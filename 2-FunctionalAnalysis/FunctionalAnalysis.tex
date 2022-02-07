@@ -1,0 +1,238 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{函数解析}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{ノルムとノルム空間}
+
+\section{線型空間の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=関数空間といった時は，線型構造と位相構造を想定している．]
+    熱伝導方程式の問題はFourierの「熱の解析的理論」(1822)によって解かれた．
+    ここから函数解析が生じる．
+    「重ね合わせの原理」が成り立つ基礎方程式は他にもあるが，これは解空間が線型演算について閉じていること＝解空間が線型空間であることをいう．
+    続いて解空間は無限次元であることが多いから，線型位相空間を考えていることになる．
+\end{tcolorbox}
+
+\begin{example}[linear space]\mbox{}
+    \begin{enumerate}
+        \item $\c:=\{x\in\Map(\N,\K)\mid xは\mathrm{Cauchy}列である\}$．
+        \item 開集合$\Omega\osub\R^n$について，$C(\Omega)$は関数空間．$C_0(\Omega):=\{u\in C(\Omega)\mid \supp uはコンパクト\}$は部分空間となる．$C^l(\Omega),C^l_0(\Omega)\;(l\in\N\cup\{\infty\})$はいずれも線型空間．
+        \item 任意の部分集合$\Omega\subset\R^n$について，$L_\loc^1(\Omega):=\{u\in\Map(\Omega,\K)\mid uは局所可積分\}$は線型空間である．なお，$\Omega$-局所可積分とは，任意のコンパクト集合$K\subset\Omega$について$\int_K\abs{u}dx<\infty$をいう．特に$\int_\Omega\abs{u}dx<\infty$のとき，$L^1_\loc(\Omega)=L^1(\Omega)$となる．一般に$L^p(\Omega)\;(p\in\N_+)$は線型空間である．この確認に$(a+b)^p\le 2^p(a^p+b^p)\;(a,b\ge 0)$が用いられる（命題\ref{prop-norm-inequality-discrete}）．
+    \end{enumerate}
+\end{example}
+
+\section{線型空間の部分集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    線型空間の重要な（非線形な）部分集合として，線分，凸集合などがある．
+    早速，線形代数と凸解析と位相空間論が入り乱れる．
+\end{tcolorbox}
+
+\begin{definition}[linear hull]\mbox{}
+    \begin{enumerate}
+        \item $S$によって生成される部分空間を線型包ともいい，$\Lh[S]=\brac{S}$と表す．
+        \item $u,v\in X$について，部分集合$[u,v]:=\{(1-\theta)u+\theta v\in X\mid \theta\in[0,1]\}$を線分という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[convex set, convex function]\mbox{}
+    \begin{enumerate}
+        \item affine空間$X$の部分集合$S$が凸であるとは，$\forall_{u,v\in S}\;[u,v]\subset S$が成り立つことをいう．凸集合は任意の点が中心となる星形領域である．また凸集合は可縮である．\footnote{可縮とは，一点集合とホモトピー同値であることをいう．}
+        \item 凸集合の射を凸関数という．\footnote{凸集合の射といったとき，nLabでは線型凸関数を指す．なお，上に凸な関数は凹関数(concave function)ともいう．これは$-f$が凸関数であることに同値．}すなわち，凸集合上の関数$f:D\to\R$の上位グラフ(supergraph, epigraph)$\Epi f:=\{(x,y)\in D\times\R\mid y\ge f(x)\}$が凸集合であるとき，$f$を凸関数という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $X:=C[-1,1],K:=\{u\in X\mid 0\le u(0)\le 1\}$とすると，$u(0),v(0)\in[0,1]$のとき，任意の$\theta\in[0,1]$について$0\le (1-\theta)u(0)+\theta v(0)\le 1$より，$K$は$X$の凸集合である．
+        \item この$X$上の，自乗積分関数$\varphi:X\to\R$を$\varphi(u):=\int^1_{-1}u^2dt$で定めると，これは凸関数である．これは自乗関数$\lambda\mapsto\lambda^2$の凸性より$\forall_{u,v\in X}\;((1-\theta)u+\theta v)^2\le(1-\theta)u^2+\theta v^2$であることから従う．
+        \item ノルムの定義のスカラー斉次性と三角不等式は，ノルムが凸関数であることを指す．
+        \item Taylorの定理より，２階微分可能で２階導関数が正である実数上の関数は凸である．$x^p,\exp$など．
+        \item 一般のEuclid空間上の関数については，Hessianが半正定値な二次形式であるとき，凸関数である．
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    $\varphi:X\to\R$を凸関数，$k\in\R$を実数とする．
+    下半開区間$(-\infty,k]$の逆像$M_k:=\{x\in X\mid \varphi(x)\le k\}$は凸集合である．
+\end{proposition}
+\begin{proof}
+    $u,v\in M_k$を任意に取ると，$\varphi(u),\varphi(v)\le k$を満たす．
+    $\varphi$は凸関数より，任意の$\theta\in[0,1]$について，
+    \begin{align*}
+        \varphi((1-\theta)u+\theta v)&\le (1-\theta)\varphi(u)+\theta\varphi(v)\\
+        &\le(1-\theta)k+\theta k=k
+    \end{align*}
+    より，$(1-\theta)u+\theta v\in M_k$．
+\end{proof}
+\begin{remarks}
+    凸関数とは，上位集合が凸となるスカラー関数で，その境界が
+    値域である．これを任意の$k$で切って下位部分を取ると，逆像は凸集合になる．
+\end{remarks}
+
+\section{ノルム空間と劣加法性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=ほとんどの不等式は劣加法性として理解できる]
+    ベクトルには長さの概念が自然に定まり，距離構造や位相はこれが引き起こす，という順番が物理的対象に沿う．
+    では長さとはなんだろうか．実は線型な凸関数（劣加法的）概念である．劣加法性は面積の概念（測度の概念）でも現れる．
+    半正値概念もよく現れ，これをセミノルムという．
+
+    ほとんどのノルムの三角不等式は内積についての消息であるSchwarzの不等式から導かれる．
+    これで，不等式のほとんどがノルムとして解釈される．
+    極めて精緻な概念である．
+    劣加法性として理解された不等式は，等号成立条件とは「２点が一致するとき」として理解できる．
+\end{tcolorbox}
+
+\begin{definition}[norm, seminorm, equivalence]
+    $X$を$k$-線型空間とし，体$k$には絶対値$\abs{\;}:X\to\R_{\ge 0}$が備わっているとする．
+    \begin{enumerate}
+        \item 実数値関数$\norm{\;}:X\to\R$がノルムであるとは，次の３条件を満たすことをいう．
+        \begin{enumerate}[(a)]
+            \item (positivity) $\forall_{u\in X}\;\norm{u}=0\Rightarrow u=0$．\footnote{これは通常$\forall_{u\in X}\;\norm{u}\ge 0$と等号成立条件が$u=0$と分けて書かれる．この主張だけで十分である理由は，(2)より$\norm{-u}=\norm{u}$であり，(3),(1)より$\norm{0}\le 2\norm{u}$が従うので，非負値であることが３条件から従う．}
+            \item (linearity) $\forall_{\alpha\in k}\;\forall_{u\in X}\;\norm{\alpha u}=\abs{\alpha}\norm{u}$．
+            \item (triangle inequality) $\forall_{u,v\in X}\;\norm{u+v}\le\norm{u}+\norm{v}$．
+        \end{enumerate}
+        \item 条件(1)が成り立たない場合，セミノルムという．
+        \item ノルムが同値であるとは，$\exists_{C_1,C_2\in\R_{>0}}\;\forall_{u\in X}\;C_1\norm{u}_1\le\norm{u}_2\le C_2\norm{u}_1$．これはノルムが定める距離が同値であることに同値．\footnote{これは，$\id$についてのLipschitz連続性の条件と見れば良い．}
+        よって，ノルムが生成する位相が同相であることに同値．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[norm, quotient norm]\mbox{}
+    \begin{enumerate}
+        \item $\R^n$上にて，任意の$p$-ノルム($p=1,2,\cdots,\infty$)は同値である．
+        \item $X=C[a,b]$の\textbf{最大値ノルム}とは，$\norm{u}_\mathrm{max}=\norm{u}_{C[a,b]}=\norm{u}_C:=\max\{\abs{u(t)}\in\R\mid t\in[a,b]\}$をいう．これは一般のコンパクト集合$K$について$C(K)$上で定義できる．
+        \item 開集合$\Omega\subset\R^n$上の有界連続関数全体の集合$X$の\textbf{上限ノルム}とは，$\norm{u}_{\mathrm{sup}}:=\sup\{\abs{u(x)}\in\R\mid x\in\Omega\}$をいう．
+        \item $X:=L^2(\Omega)\cap C(\Omega)$の$p$-ノルムとは，$\norm{u}_{L^p(\Omega)}=\norm{u}_p:=\paren{\int_\Omega\abs{u(x)}^pdx}^{1/p}$をいう．
+        \item $L^2(\Omega)$では同様の$p$-ノルムの定義をすると，正定値性(1)が導かれず，$\norm{u}_p=0\Rightarrow u(x)=0\;(\ae x\in\Omega)$が従うのみである．したがって，$f\sim g:\Leftrightarrow f(x)=g(x)\;(\ae x\in\Omega)$で定まる同値関係による商空間$L^2(\Omega)/\sim$での$p$-ノルムを暗黙に考える．
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    同値なノルムは同値な位相を定める．
+\end{proposition}
+
+\begin{proposition}[凸関数論]\mbox{}
+    \begin{enumerate}
+        \item (Jensen, 1906)：凸函数の性質$\varphi\paren{\frac{\sum a_ix_i}{\sum a_i}}\le\frac{\sum a_i\varphi(x_i)}{\sum a_i}$のこと．まず凸解析から始まることに痺れる．なお，確率空間$(\Omega,\A,\mu)$では簡潔に連続化できる：$\varphi\paren{\int_\Omega f\;d\mu}\le\int_\Omega f\circ\varphi\;d\mu$．
+        \item 相加相乗平均：算術平均と幾何平均の関係は，指数関数の凸性$\frac{\sum^n_{i=1}\exp(\log a_i)}{n}\ge\exp\paren{\frac{\sum^n_{i=1}\log a_i}{n}}$とみなせる．
+        \item (Young, 1912)：$\frac{1}{p}+\frac{1}{q}=1,p,q\in(1,\infty)$とする．この時，任意の$a,b\ge 0$に対して，$ab\le\frac{a^p}{p}+\frac{b^q}{q}$．等号成立は$a^p=b^q$に同値．\footnote{二つの項の積がヤングの不等式によりそれらの項の冪を適当にスケールしたものの和として評価できることから、ヤングの不等式は偏微分方程式論における非線形項を評価するのにも広く用いられる。}
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+        \begin{description}
+            \item[$a,b$のいずれかが零のとき] 左辺が$0$，右辺が正となるので，不等式は成り立つ．
+            \item[$ab\ne 0$のとき] 
+            \[\frac{1}{p}+\frac{1}{q}=1\Lrarrow p+q=pq\Lrarrow q=p(q-1)\]であるから，$ab^{q-1}=ab^{q/p}$より，
+            \begin{align*}
+                ab\le\frac{a^p}{p}+\frac{b^q}{q}&\Lrarrow ab^{q-1}\le\frac{1}{p}a^pb^{-q}+\frac{1}{q}\\
+                &\Lrarrow x\le\frac{1}{p}x^p+\frac{1}{q}.
+            \end{align*}
+            ただし，$x:=ab^{q/p}$とおいた．
+            関数$f(x):=\frac{1}{p}x^p-x+\frac{1}{q}$は$f'(x)=x^{p-1}-1$で，いま$p-1\ge 0$であるから，$f$は$x=1$にて最小値$f(1)=0$を取る．よって，Youngの不等式は成り立つ．
+        \end{description}
+        または，凸函数$f(x):=-\log x:\R_{>0}\to\R$の凸性
+        \[\frac{1}{p}f(a^p)+\frac{1}{q}f(b^q)\ge f\paren{\frac{1}{p}a^p+\frac{1}{q}b^q}\]
+        による結論$-\log ab\ge -\log\paren{\frac{a^p}{p}+\frac{b^q}{q}}$と考えても良い．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[劣加法性の特に重要な例：Youngの不等式]
+    Youngの不等式も相加相乗平均も，凸性＝劣加法性の特別な場合である．
+    $ab\le\frac{a^p}{p}+\frac{b^q}{q}$は両辺の$-\log$を取ると，劣加法構造
+    \[\frac{\log a^p}{p}+\frac{\log b^q}{q}\ge\log\paren{\frac{a^p}{p}+\frac{b^q}{q}}\]
+    が出てくる．そして$\frac{1}{p}+\frac{1}{q}=1$とは，内分点であるための制約であり，等号成立は２点が一致するとき$a^p=b^q$に限る．
+\end{remarks}
+
+\begin{proposition}[ノルム不等式]\mbox{}\label{prop-norm-inequality-discrete}
+    \begin{enumerate}
+        \item (Hölder, 1889) $p,q\in[1,\infty]$を共役な指数とする．\footnote{ここら辺Legendre変換や凸双対に関係しないのか．どうやら本当に$L^p$と$L^1$とは双対空間であるようだ．}$\forall_{f\in L^p(\Omega)}\;\forall_{g\in L^q(\Omega)}\;\norm{fg}_1\le\norm{f}_p\norm{g}_q$．\footnote{より一般には左辺は内積$\brac{f,g}$である．Cauchy-Schwarzの不等式($p=q=2$のとき)の一般化で，左辺が無限大になる場合も含めて一般化できる．この条件$p+q=pq$を満たす$p,q$を共役指数という．}
+        \item (Minkowski, 1953) $p\in[1,\infty)$とする．$p$-ノルムについての三角不等式$\forall_{u,v\in L^p(\Omega)}\;\norm{u+v}_p\le\norm{u}_p+\norm{v}_p$をMinkowskiの不等式という．
+        \item $p\in[1,\infty)$とする．$a,b\ge 0$について，$a^p+b^p\le(a+b)^p\le 2^{p-1}(a^p+b^p)$．$a,b$の$p$-ノルムが収束するなら$a+b$の$p$-ノルムも収束することを示し，Minkowkiの不等式がwell-definedであることを導く．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $p=1$の時は積分の劣加法性から従う．$p>2$とする．
+        Youngの不等式より，任意の$a,b\ge 0$について
+        \[ab\le\frac{a^p}{p}+\frac{b^q}{q}\]
+        が成り立つから，正定数$\lambda>0$について$a=\lambda\abs{f(x)},b=\frac{\abs{g(x)}}{\lambda}$とすると，
+        \[\abs{(fg)(x)}\le\frac{\lambda^p}{p}\abs{f(x)}^p+\frac{1}{q\lambda^q}\abs{q(x)}^q.\]
+        これを$x$で積分して，
+        \[\norm{fg}_1\le\frac{\lambda^p}{p}\norm{f}_p^p+\frac{1}{q\lambda^q}\norm{g}^q_q.\]
+        まず，$\norm{f}_p,\norm{g}_q\ne 0$として，$\lambda=\frac{\norm{g}_q^{1/p}}{\norm{f}_p^{1/q}}>0$とすると，
+        上式の右辺は
+        \[\frac{\lambda^p}{p}\norm{f}_p^p+\frac{1}{q\lambda^q}\norm{g}^q_q=\frac{1}{p}\norm{g}_q\norm{f}_p^{p-p/q}+\frac{1}{q}\norm{f}_p\norm{g}_q^{q-q/p}=\norm{f}_p\norm{g}_q.\]
+        一方，$\norm{f}_p=0$または$\norm{g}_q=0$のときは，$f,g$がそれぞれ至る所$0$であり，したがって$\norm{fg}_1=0$が従い，等号が成立する．
+        \item 
+        \begin{align*}
+            \norm{u+v}_p^p&=\int_\Omega\abs{u(t)+v(t)}^{p-1}\norm{u(t)+v(t)}dt\\
+            &\le\int_\Omega\abs{u(t)+v(t)}^{p-1}\norm{u(t)}dt+\int_\Omega\abs{u(t)+v(t)}^{p-1}\norm{v(t)}dt\\
+        \end{align*}
+        であるが，いま，$\abs{w}^{p-1}$という関数を考えると，実は共役指数$q$について
+        \begin{align*}
+            \norm{\abs{w}^{p-1}}_q&=\paren{\int_\Omega\abs{w(x)}^{(p-1)q}}^{1/q}\\
+            &=\paren{\int_\Omega\abs{w(x)}^{p}}^{1/q}=\norm{w}_p^{p/q}
+        \end{align*}
+        という関係にある．特に，$\abs{w}^{p-1}\in L^q(\Omega)\Lrarrow w\in L^p(\Omega)$である（非負値を取るなら同時である）．
+        よって，仮定より$u\in L^p(\Omega)$そして新たに発見した$\abs{u+v}^{p+1}\in L^q(\Omega)$について，Hölderの不等式より，
+        \[\le \norm{\abs{u+v}^{p-1}}_q\norm{u}_p+\norm{\abs{u+v}^{p-1}}_q\norm{v}_p=\norm{u+v}_p^{q/p}\norm{u}_p+\norm{u+v}_p^{p/q}\norm{v}_p\]
+        と評価できる．
+        $\norm{u+v}_p\ne 0$のとき，両辺を$\norm{u+v}_p^{1-p}=\norm{u+v}_p^{p/q}$で割ると，
+        \[\norm{u+v}_p\le\norm{u}_p+\norm{v}_p\]
+        を得る．
+        一方$\norm{u+v}_p=0$のとき，ノルムの正定値性から不等式は成り立つ．
+        \item 
+        まず，$a^p+b^p\le a^p+b^p+\sum_{i=1}^{p-1}\begin{pmatrix}p\\i\end{pmatrix}a^ib^{p-i}=(a+b)^p$．
+        次に，函数$y=x^p$の凸性より，
+        \[\paren{\frac{a+b}{2}}^p\le\frac{a^p+b^p}{2}\]
+        これの分母を払うと$(a+b)^p\le 2^{p-1}(a^p+b^p)$．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}\mbox{}
+    \begin{description}
+        \item[Hölder] $\lambda$を噛ませることで，証明の構造が極めてわかりやすくなっている．こういう術を身につけたい．が，結局Youngの不等式の，凸性を測る２点には$x$毎に$a^p=\frac{\norm{g}_q}{\norm{f}^{p/q}_p}\abs{f(x)},b^q=\frac{\norm{f}_p}{\norm{g}_q^{q/p}}\abs{g(x)}$を代入しており，$x$について積分するとこれらの項は一致する．こうして$\frac{1}{p},\frac{1}{q}$の内分が自明になる形で証明に決着がつく．こうして，内分の構造が消えてSchwartの形になる．すなわち，積関数のノルムは，共役なノルムの積に分解できるという構造を示しており，$p=q=2$は唯一の同次な場合である．
+        \item[Minkowski] $p$-ノルムの三角不等式を証明するのに，共役指数$q$のノルム空間$L^q(\Omega)$の力を借りることが極めて非自明である．
+    \end{description}
+\end{remarks}
+
+\section{ノルムと収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ノルムが定める距離が定める位相についての収束を\textbf{強収束}，\textbf{強極限}という．
+\end{tcolorbox}
+
+\begin{example}[uniform convergence]
+    最大値ノルムまたは一様ノルムが定める位相についての収束は，一様収束と同値になる．
+\end{example}
+
+\chapter{完備性とBanach空間}
+
+\chapter{内積とHilbert空間}
+
+\chapter{線型作用素}
+
+\chapter{一様有界性の原理と閉グラフ定理}
+
+\chapter{レゾルベントと作用素の関数}
+
+\chapter{作用素の半群}
+
+\chapter{共役空間と弱収束}
+
+\chapter{コンパクト作用素とRiesz-Schauderの定理}
+
+\chapter{対称作用素}
+
+\end{document}

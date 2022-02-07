@@ -1,0 +1,160 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{数理最適化}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{Introduction}
+
+\begin{history}[ORの華]
+    数理最適化理論の源流は，18世紀にEulerやLagrangeらが主に力学に関連する極値問題
+    あるいは変分問題（その源霊性はBernoulli兄弟の最速降下線問題である）を統一的に取り扱う方法を研究したことに遡る．
+    しかし，現代の最適化理論が大きく発展を遂げたのは，George Dantzigが1947年に線型計画問題に対する
+    単体法を開発し，初めて実用に強く抜けた．
+    同時期の有限要素法の理論的な基礎の役割を果たす点でも重要視された．
+
+    数学理論として，函数解析学の上で統一して，統計と学習理論と交錯させるのがわたしの仕事なのかもしれない．
+    計算機の利用を前提としている点で，新たな数理科学を要請しているとも考えられる．
+\end{history}
+
+\section{最適化問題}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 集合$S$とその上の実数値関数$f:S\to\R$の組を\textbf{最適化問題}という．意味論としては，$\argmin_{x\in S}f(x)$を計算する．
+        形式的には
+        \[\begin{cases}
+            \Minimize\quad f(x)\\
+            \subjectto\quad x\in S
+        \end{cases}\]
+        と表す．
+        \item $f$を\textbf{目的関数}，$S$を\textbf{実行可能領域・許容領域}，条件$x\in S$を\textbf{制約}と呼ぶ．
+        $S$の元を\textbf{実行可能解・許容解}，$\argmin_{x\in S}f(x)$を\textbf{最適解}と呼ぶ．
+        \item $S$の位相が離散集合である場合，$(S,f)$を\textbf{離散最適化問題}といい，そうでない場合を\textbf{連続最適化問題}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[輸送問題]
+    
+\end{example}
+
+\chapter{非線形最適化}
+
+\chapter{凸解析}
+
+\begin{quotation}
+    最適化問題が凸性を満たす時，局所的に最適ならば大域的に最適であることが従う重要なクラスである．
+\end{quotation}
+
+\section{凸集合}
+
+\begin{definition}
+    集合$S\subset\R^n$が$\forall_{u,v\in S}\;\forall_{\lambda\in[0,1]}\;(1-\lambda)u+\lambda v\in S$を満たす時，\textbf{凸}であるという．
+\end{definition}
+
+\begin{lemma}
+    $C_1,C_2\subset\R^n$を凸集合，$\lambda\in\R$を実数とする．
+    \begin{enumerate}
+        \item $C_1+C_2$は凸である．
+        \item $\lambda C_1$は凸である．
+        \item $C_1\cap C_2$は凸である．
+        \item 開核$C_1^\circ$は凸である．
+        \item 閉包$\o{C_1}$は凸である．
+    \end{enumerate}
+\end{lemma}
+
+\section{分離定理}
+
+\begin{lemma}[超平面]
+    非零なベクトル$p\in\R^n$と定数$c\in\R^\times$が定める超平面$H=\brac{-,p}=c$を考える．
+    半空間$H_+:=\{x\in\R^n\mid {}^t\!px\ge c\},H_-:=\{x\in\R^n\mid {}^t\!px\le c\}$は凸である．
+\end{lemma}
+
+\begin{proposition}\label{prop-separation-1}
+    $C\subset\R^n$を凸集合で，$y\notin C$とする．この時，ある超平面$H\subset\R^n$が存在して，$y\in\overset{\circ}{H_-},C\subset\overset{\circ}{H_+}$を満たす．
+\end{proposition}
+
+\begin{proposition}
+    $C\subset\R^n$を凸集合で，$y\in\partial C$とする．この時，$y\in H$を満たす超平面$H\subset\R^n$が存在して，$C\subset H_+$を満たす．
+\end{proposition}
+
+\begin{lemma}
+    $\emptyset\subsetneq K\subset\R^n$を閉凸集合とする．
+    集合$K$内で，ノルムが最小であるものが一意的に存在する．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[存在] ノルム$\norm{\cdot}:K\to\R$はコンパクト集合上の連続関数だから，最小値を取るベクトル$v\in K$が存在する．
+        \item[一意性] $y\in V$も最小のノルム$\norm{y}=:\delta$を持つとする．$K$の凸性$\frac{x+y}{2}\in K$より，$\Abs{\frac{x+y}{2}}\ge 2\delta$であるから，$\abs{x-y}^2=2\abs{x}^2+2\abs{y}^2-\abs{x+y}^2\le 2\abs{x}^2+2\abs{y}^2-4\delta^2=0$より$x=y$．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    一意性の証明まじか．
+\end{remarks}
+
+\begin{theorem}[分離定理]
+    互いに素な空でない凸部分集合$A,B\subset\R^n$について，超平面$\brac{-,v}=c$によって$A$と$B$が分離できる：$A\subset H_+,B\subset H_-$．
+\end{theorem}
+
+\section{線型不等式の定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Kuhn-Tuckerの定理の証明にも登場した，Minkowski-Farkasの定理は凸集合の分離定理と密接な関係がある．
+    また無裁定条件が状態価格の存在と同値であるという数理ファイナンスにおける最重要の主張も，本質的には凸集合の分離定理（あるいは無限次元における対応物であるHahn-Banachaの拡張定理）を基礎としている．\footnote{\url{http://web.econ.keio.ac.jp/staff/ito/pdf03/me03sepa.pdf}}
+\end{tcolorbox}
+
+\begin{notation}
+    非負ベクトル全体の集合を$\R^n_+$，正ベクトル全体の集合を$\R^n_{++}$とする．
+\end{notation}
+
+\begin{lemma}
+    部分空間$L\subset\R^n$とその直交補空間$L^\perp$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $L\cap\R^n_+=0$．
+        \item $L^\perp\R^n_{++}\ne\emptyset$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Minkowski-Farkas' lemma (02)]
+    $d_0,\cdots,d_K\in\R^N$を$N$次元の縦ベクトルとする．この時，次のいずれか一方のみが成立する．
+    \begin{enumerate}
+        \item $(d_1\;\cdots\;d_K)\begin{pmatrix}\lambda_1\\\vdots\\\lambda_K\end{pmatrix}=d_0$を満たす非負縦ベクトル$\lambda\ge 0$が存在する．
+        \item $hd_0<0$かつ$\forall_{j\in[M]}\;hd_j\ge 0$を満たす横ベクトル$h\in\R^N$が存在する．
+    \end{enumerate}
+    または(1)は「(2)：任意の$h^T(d_1\cdots d_K)\ge 0$を満たす横ベクトル$h^T\in\R^N$について，$h^Td_0\ge 0$である．」と同値である，といっても良い．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$\Rightarrow$] $y^TA\ge 0^T$を満たす任意の$y\in\R^N$について，$y^TA=y^TA{}^\exists x$で，$y^TA\ge 0^T$に$x\ge 0$も併せると，$y^TA\ge 0$．
+        \item[$\Leftarrow$] $A$の列ベクトル$a_1,\cdots,a_K$の生成する凸錐を$S:=\Brace{\sum^K_{i=1}x_ia_i\mid x_i\ge 0}$とすると，$S$は$A$による$\R^K_+:=\{x\in\R^K\mid x\ge 0\}$の像だから，(1)が成立しないとすると，$b$は像には入らないということだから$b\notin S$．
+        すると分離定理\ref{prop-separation-1}より，ある$y\in\R^N$が存在して，$y^Ta_i\ge 0$かつ$y^Tb<0$を満たす．よって矛盾．
+    \end{description}
+\end{proof}
+
+\chapter{双対理論}
+
+\chapter{線形計画}
+
+\chapter{半正定値計画}
+
+\begin{quotation}
+    線形計画の一般化理論として台頭してきている．
+\end{quotation}
+
+\chapter{変分法}
+
+\begin{thebibliography}{9}
+    \bibitem{最適化と変分法}
+    『最適化と変分法』
+    \bibitem{David Luenbuerger}
+    1969 
+\end{thebibliography}
+
+
+
+\end{document}

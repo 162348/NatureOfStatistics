@@ -1,0 +1,3208 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{形式言語理論}
+\author{}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage{textcomp, mathcomp} %Text Companionとは，T1 encodingに入らなかった文字群．これを使うためのパッケージ．\textsectionでブルバキに！
+\usepackage[T1]{fontenc} %8bitエンコーディングにする．comp系拡張数学文字の動作が安定する．
+\usepackage{ccfonts, eulervm} %KnuthのConcrete Mathematicsの組み合わせ．
+\begin{document}
+\tableofcontents
+
+\begin{quotation}
+    形式言語理論は，自由モノイドの部分集合$P(\Sigma^*)$である言語を，
+    種々の形式文法$G$を用いて分類する関手$L:C(G)\to P(\Sigma^*)$を定義し，
+    性質を研究する学問である．
+    形式文法$G$に，特に特有な図示やメンタルモデルが存在する場合，抽象機械などと呼ばれる．
+    テクノロジーとしての解釈，ミームとしての表現．
+\end{quotation}
+
+\chapter{有限オートマトンと正則言語の理論}
+
+\begin{quotation}
+    形式言語理論は，抽象機械というモデルによって，言語を分類し，包含階層(hierarchy)を得る．
+    これは計算複雑性クラスの分類に等価である．
+    抽象機械はまるでモデルのように，形式言語のクラス構造を安定的に定義する役割を果たし，
+    それ自体が形式科学的対象である．
+    その際のモデル間の射のようなものが「還元（算譜）」である．
+    この存在をcombinatoricalに構成して置けば，物理的に安定な概念が浮かび上がってくる．
+    「計算可能性」はその一番大きなクラスである．
+
+    その中でも，有限オートマトンと正則言語の言葉だけでも，
+    多くの問題は定式化出来る（PCP，古典的渡船問題など）．
+    その他プッシュダウンオートマトンやTuring機械などの多くの抽象機械(automata)を伴う計算理論は，現実の問題を
+    言語への帰属条件$x\in L$へと言い換えるから，特に数学の入り口となるものである．
+    実際抽象機械と言語の理論は，TuringとWittgensteinにdate backすることとなる．
+    その他の計算モデルも本質的には同じだが，
+    観念を符号化する記号と，
+    その間の変化によって人のメンタルモデルが全て形式として得られるのは予想される，
+    計算はこの意味でいくらか人間中心的な概念である．
+    おそらく，高度な数学性に特徴付けられて，数学の上で
+    夢想される計算機自然の法界であり，古典計算機も量子計算機も
+    その物理学的な流出だと思える．私の一番好きな計算モデルである．
+
+    有限オートマトンはコンパイラの字句解析の部分，文脈自由言語はパーサー部分，
+
+    数学基礎論は形式言語についての理論である．あるいは数学自体がそうかもしれない．自然言語の自然性を飛び出して，もう一つの自然に手を伸ばそうとする言語が自然言語で，
+    今は計算機としての豊かな実装をも持つ．
+    \begin{quote}
+    An automaton is a finite representation of a formal language that may be an infinite set.
+    \end{quote}
+
+    すると，記号列を$L$と$\Sigma^*\setminus L$の２つに分ける過程を計算と定義し，
+    これを実行するオートマトン（Turing機械）の存在性によって計算可能性を定義できる．
+
+    まずは，そのような抽象機械のうち小さなクラスである，有限状態機械を見る．
+    有限のオートマトンには２つのクラスがあって，人間が描き易いのは非決定性オートマトンの方である．
+    これは高級プログラミング言語と同じような原理であって，そこから決定性オートマトンに書き換える算譜が存在する．
+    まるでコンパイラのように決定性オートマトンへと還元してくれる．
+    特に$\epsilon$-動作について拡張しても同様の還元の原理で等価になるが，これはさらに構成し易い．
+\end{quotation}
+
+\section{言語演算：Kleene閉包と連結と逆転}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=議論領域は有限生成される空間，関係による指定が言語，その関係を特性関数とみるか算譜とみるか]
+    議論領域は毎度有限集合$\Sigma$から生成される空間$\Sigma^*$に決定される．
+    するとこの議論領域はいつでも，
+    \begin{enumerate}
+        \item 文字列の連結についてモノイド$(\Sigma^*,\cdot,\epsilon)$の構造を持っている．これが生成代数$*$に沿って，言語の空間$P(\Sigma^*)$にも連結の構造をいれる．
+        \item 「零元を省くと群になる」のアナロジーだが，今回はならないので$\Sigma^+$とでも書く．
+    \end{enumerate}
+    この中で，言語$L\in P(\Sigma^*)$を指定する方法を考えたい．
+    有限オートマトンの方法で指定できる言語は特に性質がよく，\textbf{正則言語}と呼ぶ．
+    部分関数$\N\nrightarrow\N$を原始再帰的な方法で指定できるものを計算可能と呼ぶのと並行な議論だが，今回の方が真に小さいクラスである．
+    また，問題の扱いも，形式言語理論では決定問題に限られる場合が多い．
+    言語$L=\{x\in\Sigma^*\mid P(x)\}$を指定するのに述語$P$を用いる方法と同様，算譜とは関係である．関数も関係である．
+\end{tcolorbox}
+
+\subsection{全体空間の措定：アルファベット}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    形式言語では，必ず基底たるアルファベットを指定して，それが生成する全体空間を指定してから議論が始まる．
+    この時の帰納的な「生成」を単項演算と見て，Kleene star $*$で表す（閉包と見てKleene閉包ともいう\footnote{基底的なところといい，閉包と生成の両軸が存在するところといい，とても位相っぽい．位相空間論は数学基礎論の一つの雛形になっているのだろうか}）．「真の生成」を$+$で表す．
+    元々Stephen Cole Kleene 09-94がある種のautomatonを特徴付けるために導入し，現在では正則表現にも残っている．
+    Kleene閉包の概念は，生成として$\Sigma^*$を定義してからは，\textbf{自由モノイド}として一般化されている．
+\end{tcolorbox}
+
+\begin{definition}[alphabet]
+    空でない記号の有限集合$\Sigma$を\textbf{アルファベット}という．
+\end{definition}
+\begin{example}[アルファベットの例]\mbox{}
+    \begin{enumerate}
+        \item $\Sigma=\{0,1\}$．特に極まった形式科学で使う．
+        \item $\Sigma=\{a,b,c,\cdots,z\}$．自然言語でいう「アルファベット」．
+        \item 全てのアスキー記号の集合．ウェブブラウザにとってのアルファベット．
+        \item タンパク質のアルファベット$\Sigma=\{A,R,N,D,B,C,Q,E,Z,G,H,I,L,K,M,F,P,S,T,W,Y,V\}$．生物という計算機のアルファベット．
+        \item 計算機言語のアルファベット$\Sigma=\{\mathrm{begin,\;if,\;end,\;for,\;while,\;do,\;else}\}$．この要素をtokenとも言う．
+        \item DNAのアルファベット$\Sigma=\{a,t,c,g\}$．遺伝子という計算機のアルファベット．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[string / word というデータ構造]\mbox{}
+    \begin{enumerate}
+        \item アルファベットの有限列${}^{<\omega}\Sigma=\cup_{n\in\N}\Sigma^n$の元を\textbf{文字列}または\textbf{語}という．
+        \item 文字列$\omega$について，その長さ$n$を帰納的に定義し，$|\omega|:=n$と書く．
+        \item 文字列の$i$番目の要素を，数列と見て$x_i$，文字列に作用する演算子と見て$x[i]$などと書く．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    概念としても，長さ１の列とアルファベット１つとは違うし，実装も"1 Null"と"1"とで実体が違うことが多いだろう．
+\end{remark}
+\begin{notation}[Kleene star]\mbox{}
+    \begin{enumerate}
+        \item $\Sigma^0$の元は空列$\epsilon:=[\;](:=\varnothing)$のみである．空列は$\lambda$とも書く．
+        \item 記号を表すのは$a,b,c,\cdots$で，記号列を表すのには$z,y,x,w,\cdots$を使う．
+        \item アルファベット$\Sigma$からなる全ての有限列の集合を$\Sigma^*:={}^{<\omega}\Sigma$とも書く．
+        $\Sigma^+:=\Sigma^*\setminus\{\epsilon\}$とする．
+    \end{enumerate}
+    これは正規表現に通じる．発想は，Kleene star $*$の中立元が$0$で，和$+$の中立元が$1$だというところだろうか．
+\end{notation}
+
+\subsection{文字列結合演算のモノイドとして}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    文字列の代数的操作として「文字列結合演算$*$」を導入する．
+    するとこれがうまくて，Kleene star$\Sigma^*$とは，
+    この二項演算について閉じている最小の集合として特徴付けられる（Kleene閉包）．
+    こうして連結$*$の構造は言語の空間$P(\Sigma^*)$にも持ち上がる．
+    他にも，反転${}^R$の代数的構造も定義でき，同じく持ち上がる．
+\end{tcolorbox}
+
+\begin{definition}[concatenation, power]\mbox{}\label{def-concatenation-of-words}
+    \begin{enumerate}
+        \item 列の\textbf{連結}を$xy:=x\cdot y$と書くこととする．
+        すると，$(\Sigma^*,\cdot,\epsilon)$はモノイドをなし，$(\Sigma^+,\cdot,\epsilon)$は半群である．
+        \item また，\textbf{指数}を$x^0=\epsilon,x^1=x,x^2=x\cdot x,\cdots$と定義する．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[prefix, sufflix, subword, subsequence]
+    アルファベット$\Sigma$による２つの記号列$x,y\in\Sigma^*$について，
+    \begin{enumerate}
+        \item $\exists u\in\Sigma^*, x=yu$が成り立つ時，$y$を$x$の\textbf{接頭語}と言う．
+        \item $\exists u\in\Sigma^*,x=uy$が成り立つ時，$y$を$x$の\textbf{接尾語}と言う．
+        \item $\exists u,w\in\Sigma^*,x=uyw$が成り立つ時，$y$を$x$の\textbf{部分語}と言う．
+        \item $x=x_1\cdots x_n$と部分列$1\le i_1<\cdots<i_m\le n$が存在して，$y=x_{i_1}\cdots x_{i_m}$を満たす$y$を，\textbf{部分系列}と言う．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[reverse]
+    $x=x_1\cdots x_n$に対し，$x^R:=x_n\cdots x_1$とする．
+\end{definition}
+
+\subsection{言語}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    全体空間$\Sigma^*$を「生成」の見方で用意し，「代数」の見方を滴下した．その部分集合を言語といい，これを分類することを考えるのが形式言語理論である．
+    言語の空間$P(\Sigma^*)$には通常の集合演算だけでなく，文字列演算から持ち上がった構造$*,{}^*,{}^+,{}^R$が定義される．
+\end{tcolorbox}
+
+\begin{definition}[language]
+    アルファベット$\Sigma$に対して，部分集合$L\subset\Sigma^*$を\textbf{言語}という．
+    多くは，$\Sigma^*$上に帰納的定義により建設される．自然言語では，$L$の決め方，アルファベット$\Sigma$の決め方が生物学的な理由で発生する．
+\end{definition}
+\begin{remark}
+    一階論理の文脈でいう「言語」とは意味がずれる．この意味では，むしろwell-formed formulaが一階論理の「言語」をなす．
+\end{remark}
+\begin{example}[Post Correspondence Problem]\label{problem-PCP}
+    「有限列が上下１組書かれた札（を表す文字列）が有限種類・各種類可算無限個与えられる．これらを有限枚並べて，上下の文字列を一致させることが出来るか？」
+    \[ \mathrm{PCP}:=\left\{ u_1\# v_1\#\cdots u_n\# v_n\;\middle|\; \begin{tabular}{c}$u_i,v_i\in\{0,1\}^*であり，ある列i_1,\cdots,i_m\in [n]が存在し，$\\$u_{i_1}\cdots u_{i_m}=v_{i_1}\cdots v_{i_m}が成り立つ．$\end{tabular} \right\} \]
+    この問題を解く算譜が存在しないことを証明しようとすると，気が遠くなるほどに掴みどころがない．
+    非停止性の認識問題（定理\ref{thm-undecidableness-of-halting-problem}）は，
+    巧妙な方法で最初の札の指定付きのPostの文字列揃え問題に帰着される．従って，PCPは決定不能である．
+\end{example}
+
+言語の上に，$\Sigma^*$から代数構造を入れる．
+
+\begin{definition}[言語の積・反転・Kleene closure]\label{def-operation-of-languages-Kleene}
+    $\Sigma$上の２つの言語$L,L'$について，
+    \begin{enumerate}
+        \item (concatenation) $L_1\cdot L_2:=\{xy\mid x\in L,y\in L'\}$
+        と定義する．
+        \item (power) $L^0=\{\epsilon\}, L^1=L,L^2=LL,\cdots$と定義する．
+        \item (Kleene closure) 言語$L$の閉包を$L^*=\cup_{n\in\N}L^n, L^+=\cup_{n=1,2,\cdots}L^n$とする．
+        \item (reverse) 言語の反転を$L^R:=\{x^R\mid x\in L\}$とする．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    この定義は，線型部分空間の和と全くパラレルな定義である．文字が形式的に等しくなければ，直積との同型が存在する．
+\end{remark}
+
+\begin{screen}
+    以上より，言語を集合と見て，集合演算よりさらに詳細な演算
+    \begin{enumerate}
+        \item 連結$\cdot$．$\cdot$の通常の持ち上がり．
+        \item Kleene閉包${}^*$．$\cdot$について閉じている空間を生成する生成子．
+        \item ${}^-$．
+        \item 逆転${}^R$．
+    \end{enumerate}
+    を定めた．
+\end{screen}
+
+\subsection{言語を問題と見る約束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    通常問題は部分関数$\N\nrightarrow\N$としてコードされるが，これをさらに形式科学的に還元して，
+    $\Sigma^*\to\Sigma$，さらには$\{0,1\}^*\to\{0,1\}\simeq\TV$とする．この還元されたyes, noを答えさせる，
+    形式言語理論的な問題観念を\textbf{決定問題}という．
+
+    このクラスの決定問題は理論的に扱いやすいだけでなく，例えば，C言語のコンパイラが現実的な時間内で快適に
+    使用可能なものが作れるかどうかの問題と「還元(reduction)」の関係にある．
+    この還元という考え方があるから，「帰属問題」というクラスに限って良いのである．
+    計算量理論に自然数上の部分関数を考えれば済む理由（\textbf{算術化}）と同じである．
+
+    これは所属関係$x\in X$の特別な場合である（$X$がKleene star $*$で有限生成される場合）．
+    この有限生成性が，言語の本質を作る．
+    何のアルファベットから有限生成するかは，使用者に依る．使用者に所有されない言語本来の形式に宿る性質をつかみたい．
+    最終的には$0,1$と自然数に集約されることとなる（第\ref{sec-undecidable-problems}節）．
+    \begin{quotation}
+        「問題」を言語と定義することは，計算量の理論で重要な問題を扱う妥当な方法として，時間の検証にも耐えてきた．この理論では，ある問題の計算量の下限を証明することに興味がある．
+        特に重要なのは，ある問題が入力の指数関数よりも少ない時間量で問題が解けないことを証明するための技法である．
+        はい／いいえを答えさせるという言語型の問題は，「これを解け」という意味での問題と，よく知られている多くの場合に「同程度に難しい」ことがわかっている．
+    \end{quotation}
+\end{tcolorbox}
+
+\begin{definition}[problem]
+    オートマトン理論で\textbf{問題}$L$とは，与えられたアルファベット$\Sigma$の
+    文字列$w\in\Sigma^*$に対して$w\in L$かどうかを決定する
+    クラスの「決定問題」を指す．
+\end{definition}
+
+\begin{example}[素数判定問題]\label{problem-素数判定問題}
+    素数判定問題は，アルファベット$\Sigma=\{0,1\}$の上に，言語$L_p$として得られる．$11101\in L_p$である．
+    この問題は数学的には解けてなくて，現実的なアルゴリズムは……？どうなんだ？
+\end{example}
+
+\begin{example}[SAT: Satisfiability problem]\label{problem-SAT}
+    与えられた一つの命題論理式に対して，それを充足させる付値が存在するか．
+    NP完全である．即ち，NP（非決定性Turing機械によって多項式時間で解くことができる問題）かつNP困難．
+    これはStephan Cookの1971年の論文 "The Complexity of Theorem Proving Procedures"で最初に示され，Cook-Levin's theoremと呼ばれている．
+    その論文では計算機科学最大の問題である「P対NP問題」も定式化している．
+\end{example}
+
+\begin{example}[the Entscheidungsproblem]\label{problem-Entscheidungsproblem}
+    「一階述語論理の文が与えられたとき，tautology（＝証明可能）かどうか判定するアルゴリズムはあるか？」
+    これが可能なら，非停止性の認識が出来てしまうので，これも否定される．
+\end{example}
+
+\section{有限状態機械：NFAとDFA}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=NFAとDFA]
+    有限オートマトンのうち，特に数学モデルとして適切な２つ
+    \begin{enumerate}
+        \item 非決定性有限オートマトン(NFA)
+        \item 決定性有限オートマトン(DFA)（NFAの特別なクラス）
+    \end{enumerate}
+    を定義し，DFAのなす圏Autを構成する．
+    今回はDFAを形式的な対象として定義した．この抽象機械と呼べる対象の
+    射は，「大は小を兼ねる」という性質を持たせたいから，模倣算譜の存在性で定義する．
+
+    非決定性は推論能力の源泉とも考えられる．
+    決定性は圏をなし，論理的な完結性を持つ．
+    これは不思議な双対なのかもしれない．
+
+    なお，これは退化した概念で，出力と終了状態の２つを分離することも可能である．
+    出力アルファベット$\Delta$と出力関数$\gamma:Q\times\Sigma\to\Delta$の追加は等価な抽象機械を定義し，これを順序機械という．
+\end{tcolorbox}
+
+\subsection{有限状態機械とその圏}
+
+\begin{definition}[NFA: nondeterministic finite automaton, DFA]
+    \textbf{非決定性有限オートマトン}とは，次の条件を満たす5-組$M=(Q,\Sigma,\delta,q_0,F)$のことである．
+    \begin{enumerate}
+        \item $Q$：状態からなる空でない有限集合．
+        \item $\Sigma$：入力アルファベットからなる集合．
+        \item $q_0\in Q$：初期状態．
+        \item $F\subset Q$：受理状態の集合．
+        \item $\delta\subset Q\times\Sigma\times Q$：\textbf{状態遷移関係}と呼ばれる３項関係．\footnote{従って，部分関数$\delta:Q\times\Sigma\to Q$でも良い．}
+        \begin{enumerate}[(i)]
+            \item 要素$(p,a,q)\in\delta$を遷移と呼び，$p\xrightarrow{a}q$と表す．
+            \item 状態遷移関係$\delta$が，$\forall p\in Q,\;\forall a\in\Sigma,\;\exists!q\in Q,\;(p,a,q)\in\delta$を満たすとき，このオートマトン$M$を\textbf{決定的}であると言う．
+            \item このとき，$\delta\in\Map(Q\times\Sigma,Q)$となるので，特に\textbf{状態遷移関数}と呼び，決定性の有限オートマトンを特に\textbf{有限オートマトン}と言う．
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[オートマトンの射：simulate]\label{def-category-of-DFA}
+    ２つのDFA $M_1=(Q_1,\Sigma,\delta_1,q_1,F_1),M_2=(Q_2,\Sigma,\delta_2,q_2,F_2)$
+    の間に次の３条件を満たす全射$\varphi:M_1\to M_2$が存在する時，\textbf{$M_1$は$M_2$を模倣する}という．
+    \begin{enumerate}
+        \item 初期状態を保つ：$\varphi(q_1)=\varphi(q_2)$．
+        \item 停止状態を保つ：$\varphi^{-1}(F_2)=F_1$．
+        \item 遷移を保つ：$\forall a\in\Sigma,\forall q\in Q_1,\;\delta_2(\varphi(q),a)=\varphi(\delta_1(q,a))$，即ち次の図式が可換である．
+        \[\xymatrix{
+            Q_1\times\Sigma\ar[r]^-{\delta_1}\ar[r]_-{\varphi\times 1}&Q_1\ar[d]^-{\varphi}\\
+            Q_2\times\Sigma\ar[r]^-{\delta_2}&Q_2
+        }\]
+    \end{enumerate}
+    DFA（あるいは決定的なMoore状態機械）がこの射についてなす圏をAutと表す．
+\end{definition}
+
+\begin{definition}[accepting computation,  accepting language / 定める言語]\mbox{}
+    \begin{enumerate}
+        \item 有限状態機械$M$が記号列$w=a_0\cdots a_n$を受理するとは，遷移の系列
+        \[ q_0\xrightarrow{a_0}q_1\xrightarrow{a_1}\cdots\xrightarrow{a_n}q_{n+1}\;\;\;(q_{n+1}\in F) \]
+        が存在することをいう．この系列を\textbf{受理計算}と言う．2で定義する記号を使えば$w\in L(M)$である．
+        \item 次元を一つあげる．$L(M):=\{w\in\Sigma^*\mid Mはwを受理する\}$を\textbf{受理言語}といい，
+        $M$が集合$L$を受理すると言った時は$L=L(M)$であることをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}\mbox{}
+    \begin{enumerate}
+        \item $L\subset L(M)$ではなく，意味が非常に強いことに注意．オートマトンを言語と対応させる写像$L:\Aut\to P(\Sigma^*)$を定めるためである．
+        \item 非決定性オートマトンは実際には受理し損ねることがあり得る．しかし，「受理する可能性がある」ものでなければならない．また受理計算が１つである必要もない．
+        \item $q_0\in F$であるとき，このオートマトン$M$は空列$\epsilon$を受理する．
+        \item オートマトンの持つ遷移$\delta$は非常に圏的である．これを視覚化するオートマトン独自の図式(diagram)・\textbf{状態遷移図}がある．また，Turing機械の時と同様，遷移表を与えることでも有限オートマトンを与えることと等価である．
+        \item 特に，オートマトンを計算機上で実装するための言語としては，統一モデリング言語(Unified Modeling Language)や仕様及び記述言語(Specification and Description Language)がある．
+    \end{enumerate}
+\end{remark}
+
+\begin{example}\mbox{}\label{example-FDAs}
+    \begin{enumerate}
+        \item $\{x\in\{0,1\}^*\mid xは0,1を偶数個含む\}$を受理するオートマトンは，$1$が奇数個を$q_1$，$0$が奇数個を$q_2$，どちらも奇数個を$q_3$とすれば次のように４状態を用意すると良い．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial,accepting]   (q_0)        {$q_0$};
+                \node[state]           (q_1) [right=of q_0] {$q_1$};
+                \node[state]           (q_2) [below=of q_0] {$q_2$};
+                \node[state]           (q_3) [right=of q_2] {$q_3$};
+                \path[->] (q_0) edge [bend left]    node [above] {$1$} (q_1)
+                                edge [bend left]    node [right] {$0$} (q_2)
+                          (q_1) edge [bend left]    node [below] {$1$} (q_0)
+                                edge [bend left]    node [right] {$0$} (q_3)
+                          (q_2) edge [bend left]    node [left]  {$0$} (q_0)
+                                edge [bend left]    node [above] {$1$} (q_3)
+                          (q_3) edge [bend left]    node [left]  {$0$} (q_1)
+                                edge [bend left]    node [below] {$1$} (q_2);
+            \end{tikzpicture}
+        \end{center}
+        \item $\{x\in\{0,1\}^*\mid[x]は3の倍数\}$を受理するオートマトンは，$[x]\equiv 0\mod 3$の状態で$1$を受理すると$[x1]\equiv 1\mod 3$，$0$を受理すると$[x0]\equiv 0\mod 3$というように考えていくと，次の３状態オートマトンで受理できる．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial,accepting]   (q_0)        {$q_0$};
+                \node[state]           (q_1) [right=of q_0] {$q_1$};
+                \node[state]           (q_2) [right=of q_1] {$q_2$};
+                \path[->] (q_0) edge [bend left]    node [above] {$1$} (q_1)
+                                edge [loop above]    node [above] {$0$} ()
+                          (q_1) edge [bend left]    node [below] {$1$} (q_0)
+                                edge [bend left]    node [above] {$0$} (q_2)
+                          (q_2) edge [bend left]    node [below]  {$0$} (q_1)
+                                edge [loop above]    node [above] {$1$} ();
+            \end{tikzpicture}
+        \end{center}
+    \end{enumerate}
+\end{example}
+
+\subsection{代数と余代数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=signature]
+    指標とは，極めて数学基礎論的な概念である．
+    これを用いて，代数系を$\Omega$-代数として一般化できる．
+
+    $F$-代数とは，$\Omega$-代数の圏論的な言い換えである．
+    私が無意識にやっていたことである．
+    すると，代数規則は関手$F$の言葉を用いて貼り合わせられ，一つにまとまる．
+    結局signiture\footnote{プログラミングで、メソッドや関数の、名前および引数の数や型の順序などの組み合わせ。戻り値の型を含む場合もある。}とは関手のことだと思える．
+    群，束などもこの言葉で全く並行に一般化される．
+
+    この観念を通じて，
+    計算機科学の種々の概念は代数化できる．
+    データ構造は（始）代数を定め，オートマトンも余代数として等価に理解できる．
+    これを計算機科学の分野に圏論を通じて輸入したものを，特に$F$-余代数という．
+\end{tcolorbox}
+
+\begin{definition}[$\Omega$-algebra]\mbox{}
+    \begin{enumerate}
+        \item 集合$\Omega$を（代数的）\textbf{指標(signature)}といい，非論理記号（演算子記号や述語記号）の集合とする．
+        \item $ar:\Omega\to\N$をarityという．
+        \item 指標$\Omega$が定める\textbf{$\Omega$-代数}$A$とは，carrier $|A|$と，各指標$\omega\in\Omega$の解釈としての関数$a_\omega:|A|^{ar(\omega)}\to|A|$の組$A=(|A|,(\omega)_{\omega\in\Omega})$である．
+        \item $\Omega$-代数の射$h:A\to B$とは，写像$h:A\to B$であって，任意の演算子$\omega\in\Omega$について$h(a_\omega(x_1,\cdots,x_{ar(\omega)}))=b_\omega(h(x_1),\cdots,h(x_{ar(\omega)}))$を満たすもののことをいう．
+        \item こうして$\Omega$-代数のなす圏を$\OmegaAlg$と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[signature]
+    指標の概念は組$(\Omega,ar)$としたが（これは代数的指標と呼ばれる），より精緻になる．非論理記号は基本２種類に分類できる．\footnote{\url{https://ncatlab.org/nlab/show/signature+(in+logic)}}
+    指標$\Sigma$とは，次の3-組$(S,\Rel(\Sigma),\Func(\Sigma))$のことである．
+    \begin{enumerate}
+        \item $S$は型(type, sort)の集合である．
+        \item $\Rel(\Sigma)$は関係記号の集合で，関数$ar:\Rel(\Sigma)\to S^*$が定まっている．
+        \item $\Func(\Sigma)$は関数記号の集合で，関数$(\dom,\cod):\Func(\Sigma)\to S^*\times S$が定まっている．
+    \end{enumerate}
+\end{definition}
+\begin{remark}\mbox{}
+    \begin{enumerate}
+        \item ほとんどの数学概念は$|S|=1$の指標で記述される．これを\textbf{single-sorted signature}という．
+        \item 特に大きなmultisortedな指標は圏やグラフの定義である．ここで斎藤先生はあの定義を持ち出した．
+        \item single-sortedである時，自由モノイド$S^*$は$\N$と同型であるから，関数$ar$は通常の意味でのarityである．
+        \item 従って，関係と関数の区別は，$n$-項関係，$n$-項演算と見た時，domを見ているのかである．$0$-aryの関数のことを定数という．
+        \item $\Func(\Sigma)=\emptyset$の時，これを\textbf{relational signature}という．
+        \item $\Rel(\Sigma)=\emptyset$の時，これを\textbf{equational}または\textbf{algebraic} signatureという．ただし，記号$=$は普通論理記号とみなす．
+    \end{enumerate}
+\end{remark}
+
+\begin{definition}
+    $\{x,y,z,\cdots\}$を変数からなる集合とし，$E$を言語$\{x,y,z,\cdots\}\cup\Omega$上の方程式の集合とする．
+    $E$を充すような$\Omega$-代数は再び圏をなし，これを$\OmegaEAlg$と表す．
+\end{definition}
+
+この極めて形式言語的な概念「指標$\Omega$」は，
+結局，直和の言葉によって，自己関手$F$１つにまとまる．
+$\Omega$-代数の圏と$F$-代数の圏は等しい．
+
+\begin{definition}[$F$-algebra, $F$-coalgebra]
+    \begin{enumerate}
+        \item 圏$C$とその上の自己関手$F:C\to C$について，$C$の対象$A\in C$とその射$f:F(A)\to A$の組(A,f)のことを\textbf{$F$-代数}という．$A$をこの代数の\textbf{carrier}という．
+        この双対概念を\textbf{$F$-余代数}という．即ち，射は$f:A\to F(A)$の向き．
+        \item 余代数の射$(A,f)\to(B,g)$とは，$C$の射$\alpha:A\to B$であって，次の図式を可換にするもののことである：
+        \[\xymatrix{
+            A\ar[r]^-f\ar[d]_-\alpha&F(A)\ar[d]^-{F(\alpha)}\\
+            B\ar[r]^-g&F(B)
+        }\]
+        \item これにより，$F$-余代数は圏をなす．$F$-代数も同様であり，これを\textbf{variety}という．
+        \item $F$-代数の圏が始対象を持つとき，特に\textbf{$F$-始代数}(initial $F$-algebra)と呼ぶ．この双対概念を\textbf{$F$-終余代数}(Terminal $F$-coalgebra)という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[始代数の例]
+    プログラミングで使われるリストや木構造のようないくつもの有限データ構造が、特定の自己関手の始代数として得られる。
+    \textbf{始対象と，それが生息する圏上の関手こそが，帰納や再帰といったものの一般の枠組みを与えるものだったのである}．
+    \begin{enumerate}
+        \item 自然数とは，集合の圏$\Set$上の自己関手$F=1+-$についての$F$-代数$(\N,0+succ)$である．$\Set$は始対象$0$を持つので，これは始代数である．\footnote{\url{https://en.wikipedia.org/wiki/F-algebra}}
+        \item $\Set$の自己関手$1+\N\times-$を考えると，集合$X\in \Set$に対して，始代数$(X,[x,f])$を定める．この場合の始代数は、自然数を要素とする有限な長さのリスト全体の成す集合、その点としての空リストおよび自己写像 cons（与えられた自然数と有限リストから、その自然数をリストの先頭に付け加えてえられるリストを返す函数）の組で与えられる。\footnote{\url{https://ja.wikipedia.org/wiki/始代数}}
+    \end{enumerate}
+\end{example}
+
+\begin{example}[余代数の例]
+    余代数は状態をもつシステム (状態遷移系や、オブジェクト指向プログラミングにおけるクラスなど) や、無限の内容を持ちうるデータ構造 (ストリームなど) などの挙動を、十分に一般的かつ利用しやすい形で記述できることから、計算機科学で広く用いられるようになった。
+    代数的仕様がシステムの動作を関数として (特に、コンストラクタによって生成される帰納的なデータ型を用いて) 記述するのに対し、余代数的仕様はシステムの動作を余帰納的なプロセス、つまりセレクタの出力によって観測される内容として (オートマトン理論のような考え方で) 記述する。このときありえる全ての無限動作を漏れなく重複なく集めてきた集合が終余代数となるため、終余代数も重要な役割を果たす。余代数によって記述されるシステムの性質を記述するのには、余代数的様相論理が適している。 
+    \footnote{\url{https://ja.wikipedia.org/wiki/F余代数}}
+    \begin{enumerate}
+        \item $p$進整数も距離空間として，終余代数として特徴付けられる．\footnote{Prasit Bhattacharya, The p-adic integers as final coalgebra,\url{https://arxiv.org/abs/1504.01408}}
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[遷移関数のcurryingによる，余代数によるオートマトンの定義]
+    $\delta:Q\times\Sigma\to Q$から，$\delta:Q\to Q^\Sigma$を定める．
+    ここで，終状態$F\subset Q$を，特性関数$\chi_F:Q\to 2$とみなすと，
+    $\alpha:=(\delta,\chi_F):Q\to Q^\Sigma\times 2$を定め，
+    これは$H$-余代数$(Q,\alpha)$を定める．ただし，これを定める$\Set$上の自己関手$H$は，$H(-)=-^\Sigma\times 2$というものである．
+\end{definition}
+\begin{remark}[２つの定義の等価性]
+    こうして定めたオートマトンの余代数$(Q,\alpha)$の射：$f(Q,\alpha)\to(Q',\alpha')$ s.t. $\alpha'\circ f=H(f)\circ\alpha$かつ$\delta'(\sigma,f(q))=f(\delta(\sigma,q))$かつ$f(F)=F'$．
+    即ち，simulationとしてのオートマトンの射の概念と完全に一致する．
+\end{remark}
+
+この圏の終対象$(T,\alpha_T)$がオートマトンとして面白い？
+また，non-deterministicの場合も同様に余代数化出来る．
+
+\subsection{決定性有限オートマトン論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    決定性有限オートマトンは言語を定めることを定義したが，形式言語理論の本領は，DFA自身を
+    研究対象とすることである．
+    DFAの本質は，意味論を剥ぎ取れば，算譜$\delta$である．
+    これだけが言語$L(M)$を定めていることを見る（$L(M)$の$\delta^*$による特徴付け）．
+\end{tcolorbox}
+
+\begin{definition}[遷移関数が，文字列の集合上に定める関数]
+    有限オートマトン$(Q,\Sigma,\delta,q_0,F)$の遷移関数$\delta:Q\times\Sigma^*\to Q$を，
+    次のように，$\Sigma\to\Sigma^*$の構成に関する帰納法により$q^*:Q\times\Sigma^*$に拡張する．
+    \begin{enumerate}
+        \item $\delta^*(q,\epsilon)=q\;\;\;\forall q\in Q$．
+        \item $\delta^*(q,xa)=\delta(\delta^*(q,x),a)\;\;\;\forall q\in Q,x\in\Sigma^*,a\in\Sigma$．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[$M$が$x$を受理することの特徴付け]
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $M$は$x$を受理する：$x\in M$．
+        \item $\delta^*(q_0,x)\in F$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    有限オートマトン$M$と記号列$x,y\in\Sigma^*$に対して，$\delta^*(q,xy)=\delta^*(\delta^*(q,x),y)$．
+\end{proposition}
+
+\begin{remark}[非決定性オートマトンの言語：別定義]
+    非決定性オートマトン$M=(Q,\Sigma,\delta,q_0,F)$も，$\delta\subset Q\times\Sigma\times Q$を$\overline{\delta}:Q\times\Sigma\to P(Q)$と同一視すれば，構造的帰納法によって$\delta^*:Q\times\Sigma^*\to P(Q)$が定まる．
+    そして，非決定性オートマトン$M$が定める言語は，
+    \[L(M):=\{w\in\Sigma^*\mid \delta(q_0,w)\cap F\ne\emptyset\}\]
+    と定める．つまり，必ずしも100\%の確率で受理状態に到達しなくても良い．
+
+    このように非決定性オートマトンの遷移関係$\delta\subset Q\times\Sigma\times Q$を冪集合上への写像と見なす手法は，NFA$\to$DFAの還元算譜であるsubset constructionの世界観と適合する．
+\end{remark}
+
+\subsection{オートマトンの標準形}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    オートマトンの同値類を作って，うまく代表系を取る算譜を考えたい．
+    このような志向を持った理論を標準形の理論という．
+    \begin{enumerate}
+        \item 到達不能な状態の剪定：「受理計算」の概念を一般化し，任意の２状態間に「到達可能」の二項関係を定める．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{example}[非決定性オートマトン：非常に自由度が高く，構成しやすい]
+    非決定性オートマトンは，受理計算を左右させない範囲で（特に自己遷移を）遷移を増やせる．
+    \begin{enumerate}
+        \item 次のオートマトンは，最終文字が必ず以前出てきた文字になる文字列がなす言語$\{a_1a_2\cdots a_n\in\{0,1,2\}^*\mid n\ge 2,a_n\in\{a_1,\cdots,a_{n-1}\}\}$を受理するが，$q'_0,q'_1,q'_2$の自己遷移は追加しても追加しなくても良い，受理計算に影響を与えないからである！
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial]   (q_0)        {$q_0$};
+                \node[state]           (q'_1) [right=of q_0] {$q'_1$};
+                \node[state]           (q'_2) [below=of q'_1] {$q'_2$};
+                \node[state]           (q'_0) [above=of q'_1] {$q'_0$};
+                \node[state]           (q_h)  [right=of q'_1] {$q_h$};
+                \path[->] (q_0) edge [bend left]    node [above] {$0$} (q'_0)
+                                edge                node [above] {$1$} (q'_1)
+                                edge [bend right]    node [below] {$2$} (q'_2)
+                                edge [loop above]    node [left] {$0,1,2$} ()
+                        (q'_0) edge [bend left]    node [above] {$0$} (q_h)
+                                edge [bend right]    node [below] {$2$} (q'_2)
+                                edge [bend right]    node [right] {$1$} (q'_1)
+                                edge [loop above]    node [above] {$1,2$} ()
+                        (q'_1) edge               node  [below] {$1$} (q_h)
+                                edge [bend right]    node [left] {$0$} (q'_0)
+                                edge [bend right]    node [right] {$2$} (q'_2)
+                                edge [loop right]    node [above] {$0,2$} ()
+                        (q'_2) edge [bend right]    node [below]  {$0$} (q'_0)
+                                edge [bend right]    node [left] {$1$} (q'_1)
+                                edge [bend right]    node [right] {$2$} (q_h)
+                                edge [loop below]    node [below] {$0,1$} ()
+                        (q_h) edge [loop above]    node [right] {$0,1,2$} ();
+            \end{tikzpicture}
+        \end{center}
+        \item 次のオートマトンは$\{a_1a_2\cdots a_n\in\{0,1,2\}^*\mid n\ge 2,a_n\notin\{a_1,\cdots,a_{n-1}\}\}$
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[accessible]\label{def-accessibility-of-states}
+    ２つの状態$p,p'\in M$について，$p$から$p'$に\textbf{到達可能}であるとは，
+    記号列$x=a_0\cdots a_n$と，それが定める遷移系列$p\xrightarrow{a_0}p_1\xrightarrow{a_1}\cdots\xrightarrow{a_n}p'$が存在することをいう．
+\end{definition}
+
+\begin{proposition}[有限オートマトンの標準形：初期状態から生成される部分について整形]
+    $M$に対して，次のように定めるオートマトン$M'$について，$L(M)=L(M')$．
+    また，$M$が決定的ならば$M'$も決定的である．
+    \begin{enumerate}
+        \item 初期状態$p_0$から到達可能でない状態を取り除く．
+        \item それらを端点とする遷移を取り除く．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{非決定性オートマトンの応用}
+
+\begin{application}[egrep, fgrep]
+    非決定性オートマトンはテキスト検索にも使われる．
+    UNIXコマンドegrep, fgrepでは，次の２つを混ぜて実装されている．
+    \begin{enumerate}
+        \item NFAを模倣するプログラムを書く．
+        \item subset constructionでDFAに還元し，それを模倣するプログラムを書く．
+    \end{enumerate}
+    このクラスの問題に対するsubset constructionでは，状態数の増加が伴わないことが証明できる．
+\end{application}
+
+\section{決定性オートマトンへの還元算譜と正則言語：決定性に依らない安定な構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=NFAとDFA]
+    有限オートマトンにおいて決定性／非決定性の別は
+    それが定める受理言語の観点からは対称であることが分かる．
+    なぜなら，その間にはsubset constructionという還元算譜が存在するのである．
+    （まるで座標変換）．
+    決定性の違いは，実装としては大きな違いに思えるが，
+    形式的対象としては煩瑣な違いであることがわかる．
+
+    これは新たな記号$a$を認識する度に，非決定性オートマトンの遷移し得る範囲を全て抽出して，
+    その情報を部分集合$S\subset Q$として格納していく．
+    このような動きをする決定的オートマトンを冪集合構成の上に展開してしまうまさに数学基礎論的方法である．
+    これがうまくいく理由は，非決定性オートマトンの「遷移しうる範囲」は決定的に決まっていることに起因する．
+    所詮自動人形なのである．そして「動きうる範囲」が$F$と共通部分を持つようになれば，受理計算が存在することと等価になる．
+    この構成を通じて，新たな語に対する受理計算が発生することもない．
+
+    こうして，言語の圏$P(\Sigma^*)$の中に有限オートマトンが定めるクラス
+    $L(\Aut)$を，正則言語という．
+    これは形式言語のクラスの中で，一番小さい部類のクラスとなる．
+\end{tcolorbox}
+
+\begin{theorem}[非決定性有限オートマトンと決定性有限オートマトンの等価性]
+    言語$L\in P(\Sigma^*)$に対して，次の２条件は同値．
+    \begin{enumerate}
+        \item $L$は非決定性有限オートンマトンによって受理される．
+        \item $L$は決定性有限オートマトンによって受理される．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    定義より決定性オートマトンは非決定性オートマトンの特殊な場合としたから
+    （$\delta:Q\times\Sigma\to Q$は三項関係の特別な場合に他ならない，あるいは初期状態に余分な自己遷移を加えることによっても），2.$\Rightarrow$1.は成り立つから，$\Leftarrow$を示す．
+
+    非決定性オートマトン$M=(Q,\Sigma,\delta,q_0,F)$から
+    次のように構成した(subset construction)決定性オートマトン$\tilde{M}=(\tilde{Q},\Sigma,\tilde{\delta},\tilde{q}_0,\tilde{F})$
+    は，同じ言語を受理する：$L(M)=L(\tilde{M})$と示す．
+    \begin{enumerate}
+        \item $\tilde{Q}:=P(Q)$．
+        \item $\tilde{q}_0:=\{q_0\}$．
+        \item $\tilde{F}:=\{S\in P(Q)\mid S\cap F\ne\emptyset\}$．
+        \item \[\xymatrix@R-2pc{
+            \tilde{Q}\times\Sigma\ar[r]^-{\tilde{delta}}&\tilde{Q}\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            (S,a)\ar@{|->}[r]&\{q\in Q\mid\exists p\in S,\;(p,a,q)\in\delta\}
+        }\]
+    \end{enumerate}
+    まず，$L(M)\subset L(\tilde{M})$を示す．
+    任意に$w=a_1\cdots a_n\in L(M)$を取ると，$Q$上の受理計算
+    \[ q_0\xrightarrow{a_1}q_1\xrightarrow{a_2}\cdots\xrightarrow{a_n}q_n \]
+    が存在する．すると，$S_0=\{q_0\},S_i=\{\tilde{delta}(s_{i-1},a_i)\}$とした系列を考えると，構成法より$q_n\in S_n$であるから，$S_n\in F_n$であり，受理計算が構成できたことになる．
+    よって，$w\in L(\tilde{M})$である．
+
+    次に，$L(M)\supset L(\tilde{M})$を示す．
+    全く同様に，$w\in L(\tilde{M})$の受理計算
+    \[S'_0\xrightarrow{a_1}S'_1\xrightarrow{a_2}\cdots\xrightarrow{a_n}S'_n\]
+    が$\tilde{M}$に存在する時，
+    $q_n\in S'_n$から逆算して，$q_0$からの$M$の系列が作れる．
+
+    よって，上の構成によって，決定性オートマトン$\tilde{M}$について$L(M)=L(\tilde{M})$．
+\end{proof}
+\begin{remark}
+    非決定性オートマトンの余代数を，冪集合構成によって無理やりまとめているのが$\tilde{\delta}$である！
+\end{remark}
+
+\begin{definition}[regular set / language]
+    （決定性）オートマトンによって受理される集合を\textbf{正則集合}または\textbf{正則言語}という．
+    即ち，関手（？）$L:\Aut\to P(\Sigma^*)$の値域である．
+\end{definition}
+
+\section{$\epsilon$動作付き非決定性有限オートマトン}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=$\epsilon$動作付き非決定性オートマトンをAutに引き込む]
+    非決定性オートマトンはsubset constructionによって
+    $\Aut$に引き込まれた．$\epsilon$動作付き非決定性オートマトンも同様である．
+
+    $\epsilon$動作付き非決定性有限オートマトンはさらに人間がプログラムし易い高級言語となっている．
+    $\epsilon$遷移の除去算譜も，$\epsilon$遷移について閉包を取るというstepが増えるだけで
+    本質的にはsubset constructionの延長に過ぎない．従ってこれが定め得る言語も，正則言語に一致する．
+\end{tcolorbox}
+
+\begin{definition}[$\epsilon$-transition, $\epsilon$-NFA]\mbox{}
+    \begin{enumerate}
+        \item 空語$\epsilon$を読んで行う遷移を\textbf{$\epsilon$-遷移}という．
+        \item 非決定性オートマトンの状態遷移関係$\delta\subset Q\times\Sigma\times Q$を，$\delta\subset Q\times(\Sigma\cup\{\epsilon\})\times Q$としたものを，
+        \textbf{$\epsilon$-動作付き非決定性有限オートマトン}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[$\epsilon$-closure]
+    $\epsilon$-閉包ECLOSE$(q)\subset Q$を次のように機能的に定義する．
+    \begin{enumerate}
+        \item $q\in\mathrm{ECLOSE}(q)$．
+        \item $p_1\in\mathrm{ECLOSE}(q)$とする．$\exists a\in\Sigma, (q_1,a,q_2)\in\delta$（または$q_2\in\delta(p_1)$）ならば，$q_2\in\mathrm{ECLOSE}(q)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[遷移関数の拡張と，$\epsilon$動作付き非決定性有限オートマトンが定める言語]
+    $\delta^*:Q\times(\Sigma\cup\{\epsilon\})^*\times Q$を次のように帰納的に定義する．
+    \begin{enumerate}
+        \item $\delta^*(q,\epsilon)=\mathrm{ECLOSE}(q)$．
+        \item 
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[等価原理と$\epsilon$遷移の除去算譜]
+    言語$L\in P(\Sigma^*)$に対して，次の２条件は同値．
+    \begin{enumerate}
+        \item $L$は$\epsilon$動作付き非決定性有限オートンマトンによって受理される．
+        \item $L$は決定性有限オートマトンによって受理される．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    定義上(2)$\Rightarrow$(1)は成り立つから，(1)$\Rightarrow$(2)を示す．
+
+    $\epsilon$-動作付き非決定性有限オートマトン$M=(Q,\Sigma,\delta,q_0,F)$が$L$を受理するとする．
+    $\epsilon$-動作についての閉包
+    \[\xymatrix@R-2pc{
+        \widehat{　}:P(Q)\ar[r]&P(Q)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        S\ar@{|->}[r]&{\hat{S}:=\left\{q\in Q\;\middle|\;\begin{array}{l}
+            \exists p\in S,\;\exists p_1,\cdots,p_n\in Q,\\  (p,\epsilon,p_1),\cdots,(p_n,\epsilon,q)\in\delta
+        \end{array}\right\}}
+    }\]
+    と，状態の集合$S$から記号$a$を受理することで遷移し得る範囲を
+    \[\xymatrix@R-2pc{
+        P(Q)\times\Sigma\ar[r]&P(Q)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (S,a)\ar@{|->}[r]&S(a):=\{q\in Q\mid \exists p\in S,\;(p,a,q)\in\delta\}
+    }\]
+    と定める．決定性オートマトン$\hat{M}=(\hat{Q},\Sigma,\hat{\delta},\hat{q}_0,\hat{F})$を次のように構成すると，$L=L(\hat{M})$である．
+    \begin{enumerate}
+        \item $\hat{Q}:=P(Q)$．
+        \item $\widehat{q}_0:=\widehat{\{q_0\}}$．
+        \item $\hat{F}:=\{S\in P(Q)\mid F\cap S\ne\emptyset\}$．
+        \item $\hat{delta}:\hat{Q}\times\Sigma\to\hat{Q}$は$\hat{delta}(S,a)=\widehat{S(a)}$．
+    \end{enumerate}
+\end{proof}
+
+\begin{example}[$\epsilon$遷移の除去算譜]
+    次の$\epsilon$-遷移付き非決定性有限オートマトンには，$0121$を受理する受理計算は存在しない．
+    \[\begin{array}{c|cccc}
+        &\multicolumn{4}{c}{入力}\\
+        \cline{2-5}状態&0&1&2&\epsilon\\\hline
+        q_0&\{q_0\}&\emptyset&\emptyset&\{q_1\}\\
+        q_1&\emptyset&\{q_1\}&\emptyset&\{q_2\}\\
+        q_2&\emptyset&\emptyset&\{q_2\}&\emptyset\\\hline
+    \end{array}\]
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+            \node[state,initial]   (q_0)        {$q_0$};
+            \node[state]           (q_1) [right=of q_0] {$q_1$};
+            \node[state,accepting]           (q_2) [right=of q_1] {$q_2$};
+            \path[->] (q_0) edge                  node [above] {$\epsilon$} (q_1)
+                            edge [loop above]    node [above] {$0$} ()
+                      (q_1) edge [loop above]    node [above] {$1$} ()
+                            edge                 node [above] {$\epsilon$} (q_2)
+                      (q_2) edge [loop above]    node [above] {$2$} ();
+        \end{tikzpicture}
+    \end{center}
+    これをDFAに変換すると，最終墓地が明白になる．
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+            \node[state,initial,accepting]   (q_0)        {$\{q_0,q_1,q_2\}$};
+            \node[state,accepting]           (q_1) [right=of q_0] {$\{q_1,q_2\}$};
+            \node[state,accepting]           (q_2) [right=of q_1] {$\{q_2\}$};
+            \node[state]           (empty) [below=of q_1] {$\emptyset$};
+            \path[->] (q_0) edge                  node [above] {$1$} (q_1)
+                            edge [loop above]    node [above] {$0$} ()
+                            edge [bend left=60]     node {$2$} (q_2)
+                    (q_1) edge [loop above]    node [above] {$1$} ()
+                            edge                 node [above] {$2$} (q_2)
+                            edge                 node [left]  {$0$} (empty)
+                    (q_2) edge [loop above]    node [above] {$2$} ()
+                            edge                 node [right] {$0,1$} (empty)
+                    (empty) edge [loop below]  node [below] {$0,1,2$} ();
+        \end{tikzpicture}
+    \end{center}
+\end{example}
+
+\subsection{$\epsilon$-遷移付き非決定性有限オートマトンの応用}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    この新たな武器$\epsilon$遷移と等価原理によって，
+    次の正則言語の性質が簡単にわかる．
+\end{tcolorbox}
+
+\begin{proposition}[有限な言語は全て正則]
+    任意のinput alphabet $\Sigma$について，任意の有限部分集合$L\subset\Sigma^*$は正則言語である．
+\end{proposition}
+\begin{proof}
+    $\epsilon$-動作付き非決定性有限オートマトンを構成する算譜があるはずである．
+\end{proof}
+
+\begin{itembox}[l]{無限状態機械}
+    以上の有限状態機械は，無限にも定義を拡張でき，同様の定理を証明できる．
+\end{itembox}
+
+\section{正則言語の反復補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    正則言語の必要条件を考えたい．
+    記号列の無限集合を認識する有限オートマトンは，必ずループを持つ．
+    この正則言語（や特に文脈自由言語，定理\ref{thm-Pumping-lemma-CFL}）の必要条件を，反復補題という．
+
+    本質は同様に，「形式言語は所詮有限生成される模様であるから，ある閾値があってそれを超える範囲では有限性由来の反復模様がある」
+    ということである．確かにTuring patternっぽい．初出はこれ\cite{pumping}．\footnote{反復補題（英: Pumping lemma）とは、計算可能性理論において、あるクラスの形式言語に反復を施してもそのクラスに依然として属することを示すものである。ここでいう「反復」とは、その言語に含まれる十分に長い文字列が部分に分割可能で、その一部分を繰り返したさらに長い文字列も同じ言語に含まれるようにすることである。この補題の証明には、鳩の巣原理のような組合せ数学が必要とされる。
+    反復補題の重要な具体例として、正規言語の反復補題と文脈自由言語の反復補題がある。文脈自由言語の反復補題の一種として、オグデンの補題もある。
+    これらの補題は、ある言語が特定の言語クラスに属さないことを示すのに使われる。しかし逆に、反復補題を満たすことは必要条件ではあっても十分条件ではないので、ある言語があるクラスに属することを示すのには使えない。}
+\end{tcolorbox}
+
+\begin{theorem}[Pumping Lemma]\label{thm-Pumpimg-lemma}
+    $L\subset\Sigma^*$を正則言語とする．
+    このとき，ある定数$N\ge 1$が存在して，長さが$N$以上の記号列$x\in L\land |x|\ge N$ならば，
+    その分解$x=uvw$であって，
+    \begin{enumerate}
+        \item $1\le |v|<N$（これよりも粗い条件である$(1\le |v|)\land (1\le|uv|\le N)$としても示せる（定理\ref{thm-Pumping-lemma-CFL}）），
+        \item $\forall m\in\N,\; uv^mw\in L$,
+    \end{enumerate}
+    の２条件を満たすものが存在する．
+\end{theorem}
+\begin{proof}
+    $L$は正則言語であるから，これが定める決定性有限オートマトンを$M=(Q,\Sigma,\delta,q_0,F)$とする．
+    $N=|Q|$とすれば，$\{q_0\}\subset Q$より$N\ge 1$を満たす．
+    $|x|=:n\ge N$を満たす$x=a_1a_2\cdots a_n\in L$を任意に取る．すると$x$が定める受理計算が存在するが，その系列の長さは$|Q|$を超えているから，
+    鳩の巣原理より同じ状態が少なくとも２回現れる：$\exists i,j\in n+1,\;(0<)j-i\le N\land p_i=p_j$．
+    これについて，$u:=a_1a_2\cdots a_i,v:=a_{i+1}\cdots a_j,w:=a_{j+1}\cdots a_n\in L$とすると，
+    $v$は$1\le\abs{v}< N$で，状態$p_i=p_j$を中心としたループである．従って，任意の$m\in\N$に対して$uv^mw\in L$にも受理計算があるから，
+    $uv^mw\in L(M)$．
+\end{proof}
+\begin{remarks}
+    定理\ref{thm-Pumping-lemma-CFL}の右線型文法$A\to w\mid wA$における場合の結果である．
+\end{remarks}
+
+\begin{corollary}
+    言語$L=\{0^n1^n\mid n\in\N\}$は正則ではない．
+\end{corollary}
+\begin{proof}
+    $L$を正則とする．
+    すると，$N>0$が存在して，任意の$\abs{x}=:n\ge N$を満たす文字列$x\in L$について，
+    $1\le\abs{v}<N$を満たす分解$x=uvw$が存在して，$\forall m\in\N,\;uv^mw\in L$を満たす．
+    いま，$x=0^N1^N$とする．$\abs{v}<N$より，$v\in\{0\}^*$または$v\in\{1\}^*$または$v\in\{0,1\}^*$である．
+    最初の２つの場合は$m=0$について矛盾．最後の場合は$m=2$について，位置関係が逆転している$0,1$が存在するので矛盾．
+\end{proof}
+
+\begin{corollary}[回文]
+    言語$L=\{ww^R\mid w\in\{0,1\}^*\}$は正則ではない．
+\end{corollary}
+\begin{proof}
+    $L$を正則とする．$1\le\abs{v}<N$であるので，$m=0$とすると回文ではなくなる．
+\end{proof}
+
+\section{正則表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=正則言語hack：適宜適切な代数的手法で有限生成して正則言語を得る代数的表現]
+    以前の章で，Autから言語$\Sigma^*$のクラス：正則言語を定め，
+    有限オートマトン３種の等価性をみた．
+    ここで，抽象機械とは違って，正則言語に対する代数的記法を１つ導入する．
+    これは実用化されているほど強力な代数的手法で，生成の概念を捉えている１つの形式言語である．
+    正則言語にとってはメタ言語である．
+    これは正則文法の強力な表現メディアの一つであろう（定義\ref{def-regular-grammar}）．
+\end{tcolorbox}
+
+\begin{definition}[regular expression / regex]
+    \textbf{アルファベット$\Sigma$上の正則表現}とは，アルファベット$\Sigma\cup\{*,+,),(,\emptyset\}$上の記号列$\REGEX_{\Sigma}\subset (\Sigma\cup\{*,+,),(,\emptyset\})^*$であって，次のように帰納的に定義されるものである．
+    正規表現を，それが表す正則言語へと対応させる解釈写像$L:\REGEX_{\Sigma}\to P(\Sigma^*)$が定まる．言語$L(r)\subset\Sigma^*$と正則表現$r$を混同することも多い．
+    \begin{enumerate}
+        \item 空列を表す記号$\emptyset$は正則表現で，空な言語を表す：$L(\emptyset)=\emptyset$．
+        \item 各アルファベット$a\in\Sigma$は正則表現であり，語$a$と解釈される：$L(a)=\{a\}$．
+        \item $r,s$を正則表現とすると，$(r+s),(rs),(r^*)$は正則表現であり，次のように解釈される：$L(r+s)=L(r)\cup L(s), L(rs)=L(r)L(s),L(r^*)=L(r)^*$．ただし列または言語について$L_1L_2$とは記号列の連結を表す．
+        \item 以上のように定義されるもののみが正則表現である．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    正則表現は，文字列演算を引き継いでいる（定義\ref{def-concatenation-of-words}）．
+    適宜，適切な代数的手法で有限生成すれば良いという算段である．
+    和集合と，連結と，Kleene生成である．
+    正則言語の閉包性（\ref{sec-closure-properties-of-regular-languages}節，定理\ref{thm-closure-properties-of-regular-language}）が背景である．
+\end{remarks}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 実は集合としての積に相当するものは，正則言語については自然な発想だが，正則表現には合わないようだ．注\ref{remark-regular-expressions-on-language-variables}参照．
+        \item $L((0+1)^*)=\{0,1\}^*$．$+$は和集合に対応する「または$\lor$」みたいなものである．（$a+$と書いた時は$a+\epsilon$と理解してもいい）．
+        \item $(0+1)^*00(0+1)^*$は２つ以上続く$0$を持つ文字列全体の集合を表す．
+    \end{enumerate}
+\end{example}
+
+\subsection{正則表現の代数的構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=正則表現があからさまにするもの]
+    $+,\cdot$などの記法は，次の代数的法則が成り立つことによる．
+    言語の代数的性質を救い上げている最高にクールな記法である．
+    \textbf{連結を積とし，和集合を和とした代数系}のようになる．そして\textbf{Kleene starがまるで冪}である！
+    なんと美しい．
+\end{tcolorbox}
+
+\begin{lemma}[代数的構造：集合代数から輸入]
+    次の正則表現上の等式は，解釈写像$L$とSetをモデルとして充たされる．
+    （即ち，正則表現上の$=$は解釈写像$L$を用いて集合の相等として解釈する）．
+    \begin{enumerate}
+        \item $r+s=s+r$．和集合の可換性$L(r)\cup L(s)=L(s)\cup L(r)$より．
+        \item $(r+s)+t=r+(s+t)$．和集合演算の結合性から．
+        \item $(rs)t=r(st)$．連結の結合律．
+        \item $\emptyset+r=r+\emptyset=r$．空集合は$\cup$の中立元．
+        \item $r(s+t)=rs+rt, (s+t)r=sr+tr$．分配則．連結してから和をとっても和をとってから連結しても可換であるため．
+        \item $r+r=r$．$\cup$の吸収律より．
+        \item $(r^*)^*=r^*$．閉包の安定性．
+        \item $r^*r=rr^*$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[infinite regular expression]
+    列$(r_n)_{n\in\N}$に対しても，
+    \[ L((r_n)_{n\in\N}):=\bigcup_{n\in\N}L(r_n) \]
+    として解釈を与える．
+\end{definition}
+
+\begin{notation}
+    正規表現$r^+$を$rr^*$の略記とする．$L(r^+)=L(r^*)\setminus\{\epsilon\}$が成り立つ．
+\end{notation}
+
+\begin{lemma}[展開法則]
+    正規表現$r,s$について，次の式が成り立つ．
+    \begin{enumerate}
+        \item $r^*=\epsilon+r+rr+rrr+\cdots$．
+        \item $r^*=\epsilon+r^+$．
+        \item $(\epsilon+r)^*=r^*$．
+        \item $(r+s)^*=(r^*s^*)^*$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{正則表現の変数の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable, title=正則表現を生成するアルファベットから抽象化し，独自の対象として定める]
+    正則表現を形式科学的対象として離陸させるには，アルファベットを，言語の上を走る不定元からなる有限集合$\Gamma:=\{X_1,\cdots,X_m\}$
+    に定め直して，この上の正則表現を考える．
+
+    正則表現の各文字$r,s$は，文字列の表象ではなく，言語の表象だと思ってもうまくいく．
+    $R$を$\Gamma$上の正則表現とすると，言語$L(R)\subset\Gamma^*$の元である各々の文字列に，言語を代入して全体を連結で解釈したもの$R(L_1,\cdots,R_m)$\footnote{文字列の代入と同じ記号を使っている}と，
+    $\Gamma$上の正則表現としての文字列$R$を置換$R(L_1,\cdots,L_m)$してから正則表現として解釈$L(R(L_1,\cdots,L_m))$するのとは，可換である（命題\ref{prop-regular-languages-on-language-variables}）．
+    \begin{equation}
+        \xymatrix{
+        \REGEX_\Gamma\ar[r]^-{代入}_-{(L_1,\cdots,L_m)}\ar[d]_-{L}&\REGEX_\Sigma\ar[d]^-{L}\\
+        P(\Gamma^*)\ar[r]^-{連結}_-{\cdot}&P(\Sigma^*)
+    }\label{diagram-1}
+    \end{equation}
+
+    するとこの図式が可換であることから，正則表現という対象がついに離陸する．
+    同値関係を\ref{def-equivalence-of-universal-regex}のように，
+    「任意のアルファベットについて」と全称量化によって導入すれば，自立した安定な形式科学的道具である．
+    まるでモデルを用いた一階述語論理の意味論の定義のように，正則表現も唯我独尊の対象となる．
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $X$がアルファベット$\Sigma$上の\textbf{言語変数}とは，不定元$X\in P(\Sigma^*)$とする．
+        \item この言語変数からなるアルファベット$\Gamma:=\{X_1,\cdots,X_m\}$上の正則表現$R$を考える．
+        これを，使われ得る言語変数を明示して$R(X_1,\cdots,X_m)$などと書く．この解釈は$\Gamma$上の言語$L(R)\subset\Gamma^*$である（図式\ref{diagram-1}の左下）．
+        \item また$R$は，言語変数に対するアルファベット$\Sigma$上の言語の（文字列としての）代入$(X_i):=(L_i)$を定めるたびに，$\Gamma$上の言語を定義する正則表現となり，これを$R(L_1,\cdots,L_m):=L(R(L_1,\cdots,L_m))$と書く（図式\ref{diagram-1}の右上周り）．
+    \end{enumerate}
+\end{notation}
+
+\begin{proposition}[言語変数上の正則表現の解釈の特徴付け]\label{prop-regular-languages-on-language-variables}
+    アルファベット$\Gamma=\{X_1,\cdots,X_m\}$上の正則表現$R(X_1,\cdots,X_m)$を考える．
+    これに任意の言語$L_1,\cdots,L_m\subset\Sigma^*$を代入して得る正則言語$R(L_1,\cdots,L_m)\subset\Sigma^*$について，次が成り立つ：
+    \[ \forall w\in R(L_1,\cdots,L_m),\;\exists X_{k_1}\cdots X_{k_m}\in L(R),\;w\in L_{k_1}\cdots L_{k_n}. \]
+    即ち，正則表現$R$が定める正則言語$R(L_1,\cdots,L_m)$は，その解釈$L(R)\subset\Gamma^*$の解釈を言語の接合（定義\ref{def-operation-of-languages-Kleene}）
+    だと思ったものに等しい．しかし，言語変数の文字列の集合$L(R)\subset\Gamma^*$を適切に$\Sigma$上の言語の代入に沿って$\Sigma$上の正則言語と解釈する方法は簡単には思いつかないので，こうして命題として立て，理論の完成は定理に譲った．
+\end{proposition}
+\begin{proof}
+    正則表現の構成法に関する帰納法で証明する．任意に$L_1,\cdots,L_m\subset\Sigma^*$を取る．
+    \begin{description}
+        \item[basis] 
+        \begin{enumerate}
+            \item $R=\emptyset$の時，$R(L_1,\cdots,L_m)=\emptyset$（かつ$L(R)=\emptyset$）なので，自明な形で定理は成立．
+            \item $R=X_i$の時，$L(R)=\{X_i\}, R(L_1,\cdots,L_m)=L(L_i)=L_i$である．この時，任意の$w\in R(L_1,\cdots,L_m)=L_i$について，$X_i\in L(R)$が存在して，$w\in X_i(X_i:=L_i)\footnote{記号列に対する記号の代入の意味}=L_i$は自明に成立．
+        \end{enumerate}
+        \item[deduction] 
+        \begin{enumerate}
+            \item $R=R_1+R_2$の時，$R(L_1,\cdots,L_m)=R_1(L_1,\cdots,L_m)\cup R_2(L_1,\cdots,L_m)$であるため，成立．
+            \item $R=R_1\cdot R_2$の時，$R(L_1,\cdots,L_m)=R_1(L_1,\cdots,L_m)\cdot R_2(L_1,\cdots,L_m)$であるため，成立．
+            \item $R=R_1^*$の時，$R(L_1,\cdots,L_m)=R_1(L_1,\cdots,L_m)^*$であるため，成立．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    こうして，図式\ref{diagram-1}の左下から右下の写像が開通した．
+\end{remarks}
+
+\begin{definition}[言語変数上の正則表現の同値]\label{def-equivalence-of-universal-regex}
+    言語変数$\Gamma=\{X_1,\cdots,X_m\}$上の正則言語$R,S$が同値であるとは，次を満たすことをいう：
+    \[ R\equiv S:\Leftrightarrow \forall\Sigma,\;\forall L_1,\cdots,L_m\subset\Sigma^*,\;R(L_1,\cdots,L_m)=S(L_1,\cdots,L_m). \]
+\end{definition}
+\begin{remarks}
+    まるでモデルのように，何のアルファベット代入しても同じ正則言語を生み出すものとして定義する．
+    これが一体どのような効能を持っているかは恐ろしいが，結局$\Gamma^*$上の言語として一致することだとわかる．
+\end{remarks}
+
+\begin{theorem}[言語変数上の正則表現の同値の特徴付け]
+    言語変数$\Gamma=\{X_1,\cdots,X_m\}$上の正則言語$R,S$について，次の２条件は同値である．
+    \begin{enumerate}
+        \item $R\equiv S$．
+        \item $L(R)=L(S)\subset\Gamma^*$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[1$\Rightarrow$2] 1の定義は
+        \[ R\equiv S:\Leftrightarrow \forall\Sigma,\;\forall L_1,\cdots,L_m\subset\Sigma^*,\;R(L_1,\cdots,L_m)=S(L_1,\cdots,L_m). \]
+        これに対して，$\Sigma=\Gamma$とし，$L_i=\{X_i\}\;(i=1,\cdots,m)$（これは確かに$\Gamma$上の言語$\{X_i\}\subset\Gamma^*$）を各変数$X_i$に代入しても
+        $R(L_1,\cdots,L_m)=S(L_1,\cdots,L_m)$が成り立つはずである．
+        しかしこれは解釈写像$L$の$R,S$についての値に他ならない．従って，$L(R)=L(S)$．
+        \item[2$\Rightarrow$1] アルファベット$\Sigma$を任意にとり，その上の言語$L_1,\cdots,L_m\subset\Sigma^*$を任意に定め，これについて
+        \[ R(L_1,\cdots,L_m)=S(L_1,\cdots,L_m) \]
+        を示せば良い．命題\ref{prop-regular-languages-on-language-variables}より，$w\in R(L_1,\cdots,L_m)$ならば，ある言語変数の記号列$X_{k_1}\cdots X_{k_n}\in L(R)\subset\Gamma^*$が存在して，
+        その解釈について$w\in L_{k_1}\cdots L_{k_n}$となる．よって，$R(L_1,\cdots,L_m)\subset S(L_1,\cdots,L_m)$
+        全く対称的な議論も成り立つから，$R(L_1,\cdots,L_m)=S(L_1,\cdots,L_m)$．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    まさに図式\ref{diagram-1}が可換であることから示せる．
+\end{remarks}
+
+\begin{remark}[正則表現に積演算$\cap$を入れない理由]\label{remark-regular-expressions-on-language-variables}\mbox{}
+    \begin{enumerate}
+        \item この定理はある意味で言語変数上の正則表現のwell-definednessを表している．
+        言語変数上の正則表現も，通常通りに解釈すれば，我々が自然に感じる「同値」と「正則表現としての同値」とが一致するように作れている．まるでモデル理論である．
+        \item 実は，正則言語は$\cap$について閉じている（定理\ref{thm-closure-properties-of-regular-language}）が，正則表現に$\cap$に相当する表現を組み込むと，定理の2$\Rightarrow$1が成り立たなくなる．
+        例えば，正則表現に記号$\cap$を追加して，$R=X_1\cap X_2\cap X_3,S=X_1\cap X_2\;(\Gamma=\{X_1,X_2,X_3\})$と定める．この時$L(R)=L(S)=\emptyset\subset\Gamma^*$であるが，$R(\{0\},\{0\},\emptyset)=\emptyset,S(\{0\},\{0\},\emptyset)=\{0\}$となる．
+    \end{enumerate}
+\end{remark}
+
+\section{有限オートマトンと正則表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    前節で正則表現を定義したが，これが正確に正則言語を定める代数系であることを，
+    ２つの定理を立てて確認する．
+    これで，正則表現が，有限オートマトンのどのような代数的構造を捉えていたかが明るみに出る．
+\end{tcolorbox}
+
+\begin{theorem}
+    正則表現$\psi$が定める言語$L(\psi)$は正則である．
+\end{theorem}
+\begin{proof}
+    $L(\psi)$を受理する$\epsilon$動作付き非決定性有限オートマトンを，正則表現$\psi$の構成についての帰納法で構成する．
+    なお，構成される$\epsilon$-NFAは全て，初期状態に入る遷移はなく，また受理状態はただ一つであり，受理状態から出る遷移もないことに注意．
+    \begin{enumerate}
+        \item $\psi=\emptyset$の時，次のオートマトンが$L(\psi)=\emptyset$を受理する．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial]   (q_0)        {$q_0$};
+                \node[state,accepting]           (q_1) [right=of q_0] {$q_1$};
+            \end{tikzpicture}
+        \end{center}
+        \item $\psi=a\;(a\in\Sigma)$の時，次のオートマトンが$L(\psi)=\{a\}$を受理する．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial]   (q_0)        {$q_0$};
+                \node[state,accepting]           (q_1) [right=of q_0] {$q_1$};
+                \path[->] (q_0) edge                  node [above] {$a$} (q_1);
+            \end{tikzpicture}
+        \end{center}
+        \item $\psi=r+s\;(r,s\in\REGEX_\Sigma)$の時，$L(r),L(s)$を受理する$\epsilon$-NFAをそれぞれ$M_1=(Q_1,\Sigma,\delta_1,q_1,\{f_1\}),M_2=(Q_2,\Sigma,\delta_2,q_2,\{f_2\})$とすると，$M_1,M_2$は初期状態に入る遷移はなく，また受理状態はただ一つであり，受理状態から出る遷移もない．
+        新たに$M_0:=(Q_1\cup Q_2\cup\{q_0,f_0\},\Sigma,\delta_1\cup\delta_2\cup\{(q_0,\epsilon,q_1),(q_0,\epsilon,q_2),(f_1,\epsilon,f_0),(f_2,\epsilon,f_0)\},q_0,\{f_0\})$と定めれば良い（次図参照）．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial]   (q_0)        {$q_0$};
+                \node[state]           (q_1) [above right=of q_0] {$q_1$};
+                \node[state]           (q_2) [below right=of q_0] {$q_2$};
+                \node[state]           (f_1) [right=of q_1] {$f_1$};
+                \node[state]           (f_2) [right=of q_2] {$f_2$};
+                \node[state]           (f_0) [below right=of f_1] {$f_0$};
+                \path[->] (q_0) edge                  node [above] {$\epsilon$} (q_1)
+                                edge                  node [below] {$\epsilon$} (q_2)
+                          (q_1) edge                  node [above] {$(\delta_1)$} (f_1)
+                          (q_2) edge                  node [above] {$(\delta_2)$} (f_2)
+                          (f_1) edge                  node [above] {$\epsilon$} (f_0)
+                          (f_2) edge                  node [below] {$\epsilon$} (f_0);
+            \end{tikzpicture}
+        \end{center}
+        \item $\psi=rs\;(r,s\in\REGEX_\Sigma)$の時，$M_0:=(Q_1\cup Q_2,\Sigma,\delta_1\cup\delta_2\cup\{(f_1,\epsilon,q_2)\},q_1,\{f_2\})$とすれば良い（次図参照）．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial]   (q_1)        {$q_1$};
+                \node[state]           (f_1) [right=of q_1] {$f_1$};
+                \node[state]           (q_2) [right=of f_1] {$q_2$};
+                \node[state,accepting]           (f_2) [right=of q_2] {$f_2$};
+                \path[->] (q_1) edge                  node [above] {$(\delta_1)$} (f_1)
+                          (f_1)  edge                 node [above] {$\epsilon$} (q_2)
+                          (q_2) edge                  node [above] {$(\delta_2)$} (f_2);
+            \end{tikzpicture}
+        \end{center}
+        \item $\psi=r^*\;(r\in\REGEX_\Sigma)$の時，$M_0:=(Q_1\cup\{q_0,f_0\},\Sigma,\delta_1\cup\{(q_0,\epsilon,q_1),(q_0,\epsilon,f_0),(f_1,\epsilon,q_1),(f_1,\epsilon,f_0)\},q_0,\{f_0\})$とすれば良い（次図参照）．
+        \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+                \node[state,initial]   (q_0)        {$q_0$};
+                \node[state]           (q_1) [right=of q_0] {$q_1$};
+                \node[state]           (f_1) [right=of q_1] {$f_1$};
+                \node[state,accepting]           (f_0) [right=of f_1] {$f_0$};
+                \path[->] (q_0) edge                  node [above] {$\epsilon$} (q_1)
+                                edge  [bend right=45] node [below] {$\epsilon$} (f_0)
+                          (q_1)  edge                 node [above] {$(\delta_1)$} (f_1)
+                          (f_1) edge                  node [above] {$\epsilon$} (f_2)
+                                edge [bend right=45]                 node [above] {$\epsilon$} (q_1);
+            \end{tikzpicture}
+        \end{center}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    全ての$\epsilon$-NFAについて，初期状態に入る遷移はなく，また受理状態はただ一つであり，受理状態から出る遷移もない．
+\end{remarks}
+
+\begin{theorem}
+    有限性決定オートマトン$M=(Q,\Sigma,\delta,q_1,F)$が定める正則言語$L(M)$を表現する正則表現$\psi$が存在する．
+\end{theorem}
+\begin{proof}
+    $Q=\{q_i\}_{i\in[n]}$とする．状態$q_i,q_j$と整数$k$の$1\le i,j,k\le n$を満たす3-組について，次の２条件が成り立つ記号列$x=a_1\cdots a_m\in\Sigma^*$を，記号列$x$により$q_i$から$q_j$まで$\{q_1,\cdots,q_k\}$に属する状態のみを経由して到達可能といい，そのような記号列$x\in\Sigma^*$全体からなる集合を$R^k_{ij}$とする．
+    \begin{enumerate}
+        \item $\forall l\in\{1,\cdots,m-1\},\;\delta^*(q_i,a_1\cdots a_l)\in\{q_1,\cdots,q_k\}$．
+        \item $\delta^*(q_i,a_1\cdots a_m)=\delta_j$．
+    \end{enumerate}
+    いま，$R^{k-1}_{ij}\;(1\le i,j\le n)$が定義されているとき，新たに$q_k$を経由するものと，従来のものとに分けて，$R^k_{ij}\;(1\le k\le n)$は次のように帰納的に定義されている．
+    \begin{align*}
+        R^0_{ij}&=\begin{cases}
+            \{a\in\Sigma\mid \delta(q_i,a)=q_j\},&i\ne jのとき,\\
+            \{a\in\Sigma\mid \delta(q_i,a)=q_j\}\cup\{\epsilon\},&i=jのとき.
+        \end{cases}\\
+        R^k_{ij}&=R^{k-1}_{ik}(R^{k-1}_{kk})^*R^{k-1}_{kj}\cup R^{k-1}_{ij}&（新たにq_kを経由するものとしないもの）
+    \end{align*}
+    この構造に沿って，記号列の集合$R^k_{ij}$を表現する正則表現$r^k_{ij}$を次のように帰納的に定義する．
+\end{proof}
+\begin{remarks}
+    こんな構造見抜けるか？
+\end{remarks}
+
+\section{正則言語の閉包属性}\label{sec-closure-properties-of-regular-languages}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    初め有限オートマトンという抽象機械が受理する言語として正則言語を定義し，３つの抽象機械の等価性を見た．
+    続いて，正則表現という等価な代数的手法も手に入れた．
+    道具立ては揃った，続いて正則言語を調べていく．
+    正則言語は，集合演算$\cap,\cup$，接合$\cdot$，補集合演算$\overline{\quad}$，Kleene star ${}^*,{}^+$，反転${}^R$，差集合$\setminus$，商集合$/$，逆$C$，
+    準同型の像$\Im\varphi$，準同型の逆像$\Ker\varphi$，シャッフル$\lor$について閉じている．
+    極めて代数的で扱いやすい！！
+\end{tcolorbox}
+
+\begin{notation}
+    正則言語からなる集合を$\mathcal{R}$とし，この性質を調べる．
+\end{notation}
+
+\subsection{代数的性質}
+
+\begin{theorem}[代数的性質]\label{thm-closure-properties-of-regular-language}
+    正則言語からなる集合$\mathcal{R}$は，集合演算$\cap,\cup$，接合$\cdot$，補集合演算$\overline{\quad}$，Kleene star ${}^*,{}^+$，反転${}^R$の下で閉じている．
+\end{theorem}
+
+\begin{theorem}[差集合]
+    言語$L_1,L_2\subset\Sigma^*$に対して，$L_2$が正則ならば，次も正則である：
+    \[ L_1\backslash L_2:=\{y\mid\exists x\in L_1,\;xy\in L_2\}. \]
+\end{theorem}
+
+\begin{theorem}[商集合]
+    言語$L_1,L_2\subset\Sigma^*$に対して，$L_1$が正則ならば，次も正則である：
+    \[ L_1/ L_2:=\{x\mid\exists y\in L_2,\;xy\in L_1\}. \]
+\end{theorem}
+
+\begin{theorem}
+    $L\subset\Sigma^*$は正則の時，次も正則である：
+    \[ C(L):=\{xy\mid x,y\in\Sigma^*,yx\in L\} \]
+\end{theorem}
+
+\subsection{射による正則言語の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    言語の空間に定義されるモノイドの射$h:\Sigma^*\to\Gamma^*$によって，正則言語が写り合う構造が素晴らしい．
+\end{tcolorbox}
+
+\begin{definition}[モノイドの射]
+    アルファベット$\Sigma,\Gamma$に対して，写像$h:\Sigma^*\to\Gamma^*$が次の条件を満たす時，\textbf{準同型}という：
+    \begin{enumerate}
+        \item $h(\epsilon)=\epsilon$．
+        \item $\forall u,v\in\Sigma^*,\;h(uv)=h(u)h(v)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[モノイドの基底]
+    $f,g:\Sigma^*\to\Gamma^*$を準同型とする．$(\forall a\in\Sigma,\;f(a)=g(a))\rightarrow f=g$．
+\end{proposition}
+
+\begin{theorem}
+    $\Sigma,\Gamma$をアルファベットとし，$L\subset\Sigma^*,L'\subset\Gamma^*$を正則言語とする．
+    準同型$h:\Sigma^*\to\Gamma^*$に対して，次が成り立つ：
+    \begin{enumerate}
+        \item 像$h(L)$は正則．
+        \item 逆像$h^{-1}(L')$は正則．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}[shuffle]
+    正則集合$L_1,L_2\subset\Sigma^*$に対して，次の集合も正則：
+    \[ L_1\lor L_2=\{u_1v_1\cdots u_nv_n\mid u_1,\cdots,u_n\in L_1,v_1,\cdots,v_n\in L_2, u_i,v_i\in\Sigma^*\}. \]
+\end{proposition}
+
+\section{ブール行列による有限オートマトンの表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=算譜に特性関数のアイデアが使えるので，NFAはBool行列のデータ構造に翻訳できる]
+    再び正則表現とは別の代数的表現を思いついた！
+    有限オートマトンを計算機上にコードし模倣するための準備として，ブール行列での表現を考える．
+    
+    確かに正則言語の構造は，自由モノイドの上に建設されて極めて代数的であった．
+    環の射っぽくもあった．
+
+    こうしてさらに，正則言語$L$は写像$L'$，$\sqrt{L}$について閉じていることがわかった．
+\end{tcolorbox}
+
+\begin{definition}[Boolean algebra]
+    次のように定義された代数系$(2,+,\cdot)$を\textbf{ブール代数}という．
+    \begin{align*}
+        0+0&=0,&1+0=0+1=1+1&=1,\\
+        0\cdot 0=0\cdot 1=1\cdot 0&=0,&1\cdot 1&=1.
+    \end{align*}
+\end{definition}
+
+\begin{proposition}
+    $(2,+,\cdot)$をブール代数とする．
+    \begin{enumerate}
+    \item $+$について，吸収的な加法群である．
+    \begin{enumerate}[(1)]
+        \item $x+0=0+x=x$．
+        \item $x+(y+z)=(x+y)+z$．
+        \item $x+y=y+x$．
+        \item $x+x=x$．
+    \end{enumerate}
+    \item $\cdot$についても，吸収的な加法群である．
+    \begin{enumerate}[(1)]\setcounter{enumii}{4}
+        \item $1\cdot x=x\cdot 1=x$．
+        \item $x\cdot(y\cdot z)=(x\cdot y)\cdot z$．
+        \item $x\cdot y=y\cdot x$．
+        \item $x\cdot x=x$．
+    \end{enumerate}
+    \item ２つの演算について，分配則が成り立つ．
+    \begin{enumerate}[(1)]\setcounter{enumii}{8}
+        \item $x\cdot(y+z)=x\cdot y+x\cdot z$．
+    \end{enumerate}
+    \end{enumerate}
+\end{proposition}
+
+\subsection{ブール行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    NFAとは，$\Delta:\Sigma\to\Map(Q\times Q,2)$で表せる．ある文字$a\in\Sigma$に対して，$\Delta^a:=((p,a,q)\in\delta)_{p,q\in Q}$の真理値を集めた行列として表現できる．
+    これはグラフ理論でも用いられる手法だろう．平面的で圏的ならば，二方向的なので，行列としての二次元表現を持つ．
+\end{tcolorbox}
+
+\begin{definition}[Boolean matrix]
+    有限の状態集合$Q$に対して，\textbf{$Q\times Q$ブール行列}$M$とは，写像$M:Q\times Q\to 2$のことである．
+    行列積は，Bool代数の和と積について行う．$1\times Q$行列のことを\textbf{ブールベクトル}という．
+\end{definition}
+
+\begin{definition}[Bool行列によるNFAの表現$\Delta$]
+    非決定性有限オートマトン$M=(Q,\Sigma,\delta,q_0,F)$にBool行列の集合を対応させる写像
+    \[ \xymatrix@R-2pc{
+        \Delta:\Sigma\ar[r]&\Map(Q\times Q,2)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        a\ar@{|->}[r]&\Delta_a
+    } \]
+    を，$\Delta_a$を$\delta$の特性関数$\Delta_a(p,q)=1:\Leftrightarrow (p,a,q)\in\delta$とする．
+
+    $\Delta$の指数表記を
+    \begin{enumerate}
+        \item $x=a_1\cdots a_n$の時，$\Delta^x=\Delta^{a_1}\cdots\Delta^{a_n}$とし，
+        \item $\Delta^\epsilon=E$（単位行列）
+    \end{enumerate}
+    とする．
+\end{definition}
+
+\begin{proposition}
+    記号列$x=a_1\cdots a_n$と状態$p,q\in Q$について，次の２条件は同値である．
+    \begin{enumerate}
+        \item $\Delta^x(p,q)=1$．
+        \item $M$に於ける状態遷移の列$p\xrightarrow{a_1}p_1\cdots  p_{n-1}\xrightarrow{a_n}p_n$が存在する．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $x\in\Sigma^*$について，次の２条件は同値である．
+    \begin{enumerate}
+        \item $\sum_{q\in F}\Delta^x(q_0,q)=1$．
+        \item $x$は$M$によって受理される．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{Bool行列の応用}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    NFAの受理を，行列とその積のデータ構造に落とし込めた．
+    こんな途方もないデータ構造を作ると，見えてくる証明がある．
+\end{tcolorbox}
+
+\begin{notation}
+    状態の部分集合$S\subset Q$に対して，$Q$ブール列ベクトル$I_S$を特性関数$I_S(p)=1:\Leftrightarrow p\in S$で定める．また，$p\in Q$については$I_{\{p\}}$を$I_p$と略記する．
+\end{notation}
+
+\begin{corollary}
+    非決定性有限オートマトン$M=(Q,\Sigma,\delta,q_0,F)$について，
+    \[ L(M)=\{x\in\Sigma^*\mid I_{q_0}\Delta^xI^t_F=1\} \]
+\end{corollary}
+\begin{proof}
+    $I_{q_0}\Delta^x{}^t\!I_F=1$は，$\Delta^x{}^t\!I_F$の部分で，
+    各$q\in Q$から$x$を読み込むことで終了状態への遷移が可能かを格納した縦Boolベクトルを得る．
+    これと$I_{q_0}$はある一つの要素のみが$1$であるベクトルであるが，このfilterを潜り抜けて$1$が通るかどうかが判定条件となり，
+    これは受理計算が存在することに同値．
+\end{proof}
+
+\begin{theorem}
+    $L\subset\Sigma^*$を正則言語とする．次のように定義される言語$L'$も正則である．
+    \[L':=\{x\in\Sigma^*\mid |x|=|y|であるy\in\Sigma^*が存在してxy\in L\}.\]
+\end{theorem}
+\begin{proof}
+    $L$を受理するDFA $M=(Q,\Sigma,\delta,q_0,F)$に対して，
+    $\M(Q):=\Map(Q\times Q,2)$を$Q\times Q$-Bool行列全体からなる集合とする．
+    次のようなDFA $M':=(Q',\Sigma,\delta',q'_0,F')$を考える．
+    \begin{enumerate}
+        \item $Q':=Q\times\M(Q)$．現在状態と，$Q$上のあり得る$\Sigma$上のNFA $\delta$の組全体からなる集合．
+        \item $q'_0:=(q_0,I)$．$M$の開始状態と，$Q$上の離散的な$\emptyset$を受理言語とするNFAの組．
+        \item $\delta'((p,A),a):=(\delta(p,a),A\Delta)$．ただし，$\Delta:=\sum_{b\in\Sigma}\Delta^b$を論理和とする．$A\Delta$は，Bool行列$A$で定義されるDFAについて，遷移が存在するかと遷移できるかで論理積をとっていることに当たる．
+        \item $F':=\{(p,A)\in Q\times\M(Q)\mid I_pA{}^t\!I_F=1\}$．現在状態を$p\in Q$として，$A$が定める$Q$上の遷移のあり方で，受理状態までの受理計算があるかを判定している．
+    \end{enumerate}
+    さて，このDFA $M'$に対して$x=a_1\cdots a_n\in L(M')$とは，
+    \begin{align*}
+        \delta'^*(q'_0,x)&=\delta'^*((q,I),a_1\cdots a_n)\\
+        &=\delta'^*(\delta'((q_0,I),a_1),a_2\cdots a_n)&一文字受理した\\
+        &=\delta'^*((\delta(q_0,a_1),I\Delta),a_2\cdots a_n)&ルール3より\\
+        &=\delta'^*((\delta^*(q_0,a_1a_2),I\Delta\Delta),a_3\cdots a_n)&同じ\\
+        &\hphantom{===}\vdots\\
+        &=(\delta^*(q_0,a_1\cdots a_n),\Delta^n)\in F'
+    \end{align*}
+    即ち，$I_{\delta^*(q_0,x)}\Delta^n{}^tI_F=1$に同値であるが，これはDFA $M$において，状態$\delta^*(q_0,x)\in Q$から長さ$n$の$\Delta^n$で表される或る記号列$y$によって\footnote{$\Delta^n$のデコードができないが？$y$は同じ文字の$n$連続ってことか？}，
+    $M$の受理状態に到達できることを表している：$xy\in L$．
+    従って，$L(M')=L'$．
+\end{proof}
+\begin{remarks}
+    あまりにも謎である．Bool行列のデータ構造があってこそできる芸当なのだろうが，
+    全く全体像が抽象度が高くて掴めない．
+\end{remarks}
+
+\begin{theorem}
+    $L\subset\Sigma^*$を正則言語とする．次のように定義される言語$\sqrt{L}$も正則である．
+    \[\sqrt{L}:=\{x\in\Sigma^*\mid xx\in L\}.\]
+\end{theorem}
+
+\section{最小オートマトンについての理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    有限オートマトンのクラスの中で，状態数が一番少ないもの（Aut内で同型を除いて一意に定まる）を構成する算譜を
+    $M_L,M'_L,M^\mu$の３通りで与える．
+\end{tcolorbox}
+
+\begin{example}
+    例えば、3で割り切れる2進数からなる言語は正規言語である。3で割ったときの余りは、0、1、2 の 3種類あるので、3つの同値類が存在する。従って、その言語を受容する最小オートマトンは、それぞれの同値類に対応した3つの状態を持つことになる。
+\end{example}
+
+\subsection{Myhill-Nerodeの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    University of ChicagoのJohn MyhillとAnil Nerodeが示した，正則言語の特徴付け．\cite{Nerode}
+    そして$R_L$の指標と，あるオートマトンの同型類の最小状態数とが一致する．
+    よく「右不変な同値関係」に注目せよ，と気づいたよな．
+\end{tcolorbox}
+
+\begin{definition}[index]
+    同値類の濃度をその\textbf{指標}という．
+\end{definition}
+
+\begin{definition}[right-invariant]
+    集合$\Sigma^*$上の同値関係$R$が次を満たす時，\textbf{右不変}であるという：
+    \[ xRy\Rightarrow (\forall z\in\Sigma^*,\;xzRyz). \]
+\end{definition}
+
+\begin{definition}
+    言語$L\subset\Sigma^*$が定める同値関係$R_L\subset\Sigma^*\times\Sigma^*$を
+    \[ xR_Ly:\Leftrightarrow (\forall z\in\Sigma^*\;xz\in L\leftrightarrow yz\in L) \]
+    とし，$x\in\Sigma^*$の同値類を$[x]_L$で表す．
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $R_L$は確かに同値関係である．
+        \item $R_L$は右不変である：
+        \[ [x]_L=[y]_L\Rightarrow (\forall z\in\Sigma^*\;[xz]_L=[yz]_L). \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}\label{prop-construction-of-minimal-automaton}
+    言語$L$に対して，次のように構成される決定性オートマトンは$L$を受理する．
+    \begin{enumerate}
+        \item $Q_L=\{[x]_L\mid x\in\Sigma^*\}$．
+        \item $\delta_L([x]_L,a)=[xa]_L\;(x\in\Sigma^*,a\in\Sigma)$．
+        \item $q_0^L=[\epsilon]_L$．
+        \item $F_L=\{[x]_L\mid x\in L\}$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Myhill-Nerode]
+    言語$L\subset\Sigma^*$について，次の３条件は同値である．
+    \begin{enumerate}
+        \item $L$は正則．
+        \item 有限指標で右不変な同値関係$R$が存在して，$L$はその同値類に直和分割される．
+        \item $R_L$は有限指標である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    言語$L\subset\Sigma^*$が命題\ref{prop-construction-of-minimal-automaton}で定める決定性オートマトンを$M_L=(Q_L,\Sigma,\delta_L,q_0^L,F_L)$とする．
+    決定性オートマトン$M=(Q,\Sigma,\delta,q_0,F)$も$L$を受理するならば，全射$\varphi:Q\to Q_L$が存在する．
+\end{theorem}
+
+\begin{corollary}
+    $M_L$は$L$を受理する状態数が最小の決定性オートマトンである．
+\end{corollary}
+
+\subsection{決定性オートマトンの圏}
+
+
+
+\begin{proposition}
+    決定性オートマトン$M_1=(Q_1,\Sigma,\delta_1,q_1,F_1)$が$M_2=(Q_2,\Sigma,\delta_2,q_2,F_2)$を模倣するとする．
+    $L(M_1)=L(M_2)$である．
+\end{proposition}
+
+\begin{definition}[isomorphism]
+    決定性オートマトンの射$\varphi:M_1\to M_2$が，全単射で，1,2の代わりに次の２条件を満たす時，\textbf{同型}という．
+    \begin{enumerate}
+        \item $\varphi(q_1)=q_2$．
+        \item $\varphi(F_1)=F_2$．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[最小オートマトンの同型を除いた一意性]
+    正則言語$L$について，$L$を受理する状態数が最小の有限性決定オートマトンは同型を除いて一意に定まる．
+\end{theorem}
+
+\subsection{別構成}
+
+\begin{definition}
+    言語$L\subset\Sigma^*$と$x\in\Sigma^*$に対して，言語$x\setminus L$を次のように定める：
+    \[ x\setminus L:=\{y\mid xy\in L\}. \]
+\end{definition}
+
+\begin{proposition}
+    言語$L\subset\Sigma^*$について，次の２条件は同値である．
+    \begin{enumerate}
+        \item $xR_Ly$．
+        \item $x\setminus L=y\setminus L$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    言語$L$が定める最小オートマトンを$M_L=(Q_L,\Sigma,\delta_L,q_0^L,F_L)$（命題\ref{prop-construction-of-minimal-automaton}）とする．
+    これは次のオートマトン$M'_L=(Q'_L,\Sigma,\delta'_L,q_0'^L,F'_L)$と同型である．
+    \begin{enumerate}
+        \item $Q'_L=\{x\setminus L\mid x\in\Sigma^*\}$．
+        \item $\delta'_L(X,a)=a\setminus X\;(a\in\Sigma,X\in Q'_L)$．
+        \item $q_0'^L=L$．
+        \item $F'_L=\{X\in Q'_L\mid \epsilon\in X\}$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{状態数の最小化}
+
+\begin{screen}
+    状態に同値関係を導入して，割ることを考える．
+\end{screen}
+
+\begin{definition}[equivalent, distinguishable]
+    $M=(Q,\Sigma,\delta,q_0,F)$をDFAとする．
+    \begin{enumerate}
+        \item $p,q\in Q$が\textbf{同値}であるとは，$p\equiv_Mq:\Leftrightarrow \forall z\in\Sigma^*\;\delta^*(p,z)\in F\leftrightarrow \delta^*(q,z)\in F$．
+        \item $p\not\equiv_Mq$であることを，\textbf{区別可能}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $M=(Q,\Sigma,\delta,q_0,F)$を全ての状態が初期状態から到達可能なDFAとする．
+    この時，次のように構成されるDFA $M^\mu$は$M_L$と同型である．
+    \begin{enumerate}
+        \item $Q^\mu=\{[q]_{\equiv_M}\mid q\in Q\}$．
+        \item $\delta^\mu([q]_{\equiv_M},a)=[\delta(q,a)]_{\equiv_M}\;([q]_{\equiv_M}\in Q^\mu,a\in\Sigma)$．
+        \item $q_0^\mu=[q_0]_{\equiv_M}$．
+        \item $F^\mu=\{[q]_{\equiv_M}\mid q\in F\}$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    $M=(Q,\Sigma,\delta,q_0,F)$をDFAとする．
+    任意の$p\in F$と任意の$q\in Q\setminus F$に対して，$p,q$は区別可能である．
+\end{proposition}
+
+\section{その他の有限状態機械}\label{sec-transducer}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=オートマトンの変遷]
+    有限オートマトンの拡張として，様々な有限状態機械を考える．
+
+    DFAでは退化していた出力の概念を分離して取り出す．
+    出力アルファベット$\Delta$と出力関数$\gamma:Q\times\Sigma\to\Delta$の追加は等価な抽象機械を定義し，
+    これを順序機械（過去の入力を記憶しているという意味で）という．変換器(transducer)ともいう．
+    これには出力の仕方について２種類存在し，
+    \begin{enumerate}
+        \item 状態と出力が対応するものをMoore機械\cite{Moore}，
+        \item 遷移（＝状態と入力の組）と出力が対応するものをMealy機械\cite{Mealy}
+    \end{enumerate}
+    という．MooreはMealyが退化した形とみなせる．
+    論理回路（フリップフロップなど）が順序機械の例である．
+    機能としては全く等価である（還元算譜が存在する）．
+\end{tcolorbox}
+
+\subsection{順序機械}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=transducerの応用]
+    記号列を記号列に出力する問題$\Sigma^*\rightarrow\Sigma^*$への算譜となるのが順序機械である．
+    \begin{itemize}
+        \item 音声認識，音声合成：音＝音素列$\rightarrow$単語列．
+        \item かな漢字変換，読み推定：かな漢字列$\leftrightarrow$かな列．
+        \item 形態素解析：文字列$\rightarrow$単語列．
+        \item 機械翻訳：単語列$\leftrightarrow$単語列．
+        \item 固有表現認識：単語列$\rightarrow$固有表現列．
+        \item 文法誤り訂正：単語列$\rightarrow$単語列．
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{example}
+    vending machineはとても良い有限状態機械の例である．
+\end{example}
+
+\begin{definition}[sequential machine, transducer (Mealy)]
+    次の５条件を満たす6-組$S=(Q,\Sigma,\Delta,\delta,\gamma,q_0)$を\textbf{順序機械}または\textbf{変換器}という．
+    \begin{enumerate}
+        \item $Q$は有限集合で，$q_0\in Q$は初期状態．
+        \item $\Sigma$は入力アルファベット．
+        \item $\Delta$は出力アルファベット．
+        \item $\delta:Q\times\Sigma\to Q$は状態遷移関数．
+        \item $\gamma:Q\times\Sigma\to\Delta$は出力関数．
+    \end{enumerate}
+    $(q,a)\in Q\times\Sigma$に対して$\delta(q,a)=p,\gamma(q,a)=b$であることを，$q\xrightarrow{a/b}p$と書く．
+\end{definition}
+
+\begin{definition}[順序機械が計算する関数]
+    順序機械$S$が関数$r_S:\Sigma^*\to\Delta^*$を\textbf{計算する}とは，
+    入力$a_1\cdots a_n\in\Sigma^*$に対して，
+    \[q_0\xrightarrow{a_1/b_1}q_1\cdots q_{n-1}\xrightarrow{a_n/b_n}q_n\]
+    となる時，記号列$b_1\cdots b_n\in\Delta^*$を\textbf{出力}といい，$r_S(a_1\cdots a_n)=b_1\cdots b_n$であることとする．
+    なお，$r_S(\epsilon)=\epsilon$とする．
+\end{definition}
+
+\begin{example}[加算器：Mealy機械ではcarryに依って状態は２つ用意すれば十分]
+    \begin{align*}
+        \Sigma&=\{a_{00},a_{01},a_{10},a_{11}\},&\Delta&=\{0,1\}.
+    \end{align*}
+    とし，２つの二進数$x_{n-1}\cdots x_1x_0,y_{n-1}\cdots y_1y_0\in\{0,1\}^*$
+    を加える論理回路を設計したい．
+    記号列$a_{x_0y_0}a_{x_1y_1}\cdots a_{x_{n-1}y_{n-1}}$を次の順序機械に入力すれば良い．
+    なお，出力を$b_nb_{n-1}\cdots b_1b_0$とすれば，最終状態が$q_0$の時繰り上がりはないので$b_n=0$，最終状態が$q_1$の時$b_n=1$と$\gamma$を定める．
+    \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+        \node[state,initial]   (q_0)        {$q_0$};
+        \node[state]           (q_1) [right=of q_0]        {$q_1$};
+        \path[->] (q_0) edge [bend left]    node [above] {$a_{11}/0$} (q_1)
+                        edge [loop above]   node [above] {$a_{00}/0,a_{01}/1,a_{10}/1$} ()
+                  (q_1) edge [bend left]    node [below] {$a_{00}/1$} (q_0)
+                        edge [loop below]   node [below] {$a_{01}/0,a_{10}/0,a_{11}/1$} ();
+    \end{tikzpicture}\end{center}
+\end{example}
+
+\begin{proposition}[Moore機械とMealy機械の等価性]
+    出力関数が$\gamma:Q\to\Delta$に退化した，即ち各状態$q_1$に対して出力$q_1/1$が決まっている機械をMealy機械をMoore機械という．
+    Moore記号の方が記号を多く出すが，実質的には等価である．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[Moore$\Rightarrow$Mealy] 遷移先の状態に対応した出力を，遷移に対して定義する．即ち，Moore機械の出力関数を$\gamma:Q\to\Delta$とし，遷移関数を$\delta:Q\times\Sigma\to Q$すると，Mealy機械の出力関数$\gamma':Q\times\Sigma\to\Delta$は，$\gamma'(q_1,a)=\gamma(\delta(q_1,a))$とすれば良い．
+        \item[Mealy$\Rightarrow$Moore] 出力文字$\Delta$に応じて，状態数をふやす．Mealy機械を$M=(Q,\Sigma,\Delta,\delta,\gamma,q_0)$とすると，新たに$Q'=\{q/a\}_{q\in Q,a\in\Delta}$とする．遷移$\delta',\gamma'$をこれに従って定めると良い．
+    \end{description}
+\end{proof}
+
+\subsection{一般化順序機械が定める関数とモノイドの射}
+
+\begin{definition}[generalized sequential machine]
+    順序機械$S=(Q,\Sigma,\Delta,\delta,\gamma,q_0)$の出力関数の値が文字ではなく文字列である時，
+    出力関数は$\gamma:Q\times\Sigma\to\Delta^*$，これを\textbf{一般化順序機械}という．
+\end{definition}
+
+\begin{theorem}[一般化順序機械が計算する関数は正則構造を保つ]
+    $\Sigma,\Delta$をアルファベットとする．$L\subset\Sigma^*$及び$L'\subset\Delta^*$を正則言語とする．
+    一般化順序機械$S=(Q,\Sigma,\Delta,\delta,\gamma,q_0)$が計算する関数$r_S:\Sigma^*\to\Delta^*$について，次が成り立つ．
+    \begin{enumerate}
+        \item $r_S(L)$は正則．
+        \item $r_S^{-1}(L')$は正則．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    モノイド準同型$h:\Sigma^*\to\Delta^*$は一般化順序機械によって計算できる．
+\end{proposition}
+
+\subsection{隠れマルコフモデル}
+
+確率モデルと有限オートマトンを組み合わせたようなもの．\footnote{3A知能システム論．}
+状態遷移に，確率と考えられる重みをつけたもの．
+そしてスコアが最大になるものを探す．
+
+\subsection{$\omega$-オートマトン}
+
+可算濃度の$\omega$である．
+無限長の文字列を受理するオートマトンで，
+Büchi automatonやRabin automatonなどがあり，
+動き続けるシステムのモデルとなる．
+特に形式手法・形式モデルの分野で
+システムのモデルとして考えられる．
+
+\section{有限オートマトンについてのアルゴリズム}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    
+\end{tcolorbox}
+
+\chapter{文脈自由文法とプッシュダウンオートマトンの理論}
+
+\begin{quotation}
+    一段階議論の抽象度をあげる．
+    \begin{enumerate}
+        \item 文脈自由言語を，文法が生成するものとして定義し，文法を研究対象とする．文法が対象言語で，これに対してメタ言語で生成関係$\Rightarrow$を定義して研究する．$V$が状態の集合，$T$がアルファベット，$P$が遷移規則の一般化と見れる（遷移規則は正則文法として相対化される）．
+        \item 文法$G$の標準形を目指して，３段階に分けて簡素化のアイデアを考える．
+        \item 空語を省いた標準形である\textbf{Chomsky標準形}に到達する．これは特に生成規則を理解しやすい標準形である．実際，構文木が二分木になる為，二分木化(binarization)と呼ばれる．
+        \item 文脈自由言語には，鳩の巣原理により生じる大域的な繰り返し模様がある．これを文脈自由言語の必要条件として捉えたのがOgdenの補題，またはその特殊化である反復補題である．
+        \item 所属問題は構文木の存在問題である．chartというデータ構造の上に構文木の構成を試みる手法は些かJordan標準形に似ている．コンパイラでは使われない計算量だが，文脈自由言語全般につけるため自然言語処理でも使える動的計画法であるCYKアルゴリズムを与える．
+        \item 正則言語の文脈自由言語のクラスとしての特徴付け：正則文法を与え，文脈自由言語の真のクラスであることを見る．
+        \item 文脈自由言語のクラスにふさわしい抽象機械が，プッシュダウンオートマトンである．これを与えるのがGreibach標準形の理論である．
+        \item 以降の計算可能な言語の階層分けの世界観として，Chomsky階層がある．
+    \end{enumerate}
+\end{quotation}
+
+\section{定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    文脈自由文法$G$は，生成する記号列$T^*$を定める．これを文脈自由言語といい，生成途中の$T^*\setminus(V\cup T)^*$の元を文形式という．
+    正則言語論でいうアルファベット$\Sigma$とは，終端記号$T$として相対化されたことになる．
+\end{tcolorbox}
+
+\begin{definition}[context-free grammar, variable / non-terminal, terminal (symbol), production, start symbol]
+    \textbf{文脈自由言語}とは，次の条件を満たす４つ組$G=(V,T,P,S)$のことをいう．
+    \begin{itemize}
+        \item $V$は\textbf{変数}（\textbf{非終端記号}）からなる有限集合，
+        \item $T$は\textbf{終端記号}からなる有限集合で，$V$と交わらない，
+        \item $P$は\textbf{生成規則}
+        \[\xymatrix@R-2pc{
+            V\ar[r]&(V\cup T)^*\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            A\ar@{|->}[r]&\alpha
+        }\]
+        からなる有限集合
+        \item $S\in V$は\textbf{開始記号}．
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[derivation]
+    文脈自由文法$G=(V,T,P,S)$について，記号列を$\alpha_1,\cdots,\alpha_m\in(V\cup T)^*$とする．
+    \begin{enumerate}
+        \item \textbf{直接的に導出される}とは，次の二項関係$\Rightarrow_G$をいう：
+        \[\alpha_1\Rightarrow_G\alpha_2\quad:\Leftrightarrow\quad\exists A\in V,\;\exists\alpha\in(V\cup T)^*,\;[((A,\alpha)\in P)\land (\exists \beta_1,\gamma_1\in(V\cup T)^*,\;\alpha_1=\beta_1A\gamma_1,\alpha_2=\beta_1\alpha\gamma_1)]\]
+        \item \textbf{導出される}とは，二項関係$\Rightarrow_G$の反射的推移閉包$\Rightarrow^*_G$のことをいい，この時の$\Rightarrow_G$の列のことを\textbf{導出}という．
+        \item どの文脈自由文法$G$の下で議論しているかが明白である場合，下付き文字を落として$\Rightarrow,\Rightarrow^*$などと表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[context-free language, sentential form]
+    文脈自由文法$G$が\textbf{生成する言語}$L(G)$とは，記号列の集合
+    \[L(G):=\{w\in T^*\mid S\Rightarrow^*_Gw\}\]
+    のことをいう．
+    \begin{itemize}
+        \item 関係$w\in L(G)$を$G$は$w$を\textbf{生成する}という．
+        \item このようにして文脈自由文法が定める言語を\textbf{文脈自由言語}という．
+        \item 記号列$\alpha\in(V\cup T)^*$であって，$S\Rightarrow^*_G\alpha$を満たすものは，\textbf{文形式}という．
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+        $G=(V,T,P,S)$を次のように定める：
+        \begin{itemize}
+            \item $V=\{S\}$，
+            \item $T=\{a,b\}$，
+            \item $P=\{(S,aSb),(S,ab)\}$．
+        \end{itemize}
+    が生成する文脈自由言語は，$L(G)=\{a^nb^n\mid n\in\N\setminus\{0\}\}$．
+\end{example}
+
+\begin{example}
+    $G=(V,T,P,S)$を次のように定める：
+        \begin{itemize}
+            \item $V=\{S,A\}$，
+            \item $T=\{a,b\}$，
+            \item $P=\left\{\begin{array}{l}
+                (S,aB),(S,bA),\\
+                (A,a),(A,aS),(A,bAA),\\
+                (B,b),(B,bS),(B,aBB)
+            \end{array}\right\}$．
+        \end{itemize}
+    これが定める文脈自由文法は$L(G)=\{w\in\{a,b\}^+\mid wに現れるa,bの数は等しい\}$である．
+    $\subset$はすぐに従う．$\supset$も$ab,ba\in L(G)$から帰納的にわかる．
+\end{example}
+
+\begin{example}[正則表現]
+    アルファベット$\{a,b\}$上の正則表現とは，次の文脈自由言語である：
+    \begin{itemize}
+        \item $V=\{E\}$，
+        \item $T=\{a,b,(,),*,\cdot,+,\emptyset\}$，
+        \item $P=\{E\rightarrow\mathtt{a}\mid\mathtt{b}\mid\emptyset\mid(E+E)\mid(E\cdot E)\mid(E^*)\}$．
+    \end{itemize}
+\end{example}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $S\rightarrow aSa\mid bSb\mid aa\mid bb$は$\{ww^R\mid w\in\{a,b\}^+\}$を生成する．
+        \item $S\rightarrow aB\mid bbA,\;A\rightarrow a\mid aS\mid bbAA,\;B\rightarrow bb\mid bbS\mid aBB$は$\{w\in\{a,b\}^+\mid wに出現するbの個数はaの２倍\}$を生成する．
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}[文脈自由言語の閉包属性]\label{prop-closure-properties-of-CFL}
+    文脈自由言語$L_1,L_2$に対して，次の集合$L$も文脈自由言語である．即ち，$\exists G:文脈自由文法,\;L=L(G)$．
+    \begin{enumerate}
+        \item $L_1\cup L_2$
+        \item $L_1\cdot L_2$
+        \item $L_1^*$
+        \item $L_1^R$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}$L_1,L_2$を生成する文脈自由文法をそれぞれ$G_1=(V_1,T_1,P_1,S_1),G_2=(V_2,T_2,P_2,S_2)$とする．
+    $V_1\cap V_2=\emptyset$としても一般性は失われない．$G=(V,T,P,S)$を次のように定めれば良い．
+    まず，$S\notin V_1,S\notin V_2$とし，$V=V_1\cup V_2\cup\{S\}$，$T=T_1\cup T_2$とする．
+    \begin{enumerate}
+        \item $P=P_1\cup P_2\cup\{(S,S_1),(S,S_2)\}$とすれば良い．
+        \item $P=P_1\cup P_2\cup\{(S,S_1S_2)\}$とすれば良い．
+        \item $P=P_1\cup P_2\cup\{(S,S_1S_1)\}$とすれば良い．
+        \item 次の写像の値域を$P$とすれば良い：
+        \[\xymatrix@R-2pc{
+            P_1\cup P_2\ar[r]&V\times (V\cup T)^*\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            (A,\alpha)\ar@{|->}[r]&(A,\alpha^R).
+        }\]
+    \end{enumerate}
+\end{proof}
+\begin{proposition}
+    $L_1\cap L_2$は文脈自由言語とは限らない．
+\end{proposition}
+\begin{proof}
+    $V=\{S,L,R\},T=\{a,b,c\}$とする．
+    \begin{align*}
+        P_1&:=\left\{\begin{array}{l}
+        S\to LR,\\
+        L\to abL\mid ab,\\
+        R\to Rc\mid c
+        \end{array}\right\},&P_2&:=\left\{\begin{array}{l}
+            S\to LR,\\
+            L\to aL\mid a,\\
+            R\to Rbc\mid bc
+            \end{array}\right\},
+    \end{align*}
+    と定める．文脈自由文法を$G_1:=(V,T,P_1,S),G_2:=(V,T,P_2,S)$とし，文脈自由言語を$L_1:=L(G_1),L_2:=L(G_2)$とすると，
+    \begin{align*}
+        L_1&=\{a^nb^nc^m\mid n,m\ge 1\},&L_2&=\{a^nb^mc^m\mid n,m\ge 1\},
+    \end{align*}
+    となる．$L:=L_1\cap L_2=\{a^nb^nc^n\mid n\ge 1\}$を考えると，これは文脈自由言語ではない（系\ref{cor-counterexamples-of-CFL}）．
+\end{proof}
+
+\begin{screen}
+    文脈自由文法は言語を定義するための形式的手段だと理解した．
+    そして手段であるだけでなく，形式科学的対象でもあるところが，極めて素性が良い研究対象となる所以なのであろう．
+\end{screen}
+
+\subsection{導出の木構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    直接導出関係$\Rightarrow_G$の推移閉包は，木構造を持つ．
+    先生は，弁慶読みの例をあげ，意味論が宿るのは木構造分解においてだと論ずる．
+    \begin{quote}
+        文は，それが文法からどのように導出されたかによって意味をもつ．そこで，その導出をわかりやすく表すために木構造で表現することを考える．
+    \end{quote}
+    そこで，構文木の存在性で捉える．分解の順番は関与しないが，本質的な差には関与するので，
+    存在しえる構文木の数で意味の\textbf{曖昧さ}を定義する．
+\end{tcolorbox}
+
+\begin{definition}[derivation tree / parse tree]
+    文脈自由文法$G=(V,T,P,S)$が定める\textbf{導出木}または\textbf{構文木}とは，次を満たす木をいう：
+    \begin{enumerate}
+        \item $V\cup T\cup\{\epsilon\}$でラベル付された節をもち，
+        \item ただし内部ノード（葉でないノード）のラベルは$V$の元で，
+        \item $S$を根とし，
+        \item 内部ノード$v$のラベル$A$とその子$v_1,\cdots,v_k$のラベルの列$X_1\cdots X_k$に対して$A\rightarrow X_1\cdots X_k\in P$で，
+        \item ノード$v$のラベルが$\epsilon$である場合は，ノード$v$が葉で，$v$は親ノードの唯一の子である場合に限る．
+    \end{enumerate}
+    導出木の葉のラベルを左からつなげて$\alpha\in (V\cup T)^*$となる場合，これを$\alpha$を生む(yield) $G$-構文木という．
+\end{definition}
+
+\begin{theorem}[導出関係の木構造による定式化]
+    文脈自由文法$G=(V,T,P,S)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $S\rightarrow^*\alpha$
+        \item $\alpha$を生む$G$の構文木が存在する
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    $S\rightarrow^*\alpha$と構文木を一対一対応させる
+    帰納法による．
+\end{proof}
+\begin{remarks}
+    木構造は導出経路を捉えないので，この定式化を一番安定的に提供するデータ構造となっている．
+    木構造は射$\alpha_1\to\alpha_m$に対応するのであって，
+    例えば，最右導出と最左導出などの分解の仕方（特に順番）には関与しないことが多い．
+    これを使って概念を定義する．
+\end{remarks}
+
+\begin{definition}[leftmost derivation, rightmost derivation]
+    導出$\alpha_1\Rightarrow\cdots\Rightarrow\alpha_m$であって，各$\alpha_i\Rightarrow\alpha_{i+1}\;(i=1,\cdots,m-1)$
+    について一番左端の\underline{変数}が変化している時，これを\textbf{最左導出}という．同様に\textbf{最右導出}も定義する．
+\end{definition}
+
+\begin{definition}[ambiguous, inherently ambiguous]\mbox{}
+    \begin{enumerate}
+        \item 文脈自由文法$G=(V,T,P,S)$について，記号列$w\in T^*$が存在して，これを生み出す異なる$G$-構文木が２つ以上存在する時，$G$は\textbf{曖昧}であるという．
+        \item 文脈自由言語$L$について，これを生成する文脈自由文法$G$が常に曖昧である時，$L$は\textbf{本質的に曖昧}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    次の文脈自由文法$V=\{S\},T=\{a,b\}$は曖昧である．
+    \begin{enumerate}
+        \item $S\to aSb\mid abS\mid\epsilon$．
+        \item $S\to aSbS\mid bSaS\mid \epsilon$．
+    \end{enumerate}
+    $ab\in T^*$について，次の２つの構文木が存在するからである：
+    \[\xymatrix{
+        &S\ar@{-}[d]\ar@{-}[dl]\ar@{-}[dr]&&&S\ar@{-}[d]\ar@{-}[dl]\ar@{-}[dr]\\
+        a&S\ar@{-}[d]&b&a&b&S\ar@{-}[d]\\
+        &\epsilon&&&&\epsilon
+    }\]
+    $abab\in T^*$について，次の２つの構文木が存在するからである：
+    \[\xymatrix{
+        &&S\ar@{-}[dl]\ar@{-}[d]\ar@{-}[dr]\ar@{-}[drr]&&&&S\ar@{-}[dl]\ar@{-}[d]\ar@{-}[dr]\ar@{-}[drr]\\
+        &a&S\ar@{-}[dl]\ar@{-}[d]\ar@{-}[dr]\ar@{-}[dll]&b&S&a&S&b&S\ar@{-}[dl]\ar@{-}[d]\ar@{-}[dr]\ar@{-}[drr]\\
+        b&S\ar@{-}[d]&a&S\ar@{-}[d]&&&&a&S\ar@{-}[d]&b&S\ar@{-}[d]\\
+        &\epsilon&&\epsilon&&&&&\epsilon&&\epsilon
+    }\]
+\end{example}
+
+\begin{theorem}
+    言語
+    \[L=\{a^nb^nc^md^m\mid n,m\ge 1\}\cup\{a^nb^mc^md^n\mid n,m\ge 1\}\]
+    は本質的に曖昧である．
+\end{theorem}
+
+\section{文法の簡素化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=無駄な記号がなく，空語生成規則と単一生成規則を持たない文脈自由文法]
+    複雑なデータ構造を定義したときはいつでもそうだが，
+    有限オートマトンに無駄な状態や遷移があったように，文脈自由文法にも無駄な変数や生成規則があったりする．
+    これを剪定してある種の緩い標準形を得ることを考える．
+    この標準形を３段階に分けて考えて，最後に無駄な記号がなく，空語生成規則と単一生成規則を持たない文脈自由文法を得る（定理\ref{thm-CFL-elimination-3}）こととする．
+
+    ただしオートマトンと違うのはデータ構造の次元である．今回の対象となるデータは「文法規則」である．
+    この次元の違いは生成規則$\to$と二項関係$\Rightarrow$との使い分けにも現れている．
+\end{tcolorbox}
+
+\subsection{無駄な変数の除去}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    状態についての\textbf{到達可能性}（定義\ref{def-accessibility-of-states}）と同じように，
+    記号$X$も，$G$-導出が存在してそれを踏むかどうかで有用性を判定する．
+    圏論的な世界観の下で，全く共通した手法である．
+
+    この除去算譜は２つに分解して考える．補題を２つ立てる．
+\end{tcolorbox}
+
+\begin{definition}[usefulness]
+    記号$X\in V\cup T$について，ある$\alpha,\beta\in(V\cup T)^*$が存在して，$G$-導出$S\Rightarrow^*\alpha X\beta\Rightarrow^*w$が存在するとき，\textbf{有用}であるという．
+    有用でない記号を\textbf{無駄な記号}という．
+\end{definition}
+
+\begin{lemma}[終端記号を導出しない変数の除去算譜]\label{lemma-algorithm1-unuseful-characters}
+    $G=(V,T,P,S)$を$L(G)\ne\emptyset$を満たす文脈自由文法とする．
+    次の２条件を満たす文脈自由文法$G'=(V',T,P',S)$を構成する算譜が存在する．
+    \begin{enumerate}
+        \item $L(G)=L(G')$．
+        \item $\forall A\in V',\;\exists w\in T^*,\;A\Rightarrow^*_{G'}w$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    次の算譜は，明らかに終端記号を生む変数の集合$\{A\in V\mid (A,w)\in P,w\in T^*\}$
+    から初めて，そこへバトンタッチする変数を徐々に増やしていく．
+    こうして出来る閉包を$V'$と定めるような算譜である．
+    \begin{lstlisting}[escapechar=!]
+    begin
+        oldV = !$\emptyset$!;
+        newV = !$\{A\in V\mid (A,w)\in P,w\in T^*\}$!;  #プリミティブな変数のみまずは集める
+        while oldV !$\ne$! newV do
+            begin
+                oldV = newV;
+                newV = oldV!$\;\cup\;\{A\in V\mid (A,\alpha)\in P,\alpha\in(T\cup\mathtt{oldV})^*\}$!;
+            end
+        !$V'$! = newV;
+    end
+    \end{lstlisting}
+    とし，
+    $P'=P\cap(V'\times(T\cup V')^*)$とすれば良い．
+    なお，$S\in V'$は，$L(G)\ne\emptyset$より，ある$w\in T^*$が存在して$S\Rightarrow^*_{G} w$であることから従う．
+
+    こうして定まる$G'$は２条件を満たす．
+\end{proof}
+
+\begin{lemma}[開始記号から到達可能でない文字の除去算譜]\label{lemma-algorithm2-unuseful-characters}
+    $G=(V,T,P,S)$を文脈自由文法とする．
+    次の２条件を満たす文脈自由文法$G''=(V'',T'',P'',S)$を構成する算譜が存在する．
+    \begin{enumerate}
+        \item $L(G)=L(G'')$．
+        \item 任意の記号$X\in V''\cup T''$について，開始記号$S$から導出可能な文形式であって，$V$を含むものが存在する：$\forall X\in V''\cup T'',\;\exists\alpha,\beta\in(V''\cup T'')^*,\;S\Rightarrow^*_{G''}\alpha X\beta$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    次の算譜は，開始記号$S$から初めて，閉包に到達するまで順次到達可能な文字を増やしていく算譜である．
+    \begin{lstlisting}[escapechar=!]
+        begin
+            oldV = !$\emptyset$!;
+            newV = !$\{S\}$!;
+            !$T''$! = !$\emptyset$!;
+            while oldV !$\ne$! newV do
+                begin
+                    oldV = newV;
+                    newV = oldV!$\;\cup\;\{B\in V\mid 記号Bを含む\alpha とA\in\mathtt{oldV}が存在して，(A,\alpha)\in P\}$!;
+                    !$T''$! = !$T''\;\cup\;\{a\in T\mid 記号aを含む\alpha とA\in\mathtt{oldV}が存在して，(A,\alpha)\in P\}$!;
+                end
+            !$V'$! = newV;
+        end
+    \end{lstlisting}
+    $P''=V''\times(V''\cup T'')^*$として定めた$G=(P'',V'',T'',S)$は主張の条件を満たす．
+\end{proof}
+
+\begin{theorem}[無駄な記号の除去算譜]\label{thm-CFL-elimination-1}
+    $G$を$L(G)\ne\emptyset$を満たす文脈自由文法とする．
+    次の２条件を満たす文脈自由文法$\hat{G}$を構成する算譜が存在する．
+    \begin{enumerate}
+        \item $L(G)=L(\hat{G})$．
+        \item $\hat{G}$は無駄な記号を持たない．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    補題\ref{lemma-algorithm1-unuseful-characters}と補題\ref{lemma-algorithm2-unuseful-characters}との算譜の合成を
+    与えれば良い．
+\end{proof}
+
+\subsection{空語生成規則}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    次は空語生成規則$A\to\epsilon$は，他の規則に埋め込めることを考える．
+\end{tcolorbox}
+
+\begin{definition}[$\epsilon$-production, nullable]
+    $A\to\epsilon$の形の生成規則を，\textbf{$\epsilon$-生成規則}という．
+    文脈自由文法$G$にこの生成規則が存在するとき，変数$A$は\textbf{空語に潰せる}という．
+\end{definition}
+
+\begin{theorem}\label{thm-CFL-elimination-2}
+    文脈自由文法$G=(V,T,P,S)$に対して，次の２条件を満たす文脈自由文法
+    $G'=(V',T',P',S')$を生成する算譜が存在する．
+    \begin{enumerate}
+        \item $L(G')=L(G)\setminus\{\epsilon\}$．
+        \item $G'$は無駄な変数も空語生成規則も持たない．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}３段階に分けて考える．
+    \begin{enumerate}
+        \item まず，次の算譜で空語に潰せる変数からなる集合NULL$\subset V$を確定させる．
+        \begin{lstlisting}[escapechar=!]
+            begin
+                oldNULL = !$\emptyset$!;
+                newNULL = !$\{A\in V\mid (A,\epsilon)\in P\}$!;
+                while oldNULL !$\ne$! newNULL do
+                    begin
+                        oldNULL = newNULL;
+                        newNULL = oldNULL!$\;\cup\;\{A\in V\mid \exists\alpha\in\mathtt{oldNULL}^*,\;(A,\alpha)\in P\}$!;
+                    end
+                NULL = newNULL;
+            end
+        \end{lstlisting}
+        \item 次に，$P'$を，$P$の各生成規則$A\to X_1\cdots X_n$に対して，新たに次を満たす規則$A\to\alpha_1\cdots\alpha_n$を追加することで定める．
+        \begin{enumerate}[(1)]
+            \item $X_i\notin\mathtt{NULL}$ならば$\alpha_i=X_i$．
+            \item $X_i\in\mathtt{NULL}$ならば$\alpha_i=X_i$または$\alpha_i=\epsilon$．
+            \item $\exists i\in[n],\;\alpha_i\ne\epsilon$である．
+        \end{enumerate}
+        これらは各$(A,X_1\cdots X_n)\in P$に対して有限個なので，$P'$も有限集合．
+        また$G''=(V,T,P',S)$の時，次の２条件は同値であることが帰納法により確認できる．
+        \begin{enumerate}[(1)]
+            \item $A\Rightarrow^*_{G''}w$．
+            \item $w\ne\epsilon$かつ$A\Rightarrow^*_Gw$．
+        \end{enumerate}
+        従って$L(G)=L(G'')$である．
+        \item 定理\ref{thm-CFL-elimination-1}の算譜より$G'$を得ると，これは定理の条件を満たす．
+    \end{enumerate}
+\end{proof}
+
+\subsection{単一生成規則の除去}
+
+\begin{definition}[unit production, nonunit production]
+    $A,B\in V$を用いて$A\to B\in P$と表される生成規則を\textbf{単一生成規則}という．
+    そうでないものを\textbf{非単一生成規則}という．
+\end{definition}
+
+\begin{theorem}\label{thm-CFL-elimination-3}
+    文脈自由文法$G=(V,T,P,S)$が$\epsilon\notin L(G)$であるとする．
+    $L$は無駄な記号がなく，空語生成規則と単一生成規則を持たない文脈自由文法によっても生成される．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[構成] 
+    定理\ref{thm-CFL-elimination-2}により得られる文脈自由文法を改めて$G=(V,T,P,S)$とし，
+    次を満たす生成規則の集合$P'$を持った文脈自由文法$G'=(V,T,P',S)$を考える．
+    \begin{enumerate}
+        \item 全ての非単一生成規則を$P'$に入れる．
+        \item 任意の空語生成規則でない単一生成規則の合成は$A\Rightarrow^*_G B\;(A,B\in V)$と表せる．
+        この時，$B$から始まる非単一生成規則$B\to\alpha$に対して，$A\to\alpha$を$P'$に追加する．
+    \end{enumerate}
+        \item[検証] $P'$はうまく有限で閉じている．
+    実際，$A\Rightarrow^*_GB$をチェックする算譜が存在するのは，$G$が空語生成規則を持たないからである．
+    これは必ず単一生成規則の合成となり，その総数は有限である．
+    こうして確かに$G'$を計算可能に得る．
+    $G'$は無駄な記号がなく，空語生成規則と単一生成規則を持たない文脈自由文法で
+    確かに$L(G)=L(G')$である．
+    \end{description}
+\end{proof}
+
+\section{Chomsky標準形}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
+    title=二分木化(binarization)]
+    前節で開発した「無駄な記号がなく，空語生成規則と単一生成規則を持たない文脈自由文法」を，
+    もう一つ理論的に扱いやすいものへと系をたてる．
+    これは生成規則を理論的に扱いやすいように，有限のものを２に還元したものである．
+    その分退避用の変数がたくさん生成される．
+    実際，構文木は，葉を除けば二分木となっている．
+\end{tcolorbox}
+
+\begin{theorem}[Chomsky normal form]\label{thm-Chomsky-normal-form}
+    空語を含まない文脈自由言語$\epsilon\notin L$は，次の形をした生成規則しか持たない文脈自由文法$G=(V,T,P,S)$が存在して，これによって生成される．
+    \begin{enumerate}
+        \item $A\to BC\quad(A,B,C\in V)$．
+        \item $A\to a\quad(a\in T)$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}３段階に分けて考える．
+    \begin{enumerate}
+        \item 定理\ref{thm-CFL-elimination-3}より，$L$を生成する無駄な記号がなく，空語生成規則と単一生成規則を持たない文脈自由文法
+        $G_1=(V,T,P,S)$が存在する．この$P$の生成規則は，次のいずれかである．
+        \begin{description}
+            \item[終端記号を単一生成する規則] $A\to a\;(A\in V,a\in T)$．
+            \item[記号を非単一生成する規則] $A\to X_1\cdots X_m\;(m\ge 2)$．
+        \end{description}
+        \item 終端記号生成は必ず単一になされるように整形する．即ち，非単一生成の中に終端記号が現れないようにする．
+        文脈自由文法$G_2=(V',T,P',S)$を次のように定めると，$L(G_1)=L(G_2)$となる．
+        各非単一生成規則$\to X_1\cdots X_m\in P$に対して，次を満たす生成規則と変数を追加したものを$P',V'$とする．
+        \begin{enumerate}[(1)]
+            \item $X_i=a\;(a\in T)$の時，新たな変数$C_a$を追加して生成規則$C_a\to a$を$P'$に追加する．
+            \item 生成規則中の$X_i$を全て終端記号を単一生成する変数$C_a$に置き換えて得られる生成規則を$A\to B_1\cdots B_m$とし，$P'$に追加する．
+        \end{enumerate}
+        \item 非単一生成は終端記号を生まないようになったから，これを二元化する．$m\ge 3$を満たす$P'$の生成規則$A\to B_1\cdots B_m$について，新たな変数$D_1,\cdots,D_{m-2}$を導入し，
+        \begin{align*}
+            A&\to B_1D_1,&D_1&\to B_2D_2,\\
+            \vdots&&\vdots\\
+            D_{m-3}&\to B_{m-2}D_{m-2},&D_{m-2}&\to B_{m-1}B_m.
+        \end{align*}
+        に分解して置き換える．こうして得る生成規則の集合を$P''$，変数の集合を$V''$とすれば，$G_3:=(V'',T,P'',S)$が定理の条件を満たす．
+    \end{enumerate}
+\end{proof}
+
+\section{文脈自由言語の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    Ogdenの補題の$n'=N$とした場合の退化した姿が反復補題であるが，こちらは直感がつかみやすい．
+    文法規則の数に対して，十分に長い文字列を考えると，そこには文法規則の有限生に起因する反復許容性があるはずである．
+    これを用いて文脈自由言語の必要条件を述べたのがOgdenの補題である．
+
+    Ogdenの補題により，うまく算譜を見つけてこれば，文脈自由言語でないことを見破ることができる．
+    その使用法は計算と場合分けで済む極めて煩瑣にテクニカルなもので，ここまで落とし込めるまでの祈りが莫大である．
+\end{tcolorbox}
+
+\subsection{反復補題 / Pumping lemma / uvwxy定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    $L$が文脈自由言語であるという述語を$\mathrm{CFL}(L)$，記号列$x$が「反復可能」であることを$\mathrm{Pump}(x)$と表すと，次の主張を反復補題という：
+    \[\mathrm{CFL}(L)\to\exists N\ge 1,\;\forall x\in L,\;[\abs{x}\ge N\to\mathrm{Pump}(x)].\]
+    これは対偶が強く応用可能である：
+    \[\forall N\ge 1,\;\exists x\in L,\;[\abs{x}\ge N\land \lnot\mathrm{Pump}(x)]\to \lnot\mathrm{CFL}(L).\]
+    この証明はChomsky標準形による二分木への翻訳があるために，極めて見通しが良い．これがプログラミングである．
+\end{tcolorbox}
+
+\begin{theorem}[pumping lemma]\label{thm-Pumping-lemma-CFL}
+    文脈自由言語$L$に対して，定数$N\ge 1$が存在し，任意の$\abs{z}>N$を満たす記号列$z\in L$に対して，
+    次の３条件を満たす分解$z=uvwxy\;(u,v,w,x,y\in L\cup\{\epsilon\})$が存在する．
+    \begin{enumerate}
+        \item $\abs{vx}\ge 1$．
+        \item $\abs{vwx}\le N$．
+        \item $\forall n\in\N,\;uv^nwx^ny\in L$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    定理\ref{thm-Chomsky-normal-form}より，$L\setminus\{\epsilon\}$を生成するChomsky標準形の文脈自由文法が存在するから，これを$G=(V,T,P,S)$とする．
+    次が成り立つ．
+    \begin{quote}
+        (C) 長さ$2^{i-1}+1$以上の語$w\in L$の$G$-導出木には，根から葉に至る長さ（edge数）が$i+1$以上の道が存在する．
+    \end{quote}
+    対偶「道の長さの最大値が$i$以下ならば，単語の最大長は$2^{i-1}$である．」を考えれば明らか\footnote{整数値しか取らないので，$\abs{z}>2^{i-1}\Leftrightarrow\abs{z}\ge 2^{i-1}+1$．}．
+    そこで$k:=|V|$とし，$N:=2^k$と定めると，任意の$\abs{z}\ge N=2^k$を満たす語$z$の導出木$T$には，長さ$k+1$のものが存在する．
+    この道の通るノードの列を$v_1,\cdots,v_m,v_{m+1}\;(m\ge k+1)$\footnote{道の長さとノードの数にズレがある．植木算．}
+    とし，そのラベルの列を$A_1,\cdots,A_m,a\;(A_1=S,a\in T)$とする．
+    すると，$m\ge k+1=|V|+1$より，鳩の巣原理から$A_{m-k},A_{m-k+1},\cdots,A_m$の間に重複して現れている記号が存在する．
+    その位置を$i,j\;(m-k\ge i<j\ge m)$とする．
+    $v_i$を根とする部分木を$T_1$，$v_j$を根とする部分木を$T_2$とすると，$T_2\subset T_1\subset T$で，$T_2$で導出される終端記号列を$w\in L$とすると，
+    $v,x\in L\cup\{\epsilon\}$が存在して$vwx$が$T_1$が導出する記号列である．
+    $m-k\ge i< m$より，$T_1$に存在する道の長さは最大で$k+1$だから，$\abs{vwx}\le 2^k=N$．
+    また，$j>i$より，$\abs{v}\ge 1\lor\abs{x}\ge 1$である．
+    $\abs{vwx}\le N,\abs{z}\ge N$より，$u,y\in L\cup\{\epsilon\}$が存在して，$z=uvwxy$と表せる．
+
+    この時，状況を整理すると，
+    \begin{align*}
+        S&\Rightarrow^*uA_iy,&A_i&\Rightarrow^*vA_jx,&A_j&\Rightarrow^*w
+    \end{align*}
+    であるが，$A:=A_i=A_j$であるから，任意の$n\ge 0$に対して，$S\Rightarrow^*uv^nwx^ny$となり，導出可能である．従って，$uv^nwx^ny\in L$．
+\end{proof}
+\begin{remarks}[Turing pattern?]
+    反復補題とは，有限的な生成規則に起因する極めて大域的な模様か．Turing patternとは違うのか．
+    あまりに長いと，必ず同じ変数が再出現するので，そこに反復可能性が生ずる，という自然の摂理である．
+\end{remarks}
+
+\begin{corollary}\label{cor-pumping-lemma}
+    $L\subset\Sigma^*$を無限な自由文脈言語とする．
+    ある正整数$K>0$が存在して次を満たす：
+    \[\forall n\ge 1,\;\exists s_n\in L,\;[\;nK\ge\abs{s_n}\ge(n+1)K\;].\]
+\end{corollary}
+\begin{proof}
+    定理\ref{thm-Pumpimg-lemma-CFL}と同様の算譜で，$L=L(G)$を満たすChomsky標準形の文脈自由文法$G$をとり，$N=2^{|V|}$と定める．
+    $L$は無限集合であるから，ある$z\in L$が存在して$\abs{z}\ge N$を満たす．すると，反復補題（定理\ref{thm-Pumping-lemma-CFL}）を満たす分解$z=uvwxy$が存在する．
+    この時，$\abs{vx}\ge 1$であるので，ある$c\ge 1$が存在して，$\abs{uwy}\le c\abs{vx}$を満たす．
+    この数を$K:=c\abs{vx}$とすれば，各$n\ge 1$に対して$s_n:=uv^{nc}wx^{nc}y$とすることで，
+    \begin{align*}
+        nK= nc\abs{vx}&\le \abs{s_n}=\abs{uwy}+nc\abs{vx}\\
+        &\le c\abs{vx}+nc\abs{vx}=(n+1)c\abs{vx}=(n+1)K.
+    \end{align*}
+\end{proof}
+
+\begin{corollary}\label{cor-counterexamples-of-CFL}
+    次の言語は文脈自由言語ではない．
+    \begin{enumerate}
+        \item $\{a^nb^nc^n\mid n\ge 1\}$．
+        \item $\{a^mb^mc^n\mid 1\ge m\ge n\}$．
+        \item $\{a^kb^lc^n\mid 1\ge k\ge l\ge m\}$．
+        \item $\{a^mb^nc^md^n\mid m,n\ge 1\}$．
+        \item $\{ww\mid w\in\{a,b\}^*\}$．
+        \item $\{a^nb^nc^m\mid n\ge m\ge 2n\}$．
+        \item $\{a^mb^n\mid n=m^2\}$．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    背理法による．
+    \begin{description}
+        \item[1.] $L=\{a^nb^nc^n\mid n\ge 1\}$を文脈自由言語とする．
+        反復補題\ref{thm-Pumping-lemma-CFL}より，十分大きな$N>1$について，$z=a^Nb^Nc^N\in L$には，分解$z=uvwxy$であって，$\abs{vx}\ge 1$，$\abs{vwx}\le N$，$\forall n\in\N,\;uv^nwx^ny\in L$を満たすものが存在する．
+        $\abs{vwx}\le N$に注意すると，次の２つの場合に場合分けして考えられる．
+        \begin{description}
+            \item[$vx\in\{a\}^*\lor vx\in\{b\}^*\lor vx\in\{c\}^*$のとき] $n=0$とすると，それぞれ$a,b,c$の個数が他の個数より１個以上減るので，$uwy\notin L$．
+            \item[$vx\in\{a,b\}^*\lor vx\in\{b,c\}^*$のとき] $n=0$とすると，同様に$a,b,c$の個数は不一致を起こす．
+        \end{description}
+        どの場合も矛盾．よって，$L=\{a^nb^nc^n\mid n\ge 1\}$は文脈自由言語ではない．
+        \item[5.]
+        $L=\{ww\mid w\in\{a,b\}^*\}$を文脈自由言語と仮定する．
+        反復補題\ref{thm-Pumping-lemma-CFL}より，十分大きな$N>1$が存在して，
+        $a$が$N$個続いた後に$b$が$N$個続く文字列を$w_0=a\cdots ab\cdots b$としたときに$z=w_0w_0\in L$と表される記号列$\abs{z}\ge N$も，$z=uvwxy$に分解し，$\abs{vx}\ge 1$，$\abs{vwx}\le N$，$\forall n\in\N,\;uv^nwx^ny\in L$を満たす．
+        $\abs{vxy}\ge N$より，次の２つの場合に分けられる．
+        \begin{description}
+            \item[$vwx\in\{a\}^*\lor vwx\in\{b\}^*$のとき] $\abs{y}\ge 2N$（$vwx$が$z$の中央よりも左側にある）としても一般性は失われない．$n=0$としたとき，$a$が$N$個続くというパターン，または$b$が$N$個続くというパターンが左半分で二度と現れないので，$uwy\notin L$．
+            \item[$vwx\in\{a,b\}^*$のとき] $\abs{y}\ge N$としても一般性は失われない．$n=0$としたとき，$a$が$N$個続くというパターンは右半分では現れない，または$b$が$N$個続くというパターンが左半分で現れないので，$uwy\notin L$である．
+        \end{description}
+        どの場合も矛盾．よって，$L$は文脈自由言語ではない．
+        \item[7.] $L=\{a^mb^{m^2}\mid m\in\N\}$を文脈自由言語と仮定する．
+        $L$は無限集合より，系\ref{cor-pumping-lemma}により，ある正整数$K>0$が存在して，
+        $\forall n\ge 1,\;\exists s_n\in L,\;nK\le\abs{s_n}\le(n+1)K$が成り立つ．
+        いま，$\abs{a^mb^{m^2}}=m(m+1)$より，
+        $m>K$ととれば，$K^2<\abs{a^mb^{m^2}}$が成り立つ．このとき，$nK\le \abs{a^mb^{m^2}}\le(n+1)K$を満たす$n$について，
+        $(n+1)K\le\abs{s_{n+1}}\le(n+2)K$を満たす$s_{n+1}\in L$は存在しない．
+        なぜならば，$a^mb^{m^2}$の次に長い記号列は$a^{m+1}b^{(m+1)^2}$であり，
+        その長さの差は$\abs{a^{m+1}b^{(m+1)^2}}-\abs{a^mb^{m^2}}=(m+1)(m+2)-m(m+1)=2(m+1)>2K$であるため，$(n+2)K<\abs{a^{m+1}b^{(m+1)^2}}$が成り立つからである．
+        よって，$L$は文脈自由言語ではない．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    証明は$N>1$を取った後に，任意に取って良い$\abs{z}>N$を馬鹿でかく取ること．すると場合分けが簡略化され，示しやすくなる．
+    技工は要らないというのがこの反復補題\ref{thm-Pumpimg-lemma-CFL}の本質なのだから，馬鹿でかく取って技工を使わないのが綺麗．
+\end{remarks}
+
+\begin{proposition}
+    言語$\{x\in\{0,1\}^*\mid [x]_{10}は3の倍数\}$は文脈自由言語である．
+\end{proposition}
+\begin{proof}
+    $V=\{S,S^-,S^+\},T=\{0,1\}$とし，
+    \begin{align*}
+        P=\left\{\begin{array}{lll}
+            S\to 0,&S^-\to 1,&S^+\to S^-0,\\
+            S\to S0,&S^-\to S^+0,&S^+\to S^+1,\\
+            S\to S^-1,&S^-\to S1
+        \end{array}\right\}
+    \end{align*}
+    とすると，文脈自由文法$G=(V,T,P,S)$は$L(G)=\{x\in\{0,1\}^*\mid [x]は3の倍数\}$となる．
+    ただし，$[01]=[1]=[00\cdots 01]=1$とした．
+\end{proof}
+\begin{remarks}
+    例\ref{example-FDAs}の通り，正則言語でもある．
+    設計していて思ったが，変数$V$が状態っぽい．
+\end{remarks}
+
+\subsection{Ogdenの補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    反復補題はOgdenの補題の，必ず特定位置を最大限とった$n'=n$の特別な場合である．
+    確かに反復補題の主張は少し人工的で，Chomsky標準形に整えた場合の二分木の消息に寄り添い切って居なかった．
+    \textbf{鳩の巣原理}による大域的模様という主張の核心は変わらず，算譜を少し変更するだけで済む．
+\end{tcolorbox}
+
+\begin{theorem}[Ogden]\label{thm-Ogden}
+    文脈自由言語$L$に対して，定数$N>1$が存在し，任意の$\abs{z}\ge N$を満たす記号列$z=z_1\cdots z_n\;(n\ge N)$と，
+    任意の特定位置$d_1,\cdots,d_{n'}\;(N\le n'\le n,1\le d_1<\cdots<d_{n'}\le n)$に対して，
+    次の３条件を満たす分解$z=uvwxy\;(u,v,w,x,y\in L\cup\{\epsilon\})$が存在する．
+    \begin{enumerate}
+        \item $vx$は少なくとも１つの特定位置を含む．
+        \item $vwx$は高々$N$個の特定位置を含む．
+        \item $\forall n\in\N,\;uv^nwx^ny\in L$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    $L\setminus\{\epsilon\}$を生成するChomsky標準形の文脈自由文法を$G=(V,T,P,S)$とする．
+    反復補題\ref{thm-Pumping-lemma-CFL}の場合と同様に，$k:=\abs{V}$とし，$N:=2^k$と定める．
+    ここで，$\abs{z}=n\ge N=2^k$を満たす語$z$の導出木$T$を考える．
+    特定位置$d_1,\cdots,d_{n'}\;(N\le n'\le n)$に対応する葉のうち，根からの距離が最大であるものを１つ取り，
+    その根からの道のノードの列を$v_1,\cdots,v_m,v_{m+1}$とする．
+    このとき，この道の長さが$k+1$以上，従って$m\ge k+1$であることを示せば，以降は反復補題\ref{thm-Pumping-lemma-CFL}と全く同じ設定へと還元できた事になる．
+
+    反復補題\ref{thm-Pumping-lemma-CFL}の証明における条件(C)の対偶より，長さ$k$以内の部分木で到達可能な終端記号は，$2^{k+1}$文字よりも少なく，特に$N$より少ない．
+    従って$N\le n'$より，特定位置$d_1,\cdots,d_{n'}$に対応する葉のうち，根からの距離が$k+1$以上であるものは必ず存在する．
+\end{proof}
+
+\begin{corollary}
+    次の言語は文脈自由言語ではない．
+    \begin{enumerate}
+        \item $\{0^i1^j0^k\mid i,j,k\in\N,j=\max(i,k)\}$．
+        \item $\{a^nb^nc^i\mid i,n\in\N, n\ne i\}$．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    背理法で示す．
+    \begin{enumerate}
+        \item 
+        十分大きな$N>0$について，文字列$0^N1^N0^N$（長さ$n=3N$）を考える．左から読んで最初のブロック$0^N$の全てを特定位置とする（$n'=N$）．
+        これについて，Ogdenの補題\ref{thm-Ogden}より，分解$z=uvwxy$が存在する．
+        $\abs{vwx}\le N$より，$\abs{vwx}\subset 0^N$である．
+        $\abs{vx}\ge 1$より，$n$を十分大きくすると，$uv^nwx^ny=0^i1^j0^k$における$i$の数が$j=\max(i,k)$であるはずの$j$の数より大きくなり，矛盾．
+        \item 記号列$a^nb^nc^{n!}$を考える．
+        
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    どうしてこんな議論をしているのかわからないほどに，ただ単純な計算と場合分けに議論が落とし込まれているのがOgdenの補題である．
+\end{remarks}
+
+\section{所属性判定問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    所属判定問題という形で，形式言語論が計算可能性理論に接続する．
+    また，コンパイラの原理の一つでもある．
+    議論としては，自然数上の原始再帰（部分）関数による計算可能性の定義に繋がる．
+    文脈自由言語は帰納的可算言語なので，計算可能である．問題は計算量になる．
+
+    導出は構文木の構造があるが，構文木の探索は三角チャートの構造を持つ．
+    なんとなく，データ構造自体が計算と同義なのではないかと思うようになった．
+    圏論の精神．
+\end{tcolorbox}
+
+\begin{definition}[membership problem]
+    文脈自由文法$G$に対して，二項関係$w\in L(G)$を判定させる問題を\textbf{所属判定問題}という．
+\end{definition}
+
+\begin{discussion}[CKY algorithm]
+    全ての構文木を列挙すると，構文木の数は指数爆発する（カタラン数と呼ばれる組み合わせ数学の対象）．
+    CKYアルゴリズムと呼ばれるチャートを下から埋める動的計画法により余計な計算が減る．
+    このときに使うデータ構造がchart / 三角テーブルである\footnote{第一変数と第二変数を直交基底として取ればいいのにな．すると直交するのに．なんで三角にするのだろう．}．なんとなくJordan標準形の議論を思い出す添字の付け方であった．
+    各セル$(x,y)$は区間$(x,y]$の部分記号列を生成する構文木（今回は根のラベルのみ）を保存し，$(0,n)$が構成できたならば構文木の存在を構成できたことになる．
+    \begin{enumerate}
+        \item まず，チャートの一段目$\mathtt{cell}(i,i+1)$には終端文字$(i,i+1]=x_{i+1}$を生成する変数からなる集合を格納する．
+        \item $(x,y)$を作るには，垂直な直線$(x,k),(k,y)$から作る．これは下から埋めていくこととなる．各$k$について，$\mathtt{cell}(x,k)$の変数$X$と$\mathtt{cell}(k,y)$の変数$Y$であって，これらを導出する$Z\to XY$がないか探し，あれば新たに$\mathtt{cell}(x,y)$に格納していく．
+        \item こうして，全体空間を格納するcellが空でなければ良い．
+    \end{enumerate}
+    このように葉から解析を始めることをボトムアップという．
+    CYKはCocke-Younger-Kasamiの略（それぞれ、RISCの先駆と言われる801などでも知られるジョン・コック、Daniel Younger、嵩忠雄である）。
+\end{discussion}
+\begin{remark}[chart parser]
+    chartのデータ構造により組み合わせ爆発を防ぐ方法一般をchart parserという．
+    \begin{quote}
+        チャートパーサ（英: Chart parser）は、自然言語などの曖昧な文法に向いた構文解析器の一種である。動的計画法を用い、中間的かつ仮説的な結果をチャート（chart）と呼ばれるデータ構造に格納しておき、再利用する。これによりバックトラッキングを省き、同時に組合せ爆発を防ぐ。
+        チャートパーサは Martin Kay が開発した。\footnote{\href{https://ja.wikipedia.org/wiki/チャートパーサ}{wikipedia}}
+    \end{quote}
+    \begin{itemize}
+        \item ビタビアルゴリズムを変形したものを用いることが多い。
+        \item アーリー法はチャートパーサの一種であり、計算言語学での構文解析に主に使われる。
+        \item CYK法もチャートパーサの一種である。
+        \item 左隅型解析法
+        \item 一般化LR法：1986年、冨田勝が発表した。冨田法、並列構文解析法とも呼ばれる。
+    \end{itemize}
+\end{remark}
+\begin{remark}
+    より限定的な文脈自由文法のクラスに限れば，より高速な認識アルゴリズムが存在する．
+    \begin{itemize}
+        \item LR法：自然言語の非決定的で曖昧な性質に対処できない
+        \item LL法
+    \end{itemize}
+    コンパイラ学ではこちらが議論の中心になるが，自然言語には使えない．
+\end{remark}
+
+\begin{theorem}[CKY algorithm]
+    文脈自由文法$G$と記号列$w\in T^*$に対して，$w\in L(G)$は計算可能／決定可能である（判定する算譜が存在する）．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$w=\epsilon$のとき] 
+        無駄な変数も空語生成規則も持たない文脈自由文法の存在定理\ref{thm-CFL-elimination-2}の算譜より，$S\in\mathtt{NULL}$か計算できる．
+        \item[$w\ne\epsilon$のとき] 入力を$w=x_1,\cdots,x_n\;(x_1,\cdots,x_n\in T)$とおく．
+        Chomsky標準形の文脈自由文法の存在定理\ref{thm-Chomsky-normal-form}より，$L(G')=L(G)\setminus\{\epsilon\}$となるChomsky標準形の文脈自由文法$G'=(V,T,P,S)$を計算できる．
+        次は$w\in L(G')$を判定する算譜である．
+\begin{lstlisting}[escapechar=!]
+    begin
+        for i = 0 to !$n-1$! do   ＃チャートの１段目の初期化
+            cell(i,i+1) = !$\{A\in V\mid A\to x_i\in P\}$!;
+        for i = 2 to !$n$! do
+            for x = 0 to !$n-i$! do
+                y = x + i;
+                for k = x+1 to !$y-1$! do   ＃分割位置
+                    for X !$\in$! cell(x,k)
+                        for Y !$\in$! cell(k,y)
+                            for Z !$\in$! V
+                                if !$Z\to XY\in P$! then cell(x,y) = cell(x,y) !$\cup$! Z;
+        if !$S\in\mathtt{cell}(0,n)$! then !$w\in L(G')$! else !$w\notin L(G')$!
+    end
+\end{lstlisting}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    最悪計算量は$O(n^3)\;(n=\abs{w})$．
+    まあまあ遅いが，全ての文脈自由文法に対応できるものでは最速に近い．
+    $i,x,k$のループ数（場合の数）は$O(\abs{w}^3)$（$-1$などの影響は省けるという意味で）．
+    $X,Y,Z$のループ数（場合の数）は$O(\abs{V}^3)$．
+    よって，時間計算量は$O(\abs{w}^3\abs{V}^3)$．
+\end{remarks}
+
+\begin{itembox}[l]{Chomsky標準形}
+    Chomsky標準形では，終端記号以外の単項生成を許さない．
+    これにより，一つのcell内での自己生成を考えなくて良いので，アルゴリズムが単純になる．
+\end{itembox}
+
+\section{有限オートマトンと正則文法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    正則言語が，文脈自由言語の真部分集合であることを見る．
+    そのために用いるのは，線型文法による特徴付けである．
+    定理\ref{thm-characterization-of-regular-language-as-CFL}にて，
+    \begin{enumerate}
+        \item DFAの右線型文法への還元算譜．
+        \item 右線型文法の，二分木化を経た$\epsilon$-NFAへの還元算譜．
+        \item DFAの，NFAへの反転算譜${}^R:[\mathrm{DFA}]\to[\mathrm{NFA}]$．
+    \end{enumerate}
+    の３つを導入して，世界を繋ぐ．こうして，オートマトンも形式科学の研究対象として随分と取り込んだことになる．
+\end{tcolorbox}
+
+\begin{definition}[right-linear grammar, left-linear grammar, regular grammar]\label{def-regular-grammar}
+    $A,B\in V,\;w\in T^*$とする．
+    \begin{enumerate}
+        \item 全ての生成規則が$A\to w\mid wB$の形である文脈自由文法$G$を，\textbf{右線型文法}という．
+        \item 全ての生成規則が$A\to w\mid Bw$の形である文脈自由文法$G$を，\textbf{左線型文法}という．
+        \item 右線型文法と左線型文法のことを，併せて\textbf{正則文法}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[正則言語の特徴付け]\label{thm-characterization-of-regular-language-as-CFL}
+    言語$L\subset\Sigma^*$に対して，次の３条件は同値．
+    \begin{enumerate}
+        \item $L$は正則．
+        \item $L$は右線型文法によって生成される．
+        \item $L$は左線型文法によって生成される．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $L$を正則とする．すると，これを受理するDFA $M=(Q,\Sigma,\delta,q_0,F)$が存在して$L=L(M)$となる．
+        これに対して右線型文法$G=(V,T,P,S)$を，$V=Q,T=\Sigma,S=q_0$とし，$P$を
+        \begin{enumerate}
+            \item 各$\delta(q,a)=p$に対して，$q\to ap\in P$とし，
+            \item 各$q\in F$に対して，$q\to\epsilon\in P$とする．
+        \end{enumerate}
+        すると，$L(G)=L(M)=L$となる．
+        \item[(2)$\Rightarrow$(1)] 
+        $L$は右線型文法によって生成されるとする．すると，右線型文法$G=(V,T,P,S)$が存在して$L=L(G)$である．
+        \begin{enumerate}
+            \item まず，右線型文法を二分木化する．
+            $G$の生成規則は，$a_1,\cdots,a_m\in T$を用いて$A\to a_1\cdots a_mB\mid a_1\cdots a_m\;(m\in\N)$と表せる．この$m\ge 2$の場合について，
+            前者は新たな変数
+            $C_1,\cdots,C_{m-1}$を導入して，$m$個の生成規則
+            \begin{align*}
+                A&\to a_1C_1,&C_1&\to a_2C_2,&\cdots&&C_{m-1}&\to a_mB,
+            \end{align*}
+            で置き換え，後者は新たな変数$D_1,\cdots,D_{m-1}$を導入して，$m$個の生成規則
+            \begin{align*}
+                A&\to a_1D_1,&D_1&\to a_2D_2,&\cdots&&D_{m-1}&\to a_m,
+            \end{align*}
+            で置き換えて得られる右線型文法を$G':=(V',T,P',S)$とする．
+            このとき，$P$の元は$A\to a_1\cdots a_mB\mid a_1\cdots a_m\;(m=0,1)$と表せる状態だから，書き下せば次の４通りのいずれかの形をしている．
+            \begin{enumerate}
+                \item $A\to aB\;(a\in T)$，
+                \item $A\to B$，
+                \item $A\to a$，
+                \item $A\to\epsilon$．
+            \end{enumerate}
+            \item この二分木化された右線型文法$G'$を$\epsilon$-NFA $M=(Q,\Sigma,\delta,q_0,F)$に変換する．
+            まず新たな終了状態$f$を追加して$Q=V'\cup\{f\},\;F=\{A\in V'\mid A\to\epsilon\}\cup\{f\}$とする．$\Sigma=T,q_0=S$で，遷移関係$\delta\subset (Q\times\Sigma)\times Q$は次のように定める．
+            \begin{enumerate}
+                \item $A\to aB$のとき，$(A,a,B)\in\delta$．
+                \item $A\to B$のとき，$(A,\epsilon,B)\in\delta$．
+                \item $A\to a$のとき，$(A,a,f)\in\delta$．
+            \end{enumerate}
+            すると，$L(M)=L(G')=L(G)=L$を得る．
+            \item[(1)$\Leftrightarrow$(3)]
+            同様の議論を$L$の代わりに$L^R$について行ったものが，$L$についての主張(1)$\Leftrightarrow$(3)の証明を与える．
+            ただし，オートマトンの反転，即ち，オートマトン$M=(Q,\Sigma,\delta,q_0,F)$に対して，$L(M)^R$を受理するオートマトンは，非決定性として，次のように構成する．
+            開始状態$q_0$を唯一の終了状態とし，新たな開始状態$q'_0$を追加する．
+            $M^R=(Q\cup\{q'_0\},\Sigma,\delta',q'_0,\{q_0\})$を
+            \begin{enumerate}
+                \item $\delta(p,a)=q$のとき，$(q,a,p)\in\delta'$とし，
+                \item $q\in F$のとき，$(q'_0,\epsilon,q)\in\delta'$として，実質的な開始状態とする．
+            \end{enumerate}
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}[３つの同型対応]\mbox{}
+    \begin{enumerate}
+        \item (1)$\Rightarrow$(2)で極めて簡明なオートマトンの右線型文法への翻訳算譜を作った．
+        $M$に$\epsilon$-遷移がない場合は，右線型文法のさらに真のクラスになるような文法に翻訳されている（終端文字を単一生成する規則は$\epsilon$-生成規則のみ）．
+        \item (2)$\Rightarrow$(1)はまずオートマトンのために二分木化するところまでは良い．
+        右線型文法$G$の生成規則は，$a_1,\cdots,a_m\in T$を用いて$A\to a_1\cdots a_mB\mid a_1\cdots a_m\;(m\in\N)$と表せるが，$m\ge 2$の場合を全て$m=0,1$の場合に還元すれば良い．
+        ところが，次は$\epsilon$-NFAに変換する．
+        たくさんのマシンを定義したので，ここに来て論理の自由さがありがたい．
+        $\epsilon$生成規則は終了状態に至るが，そうでない終端文字の単項生成規則の場合は新たに作った終了状態$f\in F$に集めるというトリックが必要である．
+        \item (1)$\Leftrightarrow$(3)では，文法における右線型・左線型の反転に対するNFAへの反転操作$M^R$を定義した：${}^R:[\mathrm{DFA}]\to[\mathrm{NFA}]$．
+    \end{enumerate}
+\end{remarks}
+
+\begin{example}[DFAを右線型文法へ翻訳する]
+    次のオートマトンは正則言語$0(10)^*$を受理する．
+    \begin{center}\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid]
+        \node[state,initial]   (A)                {$A$};
+        \node[state,accepting] (B) [right=of A]   {$B$};
+        \node[state]           (C) [right=of B]   {$C$};
+        \node[state]           (D) [below=of B]    {$D$};
+        \path[->] (A) edge                  node [above] {$0$} (B)
+                      edge                  node [below] {$1$} (D)
+                  (B) edge [bend left]      node [above] {$1$} (C)
+                      edge                  node [left] {$0$} (D)
+                  (C) edge [bend left]      node [above] {$0$} (B)
+                      edge                  node [below] {$1$} (D)
+                  (D) edge [loop below]     node         {$0,1$} ();
+    \end{tikzpicture}\end{center}
+    これと同じ言語を受理する右線型文法は，定理\ref{thm-characterization-of-regular-language-as-CFL}の(1)$\Rightarrow$(2)の証明を参考にして，
+    \begin{align*}
+        A&\to 0B\mid 1D\mid 0,&B&\to 0D\mid 1C,\\
+        C&\to 0B\mid 1D\mid 0,&D&\to 0D\mid 1D.
+    \end{align*}
+    となるが，最終処理場としての状態$D$は\textbf{無駄な変数}だからこれを取り除く算譜（定理\ref{thm-CFL-elimination-1}）が存在して，
+    \begin{align*}
+        A&\to 0B\mid 0,&B&\to 1C,&
+        C&\to 0B\mid 0.
+    \end{align*}
+    となる．
+\end{example}
+\begin{remarks}
+    これは$D$に関連する全ての記述を消去しただけである，相対位相$P\cap(\{A,B,C\}\times(\{A,B,C\}\cup T)^*)$をとったみたいな．
+\end{remarks}
+
+\section{Pushdown automata}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    極めて綺麗な理論である．DFA/NFAに無限長のstackのデータ構造を備えた機械とみなせる．データ構造の追加法によって，stack machineもregistar machineもあり得る．
+    stackの一番上の内容に依って，遷移の仕方を制御できる．また，純粋なstack操作も遷移関係に定義しておくことができる，ある種自分で自分をプログラムできる．
+    
+    PDA $M$の現状の表示を3-組として定義し，そこに遷移関係を写し，$\vdash_M\subset Q\times\Sigma^*\times\Gamma^*$を得る．この反射的推移閉包$\vdash_M^*$を計算することが，受理するかどうかの判定に等しい．
+\end{tcolorbox}
+
+\subsection{定義と動き}
+
+\begin{definition}[PDA: pushdown automaton]
+    次の６つ組$M=(Q,\Sigma,\Gamma,\delta,q_0,Z_0)$をいう．
+    \begin{enumerate}
+        \item $Q$は状態からなる有限集合．
+        \item $\Sigma$は入力アルファベットの有限集合．
+        \item $\Gamma$はstackアルファベットの有限集合．
+        \item $\delta\subset(Q\times (\Sigma\cup\{\epsilon\})\times\Gamma)\times(Q\times\Gamma^*)$は遷移関係．$\Gamma$はstackのtopで，$\Gamma^*$とは，消去と，新たに書き込む文字は列であることを許容する．
+        \item $q_0\in Q$は初期状態．
+        \item $Z_0\in\Gamma$は初期記号．
+    \end{enumerate}
+\end{definition}
+\begin{remark}[その他の抽象機械の設計法]
+    有限オートマトンにふたつのスタックを接続することもでき、これは事実上チューリングマシンと等価な非常に強力なデバイスとなる。線形拘束オートマトンはプッシュダウン・オートマトンよりも強力だが、チューリングマシンよりは非力である。
+\end{remark}
+
+\begin{definition}[ID: instantaneous description]
+    PDAの\textbf{時点表示}とは，次を満たす3-組$(q,w,\gamma)$をいう．
+    \begin{enumerate}
+        \item $q\in Q$はヘッドの指し示す状態．
+        \item $w\in\Sigma^*$は残りの入力文字列．
+        \item $\gamma\in\Gamma^*$はstack上の文字列．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[遷移関係]
+    PDA $M=(Q,\Sigma,\Gamma,\delta,q_0,Z_0)$の２つの時点表示の間の\textbf{遷移関係}と呼ばれる二項関係$\vdash_M$を，次のように$\delta$から定義する：
+    \begin{align*}
+        (q,aw,X\gamma)\vdash_M(q',w,\Delta\gamma)&:\Leftrightarrow((q,a,X),(q',\Delta))\in\delta,&X\in\Gamma,\Delta,\gamma\in\Gamma^*\\
+        (q,w,X\gamma)\vdash_M(q',w,\Delta\gamma)&:\Leftrightarrow ((q,\epsilon,X),(q',\Delta))\in\delta.
+    \end{align*}
+    遷移関係の反射的推移閉包を$\vdash^*_M$と表す．
+\end{definition}
+\begin{remarks}
+    PDAは必ず空の入力が$\delta$に定義されていることに注意．
+\end{remarks}
+
+\begin{definition}[受理条件]
+    PDA $M=(Q,\Sigma,\Gamma,\delta,q_0,Z_0)$が$w\in\Sigma^*$を受理するとは，$(q_0,w,Z_0)\vdash^*_M(q,\epsilon,\epsilon)$が成り立つことをいう．
+\end{definition}
+\begin{remarks}
+    入力を全て受け取った時に，stackが空になったら（なる受理列が存在すれば）受理とする．
+    終了状態$F\subset Q$を定義する流儀もある．
+    stackは必ず消費されなきゃいけないが，stackを空に消去する命令を追加することもできる．
+\end{remarks}
+
+\subsection{CFGとの等価生}
+
+\begin{definition}[Greibach normal form]
+    文脈自由言語$G=(V,T,P,S)$の全ての生成規則が次の２つのいずれかの形をしているとき，$G$を\textbf{グライバッハ標準形}という．
+    \begin{enumerate}
+        \item $A\to aB_1\cdots B_m\quad(A\in V,a\in T,B_1,\cdots,B_m\in V\setminus\{S\})$．
+        \item $S\to\epsilon$．
+    \end{enumerate}
+    左再帰が許されないという点で，右線型文法の$m\ge 2$を一部許容した形である．
+\end{definition}
+
+\begin{theorem}[Greibach]\label{thm-Greibach-normal-form}
+    全ての文脈自由文法$G$は等価なグライバッハ標準形の文法$G'$に書換えることができる：$L(G)=L(G')$．
+\end{theorem}
+
+\begin{theorem}\label{thm-CFL-PDA}
+    言語$L$について，次の２条件が同値．
+    \begin{enumerate}
+        \item あるPDA $M=(Q,\Sigma,\Gamma,\delta,q_0,Z_0)$が存在してこれが認識する：$L=L(M)$．
+        \item あるCFG $G=(V,T,P,S)$が存在して$L=L(G)$である．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    PDAとCFGの間に対応関係を定めれば良い．
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $M$の遷移関係$\delta$に対して，$((q,a,A),(q_1,B_1\cdots B_m))\in\delta$のとき，
+        任意の状態$q_1,\cdots,q_{m+1}\in Q$に対して，
+        \[(q,A,q_{m+1})\to a(q,B_1,q_1)(q_1,B_2,q_2)\cdots(q_m,B_m,q_{m+1})\]
+        を$P$に追加し，各変数$(q,A,q_{m+1})$を$V$に追加して，$P',V'$を構成する．
+        新たに追加された生成規則は，他の項$(q_1,B_2,q_2)\cdots(q_m,B_m,q_{m+1})$も消費しなければ
+        終端文字列を生成できないが，これはstackを空にしないと受理されないことに対応する．
+        \item[(2)$\Rightarrow$(1)] 
+        Greibach標準形\ref{thm-Greibach-normal-form}の文法に対して，
+        $A\to aB_1\cdots B_m$を$((q_0,a,A),(q_0,B_1\cdots B_m))\in\delta$とする．
+    \end{description}
+\end{proof}
+\begin{remarks}[Greibach標準形が全て]
+    (1)$\Rightarrow$(2)では，状態という概念を全て変数概念へ退避しなければならない．
+    新たに作った変数$(q,A,q')$は，状態$q$から$q'$へ遷移し，stackに$A$と書き込むことで受理し得る文字列を生成し得る変数としてcodeされるのである．
+    (2)$\Rightarrow$(1)では，左から終端記号に変換していき，残りの文字列をstackに入れておくのである．
+    これは，Greibach標準形\ref{thm-Greibach-normal-form}がすごいのである．
+\end{remarks}
+
+\begin{screen}
+    正則文法と文脈自由文法の違いは，stackというデータ構造が使える分だけ違う，というのである．
+    有限オートマトンとは違って，今まで読んだ文字の情報を覚えておくことができるのである．
+    ここに文字のパターン・繰り返しだけではなく，個数という概念が生まれる．
+\end{screen}
+
+\section{Chomsky階層}
+
+$\alpha,\beta,\gamma\in(V\cup T)^*$，$A,B\in V$は非終端記号，$a\in T$は終端記号とする．
+\begin{center}\begin{tabular}{lllll}\hline
+    階層名&文法&言語&オートマトン&生成規則\\\hline
+    タイプ0&形式文法&帰納的可算言語&Turing機械&$\alpha\to\gamma$\\
+    &&帰納言語\\
+    タイプ1&文脈依存文法&文脈依存言語&線形拘束オートマトン&$\alpha A\beta\to\alpha\gamma\beta$\\
+    タイプ2&文脈自由文法&文脈自由言語&プッシュダウンオートマトン&$A\to\gamma$\\
+    タイプ3&正則文法&正則言語&有限オートマトン&$A\to a,A\to aB$\\\hline
+\end{tabular}\end{center}
+
+\begin{remark}[文法の分類]
+    チョムスキー階層は、生成規則による終端および非終端記号からなる文字列の書き換えで定義される、生成文法と呼ばれる形式文法のクラスを軸に定義されている。具体的には、
+    \begin{enumerate}\setcounter{enumi}{-1}
+        \item ［\textbf{帰納的可算言語・部分決定性言語・チューリング受理性言語}］文字列のいかなる書き換えも許される制限なし文法（＝形式文法）がタイプ-0であり、これを決定性のある（つまりチューリングマシンが常に停止する）言語に限定したクラスが帰納言語で、決定性言語またはチューリング決定性言語とも呼ばれる。これらの計算複雑性はそれぞれ複雑性クラスRとREに対応する。つまり、与えられた文字列が、その言語の文字列である事を確かめるアルゴリズムを書ける言語の集合が帰納的可算言語で、その言語の文字列で無い事も確かめるアルゴリズムが存在する言語の集合が帰納言語である。
+        \item ［\textbf{文脈依存言語}］それぞれの生成規則が非終端記号ひとつのみを書き換える文脈依存文法がタイプ-1（文脈自由言語により近い所には、自然言語の研究から弱文脈依存言語というクラスが設定されている。）
+        \item ［\textbf{文脈自由言語}］文脈依存文法のうち前後の文字列に依存せず書き換える文脈自由文法がタイプ-2
+        \item ［\textbf{正規言語}］文脈自由文法のうち書き換えが終端記号一つまたは終端および非終端記号一つずつである正規文法がタイプ-3．有限オートマトンが定める．
+    \end{enumerate}
+    下方の文法クラスがそれぞれ上方の文法クラスすべての真部分集合となっているため、対応する言語も包含階層が成立する。なお、それぞれに対応するオートマトンもよく知られている。
+\end{remark}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    Chomsky階層とは，「計算可能」な言語の分類である．
+    数式やC言語のプログラム自体は文脈自由文法の範疇に入るデータ構造である．
+    日本語も同じ範疇だと考えられる．
+    一方でC言語の変数は正則言語である．
+\end{tcolorbox}
+\begin{remark}
+    Gerald GazdarとGeoffrey Pullumは、一部に文脈自由的でない構造があるものの、自然言語の大部分は文脈自由であると指摘している\cite{Pullum, Geoffrey}。文脈自由でない部分とは、例えば、スイスドイツ語のcross-serial dependencies\cite{Shieber, Stuart}や、バンバラ語の畳語である\cite{Culy, Christopher}。
+\end{remark}
+
+\begin{history}[Avram Noam Chomsky 28-]
+    生成文法を1950年代に提唱した．
+    『「生成文法理論」を提唱して，言語学の革命的大転回を引き起こし，これを通じて人間の精神構造を解明するという野心的なプログラムを可能にした．
+    これにより認知科学の成立を鼓舞し，その基盤を与えた．』貢献で1988年京都賞受賞．
+    現在もマサチューセッツ工科大学教授．
+\end{history}
+
+\subsection{形式文法}
+
+\begin{definition}[formal grammar]
+    次の４つ組$G=(V,T,P,S)$を\textbf{形式文法}という．
+    \begin{itemize}
+        \item $V$は非終端記号からなる有限集合．
+        \item $T$は終端記号からなる有限集合で$V$と交わらない．
+        \item $P\subset (V\cup T)^*\cdot V\cdot (V\cup T)^*\times (V\cup T)^*$は生成規則からなる有限集合．
+        \item $S\in V$は開始記号．
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Recursively enumerable language]
+    形式文法$G=(V,T,P,S)$が定める言語
+    \[L(G):=\{w\in T^*\mid S\Rightarrow_G^*w\}\]
+    を，\textbf{帰納的可算言語}という．
+\end{definition}
+\begin{remark}
+    そのほかの同値な定義は
+    \begin{enumerate}
+        \item 形式言語のアルファベットから生成可能な全ての単語の集合$T^*$のうち，帰納的可算な部分集合である．
+    \end{enumerate}
+    などがある．名前の由来は，帰納的可算集合と言語$\Sigma^*$との共通部分であるからである．
+\end{remark}
+
+\subsection{閉包属性の違い}
+
+\begin{enumerate}\setcounter{enumi}{-1}
+    \item Kleene閉包${}^*$，連結$\cdot$，逆転${}^R$？？，$\cup,\cap$．
+    \item Kleene閉包${}^*$？，連結$\cdot$，逆転${}^R$？？，$\cup,\cap$，補集合$\Sigma^*\setminus-$．
+    \item Kleene閉包${}^*$，連結$\cdot$，逆転${}^R$，$\cup$（命題\ref{prop-closure-properties-of-CFL}）．準同型$\varphi(L)$，正則言語$D$との積$L\cap D$．
+    \item Kleene閉包${}^*$，連結$\cdot$，逆転${}^R$，$\cup,\cap$，差集合$\setminus$，補集合$\Sigma^*\setminus-$．shuffle $\lor$，商集合$/$（第\ref{sec-closure-properties-of-regular-languages}節）．
+\end{enumerate}
+
+\chapter{Turing機械}
+
+\begin{quotation}
+    意味論の畳み込みが面白い．第\ref{sec-undecidable-problems}節では，全ての主体の意味論を削ぎ落として$\N$と$\{0,1\}$の２つを
+    アルファベットとして採用する．また，tapeの数も意味論的な都合であり，一つにまとめる還元算譜が存在する．
+    有限回の手続きの列を計算というように，還元算譜が知能であるのかもしれない．
+
+    次に，形式科学的対象も同じく引き戻すのである．
+    Turing機械を符号化$\{0,1\}^*\supsetneq$CODE$\to$TMを通じて，$(w_i)_{i\in\N}:\N\to\{0,1\}^*$を用いて自然数$\N$に引き戻す．
+    こうして，２つの次元の違う対象を同じ台集合の上で衝突させると，対角線論法から大枠への言及を得る．
+
+    こうして，形式科学的対象（高々可算個）を用いて，問題（連続体濃度）に射を入れていく．
+    大抵の射の入れ方は等価になって，これをChurchのテーゼという．
+    これが計算理論の始まりなのだろう．
+\end{quotation}
+
+\section{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    PDAと同様，tapeに書いてある内容を元に遷移が定まっているか，未定義であるような機械である．
+    stackを対象にしたデータ構造の上を自由に行き来できる点が違う．
+    線形拘束オートマトン(Linear Bounded Automaton)の場合でさえPDAよりも計算力が真に強い（がTuring機械より真に弱い）．線形拘束オートマトンは文脈依存言語を受容する．
+
+    帰納的可算，帰納的，計算可能，決定可能が大集合する母なる大地である．
+    Zornの補題とは計算可能性についての命題であったのか？
+\end{tcolorbox}
+
+\begin{definition}[Turing machine, tape symbol, blank symbol]
+    チューリング機械とは，次の条件を満たす7-組$M=(Q,\Sigma,\Gamma,\delta,q_0,B,F)$のことである．
+    \begin{enumerate}
+        \item $Q$はfinite controlの状態全体からなる有限集合．
+        \item $\Gamma$はtape記号からなる有限集合．tapeのcellに書き込むことが出来る動作の全体を表す．
+        \item $B\in\Gamma$は空白記号．
+        \item $\Sigma\subset\Gamma\setminus\{B\}$は出力アルファベット．\footnote{第\ref{sec-undecidable-problems}節では，これを入力アルファベットと完全に一致させることがミソとなる．}
+        \item $\delta\subset((Q\times\Gamma)\times(Q\times\Gamma\times\{L,R\}))$は遷移を定める部分関数．
+        \item $q_0\in Q$は初期状態．
+        \item $F\subset Q$は受理状態．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    headの動きには$N$（動かない）を追加する流儀もあるが，空な$L,R$動作で置き換えられる．
+\end{remark}
+
+\begin{definition}[ID: instantaneous description / configuration]\mbox{}
+    \begin{enumerate}
+        \item tapeの左端を$1$とし，空白記号以外の記号が書かれているcellの右端を$n\in\N$とすると，\textbf{テープの内容}を$X_1\cdots X_n\in\Gamma^*$と表す．$n=0$のとき，テープに書かれている文字は全て空白記号であることをいう．
+        \item Turing機械の状態が$q$であり，ヘッドが$i$番目のcellにあり，テープの内容が$X_1\cdots X_n$であるとき，この時の\textbf{時点表示}または\textbf{計算状況}の3-組と見做していたものを
+        \[X_1\cdots X_{i-1}qX_{i}\cdots X_n\]
+        と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[move, calculation, halt]
+    IDが$X_1\cdots X_{i-1}qX_{i}\cdots X_n$であるとする（ただし，$i-1=n$である時，$X_i=B$である事になる）．
+    IDの間の\textbf{動作}と呼ばれる二項関係を，次のように定義する．
+    \begin{enumerate}
+        \item $\delta(q,X_i)=(p,Y,L)\;(1<i\le n+1)$である時\footnote{$i=1$である時，headがtapeから落ちるので，移動は定義されない．}，
+        \[X_1\cdots X_{i-1}qX_i\cdots X_n\vdash_MX_1\cdots X_{i-2}qX_{i-1}YX_{i+1}\cdots X_n\]
+        とする．ただし，$i=n+1$で$Y=B$であった場合，これはIDから取り除いておく．
+        \item $\delta(q,X_i)=(p,Y,R)\;(1\le i\le n+1)$である時，
+        \[X_1\cdots X_{i-1}qX_i\cdots X_n\vdash_MX_1\cdots X_{i-1}YpX_{i+1}\cdots X_n\]
+        とする．ただし，$i=n+1$であった場合は$X_{i+1}=X_{n+2}=B$はもちろん取り除くが，$Y=B$である場合はこれは取り除けない．
+        \item 動作の列$I_1\vdash_MI_2\vdash_M\cdots\vdash_MI_m$を\textbf{計算}と呼ぶ．
+        \item また，動作$\vdash_M$を有限回繰り返して得られる関係を$\vdash_M^*$と表し，これも\textbf{計算}と呼ぶ：$I_1\vdash^*_MI_m$．
+        \item ID $I$について，$I\vdash_MJ$となるID $J$が存在しない時，\textbf{$I$で停止している}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[initial ID, accepting ID, accepting language]
+    Turing機械$M=(Q,\Sigma,\Gamma,\delta,q_0,B,F)$ついて，
+    \begin{enumerate}
+        \item 入力$w\in\Sigma^*$に対して，ID $q_0w$を\textbf{初期ID}または\textbf{初期計算状況}という．
+        \item $q\in F$について，ID $\alpha_1q\alpha_2\;(\alpha_1,\alpha_2\in\Sigma^*)$を\textbf{受理ID}または\textbf{受理計算状況}という．
+        \item 受理言語とは，次の集合をいう：\[L(M):=\{w\in\Sigma^*\mid \exists p\in F,\;\exists\alpha_1,\alpha_2\in\Sigma^*,\;[q_0w\vdash^*_M\alpha_1p\alpha_2]\}.\]
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Turing機械における停止の概念]\label{prop-haltness-in-Turing-machine}
+    Turing機械$M=(Q,\Sigma,\Gamma,\delta,q_0,B,F)$ついて，$\delta'$を次のように定め，新たにTuring機械$M'$を考える．
+    \[\delta'(q,X):=\begin{cases}
+        \delta(q,X),&q\notin Fのとき,\\
+        \mathrm{undefined},&q\in Fのとき.
+    \end{cases}\]
+    このとき，次が成り立つ．
+    \begin{enumerate}
+        \item $L(M)=L(M')$．
+        \item $w\in L(M')$であることと，$w$が停止する計算によって受理されることとは同値．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    即ち，Turing機械において，受理することと停止することとを等価にするようなTuring機械の還元算譜が存在するから，
+    事実上等価に扱って良い，ということだろうか？
+\end{remarks}
+
+\begin{definition}[recursively enumerable set]
+    Turing機械によって受理される言語を，\textbf{帰納的可算言語}という．
+    言語であって，帰納的可算集合であるようなものだからである．$\Sigma^*$に関する相対位相．
+\end{definition}
+
+\begin{definition}[recursive / computable / decidable set]
+    Turing機械$M=(Q,\Sigma,\Gamma,\delta,q_0,B,F)$ついて，
+    \begin{enumerate}
+        \item 全ての入力$x\in\Sigma^*$に対して，$M$は停止するとき，$M$は\textbf{停止するTuring機械}であるという．
+        \item 停止するTuring機械によって受理される言語を\textbf{帰納的集合}という．
+        \item 集合$L$については，帰納的であるとき\footnote{特性関数が計算可能であるという定義も存在する}，\textbf{決定可能}であるともいう．帰納的でないことを\textbf{決定不可能}ともいう．
+    \end{enumerate}
+\end{definition}
+
+\section{Turing機械による関数の計算}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    再帰的関数(Kleene, 1952)の定義「初期関数から，合成・再帰的定義・最小化作用素による定義の３種を有限回施して得られる部分関数の閉包を再帰的（部分）関数という．」
+    のTuring機械による特徴付けを得る．
+    帰納的関数は決定可能で，部分帰納的関数は半決定可能である．
+    yes以外の場合は停止するかもわからないクラスが，部分関数$\N\nrightarrow\N$に対応する．
+\end{tcolorbox}
+
+\begin{definition}[decidable / computable]
+    有限の入力を持つ（部分）関数$f:\N^k\nrightarrow\N$がTuring機械によって\textbf{計算可能}であるとは，
+    次のように動くTuring機械$M$が存在することをいう．
+    \begin{enumerate}
+        \item 各$(i_1,\cdots,i_k)\in\N^k$に対して，$M$のtapeに$0^{i_1}10^{i_2}1\cdots 10^{i_k}$が入力として与えられる．
+        \item $f(i_1,\cdots,i_k)$が定義されているときは，記号列$0^{f(i_1,\cdots,i_k)}$をtapeの内容として停止する．
+        \item $f(i_1,\cdots,i_k)$が定義されていないときは，停止しない．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    一般にはTuring機械$M$ではなく，一般の算譜（定義\ref{def-algorithm}）で良い．
+    なお，未定義動作には全て停止させるTuring機械の算譜がある（命題\ref{prop-haltness-in-Turing-machine}）から，
+    定義としては，問題$\N\nrightarrow\N$の未定義入力については，何を返しても，停止しなくても良い．
+\end{remark}
+
+\begin{definition}[(total) recursive function, partial recursive function]
+    Turing機械によって計算される関数を\textbf{帰納的関数}という．
+    Turing機械によって計算される部分関数を\textbf{部分帰納的関数}という．
+\end{definition}
+
+\section{Turing機械の変種}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    \begin{description}
+        \item[off-line Turing machine] 計算量理論で用いられるモデル．
+        \item[counter machine] tapeの代わりにcounterを持ったモデル．オフラインTuring機械のような入力テープと2つのカウンタがあればTuring機械と同等の計算能力をもつことが知られている．
+        \item[pushdown automaton] ２つのstackでTuring機械と同等の計算力を持つという点ではcounter機械に一致する．
+        \item[lambda calculus] LISPとして実装されている．
+        \item[random access machine] 通常の計算機をモデル化したもの．アルゴリズムの時間やメモリの使用量はこのランダムアクセス機械で評価されることが多い．
+        \item[parallel random access machine] 並列コンピューティングに適用可能なアルゴリズムを設計するための抽象機械である．フリンの分類によれば，PRAMはMIMD型コンピュータに相当する．
+    \end{description}
+\end{tcolorbox}
+
+\subsection{非決定性Turing機械}
+
+\begin{definition}[nondeterministic Turing machine]
+    遷移関数を，遷移関係$\delta\subset(Q\times\Gamma)\times(Q\times\Gamma\times\{L,R\})$に変更したものを\textbf{非決定性Turing機械}という．
+\end{definition}
+
+\subsection{multitape Turing機械}
+
+\begin{definition}[multitape Turing machine]
+    $k$本のtapeを持つTuring機械を\textbf{$k$-tape Turing機械}という．
+    \begin{enumerate}
+        \item うち１本のみを入力用に使う．
+        \item 状態$q$で各テープから$X_1,\cdots,X_k\in\Sigma$を読んだとき，それに従って状態を$\pr_1(\delta(q,X_1,\cdots,X_k))$に変え，$\pr_2(\delta(q,X_1,\cdots,X_k))$を書き込み，各headを$\pr_3(\delta(q,X_1,\cdots,X_k))$方向に移動する．
+        従って，$\delta\subset(Q\times\Gamma^k)\times(Q\times\Gamma^k\times\{L,R\})$である．
+    \end{enumerate}
+\end{definition}
+
+\subsection{両方向に無限の長さを持つtape}
+
+\subsection{off-line Turing機械}
+
+計算量理論で用いられるモデル．
+
+\begin{definition}[off-line Turing machine]
+    入力$x\in\Sigma^*$は特殊な記号に挟まれた$\not cx\$$が印字された\textbf{入力テープ}で渡され，これはread-onlyである．
+    これの各cellを読むような書き込むことのできない，$k$-tape Turing機械を\textbf{オフラインTuring機械}という．
+\end{definition}
+
+\subsection{多次元tape Turing機械}
+
+両方向に無限の長さを持つtapeをさらに拡張して，$n$次元のcellに分割された$n$次元tapeを持ったTuring機械も考えられる．
+
+\subsection{線形拘束オートマトン}
+
+\begin{definition}[LBA: linear bounded automaton]
+    tapeの長さが有限で，特に入力文字列$\abs{w}=n$に対して長さ$\exists k\in\N,\;kn$に制限されるTuring機械を\textbf{線形拘束オートマトン}という．
+    この制限によりLBAはある意味ではチューリングマシンよりも実在のコンピュータの正確なモデルと言える．
+\end{definition}
+
+\begin{definition}[context-sensitive grammar]
+    \textbf{文脈依存文法}とは，形式文法$G=(V,T,P,S)$であって，$P$の生成規則が次のように表せるものをいう：
+    \begin{enumerate}
+        \item $\alpha A\beta\to\alpha\gamma\beta\quad(A\in V,\alpha,\beta\in(V\cup\Sigma)^*,\gamma\in(V\cup\Sigma)^+)$．
+        \item $S\to\epsilon$．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    この２つ目の規則を許すことで、空文字列を含む文脈依存言語の定義が可能になり、文脈依存言語が文脈自由言語を真に含むと言えるようになる。
+    文脈依存言語の文法で制限されていることは、ある文字列から短い別の文字列へのマッピングを持たないことである．
+\end{remark}
+
+\begin{proposition}[文脈依存文法の特徴付け]
+    次の条件を満たす形式文法は，文脈依存文法である．
+    \[P=\{(\alpha,\beta)\in(V\cup\Sigma)^*\times(V\cup\Sigma)^*\mid\abs{\alpha}\le\abs{\beta}\}.\]
+\end{proposition}
+\begin{remark}
+    この文法では生成規則を適用したときに文字列の長さが減ることがないので、「単調文法」(Monotonic Grammar)とか「非縮小文法」(Noncontracting Grammar)などと呼ばれる。
+    非縮小文法と文脈依存文法は異なるが、同じ言語クラスを定義できるという意味でほぼ等価である（違いは、非縮小文法では空の文字列$\epsilon$を含む言語を生成できない点である）。文脈依存文法で記述された言語$L$に対して、非縮小文法は$L\setminus\{\epsilon\}$を記述できるし、その逆も真である。\footnote{\href{https://ja.wikipedia.org/wiki/文脈依存文法}{文脈依存文法(wikipedia)}}
+\end{remark}
+
+\begin{theorem}
+    言語$L\subset\Sigma^*$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $L$は線形拘束オートマトンによって受理される．
+        \item $L$は文脈依存文法によって生成される．
+    \end{enumerate}
+\end{theorem}
+
+\begin{itembox}[l]{文脈依存言語の決定問題}
+    ある文字列sが文脈依存文法Gで生成される言語に属するか否かという決定問題は、PSPACE完全である。実際、文脈依存文法の中にはその文法認識問題がPSPACE完全なものもある。\footnote{\href{https://ja.wikipedia.org/wiki/文脈依存文法}{文脈依存文法(wikipedia)}}
+\end{itembox}
+
+\section{Churchのテーゼ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    こうした計算理論の結果を総括して，Alonzo Church (03-95)は次の提案をし，これは皆に理解れるている．
+    この提案をChurchのテーゼ(Church's Thesis)という：
+    “計算可能”であるとはTuring機械によって計算できることとしよう．
+\end{tcolorbox}
+
+\section{帰納的可算集合と帰納的集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    集合演算と，Turing機械を素子とした論理回路が構成できるかどうかに
+    同型対応を作っているように見える．
+    分類理論\ref{thm-language-classification}が成り立つ．
+
+    なお，帰納的関数は計算可能な全域関数$\N^k\to\N$のことで，
+    帰納的可算な関数は部分関数$\N^k\nrightarrow\N$のことである．
+    前者の方が定義域には制限を受けているが，関数としては自由度が高い大きいクラスとなっている．
+    層か？
+\end{tcolorbox}
+
+\begin{proposition}[補集合も帰納的]\label{prop-recursive-propagation-over-complement}
+    言語$L\subset\Sigma^*$が帰納的であるならば，その補集合$\overline{L}=\Sigma^*\setminus L$も帰納的である．
+\end{proposition}
+\begin{proof}
+    帰納的言語$L$には，これを受理する停止するTuring機械$M$が存在して$L=L(M)$となる．
+    これに対して，$M$がyesを返すならnoを，$M$がnoを返すならyesを返すような
+    停止するTuring機械$M'$が構成できる．これについて，$\overline{L}=L(M')$である．
+\end{proof}
+
+\begin{proposition}[合併も帰納的（可算）]
+    言語$L_1,L_2\subset\Sigma^*$について，
+    \begin{enumerate}
+        \item $L_1,L_2$が帰納的ならば，$L_1\cup L_2$も帰納的である．
+        \item $L_1,L_2$が帰納的可算ならば，$L_1\cup L_2$も帰納的可算である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $M_1,M_2$をそれぞれ，$L_1,L_2$を受理する（1.については停止する）Turing機械とする．
+    \begin{enumerate}
+        \item $M_1$がyesを返すならそのままyesを，noを返すならば$M_2$に同じ入力を入れて，yesを返すならyesを，これでもnoが返ってきたらnoを出力するTuring機械は，$L_1\cup L_2$を受理する．
+        \item $M_1,M_2$に同時に入力を入れ，どちらかからyesが返ってきたらyesを出力する（他は不問）Turing機械は，$L_1\cup L_2$を受理する．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}
+    言語$L\subset\Sigma^*$について，$L$も$\overline{L}$も帰納的可算であるとき，$L$は帰納的である．
+\end{proposition}
+\begin{proof}
+    $L$を受理するTuring機械を$M_1$とし，$\overline{L}$を受理するTuring機械を$M_2$とする．
+    全ての入力$x\in\Sigma^*$について$x\in L\lor x\in\overline{L}$であるため，新たにTuring機械$M$を，
+    $M_1$からyesが返ってきたらyes，$M_2$からyesが返ってきたらnoを返すとすると，これは停止するTuring機械で，$L=L(M)$．
+\end{proof}
+
+\begin{theorem}\label{thm-language-classification}
+    言語$L\subset\Sigma^*$について，次の３つのいずれかが成り立つ．
+    \begin{enumerate}
+        \item $L$も$\overline{L}$も帰納的である．
+        \item $L,\overline{L}$の一方が帰納的可算で，もう一方は帰納的可算でない．
+        \item $L$も$\overline{L}$も帰納的可算でない．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    停止性判定問題\ref{thm-undecidableness-of-halting-problem}で使う知見である．
+    片方が帰納的であることを証明したら，その補集合も帰納的だと決まってしまうのが，停止するTuring機械が受理する言語のクラス$\mathbf{R}$の特徴である．
+\end{remarks}
+
+\section{決定不能な問題}\label{sec-undecidable-problems}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    計算理論の本領発揮はここからである．
+    文脈自由文法というメタ的な存在を研究対象として定義できたように，
+    Turing機械も研究対象とする．
+    主な手法は還元算譜と標準形の理論である．
+
+    $L_d$は帰納的可算でなく$L_d\notin\RE$，$L_u$は$L_u\in\RE$だが帰納的ではない：$L_u\notin\mathbf{R}$．
+    従って，$\mathbf{R}\subsetneq\RE\subsetneq\{0,1\}^*$がわかる．
+\end{tcolorbox}
+
+\subsection{Turing機械の標準形}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    tape alphabetを$0,1$にするとは，一つ一つの遷移を限りなく一口大にするということである．
+    Assembly言語に少し似ている．
+\end{tcolorbox}
+
+\begin{lemma}[tape alphabetの符号化]\label{lemma-0-1-normal-form-of-Turing-Machine}
+    言語$L\subset\{0,1\}^*$が帰納的可算ならば，
+    特にtape alphabetを，入力アルファベットと混用して$\{0,1,B\}$とするようなTuring機械が存在してこれに受理される．
+    さらに，このTuring機械は$|F|=1$で，その受理状態で停止するとして良い．
+\end{lemma}
+\begin{proof}
+    命題\ref{prop-haltness-in-Turing-machine}より，
+    受理することと停止することは等価にできる算譜がある．
+    その受理状態を１つにまとめる算譜と，一般のTuring機械からtape alphabetを$\{0,1,B\}$に
+    還元する符号化の算譜が必要である．
+\end{proof}
+
+\subsection{Turing機械の符号化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    Turing機械の符号化にあたっては，$0$は個数に意味を持たせることで自然数上の意味論をtape上に載せ，
+    $1$は区切りとして使う．$1$の個数に区切りとしての意味論を載せる．
+    この形式文法（？）の意味論の射程は極めて広いようだ．
+\end{tcolorbox}
+
+\begin{definition}[encoding of Turing machine]\mbox{}\label{def-encoding-of-Turing-machine}
+    \begin{enumerate}
+        \item 補題\ref{lemma-0-1-normal-form-of-Turing-Machine}の標準形に還元したTuring機械は，一般に
+        \[M=(Q=\{q_1,\cdots,q_n\},\{0,1\},\{0,1,B\},\delta,q_1,B,\{q_2\})\]
+        と表せる．
+        \item 記号$0,1,B$をそれぞれ$X_1,X_2,X_3$とし，headの動く方向$L,R$は$D_1,D_2$とする．
+        \item 動作（ID間の二項関係）$\delta(q_i,X_j)=(q_k,X_l,D_m)$は，記号列$0^i10^j10^k10^l10^m$に符号化する．
+        \item Turing機械$M$の符号化は，$M$の動作の符号化$\{\mathrm{code}_i\}_{i\in[r]}$を用いて，$111\mathrm{code}_111\mathrm{code_2}11\cdots 11\mathrm{code}_r111$とする．
+        \item 符号化全体をCODEとし，Turing機械全体をTMとすると，今定めた符号化は写像CODE$\to$TMを定め，これは単射ではない．Turing機械の符号化は動作のtable $(\mathrm{code}_i)_{i\in[r]}$の順番に関して自由度が残るからである．
+        \item Turing機械$M$と入力$w\in\{0,1\}^*$について，組$(M,w)$の符号化$\langle M,w\rangle\in\{0,1\}^*$を$M$の符号化の後に$w$を並べて得られる文字列とする．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    Turing機械$M=(Q=\{q_1,\cdots,q_3\},\{0,1\},\{0,1,B\},\delta,q_1,B,\{q_2\})$で，
+    \[\delta=\left\{\begin{array}{ll}
+        ((q_1,1),(q_3,0,R)),&((q_3,0),(q_1,1,R)),\\
+        ((q_3,1),(q_2,0,R)),&((q_3,B),(q_3,1,L))
+    \end{array}\right\}\]
+    とする．このとき，$M$の符号化は
+    \[1110^110^210^310^110^2110^310^110^110^210^2110^310^210^210^110^2110^310^310^310^210^1111\]
+\end{example}
+
+\begin{proposition}\label{prop-encoding-of-Turing-machine-is-computable}
+    言語$L=\{y\in\{0,1\}^*\mid yは或る\mathrm{Turing}機械の符号化となっている\}$は帰納的集合である．
+    即ち，任意の記号列$y\in\{0,1\}^*$に対して，これを符号化とするTuring機械が存在するかどうかを判定する停止するTuring機械$M_{\mathrm{form}}$が存在する．
+\end{proposition}
+\begin{proof}
+    
+\end{proof}
+
+\subsection{枠組み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    こうして計算理論の枠組みが整備される．$0,1$は必ずしも扱いやすくはないので，
+    同型$(w_i):\N\to\{0,1\}^*$を取り，自然数論の上に構築される．
+\end{tcolorbox}
+
+\begin{definition}[problem]
+    部分関数$\N\to\N$，あるいはそれを定めるメタ言語の文字列を\textbf{問題}という．
+    未定義のものがあって良い，これはTuring機械が停止しないことに対応する．
+    また，多価関数（関係）として定義しても良い．
+\end{definition}
+
+\begin{definition}[algorithm]\label{def-algorithm}
+    処理の手順を適切な言語で定めたものを\textbf{算譜}という．
+    特に，遷移（部分）関数$\delta\subset((Q\times\Gamma)\times(Q\times\Gamma\times\{L,R\}))$を\textbf{算譜}という．
+    勿論多価関数（関係）として定義しても良い．
+\end{definition}
+\begin{remark}
+    Churchのテーゼは，算譜と機械を同義に扱っているというのが興味深い．
+    これが計算理論の摩訶不思議な雰囲気の始まりである．
+    計算理論は物理学とどう関わってくるのか．
+\end{remark}
+
+\subsection{受理の認識機械の非存在}
+
+\begin{theorem}[受理の認識機械の非存在]\label{thm-受理の認識機械の非存在}
+    \[L_d=\left\{w_i\{0,1\}^*\;\middle|\;\begin{array}{l}
+        w_iは或る\mathrm{Turing}機械M_{w_i}の符号化であり，\\
+        それは文字列w_iを受理する：w_i\in L(M_{w_i})
+    \end{array}\right\}\]
+    は帰納的可算集合でない．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[表の定義] 
+    $\{0,1\}^*$の要素の列$(w_i)_{i\in\N}:\N\to\{0,1\}^*$を
+    \[\epsilon,0,1,00,01,11,000,001,010,011,100,101,110,111,\cdots\]
+    とする．\footnote{${}^{\omega>}\{0,1\}\simeq\{\epsilon,0,1\}^\N$より，これは全射ではないはずである．
+    かと言ってこの列に含まれない記号列を挙げるアイデアもない．いや，$\{\epsilon,0,1\}^\N$の有限な部分集合に限れば全射か？
+    無限長のものは生成しないのか．じゃあ，${}^{\omega>}\{0,1\}\simeq\{\epsilon,0,1\}^\N$が間違っているのか．
+    正しくは${}^{\omega>}\{0,1\}\hookrightarrow\{\epsilon,0,1\}^\N$か．}
+    $i$番目の要素$w_i$を符号化とするTuring機械を，存在するならば$M_{w_i}$と名付ける．
+    これを用いて，表$(a_{ij})_{i,j\in\N}:\N^2\to\{0,1\}$を次のように定める．
+    \[a_{ij}\begin{cases}
+        a_{ij}=0,&M_{w_i}が存在して，w_jを受理しないとき：w_j\notin L(M_{w_i}),\\
+        a_{ij}=1,&M_{w_i}が存在しない，または存在してw_jを受理するとき：w_j\in L(M_{w_i}).
+    \end{cases}\]
+    この表は命題\ref{prop-encoding-of-Turing-machine-is-computable}より計算可能である．
+        \item[構成]
+    ここで，$L_d:=\{w_i\in\{0,1\}^*\mid iはa_{ii}=0を満たす\}$とする．即ち，$w_i\notin L(M_{w_i})$を満たす記号列$w_i$を集めたものである．
+    この言語$L_d$を受理するTuring機械が存在すると仮定すると，$\exists i\in\N,\;L(M_{w_0})=L_d$である．
+    ここで，Turing機械の符号化$w_i$自身を入力と見ると，$w_i\in L(M_{w_i})\lor w_i\notin L(M_{w_i})$が成り立つ．
+    $w_i\in L(M_{w_i})$の時，$a_{ii}=1$であるから，$w_i\notin L_d$である．これは$L(M_{w_0})=L_d$に矛盾．
+    従って$w_i\notin L(M_{w_i})$であるが，この時$a_{ii}=0$であるから，$w_i\in L_d$であり，これも$L(M_{w_0})=L_d$に矛盾．
+    よって，言語$L_d$を受理するTuring機械は存在しない．
+    \end{description}
+\end{proof}
+\begin{remarks}[有限という本質的障壁？]\mbox{}
+    \begin{enumerate}
+        \item 
+    Turing機械を符号化$\{0,1\}^*\supsetneq$CODE$\to$TMを通じて，$(w_i)_{i\in\N}:\N\to\{0,1\}^*$を用いて自然数$\N$に引き戻している．
+    そう，抽象機械のvariationは本質的に可算個なのである．
+    一方で問題全体の集合＝言語の集合は$P(\{0,1\}^*)$だけある．これは連続体濃度である．
+    ここに本質的な限界がある．一つ一つの機械は有限なので，何かしらの方法で無限を創発せねばならぬ．
+    \item この対角線論法は，Turing機械の符号化と，問題文に同じアルファベット$\{0,1\}$を用いて同じ俎上に載せているからこそできる議論である．これが最大のトリックなのではないか．
+    むしろ，このような証明が存在してしまうということが壮大な背理法なのである．
+    \item 言語の分類定理\ref{thm-language-classification}によると，$\overline{L_d}$は帰納的でないことはわかるが，帰納的可算であるかどうかは定まらない．
+    \end{enumerate}
+\end{remarks}
+
+\subsection{万能Turing機械}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    ここで初めて機械と算譜の概念が分離する．なぜだろう．
+    機械の方がメタ的な概念であったから，物理学と数学の関係性はあるのであろう．
+    また，objectというものがプログラムに優先するようになった起源でもあるかもしれない．
+    プログラム自体が入力として引き渡せるというのは現代では自然な感覚であるが，この議論はTuringが36年に作ったものである．
+
+    そしてこのメタ機械＝万能Turing機械についてのメタ定理を得ることになる：
+    停止性判定問題は解けない．
+    一つ下の次元では，$L_u\notin\mathbf{R}$を意味する．
+    即ち，$L_u$を解くTuring機械＝万能Turing機械は，yesの時はいずれ教えてくれるが，
+    noの時は停止するかも予測がつかない．
+    これが，Turing機械の有限性と，その総数の可算性と，言語の連続体濃度とが編み上げている模様である．
+\end{tcolorbox}
+
+\begin{theorem}[万能Turing機械の構成]\label{thm-existence-of-universal-Turing-machine}
+    言語$L_u:=\{\langle M,w\rangle\in\{0,1\}\mid\mathrm{Turing}機械Mはwを受理する\}$
+    は帰納的可算である．
+    即ち，$L_u$を受理するTuring機械$M_1$が存在する．
+\end{theorem}
+\begin{proof}
+    ３本のtapeを持ったmultitape Turing機械$M_1$を構成する．
+    第一のtapeに入力記号列$\langle M,w\rangle$を格納し，第二のテープを$M$のテープを模倣するために使い，第三のテープを$M$の状態をcodeするために使う．
+    $M_1$の算譜$\delta\subset (Q\times\Gamma)\times(Q\times\Gamma\times\{L,R\})$を次のように設定する．
+    \begin{enumerate}
+        \item 第一tapeの内容が，動作$\delta(q_i,X_j)=(q_k,X_l,D_m)$は，記号列$0^i10^j10^k10^l10^m$に符号化する定義\ref{def-encoding-of-Turing-machine}の文法にあっているか確認する．また，同じ接頭語$0^i10^j$をもち，違う接尾語を持つcodeが存在しないことを確認する．また，$1\le j,l\le 3$と$1\le m\le 2$も確認する．この時第三のtapeを使う．
+        \item 入力文字列$w$の内容を第二tapeにコピーし，第三tapeは初期化して初期状態$q_1$の符号化$0$を書き込む．
+        \item 第三tapeの内容が$00$となると，これは$q_2$の符号化であるから，受理として$M_1$を停止させることとする．
+        \item 第二tapeのheadが記号$X_j$を読んでいて，第三tapeの内容が$0^i$である時，第一tapeの内容の$111$で囲まれた領域であって$0^i10^j1$で始まるcodeを探す．
+        このcodeがなければ受理せず停止することとする．このcodeがあり，codeの全体が$0^i10^j10^k10^l10^m$であるとしたら，第三tapeを$0^k$に書き直し，第二tapeに$X_l$を書き込み，$m$に従ってheadを移動させる．step 3に戻る．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[停止性判定問題は解けない]\label{thm-undecidableness-of-halting-problem}
+    言語$L_u$は帰納的ではない．
+\end{theorem}
+\begin{proof}
+    $L_u$を受理する停止するTuring機械$M$が存在すると仮定して，矛盾を示す．
+    この万能Turing機械$M$を用いて構成した次の停止するTuring機械$M_2$は，言語
+    \[\overline{L}_d=\left\{w_i\in\{0,1\}^*\;\middle|\;\begin{array}{l}
+        w_iは\mathrm{Turing}機械の符号化ではない，または\\
+        w_iは\mathrm{Turing}機械の符号化でこれを受理する：w_i\in M_{w_i}.
+    \end{array}\right\}\]
+    を受理する．
+    \begin{enumerate}
+        \item $M_2$はまず$w_i\in\{0,1\}^*$がTuring機械の符号化であるかどうかを確かめ，そうでないならば受理して停止する．これは構成できる．
+        \item 次に，Turing機械の符号化だった場合，$M$に$w_iw_i$を入力することで，これが受理される時とは$w_i\in M_{w_i}$である場合に他ならない．
+    \end{enumerate}
+    従って，$\overline{L}_d$は帰納的であるため，言語の分類定理\ref{thm-language-classification}（命題\ref{prop-recursive-propagation-over-complement}）より，$L_d$も帰納的である．
+    が，これは定理\ref{thm-受理の認識機械の非存在}より，$L_d$は帰納的可算でさえないことに矛盾．
+    従って，$M$は存在しない．
+\end{proof}
+\begin{remarks}
+    「理解してきた，計算不能は有限性と関係があるのか．例えば「解けない時には解けないといえ」と言われると，定義域が広がり過ぎて（対応させなきゃいけない定義域内の元が多過ぎて，原始再帰的には定義できない），有限の範囲では答えを返す算譜がないって感じだろうな．ああ，だから計算不可能性が再帰関数と関係があるのかもしれない．これは要は関数の定義可能性じゃないか．」
+    という昔のメモ書きがある．
+\end{remarks}
+
+\subsection{その他の決定問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    決定問題とは部分関数$\{0,1\}^*\nrightarrow\{0,1\}=\TV$で，
+    有限列の符号化を用いて$\N$の内容をさらに還元したものであり，高度に形式科学的な対象である．
+\end{tcolorbox}
+
+\begin{itembox}[l]{半決定可能な問題＝$\RE\setminus\mathbf{R}$}
+    \begin{itemize}
+        \item Turing機械の停止性問題（定理\ref{thm-undecidableness-of-halting-problem}）
+        \item 受理計算（万能Turing機械，定理\ref{thm-existence-of-universal-Turing-machine}）
+        \item 関係$L(M)=\emptyset$
+        \item 文脈自由文法$G$に対して，関係$L(G)=\Sigma^*$．上と共役な問題だろうな．
+    \end{itemize}
+\end{itembox}
+
+\begin{itembox}[l]{半決定可能でない問題＝$\overline{\RE}$}
+    証明には，「この問題が解けると，停止性問題が解けてしまう」という還元の手法を用いる．
+    \begin{itemize}
+        \item 半決定可能な問題の補集合（命題\ref{prop-recursive-propagation-over-complement}より）
+        \item 関係$L(M)\in\mathbf{R}$．停止性問題に還元できそう．
+        \item 関係$L(M_1)=L(M_2)$．
+    \end{itemize}
+\end{itembox}
+
+\section{計算可能解析学}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    そうか，物理量は有理数なのではなくて，「計算可能実数」「測定可能実数」なのかも知れない．
+\end{tcolorbox}
+
+\begin{definition}[computable reals]
+    実数であって，有限かつ停止する算譜によって，任意精度で計算できるようなものを\textbf{計算可能実数}という．
+\end{definition}
+
+\begin{proposition}
+    計算可能実数の全体は実閉体を成す（Weihrauch 2000, p. 180）．
+\end{proposition}
+
+\begin{quotation}
+    計算可能実関数は計算可能実数を計算可能実数に写す。計算可能実関数の合成関数は再び計算可能となる。任意の計算可能実関数は連続である（Weihrauch 2000, p. 6）。
+    リーマン積分は計算可能な作用素である：換言すれば、任意の計算可能関数について、その積分を数値的に評価するアルゴリズムがある、
+    一様ノルムを取る演算もまた計算可能である。これがリーマン積分の計算可能性を導く。
+    実数値関数の微分作用素は計算不可能であるが、複素関数に対するそれは計算可能である。後者の結果はコーシーの積分公式および積分の計算可能性から従う。前者の否定的結果は（実数値関数上の）微分が不連続であるという事実による。これは、実解析と複素解析の間の隔たりを示している。また、しばしば前述の積分公式や自動微分によってバイパスされる、数値微分の困難さも示している。\footnote{\href{https://ja.wikipedia.org/wiki/計算可能解析学}{計算可能解析学(wikipedia)}}
+\end{quotation}
+
+\begin{thebibliography}{99}
+    \bibitem{Pullum, Geoffrey}%Gerald GazdarとGeoffrey Pullumは、一部に文脈自由的でない構造があるものの、自然言語の大部分は文脈自由であると指摘している\cite{Pullum, Geoffrey}。
+    Pullum, Geoffrey K.; Gerald Gazdar (1982年). “Natural languages and context-free languages”. Linguistics and Philosophy 4: 471–504.
+    \bibitem{Shieber, Stuart}%文脈自由でない部分とは、例えば、スイスドイツ語のcross-serial dependencies\cite{Shieber, Stuart}や、
+    Shieber, Stuart (1985年). “Evidence against the context-freeness of natural language”. Linguistics and Philosophy 8: 333–343.
+    \bibitem{Culy, Christopher}%バンバラ語の畳語である\cite{Culy, Christopher}。
+    Culy, Christopher (1985). “The Complexity of the Vocabulary of Bambara”. Linguistics and Philosophy 8: 345–351.
+    \bibitem{Mealy}
+    Mealy, George H. (1955), "A method for synthesizing sequential circuits" (PDF), Bell System Technical Journal, 34: 1045–1079, doi:\url{10.1002/j.1538-7305.1955.tb03788.x}, MR 0073450.
+    \bibitem{Moore}
+    Edward Moore. "Gedanken-experiments on Sequential Machines". pp. 129 – 153, Automata Studies, Annals of Mathematical Studies, no. 34, Princeton University Press, Princeton, N. J., 1956.
+    \bibitem{pumping}
+    Y. Bar-Hillel, M. Perles, E. Shamir, "On formal properties of simple phrase structure grammars", Zeitschrift für Phonetik, Sprachweissenshaft und Kommunikationsforschung 14 (1961) pp. 143-172.
+    \bibitem{Nerode}
+    A. Nerode, "Linear automaton transformations", Proceedings of the AMS, 9 (1958) pp 541-544.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,2843 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{多様体}
+\author{}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{多様体の基礎概念}
+
+\section{定義}
+
+\subsection{射の構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    群と線型空間の構造を借りる．
+    可微分写像は，線型写像の空間に対応物があること：$J:C^r(U,V)\times U\to M_{np}(\R);(f,x)\mapsto J(f)(x)$が肝要となる．
+\end{tcolorbox}
+
+\begin{notation}[多重指標の空間]\mbox{}
+    \begin{enumerate}
+        \item 非負整数の組$\al=(\al_1,\cdots,\al_n)$を\textbf{多重指標}という．
+        \item $\abs{\al}=\sum_{i=1}^n\al_i$．
+        \item $\al!=\al_1!\cdots\al_n!$．
+        \item $x^\al=x_1^{\al_1}\cdots x_n^{\al_n}$．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[Euclid空間の射]\mbox{}
+    \begin{enumerate}
+        \item 開集合を基本に組み立てるため，集合$S\subset\R^n$から$\R^p$への$C^r$級写像とは，$\exists_{S\subset U\osub\R^n}\;\exists_{\o{f}\in C^r(U,\R^p)}\;\o{f}|_S=f$を満たすことをいう．
+        \item Hom集合は$C^r(U,V)$などと書き，実線型空間の構造を持ち，自然な包含関係$C^0(U,V)\supset\cdots\supset C^\infty(U,V)\supset C^\om(U,V)$が成り立つ．
+        \item Iso集合については，$C^\infty$級の同相写像を\textbf{可微分（同相）写像}といい，$\Diff^r(U,V)$で表す．
+        \item $U$と$V$の次元が違う時は$\Diff^r(U,V)=\emptyset$とする．$\Diff^r(U)=\Diff^r(U,U)$とし，群の構造を持つ．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Euclid空間の自然作用]
+    $U,U_1\subset\R^n,V,V_1\subset\R^p$とする．
+    $(\varphi,\psi)\in\Diff^r(U,U_1)\times\Diff^r(V,V_1)$に対して，自然変換（集合の同型）
+    \[\xymatrix@R-2pc{
+        \Phi(\varphi,\psi):C^r(U,V)\ar[r]&C^r(U_1,V_1)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&\Phi(\varphi,\psi)f:=\psi\circ f\circ\varphi^{-1}
+    }\]
+    が定まる．これを，$U=U_1,V=V_1$の場合を意識して，群$\Diff^r(U)\times\Diff^r(V)$の実線型空間$C^r(U,V)$への群作用と理解する．
+    \[\xymatrix{
+        U\ar[r]^f\ar[d]_-\varphi&V\ar[d]^-\psi\\
+        U_1\ar@{.>}[r]_-g&V_1
+    }\]
+\end{definition}
+
+\begin{definition}[Jacobi行列]\mbox{}
+    \begin{enumerate}
+        \item $C^r$級同相写像は，行列を定める：$J:C^r(U,V)\times U\to M_{np}(\R);(f,x)\mapsto J(f)(x)$．
+        \item 各点$x\in U$に対し，$J:\Diff^r(U)\to\GL_n(\R)$は群準同型を定める．
+        \item $\rank_xf:=\rank(J(f)(x))$と定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    自然な写像$\Phi(\varphi,\psi):C^r(U,V)\to C^r(U_1,V_1)$について，
+    \[\forall_{x\in U}\;\rank_{\varphi(x)}\Phi(\varphi,\psi)f=\rank_xf.\]
+\end{lemma}
+
+\subsection{縮小写像の定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    距離空間の基本的な消息を復習しておく．
+    縮小写像とは，連続写像のクラスである．
+\end{tcolorbox}
+
+\begin{definition}[contract mapping]
+    距離空間$(X,d)$について，写像$f:X\to X$が次を満たす時，\textbf{縮小写像}であるという：$\exists_{r\in(0,1)}\;\forall_{x,y\in X}\;d(f(x),f(y))\le rd(x-y)$．
+\end{definition}
+
+\begin{theorem}
+    縮小写像$f:X\to X$について，
+    \begin{enumerate}
+        \item $f(a)=a$を満たす$a\in X$が存在するならば，ただ一つである．
+        \item $X$が完備である時，$f(a)=a$を満たす$a\in X$が存在する．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{逆写像定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Euclid空間の射には，局所的には，奇妙な可逆性の特徴付けがある．
+    この局所性が多様体の発想となる．
+    可微分写像は線型写像の空間に写される事実を使えば，ランクの半連続性から直ちに従う消息である．
+
+    逆写像定理も陰関数定理も，証明には縮小写像の原理を用いてみる．
+    距離空間のこの構造が情報の根源であると信じる．
+
+    複素関数論の論理展開がその特殊化であるという見方が肝要．
+    それぞれの可逆性の特徴付けがある．
+\end{tcolorbox}
+
+\begin{definition}
+    次の２条件を満たす写像$\varphi:\R^n\to\R^n$を，\textbf{原点の周りの$C^r$級の局所同相写像}という．
+    \begin{enumerate}
+        \item $\exists_{U\in\O(0)}\;\varphi\in C^r(U,\R^n),\varphi(0)=0$．
+        \item $\exists_{W\in\O(0)}\;W\subset U\land \varphi|_W\in\Diff^r(W,\varphi(W))$．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[逆写像定理]
+    $f$を$\R^n$の原点の近傍で定義された$C^r\;(r\in[1,\infty])$級写像$f:U\to\R^n$で，$f(0)=0$とする．
+    この時，次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は原点の周りで$C^r$級局所同相．
+        \item $\rank_0f=n$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] 
+        (2)$\Rightarrow$(1)を示せば良い．
+        $A:=J(f)(0)\in M_n(\R)$とおくと，$\rank A=n$である．
+        この時，$A\times$は線型な可微分同相写像$\R^n\iso\R^n$を定めるから，$\o{f}:=A^{-1}\circ f$も$\o{f}(0)=0$を満たす$C^r$級の写像$U\to\R^n$となり，追加で$J(\o{f})(0)=I_n$を満たす．
+        これについて(1)を導けば，一般の$f=A\circ\o{f}$についても，原点の周りの$C^r$級の局所同相写像となる．
+        \item[可逆射の構成] \mbox{}\\
+        \begin{enumerate}
+            \item まず，原点の近傍で定まる$C^r$級の写像$g:U\to\R^n,g(x):=f(x)-x$を考える．
+            これは$f$による移動の変位ベクトルを表す．
+            以下，$\R^n$の距離$d$をノルム$\abs{x}:=\max_{1\le i\le n}\abs{x_i}$が定めるものとする．
+
+            $g$は特に$C^1$級で（$g'$が距離$d$に関して連続で），仮定より$g'(0)=1-1=0$であるから，$\ep>0$が存在して，任意の$i,j\in[n]$に対し，$\o{U_\ep(0)}\subset (Dg)^{-1}(U_{1/2n}(0))$，すなわち
+            \[\Abs{\pp{g_i}{x_j}}<\frac{1}{2n}\quad\on\o{U_\ep(0)}.\]
+            するとこの範囲では，
+            \begin{align*}
+                \forall_{x,x'\in U_\ep(0)}\;\exists_{\theta\in(0,1)}\quad\abs{g_i(x)-g_i(x')}&=\Abs{\sum^n_{i=1}\pp{g_i}{x_j}(x+\theta(x'-x))(x_j-x'_j)}&\because 多変数の平均値の定理\\
+                &\le n\max_{x\in U_\ep(0),i,j\in[n]}\Abs{\pp{g_i}{x_j}(x)}\abs{x-x'}\le\frac{1}{2}\abs{x-x'}.
+            \end{align*}
+            と評価できる．
+            $i\in[n]$は任意だったから，$\abs{g(x)-g(x')}\le\frac{1}{2}\abs{x-x'}$．
+            特に，$g(x)\le\frac{\abs{x}}{2}$．
+            ここで，$g:U_\ep(0)\to\R^n$は，Lipschitz係数$\frac{1}{2}$の縮小写像であると言いたいが，値域についてはまだよくわからない．
+            同様に，$x,f(x),f(f(x)),\cdots$という点列の挙動も不明である．そこで，$g(x)\le\frac{\abs{x}}{2}$を用いて，値域mの方を先に制限することを考える．
+            \item そこで，$U_{\ep/2}(0)$内の点$y$に至る点$\o{x}$を逆算する．
+            \[\xymatrix@R-2pc{
+                h:U_{\ep/2}(0)\ar[r]&C^r(U,\R^n)\\
+                \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+                y\ar@{|->}[r]&h_y(x):=y-g(x)=y+x-f(x)
+            }\]
+            を考えると，$h_y$は実は$h_y:U_\ep(0)\to U_\ep(0)$（また$\o{U_\ep(0)}\to U_\ep(0)$）を定める．
+            実際，
+            \begin{align*}
+                \forall_{x\in U_\ep(0)}\quad\abs{h_y(x)}&\le\abs{y}+\abs{g(x)}\\
+                &\le\abs{y}+\frac{\abs{x}}{2}<\ep.
+            \end{align*}
+            そして，$h_y$は完備距離空間$(\o{U_{\ep}(0)},d)$上の縮小写像である：
+            \begin{align*}
+                \forall_{x,x'\in U_\ep(0)}\quad\abs{h_y(x)-h_y(x')}=\abs{g(x)-g(x')}\le\frac{1}{2}\abs{x-x'}.
+            \end{align*}
+            したがって，不動点$\o{x}=h_y(\o{x})\in\o{U}_\ep(0)$がただ一つ存在する．
+
+            さらに，$y\in U_{\ep/2}(0)$だから，$\o{x}\in U_\ep(0)$である．
+            実際，$x=\o{x},x'=0$を考えると，$\abs{h_y(\o{x})-y}=\abs{\o{x}-y}\le\frac{\abs{\o{x}}}{2}$より，$\o{x}\le 2\abs{y}<\ep$が従う．
+            \item 以上より，$W:=f^{-1}(U_{\ep/2}(0))\cap U_\ep(0)$とおくと，$f|_W:W\to U_{\ep/2}(0)$は全単射となる．
+            全射性は構成より，単射性は不動点の一意性から従う．$W$は確かに$0$の開近傍となっている．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}\mbox{}
+    \begin{description}
+        \item[方針] $A\times$という同型については，hom関手の消息で局所同相性は簡単に伝播するので，これについては無視してよく，仮定$J(f)(0)=I_n$も追加して良い．つまり，原点では微分が$0$でほぼ変化しないことを仮定して示せば良い．
+        \item[] 
+    \end{description}
+\end{remarks}
+
+\subsection{陰関数定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=逆関数定理の系としての陰関数定理]
+    逆写像定理は同じ次元の間のEuclid空間の射の局所的可逆性を言った．
+    これの系としての陰関数定理は，次元が違えど，低い方の次元に揃えれば局所的に「可逆」であることを言っていると捉えられる．
+\end{tcolorbox}
+
+\begin{corollary}
+    $f\in C^r(U,V)\;(U,V\subset\R^n)$とする．このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は可逆である：$f\in\Diff^r(U,V)$．
+        \item $f$は全単射で，$U$の各点$x\in U$で$J(f)(x)$が正則．
+    \end{enumerate}
+\end{corollary}
+\begin{remarks}
+    層でやったような，局所的な可逆写像を貼り合わせた感覚．
+    しかし複素関数論では，正則性と複素微分可能性が同値であるから，(2)の後半の条件が退化して見えなくなる．
+\end{remarks}
+
+\begin{corollary}[陰関数定理]\label{cor-implicit-function}
+    $r\in[1,\infty],n\le p$について，$f:U\osub\R^n\to\R^p$を$\R^n$の原点の周りで定義された$C^r$級写像で，$f(0)=0$を満たすものとする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $\R^p$の原点の周りの$C^r$級局所同相写像$\varphi$が存在して，$\varphi\circ f(x_1,\cdots,x_n)=(x_1,\cdots,x_n,0,\cdots,0)$が成り立つ．
+        \item $\rank_0f=n$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}[低次元への写像の場合]\label{cor-implicit-function-2}
+    $r\in[1,\infty],n\ge p$について，$f:U\osub\R^n\to\R^p$を$\R^n$の原点の周りで定義された$C^r$級写像で，$f(0)=0$を満たすものとする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $\R^n$の原点の周りの$C^r$級局所同相写像$\psi$が存在して，$f\circ\psi(x_1,\cdots,x_n)=(x_1,\cdots,x_p)$が成り立つ．
+        \item $\rank_0f=p$．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{微分構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可微分多様体論では，極大な$C^r$局所座標系で成り立つ性質に興味がある．
+    そして$C^0$構造とは，開集合を指定することにより位相構造を指定していることに他ならない（ただし，局所Euclid的な位相）．
+\end{tcolorbox}
+
+\begin{definition}[local coordinates]
+    Hausdorff空間$M$について，族$\{U_\al,\varphi_\al\}_{\al\in A}$が\textbf{$C^r$級の局所座標系}であるとは，次の３条件を満たすものを言う：
+    \begin{enumerate}
+        \item $\{U_\al\}_{\al\in A}$は$M$の開被覆である：$\cup_{\al\in A}U_\al=M$．
+        \item ある$n\in\N$が存在して，$\varphi:U_\al\to V\osub\R^n$は位相同型である．\footnote{$M$が連結ならば，$n$は$U_\al$の取り方に依らず一定である．}
+        \item $U_\al\cap U_\beta\ne\emptyset$のとき，$\varphi_{\beta\al}:=\varphi_\beta\circ U_\al^{-1}:\varphi_\al(U_\al\cap U_\beta)\to\varphi_\beta(U_\al\cap U_\beta)$は$C^r$級写像である．\footnote{(2)と併せると，これが$C^r$級の同型であることが従う．}
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[同値なアトラス]
+    $M$の２つの$C^r$-局所座標系$\{U_\al,\varphi_\al\}_{\al\in A},\{V_\beta,\psi_\beta\}_{\beta\in B}$が同値であるとは，それらの合併が再び$M$の$C^r$-局所座標系を定めることをいう．
+    この条件は，任意の$\al\in A,\beta\in B$に関して，$U_\al\cap V_\beta\ne\emptyset$ならば$\varphi_\al\circ\psi_\beta^{-1}:\psi_\beta(U_\al\cap V_\beta)\to\varphi_\al(U_\al\cap V_\beta)$及びその逆写像が$C^r$級になっていることに同値である．
+\end{definition}
+
+\begin{definition}[多様体]
+    Hausdorff空間$M$と$C^r$級の局所座標系$\{U_\al,\varphi_\al\}_{\al\in A}$との組を，\textbf{$C^r$級多様体}という．
+    理論的には極大アトラスを取るが，そうでない場合も適宜考えたいため，多様体を$M=M(M,\{U_\al,\varphi_\al\}_{\al\in A})$と表してしまう．
+    \begin{enumerate}
+        \item $C^0$を位相多様体，$C^\infty$を滑らかな多様体，$C^\om$を実解析的多様体といい，$C^r\;(1\le r\le\infty)$を可微分多様体という．
+        \item $C^r$多様体$M$のアトラスが定める$C^{r'}\;(r'\le r)$微分構造を，\textbf{基礎$C^{r'}$構造}という．
+        \item コンパクトな多様体を閉多様体，コンパクトな連結部分を持たない多様体を開多様体という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    同じ基礎$C^0$構造$M$を持つ２つの$C^r$多様体$M',M''$が$C^r$同相のとき，$M'$と$M''$は$M$の上に同値な$C^r$構造を与えているという．
+\end{definition}
+
+\subsection{多様体の射}
+
+\begin{definition}
+    $M,N$を$C^r$級多様体，$s\le r$とする．
+    \begin{enumerate}
+        \item $f\in C^s(M)$とは，$\forall_{\al\in A}\;f\circ\varphi_\al^{-1}\in C^s(\varphi_\al(U_\al))$と定める．
+        \item $C^s(M)$は実線型空間で，関数の乗法について$\R$上の多元環の構造も持つ．
+        \item $f\in C^s(M,N)$とは，$\forall_{\al\in A,\beta\in B}\;W_{\al\beta}:=U_\al\cap f^{-1}(V_\beta)\ne\emptyset\Rightarrow \psi_\beta\circ f\circ\varphi_\al^{-1}|_{\varphi_\al(W_{\al\beta})}\in C^s(\varphi_\al(W_{\al\beta},\psi_\beta(V_\beta)))$と定める．
+        \item $M$の閉集合$S$から$N$への写像が$C^s$級であるとは，開近傍$S\subset U$と関数$\o{f}\in C^s(U,N)$が存在して，$\o{f}|_{S}=f$を満たすことをいう．
+        \item 多様体の射$\Phi\in C^r(M,N)$は，引き戻しによって，多元環の間の準同型$\Phi^*:C^r(N)\to C^r(M)$を定める．
+        \item 同相写像全体の作る集合を$\Diff^r(M,N)$と表す．$M=N$のとき，$\Diff^r(M)$を$M$上の$C^s$級同相写像の群という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{境界を持つ多様体}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    53p．一旦保留．
+\end{tcolorbox}
+
+\section{基本的な結果}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    局所的に魅力的な性質は，全て$\R^n$から受け継いでいる．
+    その性質は連結部分で打ち止めになる．
+    そこで，大域とを繋ぐ性質が焦点になる．
+    \begin{enumerate}
+        \item 位相多様体は明らかに局所コンパクト．座標近傍$U$は局所コンパクトであるため．
+        \item 局所連結である．任意の開集合$x\in V$に対して，$x\in U\subset V$を満たす連結開集合$U$が存在する．また局所弧状連結でもある．
+        \item 各連結部分は開かつ閉で，その上で一定の次元を持つ．
+        \item 各連結部分は弧状連結である．
+    \end{enumerate}
+\end{tcolorbox}
+
+\subsection{パラコンパクト}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=可微分多様体に第２可算性を仮定する理由]
+    多様体の基本構造は局所Euclid性の貼り合わせである．
+    その貼り合わせ方の言葉を用いて，ある種の有限性のクラスを定義する．
+    そのうち「第２可算」という性質に注目して，そのクラスの多様体を主に考えることとなる．
+    線型空間の有限次元性，可測空間の$\sigma$-有限性などに通ずる．
+\end{tcolorbox}
+
+\begin{definition}[paracompact]
+    位相空間$M$について，
+    \begin{enumerate}
+        \item 開被覆$(U_\al)_{\al\in A}$が局所有限であるとは，$\forall_{x\in M}\;\exists_{U\in\O(x)}\;\Abs{\Brace{\al\in A\mid U_\al\cap U\ne\emptyset}}\in\N$．
+        \item 被覆$(U_\al)_{\al\in A}$の細分とは，被覆$(V_\beta)_{\beta\in B}$であって，$\forall_{\beta\in B}\;\exists_{\al\in A}\;V_\beta\subset U\al$を満たすものをいう．全ての元$U_\al$を縮めて作った被覆をいう．
+        \item 任意の開被覆が，局所有限な開細分\footnote{元すべて開集合であるような被覆を開被覆ということと同様．}を持つとき，$M$を\textbf{パラコンパクト}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[局所コンパクト空間のパラコンパクト性の特徴付け]
+    $M$を連結な局所コンパクト空間（特に位相多様体）とする．次の４条件は同値．
+    \begin{enumerate}
+        \item $M$はパラコンパクト．
+        \item $M$には局所有限な開被覆$(U_\al)_{\al\in A}$で，各$\o{U_\al}$がコンパクトであるものが存在する．
+        \item $M$は$\sigma$-コンパクト：$M$は高々可算個のコンパクト集合$(S_i)_{i\in\N}$の和集合として表せる．
+        \item $M$は高々可算個の開集合$(U_i)_{i\in\N}$の和で表せ，かつ，各$U_i$は相対コンパクトで$\forall_{i\in\N}\;\o{U_i}\subset U_{i+1}$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[Lindelöf]
+    位相空間がLindelöfまたは可算被覆性を持つとは，任意の開被覆が可算部分被覆を持つことをいう．
+\end{definition}
+
+\begin{lemma}[second-countable then Lindelöf]
+    第２可算な位相空間は，可算被覆性を持つ．すなわち，任意の開被覆に対して，可算な部分被覆が存在する．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[私の案] 可算な開基$\U:=(U_i)_{i\in\N}$を１つ取る．
+        $(V_\al)_{\al\in A}$を任意の開被覆とする．
+        任意の$x\in M$について，$\exists_{\al}\;x\in V_\al$であるが，$\U$は$M$の開基だから，ある$i\in\N$が存在して，$x\in U_i\subset V_\al$を満たす．
+        こうして$i$と結びつけられる$V_\al$を集めれば，可算な部分被覆となっている． 
+        \item[stackexchange (ある種の背理法と言える論理マジック)] 
+    \url{
+        https://math.stackexchange.com/questions/2257690/if-x-is-second-countable-then-x-is-lindel%C3%B6f
+    }
+    \end{description}
+\end{proof}
+
+\begin{corollary}
+    位相多様体$M$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $M$は可算基を持つ（第２可算である）．
+        \item $M$はパラコンパクトかつ連結成分が高々可算個である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] まず，連結成分が非可算個であった場合は，全ての連結成分からなる開被覆については可算な部分被覆を持たないので矛盾．よって連結成分は高々可算個である．
+        あとは，それぞれの連結成分がパラコンパクトであることを示せば良い．任意の開被覆に対して，可算な部分被覆が存在する．
+    \end{description}
+\end{proof}
+
+\begin{example}[長い直線]
+    
+\end{example}
+
+\begin{theorem}[normal, metrizable, admit subordinate partition of unity]\mbox{}
+    \begin{enumerate}
+        \item （コンパクトなHausdorff空間は正規であるが，）パラコンパクトなHausdorff空間も正規である：任意の２つの互いに素な閉集合は近傍によって分離できる．局所コンパクトな空間は正規とは限らない．正規性は大域的なコンパクト性と関係が深いようだ．
+        \item (Urysohnの距離付け定理) 位相空間$M$について，次の３条件は同値．
+        \begin{enumerate}[(a)]
+            \item $M$は可分かつ距離付け可能．
+            \item $M$は第２可算かつ正規．
+            \item 埋め込み$M\to\R^\N$が存在する．
+        \end{enumerate}
+        \item (１の分解定理, AC) 位相空間$M$がパラコンパクトなHausdorff空間であることと，任意の開被覆に対して従属する１の分割が存在することは同値．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \url{https://ncatlab.org/nlab/show/paracompact+Hausdorff+spaces+are+normal}
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[パラコンパクト多様体の開被覆]\label{thm-open-cover-of-paracompact-locally-Euclidean-space}
+    $M^n$をパラコンパクトな位相多様体とし，$\U=(\wt{U}_i)$を$M^n$の局所有限な開被覆とする．このとき，$\U$の局所有限な細分$\V=(V_j)$であって，次の条件を満たすものが存在する：
+    $\V$を$M$上の開集合の族と考えたとき，$\V=\V_0\cup\V_1\cup\cdots\V_n$と分解でき，各$\V_k$の元は互いに素な開集合族となっている．
+\end{theorem}
+
+\subsection{可微分多様体の１の分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    以降第２可算な多様体のみを考えると，まず大域に言及するための最強の道具が存在する．
+\end{tcolorbox}
+
+\begin{theorem}
+    $C^r\;(r\in[1,\infty])$多様体$M$の局所有限かつコンパクトな開被覆$(O_\al)_{\al\in A}$について，これに属する１の分解$(f_\al)_{\al\in A}$で，各$f_\al$が$M$上$C^r$級であるものが存在する．
+    \begin{enumerate}
+        \item $\{f_\al\}_{\al\in A}\subset C^r(M)$．
+        \item $0\le f_\al\le 1$．
+        \item $\supp f_\al=\o{x\in M\mid f_\al(x)\ne 0}\subset\O_\al$．
+        \item $\sum_{\al\in A}f_\al=1$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{problem}
+    多様体$M$内の閉集合集合$A$上の関数$f:A\to\R$は，次の条件を満たすとする：
+    \begin{quote}
+        任意の$x\in A$について，近傍$x\in U_p$とその上の$C^\infty$関数$f_p:U_p\to\R$が存在して，$f|_{A\cap U_p}=f_p|_{A\cap U_p}$．
+    \end{quote}
+    この時，$M$の全域で定義された$C^\infty$関数$\wt{f}:M\to\R$であって，$\wt{f}|_A=f$を満たすものが存在する．
+\end{problem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 集合族$\{U_p\}_{p\in I}\cup\{M\setminus A\}$は$M$の開被覆となる．これが局所有限だと仮定しても，$M$の第２可算性，特にパラコンパクト性より，開細分を取り直すことにより，一般性を失わない．
+        よって，これに従属する１の分割$(\rho_\lambda)_{\lambda\in\Lambda}$が存在する．
+        \item 添字集合の部分集合$\Lambda_0:=\Brace{\lambda\in\Lambda\mid\supp\rho_\lambda\cap A\ne\emptyset}$に注目し，対応する開被覆の部分族を$p(\lambda)\in\Brace{p\in I\mid\supp\rho_\lambda\subset U_p}\ne\emptyset$により$(U_{p(\lambda)})_{\lambda\in\Lambda_0}$と取る．
+        これについて，
+        \[\wt{f}:=\sum_{\lambda\in\Lambda_0}\rho_\lambda f_{p(\lambda)}\]
+        とおくと，局所有限性より，$C^\infty$級写像$\wt{f}:M\to\R$が定まる．
+        \item また，任意の$x\in A$について，$x\in U_{p(\lambda)}$を満たす$\lambda\in\Lambda_0$が１つ取れて，
+        \[\wt{f}(x)=\sum_{\lambda\in\Lambda_0}\rho_\lambda(x) f_{p(\lambda)}(x)=f_{p(\lambda)}(x)=f(x)\]
+        となる．
+    \end{enumerate}
+\end{proof}
+
+\subsection{埋め込みと嵌め込み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体は，局所構造と位相構造で定めたので，その２つを保存する射であるところの
+    埋め込みの像と部分多様体とは同値に定める．
+    その定義の言葉は陰関数定理の言葉を用いる．\footnote{だから正則等位集合定理も陰関数定理と呼ぶことがある．}
+    嵌め込みの像も「嵌め込まれた部分多様体」と呼ぶことがある．
+\end{tcolorbox}
+
+\begin{definition}[immersion, imbedding]
+    $C^r$多様体$M^n,N^p$と$f\in C^s(M^n,N^p)\;(1\le s\le r)$について，
+    \begin{enumerate}
+        \item $f$が嵌め込みであるとは，$\forall_{x\in M}\;\rank_xf=n$が成り立つことをいう．\footnote{したがって，$n\le p$が必要．}
+        \item $f$が埋め込みであるとは，$f$が嵌め込みであり，かつ，$f$が$N$の部分空間への位相同型を定めていることをいう．
+    \end{enumerate}
+    自然な包含関係$\Imm^s(M,N)\supset\Imb^s(M,N)\supset\Diff^s(M,N)$が成り立つ．
+\end{definition}
+\begin{remarks}
+    嵌め込みは局所的には単射である（陰関数定理\ref{cor-implicit-function}より，任意の$x_0\in M$とその座標近傍に関して，$f(x_0)$の座標近傍をうまく選ぶと，$f(x_1,\cdots,x_n)=x_1,\cdots,x_n,0,\cdots,0$と表せるため）が，大域的に単射であるとは限らない．
+    有名な反例はDecartesの葉線である．
+    このように，嵌め込みの定義は陰関数定理の前提条件を満たすためにあり，その局所的な問題点を解消するために埋め込みの定義があると考えるとわかりやすい．
+\end{remarks}
+\begin{remark}
+    単射な連続写像が，部分空間への位相同型を定めているとは限らないため（retractionが存在することによって特徴付けられる），
+    単射な嵌め込みは埋め込みとは限らず，すなわち像は部分多様体を定めないが，微分幾何学ではこれを「嵌め込まれた部分多様体」と呼ぶこともある．
+    なお，終域がコンパクトな多様体であるときは同値になる．
+\end{remark}
+
+\begin{definition}[部分多様体]
+    部分集合$S\subset M^n$が$C^s\;(1\le s\le r)$部分多様体であるとは，次の条件を満たすことをいう：
+    \begin{quote}
+        任意の$x\in S$について，$x$を含む$M$の$C^s$級局所座標近傍$U_\al$を適当に取ると，
+        \[S\cap U_\al=\Brace{y\in M\mid y=(y^1_\al,\cdots,y^m_\al,0,\cdots,0)}\]
+        と表せる．
+    \end{quote}
+    \begin{enumerate}
+        \item 閉部分多様体とは，$S$が$M$の閉集合であることをいう．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    多様体の定義も局所的にEuclid空間に引き戻して考えたように，部分多様体の概念も，局所的にEuclid空間に引き戻したときに部分空間になることと定義する．
+\end{remarks}
+
+\begin{theorem}[埋め込み定理 (Whitney 36)]
+    $C^r\;(r\in[1,\infty])$級多様体$M^n$に対して，$l\in\N$が存在して，$\Imb^r(M,\R^l)\ne\emptyset$を満たす．
+    $\Phi\in\Imb^r(M,\R^l)$を取ると，$\Phi(M)$は$\R^l$の閉集合となる（閉部分多様体としての実現）．
+\end{theorem}
+\begin{remark}
+    Whitneyは44年に$l=2n$と取っても成り立つことを示した．Kleinの壺は曲面である（torusと同じ筒から構成される）が，$\R^3$の中では実現されない（埋め込めず，嵌め込みになってしまう）．しかし$\R^4$では，新たな次元に少し動かすことで交わりを解消できる．２次元の組紐は３次元では交わらないようにできる．
+\end{remark}
+
+\begin{corollary}
+    任意の$M^n$について，$p\in\N$が存在して，$\Imb(M^n,N^p)\ne\emptyset$．
+\end{corollary}
+
+\begin{remark}
+    松島多様体では，単射な嵌め込みを「埋め込み」と呼んでおり，これを部分多様体とし，「埋め込み」が位相空間の射の意味での埋め込み，すなわち部分空間への同型写像を定める際に正則部分多様体と呼んでいる．
+    単射な嵌め込みであるが，部分空間の位相とは一致しないことがある．その例は，無理数$\al\in\R$を用いた，$T^2\simeq S^1\times S^1\ni(e^{2\pi i\theta},e^{2\pi i\tau})$への写像
+    \[\xymatrix@R-2pc{
+        \R\ar[r]&T^2\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        t\ar@{|->}[r]&(e^{2\pi it},e^{2\pi i\al t})
+    }\]
+    は単射であり，嵌め込みである．Kroneckerの近似定理より，$\Im\varphi$は$T^2$で稠密である．$\varphi$が位相同型になるように$\Im\varphi$に位相を入れると，これは$T^2$の部分空間の位相とは一致しない．
+\end{remark}
+
+\subsection{部分多様体の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    部分多様体とは結局，任意の局所座標系に関して，局所的には$m$次元の平面上に乗った$n-m$個の関数で定められた「曲面」である．
+    部分多様体の代表的な構成には，正則等位集合としての構成がある．
+\end{tcolorbox}
+
+\begin{theorem}[部分多様体の特徴付け]
+    $S\subset M^n$を部分集合とする．
+    \begin{enumerate}
+        \item $S$は$m\le n$次元の$C^s$級部分多様体である．
+        \item 任意の$x_0\in S$とその周りの$M$の任意の$C^s$級局所座標近傍$\{V_\beta,(y^1_\beta,\cdots,y^n_\beta)\}$とについて，$n-m$個の$C^s$級関数$f^{m+1},\cdots,f^n$が存在して，
+        \[S\cap V_\beta=\Brace{(y^1_\beta,\cdots,y^n_\beta)\in M\mid y^{m+1}_\beta=f^{m+1}(y_\beta^1,\cdots,y_\beta^m),\cdots,y_\beta^n=f^n(y^1_\beta,\cdots,y^m_\beta)}\]
+        と表せる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    部分多様体$S^m\subset M^n$に対して，$S$の余次元を$\codim S:=n-m$で定める．
+\end{definition}
+
+\begin{definition}
+    $f\in C^s(M^n,N^p)$について，
+    \begin{enumerate}
+        \item $\rank_xf<\min(n,p)$を満たす$x\in M$を$f$の臨界点という．
+        \item $f^{-1}(y)\subset M$が$f$の臨界点を含まないとき，$y\in N$を$f$の正則値という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $f\in C^s(M^n,N^p)\;(n\ge p)$について，$y\in N^p$が$f$の正則値ならば，$f^{-1}(y)$は$M$の余次元$p$の$C^s$級（閉）部分多様体を定める．
+\end{theorem}
+\begin{remarks}
+    これは系\ref{cor-implicit-function-2}からすぐに従うので，
+    陰関数定理とも呼ぶ．
+    松島多様体では，各点$p\in U\osub M\subset M'$に対して，$U\cap M=f^{-1}(0)$で，$U$の近傍座標について$f=(f^1,\cdots,f^n)$とすると，$(df^1)_p,\cdots,(df^n)_p$が一次独立である時，と記述されている．
+    これは$f$が正則値であることの言い換えである．関数の微分$df^i\in T^*(M)$を用いている点が興味深い．
+\end{remarks}
+
+\subsection{管状近傍}
+
+\section{例}
+
+\begin{example}[開部分多様体$\GL$]
+    $\GL_n(\R)$は$M_n(\R)$の開集合として$C^\om$多様体となる．つまり１枚の座標で覆われる．
+\end{example}
+
+\begin{example}[積多様体$T^n$]
+    $T^n=S^1\times\cdots\times S^1$として得られる$C^\infty$多様体をトーラスという．
+\end{example}
+
+\begin{example}[代数的多様体$\SL$]
+    \[\SL_n(\R)=\Brace{A\in M_n(\R)\mid\det A=1}\]
+    $\det A$は多項式で，$1$は正則値である．
+\end{example}
+
+\begin{example}[コンパクトなLie群]
+    $M_n(\R)\simeq\R^{n^2}$の，対称行列の作る部分空間は$\R^{\frac{n(n+1)}{2}}$と同一視できる．
+    この間の写像
+    \[\xymatrix@R-2pc{
+        \Psi:M_n(\R)\simeq\R^{n^2}\ar[r]&\R^{\frac{n(n+1)}{2}}\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        X\ar@{|->}[r]&X\cdot {}^t\!X
+    }\]
+    は滑らかな写像で，$O(n)=\Psi^{-1}(I)$と表せる．
+    \begin{enumerate}
+        \item $O(n)$は有界閉集合だから，コンパクトである．
+        \item $I$は正則値である．まず，$A\in O(n)$に関するprecomposition
+        \[\xymatrix@R-2pc{
+            R_A:M_n(\R)\ar[r]&M_n(\R)\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            X\ar@{|->}[r]&XA
+        }\]
+        について，$\Psi\circ R_A=\Psi$が成り立つ．これは可微分同相写像であるから，$J(R_A)(I)$は正則より，両辺のJacobi行列を考えることにより，$\rank(J(\Psi)(A)\cdot J(R_A)(I))=\rank(J(\Psi)(I))$．
+        すなわち，$\rank_A\Psi=\rank_I\Psi=\frac{n(n+1)}{2}$．
+    \end{enumerate}
+    以上より，$O(n)$は次元$\frac{n(n-1)}{2}$の多様体．
+\end{example}
+
+\begin{proposition}[複素Jacobi行列]
+    \begin{align*}
+        J(f,\o{f}/z,\o{z})&:=\begin{pmatrix}\pp{f_1}{z_1}&\pp{f_1}{\o{z_1}}&\cdots&\pp{f_1}{\o{z_n}}\\\pp{\o{f_1}}{z_1}&\ddots&\ddots&\vdots\\\vdots&\ddots&\ddots&\vdots\\\pp{\o{f_p}}{z_1}&\pp{\o{f_p}}{\o{z_1}}&\cdots&\pp{\o{f_p}}{\o{z_n}}\end{pmatrix},&J_1&:=J(z,\o{z}/x,y)=\begin{pmatrix}1&i\\1&-i\end{pmatrix},
+    \end{align*}
+    を，それぞれ列ベクトル$(f_1,\o{f_1},\cdots,f_p,\o{f_p})$と変数$(z_1,\o{z_1},\cdots,z_n,\o{z_n})$とによる$(2p,2n)$行列と，$J_n:=\diag(J_1,\cdots,J_1)$とする．
+    このとき，
+    \[J(\Re f,\Im f/x,y)=J^{-1}_p\cdot J(f,\o{f}/z,\o{z})\cdot J_n.\]
+    特に，$\rank J(\Re f,\Im f/x,y)=\rank J(f,\o{f}/z,\o{z})$．
+\end{proposition}
+
+\begin{example}[複素空間中の代数多様体$U$]
+    $U(n)$は$M_n(\C)$の次元$n^2$のコンパクトな代数多様体である．
+\end{example}
+
+\begin{example}[Lie群]
+    Diffの群対象である．左移動による群の単射準同型$G\mono\Diff^\infty(G);g\mapsto L_g$がある．
+\end{example}
+
+\begin{example}[射影空間]
+    $\R^{n+1}\setminus\{0\}$の点について，$x\sim y:\Leftrightarrow\exists_{\al\ne0}x=\al y$による商空間を$P^n(\R)$で表し，コンパクトな多様体になる．
+    \begin{description}
+        \item[Hausdorff性] 
+        \item[斉次座標] 商空間$P^n(\R)$の元である同値類は$p(x_1,\cdots,x_{n+1})=:(x_1:\cdots:x_{n+1})$などと表し，これを斉次座標と呼ぶ．
+        \item[微分構造] \begin{align*}
+            U_i&:=\Brace{(x_1,\cdots,x_{n+1})\in\R^{n+1}\mid x_i\ne 0},&\wt{U_i}&:=p(U_i)
+        \end{align*}
+        とし，$\varphi_i:U_i\to\R^n$を$\varphi_i(x):=\Brace{\frac{x_1}{x_i},\cdots,\frac{x_{i-1}}{x_i},\frac{x_{i+1}}{x_i},\cdots,\frac{x_{n+1}}{x_i}}$で定めると，$\varphi_i$の定める同値類は，$\sim$に等しい．
+        よって，$\wt{\varphi_i}:\wt{U_i}\mono\R^{n}$が誘導される．これにより，$(\wt{U_i},\wt{\varphi_i})$が局所座標を与えており，$C^\om$級である．座標変換が$p(x)\in\wt{U_i}\cap\wt{U_j}$について$\forall_{k\ne i,j}\;\frac{x_k}{x_j}=\paren{\frac{x_j}{x_i}}^{-1}\frac{x_k}{x_i}$となるためである．
+        \item[コンパクト性] $S^n$の商空間とみなせるため．
+    \end{description}
+\end{example}
+
+\begin{example}[Grassmann多様体]
+    射影空間の考え方を一般化する．
+    非負整数$0\le n\le l$について，$\R^l$の原点を通る$n$次元平面全体の集合を$G(l,n)$と表すと，$n(l-n)$次元のコンパクトな$C^\om$多様体の構造を持つ．
+    また，$P^n(\R)\simeq G(n+1,1)$．
+    $\Gr_n(k):=O(k)/(O(n)\times O(k-n))$と構成できる．
+\end{example}
+
+\begin{example}[Handlebody]
+    非負整数に対して，球体と球面を
+    \begin{align*}
+        D^p&:=\Brace{x\in\R^p\mid\norm{x}\le 1},&S^{p-1}&:=\Brace{x\in\R^p\mid\norm{x}=1},
+    \end{align*}
+    と表す．
+    \begin{enumerate}
+        \item 境界$\partial D^p=S^{p-1}$上の点における近傍$V(\partial D^p)\simeq S^{p-1}\times[0,\ep)$をcollar近傍という（任意の境界を持つ多様体の境界は，このように境界と半開区間との直積空間の形での開近傍を持つことをcollar neighbourhood theoremというBrown 62）．\footnote{\url{https://ncatlab.org/nlab/show/collar+neighbourhood+theorem}}
+        \item 直積空間$D^p\times D^{n-p}$は，$D^p,D^{n-p}$の局所座標系の直積をそのまま微分構造として採用しても，一般的に「かど」が生じて多様体の構造を与えない．$D^1\times D^1$は正方形である．これを解消するために，$\partial D^p\times\partial D^{n-p}$の点には特殊な局所座標を用意し，滑らかな，境界を持つ多様体の構造を入れる．
+        扇型の展開
+        \[\xymatrix@R-2pc{
+            \Brace{(u,v)\in\varphi(U)\mid u^2+v^2<\ep^2,u,v\ge 0}\ar[r]&\Brace{(u',v')\in\R^2_+\mid u'^2+v'^2<\ep^2,-\ep<u'<\ep}\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            (\rho\cos\theta,\rho\sin\theta)\ar@{|->}[r]&(\rho\cos2\theta,\rho\sin2\theta)
+        }\]
+        を用いて，$\Phi:(x^1,\cdots,x^{p-1},u,y^1,\cdots,y^{n-p-1},v)\mapsto(x^1,\cdots,x^{p-1},u',y^1,\cdots,y^{n-p-1},v')$を考えると，これは$\partial D^p\times\partial D^{n-p}$のカラー近傍を$\R^2_+$の開集合に同相に移す．
+        \item コンパクトな境界を持つ滑らかな多様体$M^n$と，そこへの滑らかな埋め込み$f:\partial D^p\times D^{n-p}\mono\partial M$を考える．
+        $V:=M\underset{f}{\cup}(D^p\times D^{n-p})$に，貼り合わせた部分についてはうまくカラー近傍同士を融合して多様体の構造を入れたものを，\textbf{$M$に指数$p$のハンドルを付け加えて得る多様体}という．
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    任意のコンパクトな２次元曲面は，$D^2$から逐次ハンドルを付け加えて得られるhandlebodyとして実現できる．特に，コンパクトな曲面は滑らかな微分構造を持つ．
+\end{theorem}
+
+\begin{theorem}[Morse理論]
+    $n$次元多様体$M$に適切な標高関数が定められているとき，$M$をハンドル体として表示できる．
+\end{theorem}
+
+\section{構成}\label{sec-construction}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体の商空間はHausdorffとは限らないどころか，Euclid空間からスタートしても飛び出る．
+    同値関係に非常に強い制限が必要になる．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 位相空間$X$に対して，部分群$G<\Iso(X)$を\textbf{変換群}という．
+        \item $X$上の同値関係$x\sim y:\Leftrightarrow\exists_{f\in G}\;f(x)=y$により得られる商空間を$X/G$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    $\{\id_{S^n},f\}\simeq \Z/2\Z$の$S^n$に対する作用から得られる多様体$S^n/(\Z/2\Z)$を射影空間$P^{n}(\R)$という．
+\end{example}
+
+\begin{theorem}
+    Hausdorf空間$X$の有限な変換群$F$について，$X/F$は再びHausdorffである．
+\end{theorem}
+
+\section{Whitney位相}
+
+\section{微分構造の存在と一意性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相多様体と可微分多様体では根本的に性質が違う．
+    だから可微分多様体を扱う際，「滑らか」と言ってしまう．
+\end{tcolorbox}
+
+\begin{theorem}
+    $1\le r\le\infty$について，
+    \begin{enumerate}
+        \item $M$を$C^r$多様体とする．基礎$C^r$構造は同じである$C^\infty$多様体が存在する．
+        \item $C^r$同相な$C^\infty$多様体$M',M''$は，$C^\infty$同相である．
+    \end{enumerate}
+\end{theorem}
+
+\section{複素多様体}
+
+偶数次元の滑らかな多様体に，複素構造が入るとは限らない．例えば$S^{2n}$には入らない．
+（一点集合を除いて）コンパクトな複素多様体は$\C^l$には埋め込めない．
+
+\chapter{ベクトル束}
+
+\begin{quotation}
+    滑らかな多様体を，ベクトルバンドルから切り込むのが基調である．
+    この見方が極めて見通しが良い．多様体とは，束という対象である．
+    幾何学とは空間への写像を研究する学問である．
+    すると，嵌め込みの定義も，ベクトル場の押し出しの定義も，納得がいく．
+    接束があまりに重要であるから一般論は隠れがちであるが，ほとんどの幾何学的概念はバンドルで説明すると明快である．
+\end{quotation}
+
+\section{一般論}
+
+有限次元線型空間に，$V\simeq K^n$による位相を入れる．
+
+\subsection{ベクトル束とその射}
+
+\begin{definition}[ベクトル束]
+    位相空間と写像の組$(E,X,\pi:E\to X)$が次の３条件を満たすとき，$X$上の（連続な）\textbf{ベクトル束}という．
+    \begin{enumerate}
+        \item $\pi:E\epi X$は全射な連続写像．
+        \item $E_x:=\pi^{-1}(x)$は$n$次元$K$-線型空間の構造を持つ．\footnote{(3)により，$n$は各連結部分上では一定である．}
+        \item (局所自明性) 各$x\in X$に対して次を満たす近傍$U(x)$が存在する：任意の$y\in U(x)$に対し，$E_y$の基底$e_1(y),\cdots,e_n(y)$が存在し，$E\supset\pi^{-1}(U(x))\iso U(x)\times K^n;\sum^n_{\mu=1}\al^\mu e_\mu(y)\mapsto (y;\al^1,\cdots,\al^n)$は位相同型を定める．\footnote{したがって，$E_x$の$E$の部分空間としての位相が線型空間としての位相と一致している．}
+        この$U(x)$を局所自明性が成り立つ近傍と呼ぶ．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}[切断の萌芽]
+    $e_i(y)$を基底選択の写像$e_i:U(x)\to E_y$と見る視点がとてもわかりやすい．\textbf{実はこれが切断である}．
+    $y\in U(x)$を動かしても，$e_i$がうまく規定を取り続けることにより，連続に次の$E_y\simeq K^n$にうつれるので，局所的に自明な接束になっている．
+    $E|_{U(x)}=\pi^{-1}(U(x))\simeq U(x)\times K^n$は$E$の局所的構造を表すと捉える．
+    また，$y\mapsto e_\mu(y)\mapsto \al^\mu$という構造（$X$の点からベクトル束に上がってそこの係数を取る：これが切断の成分）も捉えられる．
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $\pr_1:X\times K^n\epi X$はベクトル束である．これを\textbf{積バンドル}という．
+        \item 積バンドルに同型なバンドルを，自明なバンドルという．
+        \item ベクトル束の制限$\pi|_Y:\pi^{-1}(Y)\to Y$を$E|_Y$などと表す．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[ベクトル束の射]
+    $\pi:E\to X,\pi_1:F\to X$をベクトル束とする．
+    写像$\varphi:E\to F$が次の条件を満たすとき，$E$から$F$の\textbf{準同型}という．
+    \begin{enumerate}
+        \item $\varphi$は連続写像．
+        \item 次の図式は可換である：
+        \[\xymatrix{
+            E\ar[rr]^-\varphi\ar[dr]_-\pi&&F\ar[dl]^-{\pi_1}\\
+            &X
+        }\]
+        \item 任意の$x\in X$について，$\varphi|_{E_x}$は$E_x$から$F_x$への準同型を与える．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[部分バンドル]
+    ベクトル束$\pi:E\to X$について，部分空間$F\subset E$が次の３条件を満たすとき，$(F,X,\pi|_{F})$を\textbf{部分バンドル}という．
+    \begin{enumerate}
+        \item $\pi|_F:F\to X$は全射．
+        \item $(F,X,\pi|_{F})$はベクトル束である．
+        \item 包含写像$i:F\mono E$はベクトル束の準同型となる．
+    \end{enumerate}
+\end{definition}
+
+\subsection{切断}
+
+\begin{definition}[section]
+    ベクトルバンドル$\pi:E\to X$に対して，部分空間$Y\subset X$からの連続な切断$\sigma:Y\to E$を\textbf{$Y$上の切断面}という：$\pi\circ\sigma=\id_X$．
+    $Y$上の$E$の切断面全体の作る集合を$\Gamma(E|Y)$で表す．特に$Y=X$のとき，$\Gamma(E)$と表す．
+\end{definition}
+\begin{remarks}
+    切断とは，$y\in X$から，線型空間$E_y$に上がり，そこでの係数を取る対応
+    $\sigma^i:y\mapsto e_i(y)\mapsto \al^i$に他ならない．だから添字は上．
+\end{remarks}
+
+\begin{lemma}[切断の特徴付け]
+    $\pi:E\to X$をベクトル束とする．写像$\sigma:X\to E$について，
+    \begin{enumerate}
+        \item $\sigma\in\Gamma(E)$である．
+        \item $\forall_{x\in X}\;\sigma(x)\in E_x$かつ各$U(x)$上で$\sigma$は連続である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] $\pi(\sigma(x))=x\Leftrightarrow\sigma(x)\in\pi^{-1}(x)=E_x$．
+        \item[(2)$\Rightarrow$(1)] $\sigma(x)\in E_x=\pi^{-1}(x)$ならば，$\pi(\sigma(x))=x$．
+    \end{description}
+\end{proof}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $\Gamma(E|Y)$は写像の和について$K$-線型空間となる．
+        \item $C^0(Y)$は写像の積について$K$上の可換な多元環となる．
+        \item $\Gamma(E|Y)$は各店積について$C^0(Y)$上の加群となる．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\sigma_1+\sigma_2$も，$\al\sigma$も，$x$による値が線型空間$E_x$からでないため．
+        \item 線型空間の構造の上に，積の構造$f\cdot g$も考えられる．
+        \item 各点毎に考えても$f\sigma\in\Gamma(E|Y)$となる．実際，$f\sigma(x)=f(x)\sigma(x)\in E_x=\pi^{-1}(x)$より，$\pi(f(x)\sigma(x))=x$．
+    \end{enumerate}
+\end{proof}
+\begin{remark}
+    $C^0(X)\simeq\Gamma(X\times K)$．$\sigma:X\to K$は連続写像を与えるため．
+\end{remark}
+
+\begin{definition}[切断の押し出し]
+    準同型$\varphi:E\to Y$について，$\sigma\in\Gamma(E)$の押し出し$\varphi_*\sigma\in\Gamma(F)$が定まる．
+    $\varphi_*:\Gamma(E)\to\Gamma(F)$は$C^0(X)$-加群の準同型を定める．
+\end{definition}
+
+\subsection{束写像}
+
+\begin{definition}
+    ２つのベクトル束$\pi:E\to X,\pi_1:F\to Y$を考える．連続写像$\varphi:E\to F$が次の条件を満たすとき，これを\textbf{バンドル写像}という．
+    \begin{enumerate}
+        \item 連続写像$f:X\to Y$が存在して図式は可換になる：
+        \[\xymatrix{
+            E\ar[r]^-\varphi\ar[d]_-\pi&F\ar[d]^-{\pi_1}\\
+            X\ar@{.>}[r]^f&Y
+        }\]
+        このとき，$\varphi$を$f$の\textbf{持ち上げ}という．
+        \item 任意の$x\in X$について，$\varphi|_{E_x}$は同型$E_x\simeq F_{f(x)}$を定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[誘導バンドル／引き戻し]
+    \[\xymatrix{
+        f^*(F)\ar@{.>}[r]\ar@{.>}[d]&F\ar[d]^-{\pi}\\
+        X\ar[r]^-f&Y
+    }\]
+    ファイバー積$f^*(F):=F_{\pi_1}\underset{Y}{\times}{}_fX$と，射影の制限$\pi_2:f^*(F)\to X$とを，$F$の\textbf{誘導バンドル}という．
+\end{definition}
+
+\begin{theorem}
+    \[\xymatrix{
+        E\ar[r]^-\varphi\ar[d]_-\pi&F\ar[d]^-{\pi_1}\\
+        X\ar[r]^-f&Y
+    }\]
+    図式を可換にする束写像$\varphi:E\to Y$に対して，ベクトル束の同型$E\simeq f^*(F)$が成り立つ．
+\end{theorem}
+
+\begin{example}[Whitney和]\mbox{}
+    \begin{enumerate}
+        \item 積写像$\pi\times\pi_1:E\times F\to X\times Y$を直積バンドルという．
+        \item 対角写像$\Delta:X\to X\times X$に関する誘導バンドル$\Delta^*(E\times F)=:E\oplus F=\Brace{(e,f,x)\in E\times F\times X\mid \pi(e)=\pi_1(f)=x}$を\textbf{Whitney和}という．
+        \[\xymatrix{
+            E\oplus F\ar@{.>}[r]\ar@{.>}[d]&E\times F\ar[d]^-{\pi\times\pi_1}\\
+            X\ar[r]^-\Delta&X\times X
+        }\]
+        $E\oplus F=\Brace{(x,y)\in E\times F\mid \pi(x)=\pi_1(y)}$で，$\pi\oplus\pi_1:E\oplus F\to X$はその値である．
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}[Whitney和の性質]\mbox{}
+    \begin{enumerate}
+        \item $(E\oplus F)_x=E_x\oplus F_x$．
+        \item $(E\oplus F)\oplus G\simeq E\oplus(F\oplus G)$．
+        \item $C^0(X)$-加群として$\Gamma(E\oplus F)\simeq\Gamma(E)\oplus\Gamma(F)$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{ベクトル束の構成}
+
+\begin{lemma}
+    $X$の部分集合族$(S_\al)_{\al\in A}$について，
+    $X=\cup_{\al\in A}S_\al$とする．
+    $(S_\al)$の位相が次を満たすならば，$X$上に，各$S_\al$上では$S_\al$の位相と一致し，各$S_\al$を開集合とする位相がただ一つ定まる．
+    \begin{quote}
+        $S_\al\cap S_\beta$では，$S_\al$も$S_\beta$も同じ相対位相を定め，かつ，いずれから見ても開集合となっている．
+    \end{quote}
+\end{lemma}
+
+\begin{example}[準同型バンドル]
+    ベクトル束$\pi:E\to X,\pi_1:F\to X$について，準同型バンドル$\wt{\pi}:\Hom(E,F)\to X$を作れる．
+    \begin{enumerate}
+        \item $\Hom(E,F):=\cup_{x\in X}\Hom(E_x,F_x)$とする．
+        \item 局所自明な近傍による開被覆$(U_\al)$について，$\cup_{x\in U_\al}\Hom(E_x,F_x)\simeq_\Set U_\al\times\Hom(K^n,K^m)$．この左辺を$S_\al$とし，右辺による直積位相を定める．
+    \end{enumerate}
+    $E^*:=\Hom(E,X\times K)$を\textbf{双対バンドル}という．$E_x^*$は$E_x$の双対空間となる．
+\end{example}
+
+\begin{example}[テンソルバンドル]
+    
+\end{example}
+
+\begin{example}[外積バンドル]
+    
+\end{example}
+
+\section{普遍ベクトル束}
+
+\subsection{モノドロミー定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+        誘導バンドルはホモトピー類で決まる．
+        これは解析接続の議論でもやった．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X$をパラコンパクトなHausdorff空間とし，２つの連続写像$f,g:X\to Y$はホモトープであるとする．
+    このとき，任意のベクトル束$\pi_1:F\to Y$に対して，ファイバー束はベクトル束として同型である：$f^*(F)\simeq g^*(G)$．
+\end{theorem}
+
+\subsection{普遍ベクトル束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    他のあらゆる同ランクのベクトルバンドルは，普遍ベクトル束の引き戻し（誘導バンドル）として定まる．
+\end{tcolorbox}
+
+\begin{notation}
+    $\R^l$の原点を通る$n$次元平面$H$について，$H\in G(l,n),\{H\}\subset\R^l$と表す．
+\end{notation}
+
+\begin{definition}[universal vector bundle]
+    \[E(l,n):=\Brace{(H,x)\in G(l,n)\times\R^l\mid x\in\{H\}}\]
+    について，第一射影の制限$\pr_1:E(l,n)\to G(l,n)$を\textbf{普遍ベクトルバンドル}という．
+\end{definition}
+
+\begin{theorem}
+    $X$をパラコンパクトなHausdorff空間とし，$\pi:E\to X$を$n$次元の$K$-ベクトル束とする．
+    このとき，次の３条件は同値である．
+    \begin{enumerate}
+        \item $E$は自明なベクトルバンドルの部分バンドルである．
+        \item ある自然数$l$と連続写像$f:X\to G(l,n;K)$が存在して，$E=f^*(E(l,n;K))$と表せる．
+        \item $X$のある有限開被覆$(U_i)_{i\in[s]}$が存在して，$E|_{U_i}$は自明なベクトル束となる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $E,F$を$X$上のベクトル束とする．２つの連続写像$f,g:X\to G(l,n)$について，$E=f^*(E(l,n)),F=g^*(E(l,n))$とする．
+    ベクトルバンドルが同型$E\simeq F$ならば，$\o{f},\o{g}$はホモトープである．
+\end{theorem}
+
+\section{滑らかなベクトル束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Diff内のベクトル束対象$pi:E\to M$を滑らかなベクトル束という．$E$も$M$も可微分多様体で，$\pi$は$C^\infty$級．
+\end{tcolorbox}
+
+\subsection{定義と例}
+
+\begin{definition}[滑らかなベクトル束]
+    $M$を滑らかな多様体とする．
+    ベクトル束$\pi:E\to M$について，全空間$E$も滑らかな多様体で，局所自明性を与える切断$e_1,\cdots,e_p$が滑らかな対応
+    \[\xymatrix@R-2pc{
+        E|_U\ar[r]&U\times K^p\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \sum^p_{\mu=1}\al^\mu e_\mu(y)\ar@{|->}[r]&(y;\al^1,\cdots,\al^p)
+    }\]
+    を開部分多様体$E|_{U}=\pi^{-1}(U)$と積多様体$U\times K^p$の間に定めるとき，$E$を\textbf{滑らかなベクトル束}という．
+\end{definition}
+\begin{remark}
+    $\pi:E\to X$も$e_\mu:U\to E;y\mapsto e_\mu(y)$も滑らかで，$\forall_{a\in E}\;\rank_a\pi=n$である．
+\end{remark}
+
+\begin{example}
+    普遍バンドル$\pi:E(l,n)\to G(l,n)$は滑らかである．
+\end{example}
+
+\subsection{多様体上のベクトル束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    滑らかなベクトル束は，直ちに３条件が成り立つ．
+\end{tcolorbox}
+
+\begin{theorem}
+    $\pi:E\to M$を滑らかなベクトル束とする．次の３条件が成り立つ．
+    \begin{enumerate}
+        \item $E$は自明なベクトルバンドルの部分バンドルである．
+        \item 自然数$l$と連続写像$f:M\to G(l,n;K)$とが存在して，$E=f^*(E(l,n;K))$となる．
+        \item $M$のある有限開被覆$(U_i)_{i\in[s]}$が存在して，$E|_{U_i}$は自明な滑らかなベクトルバンドルとなる．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    可算基を持つ可微分多様体はパラコンパクトだから，定理\ref{thm-open-cover-of-paracompact-locally-Euclidean-space}が成り立つ：局所有限な開被覆$(V_j)$で，$n+1$個の互いに交わらない開集合族に分割できるものが取れる．
+    それぞれの開集合族に属する開集合は$\R^n$（の開集合）と同相だから，$M$上の任意のベクトル束は$M$上で自明になる．
+\end{proof}
+
+\subsection{基礎$C^0$構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここでも同様，基礎$C^0$構造によりほぼ定まる．
+    $M$上のベクトル束を取り扱う際は，連続なベクトル束も滑らかなベクトル束も，本質的には同じ概念として取り扱うことができる．
+\end{tcolorbox}
+
+\begin{lemma}
+    $f,g:M\to N$を滑らかな多様体の射とする．$f,g$が連続写像としてホモトープならば，$C^\infty$級の意味でホモトープである．
+\end{lemma}
+
+\begin{theorem}
+    $M$を滑らかな多様体とする．
+    \begin{enumerate}
+        \item $\pi:E\to M$を$M$上の連続なベクトル束とする．このとき，$M$上の滑らかなベクトル束$\pi:E_s\to M$が存在して，$E$と$E_s$は連続なベクトル束として同型．
+        \item $\pi:E_s\to M,\pi':E'_s\to M$を$M$上の滑らかなベクトル束とし，$E_s,E'_s$は連続なベクトル束として同型であるとする．このとき，$E_s,E'_s$は滑らかなベクトル束としても同型である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}[切断の延長]
+    滑らかなベクトル束$\pi:E\to M$について，$\sigma\in\Gamma(S)$をコンパクト集合$S\subset M$上の切断とする．
+    ある切断面$\tau\in\Gamma(M)$に延長される．
+\end{proposition}
+\begin{proof}
+    開近傍$S\subset U\osub M$に従属し，$S$上で１になる$f\in C(M)$を用いて
+    \[\tau(x):=\begin{cases}
+        f(x)\sigma(x),&x\in U,\\
+        0,&x\notin U.
+    \end{cases}\]
+    は$\sigma$の$M$上での延長である．
+\end{proof}
+
+\section{計量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $t\in\Gamma(E)^{\otimes^p_{C(X)}}\otimes_{C(X)}\Gamma(E^*)^{\otimes^q_{C(X)}}$の元を$(p,q)$-テンソルという（順に共変・反変）．ベクトル場は$(1,0)$-テンソルである．
+\end{tcolorbox}
+
+\subsection{定義と整理}
+
+\begin{definition}[metric]\label{def-metric}
+    滑らかなベクトル束$\pi:E\to M$を考える．
+    \begin{enumerate}
+        \item 全てのファイバー$E_x$に内積$(-,-)_x$が与えられており，内積空間である．
+        \item 任意の滑らかな切断面$\sigma_1,\sigma_2\in\Gamma(E)$に対して，合成写像$(\sigma_1(-),\sigma_2(-))_x:M\to K$は滑らかである．
+    \end{enumerate}
+    $E$が$\R$上のベクトル束ならばRiemann計量，$\C$上のベクトル束ならばHermite計量という．
+\end{definition}
+\begin{remarks}
+    $(\sigma_1(-),\sigma_2(-))_x\in\Gamma(E)\otimes_{C(X)}\Gamma(E)$は確かに共変2-テンソルである．
+    任意の２つのベクトル場$\sigma_1,\sigma_2\in\Gamma(E)$に対して，$x\in M$をまずベクトル束$E_x$上の２つのベクトル$\sigma_1(x),\sigma_2(x)$に対応させ，そこで内積を取る対応．
+\end{remarks}
+
+\subsection{ベクトル束の分解}
+
+\subsection{標準的な同型}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 内積空間$V$について，同型$V\to V^*:a\mapsto(a,-)$が定まる．これを\textbf{内積が定める標準的な同型対応}という．
+        \item 各ファイバー$E_x\simeq E_x^*$にも標準同型が存在し，ここからベクトルバンドルとしての同型対応$E\simeq E^*$が引き起こされる．これを\textbf{計量が定める標準的な同型対応}という．
+    \end{enumerate}
+\end{definition}
+\begin{notation}
+    $V$の基底$(e_1,\cdots,e_p)$と$V^*$の双対基底$(e^1,\cdots,e^p)$について，$g_{\mu\nu}:=(e_\mu,e_\nu)$とおく．基底だから，$\det(e_{\mu\nu})>0$な対称行列．
+    すると，$a\in V$について，
+    \[(a,x)=\sum_{\mu=1}^pa^\mu(e_\mu,x)=\sum_{\mu,\nu=1}^pa^\mu x^\nu(e_\mu,e_\nu)=\sum_{\mu,\nu=1}^pg_{\mu\nu}a^\mu x^\nu\]
+    と表せるから，標準的な同型対応は
+    \[a=\sum^p_{\mu=1}a^\mu e_\mu\mapsto\sum^p_{\nu=1}\paren{\sum^p_{\mu=1}g_{\mu\nu}a^\mu}e^\nu\]
+    で与えられる．
+\end{notation}
+
+\section{貼り合わせと主束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ベクトルバンドルの背景にはどうしても$\GL_p(K)$-主バンドルがあって，この２つは密接に関係しあっている．
+    複素関数と層のように？
+    この関係をさらに詳しく調べるには，ベクトル束の範疇を超えてファイバー束の一般理論が必要になる．
+\end{tcolorbox}
+
+\subsection{貼り合わせの構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    なんだかCousinの問題っぽい．
+    $M$上の$p$次元のベクトル束を与えることと，$\GL_p(K)$に値を持つ変換関数を与えることは一対一対応する．
+    $\GL_p(K)$と$K^n$とは，$\R^n$とその間の局所同型との一般化である．
+    これは直感的には，多様体の「作り方」は「貼り合わせ方」を指定すれば良い，というような議論である．
+\end{tcolorbox}
+
+\begin{problem}
+    滑らかな多様体$M$上の開被覆$(U_\al)_{\al\in A}$について，次が成り立つとする：
+    \begin{enumerate}
+        \item (変換関数) $U_\al\cap U_\beta\ne\emptyset$ならば，滑らかな写像$\varphi_{\al\beta}:U_\al\cap U_\beta\to\GL_p(K)$が存在する．
+        \item (貼り合わせの条件) $U_\al\cap U_\beta\cap U_\gamma\ne\emptyset$ならば，任意の$x\in U_\al\cap U_\beta\cap U_\gamma$に対し，$\varphi_{\al\gamma}(x)=\varphi_{\al\beta}(x)\varphi_{\beta\gamma}(x)$を満たす．\footnote{$\varphi_{\al\al}=I,\varphi_{\al\beta}=\varphi_{\beta\al}^{-1}$を含意する．}
+    \end{enumerate}
+\end{problem}
+
+\begin{definition}[貼り合わせによる構成]
+    直和空間$\sqcup_{\al\in A}(U_\al\times K^p)$の，同値関係
+    \[(x,a)\sim (y,b):\Leftrightarrow\begin{cases}
+    x=y\in U_\al\cap U_\beta\\
+    a=\varphi_{\al\beta}(x)b
+    \end{cases}\]
+    による商空間を全空間$E$とする．
+    すると，埋め込み$\iota_\al:U_\al\times K^p\mono E$が存在する．
+    各$\pi_\al:U_\al\times K^p\to U_\al$を第一射影とする．
+    すると，貼り合わせの条件より，任意の$\al\in A$に対して次の図を可換にするような連続写像$\pi:E\to M$がただ一つ存在する．
+    \[\xymatrix{
+        U_\al\times K^p\ar[r]^-{\iota_\al}\ar[d]_-{\pi_\al}&E\ar@{.>}[d]^-\pi\\
+        U_\al\ar[r]^-i&M
+    }\]
+    $\pi:E\to M$は$p$次元の滑らかなベクトルバンドルとなり，構成から，$\iota_\al^{-1}:E_{U_\al}\to U_\al$は局所自明性を与える．
+    こうして，貼り合わせの問題が解ける．ベクトル束$\pi:E\to M$を，\textbf{変換関数$(\varphi_{\al\beta})$から貼り合わせによって得られたベクトル束}という．
+\end{definition}
+
+\begin{remarks}
+    多様体$M$上の$p$次元のベクトル束$E\to M$に対して，対応$x\mapsto\varphi_{\al\beta}(x)$はなめらかな写像$U_\al\cap U_\beta\to\GL_p(K)$を定める．
+    こうして，ベクトル束と変換関数の族とは対応する．
+\end{remarks}
+
+\subsection{変換関数への翻訳}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    となると，「作り方」を見れば，出来上がる多様体のベクトル束が同型になるかどうかを判別できるはずである．
+\end{tcolorbox}
+
+\begin{theorem}
+    多様体$M$と開被覆$(U_\al)_{\al\in A}$とを固定する．
+    $\varphi=(\varphi_{\al\beta}),\psi=(\psi_{\al\beta})$を変換関数とし，$E(\varphi),E(\psi)$がそれぞれが定めるベクトル束とする．
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $E(\varphi)\simeq E(\psi)$．
+        \item 任意の$\al\in A$について，なめらかな写像$\lambda_\al:U_\al\to\GL_p(K)$が存在して，$\psi_{\al\beta}=\lambda_\al\cdot\varphi_{\al\beta}\cdot\lambda_\beta^{-1}\;\on\; U_\al\cap U_\beta$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+\begin{corollary}
+    $E(\varphi)$が自明なベクトル束となるための必要十分条件は，
+    $I=\lambda_\al\cdot\varphi_{\al\beta}\cdot\lambda_\beta^{-1}\;\on\;U_\al\cap U_\beta$である．
+\end{corollary}
+
+\subsection{主バンドル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここから大死一番，ベクトル束のことを忘れて，研究の対象を変換関数へ移す．
+    すると変換関数は，もう一つ別の興味深いバンドルを定めているが，これはもはやベクトル束ではない．
+\end{tcolorbox}
+
+\begin{definition}[principal bundle]\label{def-principle-budle}
+    変換関数$(\varphi_{\al\beta})$と同様の貼り合わせの条件下で，直和空間$\sqcup_{\al\in A}(U_\al\times\GL_p(K))$の同値関係
+    \[(x,P)\sim(y,Q):\Leftrightarrow\begin{cases}
+        x=y\in U_\al\cap U_\beta,\\
+        P=\varphi_{\al\beta}(x)Q
+    \end{cases}\]
+    による商空間$B$を考えると，これは滑らかな多様体となり，各$U_\al\times\GL_p(K)$を開部分多様体に持つ．
+    が，滑らかな射影$\pi_1:B\to M$の各ファイバー$F_x=\pi^{-1}(x)\simeq\GL_p(K)$はLie群ではあるが，
+    線型空間にはならない．
+    これを\textbf{変換関数$(\varphi_{\al\beta})$の定める$\GL_p(K)$-主バンドル}という．
+\end{definition}
+\begin{remark}
+    以上の議論を最初からたどると，ベクトルバンドル$\pi:E\to M$は変換関数の族を定めるから，これから定義される$\GL_p(K)$-主バンドルを，\textbf{$E$に同伴する$\GL_p(K)$-主バンドル}という．
+\end{remark}
+
+\begin{definition}
+    Lie群の右作用$\GL_p(K)\to\End_\Diff(B)$を，$R\mapsto ((x,P)\mapsto(x,PR))$で定める．これは各ファイバー$F_x\mono B$を$F_x$の上に移している．
+\end{definition}
+
+\begin{definition}[section]
+    なめらかな写像$\sigma:M\to B$が$\pi\circ\sigma=\id_M$を満たすとき，$B$の\textbf{切断面}であるという．
+\end{definition}
+
+\begin{theorem}
+    ベクトル束$\pi:E\to M$について，
+    \begin{enumerate}
+        \item $E$は自明である．
+        \item $E$に同伴する$\GL_p(K)$-主バンドル$B$は切断面を持つ．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{主束からベクトル束の復元}
+
+
+
+\chapter{多様体上のベクトル束}
+
+\section{接束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $x\in M$の$U_\al,U_\beta$による成分表示$(\xi_\al^1,\cdots,\xi_\al^n),(\xi_\beta^1,\cdots,\xi_\beta^n)$について，
+    Jacobi行列による貼り合わせの規則
+    \[\xi_\beta^\mu=\sum^n_{\nu=1}\pp{x_\beta^\mu}{x_\al^\nu}\xi_\al^\nu\]
+    を満たすならば，これらの成分は全体として接ベクトルを定義していると考えても良い．
+    基底の変換則は
+    \[\pp{}{x_\beta^\mu}=\sum^n_{\nu=1}\pp{x_\al^\nu}{x_\beta^\mu}\pp{}{x_\al^\nu}\]
+    となる．
+\end{tcolorbox}
+
+\begin{definition}[tangent bundle]
+    滑らかな多様体$M$上の，局所座標近傍による開被覆$(U_\al)_{\al\in A}$について，
+    $U_\al\cap U_\beta\ne\emptyset$ならば，座標変換$\varphi_{\beta\al}:=\varphi_\beta\circ\varphi_\al^{-1}:\varphi(U_\al\cap U_\beta)\to\varphi_\beta(U_\al\cap U_\beta)$は，Jacobi行列$J(x_\beta/x_\al)\in\GL_n(\R)$を定める．
+    これは貼り合わせの条件を満たす\footnote{族にいうベクトル場の変換則}．
+    こうして，$U_\al\times\R^n,U_\beta\times\R^n$を$U_\al\cap U_\beta$で$J(x_\beta/x_\al)$によって張り合わせることで，$M$上の$n$次元実ベクトルバンドルを得る．これを接束といい，$T(M)$と表す．
+\end{definition}
+
+\begin{lemma}
+    接束の定義は，局所座標近傍による開被覆$(U_\al)_{\al\in A}$の取り方に依らず，同値に定まる．
+\end{lemma}
+
+\begin{remarks}
+    $x\in U_\al$上の自明性$T(M)|_{U_\al}\simeq U_\al\times\R^n$により，
+    点$x$の接ベクトル$\xi\in T_x(M)$は$(x:\xi^1_\al,\cdots,\xi^n_\al)$と表示できる．
+    $\pp{}{x_\al^\mu}:=(x;0,\cdots,0,1,0,\cdots,0)\in T_x$で表す．$x\in U_\al$を動かすと，これは$T(M)$の$U_\al$上の局所基底を与える$n$個の切断面$U_\al\to T(M)|_{U_\al}$となっている．
+\end{remarks}
+
+\subsection{接ベクトルの定める導分}
+
+このような構成をすると，次の普遍性が成り立つ．
+
+\begin{theorem}
+    線型写像$D:C(M)\to\R$で，$D(fg)=f(x_0)D(g)+g(x_0)D(f)$を満たすものは，必ずただ一つの接ベクトル$xi\in T_{x_0}$が存在して$D(f)=\xi(f)$と表せる．
+\end{theorem}
+
+\subsection{微分}
+
+\begin{definition}
+    滑らかな写像$\varphi:M\to N$は$x\mapsto y$と写すとする．
+    すると，$\varphi$は$\xi:C(M)\to\R\in T_x$を押し出して$\xi\circ\varphi^*:C(N)\to\R$を定める．
+    これは再びLeibniz則を満たすから，$\eta\in T_y(N)$が存在して，$\eta=\xi\circ\varphi^*$．
+    この対応を$d\varphi_x:T_x\to T_y$で表し，$\varphi$の$x$における微分という．
+\end{definition}
+
+\subsection{Riemann計量}
+
+接バンドル$T(M)$に計量が与えられたとき，$M$にRiemann計量が与えられたという．
+計量の定義\ref{def-metric}を局所的な「各点ごとに見ると内積」とは違って大域的に定義すると，滑らかな$(0,2)$-テンソル場$g\in\Gamma(T^*(M)\otimes T^*(M))$であって，(Hermite)対称かつ正定値なものをいう．
+すなわち，$g_x:T_x(M)\times T_x(M)\to\R$を満たす双線型写像で，$g_x(X,Y)=g_x(Y,X)$かつ$g_x(X,X)>0\;(X\ne 0)$として扱える．
+$g:M\to T^*(M)\otimes T^*(M)$は，各$(U,(x^1,\cdots,x^n))$上での$C^\infty$関数$g_{ij}:=\paren{\pp{}{x^i},\pp{}{x^j}}$の貼り合わせである．
+これに対して内積は$\brac{X,Y}:=g(X,Y)$で復元できる．
+
+\[g_{\mu\nu}^\al(x):=\paren{\pp{}{x_\al^\mu},\pp{}{x^\nu_\al}}_x\]
+とおくと，$g_{\mu\nu}^\al:U_\al\to\R$は滑らかな関数であり，各点で$\det(g^\al_{\mu\nu})>0$を満たす．
+（ベクトル場の成分の２次元版）．
+
+$x\in U_\al\cap U_\beta$のとき，$(g_{\mu\nu}^\al(x))$と$(g_{\mu\nu}^\beta(x))$との間の変換則は，
+\[g_\mu\nu^\beta(x)=\sum^n_{i,j=1}\pp{x_\al^i}{x_\beta^\mu}\pp{x_\al^j}{x^\nu_\beta}g_{ij}^\al(x)\]
+で与えられる．
+
+この変換則は確かに$(2,0)$-テンソルである（基底と同じ変換則を２重に満たす）．
+
+逆に，各局所座標$U_\al$上で定義された正値行列$(g_{\mu\nu}^\al(x))$で，$U_\al\cap U_\beta$上で上述の$(2,0)$-テンソルの貼り合わせの条件を満たすものを与えることで，計量が定まる．
+これを
+\[ds^2=\sum g_{\mu\nu}^\al(x)dx^\mu_\al dx_\al^\nu\]
+と表す．
+
+テンソルやベクトルとは，貼り合わせの法則によって定まるベクトル束なのである．
+
+\subsection{ベクトル場}
+
+\begin{definition}
+    $\X(M):=\Gamma(T(M))$の元をベクトル場という．
+    接ベクトルが導分を定めるのと同様，ベクトル場は$C(M)$に各点ごとの微分作用素$X:C(M)\to C(M)$を定める．
+\end{definition}
+
+\begin{theorem}
+    線型写像$D:C(M)\to C(M)$で$D(fg)=fD(g)+gD(f)$を満たすものについて，ただ一つのベクトル場$X$が存在して，$D=X$が成り立つ．
+\end{theorem}
+
+\subsection{無限小変換としてのベクトル場}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=ベクトル場を通じて多様体の形を考えたい]
+    1-パラメータ群とは，滑らかな群準同型$R\to\Diff(M)$の像のイメージである．各時刻に，自己可微分同型$\varphi_t:M\iso M$が対応する．
+    これは，ベクトル場$X$が定める流れの場の各点に粒子を置いてその時を時刻$0$としたとき，時刻$t\in\R$では粒子はどこに居るか／居たかを表示する写像である．
+    これが大域フローの名の所以である．
+
+    また，各点$x\in M$を止めてみると，$x\in M$の軌跡が描く滑らかな大域的曲線$\R\to M$が見える．これを軌道という．
+    軌道の時間$t\in\R$による微分は，それぞれの時刻にベクトル場を定める．
+\end{tcolorbox}
+
+\begin{definition}[one-parameter group  / global flow]
+    滑らかな写像$\varphi:\R\times M\to M$が次の２条件を満たすとき，\textbf{$M$上の可微分写像の1-パラメータ群}または\textbf{大域フロー}という．
+    \begin{enumerate}
+        \item $\forall_{t\in\R}\;\varphi_t(x):=\varphi(t,x)\in\Diff(M)$．
+        \item $\forall_{s,t\in\R}\;\varphi_{s+t}=\varphi_s\circ\varphi_t$．
+    \end{enumerate}
+    (1),(2)から，$\varphi_s,\varphi_t$は可換であること，$\varphi_0=\id_X,\varphi_t^{-1}=\varphi_{-t}$となることが簡単にわかる．
+\end{definition}
+\begin{remarks}
+    すなわち滑らかな群作用$\varphi:\R\to\Diff(M)$を1-パラメータ群という．
+    $\R$は加法群と見る．
+\end{remarks}
+
+\begin{definition}[infinitesimal transformation : 1-パラメータ群が生成するベクトル場]
+    逆に1-パラメータ群$\varphi$が与えられたとき，$f\in C(M)$に対して
+    \[X(f)(x):=\lim_{r\to 0}\frac{f(\varphi_r(x))-f(x)}{r}\]
+    とおくことで対応$X:C(M)\to C(M)$が定まり，これは
+    各点$x\in M$を止めてみると$\R\to M;t\mapsto\varphi_t(x)$という滑らかな曲線に沿った$t=0,\varphi(0)=x$における微分係数であるから確かに方向微分で，
+    Leibniz則を満たすからベクトル場を定める．
+    これを\textbf{$\varphi$が生成するベクトル場}または\textbf{$\varphi_t$の無限小変換}という．
+\end{definition}
+
+\begin{definition}[フロー／積分曲線という特徴付け]
+    この考え方を各時刻$t\in\R$について一般化すると，
+    $\paren{\dd{\varphi_t}{t}}_x:C(M)\to\R\in T_{\varphi_t(x)}$が，
+    \[\paren{\dd{\varphi_t}{t}}_x(f):=\lim_{r\to 0}\frac{f(\varphi_{t+r}(x))-f(\varphi_t(x))}{r}\]
+    により定まる．これは$d\varphi_t\paren{\frac{d}{dt}_x}$でもある．
+
+    こうして，$x\in M$を固定し，$\varphi(-,x):U\to X$と見て，その微分$\dd{\varphi}{t}(-,x):U\to T(M)$が
+    \[\forall_{t\in U}\dd{\varphi}{t}(t,x)=X_{\varphi(t,x)}\]
+    を満たすものを，$X$の\textbf{積分曲線}という．
+\end{definition}
+
+\subsection{完備ベクトル場の十分条件}
+
+\begin{problem}
+    では逆に，ベクトル場はいつ1-パラメータ群を生成するか．
+    1-パラメータ変換群が無限小変換を定める対応$\varphi_t=\Exp(tX)$は単射であるが，全射ではない．
+\end{problem}
+\begin{discussion}
+    仮に$X$が$\varphi_t$を生成したとすると，任意の$x\in M$について，
+    \[\begin{cases}
+        \dd{\varphi_t}{t}=X_{\varphi_t(x)}\in T_{\varphi_t(x)}\\
+        \varphi_0(x)=x
+    \end{cases}\]
+    を満たす必要がある（粒子$x\in M$の$x$からの動き）．これは微分方程式の初期値問題に他ならない．
+    これは常に局所的には解けるから，任意の滑らかなベクトル場$X$は，ただ一つの極大フロー（＝局所変換の1-パラメータ変換群）$\Exp(X):\R\times M\to M$を持つのであった．
+\end{discussion}
+
+\begin{example}
+    標準座標系を$(x^1,\cdots,x^n)$とする$\R^n$上のベクトル場で，行列$A:=(a^i_j)$に対して次の形を持つもの
+    \[X=\sum^n_{i,j=1}a^i_jx^j\pp{}{x^i}\]
+    を，$\R^n$の\textbf{無限小線型変換}と呼ぶ．
+    これは完備なベクトル場であって，対応する1-パラメータ変換群は，各点$p\in\R^n$で
+    \[(\Exp tX)(p)=(\exp tA)\begin{pmatrix}x^1(p)\\\vdots\\x^n(p)\end{pmatrix}\]
+    と表される．行列の指数関数の値は正則$\exp tA\in\GL_n(\R)$だから，たしかに$\Exp tX\in\Diff(\R^n)$である．
+    可換であるとき，加法定理$\exp sA\cdot\exp tA=\exp(s+t)A$が成り立つのであった．
+    最後に，$\dd{}{t}\exp tA=A\exp tA$だから，この1-パラメータ変換群の$t=0,p\in\R^n$における接ベクトルの成分は，$A\exp tA\left.\begin{pmatrix}x^1(p)\\\vdots\\x^n(p)\end{pmatrix}\right|_{t=0}=A\begin{pmatrix}x^1(p)\\\vdots\\x^n(p)\end{pmatrix}$より，確かに$X$を定める．
+\end{example}
+
+\begin{example}
+    定値ベクトル場$X=\sum^n_{i=1}b^i\pp{}{x^i}$も完備であって，対応する1-パラメータ群$\Exp tX$は平行移動（等速直線運動）$x^i\mapsto x^i+tb^i$である．
+\end{example}
+
+\begin{theorem}
+    $X$を$M$のベクトル場とし，あるコンパクト集合$S$内に台を持つとする：$\supp X\subset S$．
+    このとき$X$はただ１つの$M$の可微分同相写像の1-パラメータ群$\Exp(tX)$を生成する．
+\end{theorem}
+
+\begin{corollary}[精緻化]
+    ベクトル場$X$が完備になる条件は，次を満たす正数$\ep_0>0$が存在することである：
+    \begin{quote}
+        各点$x\in M$に対し，$x$の近傍$U$が存在して，初期値問題が$x\in U,\abs{t}<\ep_0$で$(x,t)$に滑らかに従属するただ一つの解を持つ．
+    \end{quote}
+\end{corollary}
+
+\begin{example}
+    $(0,\infty)$上のベクトル場$x\pp{}{x}$はコンパクト台を持たないが，完備である．
+    実際，点$x$に居た粒子の時刻$t$での速度ベクトルは積分曲線$\varphi(t,x)=xe^t$の$t$による微分の$(x,t)$における値で，$\dd{\varphi}{t}(t,x)=xe^t$．
+    ベクトル場$x\dd{}{x}$の点$xe^t$での接ベクトルは$x\dd{}{x}(xe^t)=xe^t$．
+\end{example}
+
+\subsection{局所変換の1-パラメータ群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    逆に，積分曲線の同値類（芽）も，局所変換の1-パラメータ群の同値類も，ベクトル場と１対１の関係にある．
+\end{tcolorbox}
+
+\subsection{Riemann多様体の運動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    1-パラメータ変換群の定めるベクトル場を無限小変換と呼んだように，Riemann多様体の間の等長写像を\textbf{運動}と呼ぶ．運動も群$\Iso(M)$を作る．
+\end{tcolorbox}
+
+\begin{theorem}
+    Euclid空間$\R^n$の運動は，affine変換$\varphi^*x^i=\sum_ja^i_jx^j+b^i$であって，$(a^i_j)$が直交行列となるようなものである．
+    これは半直積によって明快に表示できる．
+    \ref{exp-Affine-transformation-and-Euclid-motion-group}．
+\end{theorem}
+
+\section{ベクトル場のLie環と葉層構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体の葉層構造とは，嵌め込まれた部分多様体への分割で，その各はめ込まれた部分多様体を葉(leaf)という．
+    はじめ微分方程式の解曲線の定性的研究から意識された．
+    実際，可微分多様体の葉層構造とはその上の完全積分可能な連立全微分方程式のことである．\footnote{\url{https://www.jstage.jst.go.jp/article/sugaku1947/25/2/25_2_134/_pdf/-char/ja}}
+\end{tcolorbox}
+
+\subsection{括弧積による環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の多元環（結合的かつ分配的な積を持つ線型空間）に，その積の構造から交換子積$[a,b]:=ab-ba$を導入すると，Lie環を構成できる．線型写像$D\in\End(M)$がLeibniz則を満たす時，微分作用素といい，Lie環上の微分作用素の空間も同様にLie環の構造を持つ．
+\end{tcolorbox}
+
+\begin{definition}[括弧積]
+    $X,Y\in\X(M)$に対して，線型写像$[X,Y]:C(M)\to C(M)$を
+    \[[X,Y]f=X(Yf)-Y(Xf)\]
+    で定めると，Leibniz則を満たすから，写像$[-,-]:\X(M)\times\X(M)\to\X(M)$を定める．
+\end{definition}
+
+\begin{lemma}[Lie環の構造を持つ]
+    括弧積について，次が成り立つ：
+    \begin{enumerate}
+        \item 双線型性：$[aX+bY,Z]=a[X,Z]+b[Y,Z]$．
+        \item 歪対称性：$[X,Y]=-[Y,X]$．
+        \item Jacobi恒等式：$[X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0$．
+    \end{enumerate}
+    括弧積は非結合的であることに注意．
+\end{lemma}
+
+\begin{theorem}
+    Lie環$\X(M)$は，多元環$C^\infty(M)$上の微分作用素全体の作るLie環と同型．
+\end{theorem}
+\begin{proof}
+    言い直しただけ．
+\end{proof}
+\begin{remarks}
+    しかし，引き戻し$\varphi^*$が多元環$C^\infty(M)$の自己同型となり，押し出し$\varphi_*$がLie環$\X(M)$の自己同型を定める．
+    Lie環の自己同型が常にこの形で書けるかどうかは未解決．
+\end{remarks}
+
+\subsection{ベクトル場の押し出し}
+
+\begin{definition}
+    $\varphi\in\Diff(M)$に対して，
+    $(\varphi_*X)_{\varphi(x)}=d\varphi_x(X_x)$，すなわち，
+    $(\varphi_*X)_x=d\varphi_{\varphi^{-1}(x)}(X_{\varphi^{-1}(x)})$
+    と定める．
+\end{definition}
+\begin{remarks}[写像としてのベクトル場]
+    $\varphi\in\Diff(\R^n)$が線型写像であるとき，至る所で$d\varphi_x=\varphi:\R^n\iso\R^n$であるから，
+    $(\varphi_*X)(x)=\varphi(X(\varphi^{-1}(x)))$となり，随伴の関係が明らかになる．
+    $\varphi$が接束に定める束写像を$\varphi_*$で表すと，一般に，次の図式が可換になる：
+    \[\xymatrix{
+        T(M)\ar[r]^-{\varphi_*}&T(M)\\
+        \R^m\ar[u]^-X\ar[r]^-{\varphi}&\R^m\ar[u]_-{\varphi_*X}
+    }\]\footnote{ベクトル束を取り扱っているので，あくまでこの定義が自然である．$\varphi_*X\circ f=X$という可換性は有用でない．}
+\end{remarks}
+\begin{remarks}[作用素としてのベクトル場]
+    一方で，作用する際には，$((\varphi_*)_pX_p)f=X_p(f\circ\varphi)$というように作用する．
+    これも１つの随伴関係で，大局的に見ると，次の図式を可換にする．ただし，$\varphi:M\iso M'$について，
+    $X$の定める関数の微分を$D:C(M)\to C(M)$，$\varphi_*X$の定める関数の微分を$D':C(M')\to C(M')$とする．
+    \[\xymatrix{
+        C(M)&C(M')\ar[l]_-{\varphi^*}\\
+        C(M)\ar[u]^-D&C(M')\ar[l]^-{\varphi^*}\ar[u]_-{D'}
+    }\]
+    すなわち，$\varphi$で引き戻してから微分するのと，押し出したベクトル場で微分してから引き戻すのが等しくなる．
+\end{remarks}
+
+\begin{proposition}
+    $\varphi\in\Diff(M)$によるベクトル場の押し出し$\varphi_*:\X(M)\to\X(M)$は\footnote{記法が写像の微分と一致している点は含蓄が深い．}，Lie代数としての同型を定める：$[\varphi_*X,\varphi_*Y]=\varphi_*[X,Y]$．
+\end{proposition}
+
+\subsection{対合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これは可積分性条件になる．
+\end{tcolorbox}
+
+\begin{definition}[involution]
+    接バンドル$T(M)$の部分バンドル$E$が存在して，$\Gamma(E)$が$\X(M)$の部分Lie環になっている時，$\Gamma(E)$を\textbf{対合的}であるという．
+\end{definition}
+
+\begin{example}
+    積多様体$M=N_1\times N_2$と射影$\pi:=\pr_2:M\to N_2$を考える．
+    $E:=\cup_{x\in M}\;\Ker d\pi_x$とおくと，これは$T(M)$の部分バンドルとなる．
+    各$\Ker d\pi_x$は$N_2$の$x$の周りの局所座標を用いて$\pp{}{y^1},\cdots,\pp{}{y^p}$ではられる接ベクトル空間となる．
+    $\Gamma(E)$の元を，\textbf{$N_1$に沿うベクトル場}という．
+
+    この例は非常に「まっすぐ」であったが，陰関数定理により，滑らかな写像の分ならばいくら曲げても同じような構成ができる．
+    この考え方はこうして葉層構造の概念に一般化される．
+\end{example}
+
+\subsection{葉層構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体の葉層構造とは，部分多様体への分解$(\varphi_\al^{-1}(c))$である．
+    $\R^d$や積多様体には自然な葉層構造（座標格子）が入っていたのである．
+\end{tcolorbox}
+
+\begin{definition}[foliation]
+    $0<q<n$とする．$M^n$の開被覆$(\varphi_\al)_{\al\in A}$と滑らかな写像$(\varphi_\al:U_\al\to\R^q)_{\al\in A}$が次の２条件を満たす時，$(U_\al,\varphi_\al)_{\al\in A}$を$M$の\textbf{葉層構造}という．
+    \begin{enumerate}
+        \item $\forall_{x\in U_\al}\;\rank_x\varphi_\al=q$．
+        \item $x\in U_\al\cap U_\beta$のとき，$\varphi_\al(x)\in\R^q$の$\varphi_\al(U_\al)$における近傍$W_\al(x)$と$\varphi_\beta(U_\beta)$における近傍$W_\beta(x)$と，その間の可微分同相写像$g_{\beta\al}:W_\al(x)\iso W_\beta(x)$が存在して，$x$の近傍で$\varphi_\beta=g_{\beta\al}\circ\varphi_\al$を満たす．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[leaves]
+    (1)と陰関数定理より，$\varphi_\al$は局所的に「可逆」だから，
+    すなわち，$x$の近傍$V$とその上の局所座標$(y^1,\cdots,y^p,z^1,\cdots,z^q)$をうまく取ると，$V$上で$\varphi_\al$は$\varphi_\al(y^1,\cdots,y^p,z^1,\cdots,z^q)$で表せる．
+    したがって$\varphi_\al(U_\al)\osub\R^q$は開集合であり，$c\in\varphi_\al(U)$は正則値だから
+    $\varphi_\al^{-1}(c)$は$U_\al$の$p$次元部分多様体を定める．
+    これを\textbf{$U_\al$の葉面}という．
+    $c,c'\in\varphi_\al(U_\al)$について，$c\ne c'\Rightarrow\varphi_\al^{-1}(c)\cap\varphi_\al^{-1}(c')=\emptyset$なので，$U_\al=\coprod_{c\in\varphi_\al(U_\al)}\;\varphi_{\al}^{-1}(c)$と直和分解される．
+\end{definition}
+
+\begin{definition}
+    $E=\cup_{x\in U_\al,\al\in A}\Ker(d\varphi_\al)_x$は$T(M)$の部分バンドルを定め，$\Gamma(E)$は対合的である．
+    この元を\textbf{葉面方向に沿うベクトル場}という．
+\end{definition}
+
+\begin{example}[foliation]\mbox{}
+    \begin{enumerate}
+        \item トーラス$T^2$上の線型流は葉層構造を定める．直線の傾きが有理数のときは各軌道は$S^1$に同相で$T^2$に埋め込まれた多様体になっているが，
+        無理数のときは各軌道ははめ込まれた$\R$となり，$T^2$内で稠密となる(Kronecker)．
+        \item $S^2\subset\R^3$を$xy$平面と平行な平面で切った切り口全体は$S^2$に葉層構造を定める．
+        \item ベクトル束，$\GL_p(K)$-主バンドルなどは，各ファイバーを葉面とする葉層構造を持つ．
+    \end{enumerate}
+\end{example}
+
+\begin{history}
+    Poincaré-Bendixsonの定理は，Euclid平面上の余次元１の葉層構造はコンパクトな葉を持たないことを主張し，
+    Denjoy-Siegelの定理は$T^2$上の余次元１の$C^s$級葉層構造がコンパクトな葉を持たなければ，その全ての葉は$T^2$上で稠密である．
+    これらは現在力学系の理論として一般化されている．
+\end{history}
+
+\subsection{極大な連結葉面}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    どんどん層のような理論になって行った．
+\end{tcolorbox}
+
+共通点のある２つの葉面は，$M$から滑らかな多様体の構造が入り，接続される．
+極大な連結葉面を解析接続のような言葉で定義すると，多様体$M$は極大な連結葉面全体の族によって，互いに重なり合うことなく覆い尽くされる．
+
+\subsection{Frobeniusの定理}
+
+\begin{theorem}
+    $E$を$0<p:=\dim E<n:=\dim M$を満たす$T(M)$の部分バンドルで，$\Gamma(E)$が対合的であるとする．
+    このとき，$M$に葉層構造が存在して，この葉面方向に沿うベクトル場の全体として$\Gamma(E)$が表せる．
+\end{theorem}
+
+\section{余接束と微分形式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ベクトル束に外積を導入しているのが極めて見通しが良く，ベクトル場と完全に類比的に定義できる．
+\end{tcolorbox}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $p$次の微分形式は，$\X(M)\to C(M)$に$C(M)$加群としての$p$重交代線型写像を定める．
+    方向微分を定めたベクトル場のように，この性質によって一意に特徴付けられる．
+\end{tcolorbox}
+
+\begin{definition}
+    $T^*(M)$の$p$次の外積バンドル$\bigwedge^pT^*(M)$の切断面\footnote{$x\mapsto df_x$とみる．}を，$M$上の$p$次の微分形式という．
+    この全体が作る実線型空間を$A^p(M):=\Gamma\paren{\bigwedge^pT^*(M)}$で表す．
+\end{definition}
+\begin{remark}
+    $A(M)$は外積$A^p\otimes A^q\to A^{p+q};\om^p\otimes\om^q\mapsto\om^p\wedge\om^q$により$\R$上の多元環となる．
+\end{remark}
+
+\begin{theorem}
+    $\X(M)\to C(M)$の$C(M)$加群としての$p$重交代線型写像について，$p$次微分形式$\om$が存在して，
+    $L(X_1,\cdots,X_p)(x)=\om(x)((X_1)_x,\cdots,(X_p)_x)$と表せる．
+\end{theorem}
+
+\subsection{外微分}
+
+\section{テンソル場とLie微分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ベクトル場，微分形式の定義で見えてきた普遍性を，テンソル場の言葉で統一的に定義する．
+\end{tcolorbox}
+
+\subsection{定義と例}
+
+\begin{notation}[tensor bundle]
+    $T(a,b)$で，初めに$T(M)$を$a$個テンソル積を取り，次に$T^*(M)$を$b$個テンソル積を取って得られるベクトルバンドルとする．
+    これを反変$a$次，共変$b$次のテンソルバンドルという．
+    この切断面を，反変$a$次，共変$b$次のテンソル場という．\footnote{このように書いているのは志賀さんの本と足助先生の講義ノートとwikipediaで，nLabや富田さんのpdfは逆．逆の方が「$T(M)$の基底と同じ変換を受けるのが共変（添字が下付き）」という意味で数学的だろう．}
+\end{notation}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item ベクトル場は$(1,0)$-テンソル場である．
+        \item Riemann計量は対称な$(0,2)$-テンソル場である．
+        \item $n$次微分形式は歪対称な$(0,n)$-テンソル場である．
+    \end{enumerate}
+\end{example}
+
+\subsection{多重線型写像としての特徴付け}
+
+\begin{theorem}
+    $A^1(M)\times\cdots\times A^1(M)\times\X(M)\times\cdots\times\X(M)\to C(M)$の$C(M)$-加群としての多重線型写像$L$に対し，$(a,b)$-テンソル場$\xi$がただ一つ存在して，$L=\xi$と表せる．
+\end{theorem}
+
+\subsection{縮約写像}
+
+\subsection{Lie微分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L:\X(M)\to\End_\R(\Gamma(T(a,b)))$とは，Lie環$\X(M)$の$\Gamma(T(a,b))$上への表現である．
+    性質$\L_{[X,Y]}=\L_X\circ\L_Y-\L_Y\circ\L_X$はその射であることを示している．
+\end{tcolorbox}
+
+\begin{definition}[Lie derivative]
+    次のように定めた$L:\X(M)\to\End_\R(\Gamma(T(a,b)))$の像である線型写像を，Lie微分といい$\L_X$で表す．
+    \begin{enumerate}
+        \item $a=b=0,\Gamma(T(a,b))=C(M)$のとき，$\L_Xf=X(f)$とはベクトル場の作用である．
+        \item $a=1,b=0,\Gamma(T(a,b))=\X(M)$のとき，$\L_XY=[X,Y]$とはLie括弧積である．
+        \item $a=0,b=1,\Gamma(T(a,b))=A^1(M)$のとき，$(\L_X\xi)(Y)=X(\xi(Y))-\xi([X,Y])$により定まる線型写像である．これは$X$の定めるflow $\exp(X-):\R\times M\to M$に沿った$\om$の引き戻しの線型化$\L_X\om=\dd{}{t}|_{t=0}\exp(tX)^*(\om)$として特徴付けられる．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $\L_{[X,Y]}=\L_X\circ\L_Y-\L_Y\circ\L_X$．
+\end{lemma}
+
+\begin{theorem}[Lie微分の幾何学的特徴付け]
+    ベクトル場$X$の生成する局所変換の1-パラメータ群（フロー）を$\varphi_t:\R\times M\to M$とする．
+    \begin{enumerate}
+        \item $(a,0)$-テンソル場$\xi$に対して，$\L_X\xi=\lim_{t\to 0}\frac{1}{t}(((\varphi_{-t})_*\xi-\xi))$．
+        \item $(0,b)$-テンソル場$\xi$に対して，$\L_X\xi=\lim_{t\to 0}\frac{1}{t}(((\varphi_{t})^*\xi-\xi))$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{指標の上げ下げ}
+
+$U$上のRiemann計量を$(g_{\mu\nu})$とすると，$T^*(M)|_U$上の標準的な計量は$(g^{\mu\nu})=(g_{\mu\nu})^{-1}$という逆行列の対応となっている．
+これは双対空間の間の同型を定める．
+「指標の上げ下げ」は同型な変換だから普段は抽象化して良いが，成分行列で言えば，逆行列の関係にあることに注意．
+
+$f\in C(M)$に対して$df\in\Gamma(T^*(M))$であるが，指標を上げることによって対応する$\Gamma(T(M))$の元を考えることができる．これを$\grad f$という．
+
+\section{体積バンドルと積分}
+
+\subsection{方向バンドル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体の向きさえベクトル束の言葉で定義する．美しい！
+\end{tcolorbox}
+
+\begin{notation}[方向バンドル]
+    $x\in U_\al\cap U_\beta$について，$\sigma(x_\beta/x_\alpha):=\sgn\det J(x_\beta/x_\al)$とおく．
+    $U_\al\cap U_\beta$上の関数$\sigma:U_\al\cap U_\beta\to\GL_1(\R)\simeq\R^*$は貼り合わせの条件を満たすから，変換関数として採用できる．
+    こうして，$M$上の１次元のベクトル束$\Theta(M)$を得る．
+\end{notation}
+
+\begin{theorem}[orientation]
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $\Theta(M)$は自明バンドルとなる．
+        \item $M$の局所座標近傍による開被覆$(U_\al)$を適当に選ぶと，$U_\al\cap U_\beta\ne\emptyset$ならば必ず$\sigma(x_\beta/x_\alpha)$とできる．
+    \end{enumerate}
+    この条件を満たすとき，$M$を\textbf{向き付け可能}という．
+    これに対して，自明性を与える写像$\Theta(M)\iso M\times\R$を１つ指定したとき，$M$は向きづけられたという．
+\end{theorem}
+
+\subsection{体積バンドル}
+
+\begin{definition}
+    $V(M):=\bigwedge^n(T^*(M))\otimes\Theta(M)$を$M$の体積バンドルという．
+\end{definition}
+\begin{remarks}
+    体積バンドルは１次元のベクトル束になる．
+    $v^\al,v^\beta\in V(M)_x$の間の変換則は
+    \[v^\beta=\det J(x_\al/x_\beta)\cdot\sigma(x_\beta/x_\al)v^\al=\abs{\det J(x_\al/x_\beta)}v^\al\]
+    となる．
+\end{remarks}
+
+\begin{theorem}
+    $V(M)$は自明なバンドルである：$V(M)\simeq M\times\R$．
+\end{theorem}
+
+\begin{corollary}
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $M$は向き付け可能である．
+        \item $\bigwedge^n(T^*(M))$は自明なバンドルである．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    なるほど確かに，積分とは微分形式（正確には体積バンドル）に対する写像である．
+\end{tcolorbox}
+
+\begin{definition}
+    コンパクト台をもつ切断面$\Gamma_0(V(M))$は$C_0(M)$上の加群の構造を持つが，ここから$\R$への線型写像を積分という．
+\end{definition}
+
+\subsection{発散とは体積要素に対するLie微分}
+
+\section{Lie群とLie環}
+
+\subsection{平行性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体$M$の接束が自明であるとき，これを平行性を持つという．
+\end{tcolorbox}
+
+\begin{lemma}
+    Lie群$G$について，左移動$L_g\in\Diff(G)$を用いて，任意の$x_0\in G$と$\xi\in T(G)_{x_0}$について，
+    $X:M\to T(M)$を
+    $X_{gx_0}:=\xi(gx_0)=dL_g(\xi)\in T(G)_{gx_0}$と定めると，これは$G$上のベクトル場を定める．
+\end{lemma}
+
+\begin{corollary}
+    $T(G)$は自明なバンドルである．
+\end{corollary}
+
+\begin{definition}
+    したがって，Lie群$G$の次元は，連結成分に依らず一定であって，$G$の定めるLie環$\g$の次元も$n$である．
+\end{definition}
+
+\subsection{左不変性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群はLie環を定める．
+\end{tcolorbox}
+
+\begin{definition}
+    次を満たすベクトル場$X\in\X(G)$は\textbf{左不変}であるという：$\forall_{g\in G}\;X=(L_g)_*X$．
+\end{definition}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item 左不変なベクトル場全体の作る線型空間は，対応$\g\ni X\mapsto X(e)\in T(G)_e$により，単位元における接空間$T(G)_e$と同一視できる．
+        \item 左不変なベクトル場全体$\g$は，$\X(G)$の部分Lie環となる．
+    \end{enumerate}
+    これを，\textbf{Lie群$G$のLie環}という．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item ベクトル場の押し出しの定義より，$\forall_{x\in G}\;((L_g)_*X)(x)=dL_g(X(g^{-1}x))$であるから，特に$X(g)=dL_g(X(e))$．
+        よって，線型写像$\g\to T(G)_e;X\mapsto X(e)$が可逆であることが予想できる．実際，$\xi\in T(G)_e$に対して，$X_\xi(g):=dL_g(\xi)$と定めると，$X_\xi\in\g$である．
+    \end{enumerate}
+\end{proof}
+
+\section{ジェット・バンドル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    接空間とは１階の微分についてのtangencyについての曲線の芽の同値類であるが，その高階な部分空間を考えることができる．
+\end{tcolorbox}
+
+\begin{definition}
+    滑らかな関数の空間$C(\R^n,\R)$の，同値関係$f\sim_kg:\Leftrightarrow \forall_{\abs{\al}\le k}D^\al f(0)=D^\al g(0)$による商空間（実線型空間の意味でも）を$J^k(n;1)$と表す．
+    これを，\textbf{$\R^n$の原点における$k$-ジェットの空間}という．
+\end{definition}
+
+\section{微分作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    微分作用素は，$\sigma\in\Gamma(E)$がある開集合$U$上で恒等的に$0$ならば，微分しても$0$であるという性質によって定義する．
+\end{tcolorbox}
+
+\subsection{定義と例}
+
+\begin{definition}
+    $E,F$を$M$上のベクトル束とする．
+    線型写像$\Phi:\Gamma(E)\to\Gamma(F)$が，任意の$\sigma\in\Gamma(E)$に対して$\supp\Phi(\sigma)\subset\supp\sigma$を満たすとき，これを\textbf{微分作用素}という．
+    微分作用素全体のなす線型空間を$D(E,F)\subset\Hom_\R(E,F)$で表すと，$C(M)$-加群の構造も持つ．
+\end{definition}
+
+\subsection{Peetreの定理}
+
+\subsection{平旦性}
+
+\begin{definition}
+    $\sigma\in C(U,\R^p)$に対して，$\al$が点$x_0\in U$で$D^\al\sigma(x_0)=0\;(\abs{\al}\le k)$を満たすとき，$\sigma$は\textbf{$x_0$で$k$-平旦}であるという．
+\end{definition}
+
+\chapter{練習}
+
+\section{正則等位集合定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Tu多様体では，正則部分多様体を，各点において，ある近傍座標$(x^1,\cdots,x^n)$が存在して，ある$n-k$個の座標関数が消えている点の集合として表せるような部分集合と定義している．
+    したがって，常に座標近傍とセットで存在する．これを「適合するチャート」と呼んでいる．
+
+    すると，$M=f^{-1}(0)$で定まる部分多様体について，$\pp{f}{x_1}(p)\ne 0$ならば，$\frac{D(f,x^2,\cdots,x^n)}{D(x^1,\cdots,x^n)}\ne 0$より，$(f,x^2,\cdots,x^n)$はある$p$の近傍$U_p$についてのチャートで，$U_p$において$f=0$が定めるのが$M\cap U_p$となっている．
+\end{tcolorbox}
+
+\begin{lemma}[正則等位集合定理の証明抽出]
+    $f:N^n\to\R^m\;(m\le n)$を$C^\infty$級写像とする．
+    $S:=f^{-1}(0)$の任意の点$p\in S$とその近傍座標系$(U;x^1,\cdots,x^n)$について，
+    \[\pp{(f^1,\cdots,f^m)}{(x^1,\cdots,x^m)}\ne 0\]
+    ならば，組$(f^1,\cdots,f^m,x^{m+1},\cdots,x^n)$も$p$のある近傍において$N$の座標近傍であり，$S$に適合する．
+\end{lemma}
+
+\section{階数一定定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則等位集合定理より使いやすい定理であるが，どこからきたかというと，陰関数定理の一般化である．陰関数定理は，rankの半連続性（$\rank\ge k$を満たす集合は開）から従う特別な場合である．
+
+    松島多様体の，「$(df^1)_p,\cdots,(df^k)_p$が一次独立」という表現は，これらを統一的に表現するための技巧か！
+
+    すると，正則等位集合定理は，沈め込み定理の退化した場合とみれる．
+\end{tcolorbox}
+
+\begin{theorem}[階数一定定理]
+    $f:\R^n\supset U\to\R^m$と$p\in U$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $p\in U$と$f(p)\in\R^m$の近傍で微分同相写像$\varphi,\psi$が存在して，$\varphi\circ f\circ\psi^{-1}(x^1,\cdots,x^n)=(x^1,\cdots,x^k,0,\cdots,0)$と表せる．
+        \item $p\in U$の近傍で一定の階数$k$を持つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[正則部分多様体の特徴付け(松島)]
+    $M\subset M'^m$を部分集合とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $M$は$M'$の余次元$k$の正則部分多様体である．
+        \item 各点$p\in M$に対して，$M'$での近傍$U$とその上の関数$f^1,\cdots,f^k$が存在して（ただし$k\in\N$は$p\in M$に依らず一定），次の２条件を満たす．
+        \begin{enumerate}[(a)]
+            \item $U\cap M=\cap_{i=1}^k(f^i)^{-1}(0)$．
+            \item $(df^1)_p,\cdots,(df^k)_p\in T^*_p(M')$は一次独立．
+        \end{enumerate}
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[嵌め込み・沈め込みの原理]
+    $f:N^n\to M^m$を滑らかな写像とする．
+    \begin{enumerate}
+        \item $f$が$p\in N$における嵌め込みなら，$p$の近傍で一定の階数$n$を持つ．
+        \item $f$が$p\in N$における沈め込みなら，$p$の近傍で一定の階数$m$を持つ．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    ランクの半連続性により，点における階数の最大性は，その近傍で一定であることを含意するため．
+\end{proof}
+
+\section{標高関数と横断性定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    過去問を解いているうちに，横断性定理は正則等位集合定理の一般化だと気づいた．
+\end{tcolorbox}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    種々の性質を持つ多様体を，横断的な交わりの共通部分として構成する方法はThomやPontryaginにより用いられた．
+\end{tcolorbox}
+
+\begin{definition}[transversality]
+    多様体の射$f:X\to Z,g:Y\to Z$が\textbf{横断的に交わる}とは，
+    任意の$f(x)=g(y)=z$を満たす点$z\in Z$について，写像の微分の像同士の和が$T_xZ$を生成することをいう：
+    $\Im(df)+\Im(dg)\simeq T_zZ$．\footnote{線型空間$T_zZ\simeq\R^n$上で定義された和であって，直和である必要はない．むしろこの時のために用意された場である．}
+\end{definition}
+
+\begin{theorem}[transversality theorem]
+    $C^\infty$級写像$f:N\to M$が$M$における余次元$k$の正則部分多様体$S$に対して横断的ならば，$f^{-1}(S)$は$N$における余次元$k$の正則部分多様体である．
+\end{theorem}
+
+\begin{theorem}[Pontryagin's construction]
+    $X$の正則部分多様体$Y,Z$が横断的に交わる時，$Y\cap Z$も$X$の$\dim Y+\dim Z-\dim X$次元正則部分多様体である．
+\end{theorem}
+
+\section{関数の微分と極値問題}
+
+\begin{definition}[Hesse bilinear form]
+    $f\in C(M)$とその臨界点$p\in M$について，
+    \begin{enumerate}
+        \item $T_p(M)$上の対称双線型形式$H_f$を，$p$の近傍における局所座標系$(x^i)$とそれについての$u,v\in T_p(M)$の成分表示$(\xi^i),(\eta^j)$について，
+        $H_f(u,v):=\sum^n_{i,j=1}\pp{^2f}{x^i\partial x^j}(p)\xi^i\eta^j$とおくと，これは局所座標系の取り方に依らない．これを\textbf{Hesse双線型形式}という．
+        \item 臨界点$p\in M$において，Hesse行列$H(f)(p)$が正則である時，これを\textbf{正則臨界点}という．$H(f)(p)$の指数を，正則臨界点$p$の指数という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $p\in M$を$f\in C(M)$の正則臨界点とし，指数を$(r,s)$とする．
+    この時，$p$の近傍の局所座標系$(y^1,\cdots,y^n)$であって，次の２条件を満たすものが存在する：
+    \begin{enumerate}
+        \item $y^i(p)=0$．
+        \item $f=f(p)+(y^1)^2+\cdots+(y^r)^2-(y^{r+1})^2-\cdots-(y^{r+s})^2$．
+    \end{enumerate}
+\end{theorem}
+
+\section{可微分関数と局所座標系}
+
+\begin{notation}
+    $f\in C(M)$と$p\in M$について，局所座標$(U,\psi)$が存在する．
+    $\psi$の成分$x^1,\cdots,x^n$は可微分関数の１つに他ならない．
+    この局所座標を用いて，$f\in C(M)$は，$\R^n$からの関数
+    \[F(u^1,\cdots,u^n):=f(\psi^{-1}(u))\quad(u\in\psi(U))\]
+    とみなせる．$q:=\psi^{-1}(u)$とすると，$(u^1,\cdots,u^n)=(x^1(q),\cdots,x^n(q))$であるから，
+    \[f(q)=F(x^1(q),\cdots,x^n(q))\]
+    と表せる．この，「一度$\psi(U)$に暗黙裡に写してから，$\R^n$からの写像だと思う」ことにして，$f=F(x^1,\cdots,x^n)$と略記し，$\pp{F}{u^i}$を$\pp{f}{x^i}$と略記する．
+\end{notation}
+
+\begin{definition}
+    $\det\paren{\pp{f^i}{x^j}}_{i,j\in[n]}\ne 0$を満たす時，$f^1,\cdots,f^n\in C(M)$を$p$の周りの局所座標系という．
+\end{definition}
+\begin{remarks}
+    略記法を思い出すと，これは$\det\paren{\pp{F^i}{u^j}}_{i,j\in[n]}\ne 0$の意味である．したがって，逆関数定理より，$F:\psi(U)\to\R^n$は$p\in\psi(U)$の周りで局所的に可逆．
+    すると，$F$と$\psi$との合成である$f:U\to\R^n;q\mapsto f(q)$も局所的に可逆．よって，$(U,f)$は$p$の座標近傍である．
+\end{remarks}
+
+\section{ベクトル場の問題}
+
+\begin{problem}
+    滑らかな関数$M\to\R/\Z\simeq S^1$を考える．
+    $M$のRiemann計量$g:M\to T^*(M)\otimes T^*(M)$について，
+    ベクトル場$X:M\to T(M)$を
+    \[g_p(X_p,v)=(df)_p(v)\quad(v\in T_p(M))\]
+    で定める．
+    \begin{enumerate}
+        \item $X$は滑らかである．
+        \item $X_p=0$と$p$が$f$の臨界点であることは同値である．
+        \item $f$は臨界点を持たないとする．
+    \end{enumerate}
+\end{problem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意の$p\in M$と座標近傍$(U_\al;x^1,\cdots,x^n)$をとって考える．
+        これについて，
+        \begin{align*}
+            X_q&=h^1(q)\paren{\pp{}{x^1}}_q+\cdots+h^m(q)\paren{\pp{}{x^m}}_q,&
+            df&=f_1dx^1+\cdots+f_mdx^m,\quad(q\in U_\al)
+        \end{align*}
+        と表されるとし，$g_{ij}^\al(q):=g_q\paren{\paren{\pp{}{x^i}}_q,\paren{\pp{}{x^j}}_q}\;(q\in U_\al)$とおくと，これは$U_\al$上の$C^\infty$級の関数である．
+        すると，$q\in U_\al$について，式$g_q(X_q,v)=(df)_q(v)\quad(v\in T_q(M))$は，$v=v^1\paren{\pp{}{x^1}}_q+\cdots+v^m\paren{\pp{}{x^m}}_q$とすると，
+        \begin{align*}
+            \paren{h^1(q)\;\cdots\;h^m(q)}\begin{pmatrix}g^\al_{11}&\cdots&g^\al_{1m}\\\vdots&\ddots&\vdots\\g^\al_{m1}&\cdots&g_{mm}\end{pmatrix}\begin{pmatrix}v^1\\\vdots\\v^m\end{pmatrix}=(f_1\;\cdots\;f_m)\begin{pmatrix}v^1\\\vdots\\v^m\end{pmatrix}
+        \end{align*}
+        と表せる．$f_1,\cdots,f_m$は$C^\infty$級であるから，$h^1,\cdots,h^m$も$C^\infty$級である．
+        \item 
+
+    \end{enumerate}
+\end{proof}
+
+\section{Sardの定理}
+
+\begin{theorem}
+    $\varphi:M^n\to M'^n$を可微分写像とする．$M$が第２可算ならば，$\varphi$の臨界値の集合$K$は$M'$の測度$0$の集合である．
+\end{theorem}
+
+\chapter{Lie群と表現論}
+
+\begin{quotation}
+    Topの群対象を位相群，Diffの群対象をLie群という．
+
+    Sophus Lie 1842-1899の，空間$X$に対する変換群$\Aut_\Diff(X)$の研究，
+    特に無限小変換と連続群の研究に端を発するためこの名がついた．
+
+    Lie群はそれ自身への左移動によって推移的に作用するからそれ自身等質空間である．
+    それゆえ，単位元における接空間の知見を深めれば，どの点でも局所的には同じ構造をしていると考えられる．
+    そして単位元における接空間$\g:=T_eG$では，Lie環を定めるような自然な括弧積が定義できる．
+    「Lie群の局所構造はLie環によって完全に決定され（Lie理論），さらに大域構造もLie環によってかなり統制することができる」\cite{小林}
+
+    「Lie群・Lie環やその表現論では，同じ定理を証明するのに解析的な手法・幾何的な手法・代数的な手法のいずれもが可能となる場合がある．
+    これは偶然ではなく，むしろこの分野の特性というべきものである．そうした特性が生命力となり，また，壮大な理論につながって数学そのものを前進させる原動力となってきた．」\cite{小林}
+
+    何かの「変換群」はなぜかDiffの中に住むべきで，Lie群は作用させて使う．
+    Lie群とその等質空間の研究と，（特に線型空間への）作用の研究とが両輪になって発展した．
+    これを無限小のレベルで考えることで，Lie環という代数的対象を生む．
+
+    Torus群$T$に対するFourier級数論は，一般のコンパクト群$G$上に拡張できる．これをPeter-Weylの定理という．
+\end{quotation}
+
+\section{位相群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標準的な自己位相同型$L_g,R_g\in\Aut_\Top(G)$や$Ad(g)=L_g\circ R_{g^{-1}}$，または演算写像とその合成$\mult\circ(\id_G\times\inv);(x,y)\mapsto xy^{-1}$が連続であることを元に議論する．
+    すると，$e\in G$の近傍全体のなす集合$\U$に注目すれば良い．
+    任意の点$g\in G$について，その近傍全体のなす集合は$L_g(\U)=g\U$であるため．
+    つまり，自己移動によって近傍系が写り合うという意味で「等質的」である．
+    この群$G$にある意味で似ている位相空間が，等質空間である．
+\end{tcolorbox}
+
+\subsection{基本的な道具}
+
+\begin{lemma}
+    $A,B\subset G$を部分集合とする．
+    \begin{enumerate}
+        \item $A$または$B$が開であるとき，$AB$は開である．
+        \item $A$が開であるとき，$A^{-1}$及び$gAg^{-1}$も開である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $A$が開とすると，任意の$b\in B$について$R_b(A)$は開である．よって，$AB=\cup_{b\in B}R_b(A)$も開．
+        \item $A^{-1}$は連続写像である$\inv:G\to G$の像．$gAg^{-1}$は$\Ad(g):G\to G$の像．
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[使える連続写像のレパートリー]\label{lemma-morphism-toolset-for-topological-group}
+    $e\in G$の近傍全体の集合$\U$について，
+    \begin{enumerate}
+        \item $\U\ne\emptyset$．
+        \item $\U$は開集合の基底である：$\forall_{U_1,U_2\in\U}\;\exists_{U_3\in\U}\;(e\in)U_3\subset U_1\cap U_2$．
+        \item $\forall_{U\in\U}\;\exists_{V\in\U}\;V\cdot V^{-1}\subset U$．
+        \item $\forall_{U\in\U}\;\forall_{a\in U}\;\exists_{V\in\U}\;aV\subset U$．
+        \item $\forall_{U\in\U}\;\forall_{g\in G}\;\exists_{V\in\U}\;gVg^{-1}\subset U$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $G\in\U$．
+        \item 基本近傍系だから．
+        \item $\varphi:=\mult\circ(\id_G\times\inv):G\times G\to G;\varphi(x,y)=xy^{-1}$が連続であることと，$\varphi(e,e)=e$であることより，任意の近傍$U$に対して，近傍$V$が存在して$\varphi(V,V)=V\cdot V^{-1}\subset U$を満たす．
+        \item $L_a:G\to G$は$L_a(e)=a$を満たす連続写像であるため．
+        \item $L_g\cdot R_{g^{-1}}=\Ad(g)$について．
+    \end{enumerate}
+\end{proof}
+\begin{remark}
+    上の５つを公理として，$G$の部分集合の族$\U$を定める．$\U(g):=\Brace{gU\mid U\in\U}$とおくと，これらを$g$の基本近傍系とするような位相が$G$に定まる．
+\end{remark}
+
+\subsection{位相群の位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    基本$\{e\}$の近傍系に引き戻して考えるので，$G$の位相は$e$の近傍の言葉で特徴付けられる．
+\end{tcolorbox}
+
+\begin{proposition}[ハウスドルフ位相群の特徴付け]
+    位相群$G$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $G$はHausdorffである．
+        \item $\bigcap_{U\in\U}U=\{e\}$．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    他の点が分離可能ってそう言うことだもんね．位相群本当に面白いな．
+\end{remarks}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 任意の$g\in G\setminus\{e\}$について，$g\notin U$を満たす$U\in\U$が存在するため．
+        \item[(2)$\Rightarrow$(1)] 任意に相異なる$g,h\in G$を取る．相異なるため，$h^{-1}g\ne e$であるから，$h^{-1}g\in U$を満たす$U\in\U$が存在する．このとき，$\mult\circ\inv$の連続性より，$VV^{-1}\subset U$を満たす$V\in\U$が存在し，これについても$h^{-1}g\notin VV^{-1}$．すなわち，$g\notin hVV^{-1}$，$gV\cap hV=\emptyset$．
+    \end{description}
+\end{proof}
+
+\subsection{位相群の例}
+
+\begin{example}[$p$進整数：位相群だがLie群でない例]
+    素数$p$について，自然な射影
+    \[\cdots\Z/p^4\Z\to\Z/p^3\Z\to\Z/p^2\Z\to\Z/p\Z\]
+    の射影極限$\varprojlim\Z/p^n\Z$を$\Z_p$で表す．これはコンパクト位相群になる．
+\end{example}
+
+\begin{example}
+    ３つの位相群
+    \begin{enumerate}
+        \item torus $T=\R/2\pi\Z$．
+        \item $S^1:=\Brace{z\in\C\mid\abs{z}=1}$．
+        \item $SO(2)=\Brace{g\in M_2(\R)\mid {}^t\!gg=I,\det g=1}$．
+    \end{enumerate}
+    は互いに同型である．成分毎の計算によって，
+    \[SO(2)=\Brace{\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}\in M_2(\R)\;\middle|\;\theta\in\R}\]
+    と分かる．
+\end{example}
+
+\begin{example}[半直積]
+    半直積$H\rtimes_\pi G$の部分群$H$は閉正規部分群で，位相群としての同型$(H\rtimes G)/H\simeq G$を得る．
+\end{example}
+
+\begin{example}[Affine変換群とEuclid運動群]\mbox{}\label{exp-Affine-transformation-and-Euclid-motion-group}
+    \begin{enumerate}
+        \item 
+    $A\in\GL_n(\R),b\in\R^n$について，$(A,b):\R^n\to\R^n;x\mapsto Ax+b$をaffine変換という．
+    この全体$\Aff(\R^n)$は群をなす．合成法則を見ると，これは積を$(A_1,b_1)\cdot(A_2,b_2):=(A_1A_2,b_1+A_1b)$と定めた
+    半直積群$\Aff(\R^n)\simeq\GL_n(\R)\ltimes\R^n$と同型である．
+    \[\Aff(\R^n):=\Brace{\begin{pmatrix}A&b\\0&1\end{pmatrix}\in\GL_{n+1}(\R)\;\middle|\;A\in\GL_n(\R),b\in\R}\]
+    とも定義できる．
+    \item Affine変換群の部分群$O(n)\ltimes\R^n$は$\R^n$の等長変換の群であり，\textbf{Euclid運動群}という．$n=2$の場合は平面の合同変換群という．
+    \end{enumerate}
+\end{example}
+
+\section{位相群の部分群と商空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    部分群については，剰余類分解があるため，閉集合であることの方が，開集合であることより広い概念である．
+    $H$が開ならば，これについての剰余類分解を考えると，$G\setminus H$も開とならざるを得ない．$G/H$が有限ならば，同様のことが閉集合についても成り立つ．
+\end{tcolorbox}
+
+\begin{lemma}
+    $G$を位相群，$H$を部分群とする．
+    \begin{enumerate}
+        \item $H$の閉包$\o{H}$は$G$の閉部分群である．
+        \item $H$が$G$の正規部分群ならば，$\o{H}$も$G$の正規部分群である．
+        \item $H$が$G$の開集合ならば，$H$はまた$G$の閉集合である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $g,h\in\o{H}$を任意に取る．$gh^{-1}\in\o{H}\Lrarrow\forall_{U\in\U}\;gh^{-1}U\cap H\ne\emptyset$を示せば良い．
+        $\Ad(h)\circ\mult\circ(\id_G\times\inv)$の連続性（補題\ref{lemma-morphism-toolset-for-topological-group}）より，$hVV^{-1}h^{-1}\subset U$を満たす$V\in\U$が存在する．すなわち，$VV^{-1}h^{-1}\subset h^{-1}U$．
+        $g,h\in\o{H}$より，$gV\cap H\ne\emptyset,hV\cap H\ne\emptyset$であるから，$gu,hv\in H$を満たす$u,v\in V$が存在する．これについて，$(gu)(hv)^{-1}=guv^{-1}h^{-1}\in H$であるから，$gVV^{-1}h^{-1}\subset gh^{-1}U$が空でないことがわかった．
+        \item 
+        $H$が$G$の正規部分群だから，任意の$g\in G$について，$gHg^{-1}=\Ad_g(H)=H$．ここで，$Ad_g:G\iso G$は位相同型であることより，$\o{\Ad_g(H)}=\Ad_g(\o{H})=g\o{H}g^{-1}=\o{H}$．
+        \item $H$による左剰余類分解$G=H\cup\bigcup_{\alpha\in A}a_\alpha H$を考える．$a_\alpha H$は連続写像$L_{a_\alpha}$の像だから開．よって，$H$の補集合$H'=\bigcup_{\alpha\in A}a_{\alpha}H$は開である．
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 位相群$G$の中心は閉部分群である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 左剰余類全体の集合$G/H$に，終位相を入れると，$\pi:G\epi G/H$は開写像となる．
+        \item $H\rsub G$であるとき，$G/H$は位相群である．
+        \item Hausdorff位相群$G$の商群$G/H$がHausdorffであるための必要十分条件は，正規部分群$H$が閉であることである．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    これは商位相空間がHausdorffになる条件\ref{thm-characterization-of-quotient-Hausdorff}の例である．
+\end{remarks}
+
+\section{位相群の連結部分}
+
+\subsection{連結位相群の性質}
+
+\begin{theorem}
+    $G$を連結位相群，$U\subset G$を単位元$e$の近傍で，$U=U^{-1}$を満たすものとする．
+    \begin{enumerate}
+        \item この時，$\forall_{g\in G}\;\exists_{k\in\N}\;\forall_{1\le i\le k}\;\exists_{g_i\in U}\;g=g_1\cdots g_k$．
+        \item $G$がコンパクトならば，正整数$n\in\N$が存在して，常に$k=n$と取れる．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{位相群の連結部分の構造}
+
+\begin{lemma}
+    $H<G$を位相群とする．
+    $H,G/H$が連結ならば，$G$も連結である．
+\end{lemma}
+
+\begin{theorem}
+    $G$を位相群とし，$e$を含む連結部分を$G_0$とする．
+    \begin{enumerate}
+        \item $G_0$は$G$の正規閉部分群である．
+        \item $G/G_0$の単位元を含む連結成分$(G/G_0)_0$は自明群である．\footnote{$G_0=\{e\}$となる位相群$G$を完全不連結という．}
+        \item $G$を局所連結とすると，$G/G_0$は離散空間である．
+        \item $g\in G$を含む連結部分は$gG_0$と表せる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 行列式の値が正の$n$次元実行列の全体を$\GL^+_n(\R)$，負のものを$\GL^-_n(\R)$とする．$\GL_n(\R)$の連結成分は$\GL_n^+(\R)\cup\GL_n^-(\R)$の２つからなる．
+        \item $\GL_n(\C)$は連結である．
+    \end{enumerate}
+\end{example}
+
+\section{位相群の作用：等質空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    1-パラメータ群も一種の変換群である．Lieはこのようにして，連続にパラメータ付けられた$\Aut(M)$の部分群を考えた．これはLie群の中心的な例である．
+    多様体の構成\ref{sec-construction}の一般論である．
+    「球面が丸い」とは$SO_n(\R)$の作用で，「直線はまっすぐだ」とは加法群$\R$の作用によって理解している概念である．
+
+    変換群の作用の「最小単位」を等質空間という．軌道分解によってここに辿り着く．
+\end{tcolorbox}
+
+\subsection{位相群の作用と等質空間}
+
+\begin{definition}[topological transformaton group, effective / free, transitive, homogeneous space, isotropy subgroup]\mbox{}
+    \begin{enumerate}
+        \item 位相空間$X$への位相群の作用$\varphi:G\times X\to X$が定まっているとき，$G\to\Aut_\Top(X)$が定まっている．このとき位相群$G$のことを\textbf{（位相）変換群}という．
+        \item 作用が\textbf{効果的}であるとは，$\forall_{x\in X}\;gx=x\Rightarrow g=e$が成り立つことをいう．すなわち，剪断写像$(\varphi,\pr_2):G\times X\to X\times X$が単射である．
+        \item 作用が\textbf{推移的}であるとは，$\forall_{x,y\in X}\;\exists_{g\in G}\;gx=y$が成り立つことをいう．すなわち，剪断写像$(\varphi,\pr_2):G\times X\to X\times X$が全射である．これは軌道が１つであるということであり，この位相空間$X$を，\textbf{位相群$G$の等質空間}という．
+        \item 安定化群$\Stab_G(x):=\Brace{g\in G\mid gx=x}$を，$G$の\textbf{等方部分群}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $x$における等方部分群$\Stab_G(x):=\Brace{g\in G\mid gx=x}$は$G$の部分群になる．
+        \item $G$がHausdorffであるとき，等方部分群は閉である．
+        \item $N:=\Brace{g\in G\mid \forall_{x\in X}\;gx=x}$は$G$の正規閉部分群である．
+        \item $G$が$X$に推移的に作用するとき，$X$の任意の２点における等方部分群$H,H'$は互いに共役である：$\exists_{g\in G}\;gHg^{-1}=H'$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $gx=x\Lrarrow x=g^{-1}x$より逆元について閉じており，$(gh)x=g(hx)=gx=x$より積についても閉じており，単位元を含むため．
+        \item $\varphi(-,x):=\varphi_x:G\to X$を$g\mapsto gx$と定めると，これは作用$\varphi:G\times X\to X$の制限であるため，連続である．このとき，$\Stab_G(x)=\varphi_x^{-1}(x)$と，閉集合の逆像であるため．
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    $G$を位相群，$H$をその正規部分群とすると，$G$は$G/H$の位相変換であり，$G/H$に推移的に作用する：
+    \[\xymatrix@R-2pc{
+        \varphi:G\times G/H\ar[r]&G/H\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (g,\pi(g'))\ar@{|->}[r]&\pi(gg')
+    }\]
+    この作用のcurryingを$T:G\to\Aut_\Top(G/H)$と表し，$T_ga=\varphi(g,a)$と表す．
+\end{example}
+
+\begin{example}[Lie群の作用]\mbox{}
+    \begin{enumerate}
+        \item 左移動$G\times G\to G$は$C^\infty$級の自由作用．
+        \item 共役作用$G\times G\to G$は$C^\infty$級の作用である．$G_x=G\Leftrightarrow x\in Z(G)$．
+        \item 行列のベクトルへの作用$\GL_n(\K)\times\K^n\to\K^n$は$C^\infty$級の作用である．
+        \item 射影変換$\GL_{n+1}(\K)\times\K P^n\to\K P^n$も$C^\infty$級の作用である．
+        \item Möbius変換$\SL_2(\R)\times\H\to\H$も$C^\infty$級の作用である．これは射影変換$\GL_2(\C)\times\C P^1\to\C P^1$の部分作用であるため．
+    \end{enumerate}
+\end{example}
+
+\subsection{等質空間に関する軌道・安定化群定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $SO(n)/SO(n-1)\simeq S^{n-1}$はどう見るべきかというと，$SO(n)$の$S^{n-1}$への推移的な作用において，
+    $SO(n-1)$は安定化群になる．これで割ると，$SO(n)$から$S^{n-1}$の形が見える．
+
+    すなわち，$G/H$というのが標準的な等質空間になり，推移的に作用するなら$H$が存在して$G/H$と同型になる．
+    等質空間$G/H$にはLie環の指数写像を用いて多様体の構造を与えられる．\textbf{$G/H$の内在的なこの多様体の構造と，等質空間$X$の多様体の構造は一致する}．
+\end{tcolorbox}
+
+\begin{theorem}[等質空間に関する軌道・安定化群定理]
+    局所コンパクトハウスドルフ空間$X$を，可算基を持つ位相群$G$の等質空間とする（すなわち，推移的に連続作用している）．
+    $H$を，$x\in X$における$G$の等方部分群とする．
+    \begin{enumerate}
+        \item 次の写像は同相写像である．
+        \[\xymatrix@R-2pc{
+            \alpha:G/H\ar[r]&X\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            gH\ar@{|->}[r]&gx
+        }\]
+        \item $T_g:=\pi(g\cdot -):G\epi G/H$について，$\alpha(T_g\xi)=g\alpha(\xi)$．
+    \end{enumerate}
+\end{theorem}
+\begin{example}[直交群の等質空間としての単位球面]
+    $O(n)\subset\GL_n(\R)$はコンパクト部分群である．列ベクトルの空間として，$U_1(0)\subset\R^n$を$n$次元開球とすると，$O(n)\subset\o(U_1(0))^n$より．
+    ここで，$\norm{Ax}=\norm{x}$を満たすから，$O(n)$の作用は連続写像$S^{n-1}\epi S^{n-1}$を誘導する．また，$O(n)$は推移的に$S^{n-1}$に作用する．
+    したがって，$S^{n-1}$は$O(n)$の等質空間である．
+    点$e_1\in S^{n-1}$における等方部分群は
+    \[H:=\Brace{\begin{pmatrix}1&0\\0&B\end{pmatrix}\;\middle|\;B\in O(n-1)}\]
+    より，軌道と安定化群との関係から，$O(n)/H\simeq O(n)/O(n-1)\simeq S^{n-1}$である．
+
+    全く同様の議論で，$SO(n)/SO(n-1)\simeq S^{n-1}$も成り立つ．
+\end{example}
+\begin{example}[affine空間]
+    affine変換群$\Aff_n(\R)$は局所コンパクトで，$n$次元空間$A^n$の推移的な位相変換群である．
+    原点$0$における等方部分群は$\GL_n(\R)$に等しいから，$\Aff_n(\R)/\GL_n(\R)\simeq A^n$が成り立つ．
+\end{example}
+
+\begin{proposition}
+    $SO(n)$は$O(n)$の，単位元を含む連結成分である．
+\end{proposition}
+
+\subsection{局所コンパクト群の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群は局所コンパクトである．そこで，局所コンパクト性がどう効いてくるか調べる．
+\end{tcolorbox}
+
+\begin{theorem}
+    $G,G'$を局所コンパクト群，$G$は可算基を持つとする．準同型$G\to G'$は常に開である．
+\end{theorem}
+
+\begin{theorem}
+    連結な局所コンパクト群$G$は，$\sigma$-コンパクトである．
+\end{theorem}
+
+\section{Lie群とLie環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群はDiffの群対象だから，可算基をもち，また局所コンパクトである．
+\end{tcolorbox}
+
+\subsection{Lie群と閉部分群定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Lie群の閉部分群は，再びLie群である．
+    これが，与えられた群がLie群であることを示すための一番簡単な方法となる．
+\end{tcolorbox}
+
+\begin{lemma}
+    Lie群$G$の単位元$e$を含む連結成分$G_0$は再びLie群である．
+\end{lemma}
+
+\subsection{Lie環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相空間には位相変換群を考えたが，Lie群には無限小変換のなす結合多元環を考える．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item Lie群$G$上のベクトル場$X$が，$\forall_{g\in G}\;(L_g)_*X=X$を満たす時，\textbf{左不変}であるという．
+        \item $G$の左不変なベクトル場の全体$\g\subset\X(G)$はLie環，すなわち交換子積を備えた結合多元環となる．これを\textbf{Lie群$G$のLie環}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Lie群の次元を$n$とすると，Lie環$\g$の次元も$n$である．
+\end{theorem}
+
+\section{Lie群の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群とは，$C^\infty$級多様体の圏での群対象である．
+\end{tcolorbox}
+
+\begin{remark}
+    任意の群は離散位相を入れることで，$0$次元Lie群になる．
+\end{remark}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $\K^n$は加法についてLie群をなす．
+        \item $\GL_n(\K)$は行列積についてLie群をなす．積演算は成分の二次多項式だから$C^\infty$級で，逆もCramerの公式より$C^\infty$級とわかる．\footnote{多様体となることは，detの正則点の集合となることからわかる（例\ref{example-GL-as-submanifold-of-Euclidean-space}．SLはdetの正則等位集合であり，$\{1\}\subset\R$の逆像なので$\R^{n^2}$の開部分集合であるGLの閉部分集合．}
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}[群の包含写像が滑らかならば，部分Lie群である]
+    Lie群$G$に対して，任意の部分群$H\mono G$は$C^\infty$級多様体である．が，$H\mono G$が埋め込みとは限らないので部分多様体とは限らない．
+    これについて，次を満たすならば，$H$はLie（部分）群である：$\forall_{L\in\Diff}\;\forall_{f:L\to H}\;i\circ fがC^\infty 級\Lrarrow fがC^\infty 級$．
+    特に，$H$が$C^\infty$部分多様体ならば，$H$はLie部分群である．
+\end{lemma}
+\begin{proof}
+    条件は$i:H\mono G$が$C^\infty$級だということを特徴付けているから，$H$の各射は確かに$C^\infty$級である．
+\end{proof}
+
+\begin{example}[Lie部分群]\mbox{}
+    \begin{enumerate}
+        \item $\SL_n(\K),O(n),U(n),SU(n),O(n,\C),\Sp_{2g}(\K)$などは$\GL_n(\K)$の部分群かつ正則部分多様体である．このとき，$i:\SL\mono\GL$は群準同型であるだけでなく滑らかな埋め込みであるから，Lie部分群である．
+        \item $\H:=\Brace{\begin{pmatrix}z&w\\-\o{w}&\o{z}\end{pmatrix}\;\middle|\;z,w\in\C}\simeq\R^4$は$M_2(\C)$の$\R$-部分代数で，非可換体である．
+        $\H^\times=\H\setminus\{0\}$はLie群である．
+        \item $\H^\times$の部分群かつ部分多様体であるから，$S^3\simeq SU(2)$はLie群である．
+        \item 同様に円群$S^1=\{z\in\C^\times\mid\abs{z}=1\}=U(1)=SO(2)$もLie群である．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[Lie群の射]
+    $\det:\GL_n(\K)\to\K^\times$はLie群の射である．
+\end{example}
+
+\section{位相群の表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相群の作用＝変換の中で，特に重要なものは線型変換である．この時の作用を「表現」という．
+    群とは元々種々の空間に対する作用全体のなす空間を捉える概念であったが，一度抽象したために，線型空間に作用させてしまうと全て統一的に，そして計算可能に理解できる（Lie群の随伴表現や，等質空間における等方表現）．
+    また線型空間は，位相群の一般の位相空間$X$への作用を考えた時，$X$上の関数空間$C(X)$を考えることにより，自然に出現する（群の正則表現や等質空間上の準正則表現）．
+\end{tcolorbox}
+
+\chapter{Fourier解析とコンパクト群の表現論}
+
+\begin{quotation}
+    調和振動子$\{e^{int}\}_{n\in\N}$の$L^2$-完備性と$T$の既約ユニタリ表現の分類は表裏一体になっていることが，Peter-Weylの定理の証明の柱となるアイデアである．
+
+    群の正則表現の理論（Peter-Weylの定理や関数環$C(G)$の$*$-代数としての構造）が，元の群の性質を浮き彫りにする．
+    多様体自身を考える代わりに多様体上の関数全体を考えるという考え方は，代数幾何や微分幾何を初め20世紀の数学の諸分野を躍進させた重要な観点であり，幾何的な意味での対称性を研究する変換群論にも群の表現論が深く関わっている１つの裏付けを与えている．
+\end{quotation}
+
+\section{位相群の表現}
+
+\subsection{表現の定義}
+
+\begin{definition}
+    $G$を群，$V$を$\C$-線型空間とする．群準同型$\pi:G\to\GL_\C(V)=\Aut_\C(V)$を$V$上の表現という．
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 定値写像$1:G\to1\to\GL_\C(V)$を\textbf{自明な表現}という．
+        \item 一般線型群への埋め込み$G\mono\GL_n(\C)$を\textbf{自然表現}
+    \end{enumerate}
+\end{example}
+
+\chapter{接続}
+
+\section{接続の基本概念}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=接続とそれが定める共変微分]
+    所与の微分概念について，$d:C(M)\to\Gamma(T^*(M))=\Hom_\R(T(M),T(\R));f\mapsto df$は，$\ep^1$を$M$上の１次元の自明バンドルとすると$C(M)=\Gamma(\ep^1),\Gamma(T^*(M))=\Gamma(\ep^1\otimes T^*(M))$だから，
+    $\Gamma(\ep^1)\to\Gamma(\ep^1\otimes T^*(M))$という線型写像である．
+    すなわち，「余接空間への持ち上げ」と見たら１次元の退化した対応で，
+    自明なバンドル$\xi^1$には自然な接続をすでに考えていたのである．
+
+    そこで，一般のバンドルについて，その「微分」なるものを考えたい．
+    これを接続$\nabla$といい，それについてベクトル場$X$についての方向微分＝共変微分$\nabla_X$が定まる．
+    $X$方向の微分$X(f)$は$T(M)$上の内積$X(f)=\brac{X,df}$で与えられるので，この方向で一般化する．
+\end{tcolorbox}
+
+\subsection{接続の存在}
+
+\begin{definition}[connection]
+    $M$上のベクトル束$E$について，線型写像$\nabla:\Gamma(E)\to\Gamma(E\otimes T^*(M))$であって，$\forall_{f\in C(M),\sigma\in\Gamma(E)}$に対して$\nabla(f\sigma)=f\cdot\nabla\sigma+\sigma\otimes df$を満たすものを，$E$上の\textbf{接続}という．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $\nabla$は微分作用素である．
+        \item $\nabla$は一階の微分作用素である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\sigma\in\Gamma(E)$について，$f\in C(M)$を$x_0\in M\setminus\supp\sigma$の近傍で$1$，$\supp\sigma$上で$0$となるものを取ると，$\nabla(f\sigma)(x_0)=\nabla(\sigma)(x_0)=\nabla\sigma(x_0)+0\otimes 0(x_0)$より，$\nabla\sigma(x_0)=0$を得る．すなわち，$\supp\nabla\sigma\subset\supp\sigma$．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+    任意のベクトルバンドル$E$上に接続が存在する．
+\end{theorem}
+
+
+\subsection{共変微分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意のベクトル束の切断について，「ベクトル場に沿った方向微分」なる概念を定義できる，これが共変微分であり，特に接束を考えるとき，この接続をaffine接続という．
+\end{tcolorbox}
+
+\begin{discussion}
+    接続$\nabla:\Gamma(E)\to\Gamma(E\otimes T^*(M))$の値域の$T^*(M)$はこのようにして使う：
+    $T(M),T^*(M)$の間の，任意の局所座標を取ったときに定まる双対写像を用いると，これは局所座標の取り方に依らずに，
+    ベクトル場$X\in\X(M)$に対して，
+    各点で接ベクトルとの内積を取ることで線型写像$\brac{X,-}:\Gamma(E\otimes T^*(M))\to\Gamma(E)$を定める．
+\end{discussion}
+
+\begin{definition}[接続の定める共変微分]
+    $\nabla$を$E$上の接続とする．
+    任意のベクトル場$X\in\X(M)$に対して，対応
+    \[\xymatrix@R-2pc{
+        \nabla_X:\Gamma(E)\ar[r]&\Gamma(E)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \sigma\ar@{|->}[r]&\brac{X,\nabla\sigma}
+    }\]
+    が定まる．この対応$\X(M)\to\End_\R(\Gamma(E));X\mapsto\nabla_X$の値を，$X$に沿う\textbf{共変微分}という．
+\end{definition}
+
+\begin{theorem}
+    写像$\X(M)\otimes\Gamma(E)\ni(X,\sigma)\mapsto\nabla_X\sigma\in\Gamma(E)$は双線型写像であって，次の２条件を満たす．
+    \begin{enumerate}
+        \item (Leibniz則) $\forall_{f\in C(M),\sigma\in\Gamma(E)}\;\nabla_X(f\sigma)=f\nabla_X\sigma+X(f)\sigma$．
+        \item ($C(M)$-線型性) $\nabla_{fX}\sigma=f\nabla_X\sigma$．
+    \end{enumerate}
+    逆に，(1),(2)を満たす双線型写像が与えられたとき，これを定める$E$上の接続$\nabla$がただ一つ存在する．
+\end{theorem}
+\begin{remarks}
+    この(1),(2)は群作用における「微分」の概念との関連がわかりやすい．
+\end{remarks}
+
+\begin{example}[affine connection]
+    $E=T(M)$とし，$\sigma\in\X(M)$をベクトル場だと思った双線型写像$\nabla:\X(M)\times\X(M)\to\X(M)$を，\textbf{affine接続}という．
+    たくさん存在するが，捩れがなく，Riemann計量と両立するものは定理より一意に定まる．
+    これは，違う接空間の間の橋渡しを（＝微分の言葉によって移動の概念を定義）しているとみなせる．
+\end{example}
+
+\subsection{affine接続の局所座標への制限}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=affine接続＝共変微分とは「ベクトル場のベクトル場に沿った方向微分」]
+    本書では一般論で展開されていたが，幾何学XDを参考にしてaffine接続の例で議論する．
+    名前はÉlie Cartanによるもので，Euclid空間のaffine接続は，平行移動による同一視で，その一般化に発想を得ていることによる．
+    affine接続を指定することで，「接空間が互いにaffine空間としてEuclid空間のようになる」という追加の局所Euclid性を添加できる．
+\end{tcolorbox}
+
+\begin{definition}
+    この双線型写像を，内積のように捉えて，
+    \[\nabla_{\pp{}{x^i}}\paren{\pp{}{x^j}}=\sum_{k}\Gamma^k_{ij}\pp{}{x^k}\]
+    と表す．$(\Gamma^k_{ij})$を接続$\nabla$の\textbf{成分}といい，Christoffelの記号と呼ばれる．
+\end{definition}
+
+\begin{theorem}
+    局所座標$(x^1,\cdots,x^n)$を考える．これについて，
+    \[\nabla_XY=\sum_{i,k}X^i\paren{\pp{Y^k}{x^i}+Y^j\Gamma^k_{ij}}\pp{}{x^k}.\]
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        \nabla_XY&=\nabla_{\paren{\sum X^i\pp{}{x^i}}}\paren{\sum Y^j\pp{}{x^j}}\\
+        &=\sum_iX^i\nabla_{\pp{}{x^i}}\paren{\sum Y^j\pp{}{x^j}}\\
+        &=\sum_iX^i\Brace{\pp{Y^j}{x^i}\pp{}{x^j}+Y^j\nabla_{\pp{}{x^i}}\pp{}{x^j}}\\
+        &=\sum_{i,k}X^i\paren{\pp{Y^k}{x^i}+Y^j\Gamma^k_{ij}}\pp{}{x^k}.
+    \end{align*}
+    最後の変形はLeibniz則による．
+\end{proof}
+
+\begin{corollary}
+    曲線$c:(-\ep,\ep)\to M$と曲線上の滑らかなベクトル場$Y:(-\ep,\ep)\ni t\mapsto Y(t)\in T_{c(t)}(M)$について，
+    「ベクトル場の方向微分」$\nabla_{\dot{c}(t)}Y\in T_{c(t)}(M)$はwell-definedである．
+\end{corollary}
+
+\subsection{接続の分解}
+
+\section{曲率と平行移動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    微分幾何学的概念の多様体への接続を介した流入．
+\end{tcolorbox}
+
+\subsection{曲率}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ねじれは一階微分による不変量，曲率は二階微分による不変量である．
+\end{tcolorbox}
+
+\begin{definition}[torsion, curvature]\mbox{}
+    \begin{enumerate}
+        \item $T^\nabla(X,Y):=\nabla_XY-\nabla_YX-[X,Y]$を捩れという．
+        \item 対応$K:\X(M)\times\X(M)\to\End_\R(\Gamma(E));(X,Y)\mapsto K(X,Y):=\nabla_X\nabla_Y-\nabla_Y\nabla_X-\nabla_{[X,Y]}$を，接続$\nabla$の曲率という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $K(X,Y)=-K(Y,X)$．
+        \item $\forall_{f,g,h\in C(M),\sigma\in\Gamma(E)}\;K(fX,gY)(h\sigma)=fghK(X,Y)\sigma$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{平行移動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    affineの名前の由来である．
+    局所Euclid的な空間である多様体に，どのように平行移動の概念を移植するか．
+    ベクトル場$X$が平行であるとは，任意のベクトル場$Y$に対して，$\nabla_YX=0$となることをいう．すなわち，定値なベクトル場である．
+    これを起点にして，接空間の間に同一視を試みるが，平行なベクトル場は一般には存在しない（曲率が$0$となるときのみ）．
+    したがって，曲線に沿う切断面を用いて，局所的に考えていく．
+\end{tcolorbox}
+
+\begin{definition}
+    $E$を$M$上のベクトル束，$\nabla$をその上の接続とする．
+    \begin{enumerate}
+        \item 曲線$c:[0,1]\to M$に沿った$E$の切断面とは，滑らかな写像$\sigma:[0,1]\to E;t\mapsto \sigma(t)\in E_{c(t)}$をいう．
+        \item 成分$(\nabla_{dc/dt}\sigma(t))^i:=\dd{\sigma^i}{t}(t)+\sum_{j,\mu}\Gamma^i_{j\mu}(c(t))\sigma^j(t)\dd{c^\mu}{t}$により定まる微分作用素を$\frac{D\sigma}{dt}$で表し，
+        $c$に沿っての$\sigma$の共変微分という．これはまた$c$に沿う$E$の切断面である．
+        \item $c$に沿う切断面$\sigma$が$\frac{D\sigma}{dt}=0$を満たすとき，$\sigma$を平行な切断面であるという．
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    $\dd{c}{t}:=dc\paren{\dd{}{t}}$とおくと，これは$c$に沿う$T(M)$の切断面を与えている．
+\end{example}
+
+\begin{theorem}
+    曲線$c$と$e\in E_{c(0)}$が与えられたとき，$\sigma(0)=e$を満たす，$c$に沿う平行な切断面$\sigma$がただ一つ存在する．
+\end{theorem}
+
+\begin{definition}
+    定理より，$E_{c(0)}$から$E_{c(t)}$の上への線形な同型写像$P_c(t)$が一意に定まる．これを曲線$c$に沿う平行移動という．
+    $\frac{D\sigma}{dt}$を\textbf{平行移動を定義する微分方程式}という．
+    これは局所自明化により一階の線型常微分方程式により，初期条件に応じてたしかに一意な局所解を持つ．
+\end{definition}
+
+\begin{remarks}
+    affine接続は，任意の曲線$\gamma$の，frame bundle $\GL(M)$内の曲線$\wt{\gamma}$への持ち上げをもたらす．
+    こうして得た接空間の基底について同一視をし，「平行」の概念をもたらす．
+    このように表現すれば，極めて層の理論と並行である．
+\end{remarks}
+
+\subsection{平行移動による共変微分の特徴付け}
+
+\section{Riemann計量から導かれる接続}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    affine接続自体はたくさんあるが，Riemann計量と両立するものは一意に定まる．
+\end{tcolorbox}
+
+\subsection{Riemann / Levi-Civita接続}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    affine接続の主な不変量は捩れと曲率であるから，これらを指定することでaffine接続を１つに確定できる．」
+\end{tcolorbox}
+
+\begin{theorem}[Riemannian / Levi-Civita connection]
+    $M$上にRiemann計量，すなわち$T(M)$の内積$(\xi,\eta)_x\;(\xi,\eta\in T(M)_x)$が与えられたとする．
+    このとき，次の条件を満たす$T(M)$の(affine)接続$\nabla$がただ一つ存在する．
+    \begin{enumerate}
+        \item ($\nabla$ is Riemannian) $M$上の任意の曲線$c$に対し，$c$に沿っての$T(M)_{c(0)}$から$T(M)_{c(1)}$への平行移動は，内積を不変にする：$X\cdot\brac{Y,Z}=\brac{\nabla_XY,Z}+\brac{Y,\nabla_XZ}$．\footnote{これは$C(M)$上の等式であることに注意．方向微分$X$と共変微分$\nabla_X$とに渡るLeibniz則と見れる．}すなわち，平行移動は等長変換を定める．
+        \item (torsion-free) $\forall_{X,Y\in\X(M)}\;\nabla_XY-\nabla_YX=[X,Y]$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{テンソル場の共変微分}
+
+\subsection{Ricciの補題}
+
+\section{正規座標}
+
+\subsection{測地線}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測地線とは加速度０の自由運動のことで，Euclid空間における等速直線運動の一般化となっている．
+    $\forall_{t\in[-\ep,\ep]}\;\nabla_{\gamma'(t)}\gamma'=0$はまさにRiemann幾何の言葉で書かれた「加速度ベクトル」のようなものである．
+\end{tcolorbox}
+
+\begin{definition}[geodesic]
+    Riemann多様体$M$上の曲線$c$に沿うベクトル場$\dd{c}{t}$が平行のとき，$c$を\textbf{測地線}という．
+\end{definition}
+\begin{remarks}
+    したがって，測地線$c$について$\frac{D}{dt}\paren{\dd{c}{t}}=0$が成り立つから，$\Norm{\dd{c}{t}}$は一定である．
+\end{remarks}
+\begin{proof}
+    $\abs{\gamma'}^2$が定数であることを示す．
+    \begin{align*}
+        \frac{1}{2}\dd{}{t}\paren{\abs{\gamma'}^2}&=\frac{1}{2}\gamma'\cdot\paren{\brac{\gamma',\gamma'}}&tでの微分は接ベクトル\gamma'による方向微分に一致\\
+        &=\frac{1}{2}\Brace{\brac{\nabla_{\gamma'}\gamma',\gamma'}+\brac{\gamma',\nabla_{\gamma'}\gamma'}}&\text{Riemann接続の性質}\\
+        &=\brac{\nabla_{\gamma'}\gamma',\gamma'}=0
+    \end{align*}
+\end{proof}
+
+また，このように定義しても良い．
+
+\begin{definition}
+    $\forall_{t\in[-\ep,\ep]}\;\nabla_{\gamma'(t)}\gamma'=0$の時，$\gamma$を\textbf{測地線}という．
+\end{definition}
+
+\begin{lemma}[測地線の存在と一意性]
+    任意の$x\in M,X\in T_xM$に対して，測地線$\gamma:(-\ep,\ep)\to M$が存在して，$\gamma(0)=x,\gamma'(0)=X$を満たし，これは任意の同じ条件を満たす測地線$\o{\gamma}:(-\o{\ep},\o{\ep})\to M$に対して，$\gamma=\o{\gamma}\;\on\;(-\ep_0,\ep_0)\;(\ep_0:=\min\Brace{\ep,\o{\ep}})$が成り立つという意味で一意である．
+\end{lemma}
+
+\section{法バンドルと管状近傍}
+
+\chapter{ファイバー束}
+
+\section{主バンドルと同伴バンドル}
+
+\begin{definition}[shear map]
+    群作用$\rho:G\times X\to X$に対して，群の射
+    \[\xymatrix@R-2pc{
+            (\rho,\pr_2):G\times X\ar[r]&X\times X\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            (g,x)\ar@{|->}[r]&(\rho(g)(x),x)
+    }\]
+    を\textbf{剪断写像}という．
+\end{definition}
+
+\begin{definition}[proper, transitive, free, regular, faithful / effective]
+    Lie群の多様体$X$への作用$\rho:G\times X\to X$について，
+    \begin{enumerate}
+        \item 位相群の作用が\textbf{固有}であるとは，shear map $G\times X\to X\times X$がproperであることをいう．すなわち，全てのコンパクト集合の逆像はコンパクトである．
+        \item $X\ne\emptyset$で軌道を１つしか持たないとき，すなわち$\forall_{x,y\in X}\;\exists_{g\in G}\;gx=y$を満たすとき，\textbf{推移的}であるという．すなわち，shear mapが全射である．
+        \item $k\in\N$について，群作用が定める作用$G\times X^k\to X^k$が推移的であるとき，$k$-推移的であるという．
+        \item $\forall_{x\in X}\;gx=x\Rightarrow g=e$が成り立つとき，\textbf{自由}であるという．すなわち，shear mapが単射である．
+        \item 推移的かつ自由な群作用を\textbf{正則}という：$\forall_{x,y\in X}\;\exists!_{g\in G}\;gx=y$．すなわち，shear mapが全単射である．この時集合$X$を$G$-torserまたは主等質空間(principal homogeneous space)\footnote{明らかに束を意識した名前である．}という．
+        \item $E$上の$G$-主束または$E$上の$G$-torsorとは，束$X\to E$のファイバー$X$に$G$が正則に作用している時をいう．
+        \item 表現$\wt{\rho}:G\to\Diff(X)$が\textbf{忠実}である，または作用は\textbf{効果的}であるとは，$\wt{\rho}$が単射であることをいう．
+    \end{enumerate}
+\end{definition}
+
+\subsection{主束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群$G$の多様体$M$への効果的な作用は，$M$の構造についての情報をすべて含んでいると考えられる．
+\end{tcolorbox}
+
+\begin{definition}
+    Lie群$G$の多様体$B$への自由作用を$\rho:G\to\Diff(B)$とする．
+    滑らかな写像$\pi:B\to M$が次の条件を満たすとき，組$(B,M,G,\pi)$を多様体$M$上の\textbf{$G$-主束}という．
+    \begin{quote}
+        各点$x_0\in M$に対して，ある開近傍$U$と可微分同相$\varphi_U:\pi^{-1}(U)\to U\times G$とが存在して，
+        \begin{enumerate}
+            \item (局所自明性) 次の図式は可換である，ただし$\pi_U:=\pr_1$．
+            \[\xymatrix{
+                \pi^{-1}(U)\ar[r]^-{\varphi_U}\ar[d]_-{\pi}&U\times G\ar[d]^-{\pi_U}\\
+                U\ar[r]^-\id&U
+            }\]
+            すなわち，$\pi\circ\varphi_U^{-1}=\pr_1$．
+            \item (作用との両立) $\varphi_U$は$\rho$と可換である：$\forall_{x\in U,g_1,g_2\in G}\;\varphi_U^{-1}(x,g_1g_2)=\varphi_U^{-1}(x,g_1)g_2$．
+        \end{enumerate}
+    \end{quote}
+    $\pi$を射影，$\varphi_U$を座標写像という．
+\end{definition}
+
+\begin{proposition}
+    $G$-主束$B\to X$は，$G$の作用による商写像$B\to B/G\simeq X$と同型である．
+\end{proposition}
+
+\begin{proposition}
+    多様体$X$へのコンパクトLie群$G$の自由で滑らかな作用による商写像$X\to X/G$は$G$-主束である．
+\end{proposition}
+
+\subsection{ファイバー束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最も一般にファイバー束とは，任意のファイバーが適切な意味で同型で，局所自明な束のことをいう．
+    すなわち，局所的には２つの位相空間の直積だと思える空間のことで，今までで最も一般的な概念である．
+
+    ここでのファイバー束は，さらに構造群$G$の作用を受けるもの＝座標変換を持つものをいう．
+    構造群は，ファイバー同士を底空間に沿って，どのように束ねるかを指定していると思える．
+    このマニュアルを群として抽出すれば，多様体の分類問題は構造群の分類問題に落ちるという戦略である．
+
+    そして，標準ファイバーが構造群$G$自身で，自身の左作用を受けるファイバー束を，特に$G$-主束という．
+
+    ベクトル束もファイバー束の特別な場合であることに注意．
+\end{tcolorbox}
+
+\begin{discussion}
+    Lie群$G$から多様体$F$への左作用$\rho:G\to\Diff(F)$を考える．
+    $M$上の$G$-主束$(B,M,G,\pi)$が与えられたとする．
+    直積空間$B\times F$上に次の同値関係を考え，これによる商集合を$E:=B\times F/\sim$で表す：
+    \[(b,a)\sim(b',a'):\Leftrightarrow\exists_{g\in G}\;b'=bg\land a'=\rho(g^{-1})(a).\]
+    商写像は射影$\pi:E\to M$を定める．
+\end{discussion}
+
+\begin{definition}[fiber bundle]
+    多様体$E$からの滑らかな射影$\pi:E\to M$と，Lie群の左作用$\rho:G\to\Diff(F)$とについて，\textbf{ファイバー束}とは，次を満たす組$\xi=(E,M,G,F,\pi)$をいう：
+    \begin{enumerate}
+        \item (局所自明性) $M$の開被覆$(U_\al)$と，可微分同相$\psi_\al:\pi^{-1}(U_\al)\to U_\al\times F$が存在し，図式
+        \[\xymatrix{
+            \pi^{-1}(U_\al)\ar[r]^-{\psi_\al}\ar[d]_-\pi&U_\al\times F\ar[d]^-{\pi_{U_\al}}\\
+            U_\al\ar[r]^-{\id}&U_\al
+        }\]
+        は可換になる．ただし，$\pi_{U_\al}=\pr_1$とする．
+        \item (作用との両立) $\forall_{x\in U_\al\cap U_\beta}\;\exists_{\wt{g}_{\al\beta}\in\Diff(U_\al\cap U_\beta,G)}\;\psi_\al\circ\psi_\beta^{-1}(x,a)=(x,\wt{g}_{\al\beta}(x)a)$．
+    \end{enumerate}
+    $E$を全空間，$M$を底空間という．$G$を\textbf{構造群}，$F$を\textbf{標準ファイバー}といい，$\psi_\al$を\textbf{座標写像}，$\wt{g}_{\al\beta}$を\textbf{変換関数}という．
+\end{definition}
+\begin{remarks}
+    (1)から，各ファイバー$\pi^{-1}(x)$は$F$と可微分同相である．
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 底空間を$S^1$とし，標準ファイバーを$I=[0,1]$とするファイバー束を考える．
+        まずは自明なファイバー束として円筒$\pr_1:S^1\times I\to S^1$が考えられるが，メビウスの輪もこれに当てはまる．
+        構造群は$\Z/2\Z$．
+        \item $S^1\times S^1$はトーラスであるが，クラインの壺はこれと局所的に等しい．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[associated bundle]
+    $M$上の主束$B$と，左作用を備えた多様体$\rho:G\to\Diff(F)$が与えられれば，構造群を$G$，標準ファイバーを$F$とするファイバー束が得られる．これを$B\times_\rho F$で表し，\textbf{$B$の$\rho$に付随する同伴バンドル}という．
+\end{definition}
+
+\section{ファイバー束の一般論}
+
+\section{等質空間}
+
+\section{枠バンドル}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 多様体$M^n$の接バンドル$T(M)$に同伴する$\GL_n(\R)$-主束を$M$の\textbf{枠束}といい，$F(M)$で表す．
+        \item 接空間$T(M)_x$の一次独立な接ベクトルの組$(e_1,\cdots,e_n)$を$M$の\textbf{枠}という．
+    \end{enumerate}
+\end{definition}
+
+\section{被覆多様体}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\begin{definition}[covering space, covering projection]
+    連結な多様体$M^n$について，滑らかな写像$\pi:\wt{M}\to M$が次の条件を満たすとき，$\wt{M}$を\textbf{被覆多様体}，$\pi$を\textbf{被覆写像}という．
+    \begin{quote}
+        各点$x\in M$に対し，$\R^n$と可微分同相な$x$の近傍$V$が存在し，$\pi^{-1}(V)$の各連結成分は$\wt{M}$の中で開集合でかつ$\pi$によって$V$と可微分同相となる．
+    \end{quote}
+\end{definition}
+\begin{remarks}
+    すると特に，各ファイバー$F_x$は孤立点からなる離散集合となり，次の図式は可換になる（局所自明）：
+    \[\xymatrix{
+        U\times E_x\ar[r]^-\sim\ar[dr]_-\pi&p^{-1}(U)\ar[d]\ar[r]&E\ar[d]^-{p}\\
+        &U \;\ar@{^{(}->}[r]&B
+    }\]
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 標準射影$S^n\to\R P^n$は被覆写像である．
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    連結な多様体$M$の被覆多様体$\wt{M}$は，構造群$\pi_1(M,x_0)/H$と標準ファイバー$F_{x_0}$を持つファイバー束とみれる．
+\end{theorem}
+
+\subsection{普遍被覆}
+
+\subsection{left lifting property}
+
+\begin{proposition}[covering projections are open maps]
+    $p:E\to X$を被覆写像とする．$p$は開写像である．
+\end{proposition}
+
+\begin{lemma}[fiber-wise diagonal of covering space is open and closed]
+    $p:E\to X$を被覆空間とする．
+    ファイバー積$E\times_XE$と対角連続写像$\Delta:=(\id,\id):E\to E\times_XE$について，像$\Delta(E)\subset E\times_XE$は開かつ閉である．
+\end{lemma}
+
+\begin{lemma}[lifts out of connected space into covering spaces are unique relative to any point]
+    $p:E\to X$を被覆空間，$Y$を連結空間，$f:Y\to X$を連続写像とし，$\wt{f_1},\wt{f_2}:Y\to E$を$f$のリフトで，次の図式は可換であるとする：
+    \[\xymatrix{
+        &E\ar[d]^-p\\
+        Y\ar[ur]^-{\wt{f}_i}\ar[r]_-f&X
+    }\]
+    $\exists_{y\in Y}\;\wt{f}_1(y)=\wt{f}_2(y)$ならば，$\wt{f}_1=\wt{f}_2$．
+\end{lemma}
+
+\begin{lemma}
+    $p:E\to X$を被覆空間，$\gamma:I\to X$を道，$\wt{x}_0\in E$を始点のリフトとする：$p(\wt{x}_0)=\gamma(0)$．
+    このとき，ただ一つのリフト$\wt{\gamma}:I\to E$が存在して，$\wt{\gamma}(0)=\wt{x_0}$を満たす．
+\end{lemma}
+\begin{remarks}
+    これは，Topの次の形をした可換図式は，一意のリフトを持つことと同値：
+    \[\xymatrix{
+        \{0\}\ar[r]^-{\wt{x}_0}\ar[d]&E\ar[d]^-p\\
+        {[0,1]}\ar[r]_-\gamma\ar@{.>}[ur]^-{\wt{\gamma}}&X
+    }\]
+\end{remarks}
+
+\begin{proposition}[homotopy lifting property of covering spaces against locally connected spaces]
+    $p:E\to X$を被覆空間，$Y$を位相空間とする．
+    このとき，次の形をしたリフティング問題は，ただ一つの解を持つ：
+    \[\xymatrix{
+        Y\ar[r]^-{\wt{f}}\ar[d]_-{(\id_Y,\const_0)}&E\ar[d]^-p\\
+        Y\times I\ar[r]_-{\eta}\ar[ur]^-{\wt{\eta}}&X
+    }\]
+\end{proposition}
+
+\subsection{モノドロミー}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    空間$X$のホモトピー群の，被覆空間のファイバーへの作用$\pi_1(X,x)\to\Aut(F_x)$をモノドロミーという．
+    置換表現の一種である．
+    この考え方は複素解析から生じた．
+\end{tcolorbox}
+
+\begin{definition}
+    $p:E\to X$を被覆空間とし，$\Pi_1(X)$を基本亜群とする．
+    関手$\Fib_E:\Pi_1(X)\to\Set$を次のように定める：
+    \begin{enumerate}
+        \item 点$x\in X$を，ファイバー$p^{-1}(x)\in\Set$に写す．
+        \item $x:=\gamma(0),y:=\gamma(1)$を結ぶ道$\gamma$のホモトピー類を，関数$p^{-1}(x)\to p^{-1}(y);\wt{x}=\wt{\gamma}(0)\mapsto \wt{\gamma}(1)$に写す．ただし，$\wt{\gamma}$を，$\wt{x}=\wt{\gamma}(0)$を始点とする$\gamma$の$p$に沿ったリフトとした．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    これはいわば$\Pi_1(X)$の"permutation groupoid representation"である．
+\end{remarks}
+
+\begin{example}
+    $E=\Brace{z\in\C\mid\Re(z)>0}$上の正則関数$F:=\log$の一価性群は無限巡回群$\Z$で，被覆空間は$\C\setminus\{0\}$の普遍被覆である．
+\end{example}
+
+\chapter{de Rham理論}
+
+\begin{thebibliography}{9}
+    \bibitem{小林}
+    小林俊行・大島利雄『リー群と表現論』（岩波書店，現代数学の基礎）
+    \bibitem{志賀}
+    志賀浩二『多様体論』（岩波基礎数学選書）
+\end{thebibliography}
+
+\end{document}

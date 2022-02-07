@@ -1,0 +1,608 @@
+\usepackage{mathtools}
+%\mathtoolsset{showonlyrefs=true} %labelを附した数式にのみ附番される設定．
+%\usepackage{amsmath} %mathtoolsの内部で呼ばれるので要らない．
+\usepackage{amsfonts} %mathfrak, mathcal, mathbbなど．
+\usepackage{amsthm} %定理環境．
+\usepackage{amssymb} %AMSFontsを使うためのパッケージ．
+\usepackage{ascmac} %screen, itembox, shadebox環境．全てLATEX2εの標準機能の範囲で作られたもの．
+\usepackage{comment} %comment環境を用いて，複数行をcomment outできるようにするpackage
+\usepackage{wrapfig} %図の周りに文字をwrapさせることができる．詳細な制御ができる．
+\usepackage[usenames, dvipsnames]{xcolor} %xcolorはcolorの拡張．optionの意味はdvipsnamesはLoad a set of predefined colors. forestgreenなどの色が追加されている．usenamesはobsoleteとだけ書いてあった．
+\setcounter{tocdepth}{2} %目次に表示される深さ．2はsubsectionまで
+\usepackage{multicol} %\begin{multicols}{2}環境で途中からmulticolumnに出来る．
+
+\usepackage{url}
+\usepackage[dvipdfmx,colorlinks,linkcolor=blue,urlcolor=blue]{hyperref} %生成されるPDFファイルにおいて、\tableofcontentsによって書き出された目次をクリックすると該当する見出しへジャンプしたり、さらには、\label{ラベル名}を番号で参照する\ref{ラベル名}やthebibliography環境において\bibitem{ラベル名}を文献番号で参照する\cite{ラベル名}においても番号をクリックすると該当箇所にジャンプする．囲み枠はダサいので，colorlinksで囲み廃止し，リンク自体に色を付けることにした．
+\usepackage{pxjahyper} %pxrubrica同様，八登崇之さん．hyperrefは日本語pLaTeXに最適化されていないから，hyperrefとセットで，(u)pLaTeX+hyperref+dvipdfmxの組み合わせで日本語を含む「しおり」をもつPDF文書を作成する場合に必要となる機能を提供する
+\definecolor{花緑青}{cmyk}{0.52,0.03,0,0.27}
+\definecolor{サーモンピンク}{cmyk}{0,0.65,0.65,0.05}
+\definecolor{暗中模索}{rgb}{0.2,0.2,0.2}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,automata} %automaton描画のため
+\usepackage{tikz-cd}
+\usepackage[all]{xy}
+\def\objectstyle{\displaystyle} %デフォルトではxymatrix中の数式が文中数式モードになるので，それを直す．\labelstyleも同様にxy packageの中で定義されており，文中数式モードになっている．
+
+\usepackage[version=4]{mhchem} %化学式をTikZで簡単に書くためのパッケージ．
+\usepackage{chemfig} %化学構造式をTikZで描くためのパッケージ．
+\usepackage{siunitx} %IS単位を書くためのパッケージ
+
+\usepackage{ulem} %取り消し線を引くためのパッケージ
+\usepackage{pxrubrica} %日本語にルビをふる．八登崇之（やとうたかゆき）氏による．
+
+\usepackage{graphicx} %rotatebox, scalebox, reflectbox, resizeboxなどのコマンドや，図表の読み込み\includegraphicsを司る．graphics というパッケージもありますが，graphicx はこれを高機能にしたものと考えて結構です（ただし graphicx は内部で graphics を読み込みます）
+
+\usepackage[breakable]{tcolorbox} %加藤晃史さんがフル活用していたtcolorboxを，途中改ページ可能で．
+\tcbuselibrary{theorems} %https://qiita.com/t_kemmochi/items/483b8fcdb5db8d1f5d5e
+\usepackage{enumerate} %enumerate環境を凝らせる．
+\usepackage[top=15truemm,bottom=15truemm,left=10truemm,right=10truemm]{geometry} %足助さんからもらったオプション
+
+%%%%%%%%%%%%%%% 環境マクロ %%%%%%%%%%%%%%%
+
+\usepackage{listings} %ソースコードを表示できる環境．多分もっといい方法ある．
+\usepackage{jvlisting} %日本語のコメントアウトをする場合jlistingが必要
+\lstset{ %ここからソースコードの表示に関する設定．lstlisting環境では，[caption=hoge,label=fuga]などのoptionを付けられる．
+%[escapechar=!]とすると，LaTeXコマンドを使える．
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+%\makeatletter %caption番号を「[chapter番号].[section番号].[subsection番号]-[そのsubsection内においてn番目]」に変更
+%    \AtBeginDocument{
+%    \renewcommand*{\thelstlisting}{\arabic{chapter}.\arabic{section}.\arabic{lstlisting}}
+%    \@addtoreset{lstlisting}{section}
+%    }
+%\makeatother
+\renewcommand{\lstlistingname}{算譜} %caption名を"program"に変更
+
+\newtcolorbox{tbox}[3][]{%
+colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
+
+%%%%%%%%%%%%%%% フォント %%%%%%%%%%%%%%%
+
+\usepackage{textcomp, mathcomp} %Text Companionとは，T1 encodingに入らなかった文字群．これを使うためのパッケージ．\textsectionでブルバキに！
+\usepackage[T1]{fontenc} %8bitエンコーディングにする．comp系拡張数学文字の動作が安定する．
+
+%%%%%%%%%%%%%%% 数学記号のマクロ %%%%%%%%%%%%%%%
+
+\newcommand{\abs}[1]{\lvert#1\rvert} %mathtoolsはこうやって使うのか！
+\newcommand{\Abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\Norm}[1]{\left\|#1\right\|}
+%\newcommand{\brace}[1]{\{#1\}}
+\newcommand{\Brace}[1]{\left\{#1\right\}}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\bracket}[1]{\langle#1\rangle}
+\newcommand{\brac}[1]{\langle#1\rangle}
+\newcommand{\Bracket}[1]{\left\langle#1\right\rangle}
+\newcommand{\Square}[1]{\left[#1\right]}
+\renewcommand{\o}[1]{\overline{#1}}
+\renewcommand{\u}[1]{\underline{#1}}
+\renewcommand{\iff}{\;\mathrm{iff}\;} %nLabリスペクト
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ppp}[3]{\frac{\partial #1}{\partial #2\partial #3}}
+\newcommand{\dd}[2]{\frac{d #1}{d #2}}
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
+\newcommand{\Floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\lceil#1\rceil}
+
+\newcommand{\iso}{\xrightarrow{\,\smash{\raisebox{-0.45ex}{\ensuremath{\scriptstyle\sim}}}\,}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+
+\newcommand{\Lrarrow}{\;\;\Leftrightarrow\;\;}
+
+%ノルム位相についての閉包 https://newbedev.com/how-to-make-double-overline-with-less-vertical-displacement
+\makeatletter
+\newcommand{\dbloverline}[1]{\overline{\dbl@overline{#1}}}
+\newcommand{\dbl@overline}[1]{\mathpalette\dbl@@overline{#1}}
+\newcommand{\dbl@@overline}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1\overline{#2}$}%
+  \ht\z@=\dimexpr\ht\z@-2\dbl@adjust{#1}\relax
+  \box\z@
+  \ifx#1\scriptstyle\kern-\scriptspace\else
+  \ifx#1\scriptscriptstyle\kern-\scriptspace\fi\fi
+  \endgroup
+}
+\newcommand{\dbl@adjust}[1]{%
+  \fontdimen8
+  \ifx#1\displaystyle\textfont\else
+  \ifx#1\textstyle\textfont\else
+  \ifx#1\scriptstyle\scriptfont\else
+  \scriptscriptfont\fi\fi\fi 3
+}
+\makeatother
+\newcommand{\oo}[1]{\dbloverline{#1}}
+
+\DeclareMathOperator{\grad}{\mathrm{grad}}
+\DeclareMathOperator{\rot}{\mathrm{rot}}
+\DeclareMathOperator{\divergence}{\mathrm{div}}
+\newcommand{\False}{\mathrm{False}}
+\newcommand{\True}{\mathrm{True}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\fX}{\mathfrak{X}}
+\newcommand{\fY}{\mathfrak{Y}}
+\newcommand{\fZ}{\mathfrak{Z}}
+\renewcommand{\H}{\mathcal{H}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\A}{\mathcal{A}}
+% \renewcommand\coprod{\rotatebox[origin=c]{180}{$\prod$}} すでにどこかにある．
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\U}{\mathfrak{U}}
+\newcommand{\Map}{\mathrm{Map}}
+\newcommand{\dom}{\mathrm{dom}\;}
+\newcommand{\cod}{\mathrm{cod}\;}
+\newcommand{\supp}{\mathrm{supp}\;}
+\newcommand{\otherwise}{\mathrm{otherwise}}
+\newcommand{\st}{\;\mathrm{s.t.}\;}
+\newcommand{\lmd}{\lambda}
+\newcommand{\Lmd}{\Lambda}
+%%% 線型代数学
+\newcommand{\Ker}{\mathrm{Ker}\;}
+\newcommand{\Coker}{\mathrm{Coker}\;}
+\newcommand{\Coim}{\mathrm{Coim}\;}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\lcm}{\mathrm{lcm}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\alt}{\mathrm{alt}}
+%%% 複素解析学
+\renewcommand{\Re}{\mathrm{Re}\;}
+\renewcommand{\Im}{\mathrm{Im}\;}
+\newcommand{\Gal}{\mathrm{Gal}}
+\newcommand{\PGL}{\mathrm{PGL}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\newcommand{\Log}{\mathrm{Log}\,}
+\newcommand{\Res}{\mathrm{Res}\,}
+\newcommand{\on}{\mathrm{on}\;}
+\newcommand{\hatC}{\hat{\C}}
+\newcommand{\hatR}{\hat{\R}}
+\newcommand{\PV}{\mathrm{P.V.}}
+\newcommand{\diam}{\mathrm{diam}}
+\newcommand{\Area}{\mathrm{Area}}
+\newcommand{\Lap}{\Laplace}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\const}{\mathrm{const.}}
+\newcommand{\Om}{\Omega}
+\newcommand{\Cinf}{C^\infty}
+\newcommand{\ep}{\epsilon}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\opart}{\o{\partial}}
+%%% 解析力学
+\newcommand{\x}{\mathbf{x}}
+%%% 集合と位相
+\renewcommand{\O}{\mathcal{O}}
+\renewcommand{\S}{\mathbb{S}}
+\renewcommand{\U}{\mathcal{U}}
+\newcommand{\V}{\mathcal{V}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\TV}{\mathrm{TV}}
+\newcommand{\ORD}{\mathrm{ORD}}
+\newcommand{\Tr}{\mathrm{Tr}\;}
+\newcommand{\Card}{\mathrm{Card}\;}
+\newcommand{\Top}{\mathrm{Top}}
+\newcommand{\Disc}{\mathrm{Disc}}
+\newcommand{\Codisc}{\mathrm{Codisc}}
+\newcommand{\CoDisc}{\mathrm{CoDisc}}
+\newcommand{\Ult}{\mathrm{Ult}}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\maj}{\mathrm{maj}}
+%%% 形式言語理論
+\newcommand{\REGEX}{\mathrm{REGEX}}
+\newcommand{\RE}{\mathbf{RE}}
+
+%%% Fourier解析
+\newcommand*{\Laplace}{\mathop{}\!\mathbin\bigtriangleup}
+\newcommand*{\DAlambert}{\mathop{}\!\mathbin\Box}
+%%% Graph Theory
+\newcommand{\SimpGph}{\mathrm{SimpGph}}
+\newcommand{\Gph}{\mathrm{Gph}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\inv}{\mathrm{inv}}
+%%% 多様体
+\newcommand{\Der}{\mathrm{Der}}
+\newcommand{\osub}{\overset{\mathrm{open}}{\subset}}
+\newcommand{\osup}{\overset{\mathrm{open}}{\supset}}
+\newcommand{\al}{\alpha}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\h}{\mathfrak{h}}
+\newcommand{\Exp}{\mathrm{Exp}\;}
+\newcommand{\Imm}{\mathrm{Imm}}
+\newcommand{\Imb}{\mathrm{Imb}}
+\newcommand{\codim}{\mathrm{codim}\;}
+\newcommand{\Gr}{\mathrm{Gr}}
+%%% 代数
+\newcommand{\Ad}{\mathrm{Ad}}
+\newcommand{\finsupp}{\mathrm{fin\;supp}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\acts}{\curvearrowright}
+\newcommand{\mono}{\hookrightarrow}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\nor}{\mathrm{nor}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\Aff}{\mathrm{Aff}}
+\newcommand{\rsub}{\triangleleft}
+\newcommand{\rsup}{\triangleright}
+\newcommand{\subgrp}{\overset{\mathrm{subgrp}}{\subset}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\sbs}{\subset}\newcommand{\sps}{\supset}
+\newcommand{\In}{\mathrm{In}}
+\newcommand{\Tor}{\mathrm{Tor}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\q}{\mathfrak{q}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\Frac}{\mathrm{Frac}\,}
+\newcommand{\Spec}{\mathrm{Spec}\,}
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Ann}{\mathrm{Ann}}
+%%% 代数的位相幾何学
+\newcommand{\Ho}{\mathrm{Ho}}
+\newcommand{\CW}{\mathrm{CW}}
+\newcommand{\lc}{\mathrm{lc}}
+\newcommand{\cg}{\mathrm{cg}}
+\newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\Cyl}{\mathrm{Cyl}}
+\newcommand{\Ch}{\mathrm{Ch}}
+%%% 数値解析
+\newcommand{\round}{\mathrm{round}}
+\newcommand{\cond}{\mathrm{cond}}
+\newcommand{\diag}{\mathrm{diag}}
+%%% 確率論
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Meas}{\mathrm{Meas}}
+\newcommand{\as}{\;\mathrm{a.s.}} %almost surely
+\newcommand{\io}{\;\mathrm{i.o.}} %infinitely often
+\newcommand{\fe}{\;\mathrm{f.e.}} %with a finite number of exceptions
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\Pois}{\mathrm{Pois}}
+\newcommand{\iid}{\mathrm{i.i.d.}}
+\newcommand{\wconv}{\rightsquigarrow}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\xrightarrown}{\xrightarrow{n\to\infty}}
+\newcommand{\au}{\mathrm{au}}
+%%% 情報理論
+\newcommand{\bit}{\mathrm{bit}}
+%%% 積分論
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\calC}{\mathcal{C}}
+\renewcommand{\ae}{\mathrm{a.e.}\;}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\fF}{\mathfrak{F}}
+\newcommand{\fI}{\mathfrak{I}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\sMap}{\sigma\textrm{-}\mathrm{Map}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\comp}{\complement}
+\newcommand{\J}{\mathcal{J}}
+\newcommand{\sumN}[1]{\sum_{#1\in\N}}
+\newcommand{\cupN}[1]{\cup_{#1\in\N}}
+\newcommand{\capN}[1]{\cap_{#1\in\N}}
+\newcommand{\Sum}[1]{\sum_{#1=1}^\infty}
+\newcommand{\sumn}{\sum_{n=1}^\infty}
+\newcommand{\summ}{\sum_{m=1}^\infty}
+\newcommand{\sumk}{\sum_{k=1}^\infty}
+\newcommand{\sumi}{\sum_{i=1}^\infty}
+\newcommand{\sumj}{\sum_{j=1}^\infty}
+\newcommand{\cupn}{\cup_{n=1}^\infty}
+\newcommand{\capn}{\cap_{n=1}^\infty}
+\newcommand{\cupk}{\cup_{k=1}^\infty}
+\newcommand{\cupi}{\cup_{i=1}^\infty}
+\newcommand{\cupj}{\cup_{j=1}^\infty}
+\newcommand{\limn}{\lim_{n\to\infty}}
+\renewcommand{\l}{\mathcal{l}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\Ae}{\textrm{-a.e.}\;}
+\newcommand{\csub}{\overset{\textrm{closed}}{\subset}}
+\newcommand{\csup}{\overset{\textrm{closed}}{\supset}}
+\newcommand{\wB}{\wt{B}}
+\newcommand{\cG}{\mathcal{G}}
+%%% 数理ファイナンス
+\newcommand{\pre}{\mathrm{pre}}
+\newcommand{\om}{\omega}
+
+%%% 統計的因果推論
+\newcommand{\Do}{\mathrm{Do}}
+%%% 数理統計
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\compsub}{\overset{\textrm{cpt}}{\subset}}
+\newcommand{\lip}{\textrm{lip}}
+\newcommand{\BL}{\mathrm{BL}}
+\newcommand{\G}{\mathbb{G}}
+\newcommand{\NB}{\mathrm{NB}}
+\newcommand{\oR}{\o{\R}}
+\newcommand{\liminfn}{\liminf_{n\to\infty}}
+\newcommand{\limsupn}{\limsup_{n\to\infty}}
+%\newcommand{\limn}{\lim_{n\to\infty}}
+\newcommand{\esssup}{\mathrm{ess.sup}}
+\newcommand{\asto}{\xrightarrow{\as}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\VC}{\mathrm{VC}}
+\newcommand{\mb}{\mathrm{mb}}
+\newcommand{\Avar}{\mathrm{Avar}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\sd}{\mathrm{sd}}
+\newcommand{\w}[1]{\widehat{#1}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\Bernoulli}{\mathrm{Bernoulli}}
+\newcommand{\Mult}{\mathrm{Mult}}
+\newcommand{\BPois}{\mathrm{BPois}}
+\newcommand{\fraks}{\mathfrak{s}}
+\newcommand{\frakk}{\mathfrak{k}}
+%%% 函数解析
+\renewcommand{\c}{\mathbf{c}}
+\newcommand{\loc}{\mathrm{loc}}
+\newcommand{\Lh}{\mathrm{L.h.}}
+\newcommand{\Epi}{\mathrm{Epi}\;}
+\newcommand{\slim}{\mathrm{slim}}
+\newcommand{\Ban}{\mathrm{Ban}}
+\newcommand{\Hilb}{\mathrm{Hilb}}
+\newcommand{\Ex}{\mathrm{Ex}}
+\newcommand{\Co}{\mathrm{Co}}
+\newcommand{\sa}{\mathrm{sa}}
+\newcommand{\nnorm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+\newcommand{\dvol}{\mathrm{dvol}}
+\newcommand{\Sconv}{\mathrm{Sconv}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\nonunital}{\mathrm{nu}}
+\newcommand{\cpt}{\mathrm{cpt}}
+\newcommand{\lcpt}{\mathrm{lcpt}}
+\newcommand{\com}{\mathrm{com}}
+\newcommand{\Haus}{\mathrm{Haus}}
+\newcommand{\proper}{\mathrm{proper}}
+\newcommand{\infinity}{\mathrm{inf}}
+\newcommand{\TVS}{\mathrm{TVS}}
+\newcommand{\ess}{\mathrm{ess}}
+\newcommand{\ext}{\mathrm{ext}}
+%%% 最適化
+\newcommand{\Minimize}{\text{Minimize}}
+\newcommand{\subjectto}{\text{subject to}}
+%%% 圏
+\newcommand{\varlim}{\varprojlim}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Iso}{\mathrm{Iso}}
+\newcommand{\Mor}{\mathrm{Mor}}
+\newcommand{\Isom}{\mathrm{Isom}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\ev}{\mathrm{ev}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\Ar}{\mathrm{Ar}}
+\newcommand{\Arr}{\mathrm{Arr}}
+
+\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\Grp}{\mathrm{Grp}}
+\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\Mon}{\mathrm{Mon}}
+\newcommand{\CMon}{\mathrm{CMon}} %Comutative Monoid 可換単系とモノイドの射
+\newcommand{\Ring}{\mathrm{Ring}}
+\newcommand{\CRing}{\mathrm{CRing}}
+\newcommand{\Ab}{\mathrm{Ab}}
+\newcommand{\Pos}{\mathrm{Pos}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\FinVect}{\mathrm{FinVect}}
+\newcommand{\FinSet}{\mathrm{FinSet}}
+\newcommand{\OmegaAlg}{\Omega$-$\mathrm{Alg}}
+\newcommand{\OmegaEAlg}{(\Omega,E)$-$\mathrm{Alg}}
+\newcommand{\Alg}{\mathrm{Alg}} %代数の圏
+\newcommand{\CAlg}{\mathrm{CAlg}} %可換代数の圏
+\newcommand{\CPO}{\mathrm{CPO}} %Complete Partial Order & continuous mappings
+\newcommand{\Fun}{\mathrm{Fun}}
+\newcommand{\Func}{\mathrm{Func}}
+\newcommand{\Met}{\mathrm{Met}} %Metric space & Contraction maps
+\newcommand{\Pfn}{\mathrm{Pfn}} %Sets & Partial function
+\newcommand{\Rel}{\mathrm{Rel}} %Sets & relation
+\newcommand{\Bool}{\mathrm{Bool}}
+\newcommand{\CABool}{\mathrm{CABool}}
+\newcommand{\CompBoolAlg}{\mathrm{CompBoolAlg}}
+\newcommand{\BoolAlg}{\mathrm{BoolAlg}}
+\newcommand{\BoolRng}{\mathrm{BoolRng}}
+\newcommand{\HeytAlg}{\mathrm{HeytAlg}}
+\newcommand{\CompHeytAlg}{\mathrm{CompHeytAlg}}
+\newcommand{\Lat}{\mathrm{Lat}}
+\newcommand{\CompLat}{\mathrm{CompLat}}
+\newcommand{\SemiLat}{\mathrm{SemiLat}}
+\newcommand{\Stone}{\mathrm{Stone}}
+\newcommand{\Sob}{\mathrm{Sob}} %Sober space & continuous map
+\newcommand{\Op}{\mathrm{Op}} %Category of open subsets
+\newcommand{\Sh}{\mathrm{Sh}} %Category of sheave
+\newcommand{\PSh}{\mathrm{PSh}} %Category of presheave, PSh(C)=[C^op,set]のこと
+\newcommand{\Conv}{\mathrm{Conv}} %Convergence spaceの圏
+\newcommand{\Unif}{\mathrm{Unif}} %一様空間と一様連続写像の圏
+\newcommand{\Frm}{\mathrm{Frm}} %フレームとフレームの射
+\newcommand{\Locale}{\mathrm{Locale}} %その反対圏
+\newcommand{\Diff}{\mathrm{Diff}} %滑らかな多様体の圏
+\newcommand{\Mfd}{\mathrm{Mfd}}
+\newcommand{\LieAlg}{\mathrm{LieAlg}}
+\newcommand{\Quiv}{\mathrm{Quiv}} %Quiverの圏
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Span}{\mathrm{Span}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\Decat}{\mathrm{Decat}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\Grpd}{\mathrm{Grpd}}
+\newcommand{\sSet}{\mathrm{sSet}}
+\newcommand{\Mod}{\mathrm{Mod}}
+\newcommand{\SmoothMnf}{\mathrm{SmoothMnf}}
+\newcommand{\coker}{\mathrm{coker}}
+
+\newcommand{\Ord}{\mathrm{Ord}}
+\newcommand{\eq}{\mathrm{eq}}
+\newcommand{\coeq}{\mathrm{coeq}}
+\newcommand{\act}{\mathrm{act}}
+
+%%%%%%%%%%%%%%% 定理環境（足助先生ありがとうございます） %%%%%%%%%%%%%%%
+
+\everymath{\displaystyle}
+\renewcommand{\proofname}{\bf ［証明］}
+\renewcommand{\thefootnote}{\dag\arabic{footnote}} %足助さんからもらった．どうなるんだ？
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\renewcommand{\labelenumi}{(\arabic{enumi})} %(1),(2),...がデフォルトであって欲しい
+\renewcommand{\labelenumii}{(\alph{enumii})}
+\renewcommand{\labelenumiii}{(\roman{enumiii})}
+
+\newtheoremstyle{StatementsWithStar}% ?name?
+{3pt}% ?Space above? 1
+{3pt}% ?Space below? 1
+{}% ?Body font?
+{}% ?Indent amount? 2
+{\bfseries}% ?Theorem head font?
+{\textbf{.}}% ?Punctuation after theorem head?
+{.5em}% ?Space after theorem head? 3
+{\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\ast}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
+%
+\newtheoremstyle{StatementsWithStar2}% ?name?
+{3pt}% ?Space above? 1
+{3pt}% ?Space below? 1
+{}% ?Body font?
+{}% ?Indent amount? 2
+{\bfseries}% ?Theorem head font?
+{\textbf{.}}% ?Punctuation after theorem head?
+{.5em}% ?Space after theorem head? 3
+{\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\ast\ast}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
+%
+\newtheoremstyle{StatementsWithStar3}% ?name?
+{3pt}% ?Space above? 1
+{3pt}% ?Space below? 1
+{}% ?Body font?
+{}% ?Indent amount? 2
+{\bfseries}% ?Theorem head font?
+{\textbf{.}}% ?Punctuation after theorem head?
+{.5em}% ?Space after theorem head? 3
+{\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\ast\ast\ast}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
+%
+\newtheoremstyle{StatementsWithCCirc}% ?name?
+{6pt}% ?Space above? 1
+{6pt}% ?Space below? 1
+{}% ?Body font?
+{}% ?Indent amount? 2
+{\bfseries}% ?Theorem head font?
+{\textbf{.}}% ?Punctuation after theorem head?
+{.5em}% ?Space after theorem head? 3
+{\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\circledcirc}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
+%
+\theoremstyle{definition}
+ \newtheorem{theorem}{定理}[section]
+ \newtheorem{axiom}[theorem]{公理}
+ \newtheorem{corollary}[theorem]{系}
+ \newtheorem{proposition}[theorem]{命題}
+ \newtheorem*{proposition*}{命題}
+ \newtheorem{lemma}[theorem]{補題}
+ \newtheorem*{lemma*}{補題}
+ \newtheorem*{theorem*}{定理}
+ \newtheorem{definition}[theorem]{定義}
+ \newtheorem{example}[theorem]{例}
+ \newtheorem{notation}[theorem]{記法}
+ \newtheorem*{notation*}{記法}
+ \newtheorem{assumption}[theorem]{仮定}
+ \newtheorem{question}[theorem]{問}
+ \newtheorem{counterexample}[theorem]{反例}
+ \newtheorem{reidai}[theorem]{例題}
+ \newtheorem{ruidai}[theorem]{類題}
+ \newtheorem{problem}[theorem]{問題}
+ \newtheorem{algorithm}[theorem]{算譜}
+ \newtheorem*{solution*}{\bf{［解］}}
+ \newtheorem{discussion}[theorem]{議論}
+ \newtheorem{remark}[theorem]{注}
+ \newtheorem{remarks}[theorem]{要諦}
+ \newtheorem{image}[theorem]{描像}
+ \newtheorem{observation}[theorem]{観察}
+ \newtheorem{universality}[theorem]{普遍性} %非自明な例外がない．
+ \newtheorem{universal tendency}[theorem]{普遍傾向} %例外が有意に少ない．
+ \newtheorem{hypothesis}[theorem]{仮説} %実験で説明されていない理論．
+ \newtheorem{theory}[theorem]{理論} %実験事実とその（さしあたり）整合的な説明．
+ \newtheorem{fact}[theorem]{実験事実}
+ \newtheorem{model}[theorem]{模型}
+ \newtheorem{explanation}[theorem]{説明} %理論による実験事実の説明
+ \newtheorem{anomaly}[theorem]{理論の限界}
+ \newtheorem{application}[theorem]{応用例}
+ \newtheorem{method}[theorem]{手法} %実験手法など，技術的問題．
+ \newtheorem{history}[theorem]{歴史}
+ \newtheorem{research}[theorem]{研究}
+ \newtheorem{shishin}[theorem]{指針}
+ \newtheorem{yodan}[theorem]{余談}
+% \newtheorem*{remarknonum}{注}
+ \newtheorem*{definition*}{定義}
+ \newtheorem*{remark*}{注}
+ \newtheorem*{question*}{問}
+ \newtheorem*{problem*}{問題}
+ \newtheorem*{axiom*}{公理}
+ \newtheorem*{example*}{例}
+ \newtheorem*{corollary*}{系}
+ \newtheorem*{shishin*}{指針}
+ \newtheorem*{yodan*}{余談}
+ \newtheorem*{kadai*}{課題}
+%
+\theoremstyle{StatementsWithStar}
+ \newtheorem{definition_*}[theorem]{定義}
+ \newtheorem{question_*}[theorem]{問}
+ \newtheorem{example_*}[theorem]{例}
+ \newtheorem{theorem_*}[theorem]{定理}
+ \newtheorem{remark_*}[theorem]{注}
+%
+\theoremstyle{StatementsWithStar2}
+ \newtheorem{definition_**}[theorem]{定義}
+ \newtheorem{theorem_**}[theorem]{定理}
+ \newtheorem{question_**}[theorem]{問}
+ \newtheorem{remark_**}[theorem]{注}
+%
+\theoremstyle{StatementsWithStar3}
+ \newtheorem{remark_***}[theorem]{注}
+ \newtheorem{question_***}[theorem]{問}
+%
+\theoremstyle{StatementsWithCCirc}
+ \newtheorem{definition_O}[theorem]{定義}
+ \newtheorem{question_O}[theorem]{問}
+ \newtheorem{example_O}[theorem]{例}
+ \newtheorem{remark_O}[theorem]{注}
+%
+\theoremstyle{definition}
+%
+\raggedbottom
+\allowdisplaybreaks

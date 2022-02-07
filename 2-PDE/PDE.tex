@@ -1,0 +1,44 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{偏微分方程式}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+関数空間上の写像$F$と関数$u(x_1,\cdots,x_n)$に対して，
+\[F\paren{x_1,\cdots,x_n,\pp{u}{x_1},\cdots,\pp{u}{x_n},\cdots,\pp{^2u}{x_1^2},\cdots,\pp{^2u}{x_i\partial x_j},\cdots,\pp{u}{x^2_n},\cdots}=0\quad(n\ge 2)\]
+を偏微分方程式という．
+\begin{enumerate}
+    \item $F$に$x_1,\cdots,x_n$の項がない場合，\textbf{線型}という．$x_1,\cdots,x_n$は関数空間上の定数と思えるため？
+    \item １階の線型偏微分方程式を\textbf{移流／輸送方程式(advection / transport equation)}という．
+    \item ２解の線型偏微分方程式について，$\sum^n_{i=1}\sum^n_{j=1}a_{ij}\pp{^2u}{x_i\partial x_j}$部を\textbf{主要部}という．
+\end{enumerate}
+
+主要部の係数$(a_{ij})$が定数の場合を考える．
+適当な変数変換によって，係数行列$A:=(a_{ij})$を，対角成分が$0,\pm 1$の対角行列にすることができる．
+$u$に$C^2$級を仮定するとき，$(a_{ij})$は対称行列であるため，固有値は全て実数となる．
+\begin{enumerate}
+    \item $A$が正則で，全ての固有値が同一符号であるとき，主要部は$\pp{^2u}{x^2_1}+\cdots+\pp{^2u}{x_n^2}$と表せる．これを\textbf{楕円型}という．
+    \item $A$が正則で，ただ一つの固有値のみ符号が異なるとき，主要部は$\pp{^2u}{x_1^2}+\cdots+\pp{^2u}{x_{n-1}^2}-\pp{^2u}{x^2_n}$と表せる．これを\textbf{双曲型}という．
+    \item $A$が正則で，上記以外の場合，主要部は$\paren{\pp{^2u}{x_1^2}+\cdots+\pp{^2u}{x^2_m}}-\paren{\pp{^2u}{x^2_{m+1}}+\cdots+\pp{^2u}{x_n^2}}$と表せる．これを\textbf{超双曲型}という．
+    \item $A$が非正則であるとき，これを\textbf{放物型}という．
+\end{enumerate}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 楕円型方程式$\pp{^2u}{x_1^2}+\cdots+\pp{^2u}{x^2_n}=0$をpotential方程式，またはLaplace方程式という．
+        \item 双曲型方程式$\pp{^2u}{x_1^2}+\cdots+\pp{^2u}{x_n^2}=\pp{^2u}{t^2}$を波動方程式という．
+        \item 放物型方程式$\pp{^2u}{x_1^2}+\cdots+\pp{^2u}{x_n^2}=\pp{u}{t}$を熱方程式・拡散方程式という．
+    \end{enumerate}
+\end{example}
+
+\chapter{熱方程式}
+
+\section{熱方程式の発生}
+
+
+
+\end{document}

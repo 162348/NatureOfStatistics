@@ -1,0 +1,599 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{数値解析}
+\author{司馬博文 05-210520}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{数の表現}
+
+\begin{quotation}
+    コンピュータの性能が向上しようと，その数学的な限界（有限性や数の表現など）を
+    議論できるのは，その母体である数学のみである．
+\end{quotation}
+
+\section{実数の浮動小数点表示}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    指数表現によって可能な十分に広い絶対値の範囲内において、仮数部の桁数に依って常に\textbf{一定の範囲内の相対誤差で}任意の実数を近似できる．
+    基本的には$m$-進小数展開を途中で切ったものであり，表現$[\beta^m,\beta^{m+1}]$を指数部により移動させる．
+    結果，最大正数は$1.7976\cdots\times 10^{308}$ある．
+    倍精度の計算機イプシロンは$\epsilon_M=\beta^{-52}=2.2204\cdots\times 10^{-16}$なので誤差は16桁目から生じる．
+\end{tcolorbox}
+
+\begin{notation}
+    $\beta\ge 2$を偶数とし，これを\textbf{基数}と呼ぶ．
+\end{notation}
+
+\begin{lemma}[$m$進小数展開は連続]
+    $m\ge 2$を自然数とする．$m$を離散空間とし，無限積空間$m^\N$からの写像$e_m:m^\N\to[0,1]$を$m$進小数展開
+    \[ e_m((x_n)):=\frac{1}{m}\sum^\infty_{n=0}\frac{x_n}{m^n} \]
+    で定める．この時，$e_m$は連続である．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 自然数$n\in\N$に対し，$n$番目以降を切断する写像\[\xymatrix@R-2pc{
+            q_n:m^\N\ar[r]&m^n\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            (x_l)\ar@{|->}[r]&(x_0,\cdots,x_{n-1})
+        }\]
+        は連続である．実際，任意の$(x_0,\cdots,x_{n-1})\in m^n$に対して，逆像は$q_n^{-1}(x_0,\cdots,x_{n-1})=\{x_0\}\times\{x_1\}\times\cdots\times\{x_{n-1}\}\times m\times m\times\cdots\in\U$は$m^\N$の開集合系の基底である．
+        よって，これを用いて$V_n(x):=q_n^{-1}(q_n(x))$とおくと，これは$x$の開近傍である．
+        \item \[e_m(V_n(x))=\left[\frac{1}{m}\sum^{n-1}_{l=0}\frac{x_l}{m^l},\frac{1}{m}\sum^{n-1}_{l=0}\frac{x_l}{m^l}+\frac{1}{m^n}\right]\]である．
+        左端は$x(i)=0\;(i\ge l)$となる数列，右端は$x(i)=m-1\;(i\ge l)$となる数列で，全体として閉区間で，直径は$\frac{1}{m^n}$である．
+        \item 任意の実数$r>0$に対し，$m^nr>1$を満たすように$n$を取ると，\[\forall x\in m^\N,\;e_m(V_n(x))\subset U_r(e_m(x))\]である．
+        よって，任意の$e_m(x)\in[0,1]$の任意の開近傍の基本系の逆像は，その下に開集合が見つかる訳だから，命題\ref{prop-continuousness-in-terms-of-basis}より，
+        $e_m:m^\N\to\R$は連続．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    書籍の方では$\{V_n(x)\}_{n\in\N}$が開近傍の基本系であることを確認せずに証明しているの，実はやばくないか？
+    それにしても，射影$\pr_i$が連続写像になるだけでなく，その拡張（？）$q_n$も連続写像になり，$n\in\N$の調節によって自由にピントを合わせることができる，という道具立てを使う．
+\end{remarks}
+
+\begin{lemma}[$\beta$-adic decimal expansion]
+    $\beta\ge 2$を偶数とする．
+    \begin{enumerate}
+        \item 任意の実数$x\in\R_{\ne 0}$に対して，整数$m\in\Z$と列$(d_i)_{i\in\N}:\N\to\beta,\;b_0\ne 0$が存在し，
+        \[x=\pm\paren{\frac{d_0}{\beta^0}+\frac{d_1}{\beta^1}+\frac{d_2}{\beta^2}+\cdots}\times\beta^m\]
+        を満たす．
+        \item 各$m\in\N$について，こうして定めた写像\[\xymatrix@R-2pc{
+            E_m:\beta^\N\ar[r]&[\beta^{m},\beta^{m+1}]\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            (d_i)_{i\in\N}\ar@{|->}[r]&x=\frac{d_0}{\beta^0}+\frac{d_1}{\beta^1}+\frac{d_2}{\beta^2}+\cdots
+        }\]
+        は全射であるが，$\Z$との共通部分において単射ではない．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 算譜を構成する．まず$x$の整数部分$\floor{x}$を$\beta$-進数で表し，これを$(d_0,d_1,\cdots,d_r)$とする．続いて全射$e:\beta^\N\to[0,1]$を用いて，小数部分を繋げれば良い．
+        \item $x\in\Z$の場合，上の構成法の他に，$x-1$を整数部分として，小数部分を用いて$1$を作ることでも，対応する$(d_i)_{i\in\N}$が得られる．$B_m$の非単射性は本質的にはこれのみにより，$B_m$の任意の長さ$1$の閉区間への制限は全単射である．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    要は，$B_m$の非単射性は，無限和であることにより，有限和の範囲では各$1/\beta^i$は基底だから，表示は一意的になる．
+\end{remarks}
+
+\begin{definition}[floating point number]
+    合成
+    \[\xymatrix@R-2pc{
+        E_{m,n}:=E_m\circ q_n:\beta^{n+1}\ar[r]&[\beta^m,\beta^m(\beta-\beta^{-n})]\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (d_i)_{i\in n+1}\ar@{|->}[r]&\paren{\underbrace{\frac{d_0}{\beta^0}+\frac{d_1}{\beta^1}+\cdots+\frac{d_n}{\beta^n}}_{=:\alpha}}\times\beta^m
+    }\]
+    は単射だが，もはや全射ではない．$m$が大きいほど間隙は大きくなる．$\alpha\in[1,\beta]$を\textbf{仮数部}，$m$を\textbf{指数部}という．
+    さらに，正数$L,U\in\Z_{>0}$に対して，
+    \[\F(\beta,n,L,U)=\{0\}\cup\bigcup_{i=-L}^{U}\pm\Im E_{i,n}\]
+    を\textbf{$\beta$進$n+1$桁の浮動小数点数系}と呼ぶ．
+    IEEE754-1985規格に拠ると，$(\beta,n,L,U)=(2,23,126,127)$を\textbf{単精度}\footnote{符号1bit，指数$L,U$で8bit，仮数部$n$が23bit．}，$(\beta,n,L,U)=(2,52,1022,1023)$を\textbf{倍精度}\footnote{指数部には11bit使っている．符号1bitを除いて仮数部52bit．}という．\footnote{IEEE754-2008ではbinary32, binary64と改名されている．}
+\end{definition}
+\begin{remark}[ケチ表現]
+    2進法で正規化をすると、最上位ビット$d_0$は常に$1$になるので、これを表さず常に$1$があるものとみなす省略が可能で、省略した表現をケチ表現などと言う。この省略を使うと、仮数部に割り当てたビット数が$n$であれば、有効桁数は$n+1$となる。 
+\end{remark}
+
+\begin{definition}[round, rounding error, underflow, overflow]\mbox{}
+    \begin{enumerate}
+        \item 浮動小数点数系$\F$に対して，写像
+        \[\xymatrix@R-2pc{
+            \round:\R\ar[r]&\F\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            \tilde{x}\ar@{|->}[r]&x
+        }\]
+        を１つ定め（\textbf{丸めの方法}と呼ぶ），それに沿って値を対応させることを\textbf{丸める}という．
+        その時に生じる誤差$d(\tilde{x},x)$を\textbf{丸め誤差}という．
+        \item 代表的な丸めの方法には，\textbf{最近点への丸め}と\textbf{切り捨て}がある．
+        \item $0\in\F$に丸められてしまうことを\textbf{アンダーフロー}，$\max\F$を超えてしまうことを\textbf{オーバーフロー}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[最近偶数への丸め]
+    デフォルトの丸め関数であるから，この関数を指して「最近数への丸め」ともいう．
+    基本的には$\tilde{x}:=\max_{y\in\F}\abs{y-\tilde{x}}$と定めるが，$\max$関数が定まらない場合は，
+    \[x:=\begin{cases}
+        \sigma\cdot\paren{\frac{d_0}{\beta^0}+\frac{d_1}{\beta^1}+\cdots+\frac{d_n}{\beta^n}}\cdot\beta^m&d_nが偶数のとき\\
+        \sigma\cdot\paren{\frac{d_0}{\beta^0}+\frac{d_1}{\beta^1}+\cdots+\frac{d_n+1}{\beta^n}}\cdot\beta^m&d_nが奇数のとき
+    \end{cases}\]
+\end{example}
+
+\begin{proposition}[相対誤差：machine epsilon]
+    任意の$\tilde{x}\in\R$と$x:=\round(\tilde{x})$について，
+    \[\Abs{\frac{\tilde{x}-x}{\tilde{x}}}\le\begin{cases}
+        \frac{1}{2}\beta^{-n},&最近点への丸め\\
+        \beta^{-n},&切り捨て
+    \end{cases}\]
+    が成り立つ．特徴量$\epsilon_M:=\beta^{-n}=\min(\F\setminus(-\infty,1])$を\textbf{計算機イプシロン}という．
+\end{proposition}
+
+\begin{example}[倍精度の計算機イプシロン]
+    倍精度の計算機イプシロンは$\epsilon_M=\beta^{-52}=2.2204\cdots\times 10^{-16}$となる．
+\end{example}
+
+\begin{fact}[IEEE754の実装：denormalized number, NaN]
+    \[x_{\mathrm{min}}:=2^{-1022}=\min_{y\in\F(2,52,1022,1023)}\abs{y}\]
+    とする．正規化数の仮数部は必ず$1\le\alpha\le\beta$をみたしたが，
+    \textbf{非正規化数}
+    \[\mathbb{Y}:=\Brace{\pm\paren{\frac{d_0}{2^0}+\frac{d_0}{2^0}+\cdots+\frac{d_0}{2^0}}\cdot 2^{-1023}\;\middle|\;d_i\in 2\;(i\in 52)}\subset[0,x_{\mathrm{min}})\]
+    が定義されている．
+    よって，$\abs{\tilde{x}}\le\frac{1}{2}y_\mathrm{min}$はアンダーフローの可能性がある．
+
+    また，$0/0,\sqrt{-1}$としてNaN (Not a Number)が定義されており，$\infty$としてInfが定義されている．
+\end{fact}
+
+\begin{history}[IBM方式]
+    IBM方式は、IBM社がSystem/360で導入し、以後同社の標準としてSystem/370などのメインフレームで使った方式である．
+    指数部が2の冪ではなく16の冪を表すという特徴がある。
+    この方式は、より大きな範囲を少ないビット数の指数部で表すことができ、そのぶんのビットを仮数部の桁数に使うことで精度も確保できるように一見思える。
+    しかし、仮数部に\textbf{ケチ表現を使うことができず}、さらに指数部の変化の前後で、仮数部のLSBが表現する値の\textbf{刻み幅が16倍変化する}ため、
+    2べきの場合に比べて最悪の場合には2進で3ビット分の精度が損なわれるため、一般には大成功であったと評されたSystem/360の設計において良くなかった点の一つとして挙げられる。
+\end{history}
+
+\section{演算}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=遠すぎる数の和，近すぎる数の差には注意．]
+    整数演算と同じ操作で処理が済む固定小数点と違い、通常の整数演算命令を使って実装すると、多くの命令と時間が必要になる。処理の軽減のため、演算にはハードウェアで実装したFPUなどのコプロセッサを用い、現在のマイクロプロセッサなどの多くでは内蔵されていることが多い。 
+\end{tcolorbox}
+
+\begin{example}[情報落ち / loss of trailing digit]
+    絶対値の大きさが極端に違う２数を足す際に吸収律が成り立ってしまうこと．
+    Basel級数$\sim^\infty_{n=1}\frac{1}{n^2}$の計算は末尾から足すと精度が出るが，頭から足すと途中の時点で停止する．
+\end{example}
+
+\begin{example}[桁落ち / loss of significance]\label{exp-loss-of-significance-in-quadratic-formula}
+    値の近い２数の減算をすると，有効桁数が大きく減る．
+    二次方程式の解の小さい方を求める$-b-\sqrt{b^2-4ac}$ときに影響が大きいため，
+    もう一方は解と係数の関係$x_1x_2=c$で計算する．
+\end{example}
+
+\chapter{代数：連立一次方程式と行列分解}
+
+\begin{quotation}
+    現実問題の数理モデル化においては，偏微分方程式の近似を経て，問題が連立一次方程式に帰着される場合が多い．
+    素行列でも密行列でも対応できる解析的方法をまずは考えたい．
+    このための霊性を湛えた数学の御堂が代数である．
+    しかし，密行列の場合は，$O(N^2)$の記憶容量，$O(N^3)$の計算量が大きな欠点となる．
+
+    こうして，数理手法・算譜の数理的な扱いに集中するのがどうやらこの本の哲学である．
+    ソフトウェアの適切な選択ということである．
+\end{quotation}
+
+\section{連立一次方程式とCramerの公式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=計算量の世界：三角行列への注目]
+    Cramerの公式は行列式計算を含むため，乗除算の階数は階乗のオーダーで増えていく．
+    これは最悪な種類の計算量である．もはや計算測度があと$10^n$倍速くなろうと意味をなさない算譜である．
+    また$\det(\epsilon A)=\epsilon^n\det A$でもあるから，さらに意味を持たない．
+    よって，detを用いた正則性の判断は実は難しい．
+    こうして，三角行列への注目が誘導される．
+\end{tcolorbox}
+
+\section{Hermite行列と実対称行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{itemize}
+        \item Hermite行列は，内積$\brac{\cdot,\cdot}:V\times W\to K$について定まる随伴関手${}^*:\Hom(V,V)\to\Hom(W^*,W^*)$
+        への対応であり，Hermite性は$\brac{Ax,x}=\o{\brac{x,Ax}}=\brac{x,Ax}$より，$\brac{Ax,x}={}^\exists\lambda\brac{x,x}\in\R$より，固有値は実数になる．
+        \item 正則行列による共役変換を相似変換とよび，ある対角行列と相似であることを対角化可能という．Hermite行列は，固有ベクトルの中から正規直交基底を選び出せるので，ユニタリー行列による相似変換で対角化する．
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{definition}[positive definite]\mbox{}
+    \begin{enumerate}
+        \item Hermite行列が正定値であるとは，固有値が全て正であることを言う．$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}>0$が必要十分．
+        \item Hermite行列が半正定値であるとは，固有値が全て非負であることを言う．$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}\ge 0$が必要十分．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    Hermite行列$A$に対して，$B:=AA^*$と定める．
+    \begin{enumerate}
+        \item $B$は半正定値である．
+        \item $B$が正定値であることと，$A$が正則であることは同値．
+    \end{enumerate}
+\end{lemma}
+
+首座小行列(leading principal minor)という語を使う．
+
+\section{優対角行列と既約行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    優対角行列が可逆であるためには，狭義性と既約性が必要．
+\end{tcolorbox}
+
+\begin{definition}[(strictly) diagonally dominant matrix, reducable]
+    \begin{enumerate}
+        \item 各i行目について$\abs{a_{ii}}\le\sum^n_{j=1,j\ne i}\abs{a_{ij}}$が成り立つ行列$A$を\textbf{優対角行列}という．
+        \item 各i行目について$\abs{a_{ii}}<\sum^n_{j=1,j\ne i}\abs{a_{ij}}$が成り立つ行列$A$を\textbf{狭義優対角行列}という．
+        \item 正の対角成分をもつ対角行列$D=\diag(d_i)$で，$AD$が狭義優対角行列となるものが存在するとき：$\abs{a_{ii}}d_i\ge\sum^n_{j=1,j\ne i}\abs{a_{ij}}d_j$，$A$を\textbf{一般化狭義優対角行列}という．
+        \item $n\ge 2$のとき，空でない真部分集合$J\subset\{1,\cdots,n\}$であって，$\forall_{i\in J}\;\forall_{j\notin J}\;a_{ij}=0$が成り立つとき，行列$A$を\textbf{可約}という．可約でない行列を\textbf{既約}という．$n=1$の時は，零行列のみを可約とする．
+        \item 
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    行列$\begin{pmatrix}2&-1&0\\0&2&-2\\0&2&-2\end{pmatrix}$は優対角行列だが，一般化狭義優対角行列ではなく，非正則である．
+\end{example}
+
+\section{Gaussの消去法}
+
+\section{LU分解とCholesky分解}
+
+\section{一般の場合のLU分解}
+
+\section{QR分解}
+
+\section{Schur分解}
+
+\section{Moore-Penroseの一般化逆行列}
+
+\chapter{解析：連立一次方程式と行列のノルム}
+
+\begin{quotation}
+    未知数の多い連立一次方程式系で，係数行列はよく疎行列となる．
+    このような連立一次方程式系は，Gaussの消去法などの直接法と共に，
+    反復法も有効である．
+    つまり，収束を狙って構成する技法である．
+    そのための収束の議論のためには，ノルムが大事になる．
+\end{quotation}
+
+\section{ベクトルのノルム}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    収束を距離ではなくノルムの時点から議論することで初めて解析が可能になる問題も多いということである．
+
+    ノルムを定めると，Hausdorff位相が自然に定まる．位相に正確に対応するのがseminormで，これがnormである（正値性を満たす）ことが分離可能性＝Hausdorff性に同値．
+\end{tcolorbox}
+
+\subsection{$p$-ノルム}
+
+\begin{definition}[norm]
+    $k$を絶対値を備えた体とする．
+    $k^n$上の実数値関数$\norm{\cdot}:k^n\to\R$が次の３条件を満たす時，ノルムであるという．
+    \begin{enumerate}
+        \item (positivity) $\forall_{x\in k^n}\;x\ne 0\Rightarrow\norm{x}> 0$．\footnote{この条件が落ちるとseminormという．全てのseminormは位相を定め，その位相がHausdorffであることとノルムであることが同値になる．}
+        \item (linearity) $\forall_{\alpha\in k}\;\forall_{x\in k^n}\;\norm{\alpha x}=\abs{\alpha}\norm{x}$．
+        \item (triangle inequality) $\forall_{x,y\in k^n}\;\norm{x+y}\le\norm{x}+\norm{y}$．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[p-norm]\mbox{}
+    \begin{enumerate}
+        \item 
+    $p\in[1,\infty]$について定まる次の関数$k^n\to\R$はノルムである：
+    \[
+        \norm{x}_p:=\begin{cases}
+            \paren{\sum^n_{i=1}\abs{x_i}^p}^{1/p},&p\in[1,\infty),\\
+            \max_{1\le i\le n}\abs{x_i},p=\infty.
+        \end{cases}
+    \]
+    \item $\forall_{p<q\in[1,\infty]}\;\forall_{x\in k^n}\;\norm{x}_p\le\norm{x}_q\le n^{\frac{1}{p}-\frac{1}{q}}\norm{x}_q$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{ノルムと位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有限次元ノルム空間において，任意のノルムは同値になる．
+    セミノルムが同値ならば，同じ位相を定める．
+    したがって，普段の$p$-ノルムについての開球は形は違えど本質的には違わない．
+    関数空間では任意の$p$-ノルムは違い，無数の位相の定め方がある．
+\end{tcolorbox}
+
+\begin{proposition}[continuousness of norm]
+    $\norm{\cdot}:k^n\to\R$をノルムとする．
+    \begin{enumerate}
+        \item $\forall_{x,y\in k^n}\;\abs{\norm{x}-\norm{y}}\le\norm{x-y}$．
+        \item ノルムは連続である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[equivalence of norm]
+    $k^n$の任意の２つのノルム$\norm{\cdot},\norm{\cdot}'$について，
+    $\exists_{C,C'>0}\;\forall_{x\in k^n}\; C\norm{x}'\le\norm{x}\le C'\norm{x}'$．
+\end{proposition}
+
+\section{行列のノルム}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般には行列のノルムは，整合性条件$\forall_{x\in\R^n}\;\norm{Ax}\le\norm{A}\norm{x}$を満たすものとして定める．
+    ここでは有限次元を考えているので，どう構成しようと整合性条件を満たす行列ノルムは一意であるから，
+    今回はベクトルへの作用を解して定める．
+    $A\in M_{n}(k)$について，
+    $f_A:x\mapsto^{A\times }Ax\mapsto^{\norm{\cdot}}\norm{Ax}$は連続写像であるから，有界閉集合$\partial\Delta\subset k^n$上で最大値が定まる．
+    これを行列のノルムとすれば良い．これは，$A$の「方向」にクリティカルヒットした時の拡大率である．\footnote{Jacobianよりも一般的な概念なのか！？}
+\end{tcolorbox}
+
+\begin{definition}
+    $k^n$のノルム$\norm{\cdot}$に従属する$k^{n\times n}$の行列ノルムを，
+    \[
+        \norm{A}:=\max_{x\in k^n\setminus\{0\}}\frac{\norm{Ax}}{\norm{x}}
+    \]
+    で定める．
+\end{definition}
+
+\begin{lemma}[行列ノルムの性質]
+    $A,B\in M_n(k)$を任意の行列とする．
+    \begin{enumerate}
+        \item $\forall_{x\in\R^n}\;\norm{Ax}\le\norm{A}\norm{x}$．
+        \item $\norm{AB}\le\norm{A}\norm{B}$．
+        \item $\norm{I}=1$．
+        \item ２つの同値なベクトルノルムに対して，それぞれに従属する行列ノルムも同値になる．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\norm{ABx}\le\norm{A}\norm{Bx}\le\norm{A}\norm{B}\norm{x}$であるため，ノルムの定義から．
+        \item 任意の$x\in k^n$について，$\frac{\norm{Ix}}{\norm{x}}=1$であるため．
+        \item 任意の$x\in k^n$について，$C'$
+    \end{enumerate}
+\end{proof}
+
+\subsection{$p$-行列ノルム}
+
+\begin{definition}[spectral radius]
+    $A$の固有値の最大値$\rho(A)$をスペクトル半径という．
+\end{definition}
+
+\begin{proposition}[p-行列ノルムの特徴付け]\mbox{}
+    \begin{enumerate}
+        \item $\norm{A}_1=\max_{1\le j\le n}\sum_{i=1}^n\abs{a_{ij}}$．列ベクトルの$l^1$ノルムの最大値．
+        \item $\norm{A}_\infty=\max_{1\le i\le n}\sum_{j=1}^n\abs{a_{ij}}$．行ベクトルの$l^1$ノルムの最大値．
+        \item $\norm{A}_2=\sqrt{\rho(A^*A)}=\sqrt{\rho{AA^*}}$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{複素行列の行列ノルム}
+
+\begin{proposition}
+    $A\in\C^{n\times n}$とする．
+    \begin{enumerate}
+        \item 任意の行列ノルムについて，$\rho(A)\le\norm{A}$．
+        \item 任意の行列$A\in\C^{n\times n}$と$\epsilon>0$に対して，$\norm{A}\le\rho(A)+\epsilon$を満たす行列ノルム$\norm{\cdot}=\norm{\cdot}_{A,\epsilon}$が存在する．
+    \end{enumerate}
+\end{proposition}
+
+
+\section{定常反復法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Stationary Iterative Method]
+    stationaryとは，反復計算中に解ベクトル以外の変数を変化させない方法をいい，この手法が一番計算が速くなる．
+    が，収束性がアプリケーションや境界条件の影響を受けやすいため，前処理(preconditioning)が必要になる．
+    非定常的な方法はKrylov部分空間への写像を基底として使用するので，その数理手法からKrylov部分空間法ともいう．
+\end{tcolorbox}
+
+\begin{definition}[stationary iterative method]
+    連立一次方程式系$Ax=b$について，係数行列を正則部分$M$を用いて$A=M-N$と分解し，
+    \[x=\underbrace{M^{-1}N}_{=:H}x+\underbrace{M^{-1}b}_{=:c}\]
+    と変形し，解ベクトルの列$(x^{(k)})_{k\in\N}$を$x^{(k+1)}:=Hx^{(k)}+c$と更新していく手法を，$H,c$がループ数$k$に依らないために\textbf{定常反復法}という．
+    以下，$A$の対角成分を$D$，下・上三角成分を$E,F$とする
+    \begin{description}
+        \item[Jacobi method] $M:=D,N:=-(E+F)$とする．
+        \item[Gauss-Seidel mathod] $M:=D+E,N:=-F$とする．\footnote{Jacobi法の大体２倍の速さで収束するとのこと．}
+        \item[Successive Over-Relaxation method] 緩和係数$\omega>0$を用いて，$M:=\frac{1}{\om}(D+\om E),N:=\frac{1}{\om}((1-\om)D-\om F)$と定める．$\om=1$のときがGauss-Seidel法である．
+    \end{description}
+\end{definition}
+
+\begin{theorem}[定常反復法の収束条件]
+    任意の$x^{(0)}\in\R^n,b\in\R^n$に対して定常反復法による反復列$(x^{(k)})_{k\in\N}$が$Ax=b$の解$x$に収束するための必要十分条件は，$\rho(H)<1$である．
+\end{theorem}
+
+\begin{corollary}[SOR法の収束の必要条件]
+    SOR法は，$\omega\le 0,\omega\ge 2$のとき，収束しない．
+\end{corollary}
+
+\section{安定性と条件数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Gaussの消去法の数値的安定性の厄介さ]
+    ２次元においては連立方程式系は直線の交点だが，２直線がほぼ直交しているならば，解は$b$の摂動に対して極めて安定的である．
+\end{tcolorbox}
+
+\begin{definition}[condition number]
+    \[
+        \cond(A)=\begin{cases}
+            \norm{A}\cdot\norm{A^{-1}},&Aが正則のとき,\\
+            \infty,&Aが正則でないとき.
+        \end{cases}
+    \]
+    特に行列ノルムとして$p$-ノルムを用いた場合，$\cond_p(A)$と表す．
+\end{definition}
+
+\subsection{後退誤差解析}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=視点を逆にする]
+    丸め誤差の拡大を順方向で追うのは難しく，極端な評価しか得られない．
+    \begin{quote}
+        von Neumann and Goldstein (1947) -- 素朴な(前進)誤差解析でGaussの消去法を解析した。これを信じると100元の方程式を解くのは絶望的と考えられるが、実際には楽楽解けてしまう。
+    \end{quote}
+    しかし逆に考えて，得られた解が，どのような摂動問題の解であるかを見ることで，精度保証が出来る．\footnote{J.H.Wilkinson "Rounding errors in algebraic process", 1963}
+    $(E,c)$を後退誤差という．結論は，
+    （残念ながら）残差が小さくても、誤差も小さいとは保証されない！
+    係数行列の条件数が小さければ、誤差が小さくなることが保証される。 
+\end{tcolorbox}
+
+\begin{theorem}[後退誤差の存在]
+    Gaussの消去法の数値解を$\wt{x}$とし，残差を$r=b-A\wt{x}$とする．
+    $\abs{r}$が十分に小さいとき，
+    \[
+        (A+E)\wt{x}=b+c,\norm{E}\le\epsilon_M\alpha\norm{A},\norm{c}\le\epsilon_E\alpha\norm{b}
+    \]
+    を満たす$E\in M_n(\R),c\in\R^n,\alpha\in\R_{>0}$が存在する．
+\end{theorem}
+
+\begin{theorem}
+    Gaussの消去法の数値解を$\wt{x}$とし，$E\in M_n(\R),c\in\R^n$を後退誤差とする．
+    このとき，$\norm{E}<\norm{A^{-1}}^{-1}$ならば，
+    \[
+        \frac{\norm{\wt{x}-x}}{\norm{x}}\le\frac{2\epsilon_M\alpha\cdot\cond(A)}{1-\epsilon_M\alpha\cdot\cond(A)}.\footnote{いくら$\epsilon_M$が小さい優秀な浮動小数点系を使っても，係数行列の条件数が多いと，Gaussの消去法では良い数値解が得られる保証はない．}
+    \]
+\end{theorem}
+
+\chapter{非線形方程式}
+
+\begin{quotation}
+    例えば$n\ge 2$次多項式など，非線形な方程式は，例\ref{exp-loss-of-significance-in-quadratic-formula}
+    など，代数的な解析解は必ずしも数値計算の文脈で有用な手段とはならない．
+    ここが形式科学としての純粋数学の大きな違いである．
+    計算機のための形式と，人類のための形式とは，違う．
+
+    ということで議論は簡単に解析学に移る．代数が無力というわけではないが，有限な算譜の構成を諦めるべきである．
+    目指すは，実数値連続関数で，一次関数の形で表せないものに対する，縮小列の構成法を考える理論である．
+    近似解の構成算譜と解の存在の証明とは表裏一体である．
+\end{quotation}
+
+\begin{example}[単独非線型方程式]\mbox{}
+    \begin{enumerate}
+        \item $n\ge 2$次の代数方程式．代数的方法＝指数演算と冪根の有限合成では$n\ge 5$のとき算譜がない．
+        \item Kepler方程式：$\beta=x-\alpha\sin x$．
+        \item 期間中一定とみなしたときの利回り方程式(yield equation)．
+    \end{enumerate}
+\end{example}
+
+\section{$C^k$級関数とTaylorの定理}
+
+\begin{definition}[境界での微分係数は連続補完する]
+    $f\in C^1[a,b]$について，$f'(a):=\lim_{x\to a+0}f'(x)$と定める．$f(a)$が定義できない場合もあるので，その場合も関係なく簡単に定義できる．
+\end{definition}
+
+\begin{theorem}[Taylorの定理：Bernoulliの剰余項の変形]
+    $f\in C^k[a,b]$と$x,y\in [a,b]$について，
+    \[f(x)=\sum^{k-1}_{m=0}\frac{f^{(m)}(y)}{m!}(x-y)!+\frac{1}{(k-1)!}\int^1_0(1-s)^{k-1}(x-y)^kf^{(k)}(y+s(x-y))ds.\]
+\end{theorem}
+
+\section{二分法}
+
+\begin{problem}
+    連続関数$f:\R\supset I\to\R$の方程式$f(a)=0$の解$a\in I$を求める．
+\end{problem}
+\begin{discussion}[中間値の定理の証明抽出]
+    任意の$f(\alpha_0)f(\beta_0)<0$を満たす区間$[\alpha_0,\beta_0]$で，$f$はただ一つの解を持つならば，各$x_k:=\frac{1}{2}(\alpha_k+\beta_k)$について
+    \[[\alpha_{k+1},\beta_{k+1}]:=\begin{cases}
+        [\alpha_k,x_k],&f(x_k)f(\beta_k)\ge 0のとき,\\
+        [x_k,\beta_k],&f(x_k)f(\beta_k)>0のとき.
+    \end{cases}\]
+    と更新すれば，
+    \[\abs{x_k-a}\le\beta_{k+1}-\alpha_{k+1}=\paren{\frac{1}{2}}^{k+1}(\beta_0-\alpha_0)\]
+    が保証される．
+\end{discussion}
+
+\section{反復法と不動点定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    反復法の本質としては，縮小写像を構成し，そのただ一つの不動点として解を構成する．
+\end{tcolorbox}
+
+\begin{definition}[iteration method]
+    開区間上の関数$f:I\to\R$が$f(x_0)>0$を満たすとする．
+    \begin{description}
+        \item[Newton's method] \mbox{}\\$f\in C^1(I)$のとき，$x_{k+1}:=x_k-\frac{f(x_k)}{f'(x_k)}$と定めると近似列$(x_k)$を得る．
+        \item[simplified Newton's method] \mbox{}\\$f$が連続で$f'(x_0)$の値が定まっているとき，$x_{k+1}:=x_k-\frac{f(x_k)}{f'(x_0)}$と定めると近似列$(x_k)$を得る．\footnote{１回目だけ微分を計算した後，あとはこれで誤魔化せないか．}
+        \item[secant method] \mbox{}\\$f(x_1)>0$も満たすとする．$x_{k+1}:=x_k-\frac{x_k-x_{k+1}}{f(x_k)-f(x_{k+1})}f(x_k)$と定めると近似列$(x_k)$を得る．
+        \item[inverse linear interpolation method] \mbox{}\\$f(x_1)>0$も満たすとする．$x_{k+1}:=x_k-\frac{x_k-x_{0}}{f(x_k)-f(x_{0})}f(x_k)$と定めると近似列$(x_k)$を得る．これを\textbf{線型逆補間法}という．
+        \item[relaxation iteration method] \mbox{}\\$\beta$を任意の定数として，$x_{k+1}:=x_k-\beta f(x_k)$とする．これを\textbf{緩和反復法}という．\footnote{うまくいくためには，微分係数である必要はなく，それを模倣する必要もない．ということで，大海へ飛び出す．}
+    \end{description}
+    一般に，傾きを$\varphi(x_k)$とすると，$g:=\id-\varphi f$とおけば，求める$f$の解は$g(a)=a$を満たす不動点である．$g$の条件を考える．
+\end{definition}
+
+\begin{definition}[Lipschitz continuity, contraction mapping]
+    関数$g:I\to\R$について，
+    \begin{enumerate}
+        \item 閉区間$J$に於て，次が成り立つとき$J$上\textbf{リプシッツ連続}であるという：
+        \[\exists_{\lambda>0}\;\forall_{x,x'\in J}\;\abs{g(x)-g(x')}\le\lambda\abs{x-x'}.\]
+        \item Lipschitz定数$\lambda$が$\lambda\in(0,1)$を満たすとき，$g$を$J$上\textbf{縮小写像}という．\footnote{$\lambda=0$の場合は定値写像である．}
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[縮小写像の定理]
+    区間上の実数値連続関数$g:I\to\R$が，ある閉区間$J$上にて
+    $g(J)\subset J$を満たし，この上で縮小写像$g:J\to J$を定めるとき（すなわち，Lipschitz定数が$\lambda\in(0,1)$を満たすとき），次が成り立つ：
+    \begin{enumerate}
+        \item $\exists!_{a\in J}\;g(a)=a$．
+        \item 任意の$x_0\in J$について，これが定める列$(x_{k+1}:=g(x_k))_{k\in\N}$は，もちろん$\{x_{k}\}\subset J$を満たし，\[\abs{x_k-a}\le\frac{1}{1-\lambda}\lambda^k\abs{x_1-x_0}\]を満たす．特に，$\lim_{k\to\infty}x_k=a$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[Cauchy列性と収束の評価] 任意の$k>m$について，
+        \begin{align*}
+            \abs{x_k-x_m}&\le\abs{x_k-x_{k-1}}+\abs{x_{k-1}-x_{k-2}}+\cdots+\abs{x_{m-1}-x_{m}}\\
+            &\le (\lambda+1)\abs{x_{k-1}-x_{k-2}}+\cdots+\abs{x_{m-1}-x_{m}}\\
+            &\le (\lambda^2+\lambda+1)\abs{x_{k-2}-x_{k-3}}+\cdots+\abs{x_{m-1}-x_{m}}\\
+            &\hphantom{=====}\vdots\\
+            &\le (\lambda^{k-m-1}+\cdots+1)\abs{x_{m-1}-x_{m}}=\frac{1-\lambda^{k-m}}{1-\lambda}\abs{x_{m-1}-x_{m}}\\
+            &\le \frac{1-\lambda^{k-m}}{1-\lambda}\lambda^m\abs{x_{1}-x_{0}}\paren{\xrightarrow{k\to\infty}\frac{1}{1-\lambda}\lambda^m\abs{x_1-x_0}\text{より評価を得る}}\\
+            &\le \frac{1}{1-\lambda}\lambda^m\abs{x_1-x_0}\xrightarrow{m,k\to\infty}0.
+        \end{align*}
+        より，$(x_k)$はCauchy列だから，極限$a:=\lim_{k\to\infty}x_k$が存在する．
+        \item[収束先が値域に入っていること] $\forall_{k\in\N}\;x_k\in J=:[\alpha,\beta]$なのであるから，どうやっても背理法から導ける．
+        が，特に，例えば$a>\beta$とすると，$a-\beta>0$より，$\exists_{N>0}\;\forall_{n\ge N}\;\abs{x_n-a}=a-x_n<a-\beta$であるが，これは$\beta<x_n$を意味し，$\forall_{k\in\N}\;x_k\in J$に矛盾．つまり，収束先が閉区間$J$から出ているのならば，数列の十分先も$J$から出ている必要が生じてしまうため，矛盾．
+        \item[不動点について]
+        $g$は連続関数としたから，$g(a)=g(\lim_{k\to\infty}x_k)=\lim_{k\to\infty}g(x_k)$．一意性については，
+        $g(b)=b$を不動点とすると，$J$上での縮小写像性より$\abs{g(a)-g(b)}=\abs{a-b}\le\lambda\abs{a-b}$であるが，$\lambda\in(0,1)$より，$a=b$が必要．
+    \end{description}
+\end{proof}
+
+\begin{proposition}
+    ただ一つの不動点$g(a)=a$を持つ関数$g$は，$a$の近傍で$C^1$級かつ$\abs{g'(a)}<1$を満たすとする．
+    このとき，ある$\delta>0$が存在して，$J:=[a-\delta,a+\delta]$に対し，$g|_J$は連続な縮小写像である．
+    特に，Lipschiz定数を$\lambda:=\frac{1}{2}(1+\abs{g'(a)})$と取れる．
+\end{proposition}
+
+\section{ベクトル値関数の微分}
+
+\section{多変数の反復法}
+
+\chapter{固有値問題}
+
+\chapter{関数近似}
+
+\chapter{補間と積分}
+
+\chapter{常微分方程式の初期値問題}
+
+\chapter{連立一次方程式とKrylov部分空間}
+
+\begin{quotation}
+    ロシアの応用数学者で海軍技術者であったアレクセイ・クリロフにちなんで名づけられた。
+    これは数値線形代数において最も成功した手法の一つである。 
+\end{quotation}
+
+\begin{thebibliography}{9}
+    \bibitem{Moore-Penrose}
+    \href{https://arxiv.org/abs/1110.6882v1}{J. C. A. Barata, M. S. Hussein, The Moore-Penrose Pseudoinverse. A Tutorial Review of the Theory}
+\end{thebibliography}
+
+\end{document}

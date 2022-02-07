@@ -1,0 +1,546 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{今日の代数学}
+\author{}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{環上の加群}
+
+\begin{quotation}
+    線型空間とアーベル群とを含んださらに一般的な代数系「環の作用を受けるアーベル群」を，
+    イデアルの考え方を基に定義する．
+    すると，環自体が自身の上の加群と見做せ，イデアルはその部分加群である．
+    
+    基本的に，ある代数的対象に対して，
+    モノイドからの作用の付加をmoduleという．
+    本質的に群作用との関連が深い．
+\end{quotation}
+
+\begin{notation*}
+    環を，単位的で可環とする．
+\end{notation*}
+
+\section{歴史的背景と動機付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    homology代数の手法を用いて環を調べる際には加群が本質的に活躍する．
+    \begin{itemize}
+        \item イデアルの商として自然に加群が考えられる．
+        \item $F$-線型空間の自己同型の問題を解決するには，$F[X]$-加群の理論を構築すれば良い．最小多項式や固有多項式など．
+        \item 群の表現とは，線型に作用する線型空間を指すが，これを調べるには群環$k[G]$上の加群の理論を構築すれば良い．$\C[G]$は半単純環になる．また，有限次元表現の構造定理と特徴量としての指標とを得る．指標はある種の不変量で，異なる表現を区別できる．
+    \end{itemize}
+\end{tcolorbox}
+
+
+\subsection{歴史的背景}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    環上の加群の理論を要請した数学的対象は３つあり，１つは整数（数論），もう１つは代数曲線（代数幾何学）で，最後は不変式である．
+    不変式は環をなし，これを不変にする作用は群をなす．
+    随伴作用素なども，対合に対する不変式だと思える．
+\end{tcolorbox}
+
+\begin{history}
+    不変式という対象を最初に発見したのはBoole 1841である．
+    すべての代数方程式は判別式を持ち，変数の一次分数変換について定数倍しか変わらない．
+    そう，判別式は不変式である．
+    不変式が不変式たる所以は線形代数と関係が深い，現代では判別式は行列について定義されている．
+    方程式の不変式環はすべて有限生成であるが，その計算は次数が上がるに連れてどんどん難しくなっていく．
+\end{history}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $S\subset\GL_n(K)$について，不変式のなす環を
+        \[K[x_1,\cdots,x_n]^S:=\Brace{f\in K[x_1,\cdots,x_n]\mid\forall_{\sigma\in S}\;\sigma(f)=f}\]
+        と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{corollary}
+    任意の対称式は，不変対称式によって表せる：$\R[x_1,\cdots,x_n]^{S_n}=\R[s_1,\cdots,s_n]$．ただし，$s_1,\cdots,s_n$は基本対称式とした．
+\end{corollary}
+
+\begin{theorem}[Hilbert 14]
+    部分群$G<\GL_n(K)$に関して，条件
+    $\exists_{m\in\N}\;\exists_{h_1,\cdots,h_m\in K[x_1,\cdots,x_n]}\;K[x_1,\cdots,x_n]^G=K[h_1,\cdots,h_m]$が成り立つかを考える．
+    \begin{enumerate}
+        \item $G$が置換からなる群の場合，成り立つ．
+        \item $G$が有限群の場合，成り立つ(Hilbert)．またこのとき，生成系$h_1,\cdots,h_m$はいずれも次数を$\abs{G}$以下に出来る(Noetherの定理)．
+        \item 一般の$G$については偽である（永田の反例）．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{環論からの動機}
+
+\begin{proposition}[イデアルの剰余が加群になる]
+    一意分解整域$A=\C[X,Y,Z]$のイデアル$I=(X,Y,Z)$は２元では生成されない．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $I,I^2$は$A$のイデアルなので，特に部分$A$-加群である．よって，商$I/I^2$はもはやイデアルではないが，$A$-加群ではある．（ここで離陸）．
+        \item $I$の元は$I/I^2$に$0$で作用する($\forall_{a\in I,x\in I/I^2}\;ax=0\in I/I^2$)ので，$I/I^2$は$a+I\;(a\in A)$の作用を受ける$A/I$-加群でもある．$A/I=\C$より，これは$I/I^2$が$\C$-線型空間であることを意味する．$I/I^2=\C X+\C Y+\C Z$は基底$X,Y,Z$を持つから，$\dim_\C I/I^2=3$．
+        \item 仮に$f,g\in I$がイデアル$I$を生成するならば，それらの像$\o{f},\o{g}\in I/I^2$は$I/I^2$を生成する必要があるが，これは$\dim_\C I/I^2=3$に矛盾．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    $I/I^2=\C X+\C Y+\C Z$という間隙のような空間に注目することでこのようにスッキリ証明でき，そのための言葉を提供する程度には加群は抽象的な理論である．
+\end{remarks}
+
+\subsection{線型代数からの動機}
+
+\begin{proposition}[線型空間の自己同型の問題を解決するにはその係数の多項式の加群の理論を構築すれば良い]
+    $F$を体とする．次の対象は一対一に対応する．
+    \begin{enumerate}
+        \item $F$-線型空間$V$と自己同型$\varphi\in\End(V)$の組．
+        \item $F[X]$-加群$M$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[単項イデアル整域上の有限生成加群の構造定理]
+    $A$を単項イデアル整域とし，$M$を有限生成$A$-加群とする．このとき，$A$のイデアルの増大列$I_1\subset I_2\subset\cdots\subset I_r$であって，
+    \[M\simeq A/I_1\oplus\cdots\oplus A/I_r\]
+    を満たすものがただ一つ存在する．
+\end{theorem}
+\begin{remarks}
+    これは有限Abel群の構造定理（$A=\Z$の場合）の一般化となっている．
+    また，$A=F[X]$の場合のこの定理は，Jordan標準形の存在と一意性を含意する．
+\end{remarks}
+
+\subsection{表現論からの動機}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 群$G$の$k$上の表現とは，$k$-線型空間$V$と準同型$\rho:G\to\GL(V)(=\Aut_k(V))$の組$(V,\rho)$のことを指す．
+        \item $G$の表現$(V,\rho)$が既約であるとは，$V\ne 0$であり，$0\subsetneq W\subsetneq V$を満たす$V$の部分空間$W$であって$G$の作用で閉じているものが存在しないことを指す．\footnote{単純群や体に似ている概念である．}
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    $\C[X_1,\cdots,X_n]$は$S_n$の$\C$上の表現となっている．
+\end{example}
+
+\begin{theorem}
+    有限群$G$の任意の有限次元表現は，既約表現の直和に一意的に分解する．
+    $G$の有限次元表現は指標で特徴付けられる：$\forall_{g\in G}\;\Tr\rho(g)=\Tr\rho'(g)\Lrarrow(V,\rho)\simeq(V',\rho')$．
+\end{theorem}
+
+\begin{theorem}
+    群$G$の表現と，群環$\C[G]$上の加群は一対一に対応する．
+\end{theorem}
+
+\subsection{幾何学からの動機}
+
+\begin{quotation}
+    幾何学的な対象をその上の層を使って調べるように，環とその上の加群とは切り離せない．\cite{斎藤毅}
+\end{quotation}
+
+加群は基本的にベクトル束の一般化と思える．
+というのも，$R$-加群は，$R$を空間$X$上の関数のなす環として，
+$X$上のベクトル束の切断がなす空間だと思える．
+$X$がコンパクトハウスドルフ空間として，これを$C^*$-代数$C(X,\C)$に対応させる対応は，関手
+$\Top\to C^*\textrm{-}\Alg^\op$を定め，これをGelfand双対性という．
+この代数-幾何の双対性を最初から定義としたのが代数多様体の現代的な扱いである．
+この源霊性をGrothendieckに与えたのは作用素環の考え方であるかもしれない．
+
+\subsection{代数幾何からの動機}
+
+スキーム論では，可換環$A$から定められる空間$\Spec A$を，$\R^n$の開集合に当たる一番基本的な対象とする．
+$\Spec\C[X_1,\cdots,X_n]=\bA_\C^n$の極大イデアルと$\C^n$の元とは一対一対応している．
+$\Spec\C[X,Y]/(X^2+Y^2-1)$を$\{(a,b)\in\C^2\mid a^2+b^2-1=0\}$に当たる空間とする．
+この空間で$A$-加群を考えることは，$\Spec A$上のベクトル束（各点に生えた線型空間で連続に接続されているもの）を考えることに相当する．
+代数幾何で微分形式などを考えるには，加群の理論が必要となる．
+
+\section{定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    環の作用を受けるアーベル群を加群という．
+    加群はベクトル束の一般化とみなせる．
+    こうして，Geometry-Algebra dualityと関係が深い．
+\end{tcolorbox}
+
+\begin{definition}[module on a ring, ring of scalars]
+    零でない環$A$に対して\textbf{左$A$-加群}$M$とは，
+    アーベル群$M$とそれへの左作用を定める環準同型$\varphi:A\to\End(M)$の組$(M,\varphi)$をいう．
+    $a,b\in A,x,y\in M$として公理を書き下せば次の通り．
+    \begin{enumerate}
+        \item $\varphi(a)\in\End(M)$：$a(x+y)=ax+ay$．
+        \item 和を保つ：$(a+b)x=ax+bx$．
+        \item 積を保つ：$a(bx)=(ab)x$．
+        \item 単位元を保つ：$1x=x$．
+    \end{enumerate}
+    環$A$を\textbf{係数環}といい，その元をスカラーという．
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $A=F$が体のとき，$F$-加群とは$F$-線型空間をいう．これは一点上のベクトル束$F\to1$とみなせる．
+        \item $A=\Z$のとき，$\Z$-加群とはアーベル群をいう．
+        \item アーベル群が自明群$M=1$のとき，零$A$-加群という．これが$R\Mod$の零対象である($R\Mod$もアーベル圏になる)．
+        \item 環$R$自体も，乗法を$R$の$R$自身への作用とみれば，$R$-加群である．より一般的に，環準同型$\varphi:A\to B$について，\\
+        $a\cdot b=\varphi(a)b\;(a\in A,b\in B)$によって$B$は$A$-加群とみなせる．
+        \item $A$の左イデアルとは，$A$の部分$A$-加群をいう．
+        \item $X$を位相空間とし，$R:=C(X,\C)$を連続関数環とする．複素ベクトル束$E\to X$の切断全体の空間$\Gamma(E)$は，各点で積を取る作用によって$C(X,\C)$-加群となる．
+    \end{enumerate}
+\end{example}
+\begin{remarks}[interpretation of modules as generalized vector bundles]
+    こうして，最も一般的な例として，ベクトル束を考えられることを確認した．実際，加群はベクトル束の一般化だと考えられる．\footnote{In many contexts one regard modules as the canonical generalization of the notion of vector bundles, with better formal properties.}
+\end{remarks}
+
+\section{部分加群と生成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    生成された部分加群には２つの同値な定義がある．
+    構成する際には，写像の空間として$R^{(S)}$などとすれば良いが，
+    これはたしかにベクトル束（の切断）の一般化になっているともみなせる．
+\end{tcolorbox}    
+
+\subsection{部分加群}
+
+\begin{definition}[submodule]
+    $R$-加群の部分集合$N\subset M$について，$M$の加法$+:M\times M\to M$と$R$作用$R\times M\to M$の$N$への制限の像が$N$に収まるとき，$N$を$M$の$R$-部分加群という．
+\end{definition}
+
+\begin{lemma}[部分加群の特徴付け]
+    $M$を$R$-加群とし，$N\subset M$を部分集合とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $N$は$R$-部分加群である．
+        \item $\forall_{y,z\in N}\;y-z\in N$かつ$\forall_{r\in R}\;\forall_{y\in N}\;ry\in N$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[intersection, sum]
+    $M$を$R$-加群とする．
+    \begin{enumerate}
+        \item $R$-部分加群の族$(N_i)_{i\in I}$について，共通部分$\cap_{i\in I}N_i$も$M$の$R$-部分加群である．
+        \item $R$-部分加群の有限族$(N_i)_{i\in [n]}$について，和$\sum_{i=1}^nN_i=\Brace{y_1+\cdots+y_n\in M\mid y_i\in N_i}$も$R$-部分加群である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{生成された部分加群}
+
+\begin{definition}[generated submodule, system of generators, finitely generated]
+    $S\subset M$を部分集合とする．
+    \begin{enumerate}
+        \item $[S]_R:=\bigcap\Brace{N\mono M\mid NはMの部分加群でSを含む}$を\textbf{$S$で生成された$R$-部分加群}という．
+        \item $M=[S]_R$を満たすとき，$S$を$M$の\textbf{生成系}という．
+        \item $\abs{S}<\infty$を満たす生成系を持つとき，$M$を\textbf{有限生成}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[生成された部分加群の元の表示]
+    \[[S]_R=\Brace{a_1x_1+\cdots+a_nx_n\in M\mid a_i\in R,x_i\in S, n\in\N}\simeq_\Set R^{(S)}=\Brace{f\in R^S\mid\forall_{s\in S}\;f(s)=0\fe}.\]
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$\supset$] $[S]_R$は演算について閉じている必要があるから，$\supset$である必要がある．
+        \item[$\subset$] 右辺は$S$を含む$M$の$R$-加群となっている．$[S]_R$の最小性から．
+    \end{description}
+\end{proof}
+
+\subsection{商加群}
+
+\begin{definition}[fuctor module / quotient module]
+    $N$を$M$の$R$-部分加群とする．
+    加法群としての剰余群$\o{M}=M/N$に対して，スカラー倍$R\times\o{M}\to\o{M}$を$r\o{x}=\o{rx}$で定めると，これは$R$-加群になる．
+    これを\textbf{剰余$R$-加群}または\textbf{商$R$-加群}という．
+\end{definition}
+
+\subsection{ねじれ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    加群において，ねじれと直交性が交差する．
+    群におけるねじれとは位数有限な元であった．これは群に対する標準的な$\Z$の作用によって加群とみたときのねじれ元とみなせる．
+    Hilbet空間における直交補空間とは，２つ加群上に定義された双線型写像$F:M\times N\to P$に関する零化イデアルであった．
+\end{tcolorbox}
+
+\begin{definition}[annihilator, torsion element, torsion part]
+    $M$を$R$-加群とする．
+    \begin{enumerate}
+        \item 部分集合$S\subset M$に対して，$\Ann_R(S):=\Brace{a\in R\mid\forall_{x\in S}\;ax=0}$を\textbf{零化イデアル}という．
+        \item $\Ann(x)\ne0$を満たす元$x$を\textbf{ねじれ元}という．
+        \item ねじれ元の全体$M_0:=\Brace{x\in M\mid\Ann(x)\ne0}$は部分$R$-加群をなす．これを\textbf{ねじれ部分}という．
+        \item $M_0=0$のとき$M$を\textbf{ねじれなし}といい，$M_0=M$のとき$M$を\textbf{ねじれ$R$-加群}という．
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    $M=\Z/(m)\;(m\ge 2)$はねじれ加群である．任意の元$\o{x}\in\Z/(m)$に対して，$m\o{x}=0$である．
+\end{example}
+
+\begin{discussion}[annihilator and Galois connection]
+    加群の双線型写像$M\times N\to P$を介して定まる零化イデアルは，$M$と$N$の部分集合の間にGalois対応を与え，これに伴う閉包演算子はspanより強い：$\Span(S)\le\Ann(\Ann(S))$．Banach空間においては，ノルム閉部分空間の生成の特徴付けにも使われた．
+    Galois接続とは，部分群と部分体の間の対応の一般化で，一般の順序集合の間の随伴関係：$f:A\to B,g:B\to A\;\st\;\forall_{a\in A,b\in B}\;a\le g(f(a)),b\le f(g(b))$をいう．
+    射$\le$を同型$=$としても成り立つとき，これを特にGalois対応という．
+\end{discussion}
+
+\begin{definition}[Galois connection induced from a relation]
+    一般の関係$E\subset X\times Y$について，これが定まるGalois接続とは，次の写像の組$(V_E,I_E)$を言う：
+    \begin{enumerate}
+        \item $V_E:P(X)\to P(Y);S\mapsto P_E(S):=\Brace{y\in Y\mid\forall_{x\in X}\;x\in S\Rightarrow E(x,y)}$
+        \item $I_E:P(Y)\to P(X);T\mapsto I_E(T):=\Brace{x\in X\mid\forall_{y\in Y}\;y\in T\Rightarrow E(x,y)}$
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[closure operator from Galois connection]
+    $I_E\circ V_E,V_E\circ I_E$は閉包演算子（＝冪等モナド）である．すなわち，それぞれについて次の３条件が成り立つ：
+    \begin{enumerate}
+        \item $\forall_{S\in P(X)}\;S\subset I_E\circ V_E(S)$．
+        \item $\forall_{S\in P(X)}\;V_E\circ I_E\circ V_E(S)=V_E(S)$．
+        \item $I_E\circ V_E$は冪等で共変である．
+    \end{enumerate}
+\end{proposition}
+
+\section{加群の射}
+
+\subsection{定義と可逆性}
+
+\begin{definition}[homomorphism of modules]
+    $R$加群の間の写像$f:M\to M'$が次の２条件を満たすとき，$f$を$R$-準同型という：
+    \begin{enumerate}
+        \item $\forall_{x,y\in M}\;f(x+y)=f(x)+f(y)$．
+        \item $\forall_{r\in R}\;f(rx)=rf(x)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\label{lemma-inversibility-and-bijection}
+    $R$-準同型$f:M\to M'$について，
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は可逆である．
+        \item $f$は全単射である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{標準分解}
+
+\begin{definition}[image, kernel, cokernel, coimage]
+    $R$-準同型$f:M\to M'$について，
+    \begin{enumerate}
+        \item $\Im f:=\Brace{f(x)\in M'\mid x\in M}$を\textbf{像}と呼ぶ．
+        \item $\Ker f:=\Brace{x\in M\mid f(x)=0}$を\textbf{核}と呼ぶ．
+        \item $\Coker f:=M'/\Im f$を\textbf{余核}と呼ぶ．
+        \item $\Coim f:=M/\Ker f$を\textbf{余像}と呼ぶ．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $R$-準同型$f:M\to M'$について，
+    \begin{enumerate}
+        \item $\Im f$は$M'$の$R$-部分加群である．
+        \item $\Ker f$は$M$の$R$-部分加群である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[準同型定理]
+    任意の$R$-準同型$f:M\to M'$は，自然な同型
+    \[\xymatrix@R-2pc{
+        \o{f}:M/\Ker\ar[r]^\sim&\Im f\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        x+\Ker f\ar@{|->}[r]&f(x)
+    }\]
+    を引き起こす．
+\end{proposition}
+
+\subsection{射の集合}
+
+\begin{definition}[dual module]
+    $R$-加群$M$について，$M^*:=\Hom_R(M,R)$は再び加群をなす．これを\textbf{双対加群}という．
+\end{definition}
+
+\section{加群の圏}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=モノイド圏におけるモノイド対象上の加群]
+    アーベル群から，環上の加群を作る構成は，一般のモノイド圏で定義できる．
+    基本的にモノイド圏からのstuffの付加をmoduleという．
+    特に，$R$が体である場合を考えて$\Vect$についての言及だと思うと，感慨深い．
+\end{tcolorbox}
+
+\begin{definition}[module over a monoid in a monoidal category]
+    モノイド圏$(C,\otimes)$におけるモノイド対象$R\in C$について，$R$-加群のなす圏を$R\Mod$で表す．
+\end{definition}
+\begin{example}
+    $C=\Ab$で$\otimes$がテンソル積であるとき，モノイド対象$R$とは環である．
+\end{example}
+
+\begin{definition}[cokernel, kernel, zero morphism]\mbox{}
+    \begin{enumerate}
+        \item 終対象$1$を持つ圏$C$において，射$f:A\to B$の\textbf{余核}とは，次の押し出し$\Coker(f):=1\underset{A}{\sqcup}B$または$\coker f:B\to\Coker f$のことをいう：
+        \[\xymatrix{
+            A\ar[r]^-f\ar[d]&B\ar[d]\\
+            1\ar[r]&\Coker(f)
+        }\]
+        \item 始対象$0$を持つ圏$C$において，射$f:A\to B$の\textbf{核}とは，次の引き戻し$\Ker(f):=1\underset{A}{\sqcup}B$またtは$\ker f:\Ker f\to A$のことをいう：
+        \[\xymatrix{
+            \Ker(f)\ar[r]\ar[d]_-p&0\ar[d]\\
+            A\ar[r]^-f&B
+        }\]
+        \item 零対象$O$を持つ圏$C$において，標準的な射$A\to O,O\to B$を合成して得られる射$A\to B$を，\textbf{零射}$0_{AB}$という．
+        \item 零対象$O$を持つ圏において，射$f$の核とは零射$0$との等化子で，余核とは零射$0$との余等化子となる．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 圏$C=\Ab,R\Mod$では，$\Coker(f)=B/\Im f$である．
+        \item 圏$C=\Grp$では，$\Coker(f)=B/\bracket{\Im f}_\nor$である．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[additive category, pre-abelian, abelian]\mbox{}
+    \begin{enumerate}
+        \item 零対象$O$をもち，有限積と有限和を備え，標準的な同型$X\prod Y\iso X\coprod Y$を備える圏を\textbf{加法圏}という\footnote{\url{https://en.wikipedia.org/wiki/Additive_category}}．
+        \item 任意の射が核と余核を持つような加法圏$C$を\textbf{プレ・アーベル圏}という．\footnote{任意の極限とよ極限を持つAb上の豊穣圏，と定義しても良い．}
+        \item プレ・アーベル圏では，任意の射$f:A\to B$が標準分解$A\xrightarrow{p}\Coker(\ker f)\xrightarrow{\o{f}}\Ker(\coker f)\xrightarrow{i}B$を持つ．
+        \item プレ・アーベル圏であって，次の同値な条件を満たす圏を\textbf{アーベル圏}という．
+        \begin{enumerate}[(a)]
+            \item 任意の射$f:A\to B$が定める射$\o{f}:\Coim f\to\Im f$が可逆である．したがって，標準分解が完全列$A\to\Im f\to B$を与える．
+            \item 任意のモノ射が核で，任意のエピ射が余核である．
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    加法圏は同値な定義があり，普通はAb上の豊穣圏と導入される．
+\end{remark}
+
+\begin{proposition}
+    $R$が可換環であるとき，$R\Mod$はアーベル圏になる．
+\end{proposition}
+
+\begin{proposition}
+    $R\Mod$の射がモノ／エピであることと，$U:R\Mod\to\Set$の像がモノ／エピ（したがって単射・全射）であることは同値．\footnote{\url{https://ncatlab.org/nlab/show/Mod}}
+\end{proposition}
+\begin{remark}
+    任意のアーベル圏は
+    balancedであることと合わせると，補題\ref{lemma-inversibility-and-bijection}の主張を得る．
+\end{remark}
+
+\begin{proposition}
+    $R\Mod$は任意の積と余積を持つ．
+    ただし積とは，集合の直積上に各点毎の演算を定義したもので，余積は，集合の直積の有限個の成分のみが零でない元からなる部分加群である．
+    したがって，有限の場合は積と余積は同型．
+\end{proposition}
+
+\section{直和と自由加群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    加群の直和とは，台となるアーベル群の直和の上に作用を（各点積として）延長したものとする．
+    するとこれは，ベクトル束の直和（Whitney和ともいう）の「双対」とも捉えられる．
+\end{tcolorbox}
+
+\begin{proposition}
+    和$N=N_1+\cdots+N_n$に対して，次の３条件は同値．
+    \begin{enumerate}
+        \item 直和である：$N=N_1\oplus\cdots\oplus N_n$．すなわち，和の表し方は一意的である．
+        \item 線型独立：$\forall_{y_1\in N_1,\cdots,y_n\in N_n}\;y_1+\cdots+y_n=0\Rightarrow y_1=\cdots=y_n=0$．
+        \item $\forall_{i=1,\cdots,n-1}\;(N_1+\cdots+N_i)\cap N_{i+1}=0$．
+        \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    部分集合$B\subset M$であって，$R$上線型独立かつ$M$の生成元であるものが存在するとき，$M$は\textbf{自由$R$-加群}であるといい，$B$を\textbf{基底}であるという．
+\end{definition}
+
+\begin{lemma}
+    集合$S$上に生成される自由加群$R^{(S)}$は，次のような直和で表せる：
+    $R^{(S)}\simeq\bigoplus_{s\in S}R$．
+\end{lemma}
+
+\begin{theorem}
+    $M$を有限生成自由$R$-加群とする．$M$の任意の基底は有限個の元からなり，その濃度は一定である．
+\end{theorem}
+
+\begin{definition}[rank of a ring]
+    $M$の\textbf{階数}とは，$M$の基底の元の数とし，$\rank M$と表す．
+\end{definition}
+
+\section{単因子論}
+
+\begin{notation}[fundamental matrix]
+    次の基本行列の定める左作用を考える（行基本変形）．これらの基本行列はユニモジュラーである．
+    \begin{enumerate}
+        \item $P_n(i,j)$を，単位行列の$i$行と$j$行を入れ替えたもので，行の入れ替え変換に対応する行列とする．
+        \item $Q_n(i;-1)$を，単位行列の$a_{ii}$成分の符号を反転させたもので，行の$-1$倍変換に対応する行列とする．
+        \item $R_n(i,j;c)$を，単位行列に$a_{ij}$成分だけ$c$である行列を足したもので，行の定数倍を加える変換に対応する行列とする．
+    \end{enumerate}
+    同様の行列の右作用を考えると，同種の列基本変形に対応する．
+\end{notation}
+
+\begin{definition}[unimodular]
+    環$M_n(\Z)$の可逆元を\textbf{単模行列}といい，これがなす群を$\GL_n(\Z)$で表す．
+    一般の可換環$R$について，環$M_n(R)$の元で行列式が単元になる行列を単模行列という．
+    $R$が体のとき，行列が単模であることと正則であることは同値．
+\end{definition}
+
+\subsection{整数行列}
+
+\begin{theorem}[(Smith) normal form]
+    任意の$A\in M_{mn}(\Z)$は，$\forall_{1\le i\le r-1}\;e_i|e_{i+1}$を満たす自然数の組$(e_1,\cdots,e_r)$が一意的に存在して，
+    標準形$\diag(e_1,\cdots,e_r,0,\cdots,0)$と相似である．
+\end{theorem}
+\begin{remark}
+    一般の単項イデアル整域$R$については，$\forall_{1\le i\le r-1}\;(e_i)\supset)e_{i+1}$という条件になり，一意性は単元倍を除いて定まる．
+\end{remark}
+
+\begin{definition}
+    任意の$A\in M_{mn}(\Z)$について，$(e_1,\cdots,e_r)$を\textbf{単因子}といい，$r$を\textbf{階数}という．
+\end{definition}
+
+\begin{example}
+    \[A=\begin{pmatrix}2&4&0\\0&8&0\\4&0&12\end{pmatrix}\]
+\end{example}
+
+\begin{corollary}
+    $A\in M_n(\Z)$がユニモジュラー行列であるとき，$A$は基本行列の積として表せる．
+\end{corollary}
+
+\subsection{体係数多項式の行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $M_n(K[x])$の元を，$x$-行列と呼ぶこととすると，これは$M_n(K)$の一般化である．
+\end{tcolorbox}
+
+\begin{definition}
+    $n$次の$x$-行列$A(x)$のすべての$k$次小行列式の（モニックな）最大公約数を，$A(x)$の$k$次\textbf{行列式因子}といい，$d_k(x)$で表す．$d_k(x)=0$とは，$k$次小行列式がすべて$0$であることとする．
+\end{definition}
+\begin{lemma}
+    相似な行列の間で，$n$個の行列式因子は一致する．
+\end{lemma}
+
+\begin{theorem}
+    任意の$n$次$x$-行列$A(x)$は，一意的な標準形$\diag(e_1,\cdots,e_r,0,\cdots,0)$に対等である．
+    ただし，$e_i(x)$はモニックな多項式で，$e_i(x)$は$e_{i-1}(x)$で割り切れるとする．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[存在] $n>1$についての数学的帰納法により証明する．
+        
+    \end{description}
+\end{proof}
+
+\section{有限生成アーベル群の基本定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有限次元線型空間論における定理$V\simeq K^n$の，一般の$R$-有限生成加群への一般化である．
+    可逆性の特徴付けは，行列式が$K^\times$であることとなる．
+\end{tcolorbox}
+
+\chapter{テンソル積とテンソル代数}
+
+\chapter{有限群の表現論}
+
+\chapter{Noether加群}
+
+\begin{thebibliography}{9}
+    \bibitem{斎藤毅}
+    斎藤毅『数学原論』
+\end{thebibliography}
+
+\end{document}

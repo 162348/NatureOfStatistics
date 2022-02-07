@@ -1,0 +1,174 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{統計的学習の数理}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{機械学習の枠組み}
+
+\begin{quotation}
+    まさか情報「科学」らしくなっていることに驚愕している．
+    「学習」は統計的には「推定」「予測」と同義であるが，特に「機械」が行うアルゴリズム的行為を表現する際に使う，concept with an attitudeである．
+\end{quotation}
+
+\section{枠組み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    機械の構成の際に，モデルの選択など，人間により恣意的に挿入された偏りを\textbf{帰納バイアス}という．
+    帰納バイアスが弱いことを「万能」という．
+    逆に特徴量エンジニアリングやCNNなどは，ドメイン知識に基づいて適切な帰納バイアスを導入することで狭い分野に対する高い性能を目指す．
+\end{tcolorbox}
+
+\begin{definition}[model]\mbox{}
+    \begin{enumerate}
+        \item 観測によって得られる情報を\textbf{データ}という．情報理論の対象．
+        データ生成分布を背後に想定することで，推測統計学が始まる．
+        \begin{enumerate}[(a)]
+            \item 仮説のパラメータを推定するために直接用いられるデータを\textbf{学習データ(training data)}または\textbf{訓練データ}という．
+            \item 正則化パラメータの調整など，学習結果の性能を検証するためのデータを\textbf{検証データ(validation data)}という．
+            \item 学習データと検証データを併せて，観測によってすでに人類の手元に得られたデータを\textbf{観測データ(observed data)}という．単にデータといったときはこれを指す．
+            \item 予測精度を評価するためのデータを\textbf{テストデータ}という．いまだに人類に観測されていないデータを使う場合もある．
+            \item データが入力と出力の組$(x,y)\in\X\times\Y$で表されるとき，入力データと出力データという．$\abs{\Y}<\infty$を満たす出力空間の元を\textbf{ラベル}という．$\abs{\Y}=2$を満たすときのデータ$(x,y)\in\X\times\Y$を\textbf{２値データ}という．
+        \end{enumerate}
+        \item 入力空間から出力空間への関数の族$\F\subset\Map(\X,\Y)$を\textbf{仮説集合(hypothesis set)}または\textbf{統計モデル}という．$\abs{Y}<\infty$であるとき，仮説$f\in\F$を\textbf{判別器(classifier)}といい，これを定める関数$\X\to\R$を\textbf{判別関数(discriminant function)}という．
+        \item 学習データの集合から仮説集合への関数$\X\times\Y\supset D\to\F$を\textbf{学習アルゴリズム}という．
+        \item 学習アルゴリズムと実際のデータの差を評価する関数を\textbf{損失関数}という．
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    $\abs{\Y}<\infty$であるときは判別問題，$\Y=\R$であるときは回帰問題という．
+    それぞれ，0-1損失や二乗損失などの損失関数が使われる．$(x,x',y)\in\X^2\times\Y,\Y=\Z/2\Z$と定式化される問題は，$\X$に順序が誘導されるため，ランキング問題という．
+\end{example}
+
+\begin{definition}
+    データ$D\subset\X\times\Y$に対して，
+    新たなデータを生み出すことを考え，$\X\times\Y$上の確率分布，または，$\F\subset\Map(\X\times\yocto,\X\times\Y)$\textbf{生成モデル}という．
+\end{definition}
+
+\section{損失と相対エントロピー}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    丸暗記を過学習と呼ぶ．この組み合わせ論的な解を超えることを考える．そこに神が宿る．
+    そのプロセスは，相対エントロピーの（適切な）最小化として完全に特徴づけられる．
+
+    情報幾何学は，その一般化として$C^*$-代数による量子確率論による定義と理論展開もある．
+    Fisher情報量は統計多様体の曲率を定め，曲率が大きい時は「大きく変化する」が，これがCramer-Raoの不等式である．
+\end{tcolorbox}
+
+\begin{definition}[over fitting, regularization]\mbox{}
+    \begin{enumerate}
+        \item 訓練データは有限であるから，組み合わせ論的な解は存在する．このように，訓練データのみにしか使えないアルゴリズムを，\textbf{過学習}という．対して，理想的な状況を\textbf{汎化}という．
+        \item 損失関数にペナルティ項などの追加の構造を付加することにより，過学習やill-posed problemをとこうとする手法群を\textbf{正則化}という．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    深層学習では，特殊な構造を持ったレイヤーを用意すること自体が正則化の代わりをする．この現象をimplicit regulartizationという．
+    これは深層学習の汎化性能を説明する可能性がある．
+\end{remark}
+
+\begin{definition}[predictive loss, empirical loss]
+    $l(\wh{y},y)$を損失関数とする．
+    これに対して，仮説毎に定まる損失関数の値の平均値を\textbf{損失}$\F\to\R$という．
+    $h\in\F$を仮説とし，真の分布を$P$，観測データが定める経験分布を$\bP_n$とする．
+    \begin{enumerate}
+        \item $R(h):=E[l(h(X),Y)]$を\textbf{予測損失}という．
+        \item $\wh{R}(h):=E_{\bP}[l(h(X),Y)]$を\textbf{経験損失}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    学習した仮説の精度を評価するにあたって，経験損失と予測損失との間の違いを見積もることが肝要となる．
+\end{remarks}
+
+\begin{lemma}
+    経験損失は，予測損失の不偏推定量である．
+\end{lemma}
+
+\begin{definition}[relative entropy / KL divergence]\mbox{}
+    \begin{enumerate}
+        \item $H$をヒルベルト空間とすると，可観測量は$C^*$-部分代数$\A\subset B(H)$をなす．
+        \item \textbf{状態}とは，可観測量$A\in\A$に対して期待値$\brac{A}\in\C$を定める線型汎関数$\brac{-}:=\langle\psi|-|\psi\rangle:B(H)\to\R$をいう．これはRieszの表現定理より，ある元$\psi\in H$が存在して，これが定める内積から定まる．
+        \item $C^*$-代数と状態の組を\textbf{量子確率空間}といい，これは確率空間の一般化となっている．
+        \item エントロピーの概念を，２つの状態の間に定義される距離として一般化したものを\textbf{相対エントロピー}また\textbf{Kullback-Leibler divergence}という．
+        具体的には，可測空間$X$上の２つの確率測度$P,Q$について，$Q$は$P$に関して絶対連続であるとき，相対エントロピーを
+        \[S(Q|P):=\int_X\log\frac{dQ}{dP}dP\]
+        と定める．
+        相対エントロピーは非対称であることを除いて距離を定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    判別問題の損失関数$l$について，
+    \begin{enumerate}
+        \item $\inf_{h\in\Meas(\X,\Y)}R(h)$を\textbf{Bayes誤差}という．
+        \item 下限を達成する可測関数がモデル$\F$の元であるとき，これを\textbf{Bayes規則}という．
+    \end{enumerate}
+\end{definition}
+
+\section{勾配降下法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    相対エントロピーの最小化アルゴリズムには，勾配降下法／最急降下法がある．ここからは数値解析の領域である．
+    しかし，これは損失関数が下に凸である場合にしか保証されない．
+    しかし，深層学習では，ほとんどすべてのモデルが勾配降下法で訓練されていて，これが何故かうまく行く．
+\end{tcolorbox}
+
+\section{学習アルゴリズムの性能評価}
+
+\chapter{スパース性}
+
+\begin{quotation}
+    正則化によってスパース性を誘導する方法は，直接スパース性を仮定する方法に比べてより柔軟であるだけでなく，凸最適化問題に帰着するため，計算量の上で大きなメリットがあります．
+\end{quotation}
+
+\section{スパース性とは}
+
+\begin{definition}
+    実際の説明変数は次元に比べて少数であるという仮定のことをいう．さらに一般化すれば，低ランク行列の推定問題をいう．
+\end{definition}
+\begin{example}
+    ゲノム変異からの予測，時空間データの解析，推薦システムなど．
+    自然言語処理ではデータは素になるかもしれないが，統計的な優位性は生じない．
+\end{example}
+
+\chapter{バンディット問題と強化学習}
+
+\begin{quotation}
+    強化学習は意思決定モデルをデータから，報酬を最大にするように学習する機械学習の一分野である．
+    
+\end{quotation}
+
+\chapter{Deep Learning}
+
+\section{形式的定義}
+
+\section{TCNN}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    CNNはデータの位相構造にマッチするため，強力な性能を発揮する．そこで，この成功を一般化させたい．
+    TCNNのレイヤーの位相構造は，Topological Data Analysisの知見が用いられている．
+\end{tcolorbox}
+
+\begin{thebibliography}{9}
+    \bibitem{Love}
+    Ephy Love "Topological Deep Learning" (2021)
+    \bibitem{冨岡亮太}
+    冨岡亮太『スパース性に基づく機械学習』(2015)
+    \bibitem{金森敬文}
+    金森敬文『統計的学習理論』(2015)
+    \bibitem{本多・中村}
+    本多淳也，中村篤祥『バンディット問題の理論とアルゴリズム』(2016)
+    \bibitem{持橋・大羽}
+    持橋大地，大羽成征『ガウス過程と機械学習』(2019)
+    \bibitem{森村哲郎}
+    森村哲郎『強化学習』(2019)
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,116 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{理論計算機科学}
+\author{Anonymous Mathematicians\\anomath.com}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble.tex}
+\begin{document}
+\tableofcontents
+
+\section{形式化}
+
+\begin{screen}
+    一階論理の形式化，集合論の形式化，代数系の定義の形式化に共通する枠組みを定義する．
+
+    指標とは，極めて数学基礎論的な概念である．
+    これを用いて，代数系を$\Omega$-代数として一般化できる．
+
+    $F$-代数とは，$\Omega$-代数の圏論的な言い換えである．
+    私が無意識にやっていたことである．
+    すると，代数規則は関手$F$の言葉を用いて貼り合わせられ，一つにまとまる．
+    結局signiture\footnote{プログラミングで、メソッドや関数の、名前および引数の数や型の順序などの組み合わせ。戻り値の型を含む場合もある。}とは関手のことだと思える．
+    群，束などもこの言葉で全く並行に一般化される．
+
+    この観念を通じて，
+    計算機科学の種々の概念は代数化できる．
+    データ構造は（始）代数を定め，オートマトンも余代数として等価に理解できる．
+    これを計算機科学の分野に圏論を通じて輸入したものを，特に$F$-余代数という．
+\end{screen}
+
+\begin{definition}[$\Omega$-algebra]\mbox{}
+    \begin{enumerate}
+        \item 集合$\Omega$を（代数的）\textbf{指標(signature)}といい，非論理記号（演算子記号や述語記号）の集合とする．
+        \item $ar:\Omega\to\N$をarityという．
+        \item 指標$\Omega$が定める\textbf{$\Omega$-代数}$A$とは，carrier $|A|$と，各指標$\omega\in\Omega$の解釈としての関数$a_\omega:|A|^{ar(\omega)}\to|A|$の組$A=(|A|,(\omega)_{\omega\in\Omega})$である．
+        \item $\Omega$-代数の射$h:A\to B$とは，写像$h:A\to B$であって，任意の演算子$\omega\in\Omega$について$h(a_\omega(x_1,\cdots,x_{ar(\omega)}))=b_\omega(h(x_1),\cdots,h(x_{ar(\omega)}))$を満たすもののことをいう．
+        \item こうして$\Omega$-代数のなす圏を$\OmegaAlg$と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[signature]
+    指標の概念は組$(\Omega,ar)$としたが（これは代数的指標と呼ばれる），より精緻になる．非論理記号は基本２種類に分類できる．\footnote{\url{https://ncatlab.org/nlab/show/signature+(in+logic)}}
+    指標$\Sigma$とは，次の3-組$(S,\Rel(\Sigma),\Func(\Sigma))$のことである．
+    \begin{enumerate}
+        \item $S$は型(type, sort)の集合である．
+        \item $\Rel(\Sigma)$は関係記号の集合で，関数$ar:\Rel(\Sigma)\to S^*$が定まっている．
+        \item $\Func(\Sigma)$は関数記号の集合で，関数$(\dom,\cod):\Func(\Sigma)\to S^*\times S$が定まっている．
+    \end{enumerate}
+\end{definition}
+\begin{remark}\mbox{}
+    \begin{enumerate}
+        \item ほとんどの数学概念は$|S|=1$の指標で記述される．これを\textbf{single-sorted signature}という．
+        \item 特に大きなmultisortedな指標は圏やグラフの定義である．ここで斎藤先生はあの定義を持ち出した．
+        \item single-sortedである時，自由モノイド$S^*$は$\N$と同型であるから，関数$ar$は通常の意味でのarityである．
+        \item 従って，関係と関数の区別は，$n$-項関係，$n$-項演算と見た時，domを見ているのかである．$0$-aryの関数のことを定数という．
+        \item $\Func(\Sigma)=\emptyset$の時，これを\textbf{relational signature}という．
+        \item $\Rel(\Sigma)=\emptyset$の時，これを\textbf{equational}または\textbf{algebraic} signatureという．ただし，記号$=$は普通論理記号とみなす．
+    \end{enumerate}
+\end{remark}
+
+\begin{definition}
+    $\{x,y,z,\cdots\}$を変数からなる集合とし，$E$を言語$\{x,y,z,\cdots\}\cup\Omega$上の方程式の集合とする．
+    $E$を充すような$\Omega$-代数は再び圏をなし，これを$\OmegaEAlg$と表す．
+\end{definition}
+
+この極めて形式言語的な概念「指標$\Omega$」は，
+結局，直和の言葉によって，自己関手$F$１つにまとまる．
+$\Omega$-代数の圏と$F$-代数の圏は等しい．
+
+\begin{definition}[$F$-algebra, $F$-coalgebra]
+    \begin{enumerate}
+        \item 圏$C$とその上の自己関手$F:C\to C$について，$C$の対象$A\in C$とその射$f:F(A)\to A$の組(A,f)のことを\textbf{$F$-代数}という．$A$をこの代数の\textbf{carrier}という．
+        この双対概念を\textbf{$F$-余代数}という．即ち，射は$f:A\to F(A)$の向き．
+        \item 余代数の射$(A,f)\to(B,g)$とは，$C$の射$\alpha:A\to B$であって，次の図式を可換にするもののことである：
+        \[\xymatrix{
+            A\ar[r]^-f\ar[d]_-\alpha&F(A)\ar[d]^-{F(\alpha)}\\
+            B\ar[r]^-g&F(B)
+        }\]
+        \item これにより，$F$-余代数は圏をなす．$F$-代数も同様であり，これを\textbf{variety}という．
+        \item $F$-代数の圏が始対象を持つとき，特に\textbf{$F$-始代数}(initial $F$-algebra)と呼ぶ．この双対概念を\textbf{$F$-終余代数}(Terminal $F$-coalgebra)という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[始代数の例]
+    プログラミングで使われるリストや木構造のようないくつもの有限データ構造が、特定の自己関手の始代数として得られる。
+    \textbf{始対象と，それが生息する圏上の関手こそが，帰納や再帰といったものの一般の枠組みを与えるものだったのである}．
+    \begin{enumerate}
+        \item 自然数とは，集合の圏$\Set$上の自己関手$F=1+-$についての$F$-代数$(\N,0+succ)$である．$\Set$は始対象$0$を持つので，これは始代数である．\footnote{\url{https://en.wikipedia.org/wiki/F-algebra}}
+        \item $\Set$の自己関手$1+\N\times-$を考えると，集合$X\in \Set$に対して，始代数$(X,[x,f])$を定める．この場合の始代数は、自然数を要素とする有限な長さのリスト全体の成す集合、その点としての空リストおよび自己写像 cons（与えられた自然数と有限リストから、その自然数をリストの先頭に付け加えてえられるリストを返す函数）の組で与えられる。\footnote{\url{https://ja.wikipedia.org/wiki/始代数}}
+    \end{enumerate}
+\end{example}
+
+\begin{example}[余代数の例]
+    余代数は状態をもつシステム (状態遷移系や、オブジェクト指向プログラミングにおけるクラスなど) や、無限の内容を持ちうるデータ構造 (ストリームなど) などの挙動を、十分に一般的かつ利用しやすい形で記述できることから、計算機科学で広く用いられるようになった。
+    代数的仕様がシステムの動作を関数として (特に、コンストラクタによって生成される帰納的なデータ型を用いて) 記述するのに対し、余代数的仕様はシステムの動作を余帰納的なプロセス、つまりセレクタの出力によって観測される内容として (オートマトン理論のような考え方で) 記述する。このときありえる全ての無限動作を漏れなく重複なく集めてきた集合が終余代数となるため、終余代数も重要な役割を果たす。余代数によって記述されるシステムの性質を記述するのには、余代数的様相論理が適している。 
+    \footnote{\url{https://ja.wikipedia.org/wiki/F余代数}}
+    \begin{enumerate}
+        \item $p$進整数も距離空間として，終余代数として特徴付けられる．\footnote{Prasit Bhattacharya, The p-adic integers as final coalgebra,\url{https://arxiv.org/abs/1504.01408}}
+    \end{enumerate}
+\end{example}
+
+\section{Recursive Domain Equations}
+
+\begin{quotation}
+    One of the great successes of category theory in computer science has been the development of a "unified theory" of the constructions underly­ ing denotational semantics. Smyth and Plotkin's paper, "The Category­ Theoretic Solution of Recursive Domain Equations" [110] builds on ear­ lier work by Wand [119] to give a definitive category-theoretic treatment of this theory.\cite{Pierce}
+\end{quotation}
+
+\begin{thebibliography}{99}
+    \bibitem{Pierce}
+    Benjiamin C. Pierce, "Basic Category Theory for Computer Scientists" (91).
+    \bibitem{Schmidt}
+    David A. Schmidt "Denotational Semantics" (86).
+    \bibitem{Lawvere}
+    William F. Lawvere "Toposes, Algebraic Geometry and Logic" (72)
+\end{thebibliography}
+
+\end{document}

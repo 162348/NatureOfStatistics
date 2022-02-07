@@ -1,0 +1,185 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{Fourier解析}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{Fourier級数}
+
+\section{Hilbert空間の正規直交系}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これから展開されるFourier級数論とは，Hilbert空間$L^2(I)$において，正規直交系$(e^{int})$が完全であることを示す旅路である．
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $L_{2\pi}:=\Brace{f:\R\to\C\mid fは\text{Lebesgue}可測で，周期2\pi を持つ}$．
+        \item $L^p_{2\pi}:=\Brace{f\in L_{2\pi}\mid f|_{(-\pi,\pi]}\in L^p((-\pi,\pi])}$．
+        \item $C_{2\pi}:=\Brace{f\in C^0(\R,\C)\mid fは周期2\pi を持つ}$．
+        \item $C^k_{2\pi}:=\Brace{f\in C^k(\R,\C)\mid k\in\N\cup\{\infty\}, fは周期2\pi を持つ}$．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[orthonormal system, complete]
+    区間$I:=(-\pi,\pi]$上の二乗可積分な複素関数の空間$L^2(I)$を考える．
+    \begin{enumerate}
+        \item 内積$L^2(I)\times L^2(I)\to\C$を$(f,g):=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)\o{g(t)}dt$とする．
+        \item 族$\{\varphi_n\}\subset L^2(I)$が$(\varphi_n,\varphi_m)=\delta_{nm}$を満たすとき，これを$L^2(I)$の\textbf{正規直交系}という．
+        \item 任意の$L^2(I)$の元が正規直交系によって展開可能であるとき，すなわち，$\forall_{n\in\N}\;(x,\varphi_n)=0\Rightarrow x=0$が成り立つとき，これを\textbf{完全}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Hilbert空間$H$において，
+    \begin{enumerate}
+        \item 完全正規直交基底は存在する．
+        \item $H$が可分ならば，可算なものが存在する．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    Hilbert空間$H$において，次の３条件は同値．
+    \begin{enumerate}
+        \item $\{\varphi_n\}$は完全な正規直交系をなす．
+        \item $\{\varphi_n\}$の一次結合全体は，$H$で稠密になる．
+        \item (Fourier級数展開) 任意の$x\in H$について，$x=\sum_n(x,\varphi_n)\varphi_n$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    $\paren{\frac{1}{\sqrt{2\pi}}\varphi_n(t):=e^{int}}_{n\in\Z}$は，$L^2((-\pi,\pi])$の正規直交系である．
+\end{proposition}
+
+\begin{lemma}\label{lemma-norm-is-continuous}
+    ノルム空間上のノルムと内積は連続である．
+\end{lemma}
+
+\section{Fourier係数の性質}
+
+\begin{proposition}[表示]
+    $f(t)=\sum^{\infty_{n=-\infty}}c_ne^{int}$が$t\in(-\pi,\pi]$上一様収束する時，
+    \[c_n=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-int}dt\]
+    が必要．
+\end{proposition}
+\begin{proof}
+    $e^{int}$は正規直交系だから，
+    \begin{align*}
+        (f,e^{int})&=\paren{\lim_{N\to\infty}S_N[f](t),e^{int}}\\
+        &=\lim_{N\to\infty}(S_N[f](t),e^{int})&内積の連続性\ref{lemma-norm-is-continuous}\\
+        &=\lim_{N\to\infty}\sum^N_{\nu=-N}c_\nu(e^{i\nu t},e^{int})&内積の線形性\\
+        &=c_n.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $f(t)=f(-t)$のとき，$c_n[f]=c_{-n}[f]$．したがって，足し合わせると$\cos$が出てくる．
+        \item $f(t)=-f(-t)$のとき，$c_n[f]=-c_{-n}[f]$．したがって，足し合わせると$\sim$が出てくる．
+        \item $f(t)\in\R$ならば，$\o{c_n[f]}=c_{-n}[f]$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{align*}
+            c_n[f]&=\int^\pi_{-\pi}f(t)e^{int}dt\\
+            &=\int_{\pi}^{-\pi}f(-x)e^{-inx}(-dx)\\
+            &=\int_{-\pi}^{\pi}f(x)e^{i(-n)x}dx=c_{-n}[f].
+        \end{align*}
+        \item 同様．
+        \item \[\o{c_n[f]}=\int^\pi_{-\pi}f(t)e^{-int}dt=c_{-n}[f].\]
+        あとは積分と複素共役の可換性についてであるが，実部と虚部に分けて考えると，積分の線形性より従う．
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    \[f(x)=\frac{1}{\frac{5}{4}+\cos x}\]
+    のFourier展開を考える．
+\end{example}
+
+\section{Riemann-Lebesgueの定理とFourier係数の減衰}
+
+\begin{theorem}[Riemann-Lebesgue]
+    任意の$f\in L^1(\R)$に関して，
+    \[\F[f](\lambda)=\hat{f}(\lambda):=\int^\infty_{-\infty}f(t)e^{-it\lambda}dt\xrightarrow{\abs{\lambda}\to\infty}0.\footnote{極限の取り方が対称なので，指数の符号はあまり問題でない．}\]
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $f=\chi_{[a,b]}\;(-\infty<a<b<\infty)$のとき，
+        \begin{align*}
+            \abs{\hat{f}(\lambda)}&=\Abs{\int^b_ae^{-it\lambda}dt}\\
+            &=\Abs{\frac{e^{-ib\lambda}-e^{-ia\lambda}}{i\lambda}}\le\frac{2}{\abs{\lambda}}\xrightarrow{\abs{\lambda}\to\infty}0.
+        \end{align*}
+        \item $f$が単関数のとき，同様．
+        \item $S:=\Brace{s=\sum^n_{i=1}b_i\chi_{[a_i,b_i]}\in L^1(\R)\mid b_i\in\C,-\infty<a<b<\infty,n\in\N}$は$L^1(\R)$で$\norm{-}_1$について稠密だから，一般の$f\in L^1(\R)$についても同様に示せる．
+        
+        実際，任意の$f\in L^1(\R)$と$\ep>0$に対して，$g\in S$が存在して，$\norm{f-g}_1=\int\abs{f(x)-g(x)}dx<\ep$を満たす．
+        いま，(2)より$\exists_{N\in\N}\;\abs{\lambda}>N\Rightarrow\Abs{\int g(t)e^{it\lambda}dt}<\ep$であるから，
+        \[\Abs{f(t)e^{it\lambda}dt}\le\int\abs{f(t)-g(t)}dt+\Abs{\int g(t)e^{it\lambda}dt}<2\ep\quad(\abs{\lambda}>N).\]
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    稠密だと限りなく$S$に近い点が取れるから，このように評価してしまえば収束性については全く同じ結論を得るのか．
+\end{remarks}
+
+\begin{corollary}
+    任意の可積分な周期関数$f\in L^1_{2\pi}$に対して，Fourier係数は収束する：$c_n[f]\to0\;(\abs{n}\to\infty)$．
+\end{corollary}
+\begin{proof}
+    定理と同様の手順で示せる．
+\end{proof}
+
+\begin{corollary}[減衰の精緻化]
+    $f$が$C^K$級のとき，
+    \begin{enumerate}
+        \item $\forall_{j=1,\cdots,K}\;\forall_{n\in\Z}\;(in)^jc_n[f]=c_n[f^{(j)}]$．
+        \item $\forall_{n\in\Z\setminus\{0\}}\;\abs{c_n[f]}\le\frac{1}{\abs{n}^K}\norm{f^{(K)}}_\infty$．
+        \item $n^K\cdot c_n[f]\xrightarrow{\abs{n}\to\infty}0$．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 部分積分により，
+        \begin{align*}
+            c_n[f]&=\frac{1}{2\pi}\Square{f(t)\frac{e^{-int}}{-in}}^\pi_{-\pi}-\frac{1}{2\pi}\int^\pi_{-\pi}f'(t)\frac{e^{-int}}{-in}dt\\
+            &=\frac{1}{2\pi}\frac{f(\pi)}{in}2\sin(n\pi)+\frac{1}{in}\frac{1}{2\pi}\int^\pi_{-\pi}f'(t)e^{-int}dt=\frac{c_n[f']}{in}.
+        \end{align*}
+        これを繰り返すとわかる．
+        \item \begin{align*}
+            \abs{c_n[f]}&\le\frac{1}{\abs{in}^K}\frac{1}{2\pi}\int^\pi_{-\pi}\abs{f^{(k)}(t)}\abs{e^{-int}}dt\\
+            &\le\frac{1}{\abs{n}^K}\frac{1}{2\pi}\int^\pi_{-\pi}\norm{f^{(k)}}_\infty dt=\frac{1}{\abs{n}^K}\norm{f^{(k)}}_\infty.
+        \end{align*}
+        \item (3)と系から明らか．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    $k$回連続微分可能な関数のFourier係数は，多項式$n^{-k}$よりも速く収束する．
+    これにより，$f\in C^2_{2\pi}$に対しては，Fourier級数$\sum^\infty_{-\infty}c_n[f]e^{inx}$が絶対収束することがわかった．
+    しかし，その収束先が$f$に一致するかは議論が必要である．
+\end{remarks}
+
+\section{Dirichlet核}
+
+\begin{definition}[Dirichlet kernel]
+    Dirichlet核を
+    \[D_K(t):=\frac{1}{2\pi}\sum^K_{n=-K}e^{int}\]
+    と定めると，Fourier和は
+    \begin{align*}
+        S_K[f](x)&=\sum^K_{n=-K}c_n[f]e^{inx}\\
+        &=\int^\pi_{-\pi}f(t)\frac{1}{2\pi}\sum^K_{n=-K}e^{in(x-t)}dt\\
+        &=\int^{\pi+x}_{-\pi+x}f(x-t)D_K(t)dt
+    \end{align*}
+    と表せる．
+\end{definition}
+
+\begin{thebibliography}{9}
+    \bibitem{Korevaar}
+    J. Korevaar "Fourier Analysis and Related Topics"
+\end{thebibliography}
+
+\end{document}

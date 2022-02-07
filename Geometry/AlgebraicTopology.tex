@@ -1,0 +1,970 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{代数的位相幾何}
+\author{}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{基本的対象とホモトピー}
+
+\begin{quotation}
+    代数的位相幾何学とは，種々の方法でTopの様子を調べる．
+    自己関手や2-射による内省的ものが（位相的）ホモトピー論であり，ホモトピー同値を同型とした位相空間の圏を$\Ho(\Top)$と表し，これを古典的ホモトピー圏という．
+    次数付き代数の圏への関手による代数的なものがホモロジー論である．
+
+    このうち，位相的ホモトピー論を考える．
+    位相的ホモトピー論に限れば，これはTopの射の$I$にパラメータ付けられた連続変位に関する考察である．
+    その後，抽象的ホモトピー論への一般化を考える．
+\end{quotation}
+
+\section{記法}
+
+%        多様体論は，座標概念に縛られていた解析学を解放した．座標とは$\R^n$への局所的な位相同型なのであった．
+%        志賀浩二さんの本のおかげで，その機能的な側面をよく理解できた．
+%        \begin{quotation}
+%            本書では，一つの試みとして，個々の多様体の持つ幾何学的側面にあまり立ち入らず，機能的な側面に重点を置いて述べてみることにした．多様体上では多くの概念が組み立てられ，それらはある機能性を帯びてさらに新しい概念を産む．
+%            それらの概念がいかに適用され，応用されるかを述べることはできないにしても，重畳として重なりあっていく概念構成の過程の中に，すでに多様体の持つ触媒としての機能を察知することが可能なのではないかと考えた．
+%        \end{quotation}
+%        そこで今度は，代数的な道具で多様体の形を調べる方法を考える．
+%        代数学の応用の方法の模範の一つである．
+%        ホモロジーはホモトピーの特殊化とみれる．
+%        完全列の拡張であるスペクトル列についても知りたい．
+%        商空間への慣れが大事．
+
+%\Delta$-複体は単体複体の一般化で，1950にEilenbergとZilberによって"semisimplical complexes"の名前で導入された．非常に自然に出現する概念であるし，計算が簡単になる．
+%その後"degeneracy maps"という追加構造が定義され，これがsimplical setの概念に結晶した．
+
+\begin{notation}[生息する圏]\mbox{}
+    \begin{enumerate}
+        \item 位相空間と連続写像の圏をTopと表す．以降単に射と言ったときはTopの射とする．Topの同型は英語でhomeomorphismという．
+        \item $\Top_\CW$によって，CW-複体に同型な位相空間のなす圏とする．
+        \item $\Top^{*/}$または$*/\Top$によって，点付き位相空間の圏とする．この圏の直和は，集合としての直和に，各基点を１点に同一視したものとし，これを楔積$\wedge_{i\in I}X_i$で表す．
+        \item 空間対と，$f(A)\subset B$を満たす連続写像$f:(X,A)\to (Y,B)$からなる圏を暫定的に$\Top^{/}$で表す．
+        \item $\Top_\cpt$で，コンパクトハウスドルフ空間のなす$\Top_\Haus$の充満部分圏を表す．
+        \item $\Top_\lc$で，局所コンパクトハウスドルフ空間のなす$\Top_\Haus$の充満部分圏を表す．
+        \item $\Top_\cg$で，コンパクト生成される位相空間のなす$\Top$の充満部分圏を表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[Kelly / kaonic space]
+    写像$f:X\to Y$が$k$-連続であるとは，$\forall_{C\in\Top_\cpt}\;\forall_{g\in\Hom_\Top(C,X)}\;f\circ g\in\Hom_\Top(C,Y)$を満たすことをいう．
+    このとき，次の同値な条件のいずれかを満たすとき，$X$を\textbf{コンパクト生成}である，または\textbf{$k$-空間}という．
+    \begin{enumerate}
+        \item $\forall_{Y\in\Top}\;\forall_{f\in\Map(X,Y)}\;f$は連続$\Leftrightarrow f$は$k$-連続．
+        \item $\exists_{S\in\Set}\;S\subset\Top_\cpt\;\land\;\forall_{C\in S}\;\forall_{f\in\Map(X,C)}\;f$は連続$\Leftrightarrow f$は$k$-連続．
+        \item $X$はあるコンパクトハウスドルフ空間の族の直和の商空間として表せる．
+        \item $\forall_{U\in P(X)}\;U\in\O_X\Leftrightarrow[\forall_{C\in\Top_\cpt}\;\forall_{g\in\Hom_{\Top}(C,X)}\;g^{-1}(U)\in\O_C]$．
+    \end{enumerate}
+\end{definition}
+
+\begin{notation}[基本的空間]\mbox{}
+    \begin{enumerate}
+        \item $I:=[0,1]$を単位区間とし，標準的位相的\textbf{区間}(standard topological interval)という．\footnote{その名前は各圏に同じ役割をするinterval objectを考えられるためである．もちろん$I$はTopのinterval objectである．}ホモトピーでは時間のような意味論を持つ．\textbf{端点の定める標準的な単射}を$\const_i,\delta_i:*\to I\;(i=0,1)$で表す．
+        \item $X\in\Top$に対し，$X\times I$を\textbf{$X$上の円筒}(standard topological cylinder)という．\textbf{円筒への標準的な単射}を$\sigma_i:=(\id_X,\delta_i):X\to X\times I;x\mapsto (x,i)\;(i=0,1)$とする．一般に円筒対象は余対角写像を分解する：$\Delta_X:X\sqcup X\xrightarrow{(\sigma_0,\sigma_1)}X\times I\to X$．
+        \item $X\in\Top$に対し，写像の空間$X^I$にコンパクト開位相を入れたものを，\textbf{道空間}(path space)という．
+        \item $n\in\N$について$S^{n-1}\subset\R^n$を\textbf{単位球面}とし，$D^n\subset\R^n$を\textbf{単位閉球}とする．標準的単射$i_n:S^{n-1}\mono D^n$が存在し，$S^{n-1}=\partial D^n$である．なお，$S^{-1}=\partial D^0=\partial\{*\}=\emptyset$とする．また$S^0=\{\pm 1\}=\partial D^1$である．
+        \item 開円板に同相な空間$e^n:\simeq_{\Top}(D^n)^\circ=D^n\setminus S^{n-1}$を$n$-\textbf{胞体}という．$e^0=D^0\setminus S^{n-1}=\{*\}$は$D^0$と同様に一点，$e^1=(-1,1)$は開線分，$e^2$は開円板である．
+        \item $T^n:=\prod_{i\in[n]}S^1$を$n$次元\textbf{トーラス}とする．
+        \item \textbf{ホモトピー同値}を$\simeq$で書き，位相同型を$=$や$\approx$や$\simeq_\Top$で書く．断らない限り位相空間の間の写像は連続とする．連続写像がホモトピックであることも$f_1\simeq f_2$で表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{notation}[標準的構成]\mbox{}
+    \begin{enumerate}
+        \item 小さな圏$I$からの関手$X_\bullet:I\to C$を\textbf{図式}という．
+        \item 図式$X_\bullet=(X_i)$上の\textbf{錐}とは，対象$Q\in C$とこれから出る射の組$(Q,p_i:Q\to X_i)$で，任意の関連する図式が可換であるものをいう．
+        \item 図式$X\xleftarrow{f}A\xrightarrow{g}Y$の余極限を\textbf{押し出し}といい，$X\sqcup_AY$で表す．これは余等化子$A\rightrightarrows X\sqcup Y\to X\sqcup_AY$に等しく，書き下せば$X\sqcup_AY\simeq(X\sqcup Y)/\{(x,y)\mid f^{-1}(x)=g^{-1}(y)\}$となる．射$g_*f:Y\to X\sqcup_AY$を\textbf{余基底変換}という．
+        $g:A\to Y$が包含写像であるとき，これを$X\cup_fY$とも表し，\textbf{貼り付けた空間}(attaching / adjunction space)という．
+        \item $A\mono X$について，次の図式の押し出し$X/A$は張り合わせの空間で，特に\textbf{商空間}または\textbf{余ファイバー}(cofiber)という．
+        \[\xymatrix{
+            A \;\ar@{^{(}->}[r]\ar[d]&X\ar[d]\\
+            {*}\ar[r]&X/A
+        }\]
+        \item 指数対象の構成関手$(-)^{(-)}:\Top^\op_\lc\times\Top\to\Top$は，配置集合$(Y,X)\mapsto X^Y$にコンパクト開位相を入れたものとする．
+    \end{enumerate}
+\end{notation}
+
+\begin{proposition}
+    Topの図式$X_\bullet=(X_i)$について，
+    \begin{enumerate}
+        \item \textbf{極限}$\varprojlim_{i\in I}X_i$とは，集合$\cup X_i$に，$(p_i:\cup_{j\in I}X_j\to X_i)$から定まる始位相を入れたものである．
+        \item \textbf{余極限}$\varinjlim_{i\in I}X_i$とは，集合$\cap X_i$に，$(p_i:\cup_{j\in I}X_j\to X_i)$から定まる終位相を入れたものである．
+        \item $Y\in\Top_\lc$について，冪対象の構成関手と直積を取る関手との間に随伴関係がある：$\Hom_\Top(Z\times Y,X)\simeq\Hom_\Top(Z,X^Y)$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{notation}[関手]
+    基本的な構成が関手という形で多々登場するので，これをまとめる．
+    \begin{enumerate}
+        \item $0$次ホモトピー集合の構成$\pi_0:\Top\to\Set$\ref{def-0th-homotopy-set}．
+        \item 高次ホモトピー群の構成$\pi_{\bullet\ge1}:\Top^{*/}\to\Grp^{\N_{\ge1}}$．
+        \item 懸垂$S:\Top\to\Top$と約懸垂$\Sigma:\Top^{*/}\to\Top^{*/}$\ref{def-suspension}．なお，$\Top^{*/}$は基点付き空間の圏とする．
+        \item ループ空間$\Om:\Top^{*/}\to\Top^{*/}$．
+        \item 錐$C:\Top\to\Top$．
+    \end{enumerate}
+\end{notation}
+
+\section{ホモトピーの定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    ホモトピーは射の間にホモトピックという関係を定め，これを通じて同型の概念を弱めることで位相空間の間にホモトピー同値という関係を定める．
+    すると定数関数のホモトピーとは道に他ならないから，弧状連結性の一般化とも捉えられる．
+\end{tcolorbox}
+
+\subsection{左ホモトピー}
+
+\begin{definition}[homotopy, homotopy type, contractable]\mbox{}
+    \begin{enumerate}
+        \item 円筒対象から出る連続写像$\eta:X\times I\to Y$を\textbf{（左）ホモトピー}といい，対応する冪対象への射$I\to Y^X$を$(f_t)_{t\in I}$とすれば，
+        $\eta:f_0\Rightarrow_Lf_1$とも表す．
+        \item このとき，２つの射$f_0,f_1$は\textbf{ホモトピック}であるといい，$f_0\simeq f_1$で表す．
+        \item 射が可逆であるとき，これを位相同型であるというが，射がホモトピックに可逆である(have homotopy inverse)とき，これを位相空間の間の\textbf{ホモトピー同値}といい，$f\simeq g$で表す．
+        \item ホモトピー同値な位相空間は，同じ\textbf{ホモトピー型}を持つという．位相同型な空間は同じ\textbf{位相型}を持つという．
+        \item $*$とホモトピー同値な空間は\textbf{可縮}であるという．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    一般化のため，可換図式でホモトピーの定義を表すと，
+    ２つの連続写像$f,g:X\to Y$間の左ホモトピー$\eta:f\Rightarrow_L g$とは，次の図式を可換にする連続写像$\eta:X\times I\to Y$をいう：\footnote{これは良い定義だ．curryingすれば$\eta:I\to C(X,Y)$となり，$\eta(0)=f,\eta(1)=g$を満たす連続写像をいう．これを関数空間の位相に言及することなく定義できる．}
+        \[\xymatrix{
+            X\ar[dr]^-f\ar[d]_-{(\id,\delta_0)}\\
+            X\times I\ar[r]^-\eta&Y\\
+            X\ar[u]^-{(\id,\delta_1)}\ar[ur]_-g
+        }\]
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item ２つの大域点$x,y:*\to X$の間のホモトピーとは，単に道である．
+        \item $S^1:=\Brace{z\in\C\mid\abs{z}=1}$上の連続関数$f,g:S^1\to\C$を$f(z)=z,g(z)=z^2$と定める．
+        $f\simeq g$だが，それぞれの終域を$\C\setminus\{0\}$にするとホモトピックではない．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[可縮な空間]
+    $\R^n,D^n$は可縮である．
+\end{example}
+
+\subsection{射のホモトピー類}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 位相空間$X$と部分空間$A\subset X$に対して，組$(X,A)$を\textbf{空間対}という．
+        \item 射$f:(X,A)\to(Y,B)$を，$f(A)\subset B$を満たす連続写像とする．$(X,\emptyset)$を$X$と同一視する．積は$(X,A)\times I=(X\times I,A\times I)$と定める．
+        \item 射の集合のホモトピックについての同値類$[(X,A),(Y,B)]:=\Hom((X,A),(Y,B))/\simeq$を，連続写像の\textbf{ホモトピー集合}といい，その元$[f]$を$f$の\textbf{ホモトピー類}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    $\pi_0(X)=[*,X]$である．
+\end{example}
+
+\subsection{弧状連結性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特殊な空間（離散空間，単位球面）からの射の集合によって，空間の性質を調べることが出来る．
+\end{tcolorbox}
+
+\begin{lemma}
+    位相空間$X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$は弧状連結である．
+        \item ホモトピー集合$[\{*\},X]$は単元集合である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    連続写像$f:S^n\to X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item 連続な延長$g:D^{n+1}\to X$が存在する．
+        \item $f$は定値写像とホモトピックである．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}
+    $\forall_{0\le m\le n}\;\abs{[S^m,X]}=1$が成り立つとき，位相空間$X$は\textbf{$n$-連結}であるという．
+\end{definition}
+\begin{remarks}
+    弧状連結であることと$0$-連結であることとは同値．Euclid空間$\R^k$は任意の$n$について$n$-連結である．
+\end{remarks}
+
+\begin{lemma}
+    自然な同型$[\{p\},X]\simeq_\Set[I^n,X]$が存在し，その濃度は空間$X$の弧状連結成分の個数に等しい．
+\end{lemma}
+\begin{remarks}
+    これは$I^n$と$\{p\}$とがホモトピー同値であることが引き起こす現象である．
+\end{remarks}
+
+\begin{discussion}
+    $\R^2\setminus\{0\}$と$\R^2\setminus\partial I$とはホモトピー同値でないが，$S^1$からのホモトピー集合はいずれも可算無限濃度である．
+    ここで，ホモトピー集合に群構造を入れることを考える．
+\end{discussion}
+
+\subsection{右ホモトピー}
+
+\begin{definition}
+    ２つの連続写像$f,g:X\to Y$の間の\textbf{右ホモトピー}とは，道空間への連続写像$\eta:X\to Y^I$であって，次の可換図式をみたすものをいう：
+    \[\xymatrix{
+        &Y\\
+        X\ar[ur]^-f\ar[r]^-\eta\ar[dr]_g&Y^I\ar[u]_-{X^{\delta_0}}\ar[d]^-{Y^{\delta_1}}\\
+        &Y
+    }\]
+\end{definition}
+
+\section{ホモトピー同値の標準分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=空間の変位レトラクトとは，全体空間をそこに連続的に縮めることが出来る部分空間である]
+    引き戻し$r:X\to A$は束であり，「標準射影」にあたる．
+    各ファイバーが自分自身になる束とも思える．
+    底空間$A$をレトラクトという．
+    引き戻しが存在するとき，包含写像$i:A\mono X$は埋め込みになる．
+    これが全写であるなら位相同型になるが，連続な切断が存在すれば十分である．
+
+    変位引き戻しは，ホモトピーの違いを除いて切断でもあるような引き戻しで，
+    位相同型のうち片方の条件をホモトピーによって弱めた概念をいう．
+
+    すると，任意の射は写像円筒と変位引き戻しとに分解できる．
+    この議論で，\textbf{ホモトピー同値が視覚化できる}\ref{thm-characterization-of-homotopy-equivalence}．
+\end{tcolorbox}
+
+\subsection{変位レトラクトと写像円筒}
+
+\begin{definition}[retraction, retract, homotopy relative to a subspace, deformation retraction]\mbox{}
+    \begin{enumerate}
+        \item 空間対$(X,A)$について，射$r:X\epi A$が\textbf{引き戻し}であるとは，$r|_A=\id_A$を満たすこと，すなわち，包含$i:A\mono X$の左逆射$r\circ i=\id_A$であることをいう．このとき，$A$を$X$の\textbf{レトラクト}という．\footnote{Abel群論では，このような引き戻しが存在するならば，引き戻し$A$は正規部分群で，$X\simeq A\times X/A$である．引き戻し$r$は射影子として理解できるのであった．}
+        \item 射$r:X\epi A$が\textbf{変位引き戻し}であるとは，引き戻しであり，かつ，ホモトピーの違いを除いて切断でもあるものをいう：$i\circ r\simeq\id_X$を満たすことをいう．すなわち，ホモトピー同値$i\simeq r$であって，片方のホモトピー$i\circ r\Rightarrow_L\id_A$が定数であるものをいう．
+        \item ホモトピー$f_t:(X,A)\to(Y,B)$が\textbf{$A$-相対}であるとは，$f_t|_A$が$t\in I$に依らず一定であることをいう．
+        \item $A$-相対な変位引き戻しを\textbf{強変位引き戻し}という．\footnote{HatcherとnLabはこれを変位レトラクトと呼ぶ．}
+    \end{enumerate}
+\end{definition}
+\begin{remarks}[strong deformation retractは，全体空間をそこに連続的に縮めることが出来る部分空間である]
+    強変位引き戻しは引き戻し$r:X\epi A$と恒等写像$\id_X$の間の$A$-相対なホモトピー$H:X\times I\to X$でもある：$\forall_{a\in A,t\in I}\;H(a,t)=a$かつ$H(-,0)=\id_X,\Im H(-,1)\subset A$．
+    すなわち，
+    視覚的に捉えると，"sliding along line segment"として視覚化できるものをいう．
+\end{remarks}
+
+\begin{lemma}
+    $X$がハウスドルフであるとき，レトラクト$A$は閉集合である．
+\end{lemma}
+
+\begin{example}[星型領域の変位レトラクト]
+    星形領域$X$とその中心$p\in X$に対して，$\{p\}$は$X$の変位レトラクトである．特に，$X$は可縮である．実際，ただ一つの写像$r:X\to\{p\}$はレトラクトである．
+    なお，このように一点からなる変位レトラクトを持つ空間は可縮である，したがって特に弧状連結かつ単連結である．
+    実は，一点に変位レトラクト出来る空間は可縮であることと同値だが，強変位レトラクトしない可縮空間が存在する．
+\end{example}
+
+\begin{definition}[mapping cylinder]
+    射$f:X\to Y$の\textbf{写像円筒}とは，次の押し出しである：$\Cyl(f)=M_f:=((X\times I)\sqcup Y)/\brac{(x,0)\sim f(x)\mid x\in X}$
+    \[\xymatrix{
+        X\ar[r]^-f\ar[d]_-{\sigma_0}&Y\ar[d]^-{f_*(\sigma_0)}\\
+        X\times I\ar[r]^-{(\sigma_0)_*f}&M_f
+    }\]
+\end{definition}
+\begin{remarks}
+    まず$X\times I$によって始域の連続時系列を用意する．この端点$X\times\{0\}$について，写像$f$によって$Y$を貼り付ける．
+    もう一端$X\times\{1\}$を一点に潰すと，これを写像錐という．
+    写像円筒のbottom $Y\mono\Cyl(f)$は変位レトラクトである\ref{thm-cannonical-decomposition-of-continuous-map}．一方で，top $X\mono\Cyl(f)$が変位レトラクトかどうかで，$f$がホモトピー同値であるかを測れる\ref{thm-characterization-of-homotopy-equivalence}．
+\end{remarks}
+
+\subsection{近傍レトラクト}
+
+\begin{definition}[neighborhood retract, NDR-pair]
+    （閉）部分空間$A\subset X$について，
+    \begin{enumerate}
+        \item 近傍$A\subset U$が存在して，$A$は$U$のレトラクトであるとき，\textbf{近傍レトラクト}であるという．
+        \item $A$が閉で，組$(X,A)$が\textbf{NDR-組}であるとは，関数$u:X\to I$とホモトピー$H:X\times I\to X$が存在して，$H(-,0)=\id_X,\forall_{t\in I,a\in A}\;H(a,t)=a,\forall_{x\in X}\;u(x)<1\land u^{-1}(0)\subset A\Rightarrow H(x,1)\in A$を満たすことを言う．
+        \item 組$(X,A)$が\textbf{DR-組}であるとは，$A$が変位レトラクトで，$A=u^{-1}(0)$を満たす関数$u:X\to I$が存在することをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $(X,A)$をNDR-組とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $i:A\mono X$は左ホモトピー逆$r$を持つ：$r\circ i\simeq\id_A$．
+        \item $A$はレトラクトである．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    $(X,A)$をDR-組とする．次の２条件は同値．
+    \begin{enumerate}
+        \item 包含$A\mono X$はホモトピー同値である．
+        \item $A$は変位レトラクトである．
+    \end{enumerate}
+    また，$A$が可縮であるとき，商写像$X\epi X/A$はホモトピー同値である．
+\end{lemma}
+
+\begin{definition}[ANR: absolute neighborhood retract, Borsuk 32]
+    距離化可能空間$Y$が\textbf{絶対近傍レトラクト}であるとは，任意の距離化可能空間$Z$の閉部分空間への埋め込み$Y\mono Z$について，$Y$が$Z$の近傍レトラクトであることをいう．
+    一方でさらに，$Y$が$Z$のレトラクトであるとき，\textbf{絶対レトラクト}であるという．
+\end{definition}
+
+\begin{example}
+    任意の局所凸距離化可能線型位相空間は絶対レトラクトである．
+\end{example}
+
+\begin{lemma}
+    距離化可能空間が絶対レトラクトであることは，絶対近傍レトラクトでありかつ可縮であることと同値．
+\end{lemma}
+
+\begin{theorem}[Cauty]
+    距離化可能空間$X$が絶対近傍レトラクトであることは，
+    $X$の任意の開部分集合がCW複体のホモトピー型を持つことと同値．
+\end{theorem}
+
+\subsection{写像錐}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    写像錐は写像円筒の一方の端を一点に潰したものと見れて，homotopy cofiberともいう．
+    一般の高次圏においての言葉で説明されるともうわからない．
+\end{tcolorbox}
+
+\begin{definition}[mapping cone / homotopy cofiber]
+    写像$f:X\to Y$に対して，写像錐$C_f$とは，写像円筒$M_f=(X\times I)\sqcup_fY$をさらに同値関係$\Brace{(x,1)\sim(x',1)\mid x,x'\in X}$で割ったものをいう．
+\end{definition}
+\begin{example}
+    埋め込み$S^1\mono D^2$の写像錐は，$S^2$に同型である．
+\end{example}
+
+\subsection{ホモトピーの標準分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=リフトとホモトピー同値とに分けて考える]
+    連続写像$f:X\to Y$に対して，cofibration $\wt{f}:X\to M_f$を与え，全写なホモトピー同値$M_f\to Y$（実はさらに$Y$は変位レトラクト）との合成$X\to M_f\to Y$として$f$を表すことを考える．
+    これは，連続写像$f:X\to Y$に対して，ホモトピー同値の違いを除いてほぼ「同じ」な持ち上げ$\wt{f}:X\to M_f$を標準的に与える算譜でもある．
+
+    これにより，ホモトピー同値の別を無視して議論するとき，任意の連続写像$f:X\to Y$は包含写像であると仮定しても一般性を失わないことがわかる．
+    さらに，写像円筒により連続写像の時系列変化が可視化されるメンタルイメージとしての利便性もある．
+\end{tcolorbox}
+
+\begin{theorem}[ホモトピー標準分解]\label{thm-cannonical-decomposition-of-continuous-map}
+    標準的な写像$j:=f_*(\sigma_0):Y\to\Cyl(f)$はホモトピー同値で，$j$のホモトピー逆として変位レトラクトであるものを取れる．
+    特に，任意の射は，写像柱への単射と変位引き戻しとに分解できる．
+\end{theorem}
+\begin{proof}
+    $M_f$は$Y$に変位引き戻しできることは，次の補題による．
+\end{proof}
+\begin{lemma}[商空間と積空間]
+    $f:X\to Y$を商写像とする．$Z$が局所コンパクトならば，$f\times\id_Z:X\times Z\to Y\times Z$も商写像である．
+\end{lemma}
+
+\begin{theorem}[ホモトピー同値の特徴付け]\label{thm-characterization-of-homotopy-equivalence}
+    射$f:X\to Y$について，
+    \begin{enumerate}
+        \item $f$はホモトピー同値である．
+        \item $X=X\times\{0\}$は写像円筒$\Cyl(f)$の強変位レトラクトである．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{弱ホモトピー同値}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ホモトピー群関手は同値類を定める．
+    これは実用上はホモトピー同値類と同じになる．
+    これはホモトピー群の考え方が極めて効果的であることの証左となる．
+\end{tcolorbox}
+
+\begin{definition}[weak homotopy equivalence]
+    射$f:X\to Y$が弱ホモトピー同値であるとは，ホモトピー群関手の像がすべて可逆であることをいう：$\pi_0(f):\pi_0(X)\iso\pi_0(Y),\pi_n(f):\pi_n(X,x)\iso\pi_n(Y,f(x))\;(n\ge 1)$．
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 任意のホモトピー同値は弱ホモトピー同値である．
+        \item (Whitehead's theorem) 議論を$\Top_\CW$に限れば，弱ホモトピー同値はホモトピー同値である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[CW approximation]
+    任意の位相空間は，あるCW-複体と弱ホモトピー同値である．
+\end{proposition}
+
+\subsection{ホモトピー型}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Setへの写像のホモトピー類を考えるよりも，構造を持たせてAbに値を持つ不変量にしたい．こういうところで群という対象の応用可能性が高くなってくる．
+\end{tcolorbox}
+
+\begin{corollary}[ホモトピー同値性の特徴付け]
+    位相空間$X,Y$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$と$Y$はホモトピー同値．
+        \item 位相空間$X,Y\subset Z$が存在して，$X,Y$はいずれもそのretractとなる．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    $Z=M_f$と取れば，あとは，$X\subset M_f$もretractであることを示せば良い．
+\end{proof}
+
+\begin{lemma}
+    ホモトピー同値は，Topに同値関係を定める．
+\end{lemma}
+
+\begin{definition}[contractible, nullhomotopic]\mbox{}
+    \begin{enumerate}
+        \item 一点集合$*$のホモトピー型を持つ集合を，\textbf{可縮}であるという．
+        \item 射がnullhomotopicであるとは，定値写像とホモトピックであることをいう．
+    \end{enumerate}
+    (1)$\Rightarrow$(2)だが，逆は一般に成り立たない．
+\end{definition}
+
+\begin{example}[house with two rooms]
+    $X$の閉$\sigma$-近傍$N(X)$は，$X$の射影柱であるが，実は$D^3= N(X)$．
+    これより，$X\simeq N(X)=D^3\simeq\{*\}$で，これは可縮である．
+\end{example}
+
+\section{fibration}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続写像$p:E\to B$が特定のホモトピーリフティング性質を持つとき，これを\textbf{ファイブレーション}という．ファイバー束をホモトピーを用いて弱めたもので（任意のファイバーがホモトピー同値），代数的一般化概念（したがって任意の高次圏で実行可能）である．
+
+    双対概念として，ホモトピー拡張性質を持つ写像を，Hurewicz cofibrationという．
+    実は埋め込みである，すなわち，連続な引き戻しを持つ．
+\end{tcolorbox}
+
+\begin{definition}[fibration in classical homotopy theory]
+    連続写像$p:E\to B$について，
+    \begin{enumerate}
+        \item 任意のホモトピーがリフト可能であるとき，Hurewicz fibrationまたは単にfibrationという．
+        \item 任意の$n$-胞体がリフト可能であるとき，Serre fibrationまたはweak fibrationという．これは，任意のCW複体に対するホモトピーリフト性質と同値．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item パラコンパクト空間上のファイバー束はHurewicz fibrationである．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[Hurewicz cofibration]
+    連続写像$i:A\to X$がHurewicz cofibrationであるとは，任意の空間に対してhomotopy extension propertyを満たすことをいう：
+    \begin{quote}
+        任意の写像$f:X\to Y$と左ホモトピー$\eta:A\times I\to Y$であって$\eta(-,0)=f\circ i$を満たすものについて，
+        左ホモトピー$\wh{\eta}:X\times I\to Y$であって$\wh{\eta}\circ(i\times\id)=\eta$を満たすものが存在する．
+        \[\xymatrix{
+            A\ar[rr]^-{(\id,0)}\ar[dd]_-i&&A\times I\ar[dd]^-{i\times\id}\ar[dl]_-\eta\\
+            &Y\\
+            X\ar[ur]^-f\ar[rr]_{(\id,0)}&&X\times I\ar@{.>}[ul]_-{\wh{\eta}}
+        }\]
+    \end{quote}
+\end{definition}
+
+\section{CW複体と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=組み合わせ論的に扱いやすく，強い普遍性を備えた対象]
+    cell complexの考え方は「cellと呼ばれる対象をpushoutによって貼り合わせる手法で有限回のうちに得られる対象」
+    で，
+    一般の圏で考えられる．
+    特にTopにおけるものをCW complexといい，$n$-胞体$S^{n-1}\mono D^n$をcellという．
+
+    代数的位相幾何学でのほとんどの対象は，あるCW複体とホモトピー同値になる．このような空間を$m$-cofibrant空間ともいう．\footnote{\url{https://ncatlab.org/nlab/show/m-cofibrant+space}}
+    代数幾何学は$m$-fibrant空間のなす圏で展開される(Milnor)．
+
+    まさか射影空間は代数的位相幾何学的に捉えた方が親しみやすいとは．
+\end{tcolorbox}
+
+\subsection{構成的定義}
+
+\begin{definition}[CW complex / cell complex]
+    次のように帰納的に構成された位相空間$X$を\textbf{CW複体}という．
+    \begin{enumerate}
+        \item $X^0$を離散集合とする($0$-cellの集まり)．
+        \item $n$-skelton $X^n$を次のように$X^{n-1}$から構成する：接着写像$\varphi_\al:S^{n-1}=\partial D^n\to X^{n-1}$について$n$-胞体$e^n_\al$を貼り付ける：$X^{n-1}\sqcup\coprod_{\al\in A}D^n_\al/\Gamma(\varphi_\al)_{\al\in A}$．ただし，$\Gamma(\varphi_\al)$は写像のグラフとした．結局，集合としては$X^{n}=X^{n-1}\sqcup\coprod_{\al\in A}e^n_\al$となる．
+        また，pushout図式としては次の通り：
+        \[\xymatrix{
+        \sqcup_{i\in I_n}S^{n-1}\ar[d]_-i\ar[r]&X_{n-1}\ar[d]_-j\\
+        \sqcup_{i\in I_n}D^n\ar[r]&X_n
+        }\]
+        \item $X:=\cup_{n\in\N}X^n$とする．$\forall_{n\in\N}\;X\ne X^n$ならば\footnote{任意の$n\in\N$について$n$-胞体の添字集合$I_n$が空でないことに同値．}，$X$は無限次元である，または可算であるといい，$X$には弱位相を導入する：$A\osub X\Leftrightarrow\forall_{n\in\N}\;A\cap X^n\osub X^n$．これはTopでの余極限が導入する位相であるので，全ての包含写像の終位相が入る．
+        \item $\exists_{n\in\N}\;X=X^n$ならば，これを満たす最小の$n$を\textbf{次元}という．
+    \end{enumerate}
+\end{definition}
+\begin{history}
+    CW複体の名前の由来はWhiteheadの導入時\footnote{“an address delivered before the Princeton Meeting of the (American Mathematical) Society on November 2, 1946”}に注目した２つの性質に由来する
+    \begin{description}
+        \item[closure finiteness] CW複体のコンパクト部分集合は有限個の$n$-胞体のみと内部との交わりを持つ．
+        \item[weak topology] CW複体は余極限として定義されるため，終位相が入る．
+    \end{description}
+    "closure finite complexes with weak topology, abbreviated to CW-complexes"と呼んでいた．
+    この２つの性質が，抽象的ホモトピー論とTopの特性との違いを特徴づける．
+\end{history}
+
+\begin{lemma}
+    選択公理と排中律の下で，胞体複体の任意のコンパクト部分集合は，有限個の胞体の内部と交わる．
+\end{lemma}
+
+\subsection{圏論的定義}
+
+\begin{notation}[standard topological generating cofibration]
+    Topの射の列
+    \[I_\Top:=\Brace{i_n:S^{n-1}\mono D^n}_{n\in\N}\]
+    を，標準的な位相生成コファイブレーションという．
+\end{notation}
+
+\begin{definition}[n-cell attachment]
+    $X,Y\in\Top,n\in\N$，$f:X\to Y$を連続写像とする．
+    \begin{enumerate}
+        \item 任意の射$\phi:S^{n-1}\to X$について，次の押し出し＝「貼り付けた空間」を，$X$への\textbf{$n$-胞体の貼り付け}という．
+        \[\xymatrix{
+            S^{n-1}\ar[r]^-{\phi}\ar[d]_-{i_n}&X\ar[d]\\
+            D^n\ar[r]&X\cup_\phi D^n
+        }\]
+        \item $f$が\textbf{相対的胞体複体}であるとは，$X$への胞体貼り付けの列$X=X_0\mono X_1\mono X_2\mono X_3\mono\cdots$（超限合成の場合も含む）として表せることをいう．すなわち，$Y$は列の余極限である．特に有限列として表せるとき，相対的胞体複体は有限であるといい，可算列であるとき，\textbf{相対的CW複体}という．
+        \item ただ一つの写像$\emptyset\to X$が相対的胞体複体であるとき，$X$を\textbf{胞体複体}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    CW-複体は，
+    \begin{enumerate}
+        \item 正規な位相空間である．
+        \item パラコンパクトである．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{例}
+
+\begin{example}[torusの一般化]
+    種数$g$の向きづけられた曲面$M_g$は，$4g$角形の対辺を同一視することで構成できる．
+    この構成をよくみると，$0$から，ある１点($0$-cell)から，$2g$個の弧($1$-cell)をつけ，その間に開円板($2$-cell)を張って構成したともみれる．
+\end{example}
+
+\begin{example}[自明な対象]\mbox{}
+    \begin{enumerate}
+        \item 1-次元CW複体とはグラフのことである．0-胞体を頂点，1-胞体を辺という．辺の両端点は同一の頂点に接着されうることに注意．
+        \item 球面$S^n$は２つの胞体$e_n$と$e_0$の定値写像$S^{n-1}\to e_0$についての貼り合わせと思える．これは$S^n=D^n/\partial D^n$という構成と同値．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[実射影空間]
+    $\R P^n$は各次元の胞体を１つずつ合併したもの$e^0\cup e^1\cup\cdots\cup e^n$となる．
+    実際，$\R P^n\simeq S^n/\{\pm 1\}$は，上半球面$D^n$の，赤道の点$\partial D^n$の対蹠点を同一視したものとみなせる．対蹠点を同一視した赤道とは$\R P^{n-1}$に過ぎないから，これに$e^n$を接着したものとみなせる．
+    すると帰納的にわかる．
+    すると，$\R P^\infty$なる対象を$\cup_{n\in\N}e^n$によって自然に定義できる．
+\end{example}
+
+\begin{example}[複素射影空間]
+    $\C P^n=e^0\cup e^2\cup\cdots\cup e^{2n}$．
+\end{example}
+
+\subsection{CW複体の圏}
+
+\begin{definition}
+    cell complexとしての構造も保つ射をcellular mapという：$\forall_{n\in\N}\;f(X_n)\subset Y_n$．
+\end{definition}
+
+\subsection{単体複体}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    CW複体は単体複体の一般化である．
+\end{tcolorbox}
+
+\begin{definition}[simplicial complex]
+    \textbf{単体複体}$K$とは，次を満たす組$(V(K),S(K))$である．
+    \begin{enumerate}
+        \item 集合$V(K)$の元を\textbf{頂点}という．
+        \item 次の条件を満たす集合$S(K)\subset\Brace{s\in P(V(K))\mid 0<\abs{s}<\infty}$の元を\textbf{単体}という．次元を$\abs{s}-1$と定める．
+        \begin{enumerate}[(a)]
+            \item $\sigma\in S(K)\land\emptyset\ne\tau\subset\sigma\Rightarrow\tau\in S(K)$．このとき，$\tau$は$\sigma$の\textbf{面}であるという．
+            \item $\forall_{v\in V(K)}\;\{v\}\in S(K)$．
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\section{部分胞体複体}
+
+\begin{definition}[characteristic map]
+    $X$内の$n$-胞体$e^n_\al$のそれぞれに対応する特性写像$\Phi_\al:D^n_\al\to X$が存在する．これは接着写像$S^{n-1}_\al\to X$の連続延長として与えられるもので，$D^n_\al\mono X^{n-1}\sqcup_{i\in I_n}D^n_\al\xrightarrow{\pi}X^n\mono X$と表せる．
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $e^n\subset S^n$の特性写像は，$\partial D^n$を一点に潰す商写像$D^n\epi S^n$である．
+        \item $e^i\subset\R P^n$の特性写像は，対蹠点を同一視する商写像$D^i\to\R P^i$となる．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[subcomplex, CW pair]
+    $X$の部分複体とは，閉部分空間$A\subset X$であって，いくつかの胞体の合併であるものをいう．特性写像の像も閉であるから，$A$は再び胞体複体となる．組$(X,A)$をCW組という．
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $n$-skelton $X^n$は$X$の部分複体である．$KP^i$は$KP^n\;(K=\R,\C)$の部分複体で，部分複体はこの形に限る．
+        \item $S^n$は$e^n\cup e^0$とみると$S^{n-1}$は部分複体ではないが，$S^k=S^{k-1}\cup e^k$として帰納的に構成していくと部分複体になる．またこの方法で無限次元球面$S^\infty=\cup_{n\in\N}S^n$を考えられる．$S^n$の２つずつある$n$-胞体は，対蹠点を同一視する写像によって$\R P^n$のただ一つの$n$-胞体と同一視でいる．
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+    一般には胞体の合併の閉包は部分胞体とは限らない．
+    $S^1$に2-胞体を$\Im f\subset S^1$が非自明なsubarcとなる$f:S^1\to S^1$によって接着したとき，これは部分胞体ではない．
+\end{remark}
+
+\section{CW複体の位相}
+
+\section{空間の構成}
+
+\section{ホモトピー型の判別}
+
+\section{ホモトピー拡張性質}
+
+\chapter{抽象ホモトピー理論}
+
+\begin{quotation}
+    一般のモデル圏において，単体的集合に対して抽象ホモトピー群を定義することが可能である．
+    こう見ると，もともとは空間をより詳細に分類するために開発された手法が，一般の圏に対する手法へと抽象化されたことになる．
+\end{quotation}
+
+\chapter{基本群}
+
+\begin{quotation}
+    Topの同型類から，代数的な圏への関手を構成することが代数位相幾何学の基本的な手法となる．
+    まずは$\pi_0:\Top\to\Set$と$\pi_1:\Top_*\to\Grp$を考える．
+\end{quotation}
+
+\section{定義と性質}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $x_0$から$x_1$への道全体の集合を，
+        \[\Om(X;x_0,x_1):=\Brace{l\in\Hom(I,X)\mid l(0)=x_0,l(1)=x_1}\]
+        と表す．
+        \item 関手による射$f$の像を$f_*:=\pi_\bullet(f)$で表す．
+    \end{enumerate}
+\end{notation}
+
+\subsection{定義}
+
+\begin{definition}[path]\mbox{}
+    \begin{enumerate}
+        \item ２つの道$f,g:I\to X$が$f(1)=g(0)$を満たすとき，積$f\cdot g$を
+        \[f\cdot g(s)=\begin{cases}
+            f(2s),&0\le s\le 1/2,\\
+            g(2s-1),&1/2\le s\le 1.
+        \end{cases}\]
+        で定める．
+        \item ２つの道$f,g$について，端点を保ってホモトピックであることも$f\simeq g$で表す．これは$\Om(X;x_0,x_1)$に同値関係を定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[pointed / based space, loop, basepoint, 0-th homotopy set]\mbox{}\label{def-0th-homotopy-set}
+    \begin{enumerate}
+        \item 空間対$(X,\{x_0\})$を単に$(X,x_0)$で表し，これを\textbf{基点付き空間}と呼ぶ．
+        \item $f(0)=f(1)=x_0$を満たす道を\textbf{ループ}といい，このときの$x_0$を\textbf{基点}という．
+        \item 基点を$x_0$とするループ全体のなすホモトピー類を$\pi_1(X,x_0):=\Om(X;x_0)/\simeq$で表す．これを\textbf{基本群}または１次元ホモトピー群という．
+        \item $\pi_0(X)$で$X$の弧状連結成分全体の集合を表す．これは，$I^0=\{*\}\to X$という一点の間のホモトピーの群と捉えられる．\footnote{終対象からの射の間のホモトピーとは，その大域点の間の道に他ならない．}連続写像$f:X\to Y$に対して，$f_*:\pi_0(X)\to\pi_0(Y)$が定まる．
+    \end{enumerate}
+\end{definition}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $x_0$に値を持つ定値ループを$C_{x_0}$で表す．
+        \item $l\in\Om(X;x_0,x_1)$の\textbf{逆道}$\o{l}\in\Om(X;x_1,x_0)$を，$\o{l}(s)=l(1-s)$で定める．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $l_1,l'_1\in\Om(X;x_0,x_1),l_2,l'_2\in\Om(X;x_1,x_2)$について，$l_1\simeq l'_1$かつ$l_2\simeq l'_2$ならば，$l_1\circ l_2\simeq l'_1\circ l'_2$．
+        \item $l_1\in\Om(X;x_0,x_1),l_2\in\Om(Xl\;x_1,x_2),l_3\in\Om(X;x_2,x_3)$について，$(\l_1\circ l_2)\circ l_3\simeq l_1\circ(l_2\circ l_3)$．
+        \item $l\in\Om(X;x_0,x_1)$について，$C_{x_0}\circ l\simeq l\simeq l\circ C_{x_1}$．
+        \item $l\in\Om(X;x_0,x_1)$について，$l\circ\o{l}\simeq C_{x_0},\o{l}\circ l\simeq C_{x_1}$．
+        \item $\pi_1(X,x_0)$は，積を演算として群をなす：$1=[C_{x_0}],[l]^{-1}=[\o{l}]$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item まず，ホモトピックな道の合成はやはりホモトピックであるから，積はwell-definedである．
+    \end{enumerate}
+\end{proof}
+
+\subsection{零次元の場合}
+
+\begin{lemma}
+    $\pi_0$は共変関手$\Top\to\Set$を定める．すなわち，
+    \begin{enumerate}
+        \item $(\id_X)_*=\id_{\pi_0(X)}$．
+        \item $f:X\to Y,g:Y\to Z$について，$(g\circ f)_*=g_*\circ f_*$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}
+    同相写像$f:X\to Y$に対して，$f_*:\pi_0(X)\to\pi_0(Y)$は全単射である．
+\end{proposition}
+
+\begin{corollary}
+    $\R$と$\R^n\;(n\ge 2)$は同相でない．
+\end{corollary}
+\begin{proof}
+    同相写像$f:\R\to\R^n$が存在したとする．すると$f$により$\R\setminus\{0\}$と$\R^n\setminus\{f(0)\}$も同相であるが，
+    $2=\#\pi_0(\R\setminus\{0\})\ne\#\pi_0(\R^n\setminus\{0\})=1$となり，矛盾．
+\end{proof}
+
+\subsection{一次元の場合}
+
+\begin{proposition}[基点の取り替え]
+    $h\in\Om(X,x_0,x_1)$について，
+    \[\xymatrix@R-2pc{
+        \beta_h:\pi_1(X,x_1)\ar[r]&\pi_1(X,x_0)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        {[l]}\ar@{|->}[r]&{[h\circ l\circ\o{h}]}
+    }\]
+    は群同型である．
+\end{proposition}
+\begin{remarks}
+    よって，弧状連結な位相空間$X$の基本群の同型類は基点に依らないので，単に$\pi_1(X)$と表せる．
+\end{remarks}
+
+\begin{proposition}
+    基点付き空間$(X,x_0),(Y,y_0)$について，
+    \[\xymatrix@R-2pc{
+        \pi_1(X\times Y,(x_0,y_0))\ar[r]&\pi_1(X,x_0)\times\pi_1(Y,y_0)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        {[(l,l')]}\ar@{|->}[r]&{([l],[l'])}
+    }\]
+    は群同型である．
+\end{proposition}
+
+\begin{definition}
+    連続写像$f:(X,x_0)\to(Y,y_0)$に対して，$f_*:=\pi_1(f):\pi_1(X,x_0)\to\pi_1(Y,y_0)$がpost-composition $f_*([l])=[f\circ l]$によって定まる．
+    これは群準同型を定める．これを\textbf{誘導準同型写像}と呼ぶ．
+\end{definition}
+
+\begin{proposition}[共変関手]
+    $\pi_1:\Top_*\to\Grp$は共変関手を定める．すなわち，
+    \begin{enumerate}
+        \item $(\id_{(X,x_0)})_*=\id_{\pi_1(X,x_0)}$．
+        \item $f:(X,x_0)\to(Y,y_0),g:(Y,y_0)\to(Z,z_0)$について，$(g\circ f)_*=g_*\circ f_*$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[基点は保つとは限らない]
+    ホモトピー同値写像$f:X\to Y$に対して，$f_*:\pi_1(X,x_0)\to\pi_1(Y,f(x_0))$は同型写像である．
+\end{proposition}
+\begin{remarks}
+    $\pi_1(X)$は弧状連結な空間$X$のホモトピー不変量である．
+\end{remarks}
+
+\begin{lemma}
+    $F:X\times I\to Y$を$f:X\to Y,g:X\to Y$の間のホモトピーとし，$h:=F(x_0,-)\in\Om(Y;f(x_0),g(x_0))$とする．
+    このとき，$f_*=\beta_h\circ g_*:\pi_1(X,x_0)\to\pi_1(Y,f(x_0))$．
+\end{lemma}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $(x_0\in)A$を$X$のレトラクトとすると，包含写像$i:A\to X$が定める群の射$i_*:\pi_1(A,x_0)\to\pi_1(X,x_0)$は単射である．
+        \item $A$が$X$の変位レトラクトならば，$i_*$は同型である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    弧状連結空間$X$であって，$\pi_1(X)=1$となる位相空間$X$は\textbf{単連結}であるという．
+\end{definition}
+\begin{example}
+    可縮な位相空間は単連結である．
+\end{example}
+
+\begin{proposition}
+    $S^n\;(n\ge 2)$は単連結である．
+\end{proposition}
+
+\subsection{貼り合わせの補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    張り合わせの補題は，基本群の構成に欠かせない．
+\end{tcolorbox}
+
+\begin{lemma}[貼り合わせの補題]
+    $(A_i)_{i\in[N]}$を$X$の閉被覆とし，$f_i:A_i\to Y$を$f_i|_{A_i\cap A_j}=f_j|_{A_i\cap A_j}$を満たす連続写像とする．
+    このとき，$f:X\to Y$を$f|_{A_i}=f_i$で定めると，$f$は連続写像である．
+\end{lemma}
+
+\begin{proposition}
+    $f,f':(X,A)\to(Y,B)$と$g,g':(Y,B)\to(Z,C)$について，$f\simeq f'$かつ$g\simeq g'$ならば，$g\circ f\simeq g'\circ f'$である．
+\end{proposition}
+
+\begin{corollary}[最初のホモトピー不変量]
+    $X\simeq Y\Rightarrow\abs{\pi_0(X)}=\abs{\pi_0(Y)}$．
+\end{corollary}
+
+
+\section{円周の基本群}
+
+\section{Van Kampenの定理}
+
+\chapter{ホモロジー}
+
+\section{一般化ホモロジーの公理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    種々の位相空間の圏から，種々の次元付きアーベル群の圏への関手を\textbf{一般化ホモロジー理論}という．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/generalized+homology}}
+\end{tcolorbox}
+
+\subsection{生息する圏の準備}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $\Top_\CW$によって，CW-複体に同型な位相空間のなす圏とする．
+        \item $\Top^{*/}$によって，点付き位相空間の圏とする．この圏の直和は，集合としての直和に，各基点を１点に同一視したものとし，これを楔積$\wedge_{i\in I}X_i$で表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[graded object, degree]
+    $S$を群とする．
+    圏$C$における$S$-次数付き対象とは，関手圏$C^S$の対象をいう．すなわち，
+    族$\{X_s\}_{s\in S}$または$X_s\in C$を満たす束$X\to S$をいう．
+    各要素$X_s$の\textbf{次数}を$s$という．
+\end{definition}
+\begin{example}[category of homology groups]
+    $\Z$-次数付きアーベル群の圏を$\Ab^\Z$で表す．この対象をホモロジー群という．
+\end{example}
+
+\begin{definition}[(unreduced) suspension, reduced suspension]\mbox{}\label{def-suspension}
+    \begin{enumerate}
+        \item $X\in\Top$の\textbf{懸垂}とは商空間$SX:=(X\times I)/\{(x_1,e)\simeq(x_2,e)\mid x_1,x_2\in X,e\in\partial I\}$という．\footnote{これは$X$を円柱に引き伸ばし，両端をそれぞれ一点に同一視して，この２点からハンモックのようにぶら下がっていると見るところから．また，$X$上の２つの錐を，baseで張り合わせたものとも見れる．}
+        \item $Sf:SX\to SY$を$Sf([x,t]):=[f(x),t]$によって，$S:\Top\to\Top$は関手を定める．また，$S(S^n)=S^{n+1}$が成り立つ．
+        \item $X\in\Top^{*/}$の\textbf{約懸垂}とは，商空間$\Sigma X:=(X\times I)/(X\times(\partial I\cup\{x_0\}))$をいう．
+        \item $\Sigma:\Top^{*/}\to\Top^*{*/}$は関手を定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[約懸垂の表示]\mbox{}
+    \begin{enumerate}
+        \item $\Sigma X\simeq S^1\wedge X$．
+        \item $\Top_\CW^{*/}$上においては，$\Sigma X$と$SX$はホモトピー同値である．
+        \item (Eckmann–Hilton duality) $\Sigma:\Top^{*/}\to\Top^*{*/}$はループ空間を定める関手$\Om$の左随伴である：$\Hom_{\Top^{*/}}(\Sigma X,Y)\simeq\Hom_{\Top^{*/}}(X,\Om Y)$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{鎖複体}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    基本的には特異鎖複体の例をお手本に一般化されてできた枠組みであるので，記法もこれに由来する．
+    ホモロジー群がすべて消えていることは完全系列であることに同値であるから，ホモロジー群は完全系列にどれくらい近いかを測る指標と考えられる．
+\end{tcolorbox}
+
+\begin{definition}[chain complex]
+    アーベル圏$\cC$において，$\Z$-次数付き\textbf{鎖複体}とは，
+    対象とその間の射の列の組$C_\bullet:=((C_n)_{n\in\Z},(\partial_n:C_n\to C_{n-1}))$で，$\forall_{n\in\Z}\;\partial_n\circ\partial_{n+1}=0$を満たすもののことをいう．
+    \begin{enumerate}
+        \item $\partial_n$を微分または境界写像という．
+        \item $C_n$の元を$n$-鎖という．
+        \item 核$Z_n:=\Ker\partial_{n-1}$の元を$n$-サイクルという．
+        \item 像$B_n:=\Im\partial_n$の元を$n$-境界という．
+        \item 余核$H_n:=Z_n/B_n$を$n$次の鎖ホモロジーという．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[chain map]
+    鎖写像とは，鎖複体の準同型であり，これについて鎖複体は圏$\Ch_\bullet(\cC)$をなす．
+\end{definition}
+
+\subsection{完全系列}
+
+\begin{definition}[exact sequence]
+    アーベル圏$\cC$において，\textbf{完全列}とは，鎖複体$C_\bullet$であって，各鎖ホモロジーが消えているものをいう：$\forall_{n\in\N}\;H_n(C)=0$．
+    特に，３つの対象を除いてほかがすべて$0$からなる完全列$0\to A\to B\to C\to 0$を，\textbf{短完全列}という．
+\end{definition}
+
+\begin{proposition}[短完全列であることの特徴付け]
+    列$0\to A\xrightarrow{i}B\xrightarrow{p}C\to 0$について，これが短完全列であるための必要十分条件は，次の３つ．
+    \begin{enumerate}
+        \item $i$はモノ射である．
+        \item $p$はエピ射である．
+        \item $\Im i=\Ker p$である．これは$\Coim p=C=B/A=\Coker i$と同値．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[split exact sequence]
+    短完全列の$i$または$p$が分裂するとき，短完全列が分裂するという．
+\end{definition}
+
+\subsection{補題}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $0\to A\to 0$が完全列ならば，$A=0$．
+        \item $0\to A_0\to A_1\to 0$が完全列ならば，$A_0\simeq A_1$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[five lemma]
+    完全系列のうち五項の準同型$(f_1,f_2,f_3,f_4,f_5)$について，$f_1,f_2,f_4,f_5$が可逆ならば$f_3$も可逆である．
+\end{lemma}
+
+\begin{lemma}[nine lemma]
+    次の図式を考える．
+    \[\xymatrix{
+            &0\ar[d]&0\ar[d]&0\ar[d]\\
+        0\ar[r]&M_1\ar[r]^-{f_1}\ar[d]&M_2\ar[r]^-{f_2}\ar[d]&M_3\ar[r]&0\\
+        0\ar[r]&N_1\ar[r]^-{g_1}\ar[d]&N_2\ar[r]^-{g_2}\ar[d]&N_3\ar[r]&0\\
+        0\ar[r]&L_1\ar[r]^-{h_1}\ar[d]&L_2\ar[r]^-{h_2}\ar[d]&L_3\ar[r]&0\\
+            0&0&0
+    }\]
+    縦の列はすべて完全で，$f_2\circ f_1=g_2\circ g_1=h_2\circ h_1=0$であるとする．
+    このとき，横の列のいずれか２つが完全列ならば，残りの１つも完全列である．
+\end{lemma}
+
+\begin{lemma}[snake lemma]
+    次の図式を考える．
+    \[\xymatrix{
+        0\ar[r]&\Ker f\ar[d]\ar[r]&\Ker g\ar[d]\ar[r]&\Ker h\\
+        0\ar[r]&L_1\ar[d]^-f\ar[r]&M_1\ar[r]\ar[d]^-g&N_1\ar[r]\ar[d]^-h&0\\
+        0\ar[r]&L_2\ar[d]\ar[r]&M_2\ar[d]\ar[r]&N_2\ar[d]\ar[r]&0\\
+            &\Coker f\ar[r]&\Coker g\ar[r]&\Coker h\ar[r]&0
+    }\]
+    中央の横２列が完全であるとき，図式を可換にする自然な写像$\Ker h\to\Coker f$が存在して，
+    \[0\to\Ker f\to\Ker g\to\Ker h\to\Coker f\to\Coker g\to\Coker h\to0\]
+    は完全系列になる．
+\end{lemma}
+
+\subsection{ホモロジー理論の公理}
+
+\begin{axiom}[homology group]
+    共変関手$H_n:\Top^{/}\to\Ab$が次を満たすとき，その像をホモロジー群という．
+    \begin{description}
+        \item[ホモトピー公理] $f,g$がホモトピックならば，$f_*=g_*$．
+        \item[空間対から完全列を定める関手] 
+        \item[切除公理] 
+        \item[次元公理] 単元集合$(\{p\},\emptyset)\in\Top$について，$H_n(\{p\})\simeq
+        \begin{cases}
+            \Z,&n=0,\\
+            0,&n>0.
+        \end{cases}$
+        が成り立ち，同型も一意に取れる．
+    \end{description}
+\end{axiom}
+
+\chapter{コホモロジー}
+
+\chapter{ホモトピー}
+
+\chapter{空間の位相の研究へ}
+
+\section{ファンカンペンの定理}
+
+\section{有限胞体複体の基本群}
+
+\section{ファイバー空間のホモトピー完全系列}
+
+\section{被覆空間}
+
+\begin{thebibliography}{9}
+    \bibitem{坪井}
+    坪井俊『幾何学II ホモロジー入門』（東京大学出版会，2016）．
+    \bibitem{Hatcher}
+    Allen Hatcher "Algebraic Topology" 
+\end{thebibliography}
+
+\end{document}

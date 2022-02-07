@@ -1,0 +1,583 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{統計的因果推論}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{枠組み}
+
+\begin{quotation}
+    統計的因果推論の研究は次の２つに分類できる．
+    \begin{enumerate}
+        \item 因果グラフを所与として，因果関係を定式化する実証分野．Rubinによる因果モデルRCMとPearlによる構造的因果モデルSCMとがある．
+        \item 因果グラフを未知として，因果グラフの構成算譜を定式化する理論分野．これを\textbf{統計的因果探索}という．
+    \end{enumerate}
+    これは数理科学の拡張の過渡期における重要な瞬間であり，物理学の意味から「実験」を「計算」に拡張して汎神化する過程である．
+    この過程を経た後に，学問のあり方は大きく変化する．このフェーズでは数学も変化が必要である．
+    私が憧れたのはこの未来感であり，未来を見せた啓蒙に対する数学の責任であり，
+    属人化される知である．
+
+    まさに私の目前で，相関関係を超えた因果関係の数理構造が定式化されつつある．
+    この営みに乗らないはずがない．事事無礙の法界を写すことが数理の営みであるのならば，
+    因果推論は莫大な霊性源とならないはずがない．
+\end{quotation}
+
+\section{Rubin因果モデル}
+
+\section{構造的因果モデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    数値への意味論の付与の仕方はただ一通りのみ許す定立を反事実モデルという．
+    すなわち，因果効果の測定は，相関係数とは何の関係もなく\footnote{相関関係と因果関係の乖離を一般に疑似創刊という．}，（平均）因果効果と呼ばれる数量によって評価する．
+    次の問題として，構造的因果モデル$M$に数学的対象を付与する関手をあてがう．
+    この方式は創造的行為であり，線型非線形を飛び交う議論になる．
+
+    構造的因果モデルの定義がやけに数学基礎論的に提示されたことが希望をくすぐる．
+    これはこれから種々の数学手法を導入し，最終的には計算機の上に実装することが究極の祈りではなかろうか？
+\end{tcolorbox}
+
+\subsection{反事実モデルと構造方程式モデルと因果グラフ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    因果関係は2上の豊穣圏として定式化できる．
+    この射をデータ生成過程と見て，確率分布の間の変換として定式化する
+    数理モデルを，構造方程式モデルという．
+\end{tcolorbox}
+
+\begin{notation}[数学基礎論的記号設定]\mbox{}
+    \begin{enumerate}
+        \item 大文字は確率変数，小文字はアルファベットとする．ここに目的言語とメタ言語の構造がある．
+        \item これを用いて，代入$=$を$A=a$と表し，介入という意味論を持つ．または$\Do(x=c)$とも表す．モデルに対して$M_{x=c}$という記法も，目的言語に於ける代入を意味する．
+        \item 右上には個体名／添字を書く．反変ベクトルであるためである．
+    \end{enumerate}
+\end{notation}
+
+\begin{axiom}[counterfactual model, causal effect, Fundamental Problem of Causal Inference]\mbox{}
+    \begin{enumerate}
+        \item ある行為をした場合による事実と，反事実の乖離を\textbf{因果関係}という．
+        \item ある行為をした場合としなかった場合の結果変数の差$X_{a=1}-X_{a=0}$を\textbf{因果効果}という．
+        \item 同時に２つの変数$X_{a=1},X_{a=0}$を両方とも観測することは出来ない．このことを\textbf{因果推論の根本問題}という．ここに，反事実のwell-definednessと，統計的推論が入る余地がある．
+        故にこの定立を\textbf{反事実モデル}という．統計的な推論が集団レベルにしかなされ得ない限界を強調して\textbf{平均因果効果}ともいう．
+    \end{enumerate}
+\end{axiom}
+
+\begin{axiom}\mbox{}
+    \begin{enumerate}
+        \item (mean exchangability) $\forall_{a}\;E[Y_a|A=1]=E[Y_a|A_0]$．２つに分けた集団が仮に逆であっても平均を変えない性質をいう．
+        \item (consistency) $\forall_{a}\;E[Y_a|A=a]=E[Y|A=a]$．
+    \end{enumerate}
+\end{axiom}
+\begin{example}[confounding, randomization]\mbox{}
+    \begin{enumerate}
+        \item 次のDAGが成立している場合（\textbf{交絡要因の存在}），平均交換律は成り立たない．
+        \item 十分に大きな集団で無作為割賦を行うと，平均交換律を満たす．\footnote{ランダム化したにもかかわらず偶然でExchangeabilityが成立しなかった場合には、共変量の調整によって後述するConditional Exchangeabilityを目指していきます。\cite{芝孝一郎}}\footnote{現実の世界では、割付された介入に従わない人が少なからずいます。例えば薬の効果を調べようとしてランダム化を行ったときに、薬を割付られたのにめんどくさがって薬をきちんと飲まない人がいるかもしれません。このような状況を割付へのnon-complianceと呼びます。\cite{芝孝一郎}}
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[SEM: Structural Equation Model]
+    4-組$M=(v,u,f,p(u))$を\textbf{構造方程式モデル}という．特にデータ生成過程$f$をモデルに含む点が特徴的であり，
+    $f$が$p(u)$から，内生変数の確率分布$p(v)$を引き起こす点が特徴である．\footnote{    * このデータ生成過程を記述しないのが多くの統計学や機械学習のモデルとなる。\cite{清水昌平}}
+    \begin{itemize}
+        \item $v\in\R^p$を内生変数(endogenous variable)という．
+        \item $u\in\R^q$を外生変数(exogenous variable)という．
+        \item 関数$f:\R^q\to\R^p$をデータ生成過程という．
+        \item $p(u):\R^q\to[0,1]$は外生変数の確率分布を与える．
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[causal graph / path diagram / causal Bayesian network / DAG:directed acyclic graph]\mbox{}
+    \begin{enumerate}
+        \item データ生成過程のモデルを作る上での仮定を表現する図である．\footnote{They can also be viewed as a blueprint of the algorithm by which Nature assigns values to the variables in the domain of interest.\url{https://en.wikipedia.org/wiki/Causal_graph}}
+    \end{enumerate}
+\end{definition}
+
+\subsection{構造的因果モデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率論に言語$\Do$を足したもの，と考えられる．
+    こうして数学基礎論的にまとめているのは，伊藤清に加えた新たな純粋数学をどう作るかの気概を感じる．
+    SCMはJudea Pearl (1995, 2009a)が導入．
+    $f,p(u)$によりデータ生成過程がモデルに入っていることが特徴である．
+\end{tcolorbox}
+
+\begin{definition}[Structural Causal Models]
+    構造方程式モデル$M=((x,y),e_y,f,p(e_y))$に対して，介入$M_{x=c}$は次を構造方程式とするモデルとなる：
+    \begin{align*}
+        x&=c,&y&=f_y(x,e_y).
+    \end{align*}
+    \begin{enumerate}
+        \item 集団において，$x$は$y$の原因になるとは，次が成り立つことをいう：$\exists_{c,d}\;p(y|\Do(x=c))\ne p(y|\Do(x=d))$．
+        \item $E(y|\Do(x=d))-E(y|\Do(x=c))$を平均因果効果と呼ぶ．
+    \end{enumerate}
+\end{definition}
+
+\subsection{試験方法：ランダム化比較試験}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    試験法として一番有名なものであり，データに対して標準的な取り扱いができる．
+    しかし，一般には介入することができない＝観察研究となるので，因果探索が要請される．
+\end{tcolorbox}
+
+\section{潜在反応モデル}
+
+\begin{definition}[potential outcome model]
+    
+\end{definition}
+
+\section{因果探索の基本問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    経済学や社会科学や疫学や生活など，controlled experimentが不可能な場面は多く，non-experimentalなデータから因果効果を推定する必要は各学問で肝要である．
+\end{tcolorbox}
+
+\subsection{因果探索の基本問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+        違う因果関係が同じ相関関係を定め得るが，観測変数の分布には相違が現れる．
+        これを足掛かりにして因果探索が行われる．
+\end{tcolorbox}
+
+\begin{model}[因果探索の基本問題]
+    次の３つの構造的因果モデル$M=((x,y),(z,e_x,e_y),f,p)$を考える．ただし，$x,y\in\R^n$．
+    \begin{enumerate}[(A)]
+        \item $\begin{cases}
+            x=f_x(z,e_x)\\
+            y=f_y(x,z,e_y)\\
+            p(z,e_x,e_y)=p(z)p(e_x)p(e_y)
+        \end{cases}$すなわち，$x\to y$．
+        \item $\begin{cases}
+            x=f_x(y,z,e_x)\\
+            y=f_y(z,e_y)\\
+            p(z,e_x,e_y)=p(z)p(e_x)p(e_y)
+        \end{cases}$すなわち，$x\leftarrow y$．
+        \item $\begin{cases}
+            x=f_x(z,e_x)\\
+            y=f_y(z,e_y)\\
+            p(z,e_x,e_y)=p(z)p(e_x)p(e_y)
+        \end{cases}$すなわち，$x\quad y$．
+    \end{enumerate}
+    外生変数$z,e_x,e_y$を独立とした．これは，$z$以外に未観測共通要因が無いことと同値．
+    また，自律性(autonomy)を仮定する，すなわち，$u$介入を行っても，$f,p$に影響しないことを仮定する．
+    また，因果関係が一方向である（$f_x$が$y$を引いたり，再帰的な構造がない）ことを仮定した．これをacyclicという．
+
+    この時，データ行列
+    \[X=\begin{pmatrix}x^1&\cdots&x^n\\y^1&\cdots&y^n\end{pmatrix}\]
+    が与えられた時，これを生成したモデル$M$を決定する問題を，因果探索の基本問題という．
+    変数を$x,y$以外に追加した場合も，この問題に還元される．
+\end{model}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $x$はチョコレートの消費量，$y$は一国のノーベル賞受賞者数，$z$はGDPと見れる．
+        \item $x$は薬を飲むかどうか，$y$は病気に罹患しているか，$z$は病気の重症度とみれる．
+    \end{enumerate}
+\end{example}
+
+\subsection{３つの手法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $f,p$について種々の仮定を置くことが考えられるが，数学的には，因果グラフが識別可能な仮定のクラスが重要となる．
+    そのためには，$p$の非Gauss性が肝要になることが\cite{清水昌平}の発見である．
+\end{tcolorbox}
+
+\subsubsection{non-parametric approach}
+
+何の仮定も置かないと，因果グラフは識別可能でない．
+理論的な限界点を明らかにする理論的な価値がある．
+
+\subsubsection{parametric-approach}
+
+実質科学からの事前知識や洞察を反映して，$f$と$p$に仮定をおいて
+３つのモデルを比較する営みである．
+特に数理的には，推定に必要な観測数が小さくなるなど，解析が容易になるなどが起こる．
+特に，数理のモデル進化の定番として，最初は
+$f$の線形性と$p$のGauss性を仮定することが多い．
+が，この場合も，観測変数の分布がいずれも同様なGauss分布となるので，
+因果探索の基本問題について，因果グラフは識別可能でない．
+これはGauss分布が２次元多様体をなすことに起因する．
+
+\begin{remark}
+    因果グラフの推測には，例え非線形な系に対しても線形性を仮定した方がうまくいくという報告が多い．
+    その後にノンパラメトリックな方法で因果効果の大きさを定量化するという流れが考えられる．
+\end{remark}
+
+\subsubsection{semi-parametric approach}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $p$の非Gauss性に注目すると，未観測の交絡要因$z$が存在しようと（存在さえ未知だろうと），因果推論が可能になる．
+    We have recently described how \textit{non-Gaussianity} in the data can be exploited for estimating causal effects.
+    In this paper we show that, with non-Gaussian data, causal inference is possible even in the presence of hidden variables (unobserved confounders),
+    even when the existence of such variables is unknown a priori.
+    Thus, we provide  a comprehensive and complete framework for the estimation of causal effects between the observed variables in the linear, non-Gaussian domain. \cite{清水08}
+\end{tcolorbox}
+
+\begin{definition}[LiNGAM: Linear Non-Gaussian Model]
+    $f$は線型関数，$p$は非Gaussな連続分布と仮定する手法をいう．
+\end{definition}
+
+\begin{theorem}
+    LiNGAMの仮定を置いた場合，３つのモデルの因果グラフは識別可能である．\cite{清水08}
+\end{theorem}
+
+\chapter{漸近展開}
+
+\section{離散時間マルチンゲール}
+
+\begin{definition}[filtration]\mbox{}
+    \begin{enumerate}
+        \item 確率空間$(\Om,\F,P)$上の，$\F$の部分$\sigma$-加法族の増大列$(\F_k)_{k\in\N}$を\textbf{離散時間フィルトレーション}という．
+        \item ４つ組$(\Om,\F,(\F_k),P)$を\textbf{離散時間確率基}という．
+        \item $(\xi_k)_{k=1,2,\cdots}$が\textbf{離散時間マルチンゲール差分列}とは，$\forall_{k\in\N}\;\xi_k$は$\F_k$可測・可積分で，$E[\xi_k|\F_{k-1}]=0\as$を満たすことをいう．
+        \item $(X_k)_{k\in\N}$が\textbf{離散時間マルチンゲール列}とは，$\forall_{k\in\N}\;\xi_k$は$\F_k$可測・可積分で，$E[\xi_k|\F_{k-1}]=X_{k-1}\as$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    離散時間マルチンゲール差分列$(\xi_k)_{k=1,2,\cdots}$と，$\F_0$-可測な可積分確率変数$X_0$と，$\F_{k-1}$-可測確率変数$H_{k-1}$であって$E[\abs{H_{k-1}\xi_k}]<\infty$であるようなものが与えられた場合，
+    \[X_k=X_0+\sum^k_{j=1}H_{j-1}\xi_j\]
+    は離散時間マルチンゲール列になる．
+\end{lemma}
+
+\section{停止時間と任意抽出定理}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $T$が\textbf{停止時刻}であるとは，確率変数$T:\Om\to\N\cup\{\infty\}$であって，$\forall_{k\in\N}\;\Brace{\om\in\Om\mid T(\om)=k}\in\F_k$を満たすことをいう．
+        \item 停止時刻が\textbf{有限}であるとは，$\forall_{\om\in\Om}\;T(\om)<\infty$を満たすことをいう．
+        \item 停止時刻が\textbf{有界}であるとは，$\exists_{c\in\R}\;\forall_{\om\in\Om}\;T(\om)\le c$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\section{離散時間マルチンゲールに関する中心極限定理}
+
+\begin{theorem}
+    離散時間確率基$(\Om^n,\F^n,(\F^n_k),P^n)$上の$p$-次元離散時間マルチンゲール差分列$(\xi^n_k)=((\xi^{n,1}_k,\cdots,\xi^{n,p}_k)^T)$と有限停止時刻の列$(T_n)$を考える．
+    \begin{enumerate}
+        \item $\forall_{i,j\in[p]}\;\sum^{T_n}_{k=1}E^n[\xi^{n,i}_k\xi^{n,j}_k|\F^n_{k-1}]\xrightarrow{p}C^{(i,j)}\in\R$．
+        \item $\forall_{\ep>0}\;\sum^{T_n}_{k=1}E^n[\norm{\xi^n_k}^21_{\Brace{\norm{\xi^n_k}>\ep}}|\F^n_{k-1}]\xrightarrow{p}0$．
+    \end{enumerate}
+    が成り立つならば，
+    \[\sum^{T_n}_{k=1}\xi^n_k\xrightarrow{d}\N_p(0,\Sigma)\quad\paren{\Sigma=(C^{(i,j)})_{i,j\in[p]}}\]
+    が成り立つ．
+\end{theorem}
+
+\begin{lemma}[Lindeberg条件の十分条件 (Lyapunov)]
+    $\exists_{\delta>0}\;\sum^{k_n}_{k=1}E^n[\norm{\xi^n_k}^{2+\delta}|\F^n_{k-1}]\xrightarrow{d}0$がなりたてば，(1),(2)が従う．
+\end{lemma}
+
+\section{傾向スコア}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    arm $w$を時刻$t$に下げる確率$e_t(w),e:T\times\W\to[0,1]$を，傾向スコアという．
+\end{tcolorbox}
+
+たとえば、喫煙の影響を知りたい場合を考える。人々を喫煙群に無作為に割り付けることは非倫理的であるため、観察研究が必要である。喫煙群と非喫煙群とを単純に比較することによって処置効果を推定すると、喫煙率に影響する要因（性別や年齢など）によるバイアスが生じる。PSM では、処置群とコントロール群の制御変数（この例では性別や年齢など）を同じくらいにすることによって、これらのバイアスを制御することを目指す。\footnote{\url{https://ja.wikipedia.org/wiki/傾向スコア・マッチング}}
+
+\begin{definition}[propensity score]\mbox{}
+    \begin{enumerate}
+        \item $Z_i\in 2$は被験者$i$が処置群に割り付けられたか，コントロール群に割り付けられたかを表す．
+        \item バックグラウンド変数$X_i$は被験者$i$への割り当て前に観測された種々のデータとする．
+        \item バックグラウンドで観測された共変量$X$に対する，処置の条件付き確率を
+        \[e(x):=P[Z=1|X=x]\]
+        と定め，これを\textbf{傾向スコア}という．
+    \end{enumerate}
+\end{definition}
+
+\section{notation}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=RosenbaumとRubinを超えていく]
+    adaptivityに由来するバイアスによって，不偏推定量がぐるぐる変わってしまう．
+    片方のarmのみsampled moreなので，バイアスがかかる．
+    これの代表的な解決がpropensity score matching (83)であり，見事にバイアスは消えるが，今度は漸近分布の正規性が消える．
+    したがってCLTが出来なかった．
+    特に或るアームの引かれる確率(assignment probability)が低い場合は裾の重い極限分布をもち，統計的推論が困難になる．
+    あるいは実際の実験は付値確率が極限分布が収束しない状態で終わる．
+    平均を整えても分散が爆発する．
+    $h_t$が特定の条件を満たすように実験を設計することで，
+    バイアスは掛かるが平均が良い推定量を得て，
+    それは利用可能性の高いデータとなる．
+\end{tcolorbox}
+
+\begin{definition}
+    $(\Om,\F,P)$を確率空間とする．$\W,\Y$を距離空間とする．
+    \begin{enumerate}
+        \item $W_t:H_t\to\W$はarm number，すなわち実現された処置(realized treatment)．歴史に依存する先天的に定義された確率分布(bandit algorithm)に従う．
+        \item $Y_t:\W\to\Y;W_t\mapsto Y_t(W_t)$は観測された結果．２値関数に落とし込まれた場合は潜在結果(potential outcome)で，$t$番目の患者が$w$にassignされた場合$1$となる．armならreward．
+        \item $m:\W\to\R;\om\to E[Y_t(\om)]$は$Y_t$に関する平均潜在結果(mean potential outcome)を表す有界な可測関数で，$\wh{m}_t:\W\times H_{t-1}\to\R$はその推定量．これは一致性を持たなくても良い．
+        論文\cite{Policy Evaluation}では$Q$という文字が用いられている．
+        \item $\Delta(w,w'):=E[Y_t(w)]-E[Y_t(w')]$とする．
+        \item $H_t:=\Brace{(Y_s,W_s)\in\Y\times\W\mid s\in t+1}=\{(Y_s,W_s)\}_{s=0,1,\cdots,t}$は歴史．$\mathbf{H}:=P(\Y\times\W)$とする．\footnote{\cite{誉賛}第一稿では，歴史$H_t$は$2t$-組として表現されている．論文\cite{Policy Evaluation}では$H^{t}$としている．}
+        \item $\H=(\H_t)_{t\in T+1}$は$\H_t=\sigma[H_t]$とするフィルトレーションである．
+        \item $e_t(w):=P[W_t=w|H^{t-1}]$はassignment probability，傾向スコアという．\footnote{time-varying and decided via some known algorithm, as it is the case with many popular bandit algorithms such as Thompson sampling\cite{Policy Evaluation}}
+        \item $P_{t-1}:H_t\times\B_\W\to\R$は正則条件付き確率とする．
+        \item 条件付き期待値$E_{t-1}:\Y\to\R$を，$E[f(W_t)]$を$E[f]$と略記する．
+        \item $\psi_{h_{t-1}}:L^2(\W,\B_\W,P_{t-1}(h_{t-1},\cdot))\to\R$は，$H^{t-1}$-条件付き自乗積分可能な関数（平均潜在結果）の空間上の
+        有界線形汎関数であり，合成関数$\psi(m)$を推定することを考える．arm毎の平均$\psi:=\ev_w$など，推定したい統計量を表す．
+        \item $h_t$はevaluation weightで，傾向スコアを打ち消すことで分散を収束させることを考える．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $\psi$の一意的なRiez-representor $\gamma(-;H^{t-1})\in L_2(P_{t-1})$
+    \[\forall_{f\in L_2(P_{t-1})}\;E[\gamma(W_t;H^{t-1})f(W_t)|H^{t-1}]=\psi(f)\]
+    が存在する．
+\end{theorem}
+\begin{remarks}
+    $\gamma(W_t)$とは，AIPWの$\frac{1_{\Brace{W_t=w}}}{e_t(w)}$に対応する．
+\end{remarks}
+\begin{example}
+    arm毎の平均$\psi:=\ev_w$のRiez representerは$\gamma_t=\frac{1_{\Brace{-=w}}}{e_t(w)}$である．
+
+\end{example}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $f(\om)=E_{t-1}[\gamma_t(w_t)f(w_t)]$をRiez-representerとする．
+        \item 下付き文字$m_t,\gamma_t$は条件付き$m(-|H^{t-1}),\gamma(-|H^{t-1})$の略記である．同様に，$E[X|H^{t-1}]=E_{t-1}[X]$と表す．
+    \end{enumerate}
+\end{notation}
+
+\section{Malliavin calculus}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $Z$のように，漸近分布から未知量を消すために標準偏差の推定量$\wh{\sigma}$で割って規格化することを，Studentizationまたはself-normalized estimatorという．
+    $t$-分布を発見したWilliam Gossetによる．
+\end{tcolorbox}
+
+\section{adaptive weightの構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    適応的実験とは強化学習と実験計画の融合である．
+    bandit algorithmで最適化される．banditとは，one-armed banditという別称を持つスロットの攻略法（どの台に賭けるか）の問題として1950sに始まったため．
+    スロット台のことをarmと呼ぶのか．
+    そうして得た結果の最大活用を考える．
+
+    assignment probabilityが収束しない場合は，そのデータからの推論を困難にする．
+    ここで，assignment probabilityが収束し，その極限分布に３つの仮定を課すと，
+    頻度主義的な信頼区間が計算できることを提案\cite{Policy Evaluation}．
+\end{tcolorbox}
+
+\begin{axiom}[adaptive weightに関する公理]\label{axiom-adaptive-weights}
+    evaluation weights $h_t$は
+    \begin{enumerate}
+        \item (Infinite Sampling) $\frac{\paren{\sum^T_{t=1}h_t}^2}{E\Square{\sum^T_{t=1}h_t^2\gamma_t^2}}\xrightarrow[T\to\infty]{p}\infty$．\footnote{Bandid algorithmはどのarmも無限回assignする．}
+        \item (Variance Convergence) $\exists_{p>1}\;\frac{\sum^T_{t=1}h_t^2E_{t-1}[\gamma^2_t]}{E\Square{\sum^T_{t=1}h_t^2\gamma_t^2}}\xrightarrow[T\to\infty]{L_p}1$．\footnote{条件付き期待値が，条件付きでない期待値に一致する．}
+        \item (Bounded Moments / Lyapunov condition) 
+        $\exists_{\delta>0}\;\frac{\sum^T_{t=1}h_t^{2+\delta}E_{t-1}[\abs{\gamma_t}^{2+\delta}]}{E\Square{\sum^T_{t=1}h^2_t\gamma^2_t}^{1+\delta/2}}\xrightarrow[T\to\infty]{p}0$．\footnote{$e_t=1/\gamma_t$のdecayがいくら速くても，$h_t$も分散を収束させるくらいには十分速い．}
+    \end{enumerate}
+    を満たす．
+    ただし，$\gamma_t$は$\frac{1}{e_t}$などの，荷重によって飼い慣らしたい量となる．
+\end{axiom}
+
+
+
+\subsection{scoring rule}
+
+\begin{definition}
+    $\wh{\Gamma}$が
+    $Q(w)$に対するunbiased scoring ruleであるとは，
+    $\forall_{w\in\W}\;\forall_{t\in[T]}\;E\Square{\wt{\Gamma}_t(w)|H^{t-1}}=Q(w)$
+    が成り立つことをいう．
+\end{definition}
+\begin{example}\mbox{}\label{exp-AIPW}
+    \begin{enumerate}
+        \item inverse propensity score weighted $\wh{\Gamma}_t^{IPW}(w):=\frac{1_{\Brace{W_t=w}}}{e_t(w)}Y_t$．
+        \item augmented inverse propensity weightedはregression adjustmentを加える(Robins 94)．
+        \[\wh{\Gamma}_t^{AIPW}(w):=\frac{1_{\Brace{W_t=w}}}{e_t(w)}Y_t+\paren{1-\frac{1_{\Brace{W_t=w}}}{e_t(w)}}\wh{m}_t(w)\]
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    不偏スコア規則$\wh{\Gamma}$が定める量
+    $\wh{Q}_t(w):=\frac{1}{T}\sum^T_{t=1}\wh{\Gamma}_t(w)$は，$Q$について不偏である：
+    $E[\wh{Q}_T(w)]=Q(w)$．
+    特に，$\wh{\Gamma}_t$が$t\in T$に相関する場合も成り立つ．
+\end{proposition}
+\begin{proof}
+    繰り返し期待値の法則による：
+    \begin{align*}
+        E\Square{\wh{Q}_T(w)}&=E\Square{\frac{1}{T}\sum^T_{t=1}\wh{\Gamma}_t(w)}\\
+        &=\frac{1}{T}\sum^T_{t=1}E\Square{E\Square{\wh{\Gamma}_t(w)|\H^t}}\\
+        &=\frac{1}{T}\sum^T_{t=1}E[Q(w)]=Q(w).
+    \end{align*}
+\end{proof}
+
+\subsection{漸近的正規なtest statistics}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Qualitatively, what we need for normality is for the variability of the estimator to be deterministic.
+    だから，「逆数にしても発散しない，修正された傾向スコア」のようなものが必要になるのだ．
+    それは，単にunbiased scoring ruleを平均して推定量とするのではなく，evaluation weight $(h_t)_{t\in T+1}$で荷重する．
+    この$(h_t)$をうまく選ぶことで，assignment probability $e_t(w)$を打ち消して挙動を漸近的正規にする．
+    \begin{quote}
+        With such weights, the adaptively-weighted AIPW estimator (6), when normalized by an estimate of its standard deviation, has a centered and normal asymptotic distribution. Similar “self-normalization” schemes are often key to martingale central limit theorems (see e.g., de la Pen ̃a et al., 2008).\cite{Policy Evaluation}
+    \end{quote}
+\end{tcolorbox}
+
+\begin{definition}[adaptively-weighted AIPW estimator]
+    \[\wh{Q}^h_T(w):=\frac{\sum^T_{t=1}h_t(w)\wh{\Gamma}_t^{AIPW}(w)}{\sum^T_{t=1}h_t(w)}.\]
+\end{definition}
+
+\begin{lemma}
+    $(h_t)$が$\sum^T_{t=0}h_t=1$を満たすならば，これが定めるadaptively-weighted AIPW推定量$Q:=\sum_{t=0}^Th_t(w)\wh{\Gamma}(w)$は不偏である：$E\Square{h_t(w)\wh{\Gamma}(w)|H^{t-1}}=h_t(w)Q(w)$．
+\end{lemma}
+
+\section{General settings}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    傾向スコアによるAIPWを，$\psi$のRiez representerと捉える枠組みは誰が気づいたのか．
+\end{tcolorbox}
+
+
+\begin{definition}
+    $(\Om,\F,P)$を確率空間とする．$\W,\Y$を距離空間とする．$\W$は可算とする．$T\in\N$とする．
+    \begin{enumerate}
+        \item $H_t=((Y_s,W_s);s\in [t])$を歴史とする．これは$\mathbf{H}_t:=(\Y\times\W)^t$の元である．各歴史が定める$\sigma$-加法族を$\H_t:=\sigma[H_t]$とし，$\H:=(\H_t)_{t\in[T]}$をfiltrationとする．
+        \item この上の正則条件付き確率を$P_{t-1}:H_t\times\B_\W\to\R$と定める．
+        \item $W_t:H_t\to\W$はarm number，すなわち実現された処置(realized treatment)で，歴史に依存する先天的に定義された確率分布(bandit algorithm)に従う．
+        その確率$e_t(w):=P[W_t=w|H^{t-1}]$はassignment probability，または傾向スコアという．
+        \item $Y_t:\W\to\Y;W_t\mapsto Y_t(W_t)$は観測された結果．２値関数に落とし込まれた場合は潜在結果(potential outcome)で，$t$番目の患者が$w$にassignされた場合$1$となる．armならreward．
+        \item $m:\W\to\R;\om\to E[Y_t(\om)]$は$Y_t$に関する平均潜在結果(mean potential outcome)を表す有界な可測関数で，$\wh{m}_t:\W\times H_{t-1}\to\R$はその推定量．これは一致性を持たなくても良い．
+        また，因果効果を$\Delta(w,w'):=E[Y_t(w)]-E[Y_t(w')]$とする．
+        \item $\psi_{h_{t-1}}:L^2(\W,\B_\W,P_{t-1}(h_{t-1},\cdot))\to\R$は，$H^{t-1}$-条件付き自乗積分可能な関数（平均潜在結果）の空間上の
+        有界線形汎関数であり，合成関数$\psi(m)$を推定することを考える．arm毎の平均$\psi:=\ev_w$など，推定したい統計量を表す．
+        論文\cite{Policy Evaluation}では$Q$という文字が用いられている．
+        \item Riesz representer $\gamma_{h_{t-1}}\in L^2(\W,\B_\W,P_{t-1}(h_{t-1},-))$を，
+        \[\forall_{f\in L^2(\W,\B_\W,P_{t-1}(h_{t-1},-))}\;\psi_{h_{t-1}}(f)=\int_\W\gamma_{h_{t-1}}(w)f(w)P_{t-1}(h_{t-1},dw)=E[\gamma_{h_{t-1}}(W_t)f(W_t)|H_{t-1}=h_{t-1}]\]
+        を満たすものと定める．
+        \item $(h_t)_{t\in[T]}$はevaluation weightと呼ばれる実数列で，傾向スコアを打ち消すことで分散を収束させることを考える．
+        \begin{axiom}[adaptive weightに関する公理]\label{axiom-adaptive-weights}
+            evaluation weights $h_t$は
+            \begin{enumerate}
+                \item (Infinite Sampling) $\frac{\paren{\sum^T_{t=1}h_t}^2}{E\Square{\sum^T_{t=1}h_t^2\gamma_t^2}}\xrightarrow[T\to\infty]{p}\infty$．\footnote{Bandid algorithmはどのarmも無限回assignする．}
+                \item (Variance Convergence) $\exists_{p>1}\;\frac{\sum^T_{t=1}h_t^2E_{t-1}[\gamma^2_t]}{E\Square{\sum^T_{t=1}h_t^2\gamma_t^2}}\xrightarrow[T\to\infty]{L_p}1$．\footnote{条件付き期待値が，条件付きでない期待値に一致する．}
+                \item (Bounded Moments / Lyapunov condition) 
+                $\exists_{\delta>0}\;\frac{\sum^T_{t=1}h_t^{2+\delta}E_{t-1}[\abs{\gamma_t}^{2+\delta}]}{E\Square{\sum^T_{t=1}h^2_t\gamma^2_t}^{1+\delta/2}}\xrightarrow[T\to\infty]{p}0$．\footnote{$e_t=1/\gamma_t$のdecayがいくら速くても，$h_t$も分散を収束させるくらいには十分速い．}
+            \end{enumerate}
+            を満たす．
+            ただし，$\gamma_t$は$\frac{1}{e_t}$などの，荷重によって飼い慣らしたい量となる．
+        \end{axiom}
+    \end{enumerate}
+\end{definition}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 条件付き期待値$E_{t-1}:\Y\to\R$について，$E_{t-1}[f(W_t)]$を$E_{t-1}[f]$と略記する．
+        \item $\gamma(W_t;H^{t-1})=\gamma_{H^{t-1}}(W_t)$を$\gamma_{t}(W_t)$と略記する．$E_{t},m_{t}$なども同様．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[一般化された不偏スコア規則]
+    一般化された不偏スコア規則$\wh{\Gamma_t}:\W\to\R$を，次のように定める：
+    \[\wh{\Gamma_t}(W_t):=\psi(\wh{m})+\gamma(W_t;H^{t-1})(Y_t-\wh{m}(W_t;H^{t-1})).\]
+\end{definition}
+
+\begin{lemma}[不偏スコアが不偏推定量となっている]\mbox{}
+    \begin{enumerate}
+        \item $E[\gamma_{H_{t-1}}(W_t)(Y_t-m(W_t))|\H_{t-1}]=0$．
+        \item $\psi_{H_{t-1}}(\wh{m}_t(\cdot,H_{t-1}))-\psi_{H_{t-1}}(m)-\gamma_{H_{t-1}}(W_t)(\wh{m}_t(W_t,H_{t-1})-m(W_t))$もmartingale差分列である．
+        \item ２つの和を$\dot{\xi^T_t}$とおくと，$\dot{\xi_t}=\wh{\Gamma}_t-\psi_{H_{t-1}}(m)$と表せて，
+        これもmartingale差分列である．
+    \end{enumerate}
+\end{lemma}
+
+\section{適応的実験のための荷重した統計量の中心極限定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    不偏スコア$\wh{\gamma}_t$を荷重$(h_t)$で調整した統計量$\wh{\psi_T}$についての中心的な極限定理を示す．
+\end{tcolorbox}
+
+\begin{theorem}[中心的極限定理]\label{thm-CLT-for-adaptive}
+    次を仮定する：
+    \begin{enumerate}
+        \item 見本過程$Y_t(w)$の分散は上に有界で，$0$でない(away from zero)．
+        \item $\delta>0$が存在して平均$E[\abs{Y_t(w)}^{2+\delta}]$が$w\in\W$について一様に上に有界．
+        \item Riesz表現子$\gamma_t$は$\exists_{b>0}\;\forall_{t\in[T]}\;E_{t-1}[\gamma^2_t]>b$を満たす．
+        \item $\wh{m}_t$は$\exists_{m_\infty\in L^2(\W,\B_\W,P_{t-1}(h_{t-1},-))}\;\norm{\wh{m}_t-m_\infty}_{L_\infty(P_{t-1})}\xrightarrow[t\to\infty]{\as}0$を満たす一様有界な推定量の列．
+    \end{enumerate}
+    荷重$(h_t)_{t\in[T]}$が次のいずれか：
+    \begin{enumerate}[(a)]
+        \item $\wh{m}_t$の一致性：$\norm{\wh{m}-m}_{L_\infty(P_{t-1})}\xrightarrow[t\to\infty]{\as}0$．
+        \item $E_{t-1}[\gamma_t^2]\xrightarrow[t\to\infty]{\as}\o{\gamma}^2_\infty\in(0,\infty]$
+    \end{enumerate}
+    を満たすならば，
+    \begin{enumerate}
+        \item (一致性) 推定量
+        \[\wh{\psi}_T:=\frac{\sum^T_{t=1}h_t\wh{\Gamma}_t}{\sum^T_{t=1}h_t}\]
+        は$\psi(m)$に確率収束し，
+        \item (漸近的正規性) student化した統計量は漸近的に正規である：
+        \[\frac{\wh{\psi_T}-\psi(m)}{\wh{V}_T^{1/2}}\xrightarrow[T\to\infty]{d}\cN(0,1)\quad\wh{V}_T:=\frac{\sum^T_{t=1}h_t^2(\wh{\Gamma}_t-\wh{\psi}_T)^2}{\paren{\sum^T_{t=1}h_t}^2}.\]
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    分散は，「$\wh{\psi}_T$の２乗の，２乗加重平均」と推定する．
+\end{remarks}
+
+\begin{theorem}[荷重の構成]
+    Riesz表現子の列$(\gamma_t)$が
+    \[\exists_{\delta>0}\;\exists_{\delta\in\left[0,\frac{\delta}{2+\delta}\right)}\;\exists_{C,C'>0}\;\Square{\paren{\frac{E_{t-1}[\abs{\gamma_t}^{2+\delta}]}{E_{t-1}[\gamma^2_t]^{2+\delta}}\le C}\land\paren{\forall_{t\in[T]}\;E_{t-1}[\gamma^2_t]\le C't^\al}}\]
+    を満たすとする．この時，
+    \begin{enumerate}
+        \item $\forall_{t<T}\;\gamma_T<1$，
+        \item $\gamma_T=1$，
+        \item $\exists_{C''>0}\;\frac{1}{1+T-t}\le\lambda_t\le C''\frac{E_{t-1}[\gamma^2_t]^{-1}}{t^{-\al}+T^{1-\al}-t^{1-\al}}$
+    \end{enumerate}
+    を満たす付値率(allocation rate)について，
+    \[h^2_tE_{t-1}[\gamma_t^2]=\paren{1-\sum^{t-1}_{s=1}h_s^2E_{s-1}[\gamma_s^2]}\lambda_t\]
+    によって帰納的に定義した荷重$(h_t)$は３つの公理\ref{axiom-adaptive-weights}を満たす．
+\end{theorem}
+
+\section{連続martingaleの周りに展開される確率変数の漸近展開}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    もし推定量$\wh{\psi}_t$が$M_n+r_nN_n$の形を持ち，いくつかの仮定を満たす確率過程だと証明できたならば，吉田先生のMalliavin解析を用いた論文の手法を適用することで漸近展開をすることができる．
+\end{tcolorbox}
+
+\begin{definition}
+    ある正なpredictableな過程$a^T=(a^T_t)$と$0$に収束する正実数列$(r_n)$について，
+    \begin{enumerate}
+        \item $M_t:=\sum^T_{t=1}a_t\dot{\xi_t}$．
+        \item $Z_T:=M_T+r_TN_T$．
+    \end{enumerate}
+    と定める．
+\end{definition}
+
+\begin{thebibliography}{99}
+    \bibitem{清水昌平}
+    清水昌平『統計的因果推論』（講談社，機械学習プロフェッショナルシリーズ，2017）．
+    \bibitem{Anastasios A. Tsiatis}
+    Anastasios A. Tsiatis "Semiparametric Theory and Missing Data" (Springer, 2006).
+    \bibitem{Winship}
+    Christopher Winship, Stephen L. Morgan "Counterfactuals and Causal Inference: Methods and Principles for Social Research" 2nd ed. (Cambridge University Press, 2014)
+    \bibitem{芝孝一郎}
+    芝孝一郎さんのブログ記事\href{https://www.krsk-phs.com/entry/counterfactual_assumptions}{データから因果関係をどう導く？：統計的因果推論の基本、「反事実モデル」をゼロから}
+    \bibitem{清水08}
+    P. O. Hoyer, S. Shimizu, A. J. Kerminen, and M. Palviainen. Estimation of causal effects using linear non-Gaussian causal models with hidden variables. \textit{International Journal of Approximate Reasoning}, 49(2), pp. 362-378, 2008.
+    \bibitem{Policy Evaluation}
+    "Confidence Intervals for Policy Evaluation in Adaptive Experiments"
+    \bibitem{吉田}
+    "Malliavin calculus and asymptotic expansion for martingales" (1997).
+    \bibitem{誉賛}
+
+\end{thebibliography}
+
+\end{document}

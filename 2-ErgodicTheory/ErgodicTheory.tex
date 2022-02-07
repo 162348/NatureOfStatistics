@@ -1,0 +1,173 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{エルゴード理論と力学系}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\renewcommand{\C}{\mathcal{C}}
+\renewcommand{\Z}{\mathcal{Z}}
+\usepackage[deluxe]{otf}
+\begin{document}
+\mgfamily
+\tableofcontents
+
+\chapter{Introduction}
+
+\begin{quotation}
+    物理学全体が極めて作用素論の影響を受けている．
+    作用素論によって定式化された量子力学が完成して，その情報理論的な本性が他の分野の定式化にも知見を与えている．
+\end{quotation}
+
+\section{歴史}
+
+\begin{enumerate}
+    \item Ergode理論はMaxwellとBoltzmannの気体分子運動論に端を発した．
+    Botlzmannは，あるひとつのmacrostateに対応する微視的状態の集合（統計集団）をmonodeと呼んだ，現在はGibbsの用語\textbf{集団(ensemble)}が採用されている．
+    気体ではなく，ひとつの分子についてはergodeと呼び，Gibbsは小正準集団(microcanonical ensemble)と呼んだ．
+    \item von Neumannのmean ergodic theorem (32)とBrikhoffのindividual ergodic theorem (31)により数学理論となった．
+    \item 1970sには，Furstenbergが，組み合わせ数論の問題からの流入口を繋いだ．
+    この道には，Host and Kra, Green and Taoらが続く．
+    おそらくコラッツ予想も続く．
+\end{enumerate}
+
+こうして，強い物理学的な動機を持った，確率論，組み合わせ論，群論，位相空間論，数理論理学の上にたった異様な理論となっている．
+
+しかし，そのはじめのことから，作用素論が中心的な役割を果たすのは必須であった．
+Koopman作用素により，状態空間の力学$\varphi$が線型作用素$T$に線形化され，関数解析の知見が流入する．
+
+\begin{quote}
+    However, this is not a one-way street. Results and problems from ergodic theory,
+once formulated in operator theoretic terms, tend to emancipate from their parental
+home and to lead their own life in functional analysis, with sometimes stunning
+applicability (like the mean ergodic theorem, see Chapter 8). We, as functional
+analysts, are fascinated by this interplay, and the present book is the result of this
+fascination.\cite{OperatorTheoretic}
+\end{quote}
+
+\section{統計力学からの動機}
+
+\begin{discussion}[問題設定]
+    $d$粒子系の理想気体の状態空間は$X\subset\R^{6d}$となる．
+    時間発展は$X$上の軌跡で表せ，これはNewton力学に従う．したがって，Hamiltonの微分方程式で定まる．
+    これは群作用が定めるflowとも考えられれば，$\varphi:X\to X$による離散力学系とも考えられる．
+    連続にしろ離散にしろ，組$(X,\varphi)$を\textbf{力学系}という．
+\end{discussion}
+
+\begin{definition}[molecular chaos]
+    気体分子運動論において，衝突する粒子の位置と速度の間には相関がないとする仮定を\textbf{分子的混沌}という．
+\end{definition}
+\begin{remarks}
+    これを仮定すると，「十分長い時間スケール（普通の観測に要する時間程度）をとると、系は微視的には小正準集団の状態のすべてをとりうる」ことが導かれる．これを\textbf{エルゴード仮説}という．
+\end{remarks}
+
+\section{物理的制約}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    力学系の分野では，合成作用素をKoopman作用素と呼び，その随伴である転送作用素をFrobenius-Perron作用素と呼ぶ．
+\end{tcolorbox}
+
+\begin{definition}[observable, Koopman operator]
+    現実問題，必ずしも状態空間の中の点を確定させることが出来るわけではない．
+    \begin{enumerate}
+        \item 可測関数$f:X\to\R$を\textbf{可観測量}という．系の温度など．
+        \item 可観測量の時間発展は，$\varphi$による引き戻しが定める線型作用素$T_\varphi:\Meas(X,\R)\to\Meas(X,\R);f\mapsto f\circ\varphi$が支配する．これを\textbf{Koopman作用素}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    このように，空間$X$上の軌道を考える代わりに位相線型空間$\Meas(X,\R)$上の軌道を考えることは，物理学的な動機も，数学的な動機も備える．
+\end{remarks}
+
+\begin{definition}[time mean]
+    特に量子系において，時間発展が極めて速いので，忠実にその発展を観測できるわけではない．
+    \begin{enumerate}
+        \item 可観測量$f$の状態$x_0\in X$における\textbf{時間平均}とは，$\lim_{N\to\infty}\frac{1}{N}\sum^{N-1}_{n=0}T^n_{\varphi}f(x_0)$をいう．
+        \item しかしこれは$\varphi^n(x_0)$またはその観測$f(\varphi^n(x_0))$なる要素を含んでおり，これが観測可能であるとは限らないという問題を孕む．
+        そこで，時間平均は初期状態$x_0\in X$に依らないとする．
+    \end{enumerate}
+\end{definition}
+
+\begin{hypothesis}[Ergodic Hypothesis]
+    ある標準的な確率測度$\mu\in P(X)$が存在し，
+    任意の初期状態$x_0\in X$と可観測量$f\in\F\subset\Meas(X,\R)$に対して，時間平均は一定で，次のように表される：
+    \[\lim_{N\to\infty}\frac{1}{N}\sum^{N-1}_{n=0}f(\varphi^n(x_0))=\int_Xfd\mu.\]
+\end{hypothesis}
+
+\section{数論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Borelのnormal numbersについての定理とWeylのequidistribution theorem (1909)に見られる通り，物理学から始まった数学的対象が，unreasonable effectivenessを発揮した分野の例が数論である．
+\end{tcolorbox}
+
+\begin{definition}[normal number (Borel 09)]
+    $\abs{\Sigma}=r\in\N$を満たすアルファベット$\Sigma$上の無限列$S\in\Sigma^\infty$が\textbf{正規}であるとは，次が成り立つことを言う：
+    \[\forall_{w\in\Sigma^*}\;\lim_{n\to\infty}\frac{N_S(w,n)}{n}=\frac{1}{e^{\abs{w}}}.\]
+    ただし，$\Sigma^*$を有限列全体の集合，$N_S(w,n)$を文字列$S$の最初の$n$個に$w$が現れる回数を表す関数とする．
+\end{definition}
+
+\begin{theorem}[Borel]
+    任意の$r\ge 2$について，$r$進正規でない数の集合は（非可算無限集合であるが）Lebesgue零集合である．
+\end{theorem}
+\begin{remark}
+    ただし，正規数の例は，Sierpinskiによる1917年の構成まで待つことになる．
+\end{remark}
+
+\begin{theorem}
+    $\{x\}$で実数$x\in\R$の小数部分を表す．
+    \begin{enumerate}
+        \item (Kroneckerの稠密定理) $\forall_{\al\in\R\setminus\Q}\;\forall_{(a,b)\subset[0,1]}\;\exists_{n\in\N}\{n\al\}\in(a,b)$．
+        \item (Weylの一様分布定理) $\forall_{\al\in\R\setminus\Q}\;\forall_{(a,b)\subset[0,1]}\;\lim_{N\to\infty}\frac{\#\Brace{n\al\mid n\le N,\{a_n\}\in(a,b)}}{N}=b-a$．
+    \end{enumerate}
+\end{theorem}
+\begin{remark}
+    $x$が$r$進正規であることと，数列$(r^nx)_{n\in\N}$がWeylの意味で一様分布することは同値．
+\end{remark}
+
+\begin{theorem}[Green-Tao]
+    素数の集合$\bP$は，$\forall_{k\in\N}\;\exists_{a\in\bP}\;\exists_{n\in\N}\;a,a+n,a+2n,\cdots,a+(k-1)n\in\bP$を満たす．
+\end{theorem}
+
+\chapter{位相力学系}
+
+\section{定義と例}
+
+\begin{definition}[topological dynamical system]
+    コンパクトハウスドルフ空間$K$と連続写像$\varphi:K\to K$との組$(K,\varphi)$を\textbf{位相力学系}という．
+    $\varphi$が全射・可逆であるとき，系が全射・可逆であるという．
+\end{definition}
+\begin{remark}
+    $K$をコンパクトハウスドルフとしたのは，明らかに圏の同値$C:\Top_\cpt\to C^*\Alg^\op_\com$を見据えている．
+\end{remark}
+
+\section{構成}
+
+\chapter{作用素論の流入}
+
+\begin{quotation}
+    $(K,\varphi)$の研究と，$(C(K),T_\varphi)$の研究とは，双対的な関係にある．
+    これが幾何-代数双対性である．
+    圏の同値$C:\Top_\cpt\to C^*\Alg^\op_\com$を用いた越境である．
+\end{quotation}
+
+\chapter{保測力学系}
+
+\chapter{量子確率論}
+
+\begin{thebibliography}{9}
+    \bibitem{Coudene}
+    Yves Coudene "Ergodic Theory and Dynamical System"
+    相互に独立した12章からなり，それぞれの分野のオムニバスのような内容．
+    \bibitem{Araki}
+    H. Araki, C. Moore, S. Stratila, D. Voiculescu "Operator Algebras and their Connections with Topology and Ergodic Theory"
+    \bibitem{Foundations}
+    Marcelo Viana "Foundations of Ergodic Theory"
+    初歩的なところから高みまで登らせてくれる入門書．
+    \bibitem{OperatorTheoretic}
+    Tanja Eisner, Balint Farkas, Markus Haase, Rainer Nagel, "Operator Theoretic Asepcts of Ergodic Theory"
+    Ergode理論と作用素論との繋がりを中心に入門を記述した本．
+    survey articles by Bryna Kra (2006), (2007) and Terence Tao (2007) on the Green-Tao theoremによってお蔵入りになったものが復活して出来た書籍．
+\end{thebibliography}
+
+\end{document}

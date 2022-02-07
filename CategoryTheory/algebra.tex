@@ -1,0 +1,426 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{今日の代数学}
+\author{}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+
+\chapter{Graph Theory}
+
+At the Como conference in 1990, William Lawvere gave a videotaped lecture including the following remarks:
+\begin{quotation}
+    I have great problems reading books on graph theory, books and papers on graph theory, because they never tell you exactly what they are talking about. Sometimes the graphs are (word inaudible, even when played slower), sometimes they are absolutely reflexive, sometimes they are not. Even if they go so far as talking about homomorphisms, I still don’t know exactly what that is, i.e., which category are we in? What they should do is admit that they are working in three or four different categories and they don’t know how to pass from one to the other, and so on, and (inaudible words) to simplify.\footnote{\url{https://ncatlab.org/nlab/show/graph}}
+\end{quotation}
+
+\section{The Basics}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=グラフの定義]
+    辺集合を$E\subset[V]^2$と定義することで，多くのグラフの構成を集合の言葉で定式化できる．
+    が，有向グラフはむしろ$F$-代数と捉えられる．圏$C:=\{0\rightrightarrows 1\}$上の前層$F:C^\op\to\Set$について，$F$が定める代数$(F(1),F(0),F(s),F(t))$が有向グラフである．
+    \begin{quote}
+        The question of how the value of one invariant influences that of another underlies much of graph theory, and it will be good to become familiar with this line of thinking early.
+    \end{quote}
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $\log$の底は$2$とし，自然対数を$\ln$で表す．
+        \item 集合$A$の分割とは，集合$A$を無縁和$A=\coprod_{i\in[k]}A_i$として表せる組$\{A_i\}_{i\in[k]}$をいう．組$\{A'_i\}_{i\in[l]}$がその細分であるとは，$\forall_{i\in[l]}\;\exists_{j\in[k]}\;A'_i\subset A_j$を満たすことをいう．
+        \item 集合$A$に対して，$[A]^k\subset P(A)$を，$A$の部分集合であって$k$個の元を持つようなもの（$k$-部分集合と呼ぶ）全体からなる集合とする．
+    \end{enumerate}
+\end{notation}
+
+\subsection{Graphs}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=全体のポイント]
+    辺を$E\subset[V]^2$とすることで，付随関係を$v\in e$と定式化でき，数々のグラフの構成を集合の言葉で定式化できる（集合演算から由来したグラフの演算や，線グラフ構成$L$など，何よりグラフ包含関係がcomponent-wiseになる）．
+    線グラフ構成関手$L$はこの後も延々と続けられる構成であるはずである．テンソルみたいな一般性は持たないのか．
+    こうしてグラフ理論も集合論を通じて算術化される．
+\end{tcolorbox}
+
+\begin{definition}[graph, vertives / nodes / points, edges / lines, order, empty graph, trivial graph]\mbox{}
+    \begin{enumerate}
+        \item \textbf{$V$上のグラフ}とは，集合$V$とその部分集合$E\subset[V]^2$との組$G=(V,E)$をいう．$G$をグラフとしたとき，それぞれの頂点集合と辺集合を$V(G),E(G)$とtagで代数的に表す．圏$C$の場合と同様に，$C,M$の別を$C$で混用する．
+        \item 濃度$\abs{V(G)}=:\abs{G}$をグラフ$G$の位数という．頂点の数$\abs{E(G)}$を$\|G\|$で表す．
+        \item $\emptyset:=(\emptyset,\emptyset)$を零グラフという．位数が$0$または$1$のグラフを自明なグラフという．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    圏論とは，対象の上のグラフという形式（データ構造）を用いて，数学的対象の相互の関係自体を数学的対象とする代数的な技術である．
+\end{remarks}
+
+\begin{definition}[incident, endvertices / ends, join]
+    $v\in V(G),e\in E(G)$とする．
+    \begin{enumerate}
+        \item 関係$v\in e$を，\textbf{付随}するという．
+        \item $e$の２つの元を，\textbf{端点}という．$e=\{x,y\}$としたとき，この辺を$xy$または$yx$と表す．
+        \item 端点$x,y$は辺$xy$を\textbf{結ぶ}という．
+        \item 部分集合$X,Y\subset V(G)$について，$x\in X,y\in Y$を用いて$xy\in E(G)$と表される辺のことを\textbf{$X$-$Y$辺}と呼び，それら全てからなる集合を$E(X,Y)$と表す．一点集合の場合は省略して$E(x,Y)$などと表す．
+        \item 点$v$から出る辺全体の集合を$E(v)$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[adjacent / neighbours, independent, complete, triangle, stable]
+    $x,y\in V(G), e,f\in E(G)$とする．
+    \begin{enumerate}
+        \item $xy\in G$の時，２点$x,y$は\textbf{隣接する}という．隣接しないことを\textbf{独立である}という．
+        \item $e\cap f\ne\emptyset$の時，２辺$e,f$は\textbf{隣接する}という．隣接しないことを\textbf{独立である}という．
+        \item グラフ$G$が\textbf{完備}であるとは，任意の２頂点$x,y\in V(G)$が隣接していることをいう．
+        \item 位数$n$の完備グラフは同型を除いて一意的で，$K^n$で表す．$K^3$を\textbf{三角形}という．
+        \item 部分集合$V'\subset V(G),E'\subset E(G)$で，どの２元も独立である時，$E'$または$V'$が独立であるという．特に独立な頂点部分集合$V'$を\textbf{安定である}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[homomorphism, isomorphism, abstract graph]
+    $G=(V,E),G'=(V',E')$をグラフとする．
+    \begin{enumerate}
+        \item 写像$\varphi:V\to V'$であって，頂点の隣接性を保存するもの：$xy\in E\Rightarrow \varphi(xy)\in E'$を，\textbf{準同型}という．従って特に，辺を一切潰してはいけないので，任意の点$x'\in\Im\varphi$について，fiber $\varphi^{-1}(x')\subset V$は安定となる．
+        \item 全単射$\varphi:V\to V'$であって，$xy\in E\Leftrightarrow \varphi(xy)\in E'$を満たすものを\textbf{同型}といい，２つのグラフ$G,G'$の間に同型があることを$G\simeq G'$または$G=G'$とも表す．特にグラフの同型類にしか興味がないことを強調する時，これを抽象グラフという．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[graph property, graph invariant]\mbox{}
+    \begin{enumerate}
+        \item \textbf{グラフ属性}とは，その条件を満たすグラフのクラスが，同型について閉じていることをいう．即ち，その同型類に属する全てのグラフが満たす性質をいう．
+        \item \textbf{グラフ不変量}とは，$\dom f=\Gph$とする写像であって，同型類への制限が定値写像となるものをいう．
+    \end{enumerate}
+\end{definition}
+\begin{example}[graph property, graph invariant]\mbox{}
+    \begin{enumerate}
+        \item 条件$K^3\subset G$はグラフ属性である．ただし，$K^3\subset G$とは，射$i:K^3\to G$が存在することとした．
+        \item 「頂点と辺の数」はグラフ不変量である．「安定な部分グラフの最大位数」もグラフ不変量である．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[グラフの演算，subgraph, supergraph, induced subgraph, induce / span, spanning subgraph, edge-maximal]
+    $G=(V,E),G'=(V',E')$をグラフとする．
+    \begin{enumerate}
+        \item $G\cup G':=(V\cup V',E\cup E'),\;G\cap G:=(V\cap V',E\cap E')$とする．
+        \item $G'\subset G:\Leftrightarrow V'\subset V\land E'\subset E$と定め，$G'$を$G$の\textbf{部分グラフ}という．$G'\subsetneq G$を満たす$G'$を真の部分グラフという．
+        \item $G'\subset G$かつ$E'=E\cap (V'\times V')$を満たす部分グラフ$G'$を，\textbf{引き起こされる部分グラフ}という．また，$V'$が$G$上で$G'$を引き起こす／生成するという．この時，$G'=:G[V']$と表す．一般の部分グラフ$H\subset G$については，$H=G[H]$と表す．
+        \item $G'\subset G$が\textbf{生成する部分グラフ}であるとは，$G[V']=G$であること，即ち，$V'=V$であることをいう．
+        \item $U\subset V$について，$G-U:=G[V\subset U]$と表す．即ち，$G$から頂点$U$と，それに隣接する辺のみを消去したグラフを表す．一点集合$U=\{v\}$の場合は，$G-v$と表す．$G-V(G')$を$G-G'$と表す．
+        \item $F\subset[V]^2$について，$G-F:=(V,E\setminus F),\;G+F:=(V,E\cup F)$と定める．
+        \item グラフ$G$があるグラフ属性について\textbf{辺極大}であるとは，いかなる$E\subset F$を満たすグラフ$(V,F)$もそのグラフ属性を満たさないことをいう．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    グラフについて極大などと行った時は，グラフ包含順序について言う．
+\end{remark}
+\begin{remarks}
+    充満部分圏と全く同じ概念である．けど，「引き起こされる」の方が圏論的世界観に統一感がある気がする．
+\end{remarks}
+
+\begin{definition}[complement, line graph]
+    $G=(V,E),G'=(V',E')$をグラフとする．
+    \begin{enumerate}
+        \item ２つのグラフ$G,G'$が互いに素であった時，$G*G':=(G\cup G',E\cup E'\cup EE')$とする．ただし，$EE'=\{\{e,f\}\in[E\cup E]^2\mid e\in E,f\in E'\}$とした．
+        \item グラフ$G$の\textbf{補グラフ}を$\o{G}:=(V,[V]^2\setminus E)$と定める．
+        \item グラフ$G$の\textbf{線グラフ}$L(G)$とは，グラフ$G$の辺集合$E$を頂点集合とし，辺集合を
+        \[ef\in E(L(G))\;\Leftrightarrow\; ２辺e,fはG上隣接する：e\cap f\ne\emptyset\]
+        と定める．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $K^2*K^3=K^5$である．
+        \item $L$はきっと関手である．$n$-圏やhomotopy論のように，永遠に射を書ける構造が，グラフ理論の時点からある．
+        \item 五角形$G$と星形$\o{G}$は，補グラフと同型な例である．
+    \end{enumerate}
+\end{example}
+
+\subsection{The degree of a vertex}
+
+\chapter{代数}
+
+\begin{quotation}
+    モノイドの定義とモナド．群の定義を可換図式で与える(diagrammatic incarnation!)．
+    代数データ型は，関手に対する代数に対応する．数学の等式公理による定式化が形式として見えにくいだけである．
+    等式公理も含めた代数の概念は，圏論的にはmonadに対するEilenberg-Moore代数と呼ばれるものである．
+
+    monadは50s後半のhomological algebraでstandard constructionという構成の圏論的構成を調べる中で確立された概念である．当時はtripleと呼ばれていたが，Jean Bénabouによりmonoidを連想させる名前が付けられた．これはmonoidの定義となる可換図式との連想からである．実際，代数的理論のLawvere理論から，ある種の余極限を取ることで，Sets上の有限モナドを得る（Lawvere理論の圏とSets上の有限モナドの圏とは圏同値になる）．2000年以降は，計算効果をモナドの代わりに代数的理論により記述する試みが進んでいる．
+\end{quotation}
+
+\section{代数の言葉}
+
+\begin{definition}[graded algebra]
+    nLabを見て書く
+\end{definition}
+
+\section{Group}
+
+\subsection{群の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    GroupをInternalizationの言葉で，一般の圏（ただし有限積を持つもの\footnote{Any category with finite products can be considered as a cartesian monoidal category (as long as we have either (1) a specified product for each pair of objects, (2) a global axiom of choice, or (3) we allow the monoidal product to be an anafunctor).\url{https://ncatlab.org/nlab/show/cartesian+monoidal+category}}）で定義する．
+\end{tcolorbox}
+
+\begin{definition}[group object]\mbox{}
+    \begin{enumerate}
+        \item 有限積を備えた圏$C$について，次の３図式を可換にする対象$G$と射$\mult:G\times G\to G,\;\inv:G\to G,\;\id:1\to G$の組
+        \[\xymatrix{
+            G\times G\ar[r]^-{\mult}&G&G\ar[l]_-{\inv}\\&1\ar[u]^-{\id}
+        }\]
+        を\textbf{群対象}という．
+        \[\xymatrix{
+            G\times G\times G\ar[rr]^-{{\scriptsize\id_{G\times G}\times\mult}}\ar[d]_-{\mult\times\id_{G\times G}}&&G\times G\ar[d]^-{\mult}&G\times G\ar[dr]_-{\mult}&G\ar[l]_-{(\id_G,\id!)}\ar[d]^-{\id_G}\ar[r]^-{(\id!,\id_G)}&G\times G\ar[dl]^-{\mult}&G\times G\ar[d]_-{\id_G\times\inv}&G\ar[l]_-{\Delta}\ar[r]^-{\Delta}\ar[d]_-{\id!}&G\times G\ar[d]^-{\inv\times\id_G}\\
+            G\times G\ar[rr]_-{\mult}&&G&&G&&G\times G\ar[r]^-{\mult}&G&G\times G\ar[l]_-{\mult}
+        }\]
+        ただし，$\id!=\id\circ !:G\to G$とし，$\Delta=(\id_G,\id_G)$を対角射とした．
+        \item これは，反変関手$F:C^\op\to\Grp$であって，台関手$C^\op\to\Set$が表現可能であるようなものに他ならない．\footnote{全ての公理が$F$から生成されるから，logicの用語では$F$を指標(signature)と呼ぶ．}
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    このように，対角射が必要であるから，monoidal圏のdoctrineには群対象が存在するとは限らない．
+\end{remark}
+
+\begin{definition}[group, Lie group, topological group, Hopf algebra]\mbox{}
+    \begin{enumerate}
+        \item 集合の圏$\Set$内の群対象を\textbf{群}という．
+        \item 滑らかな多様体の圏$\Diff$内の群対象を\textbf{Lie群}という．
+        \item 位相空間の圏$\Top$内の群対象を\textbf{連続群}という．
+        \item 可換代数の反対圏$\CAlg^\op$内の群対象を\textbf{Hopf代数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[monoid, semigroup, loop, quasigroup, magma, groupoid]
+    群$G=(G,\mult,\id,\inv)$について，\footnote{このような概念群を考察する試みはcentipede mathematicsという．Centipede mathematics in the context of foundations is often called reverse mathematics. From Mathematical Apocrypha Redux: ‘You take a centipede and pull off ninety-nine of its legs and see what it can do.’良い圏を作るのがアーベル群で，アーベル圏をなし，cohomologyが展開できるが，一般の群でも何とかなる．表現としてはモノイド作用で十分でこれが代数を作るがloopだとダメである．}
+    \begin{enumerate}
+        \item $\inv$の構造を除くと，これを\textbf{単系}という．さらに$\id$の構造を除くと\textbf{半群}という．
+        \item 結合性の条件を除くと，これを\textbf{ループ}という．さらに$\id$の構造を除くと\textbf{擬群}という．即ち，全ての元が可逆なマグマであり，単位元が存在すればループという．
+        \item 全てを除いた構造$G=(G,\mult)$を，\textbf{マグマ}または二項代数系という．
+        \item $\mult$を部分写像であることを認め，小さい圏であって全ての射が可逆であるものを\textbf{亜群}という．\footnote{この観点から見れば，群とは，pointedな単一対象亜群のことである．pointed objectとは，対象$X$と$X$-値点$!:1\to X$との組をいう．}
+        \item 群$G$を，一点のみを持つgroupoid $\B G$だと思うことを，Homotopy theoryからdelooping of a group to groupoidという．
+    \end{enumerate}
+\end{definition}
+
+\subsection{群の構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    最も簡単な構成法は自身の内部を省みる，部分群である．
+    元の構造は，早々と集合の間の構造に上げて，その記法で議論した方が良い．
+    そしてその元への言及は，なるべく外在化させて射への条件で記述するのが良い．
+\end{tcolorbox}
+
+\begin{notation}
+    群$G$の部分集合$S,T\subset G$と元$a,b\in S$に対して，群を
+    \begin{align*}
+        ST&=\{ st\mid s\in S,t\in T \} &S^{-1}&=\{s^{-1}\mid s\in S\}\\
+        aS&=\{ax\mid x\in S\}&Sb&=\{xb\mid x\in S\}&aSb&=\{axb\mid x\in S\}
+    \end{align*}
+    と定義する．また，帰納的に
+    \begin{align*}
+        S^0&=\{e\} & S^{-1}&=\{x^{-1}\mid x\in S\} & S^{m+1}&= S^mS 
+    \end{align*}
+    という記法も定める．
+\end{notation}
+
+\subsubsection{包含：部分群とその生成}
+
+\begin{proposition}[群の特徴付け]\label{prop-characterization-of-group}
+    $G$を群，$H\subset G$を空でない部分集合とする．
+    次の３条件は同値である．
+    \begin{enumerate}
+        \item $H$は群である．
+        \item $H^2\subset H\land H^{-1}\subset H$．\footnote{$\forall_{a,b\in H}\;(ab\in H)\land(a^{-1}\in H)$．}
+        \item $H^{-1}H\subset H$．\footnote{$\forall_{a,b\in H}\;a^{-1}b\in H$．}
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (1)$\Rightarrow$(2)$\Rightarrow$(3)は論理的帰結である．
+    (3)$\Rightarrow$(1)を示す．群の演算の制限$\cdot|_{H\times H}$の値域が$H$に含まれること：$\forall_{a,b\in H}\;ab\in H$を示せば良い．
+    \begin{enumerate}[1.]
+        \item $H\ne\emptyset$より，$a\in H$が取れる．
+        \item (3)より，$a^{-1}a=e\in H$である．\footnote{$a=e$でも構わない．}
+        \item (3)より，$a^{-1}e=a^{-1}\in H$である．
+        \item 以上より，任意の$a,b\in H$について，$a^{-1}\in H$もわかったから，(3)より，$(a^{-1})^{-1}b=ab\in H$．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[internalizationで考えると，今回示すべき事柄と群の公理のズレがわかりやすい]
+    要は，群の公理のうち，射の性質に当たるものは今回は示す必要がなく，可換図式から射が誘導されるための条件のみを示せば良い．$\Im(\cdot|_{H\times H})\subset H$が成り立てば良い．
+    具体的に言えば，結合性と単位元の中立性と存在，逆元の吸収性と存在のうち，前者は演算の閉性のみが大事で（じゃないと$G$を$H$に書き換えた図式に可換な射が引き起こされない），
+    後２者は存在のみが大事である（これは$\Im\inv\subset H,\Im\id\subset H$という閉性のことである）．
+    図式の言葉で考えれば，全てが統一的に見れる．
+\end{remarks}
+
+\begin{corollary}[部分群の共通部分に関する閉性]
+    $H_1,H_2\subset G$を$G$の部分群とする．$H_1\cap H_2$も部分群である．
+\end{corollary}
+\begin{proof}
+    群の特徴付け（命題\ref{prop-characterization-of-group}）より，任意の$a,b\in H_1\cap H_2$について，$a^{-1}b\in H_1\cap H_2$だから，$H_1\cap H_2$も群である．
+\end{proof}
+
+\begin{definition}[生成される群，巡回群，群の表示]\mbox{}
+    \begin{enumerate}
+        \item 群$G$の部分集合$S\subset G$に対して，$S$を含む最小の部分群を\textbf{$S$から生成される部分群}といい，$\bracket{S}$で表す．
+        \item 同値な定義に，$(G_\lambda)_{\lambda\in\Lambda}$を$S$を含む$G$-部分群全体からなる族として，$\bracket{S}=\bigcap_{\lambda\in\Lambda} G_\lambda$．また，$\bracket{S}=\{s_1^{n_1}\cdots s_r^{n_r}\in G\mid a_i\in S,n_i\in\Z,r\in\N_{>0},i\in[r]\}$などがある．
+        \item 例外的に，群がある$1$つの元の冪の全体からなっているとき，これを\textbf{巡回群}という．無限巡回群を\textbf{自由巡回群}ともいう．
+    \end{enumerate}
+\end{definition}
+
+\subsubsection{商：正規部分群と剰余群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    ある$h\in H$が存在して，$ah=b$を満たすという同値関係，即ち「$H$の元を右から掛けた分だけの違い」を潰すと，右剰余類を得る．
+    これは同値関係となるので，$\abs{H}$個の軌道に分解され，これを$G\setminus H$で表す．
+    そう，剰余類は軌道分解の例である．
+    左右の剰余類が一致するという性質は，$aH=Ha\Leftrightarrow aHa^{-1}=H$として抽出され，共役という標準的な変換が想定される．
+    共役を主役に据えると，「共役変換が不変に保つ部分群」を正規という．
+    これについて潰すと，中間的な群構造が見えてきて，これを捉える言葉が剰余群＝商群である．
+\end{tcolorbox}
+
+\begin{definition}[right coset, index]
+    $G$を群，$H\subset G$をその部分群とする．
+    \begin{enumerate}
+        \item $a\sim b:\Leftrightarrow ab^{-1}\in H$と定めると，これは同値関係であり，$b$は$a$に\textbf{右合同}であるという．
+        \item この右合同関係についての商集合を$H\backslash G$と表し，この元を$G$に於ける$H$の\textbf{右剰余類}という．
+        \item $G$の$H$による左剰余類の数を$(G:H)$と書き，$G$の$H$に於ける\textbf{指数}といいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[部分群の位数：Lagrange's theorem]
+    $H$を$G$の部分群とする．
+    \begin{enumerate}
+        \item $g\in G$について，$p(g)=Hg$と表せる．
+        \item $G$の$H$に関する右剰余類の濃度は全て$H$の濃度に等しい．
+        \item よって，$\abs{G}=(G:H)\abs{H}$．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $A$を$H$に関する右剰余類，$a\in A$とする．
+    すると，全単射の列$A\to Ha\to H$が存在する．
+    \begin{enumerate}
+        \item $x\in A\Leftrightarrow xa^{-1}\in H\Leftrightarrow x\in Ha$より，$A=Ha$である．
+        \item 全単射$A\to Ha$は，方程式$A=Ha$の解の一意性による．方程式$A=Ha$を条件$E\subset G\times G$だと思うと，$E:A\to Ha$に全単射を定める．
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[normal subgroup, simple group]
+    $G$を群，$N\subset G$を部分群とする．
+    \begin{enumerate}
+        \item $\forall_{a\in G}\; a^{-1}Na\subset N$を満たすとき，$N$は\textbf{正規}であるという．
+        \item $G$が$G,\{e\}$以外に正規な部分群を持たないとき，$G$を\textbf{単純}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[正規部分群の特徴付け]
+    群$G$に対して，共役（作用）
+    \[\xymatrix@R-2pc{
+        \Ad:N\times G\ar[r]&N\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (n,g)\ar{|->}[r]&gng^{-1}
+    }\]
+    が自然に定まる．これについて，部分群$N\subset G$に対する次の２条件は同値．
+    \begin{enumerate}
+        \item $N$は正規である．
+        \item $\forall_{g\in G}\;\Ad_g(N)=N$．
+        \item $\forall_{g\in G}\;Ng=gN$．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    (2)$\Rightarrow$(1)は明らかに含意されているから，(1)$\Rightarrow$(2)を示す．
+    $N$は正規ならば，$g^{-1}\in G$について，$gNg^{-1}\subset N\Leftrightarrow N\subset g^{-1}Ng$が成り立つ．
+    よって，$g^{-1}Ng=N$が従う．
+    (2)$\Leftrightarrow$(3)は，$g^{-1}Ng=N\Leftrightarrow Ng=gN$である．
+\end{proof}
+
+\begin{definition}[coset group / quotient group]
+    正規部分群$N\triangleleft G$に関する剰余類は群になり，これを\textbf{剰余群}または\textbf{商群}といい，$G/N$で表す．
+\end{definition}
+\begin{proof}
+    $A,B$を$N$に関する剰余群とすると，$\exists_{a,b\in G}\;A=Na,B=Nb$．
+    $AB=NaNb=Na(a^{-1}Na)b=NNab=Nab$より，$AB\in p(G/N)$も剰余群である．
+    従って，$p(N)$は群の公理を満たす．
+\end{proof}
+
+\subsubsection{積：群の直積}
+
+\subsection{標準分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    一般に群はある自由群からの全射準同型像なので必ず表示を持つが，それは一意的ではない．
+    線型空間の理論と同様，「関係$R$」さえ，群としての表現：正規閉包を持つ．線型空間については，関係$R$は余核として定めた．
+    これはいずれもSetの直交分解系(orthogonal factorization system)に由来するためである．
+\end{tcolorbox}
+
+\begin{theorem}
+    準同型写像$f:G\to G'$は，標準的な同型
+    \[\xymatrix@R-2pc{
+        \o{f}:G/\Ker f\ar[r]&\Im f\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        x\Ker f\ar@{|->}[r]&f(x)
+    }\]
+\end{theorem}
+
+\subsection{可解性}
+
+\subsection{Sylowの定理}
+
+\subsection{可換群}
+
+\section{Monoid, Monad}
+
+\subsection{monoid object}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    モノイド対象は，モノイド圏（実はもっと一般にmulticategory）に生息する．
+    群対象はcartesian monoidal categoryである必要があったのと対照的である．
+\end{tcolorbox}
+
+\begin{definition}[monoid object, monoid morphism]
+    モノイド圏$C=(C,\otimes,1,\alpha,\lambda,\rho)$において，
+    \begin{enumerate}
+        \item モノイド対象
+        \[\xymatrix@1{
+            M\otimes M\ar[r]^-{\mu}&M&1\ar[l]_-\eta
+        }\]
+        とは，次の図式を満たす3-組$(M,\mu,\eta)$である．
+        \[\xymatrix{
+            (M\otimes M)\otimes M\ar[d]_-{\mu\otimes\id_M}\ar[rr]^-{\alpha}&&M\otimes(M\otimes M)\ar[d]^-{\id_M\otimes\mu}&1\otimes M\ar[r]^-{\eta\otimes 1}\ar[dr]_-{\lambda}&M\otimes M\ar[d]_-{\mu}&M\otimes 1\ar[l]_-{1\otimes\eta}\ar[dl]_-{\rho}\\
+            M\otimes M\ar[dr]_-\mu&&M\otimes M\ar[dl]^-\mu&&M\\
+            &M
+        }\]
+        \item モノイド射とは，射$f:M\to M'$であって，次の図式を可換にするものである：
+        \[\xymatrix{
+            M\otimes M\ar[r]^-{f\otimes f}\ar[d]_-\mu&M'\otimes M'\ar[d]^-{\mu'}&1\ar[r]^-{\eta_M}\ar[dr]_-{\eta_{M'}}&M\ar[d]^-f\\
+            M\ar[r]^-{f}&M'&&M'
+        }\]
+    \end{enumerate}
+\end{definition}
+\begin{example}[ring, algebra, associative unital ring, monad]\mbox{}
+    \begin{enumerate}
+        \item モノイドの射の概念と関手の概念が一致するので，モノイドの圏Monが，単一対象圏のなす充満部分圏であるのと同様，$C$のモノイド対象のなす圏は，$C$上の豊穣圏のうち，単一対象であるもののなす充満部分圏である．
+        \item $\Z$-加群のテンソル積を備えたアーベル群の圏Abのモノイド対象を環という．
+        \item $k$上の代数とは，線型空間のテンソル積を備えた圏$\Vect_k$のモノイド対象をいう．
+        \item 加群の圏のモノイド対象を結合的単位的環(associative unital ring)という．
+        \item 自己関手の圏$C^C$は関手の合成についてモノイド圏である．この圏$C^C$のモノイド対象をモナドという．
+    \end{enumerate}
+\end{example}
+
+\subsection{Monad}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    categories are instances of monads, which can be defined in any bicategory or more generally any double category (both a kind of categorified category) or virtual double category. This generalization includes internal categories and enriched categories.
+\end{tcolorbox}
+
+\section{Ring}
+
+\begin{thebibliography}{9}
+    \bibitem{Reinhard Diestel}
+    Reinhard Diestel "Graph Theory" 5th ed. (2016).
+    \bibitem{Godsil}
+    Chris Godsil and Gordon Royle (2001), Algebraic Graph Theory, Springer.
+    \bibitem{Barr & Wells}
+    Michael "Toposes, Triples and Theories" (Springer, 1983).
+\end{thebibliography}
+
+\end{document}

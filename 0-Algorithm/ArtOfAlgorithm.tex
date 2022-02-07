@@ -1,0 +1,31 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{The Art of Computer Programming}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4} \setcounter{chapter}{-1}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+
+\begin{remark}[generating function]
+    一般に母関数とは，
+    Knuthの第一章に乗っているくらいに組合せ数学でよく使われる手法で，今回の離散変数のような列$(f_n)_{n\in\N}$という対象に対して定義される，
+    そのrig $R$上の形式的冪級数の集合$R[[z]]$の元$f(z)=\sum_{n=0}^\infty f_nz^n$のことをいう．
+    これにより，数列が関数として生まれ変わったこととなり，こちらを解析することができる．また，元の数列も微分の言葉で再現できる．
+    $R=\N,\Q,\R,\C$などが主に考えられ，後２者についてはTaylor展開の理論が，$\C$では解析接続の理論が模範としてあり，そこでは母関数とは解析関数のことをいう．
+    最初にこの方法を始めたのは一般線型回帰問題を解くために\footnote{数列とその母関数の対応は線型同型の代表例に他ならない．}A. de Moivreが創始し，James Stirling, Euler, Laplaceが応用した．
+\end{remark}
+\begin{example}[母関数の応用]
+    関手$\mathrm{Seq}\to\mathrm{Fun}$に他ならない．
+    $G(z)$が列$(a_n)$の母関数で，$H(z)$が列$(b_n)$の母関数とする．
+    \begin{enumerate}
+        \item 加算：$\alpha G(z)+\beta H(z)$．
+        \item シフト：$z^mG(z)$．
+        \item 乗算：$GH$．
+    \end{enumerate}
+    (1),(2)の組み合わせが，漸化式を解くという行為である．
+\end{example}
+
+\end{document}

@@ -1,0 +1,128 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{統計学}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{縦割りの統計学}
+
+\section{記述 vs 推測}
+
+\subsection{二項対立の構造}
+
+記述統計学と推測統計学との手法の違いは，データの背後に確率論的な構造を考えるかどうかという点にある．
+データを所与のものと思い，データに対する理解を深める手法と，データを確率変数の実現値と捉えて予測を目指す手法とである．
+
+これはアルゴリズム vs 推論という二項対立でもある．汎関数の計算・実装と，推定である．
+現在は前者の黄金期であり，推論法に進化を要求する．
+アルゴリズムは統計学の外に触発される，神経回路網，サポートベクトルマシン，ブースティングなど．
+そしてこれを受け止めるために数理がさらに豊かになる．
+
+\subsection{回帰の例}
+
+線型回帰の最小二乗法は古典的なアルゴリズムである．
+その推定の正確性を評価する推論法には，標準誤差などがある（95\% で入る振れ幅）．
+近年のアルゴリズムにはlowess (locally weighted scatterplot smoother)がある．
+これには$\pm 2$倍のブートストラップ標準誤差などで推論される．
+ブートストラップ法は解析的な方法ではない（標準誤差のように式を持たない）が，
+それゆえにいかなる複雑なアルゴリズムにも適用できることが有用になる，
+計算量にものを言わせる脳筋手法である．
+
+\subsection{仮説検定}
+
+推定量の評価以外にもう一つ，推論法が要請される分野は，仮説検定である．
+２標本$t$-統計量$t=\frac{\o{x}-\o{y}}{\wh{\sd}}$は，ステューデントの$t$分布が帰無分布となる．
+
+\chapter{統計的推論}
+
+観測データの背後に確率モデルを想定する仮定から始まる．
+
+\section{頻度派}
+
+20Cから統計学の営みが開始され，卓上計算機でも実行可能なアルゴリズムによる理論が完成した．
+これを古典理論，または，頻度派的な推論という．
+
+
+\chapter{多変量解析}
+
+\section{歴史}
+
+\begin{enumerate}
+    \item 現代的な数理統計学の理論体系が確立したのは1920sのFisher, Neyman, E. S. Pearsonらによる．
+    \item この枠組み（相関分析など）に沿って，30sからは自然な形で多変量に拡張された．Fisher自身も多くの貢献をしたが，Hotelling, Wilks, Wishartらの仕事が基礎になっている．
+    \item 多変量推測統計のAndersonによる標準的教科書"An Introduction to Multivariate Statistical Analysis"は1958年に刊行された．この頃には多変量正規分布と線型モデルに基づく推測理論の基礎は確立していた．
+    \item 1970s以降の計算機時代では，今日ではほとんどのデータは多変量データであり，取り立てて多変量分析と言わなくても，新たな統計手法は押し並べて多変量データを扱う手法となっている．
+\end{enumerate}
+\cite{フロンティア１}の序文．
+
+\begin{example}
+    回帰分析，分散分析，主成分分析，判別分析，因子分析，分割表，グラフィカルモデル．
+\end{example}
+
+\section{多変量解析の考え方}
+
+多変量解析においては，連続分布としては多変量正規分布以外に扱いやすい分布が少ない．
+ところが，実際のデータ解析の場面では多変量正規分布の仮定の妥当性が疑われる場面が多く，
+記述統計的な手法と推測統計的な手法の間に大きなギャップがあるのが現状．\cite{フロンティア１}
+
+\section{用語と記法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    行列やベクトルを言葉として用いるのが特徴であり，経済学はこのAndersonらの慣習を強く受け継いでいる．
+\end{tcolorbox}
+
+\begin{definition}[data matrix, sample size, dimension]\mbox{}
+    \begin{enumerate}
+        \item 多変量データを\textbf{データ行列}とも呼ぶ．一般には行を個体，列を変数とする．それぞれの添字を$t$と$i,j$と使い分ける．
+        \item $n\times m$データ行列の行数$n$を\textbf{標本の大きさ}といい，列数$m$を標本の\textbf{次元}という．\footnote{高次元データを，なんらかの形で２次元空間に写して解釈する記述統計的手法を，次元の縮約という．}
+        \item 値が数ではない変数を\textbf{質的変数}という．これを量的変数に変換する手法を\textbf{数量化}という．
+    \end{enumerate}
+\end{definition}
+\begin{remark}[spatial statistics, random field]
+    データ行列の古典的な枠組みに入らない多変量データには，地理的なデータなどがある．これには\textbf{空間統計}や\textbf{確率場}の手法がある．
+    また，質問表に分岐がある場合は，特定の回答をした者以外の値が\textbf{欠測値}となる．
+\end{remark}
+
+\chapter{時系列解析}
+
+\begin{quotation}
+    確率変数列$X_1,\cdots,X_n$の実現値と見做し得るデータに対する統計解析を多変量解析と呼ぶならば，確率過程の実現値と見做し得るデータに対する統計解析を時系列解析という．
+\end{quotation}
+
+\section{歴史}
+
+\begin{enumerate}
+    \item 1940sよりWienerやKolmogorovにより弱定常過程のスペクトル解析と予測の理論が確立される．特に連続時間の確率過程の理論が精緻に発展した．
+    \item 1976年刊行のGeorge BoxとJenkinsによるTime Series Analysis, Forecasting and Control"が，自己回帰移動平均(ARMA)モデルと呼ばれる線型モデルの構築と予測のための標準的な手続きが確立した．これ以降はARMAモデルの限界を乗り越えることを念頭に，非線形モデルなどさまざまな手法が提案されることになる．
+\end{enumerate}
+
+\section{時系列解析の考え方}
+
+通常の統計学は主に独立標本に対する議論であるが，時系列解析は時間軸の間にも従属関係がある状況での統計解析であり，
+その点で一般化であると捉えられる．
+
+\section{リード・ラグ効果とCCK理論}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 2つの時系列がタイムラグを持って相関する現象をlead-lag効果という．
+        \item 
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    現状の取引の流動性では，msの世界で存在する．結果，80sまでは分のスケールで観測されていた現象だが，現在は高頻度データと呼ばれる分野となってしまった．
+    そこで，古いモデルが使えなくなってしまったこの現象に対して，Hoffmann, Rosenbaum, and Yoshida (2013)が新しいモデルと推定法を提案した．
+    
+\end{remarks}
+
+\begin{thebibliography}{99}
+    \bibitem{フロンティア１}
+    『統計科学のフロンティア１　統計学の基礎I　線型モデルからの出発』（第I部「多変量解析入門」（竹村彰道），第II部「時系列解析入門」（谷口正信））
+\end{thebibliography}
+
+\end{document}

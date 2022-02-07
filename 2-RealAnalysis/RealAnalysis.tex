@@ -1,0 +1,3493 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{実解析}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\renewcommand{\B}{\mathcal{B}}
+\begin{document}
+\tableofcontents
+
+\chapter{集合論とPosの理論とPosの射としての積分}
+
+\begin{quotation}
+    Fourier 1768-1830が数学を19世紀化したとすれば，数学の20世紀化は，
+    解析学の概念的枠組みを1870年ごろから急速に現代化した．
+    Fourierの夢を原動力として進むと，数々の反例と問題が登場して，
+    ナイーブな関数の取り扱いは全て破れ，代わりにより幾何学的で抽象的な枠組みが
+    鍛造されていった．Riemann 1826-66とPoincaré 1854-1911が数学を20世紀化したと見れるだろう．
+
+    解析学の基本を追求して集合論が整備された．
+    その上に立ったのが測度論であり，ここから圏論的世界観へ離陸するのが現代の最前線である．
+    宇宙$P(X)$は包含射による2上の豊穣圏の構造をしており，Poset categoryとなっている．
+    $P(X)$の列，filtration，集合演算もこの観点から見ると新たな光が当たる．
+    この上の，数の集合へのPos射が，積分である，という射としての理解により，Riemann積分は乗り越えられる．
+    集合演算についての命題は全て2上の豊穣圏に帰着し，Boole代数の議論に帰着する．
+    これが解析学が開発した集合論という着地である．
+
+    面積，確率はadditivityを持つ．これのモデルとして圏$P(X)$は極めて優秀であり，additivityは劣加法性というposet categoryの関手の関手性の極限的な状況として実装される．
+    すると，完備Boole代数$P(X)$の部分$\sigma$-代数$\B\subset P(X)$に注目することになる．
+\end{quotation}
+
+\section{歴史的文脈}
+
+\begin{history}\mbox{}
+    \begin{description}
+        \item[1872.] Weierstrassによる至ところ微分不可能な関数の構成．
+        \item[1881.] Jordanによる有界変動関数の導入と，1887年の長さ有限性との関連．
+        \item[1883.] Cantorの３進集合．
+        \item[1890.] Peanoによる空間を埋め尽くす曲線の構成．
+        \item[1898.] Borelの可測集合．
+        \item[1902.] Rebesgueによる測度と積分の理論．
+        \item[1905.] Vitaliによる非可測集合の構成．
+        \item[1906.] FatouによるRebesgueの理論の複素関数論への応用（博士論文，Poisson integral of an arbitrary measure on the unit circleについて）．初のRebesgueの理論の実用である．\footnote{Fatouは複素力学系の開拓者となった．足助先生と繋がる．}
+    \end{description}
+\end{history}
+
+\begin{question}[Fourier係数を指定して得る関数はどのような関数か？]
+    Riemann積分可能な関数全体からなる集合$\mathcal{R}\subset\Map([-\pi,\pi],\C)$はFourier展開可能であるから，写像$\mathcal{R}\to l^2(\Z)$が定まるが，この逆は定まらない．
+    特に，$l^2(\Z)$は完備であるが，$\mathcal{R}$はそうではない．
+    そこで，任意の二乗総和可能な数列$(a_n)\in l^2(\Z)$に対して，これをFourier係数とする関数はどのようなものか考えたくなる．
+\end{question}
+
+\begin{question}[連続関数の極限はどんな関数か？]
+    関数列$(f_n:[0,1]\to\C)$に対して，$f(x):=\lim_{n\to\infty}f_n(x)$と定める．
+    $(f_n)$が一様連続ならば$f$も連続である．
+    \[\int^1_0f(x)\;dx=\lim_{n\to\infty}\int^1_0f_n(x)\;dx\]
+    が自然に成立する積分の枠組みも欲しい．
+\end{question}
+
+\begin{question}[曲線の長さとフラクタル]
+    曲線$\Gamma$が長さ有限であるためには，$x(t),y(t)$がどうあれば良いか．
+    どのように測れば良いか？
+    これは，有界変動という概念で明確に捉えられ，長さを測るのに適切なパラメータの付け方のクラスが特定できる．
+    また，曲線の長さが面積的な意味を持ち得る．
+    正方形を埋め尽くす平面上の連続曲線が存在する．
+\end{question}
+
+\section{集合論のPosの部分圏としてのまとめ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    宇宙$P(X)$を調べる．順序については，包含射についてPoset category(2上の豊穣圏)をなし，特に完備な束である．
+    代数的には任意回数の交わりと結びを許し，数の和差より自由である．完備Boole代数であることを緩めて空間の情報を抽出するのが位相の理論であるが，さらに弱めて完備束としてみて，
+    完備束の射としてRiemannより代数的に積分を得るのがLebesgueの積分論である．
+    すると構成が代数的であるため（ほぼ極限構成をする），自然と種々の極限について良い振る舞いをする．
+
+    poset categoryとは2上の豊穣圏であるから，集合についての議論は最終的にはBoole代数$2$に還元される．
+    これが解析学が開発した集合論という着地である．
+    ここまで戻れば安心であるが，この議論はなかなか容易ではない．
+    したがって以下に普遍性で言い換えていくかの代数的な配慮が大事になる．
+\end{tcolorbox}
+
+\subsection{束とHeyting代数とBoole代数}
+
+\begin{definition}[lattice, complete lattice]\mbox{}
+    \begin{enumerate}
+        \item 
+    基本的に$P(X)$は順序に関して束の構造を持つ．束とは，有限の交わりと有限の結び\footnote{poset as a $(0,1)$-categoryとしては，それぞれ直積と直和(coproduct)と見れる．}を持つ半順序集合であるが，順序も代数として見ることができ，したがって純代数的には
+    次を満たす代数系$(L,\land,\lor,\top,\bot)$をいう．
+    \begin{enumerate}[(a)]
+        \item $\land,\lor:L\times L\to L$は冪等で，結合的で，交換的である．
+        \item 吸収律$a\lor(a\land b)=a,a\land(a\lor b)=a$が成り立つ．\footnote{それぞれ，結び，交わりという「直近の交差点」を通じてアクセス可能だという順序構造を代数的に表しているとみれる．}
+        \item $\top,\bot$は$\land,\lor$の中立元である．
+    \end{enumerate}
+    ２つの表現は$a\le b\Leftrightarrow a\land b=a,\;b\le a\Leftrightarrow a\lor b=a$で対応する．\footnote{この２つの対応は，順序表現が鳥瞰図，代数表現がそのHesse図の上を動くパックマンの気持ちのようである．}\footnote{この対応は同値な条件を２つ述べている．これは，束とは，「同じ順序関係を定める２つの半束を備えた代数系が束である」という特徴づけの消息が映り込んでいる．}
+    \item 束が任意の交わりと結びについて閉じているとき，これを\textbf{完備}という．\footnote{圏が完備であることは任意の極限を保つことを言う．ここら辺が本質である．}圏CompLatをなす．結びのみについて閉じている場合をframeという．\footnote{が，adjoint functor theoremから示せる基本的な事実として，双対的に任意の結びももち，したがって結局完備である！}
+    \item 束の射は，$f(a\land b)=f(a)\land f(b),f(a\lor b)=f(a)\lor f(b)$という２つのsemi-lattice構造を保つものをいう．特に$f$は単調写像である必要があるが，十分ではない．この圏をLatなどと表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[束と束準同型の例]\mbox{}\label{exp-lattice}
+    \begin{enumerate}
+        \item 部分群の束を定め，結びは$NH$，交わりは$N\cap H$となる．
+        \item 位相$\O$は完備束をなすが，無限共通部分は$\cap$演算とは一致しないことに注意．あくまで順序構造が完備束をなす．
+        \item $\R$は束であるが完備ではない．局所コンパクト空間$\R$の端点コンパクト化$\o{\R}$はtopとbottomを備え，完備束となる．$[0,\infty]$も同様．積分$\B\to[0,\infty]$は束準同型ともみれる．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[set operation]
+    $P(X)$について，
+    \begin{enumerate}
+        \item （任意個数の）共通部分と合併$\cap,\cup:P(X)\times P(X)\to P(X)$がある種の極限に思える．すると，$(P(X),\cap,\cup,\emptyset,X)$は完備束となる．また任意濃度の分配則が成り立ち，これをde Morgan則という．
+        \item 写像$f$は一般に$f(\cup_{i\in I}A_i)=\cup_{i\in I}f(A_i)$．$f$が単射ならば，空でない族$(A_i)_{i\in I}\;I\ne\emptyset$について，$f(\cap_{i\in I}A_i)=\cap_{i\in I}f(A_i)$．すなわち，単射$f$が引き起こす全射$f_*$は完備束の射である($\sigma$-加法性も保つ)．
+        \item 一般の写像$f$が定める反変関手$f^*$は完備束の射である．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[mapping]\mbox{}
+    \begin{enumerate}
+        \item $f(A)\subset B\Lrarrow A\subset f^{-1}(B)$は，包含射$i:X\mono Y$が存在するという2上の豊穣圏での「内積」を$\brac{-,-}:P(X)\times P(X)\to 2$と表すならば，写像$f$が冪集合上に定める関手を用いて，$\brac{f_*(A),B}=\brac{A,f^*(B)}$となるから，これらは互いに随伴である．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Heyting algebra, Boolean algebra]
+    束は明らかに，双対的な２つの代数系（半束）を組み合わせたものである．\footnote{２つのフィルター／イデアルをひっくり返してくっつけて，全体として束（のあの特徴的なHesse図）になる，という感じ．}
+    ここにbicategory的な消息があるのは自然なことである（Heyting代数はbicartesian closed categoryのことに他ならない\footnote{bicartesian closed categoryとは，有限coproductも有限productも（モノイド構造として）備えたclosed categoryであり，２つの構造$\land$とinternal hom$\Rightarrow$の間に随伴関係＝curryingがあるposet categoryのことをという．}）．
+    bicategoryに特徴的なものは随伴・内積・currying・exponentである．$f_*,f^*$の互いに逆な関手が２つ生まれることはこの消息である．
+    \begin{enumerate}
+        \item 次の普遍性（$\land$との右随伴性，$\lor$との左随伴性）を満たすbicunctor (実はinternal hom) $\Rightarrow:L^\op\times L\to L$を備える束$L$を\textbf{Heyting代数}という：$(x\land a)\le b\Lrarrow x\le(a\Rightarrow b)$．\footnote{そうか，必要十分条件がわからないというけど，これは$\land,\lor$との随伴の中に生きているのか．$-\land a$と$a\Rightarrow-$が随伴ね．この随伴は，一般的にはモノイダル圏で捉えられるモノイド構造と指数対象＝cartesian monoidal categoryに関するinternal homとの随伴性の例になっている．}
+        \item Heyting代数には，２つの半束を行き来する$\lnot:L^\op\to L$が，$\lnot x:=(x\Rightarrow 0)$として自然に定義できる．これがinvolutionである時，\textbf{Boole代数}といい，命題論理のモデルとなる．これがなす圏をBoolAlgと表す．\footnote{任意の束の射は$\lnot:L\to L^\op$を保つ．}
+        \item ブール代数は環として理解できる．単位的な環がBooleanであるとは，任意の元$x\in R$について$x^2=x$を満たすことを言う．これは通常の環準同型について圏BooRngをなす．これはBoole代数の圏と圏同値になり，１つの集合$R$に入るBoole代数の構造とBoole環の構造とは標準的な全単射が存在する．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    Boole代数とBoole環とは$0=\bot,1=\top$という対応であり，その違いは，$\sigma$-代数と$\sigma$-体の違いに等しい．
+    環とはAb内のidempotent semigroupを意味し，体または代数とはAb内のidempotent monoidを意味する．\footnote{半束もidempotent monoidのことであると理解できる．}
+    これは現代的な環・体・代数の定義とは異なる．
+    $\sigma$-環$\B\subset P(X)$と言ったとき，$P(X)\in\B$とは限らないことに対応する（定義\ref{def-sigma-algebra}）．
+    いずれの場合も，和のAbel群$(P(X),\cap,\emptyset)$の方が大事で（群とはいいにくい，自然には可逆でないので），
+    その上に$\cap$の構造がどう乗るかを考え，$\sigma$-と言った時は加法に注目する．
+    この観点からは「集合体」という表現にも一理ある．
+\end{remark}
+\begin{remark}
+    Boole代数$2$は，２つのsemilatticeが結合した代数系として一番退化した形である．
+    そもそも忘却しても$P(X)\simeq\Hom_\Set(X,2)$なのであった．
+    Boole代数としてはウルトラフィルターが表現される：$\Ult(X)\simeq\Hom_\BoolAlg(X,2)$．
+\end{remark}
+
+\begin{example}[完備Heyting代数とBoole代数の例]\mbox{}
+    \begin{enumerate}
+        \item 完備Heyting代数のことをframeという．が，frameと言った時，射はsuplatticeの射を採用し，完備Heyting代数の射は採用しない．
+        \item 位相は完備束である\ref{exp-lattice}ことに加え，位相は完備Heyting代数である．と言っても，順序については$\bot=\emptyset$が存在するのでそうであるが，$\land=\cap$ではないので，普段の位相の議論の文脈では違うと言いたい．
+        \item $P(X)$は完備Heyting代数である上に，$\complement:P(X)\to P(X)$はinvolutionなので，\textbf{完備Boole代数}である．実は，$P(X)$はatomic性によって同型を除いて一意に定まる．\footnote{排中律を認めた場合}したがって，関手$P:\Set^\op\to\CompBoolAlg$は充満忠実である．この本質的な像はCABA (complete atomic Boolean algebra)と表す．まずBoole代数の元$a\in A$がatomであるとは，$a$が$A\setminus\{\bot\}$の極小元であることを言う．Boole代数$A$がatomicであるとは，任意の$b\in A$に対して，atom $a_i$のみからなる合併$b=\bigvee_{i\in I}a_i$を持つことを言う．このような構造を持つBoole代数は，必ず何かしらの集合の冪集合である．
+    \end{enumerate}
+    測度論と積分論では，位相のframeには対称性を加えBoole代数にまで上げ，しかし完備Boole代数よりは条件を弱めて，可算個の結びと交わりについてのみの閉性を要求する$\sigma$-代数\ref{def-sigma-algebra}というクラスに注目する．
+\end{example}
+
+\begin{tbox}{red}{keywords}
+    2上の豊穣圏，束準同型としての積分の代数的定義がLebesgue積分であること，作用素的な世界観，mathematics based on human cognitionは「射的なもの」へと漸近していく．
+    集合の共通部分も合併も，束の交わりも結びも，下限・上限として極限的な存在である．だから最大と最小よりも普遍的な存在なのである．
+    これを代数化したのが束（さらに双璧的な消息を捉えるとHeyting代数）だと思える．ただ完全にこの言葉で書かないのは，集合の言葉の方が構造は豊かで，また直感的だからであるが，frameによる位相空間論の使いやすさを見ると，ここは新たな研究領域としても良いだろう．
+    すると集合列の極限も圏は違えど全く同様に議論できて，上限$\limsup$と下限$\liminf$が見つかる．
+    \[\xymatrix{
+        \CompBoolAlg\ar@{}[r]|-\subset&\sigma-\Alg\ar@{}[r]|-\subset&\BoolRng\ar@{}[r]|-\sim&\BoolAlg\ar@{}[r]|-\subset&\HeytAlg\ar@{}[r]|-\subset\ar@{}[d]|-\cup&\Lat\ar@{}[r]|-\subset\ar@{}[d]|-\cup&\Pos\\
+        \Set^\op\ar@{^{(}->>}[u]^-P&&&\Frm\ar@{}[r]|-{\not\sim}&\CompHeytAlg&\CompLat
+    }\]
+\end{tbox}
+
+\subsection{余談：分配則について}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    分配性は極めて美しい圏論的特徴づけがある．したがって，self-dualityも成り立つ．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $x\lor(y\land z)=(x\lor y)\land(x\lor z)$かつ$x\land(y\lor z)=(x\land y)\lor(x\land z)$を満たす束を\textbf{分配則}という．実は２つの条件は同値で，片方を満たせば十分であるが，このようなことは無限分配束については起こらない．これは束の半束からのself-dualな構成が背景にある．
+        \item 分配則は圏DistLatをなす．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[分配則の特徴付け：Birkhoff]
+    束$L$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $L$は分配的である．
+        \item 埋め込み$N_3\mono L,M_5\mono L$はいずれも存在しない．
+    \end{enumerate}
+    \[\xymatrix{
+        &M_3&&&N_5\\
+        &\bullet&&&\bullet\\
+        \bullet\ar[ur]&\bullet\ar[u]&\bullet\ar[ul]&\bullet\ar[ur]\\
+        &\bullet\ar[ur]\ar[u]\ar[ul]&&\bullet\ar[u]&&\bullet\ar[uul]\\
+        &&&&\bullet\ar[ur]\ar[ul]
+    }\]
+\end{theorem}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 任意のHeyting代数（したがってBoole代数）は分配的である．
+        \item 任意の線型順序は分配的である．
+    \end{enumerate}
+    よって，$P(X)\to[0,\infty]$は分配則の準同型と見れる．
+\end{example}
+
+\subsection{完備性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    完備束上で，単調列は収束する部分列を持つか？
+    完備Boole代数$P(X)$上では，補題\ref{lemma-monotone-convergence}のように，収束の上下極限による特徴づけからも議論できる．
+\end{tcolorbox}
+
+\subsection{半束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\sigma$-代数$\B$の基底にある束の構造に注目すれば，これは半束＝木の組み合わせであり，加法的集合関数$\B\to\R$はこれを保つ．
+    その消息がJordan分解\ref{thm-Jordan-decomposition}であり，Hahn分解\ref{thm-Hahn-decomposition-theorem}である．
+    半束という模様を抽出した時点で，ただの冪等な可換モノイドであるが，極めて豊かな構造を持つ．
+\end{tcolorbox}
+
+\begin{definition}[join-semilattice, lattice]
+    結び半束には，次の４つの同値な定義がある．
+    \begin{enumerate}
+        \item 任意の有限集合に上限が存在するような半順序集合である．
+        \item 任意の２元に上限が存在するような，最小元$\bot$をもつ半順序集合である．
+        \item 任意の有限極限を持つposet categoryである．
+        \item 任意の有限余積を持つposet categoryである．
+        \item 可換で冪等なモノイド$(A,\lor,\bot)$である．ただし，二項関係を$a\le b:\Leftrightarrow a\lor b=b$とする．
+    \end{enumerate}
+    交わり半束とはその反対圏である．
+    したがって，純代数的には，構造に違いはなく，いずれも可換冪等モノイドである．
+    違いは形式的には記号のみである．可換冪等モノイドの射を半束の射という\footnote{モノイドの射が自然に群の者になるように，モノイドの射は自然に冪等性と可換性を保つ．}．これらがなす圏をSemiLatと表す．
+    すると，SemiLatは可換冪等モノイドの圏として一つだが，埋め込み方$i:\SemiLat\mono\Pos$が二通りある．
+
+    posetが結び半束であり，かつ交わり半束であるとき，これを束という．
+\end{definition}
+\begin{remark}
+    伝統的には，可換冪等半群を半束とよび，中立元／最小元を持つとき有界であると言ったが，これではposetに使う有界性の概念と齟齬が生じる．
+\end{remark}
+
+\begin{definition}[suplattice]
+    任意の部分集合に上限が存在するような半順序集合を上限束という．
+\end{definition}
+
+\begin{lemma}
+    上限束は下限束でもある．したがって，完備束であることに同値．
+\end{lemma}
+
+\section{集合の列と極限構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=積分論とは，集合の列による極限構成を基本言語とする理論である]
+    測度が定まるものによる近似を考えるとするなら，一番基本的な道具はなんだろうか．
+    宇宙$P(X)$の構造を考えると，これはposet categoryであり，特に完備でbicartesian closedである．\footnote{完備とは任意の極限を持つこと，bicartesian closed posetとはHeyting代数のことで，直積と直和が備わり，指数対象＝cartesian closed categoryにおけるinternal homも備わり，これらがcurryingと呼ばれる随伴関係を持つこと．}
+    \textbf{つまり，好きに極限を扱える}．\textbf{これをhackするのが新たな積分論である}．
+    この上でのfiltrationを考えたり，数の集合へのPos-射を考える理論が測度論であり，$P(X)$から出るPosの関手の関手性を劣加法性という．つまり包含射＝2上の射が不等号$\le$の本質である．
+    この関手性の極限的な理想形（演算$\cup$が$\sqcup$または$+$となるとき）を$\sigma$-加法性という．単にadditivityと言ったらこれを指す．
+
+    そこで圏$P(X)$の列の極限を考える．これによって種々の集合の構成を行う理論である．
+    これは$X$の列＝点列の拡張となっており，ニューラルネットワークっぽい．点列では集積点の集合が定まり，$\sup,\inf$によりその集合の上限と下限が取り出せるが，
+    集合列では「集積集合」なる束が定まり，その順序関係は包含射としたものとなり，$\sup$を極大集合，$\inf$を極小な集合と読める．
+    すると単調列が収束することが極めて自然に理解できる．
+\end{tcolorbox}
+
+\begin{notation}[symmetric difference]\mbox{}
+    \begin{enumerate}
+        \item 直和という極限構成を$A+B:\Leftrightarrow A\cup B\;(A\cap B=\emptyset)$で表す．これは$\R$などでの直和がAbel群の標準的な演算子$+$で表されるためである．
+        \item 対称差を$A\dot{-}B:=(A\setminus B)+(B\setminus A)$と表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}
+    $(A_n)_{n\in\N}$を集合の列とする．
+    \begin{enumerate}
+        \item $\limsup_{n\to\infty}A_n:=\cap^\infty_{n=1}\cup^\infty_{\nu=n}A_\nu$を\textbf{最大極限集合}または\textbf{上極限集合}といい，列$(A_n)$の元のうち，十分遠くでは必ず現れる＝無限回現れる($\io$)元からなる集合を表す．
+        \item $\liminf_{n\to\infty}A_n:=\cup^\infty_{n=1}\cap^\infty_{\nu=n}A_\nu$を\textbf{最小極限集合}または\textbf{下極限集合}といい，列$(A_n)$の元のうち，手前の有限個を除いて全ての$A_n$で現れる($\fe$)元からなる集合を表す．
+        \item $a\in A_n\;(n\ge{}^\exists N)$である元は，任意の$n\in\N$について$a\in\cup_{\nu=n}^\infty A_\nu$であるから，一般に$\liminf A_n\subset\limsup A_n$である．この逆も成り立って２つの集合が一致するとき，集合列$(A_n)$は\textbf{収束する}といい，$\lim_{n\to\infty}A_n$を\textbf{極限集合}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[有界な単調列は収束する]\label{lemma-monotone-convergence}
+    $P(X)$とは有界な束である．そこでの単調列$(A_n)$は収束する．
+\end{lemma}
+\begin{proof}
+    $\liminf_{n\to\infty}A_n\supset\limsup_{n\to\infty}A_n$を示せば良い．
+    単調増加列では$\exists_{N\in\N}\;a\in A_N$ならば，$\forall_{n\ge N}\;a\in A_n$より，無限回登場するものは，初登場以降登場し続ける．
+    単調減少列では$a\in A_n\Rightarrow a\in A_1$より，無限回登場するものは，実は初回から登場し続けている．
+\end{proof}
+
+\begin{lemma}[極限集合の特性関数]
+    列$(A_n)$について，
+    \begin{enumerate}
+        \item $\chi_{\limsup_{n\to\infty}A_n}(x)=\limsup_{n\to\infty}(\chi_{A_n})$．
+        \item $\chi_{\liminf_{n\to\infty}A_n}(x)=\liminf_{n\to\infty}(\chi_{A_n})$．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    interval category $2=\{0\to 1\}\in\Pos$への関手が，極限を保つことを言っている．
+    あまりに綺麗に圏論の言葉で特徴付けられるので笑ってしまった．
+\end{remarks}
+
+\begin{tbox}{red}{$P(X)$上での極限}
+    単調列は収束することを，上下極限の特徴付け(Darbouxの方法みたい)で示せる．
+    これは暗黙に位相を考えているはずで，非常に気持ちが悪い．
+\end{tbox}
+
+\section{集合関数のクラス}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    \begin{enumerate}
+        \item 有限加法族上で定義された非負値集合関数$m:\B\to[0,\infty]$で，有限加法性を満たすもののことを，\textbf{有限加法的測度}またはJordan測度という．
+        \item $\sigma$加法族上で定義された実数値集合関数$\Phi:\B\to\R$で，$\sigma$-加法性を満たすもののことを，\textbf{完全加法的$\B$-集合関数}という．値が有限であるところから分かると思うが，これは積分の抽象化であり，測度とは区別する．
+        \item $\sigma$加法族上で定義された非負値集合関数$\mu:\B\to[0,\infty]$で，$\sigma$-加法性をもののことを，\textbf{測度}という．
+        \item 全域で定義された非負値集合関数$\Gamma:P(X)\to[0,\infty]$で，単調，劣加法的なものを，\textbf{Carathéodoryの外測度}という．
+        \item 
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{definition}[extended real number, set function]\mbox{}
+    \begin{enumerate}
+        \item 拡張実数$\o{\R}:=\R\cup\{\pm\infty\}$には，線型順序を入れ，算法は$(\pm\infty)+(\mp\infty),(\pm\infty)-(\pm\infty),0\cdot(\pm\infty)$以外を定める．なお，後者は$0$に収束する非零な列$(a_n)$を考えると，$(0a_n)$は空な列$\N\to 1$であるから，$0(\pm\infty)=0$と約束することが多く，事実いくつかの議論が簡単になる．
+    \end{enumerate}
+    族$\F\subset P(X)$について，$F$で定義された$\F$-集合関数とは，$\Phi:P(F)\cap\F\to\o{\R}$をいう．
+\end{definition}
+
+\begin{definition}[interval, rectangle, figure]\mbox{}
+    \begin{enumerate}
+        \item $a<b\in\o{\R}$について，$(a,b]:=\{x\in\o{\R}\mid a<x\le b\}$を\textbf{区間}という．ただし$b=\infty$のときに限って，$(a,b]:=(a,\infty)$とする．空集合も区間とする．\footnote{$a>b$のときも許す，みたいな定義は区間の長さを定義するときに齟齬を起こす．}$(a,b),[a,b]$は開区間，閉区間と呼び分ける．
+        \item $R_d=(a_1,b_1]\times(a_2,b_2]\times\cdots\times(a_d,b_d]\subset\R^d$を\textbf{矩形}または\textbf{区間}といい，$R=[a_1,b_1]\times[a_2,b_2]\times\cdots\times[a_d,b_d]\subset\R^d$を閉矩形と呼び分ける．\footnote{Lebesgue-Stieltjes積分の流儀による．}区間全体の集合を$\fI_N\subset\R^N$で表す．
+        \item $b_1-a_1=b_2-a_2=\cdots=b_d-a_d$を満たす矩形を立方体という．
+        \item 矩形$R$の体積を$\abs{R}:=(b_1-a_1)(b_2-a_2)\cdots(b_d-a_d)$で表す．
+        \item 矩形の和集合が\textbf{ほとんど互いに素}であるとは，矩形の内部の和集合が互いに素であることをいう．
+        \item 有限個の矩形の直和（あるいは内点を共有しない閉矩形の有限直和）で表される集合を\textbf{区間塊}と言い，その全体を$\fF_N\subset\R^N$で表す．\footnote{\cite{Tao}では，区間の積はbox，その有限直和をelementary setと呼んでいる．}
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[区間塊上の集合関数]\mbox{}\label{exp-extention-to-区間塊}
+    \begin{enumerate}
+        \item $f:\R^N\to\R$を$\R^N$上での積分が絶対収束する連続関数とする．区間塊上でのRiemann積分が定める写像$\Phi:\fF_N\to\R$は$\fF_N$集合関数である．
+        \item 矩形の体積の拡張$\Psi:\fI_N\to\o{R}$を定める．定数でない単調増加な関数$f_1,\cdots,f_N:\R\to\R$に対して，
+        \[\Psi(I):=\begin{cases}
+            0,&I=\emptyset,\\
+            \prod_{\nu=1}^N(f_\nu(b_\nu)-f_\nu(a_\nu)),&Iは有界,\\
+            \sup\{\Psi(J)\in\R\mid J\subset Iは有界な区間\},&\otherwise.
+        \end{cases}\]
+        と定めると，各$f_1,\cdots,f_N$が恒等関数であるとき，これは矩形の体積となる．
+        $f_1,\cdots,f_N$を有界な関数とすると，$\Psi$も有界となる．
+        \item すると，$\Phi$の自然な区間塊への延長$\mu:\fF_N\to\o{\R}$が定まる．これがwell-definedであることは，区間塊の区間への直和分割は任意に細分して結び（共通分割）を取れることから従う．
+    \end{enumerate}
+\end{example}
+
+\section{矩形というクラス}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=伊藤記法]
+    特に区間／矩形と呼ばれるクラスの集合に注目する．
+    これは任意に細分できて下がないことを特徴にもち，これが矩形の体積\ref{exp-extention-to-区間塊}のwell-definednessの基盤となる．
+    矩形の言葉で，開集合の性質も特徴付けられる．
+    数直線上の開集合の互いに素な開区間への分解は，高次元化に耐えない．
+    $\R^d$上の開集合のほとんど互いに素な立方体への分解は，一意性が成り立たない．
+
+    伊藤\cite{伊藤}では区間は$(a,b]$とし，空集合も区間とする．
+    $N$次元区間も区間といい，区間の有限直和を区間塊と呼ぶ．
+    区間の全体を$\mathfrak{I}_N$，区間塊の全体を$\mathfrak{F}_N$とする．
+    また，$+,\sum$は直和を表すというのは兄弟で共通のようだ．
+\end{tcolorbox}
+
+\begin{lemma}[区間塊は$\delta$-環である]\mbox{}
+    \begin{enumerate}
+        \item 区間の有限共通部分は区間である．
+        \item 区間塊の有限共通部分は区間塊である．
+        \item 区間の補集合は区間塊である．
+        \item 区間塊の有限合併は区間塊である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[limit / accumulation point, perfect]\mbox{}
+    \begin{enumerate}
+        \item $x\in E$が極限点／触点であるとは，任意の$r>0$に対して$(B_r(x)\cap E)\setminus\{x\}\ne\emptyset$であることをいう．
+        \item 閉集合$E$が完全であるとは，$E$が孤立点を持たないことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 矩形$R$がほとんど互いに素な有限個の矩形$(R_k)_{k\in[N]}$の和集合で表されるとする．この時$\abs{R}=\sum^N_{k=1}\abs{R_k}$である．
+        \item $R\subset\cup_{k=1}^NR_k$のとき，$\abs{R}\le\sum^N_{k=1}\abs{R_k}$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}
+    任意の開集合$U\subset\R$は，互いに素な開区間の可算個の和集合としてただ一通りに表せる．
+\end{proposition}
+
+\begin{proposition}
+    任意の開集合$U\subset\R^d\;(d\ge 1)$は，ほとんど互いに素な可算個の閉立方体の和集合として表される．
+\end{proposition}
+
+\section{Cantor集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可算回の操作の極限として，不思議な集合を定義できる．このような操作を議論する枠組みを作るのが測度論の真髄である．
+    Cantor集合は幾何学的に（位相空間論的に）議論出来るが，形式的には３進数展開に出現する数字に制限を定めているだけである．
+    これは非可算な零集合の例となる．
+\end{tcolorbox}
+
+\begin{definition}[Cantor space]
+    閉区間$C_0:=[0,1]$から，開区間の列$(J_{k,n})_{k}:=\paren{\paren{\frac{k}{3^n},\frac{k+1}{3^n}}}_{k=1,3,\cdots,3^n-1}$
+    を除いて行くことで定まる互いに素な閉区間の列$C_n:=C_{n-1}\setminus\cup_{k=1}^{3^n-1}J_{k,n}$は，
+    降下列$[0,1]=C_0\supset C_1\supset C_2\supset\cdots\supset C_k\supset\cdots$を定める．
+    これら全体の共通部分$C:=\bigcap^\infty_{k=0}C_k=[0,1]\setminus\paren{\cupn\cup_{k=1}^{3^n-1}J_{n,k}}$は有界な閉集合であるから可測で，\textbf{Cantor集合}という．
+\end{definition}
+
+\begin{lemma}[三進数展開としての特徴付け]
+    $C$は，実数$x\in[0,1]$の三進数展開$x=\sumk\frac{a_k}{3^k}\;(a_k\in\{0,1,2\})$について，$\forall_{k\in\N}\;a_k\ne 1$を満たす点全体からなる集合と一致する．
+\end{lemma}
+
+\begin{proposition}[Cantor空間の位相]
+    $2:=\{0,1\}$を離散空間とすると，
+    $C\simeq 2^\N$である．
+    特に，完全不連結であり，かつ，完全である（孤立点を持たない）．
+\end{proposition}
+\begin{proof}
+    全単射
+    \[\xymatrix@R-2pc{
+        2^\N\ar[r]&C\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (a_n)_{n\in\N}\ar@{|->}[r]&\sumi\frac{2a_i}{3^i}
+    }\]
+    は位相同型である．
+\end{proof}
+
+\begin{proposition}[サイズと長さとの概念の違い]
+    Lebesgue測度は$0$であるが連続体濃度である．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[Lebesgue測度] $C_n$の構成で取り除いた区間$\cup_{k=1}^{n-1}J_{k,n}$の長さは$\frac{1}{3^k}\times 2^{k-1}$であるから，$\sumk\frac{2^{k-1}}{3^k}=1$．
+        \item[連続体濃度] $b_k:=\begin{cases}0,&a_k=0,\\1,&a_k=2.\end{cases}$として$C\ni x=\sumk\frac{a_k}{3^k}\;(a_k\in\{0,1,2\})$を２進数展開$\sumk\frac{b_k}{2^k}$へ対応させると，対応$\varphi:C\to[0,1]$は全単射となる．
+    \end{description}
+\end{proof}
+
+\section{被覆定理}
+
+\section{代数について}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Terence Taoの\href{https://terrytao.files.wordpress.com/2010/02/epsilon.pdf}{§2.3 of An epsilon of room, Vol. I}に詳述がある．
+\end{tcolorbox}
+
+\begin{discussion}[algebra]
+    algebraという用語法はおそらくfieldから離陸したのだろう．
+    今回，Boole代数と$\sigma$-代数が繋がったことと，
+    何かしらの準同型$P(X)\to\R$が大事であることから，
+    スッキリ理解できた．\cite{Tao}でも集合体／有限加法族はBoole代数として導入されている．
+    となると，函数解析学でも代数は極めて重要であり，
+    位相という形でも，線形代数という形でも，
+    極限構成という形でも，種々の代数が入り乱れる場となる．
+    $\B$は束＝２つの半束の合体である．
+    束とは木である．
+    この２つの木を分離するのが完全加法集合関数$\B\to\R$である．
+    根は根に対応させ，そこから世界を２つの世界樹に分け，$P(X)$をどちらかが取る．
+\end{discussion}
+
+\begin{discussion}[Stone representation theorem, Loomis-Sikorski representation]
+    全ての具体的なBoole代数＝有限加法的測度空間$(X,\B)$は，抽象的な意味でもBoole代数である．この逆を保証するのがStoneの表現定理で，
+    "So, up to (abstract) isomorphism, there is really no difference between a concrete Boolean algebra and an abstract one."\cite{Tao}
+    そして具体的な$\sigma$-代数を測度空間と呼ぶ．
+    この場合は抽象的な$\sigma$-代数が具体的なBoole代数として表現されるとは限らない．しかし失敗する場合は特定されていて，null setのなすイデアルで商を取れば良い．
+\end{discussion}
+
+\begin{definition}[morphism of Boolean algebra, Stone space]\mbox{}
+    \begin{enumerate}
+        \item 抽象Boole代数の射とは，$\emptyset,\cup,\cap,\comp,\subset$を保つ写像とする．可測関数$f:X\to Y$は，逆向きのBoole代数の射$\B_X\to\B_Y$を定めるのは，frameとlocaleの関係に似てる．
+        \item 完全不連結なコンパクトハウスドルフ空間$(X,F)$を\textbf{ストーン空間}という．Stone空間の位相$F$は，clopen setの具体Boole代数$\Cl(X)$を定め，これは$F$の開基となっている．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item Stone空間$X$の位相$F$は，$\Cl(X)$によって生成される．すなわち，$\Cl(X)$は$F$の開基である．
+        \item ２つのStone空間$X,Y$について，$X\simeq Y\Lrarrow\Cl(X)\simeq\Cl(Y)$である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Stone表現定理]
+    任意のBoole代数$A$に対して，あるStone空間$X$が存在して，$A\simeq\Cl(X)$を満たす．
+\end{theorem}
+\begin{remarks}
+    この対応
+    \[\xymatrix@R-2pc{
+        \BoolAlg\ar[r]&\Stone^\op\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \B\ar@{|->}[r]&\Hom(\B,2)\\
+        X\ar@{|->}[r]&\Cl(X)
+    }\]
+    は圏同値を与える．FrameとLocaleの関係に極めて似ている．
+    \begin{quote}
+        It is the model example of the more general Stone duality between cer- tain partially ordered sets and certain topological spaces.
+        The idea of dualising a space $X$ by considering the space of its morphisms to a fundamental space (in this case, $\{0, 1\}$) is a common one in mathematics; for instance, Pontryagin duality in the context of Fourier analysis on locally compact abelian groups provides another example (with the fundamental space in this case being the unit circle $\R/\Z$); see Section 1.12. Other examples include the Gelfand representation of $C^*$ algebras (here the fundamental space is the complex numbers $\C$; see Section 1.10.4) and the ideal-variety correspondence that provides the duality between algebraic geometry and commutative algebra (here the fundamental space is the base field $k$). In fact there are various connections between all of the dualities mentioned above.
+    \end{quote}
+\end{remarks}
+
+\begin{lemma}[Birkhoff表現定理]
+    任意の有限Boole代数$B$に対して，ある集合$X$が存在して，$B\simeq_\BoolAlg P(X)$が成り立つ．
+\end{lemma}
+
+\begin{discussion}[sequence and its limit]
+    測度論とは基本的に$[0,\infty]$と同じ構造を集合代数の中に作る理論である．
+    $\cupn$について閉じていることを要請するために，この閉性を議論するときによく$[0,\infty]$上の数列に写して考える．これで初項$\frac{1}{2}$公比$\frac{1}{2}$の等比数列がよく登場することとなる．
+    このときに附番を使う．可算和と可算濃度というのが測度の概念としての本質になってくる．
+    これは，$\epsilon$に抑え続けることができることに相当して，$\epsilon$-$\delta$論法の中で使われる．
+    ここまで戻らなきゃいけないのは少し鈍臭いというか，もう少し代数学の霊性を使えないのか．
+    \begin{itemize}
+        \item 可測関数は単関数列で各点収束させられる．これについて定理を持ち上げる（Lusinの定理\ref{thm-Lusin}など）．
+        \item $\sigma$-有限性が満たされるとき，$\mu(A)<\infty$の場合のみを考えれば良い（Radon-Nykodimの定理\ref{thm-Radon-Nykodym}など）．
+        \item 有界な集合の列で全体に至ることが出来るとき，$A_n:=E\cap(B(0,n)\setminus B(0,n-1))\;(n=1,2,\cdots)$というように開球で階段を作って補題\ref{lemma-general-topology}を使う（Lebesgue非可測集合の構成\ref{thm-existence-of-unmeasurable-sets}やLebesgue可測集合の正則性についての補題\ref{lemma-Lebesgue-measure}など）．
+    \end{itemize}
+\end{discussion}
+
+\begin{discussion}[$\epsilon$-$\delta$]
+    $\epsilon$-$\delta$論法で定理のステートメントが記述され，$\inf,\sum$もその土俵にまで解体して議論する．
+    しかしその証明は高度にアルゴリズム的で，集合論の複雑さが大いに発揮されている．
+    これを自動化できないものか．少し馬鹿馬鹿しく感じる．
+    逆に言えば測度論の証明は全てこれである．あまりに代数的な分野なのにそう見えないのは本来的ではないではないか．
+\end{discussion}
+
+\chapter{測度論}
+
+\begin{quotation}
+    測度論はLebesgue積分とKolmogorovの確率論の成功から端を発した
+    集合を用いた形式科学である．
+    Measure theory is very much having a central role in studying so called ergodic theory of dynamical system.
+
+    ここでは理論の枠組みで，実際の構成はしない．
+    つまり，「集合の族」という対象の代数的構造を抽出して公理を立て，
+    そこでの圏論的構成などの代数的議論を展開する．
+    実際にその例を構成して個別論を展開する前に先行する一般論を展開する．
+
+    集合代数に仮託して喋るので，極限構成に極めて強く，理論的な強度が桁違いになる．
+    こうして圧倒的な応用性を獲得するのである．
+    完備空間の理論も，零集合はあくまで代数法則によって抽出する．
+
+    単関数近似も，極限構成の職人である．
+    almost sureの議論も，条件と集合が交差し，その代数構造も交差し，議論は構成的で技巧的で職人的であり，そこに乗る意味論は莫大．
+    なんだか，凸解析などの応用分野の数学と似た感触を感じる．これが解析学であろうか．
+\end{quotation}
+
+\section{可測集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=集合族の代数構造と部分代数としての可測集合：素敵な加法構造を持つように集合族を選び出す]
+    全ての$\R$の部分集合が可測であるという主張は選択公理と矛盾する．
+    そこで，面積が定義できるような集合を選び出すこととなるが，それが満たすべき代数構造に注目する．
+    といっても，面積や確率に注目し，和と差に当たる演算に集中し，有限と可算無限に集中する．
+    大抵$\sigma$-代数であるが，弱められた$\sigma$-環である場合もある．
+\end{tcolorbox}
+
+\begin{definition}[measurable subsets, $\sigma$-algebra]\label{def-sigma-algebra}
+    $X$を集合とする．$\M\subset P(X)$が
+    \begin{enumerate}
+        \item 次の３条件を満たすとき，これを$X$上の環という．\footnote{The term ‘ring’ dates from the days when a ring in algebra was not assumed to be unital; so a ring on $X$ is simply a subring (in this sense) of the Boolean ring $\mathcal{P} X$.}
+        \begin{enumerate}[1]
+            \item $\emptyset\in\M$．
+            \item $\forall_{S,T\in\M}S\cup T\in\M$．
+            \item $\forall_{S,T\in M}S\setminus T\in\M$．
+        \end{enumerate}
+        \item $X$上の環であって，さらに可算個の共通部分についても閉じている時，これを$X$上の$\delta$-環という．\footnote{The symbol ‘$\delta$’ here is from German ‘Durchschnitt’, meaning intersection; it may be used in many contexts to refer to intersections of countable families.}
+        \item $X$上の環であって，さらに可算個の合併についても閉じている時，これを$X$上の$\sigma$-環という．\footnote{The symbol ‘$\sigma$’ here is from German ‘Summe’, meaning union; it may be used in many contexts to refer to unions of countable families.}
+        これは$\delta$-環である．
+        \item 次の３条件を満たすとき，これを$X$上のBoole代数／体または有限加法族という．\footnote{\cite{Tao}では(concrete) Boolean algebraと呼んでいる}これは，「全体集合$X$を含む環」として特徴付けられる．
+        \begin{enumerate}[1]
+            \item $\emptyset,X\in\M$．
+            \item $\forall_{S,T\in\M}S\cup T\in\M$．
+            \item $\forall_{S,T\in M}S\setminus T\in\M$．
+        \end{enumerate}
+        この時条件2は$X\in\M$の参加により，3から導かれる．$X\in\M$の参加と条件3より，（絶対）補集合について閉じる．\footnote{The term ‘field’ here is even more archaic than the term ‘ring’ above; indeed the only field in this sense which is a field (in the usual sense) under symmetric difference and intersection is the field $\{\empty, X\}$ (for an inhabited set $X$).}
+        \item $X$上の$\sigma$-環であってBoole代数でもあるとき，これを$X$上の$\sigma$-代数という．$\delta$-代数は$\sigma$-代数である．これを別の同値な公理化をすると
+        \begin{enumerate}[1]
+            \item $\emptyset\in\M$．
+            \item $\forall_{S\in\M}\lnot S\in\M$．
+            \item $\forall_{S_1,S_2,\cdots\in\M}\cup_{i\in\N}S_i\in\M$．
+        \end{enumerate}
+    \end{enumerate}
+    $\M$の元を$\M$-可測集合という．
+\end{definition}
+\begin{remark}
+    $\delta,\sigma$はそれぞれ積と和の可算演算への閉性（完備性への漸近）を表し，何も付かない場合は通常の有限項演算を表す．
+    環とは$1,\top,P(X)$を必ずしも満たさないもの，体／代数とはこの積中立元も含むものを指す．
+    現代的には環と言ったら積構造は単位的である代数系を指すが，この違いは集合の代数的性質が調べられた時代において，Boole環とBoole代数の使い分けに対応する．
+
+    ベクトル値の測度を使いたい場合は，ringを使ったほうがうまくいくことも多い．
+    $\sigma$-や$\delta$-をつけると，位相空間論や一様空間論のように基底と準基の理論が建てられなくなる．
+    Kolmogorov used algebras (at least at first), and Halmos used $\sigma$-rings.
+
+    環と代数の混用は作用素環論に至るまでずっと本質的である．
+    代数的場の量子論は作用素環論による基礎付けである．
+\end{remark}
+
+\begin{example}[Borel class]\mbox{}
+    \begin{enumerate}
+        \item 任意の集合$X$について$P(X)$は，任意の集合演算に閉じているので，もちろん$\sigma$-代数である．$(X,P(X))$を離散可測集合という．
+        \item 集合族の代数といえば開集合系である．位相空間$(X,\O)$に対して，開集合系$\O$から生成される$\sigma$-集合体を，\textbf{ボレル$\sigma$-集合体}または\textbf{ボレルクラス}といい，$\B(X,\O)$で表す．
+        \item 特に$X=\R^d$でEuclid位相を考えるとき，これを$\B(\R^d)$で表し，その元を\textbf{$d$次元ボレル可測集合}という．
+        \item 閉集合系が生成する$\sigma$-代数は，Borel classに一致する．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[trivial algebra, discrete algebra]\mbox{}
+    \begin{enumerate}
+        \item 自明な代数$\{\emptyset,X\}$は$\sigma$-代数であり，Boole代数でもある．
+        \item 離散代数$2^X$も$\sigma$-代数であり，完備Boole代数である．
+        \item 区間塊と余区間塊からなる集合はBoole代数である．
+        \item null setとfull setの集合はBoole代数である．
+    \end{enumerate}
+\end{example}
+
+\subsection{Jordan測度というミニチュア}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=有限加法族上の有限加法的測度]
+    内測度と外測度は，矩形の有限族を用いるとうまく飼い慣らせる．
+    可算個の演算についても克服するための指針も見えてくる：可算集合の測度は加法中立元である$0$になるべき．\footnote{可算和は濃度について閉じていることがここで実数代数への射を取るときに効いてくるとは！}
+    でないと，可算集合の可算和は再び可算集合であるから，和を発散させることができて，well-definedでなくなる．
+    これはnull setsが$\delta$-idealをなすことと関係している．
+    なぜなら，その双対がfull setsの$\delta$-filterだからである．
+    開集合のように，null setの補集合は，filterを成している．\footnote{台集合を取り去るmeasurable algebraの研究では，$\delta$-idealはquotient algebraとして定式化できる．}
+\end{tcolorbox}
+
+\begin{lemma}
+    矩形の有限族に対して，互いに交わらないようにする細分を校正する算譜がある．
+\end{lemma}
+
+\begin{definition}[Jordan measure, outer measure, inner measure]
+    $\Omega\subset\R^N$を有界集合とする．
+    \begin{enumerate}
+        \item (Jordan外測度) $\Omega$を被覆する矩形からなる互いに素な有限族$\R^*$を用いて，$m^*(\Omega):=\inf_{\R^*}\sum_{R_l\in\R^*}\abs{R_l}$と定める．
+        \item (Jordan内測度) $\Omega$に被覆される矩形からなる互いに素な有限族$\R_*$を用いて，$m_*(\Omega):=\sup_{\R_*}\sum_{R_l\in\R_*}\abs{R_l}$と定める．このような$\R_*$が存在しないとき，$m_*(\Omega)=0$とする．
+        \item $m^*(\Omega)=m_*(\Omega)$を満たすとき，集合$\Omega$をJordan可測という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $\Omega:=\Q\cap(0,1)$は$m^*(\Omega)=1,m^*(\Omega)=0$となる．
+        \item 点$(n,0)$を中心とする面積$1/n$の矩形の列も，Jordan可測ではない．
+        \item こういうものも可測にするには，すなわち$\sigma$-加法性の代数構造を持たせたいならば，可算集合の測度は$0$にする必要がある．そして$\Q\setminus[0,1]$の測度が$1$になるべきである．そういう理論を作るべきである．
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}[有限加法族である]
+    空でない集合$X$内のJordan可測集合の全体は，集合体（有限加法族）をなす．
+\end{proposition}
+
+\begin{theorem}
+    有界集合$\Omega\subset\R^N$が滑らかな境界を持つならば，Jordan可測である．
+\end{theorem}
+
+\subsection{有限加法族の性質}
+
+\begin{proposition}
+    $Z:=X\times Y$において，$X,Y$の有限加法族$\X,\Y$について，
+    $\exists_{E\in\X}\;\exists_{F\in\Y}\;K=E\times F\Rightarrow K\in\mathcal{Z}$
+    として$\cZ\subset P(Z)$を定めると，これは集合体をなす．
+\end{proposition}
+
+\subsection{$\sigma$-加法族の生成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    The question of how to generate a $\sigma$-algebra is the beginning of an entire field of mathematics, descriptive set theory.
+    結果はGeneral nonsenseしか容易には得られない．\footnote{\url{https://ncatlab.org/nlab/show/sigma-algebra}}
+    $\epsilon$が$\calA(\epsilon)$の「準基」になるかというとそんな簡単に理論を作らせてくれない．
+    この生成の抽象論はMoore閉包とmonadにつながる．\footnote{\url{https://ncatlab.org/nlab/show/Moore+closure}}
+\end{tcolorbox}
+
+\begin{theorem}[generate: general nonsense]
+    集合$X$に対して，$\epsilon\subset P(X)$を任意の部分集合族とする．
+    \begin{enumerate}
+        \item $\epsilon$を含む最小の集合体$\calA(\epsilon)$が存在する．
+        \item $\epsilon$を含む最小の$\sigma$-集合体$\sigma(\epsilon)$が存在する．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\U:=\{A\subset P(X)\mid Aは\epsilon を部分代数としてもつ集合体\}$と定める
+        と，$P(X)\in\U\ne\emptyset$である．
+        このとき，$\calA(\epsilon):=\cap_{\calA\in\U}\calA$と定めれば良い．
+        最小性はわかるから，これが集合体であることを示す．
+        $A,B\in \cap_{\calA\in\U}\calA$や族$(A_i)_{i\in\N}\in\Map(\N,\cap_{\calA\in\U}\calA)$を取ると，
+        任意の集合体$\calA\in\U$に対して$A,B\in\calA$や族$(A_i)_{i\in\N}\in\Map(\N,\calA)$となるから，$\calA$の代数法則より従う．
+        \item 同様．
+    \end{enumerate}
+\end{proof}
+
+\section{その他の集合族}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\sigma$-代数という中心的な対象を定めたが，他の代数系や順序構造が豊富に$P(X)$には入っている．
+    この後の議論でも頻繁に，$\B$の共通細分を取るなどの完備な構造を用いる．
+    その間の相互関係と特徴付けを定式化せずに，何が数学だというのだ．
+\end{tcolorbox}
+
+\subsection{単調族}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=生成の言葉が使えない今，もっと泥臭く行かねばならない：全ての族は何らかの標準的な方法で単調族に分割できる気がする]
+    $\sigma$-代数となる条件を考える際には，集合列をうまくとってそれについての条件を調べるだけで十分になる．
+    そこでまず，単調列というクラスが自然に浮かび上がる．例えば有限加法的測度の$\sigma$-加法性を特徴付ける\ref{lemma-sigma-additivity-of-finitely-additive-measure-in-terms-of-monotone-sequence}．
+    これについての道具を整備する．
+    生成の言葉が使えない今，直積測度などの難しい構成を行う際の足掛かりになる．
+    \textbf{生成元が集合体である時，単調族についての生成を行えば$\sigma$-代数を得る}．
+\end{tcolorbox}
+
+\begin{theorem}[$\sigma$-加法性の特徴付け]\label{thm-characterization-of-sigma-additivity}
+    集合体$\calA$について，次の３条件は同値である．
+    \begin{enumerate}
+        \item $\calA$は$\sigma$-集合体である．
+        \item $\calA$の任意の単調増加列$(A_n)_{n\in\N}$に対して，$\cup_{n=1}^\infty A_n\in\calA$．
+        \item 互いに素な$\calA$の元からなる任意の$\calA$-列$(A_n)_{n\in\N}$に対して，$\cup^\infty_{n=1}A_n\in\calA$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    (2)$\Rightarrow$(1)と(3)$\Rightarrow$(1)を示せば良い．
+    \begin{description}
+        \item[(2)$\Rightarrow$(1)] 
+        任意の列$(B_n)_{n\in\N}$を取る．これに対して，$A_n:=\cup_{k=1}^nB_k$と取ると，$\forall_{i\in\N}\;A_i\subset A_{i+1}=A_i\cup B_{i+1}$が成り立つから，これは単調増加列である．
+        よって，$\cup_{i\in\N}A_i\in\calA$．$\exists_{n\in\N}\;a\in A_n\Leftrightarrow\exists_{n\in\N}\;a\in B_n$となるように定めたから，$\cup_{i\in\N}A_i=\cup_{i\in\N}B_i$と併せて，$\cup_{i\in\N}B_i\in\calA$．
+        \item[(3)$\Rightarrow$(1)]
+        任意の列$(B_n)_{n\in\N}$を取る．これに対して，$A_n:=B_n\setminus\cup_{k=1}^{n-1}B_k$と取ると，$(A_n)_{n\in\N}$は互いに素である．
+        実際，ある$i<j$について$A_i\cap A_j\ne\emptyset$だった場合，$\exists_{a\in X}\;a\in B_i\setminus\cup_{k=1}^{i-1}B_k\land a\in B_j\setminus\cup^{j-1}_{k=1}B_k$であるが，これは$a\in\cup^{j-1}_{k=1}B_k$に矛盾．
+        そこで，$\exists_{n\in\N}\;a\in A_n\Leftrightarrow\exists_{n\in\N}\;a\in B_n$となるように定めたから$\cup^\infty_{n=1}A_n=\cup^\infty_{n=1}B_n$より，
+        $\cup_{n=1}^\infty B_n=\cup_{n=1}^\infty A_n\in\calA$．
+    \end{description}
+\end{proof}
+
+\begin{definition}[monotone class]
+    集合族$\M\subset P(X)$が次の２条件を満たすとき，これを単調族という．
+    \begin{enumerate}
+        \item $\M$の任意の単調増加列$(A_n)_{n\in\N}$に対して，$\cup^\infty_{n=1}A_n\in\M$．
+        \item $\M$の任意の単調減少列$(A_n)_{n\in\N}$に対して，$\cap^\infty_{n=1}A_n\in\M$．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    $\sigma$-代数の定義に併せて，complementについての双対性が映り込んでいるのが見える．
+    これが単調族定理を導く．
+\end{remarks}
+
+\begin{proposition}
+    集合族$\epsilon\subset P(X)$に対して，これを含む最小の単調族$\M(\epsilon)$が存在する．
+\end{proposition}
+
+\begin{observation}
+    $\sigma$-集合体は単調族であり，単調族が体の構造を持つならば$\sigma$-加法性も満たす（$\sigma$-加法性の特徴付け定理\ref{thm-characterization-of-sigma-additivity}）ことは見た．
+    つまり$\M(\epsilon)\subset\sigma(\epsilon)$である．
+    この逆も成り立ち，いかなる時に単調族で完全に代用可能であるかを考えたい．
+\end{observation}
+
+\begin{theorem}[monotone class theorem]\label{thm-monotone-class-theorem}
+    $\calA$を集合体とする．
+    $\M(\calA)=\sigma(\calA)$である．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] $\M(\calA)$が集合体と示せば良い．$\M(\calA)$が集合体であるならば，$\sigma$-加法性の特徴付け定理\ref{thm-characterization-of-sigma-additivity}より$\sigma$-集合体でもあり，$\sigma(\calA)\subset\M(\calA)$が成り立つ．
+        一方で全ての$\sigma$-加法族は単調族だから$\M(\A)\subset\sigma(\A)$でもある．よって，$\M(\A)=\sigma(\A)$を得る．
+        \item[(I) $\emptyset\in\M(\A)$]
+        $\A$は集合体だから$\emptyset\in\A\subset\M(\A)$．
+        \item[(II) $A\in\M(\A)\Rightarrow A^\complement\in\M(\A)$]
+        $\M:=\M(\A)$のうち補集合演算について閉じている部分集合体を$\o{\M}:=\Brace{A\in\M\mid A^\complement\in\M}$とすると，$\o{\M}\subset\M$である．
+        これが$\A$を含む単調族であることを証明し，$\M\subset\o{\M}$を導けば良い．
+        \begin{description}
+            \item[$\A$を含む] 任意の$\A$の元$A\in\A$について$A^\complement\in\A$であるから，$\A\subset\M(\A)$である．
+            \item[単調族の公理(I)] 任意に$\o{\M}$の単調増加列$(A_n)_{n\in\N}$を取ると，$\cup^\infty_{n=1}A_n\in\M(\A)$である．実はこの時，双対な列$(A_n^\complement)_{n\in\N}$は単調減少列であるから，$(\cup^\infty_{n=1}A_n)^\complement=\cap^\infty_{n=1}A_n^\complement\in\M$でもある．よって，$\cup^\infty_{n=1}A_n\in\o{\M}$．
+            \item[単調族の公理(II)] 全く双対的な証明が成り立つ．
+        \end{description}
+        \item[(III) $A,B\in\M(\A)\Rightarrow A\cup B\in\M(\A)$] ２段階に分けて，任意の元$B\in\M$について，これと和について閉じている部分集合$\M_B$は全体に一致すること：$\M_B=\M(A)$を示す．
+            \begin{description}
+                \item[$\A$の元と和について閉じるなら$\sigma$-代数である] 任意に$B\in\A$をとった時，この$B$との合併について閉じる部分集合$\M_B:=\Brace{A\in\M\mid A\cup B\in\M}$は$\A$を含む単調族になるから，$\M_B=\M$を得る．実際，
+                \begin{enumerate}
+                    \item $(A_n)_{n\in\N}$を$\M_B$の単調列とすると，$\cup_{i=1}^\infty A_n\in\M$であり，また$B\cup\cup_{i=1}^\infty A_n=\cup_{i=1}^\infty B\cup A_n\in\M$でもある．よって，$\cup_{i=1}^\infty A_n\in\M_B$である．
+                    \item 任意の$A\in\A$は，$B\in\A$に対して$A\cup B\in\A$を満たす（$\A$は集合体）から，$A\subset\M_B$である．
+                \end{enumerate}
+                \item[任意の元と和について閉じるなら$\sigma$-代数である] 
+                任意に$B\in\M(\A)$を取ると，(1)と同様の議論が成り立ち，(2)については，任意の$A\in\A$に対して，$B\in \M(\A)=\M_A$であるから，$A\cup B\in\M_B$である．よって，$\A\subset\M_B$．
+            \end{description}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    追加の条件を満たす部分代数を考え，これの単調性を示すことで，全体集合$\M=\M(\A)$の最小性に帰する証明手法．
+    (II)では補集合性は単項関係であるが，(III)は二項関係であるから，curryingによって示す．しかしこれは２段階になる．$\cap:\A\times\A\to$を考えたのちに，$\cap:\M(\A)\times\M(\A)\to$を考えると，良い．
+\end{remarks}
+
+\subsection{Dynkin族}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    続いては，特殊な演算である可算直和と固有差についての族を考える．極めて確率論と相性が良い．
+    確率の概念が自然に定義できるのがDynkin族で，ここからの生成が焦点となる．
+\end{tcolorbox}
+
+\begin{definition}[Dynkin family]
+    集合族$\D\subset P(X)$がDynkin族であるとは，次の３条件を満たすことをいう．
+    \begin{enumerate}
+        \item $X\in\D$．
+        \item $\forall_{A,B\in\D}\;A\subset B\Rightarrow B\setminus A\in\D$．
+        \item $\forall_{(A_i)_{i\in\N}:\N\to\D}\;[\forall_{i\ne j\in\N}\;A_i\cap A_j=\emptyset]\Rightarrow \sum_{i\in\N}A_i\in\D$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[生成]\mbox{}
+    \begin{enumerate}
+        \item 任意の集合$X$上のDynkin族の族$(A_\lambda)_{\lambda\in\Lambda}$について，$\cap_{\lambda\in\Lambda}A_\lambda$もDynkin族である．
+        \item 任意の集合族$\A\subset P(X)$について，これを含む最小のDynkin族$\D(\A)$が存在する．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意の$\lambda\in\Lambda$について$X\in A_\lambda$より，$X\in\cap_{\lambda\in\Lambda}A_\lambda$．$A\subset B$を満たす$A,B\in\cap_{\lambda\in\Lambda}A_\lambda$と$\cap_{\lambda\in\Lambda}A_\lambda$の族$(A_i)_{i\in\N}$を任意に取ると，任意の$\lambda\in\Lambda$について$B\setminus A\in A_\lambda$かつ$\sum_{i\in\N}A_i\in A_\lambda$．よって，$B\setminus A,\sum_{i\in\N}A_i\in \cap_{\lambda\in\Lambda}A_\lambda$．
+        \item $\o{\A}:=\Brace{\mathcal{B}\subset P(X)\mid A\subset \mathcal{B},\mathcal{B} は\mathrm{Dynkin}族}$とすると，$P(X)\in\o{\A}$である．$\D(\A):=\cap_{\mathcal{B}\in\o{\A}}\mathcal{B}$とすると，これは(1)よりDynkin族である．最小であることを示す．$\A\subset\mathcal{C}$を任意のDynkin族とすると，$\mathcal{C}\in\o{\A}$である．よって，$\D(\A)=\cap_{\mathcal{B}\in\o{\A}}\mathcal{B}\subset\mathcal{C}$．
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    集合族$\A$が有限共通部分について閉じているとき，これを\textbf{乗法族}という．
+\end{definition}
+
+\begin{theorem}
+    $\A$を乗法族とする．$\D(\A)=\sigma(\A)$である．
+\end{theorem}
+
+\section{可測関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=測度の射は何か]
+    可測集合のアイデアは自然に外部化される．
+    開集合の上に連続関数が立つのに似ているが，可測関数のクラスは各点収束について閉じている．
+
+    「事象」と「条件」の外延による集合との同一視の議論のように，これは論理演算を集合演算に移植している仮定に思える．
+    逆像は自然に$\sigma$-代数の構造を保つ．
+    集合という豊穣の大地の上に，数理モデルを建てている祈り高い営みは荘厳である．
+
+    しかしLebesgueは非可測関数の例を知らなかったように，自分が何をやってるのかの枠組みを明確にするというモチベーションの方が強いように思われる．
+\end{tcolorbox}
+
+\begin{notation}
+    可測空間$(E,\B)$の部分集合を
+    $E(f>c)=\{f>c\}:=f^{-1}((c,\infty])=\{x\in E\mid f(x)>c\}$などと表す．
+    $E$を左作用と見ると，集合$\{f>c\}$に作用する集合関数$\B\to-$に思えるからである．$(\cdot)$内部は可測関数によって記述された条件式・事象と思える．
+\end{notation}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Borel class $\calB(\R)$の基底と呼べるものが，区間$((c,\infty])_{c\in\R}$となっている．
+    おそらく補集合演算が生成において許されているので，開集合の場合よりも，より少ない集合族で基底になる．
+\end{tcolorbox}
+
+\begin{definition}[measurable function]
+    $\o{\R}$-値関数$f:X\to[-\infty,\infty]$が$\calB$-可測であるとは，次を満たすことをいう：
+    \[\forall_{c\in\R}\;\{f>c\}:=f^{-1}((c,\infty])\in\calB.\]
+\end{definition}
+\begin{remarks}
+    コンパクト化$\o{\R}$はその上の集合代数がよくなるが，代数法則が整合的に定まらず，不定形が発生するが，これは積分論で部分的な解消を見る．
+    非有界関数を扱えるのは，端的に集合代数という形式の祈りの高さによる．
+\end{remarks}
+
+\begin{lemma}[拡張実可測関数の特徴付け]\label{lemma-characterization-of-measurable-function}
+    $\o{\R}$-値関数$f:X\to[-\infty,\infty]$について，以下の４条件は同値である．
+    \begin{enumerate}
+        \item $f$は$\B$-可測．
+        \item $\forall_{c\in\R}\;\{f\ge c\}\in\B$．
+        \item $\forall_{c\in\R}\;\{f< c\}\in\B$．
+        \item $\forall_{c\in\R}\;\{f\le c\}\in\B$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 任意の$c\in\R$について，$\{x\in X\mid f(x)\ge c\}=\bigcap_{n=1}^\infty\Brace{x\in X\mid f(x)>c-\frac{1}{n}}\in\B$．
+        \item[(2)$\Rightarrow$(3)] 任意の$c\in\R$について，$\{x\in X\mid f(x)< c\}=\{x\in X\mid f(x)\ge c\}^\complement\in\B$．
+        \item[(3)$\Rightarrow$(4)] (1)$\Rightarrow$(2)の議論で不等号の向きを逆にして，$-\frac{1}{n}$を$\frac{1}{n}$に変えた議論により従う．
+        \item[(4)$\Rightarrow$(1)] (2)$\Rightarrow$(3)の不等号を逆にした議論が成り立つ．
+    \end{description}
+\end{proof}
+
+\begin{theorem}[像代数が拡張Borel classに含まれることと同値]
+    $\o{\R}$-値関数$f:X\to[-\infty,\infty]$について，以下の２条件は同値である．
+    \begin{enumerate}
+        \item $f$は$\B$-可測．
+        \item \begin{enumerate}[(a)]
+            \item $f^{-1}(\infty),f^{-1}(-\infty)\in\B$．
+            \item $\forall_{B\in\B(\R)}\;f^{-1}(B)\in\B$．
+        \end{enumerate}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(2)$\Rightarrow$(1)] 任意の区間$(c,\infty]=(c,\infty)\cup\{\infty\}$は，$(c,\infty)$を表す開集合の可算和と$\{\infty\}$との合併で表せるから，$f^{-1}((c,\infty])\in\B$が従う．
+        \item[(1)$\Rightarrow$(2)] 
+        \begin{enumerate}[(a)]
+            \item $f$は可測だから，\begin{align*}
+                \{x\in X\mid f(x)=\infty\}&=\cap_{n\in\N}\{x\in X\mid f(x)>n\}\in\B\\
+                \{x\in X\mid f(x)=-\infty\}&=\cap_{n\in\N}\{x\in X\mid f(x)<-n\}\in\B
+            \end{align*}
+            \item まず，任意の開区間$(a,b)\;(-\infty<a<b<\infty)$について，$f^{-1}((a,b))=\{x\in X\mid f(x)>a\}\cap\{x\in X\mid f(x)<b\}\in\B$であるから，任意の開集合$I\subset\R$について，$I\cap\Q=\{r_j\}_{j\in\N}$とし，$\delta_j:=d(r,\partial I)$と定めると，$I=\cup_{j\in\N}U_{\delta_j}(r_j)\in\B$．これより，$\epsilon:=(f^*)^{-1}\B=\{B\in P(\R)\mid f^{-1}(B)\in\B\}$と置くと，$\Op(\R)\subset\epsilon$であるから，$\sigma(\Op(\R))=\B(\R)\subset\epsilon$が従う．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    可測実関数の定義は，Lebesgue積分という特殊化された目標の下でもはっきり理解できた．
+    しかしこれがBorel classへの測度の射として一般化の道が開けるとは，どういうことだろう．
+\end{remarks}
+
+\subsection{可測関数に許された構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可測関数は線型和，積，絶対値冪（したがって偶数冪），極限構成について閉じている．
+    集合の$\sigma$-加法性とは，可測関数の極限に相当する．
+    しかし何故か，可測関数の縦線集合の逆像も，集合の有理数についての$\sigma$-加法に還元される．
+\end{tcolorbox}
+
+\begin{proposition}
+    $f,g:X\to[-\infty,\infty]$を$\B$-可測とする．$\max_{x\in X}\{f(x),g(x)\},\min_{x\in X}\{f(x),g(x)\}$も可測である．
+\end{proposition}
+\begin{proof}
+    任意の$c\in\R$について，
+    \begin{align*}
+        \{x\in X\mid\max_{x\in X}\{f(x),g(x)\}>c\}&=\{x\in X\mid f(x)>c\}\cup\{x\in X\mid g(x)>c\}\\
+        \{x\in X\mid\min_{x\in X}\{f(x),g(x)\}>c\}&=\{x\in X\mid f(x)>c\}\cap\{x\in X\mid g(x)>c\}.
+    \end{align*}
+\end{proof}
+
+\begin{proposition}\label{prop-measurable-function-closed-uunder-scaling-and-power}
+    $f:X\to[-\infty,\infty]$を$\B$-可測，$a,\gamma\in\R,\gamma\ne 0$とする\footnote{$\abs{f}^0$の場合は，$f$が$\{\pm\infty\}$に値を取るとき，定義できなくなる．}．
+    $af,\abs{f}^\gamma$は$\B$-可測である．
+    ただし，$a=0$のとき$f$の値に依らず$af=0$，$\gamma<0\land f(x)=0$のとき$\abs{f(x)}^\gamma=+\infty$とした．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$af$] 任意の$c\in\R$について，\begin{enumerate}
+            \item $a=0$のとき，$af=0$は可測．
+            \item $a>0$のとき，$\{x\in X\mid af(x)>c\}=\Brace{x\in X\mid f(x)>\frac{c}{a}}\in\B$．
+            \item $a<0$のとき，$\{x\in X\mid af(x)>c\}=\Brace{x\in X\mid f(x)<\frac{c}{a}}\in\B$（補題\ref{lemma-characterization-of-measurable-function}）．
+        \end{enumerate}
+        \item[$(f)^\gamma$] $c<0$のとき，$\{x\in X\mid \abs{f(x)}^\gamma>c\}=X\in\B$．以降，$c\ge 0$とする．
+        \begin{description}
+            \item[$\gamma>0$のとき] $\{x\in X\mid \abs{f(x)}^\gamma>c\}=\{x\in X\mid \abs{f(x)}>c^{1/\gamma}\}=\{x\in X\mid f(x)>c^{1/\gamma}\}\cup\{x\in X\mid f(x)<-c^{1/\gamma}\}\in\B$．
+            \item[$\gamma<0$のとき] $c=0$のとき，$f(x)=0$のとき$\abs{f(x)}^\gamma>0\;(\gamma<0)$であるから，$\{x\in X\mid \abs{f(x)}^\gamma>c\}=X\in\B$．$c>0$のとき，
+            \begin{align*}
+                \Brace{x\in X\mid\abs{f(x)}^{-\gamma}<\frac{1}{c}}&=\Brace{x\in X\mid\abs{f(x)}<\paren{\frac{1}{c}}^{-1/\gamma}}\\
+                &=\Brace{x\in X\mid f(x)<\paren{\frac{1}{c}}^{-1/\gamma}}\cap\Brace{x\in X\mid f(x)>-\paren{\frac{1}{c}}^{-1/\gamma}}\in\B
+            \end{align*}
+        \end{description}
+    \end{description}
+\end{proof}
+
+\begin{proposition}[和と積]\label{prop-sum-and-product-of-measurable-functions}
+    $f,g:X\to(-\infty,\infty)$を有界な$\B$-可測とする．$f+g,fg$は$\B$-可測である．
+    ただし，$\infty-\infty,0\times\infty$がない場合は，有界性の仮定を外しても成り立つ．\footnote{これらの仮定が，可積分関数についての理論では，null setの議論から，外すことができる．}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$f+g$について] $\{x\in X\mid f(x)+g(x)>c\}=\{x\in X\mid f(x)>c-g(x)\}$と見ると，有理数の稠密性より，任意の$x\in X,\;f(x)>c-g(x)$について$f(x)>\sigma>c-g(x)$を満たす$\sigma$が存在し，これが存在するとき元の不等式も成り立つから，$\{x\in X\mid f(x)>c-g(x)\}=\cup_{\sigma\in\Q}\paren{\{x\in X\mid f(x)>\sigma\}\cap\{x\in X\mid\sigma>c-g(x)\}}\in\B$．
+        \item[$fg$について] $fg=\frac{1}{4}((f+g)^2-(f-g)^2)$より，(1)と命題\ref{prop-measurable-function-closed-uunder-scaling-and-power}(2)と(1)とをこの順番で適用することで従う．
+    \end{description}
+\end{proof}
+\begin{remarks}[可測関数で挟んだ領域の逆像も可算]
+    $f+g$の証明は，$g:=c-g$と見れば，$E(f>g)$が可測であることの証明に一致する．
+    しかしまず，暗黙のうちにその結果を使ったことは多いが，集合の等式$\{x\in X\mid f(x)>c-g(x)\}=\cup_{\sigma\in\Q}\paren{\{x\in X\mid f(x)>\sigma\}\cap\{x\in X\mid\sigma>c-g(x)\}}$を初めて見た．
+    それにしても，加算を一体どこに帰着させているのか．
+\end{remarks}
+
+\begin{proposition}[極限構成]\label{prop-limit-of-sequence-of-measurable-function}
+    $(f_n)$を$\B$-可測関数$X\to[-\infty,\infty]$の列とする．
+    \begin{enumerate}
+        \item $\sup_{n\in\N}f_n(x),\inf_{n\in\N}f_n(x)$は$\B$-可測である．
+        \item $\limsup_{n\to\infty}f_n(x),\liminf_{n\to\infty}f_n(x)$は$\B$-可測である．特に，集積点がただ一つである場合，すなわち$\forall_{x\in X}\;\lim_{n\to\infty}f_n(x)\in[-\infty,\infty]$のとき，$\lim_{n\to\infty}f_n(x)$は$\B$-可測である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意の$x\in X$について，$\sup_{n\in\N}\;f_n(x)>c\Leftrightarrow\exists_{n\in\N}\;f_n(x)>c$であるから，
+        \[\Brace{x\in X\mid\sup_{n\in\N}f_n(x)>c}=\cup_{n\in\N}\{x\in X\mid f_n(x)>c\}\in\B.\]
+        これと命題\ref{prop-measurable-function-closed-uunder-scaling-and-power}より，$\inf_{n\in\N}f_n(x)=-\sup_{n\in\N}(-f_n(x))$も$\B$-可測．
+        \item 
+        $\limsup_{n\to\infty}f_n(x)=\inf_{n\in\N}\sup_{\nu\ge n}f_\nu(x)$は可測関数の（単調減少）列$(\sup_{\nu\ge n}f_\nu(x))_{n\in\N}$の下限より，$\B$-可測である．
+        $\liminf_{n\to\infty}f_n(x)=-\limsup_{n\to\infty}(-f_n(x))$も同様．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[この結果には，値域をコンパクトしたことがどれくらい効いているのだろうか？]
+    点列コンパクトであるから，収束する部分列は必ず存在するため，上極限と下極限は必ず定まり，そこに可測性は遺伝する．
+    集積点がただ一つであるのは特別な点列の場合である．
+\end{remarks}
+
+\subsection{単関数近似}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    単関数$f:X\to K$とは，特性関数の$K$-線型有限和，または$X$の可測集合の有限$K$-線型形式和のことをいう．
+    測度を定義するまでは，可測集合$A_i$とその特性関数$\chi_{A_i}$を同一視する．$A_i$が可測であることと$\chi_{A_i}$が可測であることとは同値である．
+\end{tcolorbox}
+
+\begin{definition}[simple function]
+    可測関数$f$が単関数であるとは，$\abs{\Im f}<\infty$であることをいう．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $f$が単関数であることと，$\exists_{\{a_i\}_{i\in n}\subset\R\setminus\{0\}}\;\exists_{\{A_i\}_{i\in n}\subset\B}\;\mathrm{with}\;A_i\cap A_j=\emptyset\;(i\ne j)\st f=\sum_{i=1}^na_i\chi_{A_i}$が成り立つことは同値．
+        \item $f,g$が単関数であるとき，$af+bg,\abs{f},fg,\max\{f,g\}$も単関数である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 有限族$(A_i)_{i\in n}$としては，$(f^{-1}(a))_{a\in\Im f}$を取ればこれは互いに素で，$f=\sum^n_{i=1}f(a_i)\chi_{f^{-1}(a_i)}$と表せる．逆は自明．
+        \item いずれの関数も像が有限集合である．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[単関数近似]\label{thm-simple-function-approximation}
+    $f:X\to[0,\infty]$を可測関数とする．このとき，単関数の単調増加列$(f_n)_{n\in\N}$が存在して，任意の点で$f$に各点収束する：$\forall_{x\in X}\;f_n(x)\nearrow f(x)$．
+\end{theorem}
+\begin{proof}
+    区間$[0,n]$を$n2^n$等分すると，各$[0,n)=\coprod_{k=0}^{n2^n-1}\left[\frac{k}{2^n},\frac{k+1}{2^n}\right)$について，$A_k:=f^{-1}\paren{\left[\frac{k}{2^n},\frac{k+1}{2^n}\right)}$は可測である（補題\ref{lemma-characterization-of-measurable-function}）．
+    よって，$A_{n2^n}:=f^{-1}([n,\infty])$とすると，
+    \[f_n:=\sum^{n2^n}_{k=0}\frac{k}{2^n}\chi_{A_k}\]
+    とおけば，これは単関数で，区間$[0,n+1]$の$(n+1)2^{n+1}$等分は区間$[0,n]$の$n2^n$等分の細分だから，各$x\in X$について$(f_n(x))_{n\in\N}$は単調増加である．
+    また，$f(x)=\infty$なる$x\in X$については，$f_n(x)=n$だから$\lim_{n\to\infty}f_n(x)=\infty$であり，$f(x)\in\R$なる$x\in X$については，$f(x)<n$を満たす全ての$n$について$\abs{f_n(x)-f(x)}\le\frac{1}{2^n}$を満たすから，$\lim_{n\to\infty}f_n(x)=f(x)$である．
+\end{proof}
+\begin{remarks}
+    値域$[0,\infty]$へ至る階段を，閉区間の列$([0,n])_{n\in\N}$で作る．
+    $2^n$分割することによって，$n+1$の場合は$n$の場合の細分となっているから，確かに$(f_n)$は単調増加である．
+\end{remarks}
+
+\section{測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度とは，集合直和を実数和に移すモノイドの射である．
+    集合直和の中立元を$0$に移すこととfunctorityを公理とする．
+    これは一般の集合和は対称性が敗れた形で保存し，包含による順序構造も保存し，固有差も保存する．
+    後ろ２つが，単調列への注目の根拠である．
+    単調列の極限も保存する．
+    一般の極限の場合は対称性が敗れた形で保存される．実数列の方が，極限事象よりも振れ幅が小さい．
+\end{tcolorbox}
+
+\subsection{有限加法的測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=単に結び半束の射ではなさそう．極限を保つ束の関手と言った方が良いか．]
+    結び半束$(L,\lor,1)$とは，任意の２元$a,b\in L$について$\{a,b\}$が$L$上に上限を持つ順序集合をいう．
+    集合代数（有限加法族）$\B$の結び半束の構造に注目して，これを$[0,\infty]$に埋め込むことを考える．\footnote{coproductを保つ関手と言ってもいい．極限を極限に移すから，$\mu(A+B)=\mu(A)+\mu(B)$であり，$A\cup B\mono A+B$は$\mu(A\cup B)\mono\mu(A\sqcup B)$に写される．これが劣加法性である．}
+    これが面積や確率などの観念のモデルとなり得る．
+
+    可測空間$(X,\B)$上の集合関数$\mu:\B\to\o{\R}$のうち，結び半束の射$\B\to[0,\infty]$となるものを有限加法的測度，
+    $\sigma$-完備な結び半束の射となるものを測度という．\footnote{一般に単調で，上限は上限に写す：$\mu(A+B)=\mu(A)+\mu(B)$．最小元も対応させる$\mu(\emptyset)=0$．}
+    frameは分配的なsuplattice\footnote{任意の結びについて閉じた半束をsuplattice（上限束）という．なおframeが分配的と言っても有限交わりが任意の結びに分配することのみが公理で，多分逆は成り立たず，またframeの射と言った時は任意合併と有限共通部分を保つことを言う．}なのであった．
+\end{tcolorbox}
+
+\begin{definition}[finitely additive measure / Jordan measure]
+    集合とその上の代数$\A$上の関数$\mu:\A\to[0,\infty]$が\textbf{有限加法的測度}であるとは，次の２条件を満たすことをいう：
+    \begin{enumerate}
+        \item (null set) $\mu(\emptyset)=0$．
+        \item (finite additivity) $\forall_{A,B\in\A}\;A\cap B=\emptyset\Rightarrow\mu(A\cup B)=\mu(A)+\mu(B)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[有限加法的測度の$\sigma$-加法性の単調族による特徴付け]\label{lemma-sigma-additivity-of-finitely-additive-measure-in-terms-of-monotone-sequence}
+    有限加法的測度$\mu_0:\A\to[0,\infty]$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\mu_0$は$\A$上$\sigma$-加法的である．
+        \item $(A_n)$を$A\in\A$に収束する$\A$の単調増加列とすると，$\lim_{n\to\infty}\mu_0(A_n)=\mu_0(A)$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 単調増加列$(A_n)$が定める互いに素な列$(B_n:=A_n\setminus(\cup_{i=1}^{n-1}A_i))$について，$\sigma$-加法性より，$\lim_{n\to\infty}\mu_0(A_n)=\lim_{n\to\infty}\sum^n_{i=1}\mu_0(B_i)=\mu_0(\sum^\infty_{i=1}B_i)=\mu_0(A)$．
+        \item[(2)$\Rightarrow$(1)] 任意の互いに素な集合列$(B_n)$に対して，これが定める単調増加列$(A_n:=\cup_{i=1}^nB_i)$も収束先は同じだから，$\lim_{n\to\infty}\sum^n_{i=1}\mu_0(B_i)=\lim_{n\to\infty}\mu_0(A_n)=\mu_0(A)=\mu_0(\sum^\infty_{i=1}B_i)$（１つ目の等号で$A_n=\sum_{k=1}^nB_k$についての$\mu$の有限加法性を用いた）．
+    \end{description}
+\end{proof}
+
+\subsection{測度の定義と性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度は加法的な関数$\B\to[0,\infty]$である．
+    これはある種の極限（$\omega$-余積）についての条件で，すると加法中立元を保ち，極限も保つことが従う．
+    もっと一般的な関手性は劣加法性とその極限として理解される．
+
+    単調な場合とそうでない場合の差は，束のうち線型順序な部分に対するposetの関手だと$\mu$を見る場合と，
+    そうでない場合は結びとして上限を取るとして束を見て，極限を保つ関手だと$\mu$を見る場合とに対応すると思える．
+    測度の性質\ref{lemma-character-of-measure}の上下極限集合に対する劣加法性(6),(7)は，$\mu\paren{\liminf_{n\to\infty}A_n}$こそが真の始対象で，$\mu\paren{\liminf_{n\to\infty}A_n}$こそが真の終対象であることを言っているように思える．
+\end{tcolorbox}
+
+\begin{definition}[measure space]
+    組$(X,\B,\mu)$が\textbf{測度空間}であるとは，次の２条件を満たすことをいう：
+    \begin{enumerate}
+        \item (null set) $\mu(\emptyset)=0$．\footnote{(2)の$\mu(\emptyset+\emptyset)=\mu(\emptyset)+\mu(\emptyset)$より，$\emptyset$は加法中立元に対応させる必要があることが従う．}
+        \item (additivity) 互いに素な$\B$の列$(A_i)_{i\in\N}$について，$\mu\paren{\sum_{i\in\N}A_i}=\sum_{i\in\N}\mu(A_i)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[測度の性質]\label{lemma-character-of-measure}
+    組$(X,\B,\mu)$を測度空間とする．
+    \begin{enumerate}
+        \item (単調性) $\forall_{A,B\in\calB}\;A\subset B\Rightarrow\mu(A)\le\mu(B)$．
+        \item (固有差) $\forall_{A,B\in\calB}\;[(A\subset B)\land(\textcolor{red}{\mu(A)<\infty})\Rightarrow\mu(B\setminus A)=\mu(B)-\mu(A)]$．
+        \item (劣加法性) $\forall_{\{A_i\}_{i\in\N}\subset\calB}\;\mu\paren{\cup_{i\in\N}A_i}\le\sum_{i\in\N}\mu(A_i)$．
+        \item (単調増加列の極限) $\forall_{\{A_i\}_{i\in\N}\subset\calB}\;A_i\nearrow A\Rightarrow\mu(A_i)\nearrow\mu(A)$．
+        \item (単調減少列の極限) $\forall_{\{A_i\}_{i\in\N}\subset\calB}\;(A_i\searrow A)\land(\textcolor{red}{A_1<\infty})\Rightarrow\mu(A_i)\searrow\mu(A)$．
+        \item (劣加法性) $\forall_{\{A_i\}_{i\in\N}\subset\calB}\;\mu\paren{\liminf_{i\to\infty}A_i}\le\liminf_{i\to\infty}\mu(A_i)$．
+        \item (劣加法性) $\forall_{\{A_i\}_{i\in\N}\subset\calB}\;\mu\paren{\cup_{i\in\N}A_i}<\infty\Rightarrow\mu\paren{\limsup_{i\to\infty}A_i}\ge\limsup_{i\to\infty}\mu(A_i)$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $B=A\cup(B\setminus A)$と見ると，$A\cap(B\setminus A)=\emptyset$であるから，測度$\mu$の加法性(2)より，$\mu(B)=\mu(A)+\mu(B\setminus A)\ge\mu(A)$．最後で(1)を用いた．
+        \item (1)の途中式から，$\mu(B\setminus A)=\mu(B)-\mu(A)$である．
+        \item $B_j:=A_j\setminus\paren{\cup_{i=1}^jA_j}$という階差列$(B_j)_{j\in\N}$を定めると，$\cup_{j=1}^\infty A_j=\cup_{j=1}^\infty B_j$で，任意の$j\in\N$について$B_j\subset A_j$かつ，$(B_j)$は互いに素．よって，$\sigma$-加法性(2)より，
+        \[\mu\paren{\cup_{j=1}^\infty A_j}=\mu\paren{\cup_{j=1}^\infty B_j}=\sum^\infty_{j=1}\mu(B_j)\le\sum^\infty_{j=1}\mu(A_j).\]
+        \item $B_j:=A_j\setminus\paren{\cup_{i=1}^jA_j}$という階差列$(B_j)_{j\in\N}$を考える．ただし，$A_0=\emptyset$とした．
+        これは収束先が一致し$A=\cup_{j=1}^\infty A_j=\cup_{j=1}^\infty B_j$，$\cup_{j=1}^kA_k=\cup_{j=1}^kB_k$でもある．
+        よって，
+        \[\mu(A)=\sum^\infty_{j=1}\mu(B_j)=\lim_{k\to\infty}\sum_{j=1}^k\mu(B_j)=\lim_{k\to\infty}\mu(A_k).\]
+        \item 双対命題だが，有界性の扱いに注意．
+        $B_j:=A_1\setminus A_j$とおくと，$(B_j)$は単調増大列で，$B_j\nearrow A_1\setminus A$．よって，(4)より，$\mu(A\setminus A_j)=\mu(B_j)\nearrow\mu(A_1\setminus A)$．
+        $A_1<\infty$より(2)から$\mu(A_1\setminus A_j)=\mu(A_1)-\mu(A_j),\mu(A_1\setminus A)=\mu(A_1)-\mu(A)$であるから，これと併せて，$\mu(A_j)\searrow\mu(A)$を得る．
+        \item 列$\paren{\cap^\infty_{j=1}A_i}_{j\in\N}$は単調増大列であるから，(4)より
+        \[\mu\paren{\liminf_{i\to\infty}A_i}=\mu\paren{\cup^\infty_{j=1}\cap^\infty_{i=j}A_i}=\liminf_{j\to\infty}\mu\paren{\cap^\infty_{i=j}A_i}\le\liminf_{j\to\infty}\mu(A_j)\]
+        最後の不等式は，$\cap^\infty_{i=j}A_i\subset A_j$による．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}\mbox{}
+    \begin{description}
+        \item[(4),(5)] 単調列は階差列に注目すると互いに素な列を得るので，加法性が使える．
+        \item[(6),(7)] $\mu$は集合の極限を保つということだろう．これは適切な位相構造を入れれば，$\mu$は連続ということだろうか．まあPosの関手と考えているので十分だろうが．
+    \end{description}
+\end{remarks}
+
+\subsection{前測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Boole代数$\B_0$上の前測度は，測度$\B\to[0,\infty]$に拡張できる．
+\end{tcolorbox}
+
+\begin{definition}[pre-measure]
+    Boole代数$\B_0$上の\textbf{前測度}$\mu_0:\B_0\to[0,\infty]$とは，測度のことである．すなわち，
+    \begin{enumerate}
+        \item (null set) $\mu(\emptyset)=0$．
+        \item (additivity) 互いに素な$\B_0$の列$(A_i)_{i\in\N}$について，$\mu_0\paren{\sum_{i\in\N}A_i}=\sum_{i\in\N}\mu_0(A_i)$．
+    \end{enumerate}
+\end{definition}
+
+\section{零集合と測度空間の完備性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=距離空間には完備化があるべき，測度空間にも完備化が標準的に取れるべき．これをあくまでも代数構造から抽出する．]
+    null setの双対概念（補集合）はfull setとなり，$\forall_{S\in\B}\;\mu(S)=\mu(S\cap F)$という代数法則を満たす．
+    吸収律的で，ここでも束の構造が出現するために，full setも好まれる．
+    $\ae$とは真理集合がfull setであることをいう．
+    完備とは全てのfull setが可測であることをいう（全てのnull setが$0$とわかるなら，その補集合も値が定まる）．
+    測度が同値とは等化子がfull setであることをいう．
+    そこで気づいたが，測度空間が完備であるとは，束・代数が完備であるということである．
+\end{tcolorbox}
+
+\subsection{零集合とalmost everywhereの概念}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    すごく位相的な概念である．位相よりも代数構造は強いが，$\ae$の観念は，コンパクト集合に関連する広義一様収束のような空間的な使い方をする．
+    この「だいたい」「概」の言葉の使い方は，代数構造に支えられた強度を持つ上に，全く非自明な意味論を持つ．
+    測度とは，空間を調べるにあたって恐ろしいほど有効な道具である．
+\end{tcolorbox}
+
+\begin{definition}[null set, $\mu$-a.e.]
+    測度空間$(X,\B,\mu)$について，
+    \begin{enumerate}
+        \item $N\in\B$が$\mu(N)=0$を満たすとき，$N$を$\mu$-零集合という．
+        \item 命題$P(x)$が$\mu(X\setminus P(x))=0$を満たすとき，\textbf{$\mu$に関してほとんど全ての$x$について命題$P(x)$が成り立つ}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[塵は可算個集まっても塵]
+    零集合の族$(N_n)_{n\in\N}$について，$\mu(\cup_{n=1}^\infty N_n)=0$．
+\end{lemma}
+
+\subsection{零集合の代数的構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    零集合は$\sigma$-代数$\B$の中で$\sigma$-イデアルをなし，その双対概念はfull setで，$\delta$-フィルターをなす．
+    "small"と"large"という概念の代数的形式化に当たる．
+    null setの構成を一般化すると，任意の$\sigma$-イデアルに対して，それをnull setの定義としてその上の完備化を考えることができる．局所化可能測度空間．
+\end{tcolorbox}
+
+\begin{definition}[$\sigma$-ideal, $\delta$-filter]\mbox{}
+    \begin{enumerate}
+        \item $\J\subset P(X)$が\textbf{$\sigma$-イデアル}であるとは，次の３条件を満たすことをいう．
+        \begin{enumerate}[(i)]
+            \item (downwardly closed) $\forall_{B\in\J}\; A\subset B\Rightarrow A\in\J$．
+            \item ($\sigma$-closed) $\forall_{\{A_i\}_{i\in\N}\subset\J}\;\exists_{B\in\J}\;\cup_{i\in\N}A_i\subset B$．\footnote{(i)と併せると，$\cup_{i\in\N}A_i\in\J$が必要．これが$\sigma$-性である．}
+            \item (empty set) $\J\ne\emptyset$．\footnote{(i)と併せると$\emptyset\in\J$が必要．}
+        \end{enumerate}
+        (ii),(iii)を満たす$\J'\subset P(X)$を\textbf{基}といい，任意の$X$の部分集合を\textbf{準基}という．
+        \item $\F\subset P(X)$が\textbf{$\delta$-フィルター}であるとは，次の３条件を満たすことをいう．
+        \begin{enumerate}[(i)]
+            \item $\forall_{A\in\F}\; A\subset B\Rightarrow B\in\F$．
+            \item $\forall_{\{A_i\}_{i\in\N}\subset\F}\;\exists_{B\in\F}\;B\subset\cap_{i\in\N}A_i$．\footnote{(i)と併せると，$\cap_{i\in\N}A_i\in\F$が必要．これが$\delta$-性である．}
+            \item $\F\ne\emptyset$．\footnote{(i)と併せると$X\in\F$が必要．}
+        \end{enumerate}
+        \item de-Morganの双対性の下で，$\J=\lnot\F$の関係がある．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[quotient $\sigma$-algebra]
+    $\sigma$-代数$\B$の商$\sigma$-代数とは，$\sigma$-イデアル$\cN$の定める同値関係$A\sim B:\Leftrightarrow A\triangle B\in N$についての商集合$\B/\cN$をいう．
+    これは抽象的には$\sigma$-代数になるが，集合の上に具体的に表現できるとは限らない．
+\end{definition}
+\begin{example}
+    $\B$を$[0,1]$上のBorel $\sigma$-代数，$\cN$をLebesgue零集合とする．$\sigma$-代数$\B/\cN$は，どの具体的な$\sigma$-代数とも同型ではない．
+\end{example}
+
+\begin{theorem}[Loomis-Sikorski representation theorem]
+    $\B$を抽象$\sigma$-代数とする．このとき，集合$A$とその上の$\sigma$-代数$\A$と$\sigma$-イデアル$\cN\subset\A$が存在して，$\B\simeq\A/\cN$を満たす．
+\end{theorem}
+
+\begin{corollary}
+    任意の抽象的な測度空間（$\sigma$-代数）は，完備化した後の具体的な測度空間に同型である．
+\end{corollary}
+
+\subsection{概収束とEgorovの定理}
+
+\begin{example}[almost sure convergence / strong convergence, sure convergence / pointwise convergence]\mbox{}
+    \begin{enumerate}
+        \item $f(x)=g(x)\;\mu$-$\ae\;x$とは，$\exists_{N:null}\;\forall_{x\in X\setminus N}\;f(x)=g(x)$．
+        \item 通常の収束を\textbf{各点収束}といい，$\lim_{n\to\infty}f_n=f\;\mu-\ae$を\textbf{概収束}または\textbf{強収束}という．\footnote{線型空間には終位相による暗黙の位相が入っている．ノルム空間上の始位相は，ノルムから定まる位相より弱く，これを弱位相と呼ぶ．}
+        \item 単調関数は，ほとんど至る所で有限な微分係数を持つ．
+        \item 有界関数がRiemann積分であることは，ほとんど至る所で連続であることに同値．
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}[Egorov (1911)：概収束ならば概一様収束]\label{thm-Egorov}
+    $(X,\B,\mu)$を測度空間とし，測度を有限とする：$\mu(X)<\infty$．
+    実可測関数列$(f_n)$が実可測関数$f:X\to\R$に概収束するならば，$\forall_{\delta>0}\;\exists_{A\in\B}\;\mu(A)<\delta$かつ$(f_n)$は$X\setminus A$上$f$に一様収束する．
+\end{theorem}
+\begin{proof}
+    \[Z:=\bigcap^\infty_{p=1}\bigcup_{q=1}^\infty\bigcap^\infty_{n=q}\Brace{z\in X\mid \abs{f_n(z)-f(z)}}<\frac{1}{p}\]
+    と定めると，$x\in X$について
+    \begin{align*}
+        \lim_{n\to\infty}f_n(x)=f(x)&\Lrarrow \forall_{p\in\N}\;\exists_{q\in\N}\;\forall_{n\ge q}\;\abs{f_n(x)-f(x)}<\frac{1}{p}\Lrarrow x\in Z
+    \end{align*}
+    より，$(f_n)$が概収束するという仮定は$\mu(Z^\complement)=0$に同値．
+
+    ここで，
+    \[Z^\complement=\bigcup^\infty_{p=1}\bigcap_{q=1}^\infty\underbrace{\bigcup^\infty_{n=q}\Brace{z\in X\mid \abs{f_n(z)-f(z)}}\ge\frac{1}{p}}_{=:B_{p,q}}\]
+    と定めると，$(B_{p,q})_{q\in\N}$は単調減少列で，$\mu(X)<\infty$より，$q\to\infty$のとき$\mu(B_{p,q})\searrow \mu(\cap^\infty_{q=1}B_{p,q})$で（補題\ref{lemma-character-of-measure}(5)），
+    $\mu(\cap^\infty_{q=1}B_{p,q})\le\mu(Z^\complement)=0$．
+
+    よって，列$(B_{p,q})_{q\in\N}$は測度$0$の集合に収束するから，任意の$\delta>0$に対して，
+    $\mu(B_{p,q_p})<\frac{\delta}{2^p}$を満たす列$(q_p)_{p\in\N}$が取れる．これは番号$q$を$p$に依って一斉にとっている．
+    こうして構成した$B:=\cup^\infty_{p=1}B_{p,q_p}$は条件を満たす．
+    \begin{enumerate}
+        \item $\mu(B)=\sum^\infty_{p=1}\mu(B_{p,q_p})<\sum^\infty_{p=1}\frac{\delta}{2^p}=\delta$．
+        \item $B^\complement=\cap^\infty_{p=1}B^\complement_{p,q_p}=\cap^\infty_{p=1}\cap^\infty_{n=q_p}\Brace{z\in X\mid \abs{f_n(x)-f(x)}<\frac{1}{p}}$．
+        となるが，これは任意の$p\in\N_+$に対して$q_p$が一様に取れていることを意味する．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    いとも簡単に論理の糸を辿って見せた……．
+    まず，$B_{p,q}$を「$q$番目以降にも，$1/p$以上外れる$n\in\N$をもつ点$x\in X$からなる集合」と定めると，概収束するとは，この測度を任意に小さくできるということである．
+    この小さくする際に，$B$を定める際に$q_p$を定めるアルゴリズムをあらかじめ決めておくことができるから，一様に収束するような場$B^\complement$が作れる．
+\end{remarks}
+
+\subsection{完備化と可測関数の延長}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    あの強力な構造を標準的に備えた空間のみに集中したいために，完備化の理論を整える．
+    $\sigma$-集合体$\B$の完備化とは，$\B$を含む$\sigma$-集合体で，測度が$0$の集合が$\sigma$-イデアルをなすような最小の$\sigma$-集合体のことを指す．
+    実際の構成は，測度$\mu$に対して，$\mu$-可測集合との対称差が$\mu$-零集合であるような集合を加えれば良い．
+    「上下から同じ測度で挟める」ということは，対称差の代数法則で回収して議論するのが良い．
+\end{tcolorbox}
+
+\begin{definition}[complete]
+    測度空間$(X,\B,\mu)$は，
+    \[\forall_{A\in\B}\;[(\mu(A)=0\land B\subset A)\Rightarrow (B\in\B\land\mu(B)=0)]\]
+    を満たすとき\textbf{完備}であるという．
+\end{definition}
+
+\begin{lemma}[目標の対称差による特徴付け]\label{lemma-completeness}
+    $B\subset X$を一般の部分集合とする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $\exists_{A\in\B}\;\exists_{N\in\B}\;A\triangle B\subset N\land\mu(N)=0$．
+        \item $\exists_{A_1,A_2\in\B}\;A_1\subset B\subset A_2\land\mu(A_2\setminus A_1)=0$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] $A_1:=A\setminus N,A_2:=A\cup N$とすると，$A_1\subset B\subset A_2$を満たし，$A_2\setminus A_1=N$より，$\mu(A_2\setminus A_1)=0$．
+        \item[(2)$\Rightarrow$(1)] $A:=A_1,N:=A_2\setminus A_1$とすると，$A\triangle B=B\setminus A_1\subset A_2\setminus A_1=N$より$\mu(B\setminus A_1)=0$である．
+    \end{description}
+\end{proof}
+\begin{remarks}[これが完備性か！]
+    こんな補題を得てしまったら勝利を確信するではないか．あらゆる部分集合が測れることになる．
+    測度$0$で挟めるということが，小学校で四角形を敷き詰めて面積が得られるということの保証である．
+\end{remarks}
+
+\begin{theorem}[completion]\label{thm-completion}
+    測度空間$(X,\B,\mu)$に対して，
+    \[\o{\B}:=\Brace{B\in P(X)\mid \exists_{A,N\in\B}\st A\triangle B\subset N,\mu(N)=0}\]
+    とし，$B\in\o{\B}$に対して$\o{\mu}(B):=\mu(A)$で$\o{\mu}:\o{B}\to\o{\R}$を定める．
+    \begin{enumerate}
+        \item $\o{\B}$も$\sigma$-集合体になる．
+        \item $\o{\mu}$は$A$に依らずに一意に定まり，$\o{\B}$上の完備測度となる．
+    \end{enumerate}
+    測度空間$(X,\o{\B},\o{\mu})$を完備化という．
+\end{theorem}
+
+\begin{proposition}[完備化可測性の特徴付け]\label{prop-characterization-of-measurability-on-complete-space}
+    次の３条件は同値である．
+    \begin{enumerate}
+        \item $f$は$\o{\B}$可測である．
+        \item $\B$可測関数$g:X\to\o{\R}$が存在して，$f(x)=g(x)\;\o{\mu}$-$\ae x$．
+        \item $\B$可測関数$g_1,g_2:X\to\o{\R}$が存在して，$\forall_{x\in X}\;g_1(x)\le f(x)\le g_2(x)$かつ$g_1(x)=g_2(x)\;\o{\mu}$-$\ae x$．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(2)$\Rightarrow$(1)] 任意の$B\in\B(\o{\R})$をとる．条件より，零集合$N\in\o{\B}$が存在して$g^{-1}(B)\in\B$を用いて$f^{-1}(B)\triangle g^{-1}(B)\subset N$を満たすから，$f^{-1}(B)\in\o{\B}$である．
+        \item[(3)$\Leftrightarrow$(2)] 任意の$B\in\B(\o{\R})$について，$g_1,g_2$の逆像が可測であることと$g$の逆像が可測であることは同値（補題\ref{lemma-completeness}）．
+        \item[(1)$\Rightarrow$(3)] \begin{enumerate}
+            \item $\exists_{B\in\o{\B}}\;f=\chi_B$の場合を考える．
+            $B\in\o{\B}$と補題\ref{lemma-completeness}より，$A_1,A_2\in\B$が存在して$A_1\subset B\subset A_2,\mu(A_2\setminus A_1)=0$を満たす．よって，$g_1:=\chi_{A_1},g_2:=\chi_{A_2}$とおけば良い．
+            \item $f$が非負の単関数である場合，すなわち，有限集合$\{a_k\}_{k\in\N}\subset(0,\infty)$と互いに素な有限族$\{B_k\}_{k\in\N}\subset\o{\B}$が存在して$f=\sum^N_{k=1}a_k\chi_{B_k}$と表せる場合を考える．
+            それぞれの$k\in[N]$について，$A_{1,k},A_{2,k}\in\B$が存在して，$A_{1,k}\subset B_k\subset A_{2,k},\mu(A_{2,k}\setminus A_{1,k})=0$を満たすものが存在する．
+            ここで，$g_1(x):=\sum^N_{k=1}a_k\chi_{A_{1,k}},g_2(x):=\sum^N_{k=1}a_k\chi_{A_{2,k}}$とおくと，各$a_k$は非負なので$\forall_{x\in\X}\;g_1(x)\le g_2(x)$を満たす．
+            さらに，$\{x\in X\mid g_1(x)\ne g_2(x)\}\subset\cup^N_{k=1}(A_{2,k}\setminus A_{1,k})$より，$\mu(\{x\in X\mid g_1(x)\ne g_2(x)\})=0$．
+            \item $f$が一般の非負可測関数である場合，
+            単関数の列$(f_n)$が存在して$f_n\nearrow f$を満たす（単関数近似\ref{thm-simple-function-approximation}）．
+            (2)より，各$n\in\N$に対して$g_{n,1},g_{n,2}$という$\B$-可測関数が存在して，
+            \begin{enumerate}
+                \item $\forall_{x\in X}\;g_{n,1}(x)\le f_n(x)\le g_{n,2}(x)$．
+                \item $g_{n,1}(x)=g_{n,2}\;\mu-\ae x$．
+            \end{enumerate}
+            これに対して，$g_1(x):=\liminf_{n\to\infty}g_{n,1}(x),g_2(x):=\liminf_{n\to\infty}g_{n,2}(x)$とおくと，
+            \begin{enumerate}
+                \item $\forall_{x\in X}\;g_{1}(x)\le f_n(x)\le g_{2}(x)$．
+                \item $g_{1}(x)=g_{2}\;\mu-\ae x$．
+            \end{enumerate}
+            を満たすことを示せば良い．(1)は極限が不等号を保つことより，(2)は$\{x\in X\mid g_1(x)\ne g_2(x)\}\subset\bigcup_{n\in\N}\Brace{x\in X\mid g_{n,1}(x)\ne g_{n,2}(x)}$より従う．
+            \item 一般の$\o{\B}$-可測関数$f:X\to[-\infty,\infty]$については，
+            $f^{\pm}:=\max{\pm f,0}$と定めると，２つの非負可測関数$f^\pm:X\to[0,\infty]$を用いて$f=f^+-f^-$と表せる．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+
+\subsection{完備化と冪等律}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    full setの代数法則である吸収律$\forall_{S\in\B}\;\mu(S)=\mu(S\cap F)$は束に似ていて，「完備化」の意味も測度空間と束では似ている．
+    冪等律がある種のcompletenessを表している，なぜなら完備測度空間の完備化はそのままであるから．
+    忘却関手が充満忠実であるとき，忘却するのは性質で，本質的に全射で忠実であるとき，忘却するのは構造であるという．
+    距離空間の完備性は位相からは定義されない「性質である」から完備化と呼ぶが，そうでない場合は「自由」という．いずれも忘却関手の随伴として捉えられる．
+    これは「チャートが定める微分構造」みたいな概念だ．
+\end{tcolorbox}
+
+\section{外測度と測度空間の構成}
+
+%\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+%title=外測度：測度の面積への応用の王道＝被覆による面積近似]
+    %小学校で習う面積の直観は，上下からの矩形での近似である．
+    %有限和しか許さないのであれば，Riemann積分論と等価な結果を得るために，
+    %現在可算和についての理論を構築しているのであった．これに完備化の理論で迫りつつある（補題\ref{lemma-completeness}）．
+    
+    %ここで，いよいよ具体的な「面積と考えられる測度」の定義にかかりたいが，その発想はJordanの外測度の場合と同様，「外から近似」の一般化が一つ考えられる．
+    %この考え方は一般性を持ち，任意の測度に対して，外測度が自然に誘導され，これを$\mu^*$と表す．
+    %Jordan外測度の満たす性質を公理として，可算化された理論を開始するのである！
+    %そして，内測度$\mu_*$と組み合わせることで完備化の道が見える．
+%\end{tcolorbox}
+
+\subsection{外測度とその例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=外測度：測度の面積への応用の王道＝被覆による面積近似]
+    目標である$\sigma$-加法性は$P(X)$全域では定義できないが，関連する代数法則である$\sigma$-加法性と単調性は容易に構成できる．
+    例えば，小学校で習う面積の定義である，上下からの矩形での近似である．
+    このように，測度とは違うが，外測度と呼ばれる集合関数のクラスはより直感的である．
+    そこで，ここから測度を構成する標準的方法を整備する．
+    
+    ＊双対概念は内測度で，これは$\mu^*(\o{-})$と補集合を噛ませれば良い．
+\end{tcolorbox}
+
+\begin{definition}[(Carathéodory) outer / exterior measure (1918)]
+    集合$X$に対して，次の３条件を満たす$P(X)$全体で定義された測度$\mu^*:P(X)\to\o{\R}$を\textbf{外測度}という．\footnote{非可測集合の上にも定義される．可測集合のクラスに限定すれば，$\sigma$-加法族をえる．}
+    \begin{enumerate}
+        \item (非負性) $\Im\mu\subset[0,\infty]$かつ$\mu(\emptyset)=0$．\footnote{測度の公理のままだと，$[-\infty,0]$で理論展開することがあり得るのか．}
+        \item (単調性) $A\subset B\Rightarrow \mu(A)\le\mu(B)$．
+        \item ($\sigma$-劣加法性) $\mu\paren{\cup_{n=1}^\infty A_n}\le\sum^\infty_{n=1}\mu(A_n)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[Lebesgue outer measure]\label{exp-Lebesgue-outer-measure}
+    矩形の面積が定める集合関数$m_d:l_d\to\o{R}$(\ref{exp-extention-to-区間塊})について，区間塊への延長ではなく，一般の集合への延長$m^*:P(X)\to\o{\R}$を
+    \[m^*(A):=\inf\Brace{\sum_{k=1}^\infty m(R_k)\in\o{\R}\mid A\subset\cup^\infty_{k=1}R_k,\{R_k\}_{k\in\N}\subset l_d}\]
+    と定めると，これは外測度となる．これはJordan外測度の発想の可算化に当たる．
+    \footnote{曲線の長さの定義に似ている．やはり極限ばかりだ．}
+\end{example}
+\begin{example}[Lebesgue-Stieltjes外測度]\label{exp-Lebesgue-Stieltjes-outer-measure}
+    この構成は，一般の単調増加関数$F:\R\to\R$について，$F((a,b]):=F(b)-F(a)$として構成しても外測度となる．Lebesgue測度は$F=\id_\R$の場合に当たる．
+\end{example}
+
+\subsection{外測度による測度の構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    外測度$\mu^*:P(X)\to\o{\R}$は$\sigma$-加法性を満たすとは限らない（ので測度ではない）．
+    この制限として測度を得る際の標準的な構成方法は，「外測度について可測な集合全体$\B^*$」を
+    \[\B^*:=\Brace{B\in P(X)\mid \forall_{A\in P(X)}\;\mu^*(A)=\mu^*(A\cap B)+\mu^*(A\cap B^\comp)}\]
+    で定めると良い．
+\end{tcolorbox}
+
+\begin{definition}[外測度による可測性(Carathéodory measurability)]
+    外測度$\mu^*:P(X)\to\o{\R}$に対して，$B\in P(X)$が$\mu^*$-可測であるとは，次と満たすことをいう：$\forall_{A\in P(X)}\;\mu^*(A)=\mu^*(A\cap B)+\mu^*(A\cap B^\comp)$．\footnote{劣加法性から，$\mu^*(A)\le\mu^*(A\cap B)+\mu^*(A\cap B^\comp)$方向は自明．}
+    $\mu^*$-可測集合全体の集合を\[\B^*:=\Brace{B\in P(X)\mid \forall_{A\in P(X)}\;\mu^*(A)=\mu^*(A\cap B)+\mu^*(A\cap B^\comp)}\]と表す．
+\end{definition}
+
+\begin{theorem}[Carathéodory extension theorem]\label{thm-measure-from-outer-measure}
+    外測度$\mu^*:P(X)\to\o{\R}$に対して，
+    \begin{enumerate}
+        \item $\mu^*$-可測な集合全体の集合$\B^*$は$\sigma$-集合体をなす．
+        \item $(X,\B^*,\mu^*)$は完備な測度空間となる．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[$\B^*$は集合体である] まず，$\B^*$が集合体をなすことを示す．
+            \begin{enumerate}[(i)]
+                \item $\emptyset\in\B^*$を示す．外測度の性質(1)$\mu^*(\emptyset)=0$より，$\forall_{A\in P(X)}\;\mu^*(A)=\mu^*(A\cap\emptyset)+\mu^*(A\cap\emptyset^\comp)$は成り立つ．
+                \item $B\in\B^*$のとき，$B^\comp\in\B^*$である．$\mu^*$-可測性の条件をそもそも対称的に定義したためである．
+                \item $B_1,B_2\in\B^*$とする．このとき， \begin{align*}
+                    \mu^*(A)&=\mu^*(A\cap B_1)+\mu^*(A\cap B_1^\comp)&\because B_1\in\B^*\\
+                    &=\mu^*(A\cap B_1\cap B_2)+\mu^*(A\cap B_1\cap B_2^\comp)\\
+                    &\hphantom{===}+\mu^*(A\cap B_1^\comp\cap B_2)+\mu^*(A\cap B_1^\comp\cap B_2^\comp)&\because B_2\in\B^*\\
+                    &\ge\mu^*(A\cap(B_1\cup B_2))+\mu^*(A\cap(B_1\cup B_2)^\comp)&\because 外測度の劣加法性\mathrm{(3)}
+                \end{align*}
+                より，外測度の劣加法性(3)による逆向きの不等号と併せて，$B_1\cup B_2\in\B^*$．
+            \end{enumerate}
+            \item[議論の一般化] 同様の，少し変形した等式を，一般の自然数$N\in\N$について示す：互いに素な$\B^*$の族$(B_n)_{n\in\N}$について，$\forall_{A\in P(X)}\;\forall_{N\in\N}\;\mu^*(A)=\sum^N_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^N_{n=1}B_n)^\comp)$．
+            $N=1$のときは$B_1\in\B^*$の定義．$N+1>1$について，
+            \begin{align*}
+                \sum^{N+1}_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^{N+1}_{n=1}B_n)^\comp)
+                &=\sum^N_{n=1}\mu^*(A\cap B_n)+\mu^*(\underbrace{A\cap B_{n+1}}_{A\cap(\cup^N_{n=1}B_n)^\comp\cap B_{n+1}})\\
+                &\hphantom{===}+\mu^*(A\cap(\cup^N_{n=1}B_n)^\comp\cap B_{n+1}^\comp)&\because B_{n+1}\subset(\cup^N_{n=1}B_n)^\comp\\
+                &=\sum^{N}_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^N_{n=1}B_b)^\comp)&\because B_{n+1}\in\B^*=\mu^*(A).
+            \end{align*}
+            \item[$\sigma$-性の証明]
+            互いに素な$\B^*$の族$(B_n)_{n\in\N}$を取る．$(\cup_{n=1}^\infty B_n)^\comp\subset(\cup^N_{n=1}B_n)^\comp$に注意して，任意の$N\in\N$について，
+            \begin{align*}
+                \mu^*(A)&=\sum^N_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^N_{n=1}B_n)^\comp)\\
+                &\ge\sum^N_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^\infty_{n=1}B_n)^\comp)&\because 外測度の単調性\mathrm{(2)}
+            \end{align*}
+            より，$N\to\infty$を考えて，
+            \begin{align*}
+                \mu^*(A)&\ge\sum^\infty_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^\infty_{n=1}B_n)^\comp)\\
+                &\ge\mu^*(A\cap\cup^\infty_{n=1}B_n)+\mu^*(A\cap(\cup^\infty_{n=1}B_n)^\comp)&\because 外測度の劣加法性\mathrm{(3)}\\
+                &\ge\mu^*(A)&\because 外測度の劣加法性\mathrm{(3)}
+            \end{align*}
+            より，$\cup_{n=1}^\infty B_n\in\B^*$．一般の$\B^*$の族$(B_n)$についても，分割を取り直せば良い．
+        \end{description}
+        \item \begin{description}
+            \item[$\mu^*$は測度である] 直前の議論の等式$\forall_{A\in P(X)}\;\sum^\infty_{n=1}\mu^*(A\cap B_n)+\mu^*(A\cap(\cup^\infty_{n=1}B_n)^\comp)$の，$A=\cup^\infty_{n=1}B_n$の場合として，$\mu^*$の$\sigma$-加法性は従うから，確かに$\mu^*:\B^*\to[0,\infty]$は測度である．
+            \item[完備性] 任意に$\mu^*(N)=0$を満たす$N\in P(X)$について，$N\in\B^*$を示せば良い．任意の$A\subset P(X)$に対して，外測度の劣加法性と単調性より，$\mu^*(A)\le\underbrace{\mu^*(A\cap N)}_{=0}+\mu^*(A\cap N^\comp)\le\mu^*(A)$が従う．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+\subsection{計量外測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    距離と両立する外測度を計量外測度という．
+    このような外測度の構成は，Hausdorff測度の構成に応用がある．
+\end{tcolorbox}
+
+\section{測度の拡張定理}
+
+\subsection{Hahn-Kolmogorovの拡張定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Hahn-Kolmogorovの拡張定理]
+    前節では外測度から完備測度を構成する方法を与えた．さらにそこへの道として，
+    有限加法的測度から外測度を通じて完備測度空間を構成する標準的な方法を考える．
+    まず，有限加法的測度$\mu_0$は可算被覆の測度の下限として外測度$\mu^*$を定める．
+    このとき，$\mu_0$が$\A$上$\sigma$-加法的である場合に限って，制限$\mu^*:\sigma(\A)\to[0,\infty]$は測度である．
+    さらに，$(X,\A,\mu_0)$が$\sigma$-有限である場合に限って，$\sigma(\A)=\B^*$で，延長$(X,\sigma(A),\mu^*)$は完備である．
+\end{tcolorbox}
+
+\begin{lemma}\label{lemma-Hahn-Kolmogorov}
+    有限加法的測度空間$(X,\A,\mu_0)$について，集合関数$\mu^*:P(X)\to[0,\infty]$を
+    \[\mu^*(A):=\inf\Brace{\sum^\infty_{k=1}\mu_0(A_k)\in[0,\infty]\;\middle|\; \{A_k\}_{k\in\N}\subset\A,A\subset\cup^\infty_{k=1}A_k}\]と定めると，次が成り立つ．
+    \begin{enumerate}
+        \item $\mu^*:P(X)\to[0,\infty]$は外測度である．
+        \item $\mu^*$-可測な集合全体の集合$\B^*$に対して，$\sigma(\A)\subset\B^*$が成り立つ（したがって，$\mu^*|_{\sigma(\A)}$は測度を定める\ref{thm-measure-from-outer-measure}）．
+        \item $\mu_0$が$\A$上$\sigma$-加法的ならば，$\forall_{A\in\A}\;\mu^*(A)=\mu_0(A)$が成り立つ．すなわち，$\mu^*$は$\mu_0$の$\sigma(\A)$への延長である．
+        \item さらに$(X,\A,\mu_0)$は$\sigma$-有限：$\exists_{\{A_k\}_{k\in\N}\subset\A}\;\mu_0(A_n)<\infty\land X=\cup^\infty_{n=1}A_n$であるとき，$\mu_0$の$\sigma(\A)$上への延長は一意的である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\mu^*:P(X)\to[0,\infty]$が外測度の公理を満たすことを確認する．
+        \begin{enumerate}[(i)]
+            \item $\mu^*(\infty)=0$かつ$\Im\mu^*\subset[0,\infty]$．
+            \item 単調になる．
+            \item 任意の$P(X)$の族$(A_n)$に対し，$\mu^*(\cup^\infty_{n=1}A_n)\le\Sum{n}A_n$を示す．
+            任意の$\epsilon>0$について，$A_n\subset\cupk A_{n,k},\Sum{k}\mu_0(A_{n,k})\le\mu^*(A_n)+\frac{\epsilon}{2^n}$を満たす族$(A_{n,k})$が各$n\in\N$に対して存在する．これを用いて，
+            \begin{align*}
+                \mu^*(\cupn A_n)&\le\sumn\sumk\mu_0(A_{n,k})\\
+                &\le\sumn\paren{\mu^*(A_n)+\frac{\epsilon}{2}}\\
+                &\sumn\mu^*(A_n)+\epsilon.
+            \end{align*}
+            したがって，$\mu^*(\cupn A_n)\le\sumn\mu^*(A_n)$．
+        \end{enumerate}
+        \item 任意の$B\in\A$に対して$\mu^*(A)\ge\mu^*(A\cap B)+\mu^*(A\cap B^\comp)$を示せば良い．
+        任意の$\epsilon>0$に対して，$A\subset\cupk A_k,\mu_0(\cupk A_k)\le\mu^*(A)+\epsilon$を満たす$\A$の族$(A_k)$が存在するから，これを用いて，
+        \begin{align*}
+            \mu^*(A)+\epsilon&\ge\mu_0(\cupk A_k)\\
+            &=\sumk\paren{\mu_0(A_k\cap B)+\mu_0(A_k\cap B^\comp)}&\mu_0の有限加法性\\
+            &\ge\mu^*(A\cap B)+\mu^*(A\cap B^\comp)&\mu^*の劣加法性と単調性.
+        \end{align*}
+        \item 任意の$A\in\A$について，$\mu^*(A)\ge\mu_0(A)$を示せば良い．
+        任意の$\epsilon>0$に対して$\mu^*(A)+\epsilon\ge\sumk\mu_0(A_k),A\subset\cupk A_k$を満たす$\A$の族$(A_k)$が存在する．$A$に収束する単調増加列$\paren{\cup_{k=1}^n(A\cap A_k)}_{n\in\N}$に注目して，有限加法的測度の$\sigma$-加法性の特徴付け\ref{lemma-sigma-additivity-of-finitely-additive-measure-in-terms-of-monotone-sequence}より，
+        \begin{align*}
+            \mu^*(A)+\epsilon&\ge\sumk\mu_0(A_k)\\
+            &\ge\sumk\mu_0(A\cap A_k)\\
+            &=\lim_{n\to\infty}\sum_{k=1}^n\mu_0(A\cap A_k)\\
+            &\ge\limn\mu_0(\cup_{k=1}^n(A\cap A_k))=\mu_0(A).
+        \end{align*}
+        \item 
+        $\sigma$-有限性より，$\cupk A_k=X$を満たす測度有限な集合の列$(A_k)$が存在する．
+        特に，$\cup_{i=1}^kA_i=:A_k$と定め直すことで，$(A_k)$は単調増大列として良い．$\mu:\sigma(\A)\to[0,\infty]$を$\mu_0$の$\sigma(\A)$上への任意の延長となる測度とし，\[\M_k:=\Brace{B\in\sigma(\A)\mid\mu(B\cap A_k)=\mu^*(B\cap A_k)}\]と定めると，$\A\subset\M_k\subset\sigma(\A)$である．あとは，任意の$k\in\N$について，$\sigma(\A)=\M(\A)\subset\M_k$を示せば良い（単調族定理\ref{thm-monotone-class-theorem}）．
+
+        そこで，$\M_k$が単調族であることを示す．
+        また，測度$\mu,\mu^*$が定める集合関数$\mu(-\cap A_k),\mu^*(-\cap A_k):\sigma(\A)\to[0,\infty]$は有限な測度となるから，任意の$\M_k$の$B$に収束する単調列$(B_n)$に対して，$\mu^*(B\cap A_k)=\lim_{n\to\infty}\mu(B_n\cap A_k)=\mu(B\cap A_k)$（測度の性質\ref{lemma-character-of-measure}(4),(5)）．
+        ただし，単調減少列について，$\mu(B_1\cap A_k)\le\mu(A_k)<\infty$の仮定を用いた．
+
+        $k\to\infty$を考えることより，$\mu_0=\mu^*\;\on\A$を満たす$\sigma(\A)$上の測度は一意であることがわかる．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    $\mu^*$をinfとして定義するから，この定義から抽出しやすい主張が$\epsilon>0$を使うものであるため，不等式$\mu^*(A)\ge\mu_0(A)$を$\forall_{\epsilon>0}\;\mu^*(A)+\epsilon\ge\mu_0(A)$に読み替えて示す．
+\end{remarks}
+
+\begin{theorem}[Hahn-Kolmogorov]
+    集合体$\A$上の有限加法的測度$\mu_0:\A\to[0,\infty]$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\sigma(\A)$上の測度に延長できる．
+        \item $\mu_0$は$\A$上$\sigma$-加法的である．
+    \end{enumerate}
+    特に，$(X,\A,\mu_0)$が$\sigma$-有限であるとき，拡張は一意である．
+\end{theorem}
+
+\subsection{完備化との関係}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hahn-Kolmogorov流のinfによる有限測度からの拡張の完備化と，有限測度が定める外測度の$\mu^*$-可測集合への制限で得る完備測度とが，一致する．
+\end{tcolorbox}
+
+\begin{notation}
+    集合族$\E\subset P(X)$に対して，$\E_\delta$を可算積についての閉包，$\E_\sigma$を可算和についての閉包とする．
+    集合体$\A$に対して，$\A\subset\A_{\delta\sigma}\subset\sigma(\A)$というクラスに注目する．$\sigma$-代数は$\delta$-代数でもあることに注意．
+\end{notation}
+
+\begin{lemma}\label{lemma-complesion}
+    $(X,\A,\mu_0)$を$\sigma$-有限な有限加法的測度空間で，$\mu_0$は$\A$上$\sigma$-加法的であるとすると，一意的な延長$\mu:\sigma(\A)\to[0,\infty]$が存在する．
+    また，$\mu_0$が定める外測度を$(X,\B^*,\mu^*)$とする．
+    \begin{enumerate}
+        \item $\forall_{B\in P(X)}\;\exists_{A\in\A_{\delta\sigma}}\;B\subset A\land\mu^*(B)=\mu(A)$．
+        \item 任意の部分集合$B\in P(X)$について，$B$が$\mu^*$-可測であることと次は同値：$\exists_{A\in\A_{\sigma\delta}}\;\exists_{N:\mu^*\mathrm{-null}}\;B\subset A\land A\setminus B\subset N$．\footnote{ちょっと$N$がイデアルっぽいかもしれない．これに「完備化」を行うと，$\o{\sigma(\A)}=\B^*$というわけだ．いや，これは対称差が外測度・内測度双対に関して対称性が破れた形か（補題\ref{lemma-completeness}）．}
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[構成] 任意の$B\in P(X)$を取る．これに対して，外測度$\mu^*$の定め方から，任意の$n\in\N_+$に対して，\[B\subset\cupk B_{n,k},\mu^*(B)+\frac{1}{n}\ge\sumk\mu(B_{n,k})\paren{\ge\mu(\cupk B_{n,k})}\qquad(\because 測度\mu の劣加法性)\]を満たす$\A$の列$(B_{n,k})_{k\in\N}$が存在する．これを用いて，\[A:=\bigcap_{n=1}^\infty\bigcup_{k=1}^\infty B_{n,k}\in\A_{\delta\sigma}\subset\sigma(\A)\]と定めれば良い．$\sigma$-代数は$\delta$-代数でもあることに注意．
+            \item[証明] この$A\in\A_{\delta\sigma}$が条件を満たすことを確認する．まず$B\subset A$を満たし，$\mu^*|_{\sigma(\A)}=\mu$と外測度$\mu^*$の劣加法性より，$\mu^*(B)\le\mu^*(A)=\mu(A)$である．続いて，構成より，$\mu^*(B)+\frac{1}{n}\ge\mu(\cupk B_{n,k})\ge\mu(A)\;(\forall_{n\in\N_+})$である．
+        \end{description}
+        \item \begin{description}
+            \item[$\Leftarrow)$] $\B^*$が完備より$A\setminus B\in\B^*$，$A\in\A_{\delta\sigma}\subset\sigma(\A)\subset\B^*$の時，$B\in\B^*$は従う．
+            実際，
+            \begin{align*}
+                \mu^*(A)&\le\mu^*(A\cap B)+\mu^*(A\cap B^\comp)&\because\mu^*の劣加法性\\
+                &=\mu^*(B)+\mu^*(A\setminus B)&\because B\subset A\\
+                &\le\mu^*(A)+\mu^*(N)=\mu^*(A)&\because\mu^*の単調性
+            \end{align*}
+            \item[$\Rightarrow)$] $B\in\B^*$を任意に取る．まずは，$B$と$\mu^*$-零集合分しか大きくない$A\in\A_{\delta\sigma}$を構成する．
+            \begin{enumerate}[(a)]
+                \item $\sigma$-有限性を用いて，$B$に収束する測度有限な$\A$-単調増大列$(A_k)$を取る．これは，$X_k\nearrow X$を満たす測度有限な$\A$-単調増大列$(X_k)$に対して，$(A_k:=B\cap X_k)_{k\in\N}$と定めれば良い，
+                \item 各$A_k$は測度有限だから，$\A$-列で任意精度近似ができる．$\mu^*(A_k)\le\mu^*(X_k)=\mu_0(X_k)<\infty$より，$\mu^*$の定義から，任意の$q\in\N_+$に対して，
+                \[A_k\subset\bigcup_{n=1}^\infty A_{k,q,n},\quad\mu^*(A_k)+\frac{1}{2^kq}\ge\sumn\mu_0(A_{k,q,n})\paren{\ge\mu^*(\cupn A_{k,q,n})}\]
+                を満たす$\A$の族$(A_{k,q,n})_{n\in\N}$が取れる．
+                \item これについて合併を取ることで$A\in\A_{\delta\sigma}$を構成する．
+                いま，
+                \[B=\bigcup_{k=1}^\infty A_k\subset\bigcup_{k=1}^\infty\bigcup_{n=1}^\infty A_{k,q,n}\in\A_{\sigma}\qquad(\forall_{q\in\N_+})\]
+                より，
+                \[A:=\bigcap_{q=1}^\infty\bigcup_{k=1}^\infty\bigcup_{n=1}^\infty A_{k,q,n}\in\A_{\sigma\delta}\]
+                と定めれば良い．
+            \end{enumerate}
+            すると，$B\subset A$を満たし，
+            \begin{align*}
+                \mu^*(A\setminus B)&\le\mu^*(\cupk\cupn A_{k,q,n}\setminus B)\\
+                &=\mu^*(\cupk\cupn A_{k,q,n}\setminus\cupk A_k)\\
+                &\le\mu^*(\cupk\cupn (A_{k,q,n}\setminus A_k))\\
+                &\le\sumk\mu^*(\cupn(A_{k,q,n}\setminus A_k))\\
+                &=\sumk\mu^*(\cupn A_{k,q,n}\setminus A_k)\\
+                &=\sumk(\mu^*(\cupn A_{k,q,n})-\mu^*(A_k))&\because\mu^*の\sigma(\A)上での完全加法性\\
+                &\le\sumk\frac{1}{2^kq}=\frac{1}{q}
+            \end{align*}
+            と任意の$q\in\N_+$について評価できるから，$\mu^*(A\setminus B)=0$．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}\mbox{}
+    \begin{enumerate}
+        \item $\mu^*|_{\sigma(\A)}=\mu$であるが，$\mu$は「十分に多くの集合を測れる」ことを言っている．これは任意の$B\in P(X)$に対して，任意精度($1/n$以下)で被覆する列$(B_{n,k})_{k\in\N}$が取れることをいう．
+        \item $\A_{\delta\sigma}$の元は$\mu^*$-可測であるが，それと零集合の分しか違わない集合は$\mu^*$-可測である．
+    \end{enumerate}
+\end{remarks}
+
+\begin{theorem}[完備化]\label{thm-complesion-and-extension}
+    $(X,\A,\mu_0)$を$\sigma$-有限な有限加法的測度空間で，$\mu_0$は$\A$上$\sigma$-加法的であるとすると，一意的な延長$\mu:\sigma(\A)\to[0,\infty]$が存在する．
+    また，$\mu_0$が定める外測度を$(X,\B^*,\mu^*)$とする．
+    このとき，$(X,\o{\sigma(\A)},\o{\mu})=(X,\B^*,\mu^*)$．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$\o{\sigma(\A)}\subset\B^*$] $\sigma(\A)\subset\B^*$で，$\B^*$は$\mu^*$-完備であるから，$\o{\sigma(\A)}\subset\B^*$が従う．$\o{\sigma(\A)}$は$\sigma(\A)$を含む$\mu$-完備な$\sigma$-集合体のうち最小のものであるため．
+        \item[$\o{\sigma(\A)}\supset\B^*$] 任意に$B\in\B^*$を取り，これが$\sigma(\A)$の元との対称差が$\mu$-零集合であることを示せば良い．補題(2)より，$\exists_{A\in\A_{\sigma\delta}}\;B\subset A\land \mu^*(A\setminus B)=0$．よって，$A\setminus B\in\B^*$について補題(1)より，$\exists_{N\in\A_{\sigma\delta}}\;A\setminus B\subset N\land \mu(N)=\mu^*(A\setminus B)=0$．ゆえに，$A\triangle B=(A\setminus B)\cup(B\setminus A)=A\setminus B\subset N$．
+    \end{description}
+    $\B^*$上の完備測度の一意性\ref{thm-completion}より，$(X,\o{\sigma(\A)},\o{\mu})=(X,\B^*,\mu^*)$が従う．
+\end{proof}
+
+
+\section{Lebesgue測度}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    矩形からの延長で議論するが，これはHahn-Kolmogorovの拡張定理\ref{lemma-Hahn-Kolmogorov}により，開集合によるBorel可測集合の議論と合流する：$\sigma(\cR_d)=\B(\R^d)$．
+    これの完備化がLebesgue測度であり，Lebesgue可測集合とは，Borel可測集合との対称差が零集合であるような集合である．
+\end{tcolorbox}
+
+\begin{notation}[矩形／区間，矩形塊]\mbox{}
+    \begin{enumerate}
+        \item $\l_d:=\Brace{(a_1,b_1]\times\cdots\times(a_d,b_d]\in P(\R^d)\mid-\infty\le a_i\le b_i\le\infty}$
+        とおく．ただし，$(a,\infty]=(a,\infty),(a,a]=\emptyset$とみなす．
+        \item 矩形塊（＝矩形／区間の有限直和）$\cR_d:=\Brace{\sum_{i=1}^nl_i\in P(\R^d)\mid l_i\in l_d}$とおくと，$\cR_d$は集合体である．
+        \item 矩形の面積が定める集合関数$m_d:l_d\to\o{R}$(\ref{exp-extention-to-区間塊})は$\cR_d$上に延長し，有限加法的測度を定める．また$P(\R^d)$上にも延長し，Lebesgue外測度を定める\ref{exp-Lebesgue-outer-measure}．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}[Lebesgue measure]\mbox{}\label{lemma-Lebesgue-measure}
+    \begin{enumerate}
+        \item 矩形の面積が定める集合関数$m_d:l_d\to\o{R}$は$\cR_d$上に延長し，$\sigma$-加法性を満たす．
+        \item 測度空間$(\R^d,\cR_d,m_d)$は$\sigma$-有限である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[準備] \begin{enumerate}[(a)]
+                \item 任意の$\alpha\ge 0$について，$m(I)>\alpha$を満たす矩形$I\in\l_d$に対して，有界な矩形$J\in\l_d$が存在して，$\o{J}\subset I,m(I)>\alpha$を満たす．実際，$I=[a,b)\;(-\infty\le a<b\le\infty)$と表せるから，$m(I)-\alpha>0$に併せてこれを狭めた区間を$J$とすれば良い．
+                \item 同様の事実が，矩形塊$E\in\cR_d$についても成り立つ．$m(E)>\alpha$ならば，有界な矩形塊$F\in\cR_d$が存在して，$\o{F}\subset E$かつ$m(F)>\alpha$が成り立つ．実際，$E=\sum^n_{i=1}I_i\;(I_i\in\l_d)$と表せるのであるから，各$I_i$について$J_i\in\l_d$を取り，$F:=\cup_{i=1}^nJ_i$と定めれば良い．
+            \end{enumerate}
+            \item[補題：大雑把な$\sigma$-劣加法性] まず，区間塊$E\in\cR_d$に対して，$E\subset\cupn I_n\Rightarrow m(E)\le\sumn m(I_n)\;\forall_{\{I_n\}_{n\in\N}\subset\l_d}$を示す．
+            各$I_n$は$I_n=(a_{n_1},b_{n_1}]\times\cdots\times(a_{n_d},b_{n_d}]$と表せるので，$m:\l_d\to\o{\R}$の連続性より，任意の$\epsilon>0$に対して，$\delta_n>0$を上手く取れば，$J_n:=(a_{n_1},b_{n_1}+\delta_n)\times\cdots\times(a_{n_d},b_{n_d}+\delta_n)$が$m(J_n)\le m(I_n)+\frac{\epsilon}{2^n}$を満たす．
+            いま，$m(E)=0$ならば主張は自明に成り立つから，$m(E)>0$として良い．$m(E)>\alpha$を満たす$\alpha\ge 0$を任意に取る．すると，(b)より，有界な区間塊$F\in\cR_d$が存在して，$\o{F}\subset E,m(F)>\alpha$を満たす．ここで，$J_n$に対して，$G_n:=(a_{n_1},b_{n_1}+\delta_n)\times\cdots\times(a_{n_d},b_{n_d}+\delta_n)$と定めると，$\o{F}\subset E\subset\cupn I_n\subset\cupn G_n$が成り立つから，有界閉集合$\o{F}$のコンパクト性より，$n_0\in\N$が存在して，$F\subset\o{F}\subset\cup_{n=1}^{n_0}G_n\subset\cup_{n=1}^{n_0}J_n$が成り立つ．
+            よって，$m:\l_d\to\o{\R}$の単調性と有限劣加法性より，
+            \begin{align*}
+                \alpha<m(F)&\le m(\cup_{n=1}^{n_0}J_n)\\
+                &\le\sum_{n=1}^{n_0}m(J_n)\\
+                &\le\sumn\paren{m(I_n)+\frac{\epsilon}{2^n}}\\
+                &=\sumn m(I_n)+\epsilon.
+            \end{align*}
+            $\epsilon\searrow 0,\alpha\nearrow m(E)$を考えると，$m(E)\le\sumn m(I_n)$が従う．
+            \item[完全加法性]
+            $E=\sumn E_n\in\cR_d$を任意に取る．各$E_n\in\cR_d$より，$E_n=\sum_{k=1}^{k_n}I_{n,k}$と表せるから，$E=\sumn\sum_{k=1}^{l_n}I_{n,k}$となる．直前の議論より，$m(E)\le\sumn\sum_{k=1}^{l_n}I_{n,k}\le\sumn m(E_n)$を得る．逆は，任意の$k\in\N$について$\sum^k_{n=1}E_n\subset E$であるから，有限加法性と単調性より$m\paren{\sum_{n=1}^kE_n}=\sum_{n=1}^km(E_n)<m(E)$．$k\to\infty$について，$\sumn m(E_n)\le m(E)$を得る．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    証明は簡潔だが，ギミックが多すぎてもつれた糸をほぐせない精緻な完成品のようだ．
+\end{remarks}
+
+\begin{definition}[Lebesgue measure]\mbox{}
+    \begin{enumerate}
+        \item 有限加法的測度空間$(\R^d,\cR_d,m_d)$で，$m_d:\cR_d\to[0,\infty]$は$\sigma$-加法的だから，延長$m:\sigma(\cR_d)\to[0,\infty]$が存在し，また$\sigma$-有限性より，この延長は一意的である（Hahn-Kolmogorovの拡張定理\ref{lemma-Hahn-Kolmogorov}）．こうして有限加法的測度空間$(\R^d,\cR_d,m_d)$から，一意に測度空間$(\R^d,\sigma(\cR_d),m)$を得る．
+        \item 測度空間$(\R^d,\sigma(\cR_d),m)$の完備化も一意的で，Lebesgue外測度$m^*:P(\R^d)\to[0,\infty]$とLebesgue可測集合$\L_d$について，$(\R^d,\o{\sigma(\cR_d)},\o{m})=(\R^d,\L_d,m^*)$が成り立つ（拡張と完備化との関係\ref{thm-complesion-and-extension}）．\footnote{特に，Lebesgue可測集合と$\sigma(\cR_d)=\B(\R^d)$の元との差は零集合になる．}
+        \item $\sigma(\cR_d)=\B(\R^d)$が成り立つ．また，任意の$B\subset\R^d$に対して，$A\in(\cR_d)_{\sigma\delta}\subset\sigma(\cR_d)=\B(\R^d)$であって，$B\subset A$かつ$m^*(B)=m(A)$を満たすものが存在する．したがって，Lebesgue可測集合とは，Borel可測集合との対称差が零集合であるような集合である．
+    \end{enumerate}
+\end{definition}
+
+\subsection{Lebesgue可測性の位相的特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\sigma(\cR_d)=\B(\R^d)$が顕著な性質である，$\sigma$-代数は随分と緩い代数法則で，区間塊と開集合とは同じ$\sigma$-代数を生成する．構成では矩形塊を中心に議論したが，性質としては開集合の言葉で特徴付けた方が良い．
+    Lebesgue外測度は$\l_d$可算被覆の測度の和の下限として定めたから，そもそも位相空間論と相性が良い．
+    Lebesgue可測性は，閉核と開包を用いて任意精度で挟めることが特徴付けになる．
+\end{tcolorbox}
+
+\begin{theorem}[Lebesgue外測度の特徴付け]\label{thm-characterization-of-Lebesgue-outer-measure-in-terms-of-open-sets}
+    任意の部分集合$A\subset\R^d$に対して，\[m^*(A)=\inf\Brace{m(G)\in\R\mid A\subset GかつGは開集合}.\]
+\end{theorem}
+\begin{proof}
+    任意に$\epsilon>0$を取り，$m(G)\le m^*(A)+2\epsilon$を満たす開集合$(A\subset)G$を構成すれば良い．
+    $m^*(A)$は$A$の$\l_d$-可算被覆の測度の和の下限として定めたから，この$\epsilon$に対して，矩形の族$\{I_n\}_{n\in\N}\subset\l_d$が存在して，
+    \[A\subset\cupn I_n,\qquad\sumn m(I_n)\le m^*(A)+\epsilon\]
+    を満たす．ここで，$I_n=(a_{n,1},b_{n,1}]\times\cdots\times(a_{n,d},b_{n,d}]$に対して，$\delta_n>0$を十分小さく取ることで
+    $J_n=(a_{n,1},b_{n,1}+\delta_n)\times\cdots\times(a_{n,d},b_{n,d}+\delta_n)$であって，$m(J_n)\le m(I_n)+\frac{\epsilon}{2^n}$を満たすように取れる（変数$\delta_n$に関する連続性）．
+    このとき，$G:=\cupn J_n$は開集合で，$A\subset\cupn I_n\subset G$を満たし，さらに
+    \begin{align*}
+        m(G)&\le\sumn m(J_n)\\
+        &\le\sumn\paren{m(I_n)+\frac{\epsilon}{2^n}}\\
+        &\le m^*(A)+2\epsilon
+    \end{align*}
+    も満たす．
+\end{proof}
+\begin{remarks}
+    $\delta_n$に関する連続性と，Lebesgue外測度の定義（$\l_d$-可算被覆の測度の和の下限）とを用いて，$\epsilon$-$\delta$論法から証明する．
+    これは補題\ref{lemma-Lebesgue-measure}でのLebesgue測度の$\sigma$-劣加法性の証明と全く同じ証明．
+\end{remarks}
+
+\begin{lemma}[閉核と開包は任意精度でとれる]\mbox{}\label{lemma-closed-kernel-and-open-closure}
+    \begin{enumerate}
+        \item Lebesgue可測集合$A\in\L_d$に対して，次が成り立つ：$\forall_{\epsilon>0}\;\exists_{G\in\Op(\R^d)}\;A\subset G\land m(G\setminus A)<\epsilon$．
+        \item Lebesgue可測集合$A\in\L_d$に対して，次が成り立つ：$\forall_{\epsilon}\;\exists_{F:\mathrm{closed}}\;F\subset A\land m(A\setminus F)<\epsilon$．特に$m(A)<\infty$ならば，閉集合$F$はコンパクトに取れる．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意に$\epsilon>0$を取る．$A$が有界であるかどうかで場合分けをする．
+        \begin{enumerate}[(a)]
+            \item $A$が有界ならば，Lebesgue外測度の開集合による特徴付け\ref{thm-characterization-of-Lebesgue-outer-measure-in-terms-of-open-sets}より，$m(G)<m(A)+\epsilon$を満たす開集合$A\subset G$が存在するから，
+            $m(A)<\infty$のとき，この$G$に対して$m(G\setminus A)=m(G)-m(A)<\epsilon$を満たす．
+            \item $A$が有界でない場合は，$\sigma$-有限性と同様の処理をする．$A_n:=A\cap B(0,n)\;(n=1,2,\cdots)$と定めると，$A_n\in\L_d$であり，$A_n$は有界であるから，(a)より$m(G_n\setminus A_n)<\frac{\epsilon}{2^n}$を満たす開集合$A_n\subset G_n$が存在する．
+            これに対して$G:=\cupn G_n$とおけば，$A\subset\cupn A_n\subset G$を満たし，
+            \begin{align*}
+                m(G\setminus A)&\le m(\cupn(G_n\setminus A_n))\\
+                &\le\sumn m(G_n\setminus A_n)<\epsilon
+            \end{align*}
+            が成り立つ．
+        \end{enumerate}
+        \item 任意に$\epsilon>0$を取る．$A$が有界であるかどうかで場合分けをする．
+        \begin{enumerate}[(a)]
+            \item $A$が有界のとき，$\exists_{n\in\N}\;A\subset B(0,n)$である．このとき，$B:=\o{B(0,n)}\setminus A$は閉集合だから可測．よって(1)より，$\epsilon$に対して開集合$B\subset G$が存在して，$m(G\setminus B)<\epsilon$を満たす．これに対して，$F:=\o{B(0,n)}\setminus G$と定めると，これは有界閉集合で，$B\subset G$より
+            \[F=\o{B(0,n)}\setminus G\subset\o{B(0,n)}\setminus B=A\]
+            を満たす．さらに，$A=\o{B(0,n)}\setminus B,F=\o{B(0,n)}\setminus G$より，
+            \begin{align*}
+                m(A\setminus F)&=m(A)-m(F)\\
+                &\le m(\o{B(0,n)})-m(B)-m(\o{B(0,n)})+m(G)\\
+                &=m(G)-m(B)=m(G\setminus B)<\epsilon.
+            \end{align*}
+            \item $A$が有界でないならば，列$(A_n)_{n\in\N}$を$A_n:=\begin{cases}
+                A\cap B(0,1),&n=1,\\
+                A\cap (B(0,n)\setminus B(0,n-1)),&n\ge 2.
+            \end{cases}$と定める．このとき，各$A_n$は有界だから(a)より，有界閉集合$F_n\subset A_n$が存在して，$m(A_n\setminus F_n)<\frac{\epsilon}{2^n}$を満たす．よって，$F:=\cupn F_n$とおくと，補題\ref{lemma-general-topology}よりこれは閉集合で，$F\subset\cupn A_n=A$を満たし，
+            \begin{align*}
+                m(A\setminus F)&\le m\paren{\cupn(A_n\setminus F_n)}\\
+                &\le\sumn m(A_n\setminus F_n)<\epsilon.
+            \end{align*}
+            \item $m(A)<\epsilon$と仮定して，この$F$が有界に取れることを示す．
+            集合列$(A\cap B(0,n))_{n\in\N}$は$A$に収束する単調増大列だから，$\lim_{n\to\infty}m(A\setminus(A\cap B(0,n)))=0$（単調減少列の極限\ref{lemma-character-of-measure}(5)，ここで仮定$m(A)<\infty$を使った）．
+            よって，$\exists_{n\in\N}\;m(A\setminus (A\cap B(0,n)))<\frac{\epsilon}{2}$．このとき，$A\cap B(0,n)$は有界だから，(a)より，$F\subset A\cap B(0,n)$かつ$m(A\cap B(0,n)\setminus F)<\frac{\epsilon}{2}$を満たす有界閉集合$F$が取れる．
+            この$F$が条件を満たす．
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    $A$が有界でない場合は，$\sigma$-有限性と同じ処理をする．
+    しかし閉集合の議論においては，それだけでなく，補題\ref{lemma-general-topology}が使えるように，各$A_n$が$B(0,n)$の外側に逃げていくように取る．これはより強い有限性条件で，$\cupn F_n$が再び閉になることを示すことができる．
+    また，$m(A)<\infty$の場合は全く別のルートがある．
+\end{remarks}
+
+\begin{lemma}[位相空間論の補足]\label{lemma-general-topology}
+    閉集合の族$(F_n)_{n\in\N}$が，$\forall_{n\in\N}\;F_n\subset B(0,n)^\comp$を満たすならば，$\cupn F_n$は閉集合である．
+\end{lemma}
+\begin{proof}
+    $\o{F}\subset F$を示せば良い．任意に$x\in\o{F}$を取ると，$\forall_{\epsilon>0}\;U(x,\epsilon)\cap F\ne\emptyset$を満たす．$U(x,\epsilon)$は有界より，$\exists_{m\in\N}\;U(x,\epsilon)\subset B(0,m)$だから，$U(x,\epsilon)\cap B(0,m)^\comp=\emptyset$．したがって，$\forall_{\epsilon>0}\;U(x,\epsilon)\cap\paren{\cup_{n=1}^{m-1}F_n}\ne\emptyset$が必要．これは$x\in\o{\cup_{n=1}^{m-1}F_n}$を意味するが，$\o{\cup_{n=1}^{m-1}F_n}=\cup_{n=1}^{m-1}F_n$．特に，$x\in F$．
+\end{proof}
+\begin{remarks}[$\sigma$-有限性というクラスへの注目]
+    これが$\sigma$-有限性に似た現象に通底する消息となる．
+    この構成によって，開集合と閉集合に拘らず，$m(A)<\infty$の場合を考察の対象に限れば十分である．
+    Lusinの定理\ref{thm-Lusin}やRadon-Nykodymの定理\ref{thm-Radon-Nykodym}など．
+\end{remarks}
+
+\begin{theorem}[Lebesgue可測性の特徴付け]\label{thm-characterization-of-Lebesgue-measurableness}
+    $A\subset\R^d$について，次の２条件は同値である．
+    \begin{enumerate}
+        \item $A$はLebesgue可測である：$A\in\L_d$．
+        \item $\forall_{\epsilon>0}\;\exists_{F:\mathrm{closed}}\;\exists_{G:\mathrm{open}}\;F\subset A\subset G\land m(G\setminus F)<\epsilon$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 補題\ref{lemma-closed-kernel-and-open-closure}より従う．
+        \item[(2)$\Rightarrow$(1)] Lebesgue可測集合全体は，Borel可測集合$\B(\R^d)$を完備化したものであるから，完備化の定理\ref{thm-completion}にある条件：差集合が零集合であるBorel可測集合で上下から評価すれば良い．任意の$n\in\N_+$に対して，$F_n\subset A\subset G_n$かつ$m(G_n\setminus F_n)<\frac{1}{n}$を満たす閉集合$F_n$と開集合$G_n$の列が取れる．それぞれはLebesgue可測だから，$\cupn F_n,\capn G_n\in\B(\R^d)$で，
+        $\cupn F_n\subset A\subset\capn G_n$を満たす．また，$m\paren{\capn G_n\setminus\cupn F_n}=m\paren{\capn(G_n\setminus F_n)}=0$．
+    \end{description}
+\end{proof}
+
+\begin{definition}[regular measure, Borel measure, Radon measure]\mbox{}
+    \begin{enumerate}
+        \item 一般の位相空間$(X,\O)$とその上の測度空間$(X,\sigma(\O),\mu)$について，測度$\mu$が\textbf{正則}であるとは，\[A\in\sigma(\O)\Rightarrow\forall_{\epsilon>0}\;\exists_{F:\mathrm{closed},G:\mathrm{open}}\;F\subset A\subset G\land\mu(G\setminus F)<\epsilon\]が成り立つことをいう．\footnote{「全ての可測集合は近似的に開かつ近似的に閉」と言える測度空間のことを正則という．}
+        \item このような，位相が生成する$\sigma$-代数$\sigma(\O)$上の測度を一般に\textbf{Borel測度}という．
+        \item $\R^d$上のBorel測度であって，コンパクト集合上では有限値を取るものを\textbf{Radon}測度という．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item Lebesgue測度は正則測度である．Lebesgue可測性の特徴付け\ref{thm-characterization-of-Lebesgue-measurableness}の(1)$\Rightarrow$(2)を正則性定理(regularity theorem)という．
+        \item 任意の距離空間上の任意のBorel確率測度は正則である．
+        \item Lebesgue測度は，コンパクト集合上では有限値を取るBorel測度だから，Radon正則測度の例である．
+    \end{enumerate}
+\end{example}
+
+\subsection{Lebesgue測度の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Lebesgue非可測集合とLusinの定理]
+    \begin{itemize}
+        \item Lebesgue可測集合は，有理数などの可算部分集合に注目して，平行移動などの互いに素な集合を生む変換を考える．
+        値を持つとするならば，この代数演算についても閉じている必要があるが，これを満たす実数$[0,\infty]$は存在しなくなる．
+        \item (Lusin) Lebesgue可測集合上の連続関数は可測である\ref{prop-continuous-function-is-Lebesgue-measurable}が，逆にLebesgue可測関数は，ほとんど至る所連続である．
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{lemma}[Lebesgue測度の平行移動不変性]\label{lemma-invariability-of-Lebesgue-measure-under-parallel-transport}
+    $\forall_{a\in\R^d}\;(\forall_{A\in\L_d}\;A+a\in\L_d)\land(m(A+a)=m(A))$．ただし，$A+a$とはAbel群$\R^d$の部分群$A+a=\Brace{a'+a\in\R^d\mid a'\in A}$とした．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $A+a\in\L_d$はLebesgue可測性の特徴付け\ref{thm-characterization-of-Lebesgue-measurableness}からわかる．$\R^d$の位相の様子はどの点でも等質である．
+        \item $m(A+a)=m(A)$は，矩形$I\in l_d$について$m(I+a)=m(I)$であることとLebesgue外測度の定義\ref{exp-Lebesgue-outer-measure}からわかる．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Lebesgue非可測集合]\label{thm-existence-of-unmeasurable-sets}
+    選択公理の下で，Lebesgue非可測集合は存在する．
+\end{theorem}
+\begin{proof}
+    $d=1$の場合について示す．一般の場合はこれについて直積集合を作れば良い．
+    \begin{description}
+        \item[構成] 
+        $x,y\in(0,1]$に対して，$x\sim y:\Leftrightarrow x-y\in\Q$とすると，これは同値関係を定める．その商集合を$(0,1]/\sim=:\{A_\lambda\}_{\lambda\in\Lambda}$と表す．選択公理を認めると，$E:=\{x_\lambda\}_{\lambda\in\Lambda}\in\prod_{\lambda\in\Lambda}A_\lambda$が取れる．
+        \item[証明]
+        この$E$が可測と仮定して，矛盾を導く．すると，$0$より大きく$1$以下の有理数$\{r_n\}_{n\in\N}:=\Q\cap(0,1]$に対して，
+        \[E_n:=\paren{(E+r_n)\cap(0,1]}\cup\paren{(E+r_n)\cap(1,2]-1}\]
+        と定めると，この$E_n$も可測であり，かつ互いに素であり，$m(E)=m(E_n),(0,1]=\cupn E_n$を満たす（Lebesgue測度の平行移動に対する不変性\ref{lemma-invariability-of-Lebesgue-measure-under-parallel-transport}）．
+        したがって，$1=\sumn m(E_n)=\sumn m(E)$が必要だが，これを満たす$m(E)\in[0,\infty]$は存在しない．
+        よって矛盾．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    区間の有理数による同値類$\R/\Q$を可測とすると，集合演算$A+a$について，未定義動作を起こしてしまう．
+    $r_n$だけ平行移動した集合$E+r_n$は，$\mathrm{mod}\;\Q$の世界では$E$と同じなので測度が等しいが，各$r_n\in\Q\cap(0,1]$について別の集合を産んでしまう．
+    この代数法則を満たして測度を$1$とするような測度の付値は存在しない．
+\end{remarks}
+
+\begin{theorem}[Lusin]\label{thm-Lusin}
+    Lebesgue可測集合$A\in\L_d$上の実関数$f:A\to\R$について，次の２条件は同値．
+    \begin{enumerate}
+        \item Lebesgue可測である．
+        \item \[\forall_{\epsilon>0}\;\exists_{F:\mathrm{closed}}\;(F\csub A)\land (m(A\setminus F)<\epsilon)\land (fはF上連続).\]
+    \end{enumerate}
+    (1)$\Rightarrow$(2)をLusinの定理という．
+\end{theorem}
+\begin{proof}
+    $f\ge 0$の場合について証明すれば，一般の関数は$f=f^+-\abs{f^-}$と捉えられ，連続関数の和は連続であるから従う．
+    $m(A)$が有限かどうかで場合分けをする．
+    \begin{enumerate}
+        \item $m(A)<\infty$のときを考える．
+        \begin{description}
+            \item[$f$が非負値単関数の場合] 
+            $f=\sum_{j=1}^Na_j\chi_{E_j}\;(a_j\in[0,\infty),\sumj E_j=E)$とおく．任意に$\epsilon>0$を取る．各$E_j$に対して，閉集合$F_j\subset E_j$であって，$m(E_j\setminus F_j)<\frac{\epsilon}{N}$を満たすものが取れる（補題\ref{lemma-Lebesgue-measure}）．
+            これに対して$F:=\cup_{j=1}^NF_j$とすればこれは閉集合であり，$f$は各$F_j$上定数であるから連続\footnote{$F_j$上連続という定義は，$U(x,\epsilon)\cap F_j$を考えるから，$F_j$の境界点に$\R^d\setminus F_j$から近づく場合などは考えない．}，したがって$F$上連続で，
+            \begin{align*}
+                m(A\setminus F)&\le m\paren{\cup_{j=1}^N(E_j\setminus F_j)}\\
+                &\le\sum_{j=1}^Nm(E_j\setminus F_j)\footnote{$F_j\subset E_j$かつ$E_j,F_j$は互いに素なので．}<\epsilon.
+            \end{align*}
+            \item[一般の非負値可測関数の場合] 非負値単関数の列$(f_n)_{n\in\N}$であって，$\lim_{n\to\infty}f_n(x)=f(x)$を満たすものが存在する\ref{thm-simple-function-approximation}．
+            \begin{enumerate}[(a)]
+                \item 上の議論より，各単関数$f_n$について，閉集合$F_n\subset A$であって，$m(A\setminus F_n)<\frac{\epsilon}{2^n}$を満たし，$f_n$が各$F_n$上連続になるものが取れるから，これに対して$F_0:=\capn F_n$と定めれば，任意の$n\in\N$について$f_n$は$F_0$上連続で，劣加法性より
+                \[m(A\setminus F_0)\le m\paren{\cupn A\setminus F_n}\le\sumn m(A\setminus F_n)<\epsilon\]
+                が成り立つ．あとは，各点収束先極限である$f$も連続であるように$F_0$を持っていけば良い．
+                \item 仮定$m(A)<\infty$より$m(F_0)\le m(A)<\infty$で，$(f_n)$は$F_0$上$f$に各点収束するから，Egoroffの定理\ref{thm-Egorov}より，ある集合$F\subset F_0$が存在して，$(f_n)$は$F$上$f$に一様収束し，$m(F_0\setminus F)<\epsilon$を満たす．特にLebesgue測度の位相的正則性\ref{thm-characterization-of-Lebesgue-measurableness}より，$F$は閉集合に取れる．
+                よって，$f$は閉集合$F$上で連続であり，
+                \[m(A\setminus F)\le m(A\setminus F_0)+m(F_0\setminus F)<2\epsilon\]
+                が従う．
+            \end{enumerate}
+        \end{description}
+        \item $m(A)=\infty$のとき，$A_n:=E\cap(B(0,n)\setminus B(0,n-1))\;(n=1,2,\cdots)$と定めると，$\forall_{n\in\N}\;m(A_n)<\infty$で，
+        各$n\in\N$について，閉集合$F_n$であって$m(E_n\setminus F_n)<\frac{\epsilon}{2^n}$かつ$f$は各$F_n$上で連続になるものが存在する．
+        すると$F:=\cupn F_n$は閉集合で（補題\ref{lemma-general-topology}），$f$は$F$上連続であり，$\mu(E\setminus F)<\epsilon$を満たす．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[測度論の議論の仕方の特徴がよく出ている]
+    非負値単関数は有限性$\abs{\Im f}<\infty$があるので問題ないが，一般の可測関数は単関数の列の極限として定義できるからこの列の附番について$\frac{\epsilon}{2^n}$を考え，そもそも証明の全体的な構造として，
+    列$A_n:=E\cap(B(0,n)\setminus B(0,n-1))\;(n=1,2,\cdots)$を考えれば全体$A$に至るので$m(A)<\infty$と仮定して良いことになる．
+\end{remarks}
+
+\section{Lebesgue可測関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Borel測度の完備化であるLebesgue測度という具体的対象に対して，これまで議論してきた測度論の結果を特殊化してまとめ直す．
+\end{tcolorbox}
+
+\begin{proposition}[Lebesgue可測関数と位相]\label{prop-continuous-function-is-Lebesgue-measurable}\mbox{}
+    \begin{enumerate}
+        \item Lebesgue可測集合$E\in\o{\B(\R^d)}$上の連続関数は，Lebesgue可測である．
+        \item $\R$上の右連続な関数はBorel可測，したがってLebesgue可測である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $E\in\o{\B(\R^d)}$上の連続関数$f:E\to\o{\R}$について，逆像$f^{-1}((-\infty,\alpha))$は$E$の開集合で，$E\subset\R^d$には$\R^d$の相対位相を考えるから，
+        $\forall_{\alpha\in\R}\;\exists_{G_\alpha\in\Op(\R^d)}\;E(f<\alpha)=E\cap G_\alpha$が成り立つ．
+        $E\cap G_\alpha\in\o{\B(\R^d)}$と併せると，$f$はLebesgue可測である．
+        \item 
+
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}\label{thm-Lebesgue-measurability-in-terms-of-Borel-measurability}
+    Borel集合$E\in\B(\R^d)$上のLebesgue可測関数$f:E\to\o{\R}$について，$E$上殆ど至る所一致するBorel可測関数$g,h:E\to\o{\R}$で，$\forall_{x\in E}\;\abs{g(x)}\le\abs{f(x)}\le\abs{h(x)}$を満たすものが存在する．
+\end{theorem}
+\begin{proof}
+    Lebesgue測度はBorel測度の完備化であるから，完備化された測度空間上の関数の可測性の特徴付け\ref{prop-characterization-of-measurability-on-complete-space}より従う．
+\end{proof}
+
+\begin{proposition}[Lebesgue可測関数の平行移動]\label{prop-pararell-shift-of-Lebesgue-measurable-function}\mbox{}
+    \begin{enumerate}
+        \item $f:\R^d\to\o{\R}$をBorel可測関数とする．$f(x+y),f(x-y):\R^{2d}\to\o{\R}$もBorel可測である．
+        \item $f:\R^d\to\o{\R}$をLebesgue可測関数とする．$f(x+y),f(x-y):\R^{2d}\to\o{\R}$もLebesgue可測である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+        \item 
+        \begin{description}
+            \item[方針] $f\ge 0$の場合に証明すれば，可測関数の和は可測である\ref{prop-sum-and-product-of-measurable-functions}ことより$f=f^+-f^-$もLebesgue可測だとわかる．
+            このとき，Lebesgue測度はBorel測度の完備化だから，$(0\le)g(x)\le f(x)\le h(x)$かつ$g(x)=f(x)=h(x)\;\ae$を満たすBorel可測関数$g,h:E\to\o{\R}$が存在する\ref{thm-Lebesgue-measurability-in-terms-of-Borel-measurability}．
+            \item[変数を増やす]
+            よって(1)より，変数を増やした関数についても$\R^{2d}$上で$g(x+y)\le f(x+y)\le h(x+y)$が成り立ち，$g,h$はいずれもBorel可測．
+            また，Fubiniの定理\ref{thm-Fubini-II}より一変数ずつ考えると，Lebesgue積分は平行移動について不変\ref{thm-invariance-of-Lebesgue-integral}であるから，
+            \begin{align*}
+                \iint_{\R^{2d}}\abs{h(x+y)-g(x+y)}dxdy&=\int_{\R^d}\paren{\int_{\R^d}\abs{h(x+y)-g(x+y)}dx}dy\\
+                &=\int_{\R^d}\paren{\int_{\R^d}\abs{h(x)-g(x)}dx}dy=0
+            \end{align*}
+            が従う．よって，$h(x+y)=f(x+y)=g(x+y)\;\ae (x,y)\in\R^{2d}$を得るから，完備空間上の関数の可測性の特徴付け\ref{prop-characterization-of-measurability-on-complete-space}より，$f(x+y):\R^{2d}\to\o{\R}$もLebesgue可測である．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    (1)から(2)を導くにはFubiniの定理\ref{thm-Fubini-I}が必要であるのが面白い．
+\end{remarks}
+
+\begin{theorem}[直積の普遍性の破れ]
+    $(X,\B_X)$を任意の可測空間とし，$Z:=X\times\R^d$において直積$\sigma$-加法族$\B_Z:=\B_X\times\B(\R^d)$を考える．
+    関数$f:Z\to\o{\R}$が次を満たすとき，$\B_Z$-可測である．
+    \begin{enumerate}
+        \item $f(-,y):X\to\o{\R}$は$\B_X$-可測．
+        \item $f(x,-):\R^d\to\o{\R}$は連続．
+    \end{enumerate}
+\end{theorem}
+
+\chapter{積分論}
+
+\begin{quotation}
+    測度空間の2-射の理論を構築する．
+\end{quotation}
+
+\section{積分の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ４段階である．集合の測度を定め，非負値単関数について積分を定義し，非負値単関数の単調列の極限として一般の関数の積分を定義し，正負の方向に一般化する．
+    単関数についてwell-definedに積分を定められるのは，測度の定義の時点で任意の細分について整合的な付値の議論を済ましてあるからである．
+    単関数は集合の構造の反映であるから，集合演算のように扱える．
+    単関数の増加列も評価がしやすい．
+    そして何より，積分が乗算の一般化であることがよくわかる．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=測度論は集合代数系であるとしたら，その上で積分を代数的に構築する頑健な理論である]
+    一般の積分論は一般の測度論の上に構築できる．これは
+    Riemann積分の理論の流れの逆であり，まず集合の測度についての理論(Riemannの理論の分割の部分)を細分構造に外材化させてから積分を構築したから，
+    積分独自の構造がはっきりする．つまり，積分のwell-definednessは集合の細分構造が深く保証してくれる．
+
+    \begin{enumerate}
+        \item 単関数の積分は，集合の細分の構造に帰着するとwell-defined．
+        \item 非負値可測関数の積分は単関数近似列で定義するが，単関数の列が定める単関数の積分の列について不等式関係が持ち上がるので，等号関係も持ち上がり，積分はwell-definedなまま．
+        \item 線形性と不等式の持ち上げの性質も，そのまま集合代数の構造から保たれる（補題\ref{lemma-integral-for-nonnegative-measurables}）．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{notation}
+    $\int_Ef(x)d\mu(x)$または$\int_Ef(x)\mu(dx)$と表す．$(x)$は省略し得る．
+\end{notation}
+
+\begin{definition}[integrable]
+    測度空間$(X,\B,\mu)$について．積分$\int\cdot d\mu:\B\times\Meas(X,\o{\R})\to\o{\R}$を次のように定義する．\footnote{$\int_Ef(x)d\mu(x)$とも，$\int_Ef(x)\mu(dx)$とも書く．}
+    \begin{enumerate}
+        \item $f$が非負値単関数の場合，分割$A=\sum_{i=0}^nA_i$と$0=:a_0<a_j\;(1\le j\le n)$が存在して，$f=\sum_{j=0}^na_j\chi_{A_j}$と表せるから，これを用いて$\int_Afd\mu=\sum^n_{j=1}a_j\mu(A_j)$と定める．これは単関数$f$の表し方に依らない．
+        \item $f$が非負値可測関数の場合，非負値単関数の単調増加列$(f_n)$で$f$に収束するものが存在する\ref{thm-simple-function-approximation}．非負値単関数の積分についての補題\ref{lemma-integral-for-simple-functions}の(2)より，これは単調増加列$\paren{\int_Xf_nd\mu}_{n\in\N}$を定める．よってこれには$[0,\infty]$の範囲で極限が存在するから，これを積分の値$\int_Xfd\mu:=\lim_{n\to\infty}\int_Xf_nd\mu$と定める．これは非負値単関数単調列$(f_n)$の取り方に依らない．
+        \item $f$が可測関数の場合，$f^{\pm}:=\max\{\pm f,0\}$と置くと，非負値可測関数への分解$f=f^+-f^-$が存在する．いずれかの値が有界であるとき，$f$は\textbf{定積分を持つ}といい，これを用いて$\int_Xfd\mu:=\int_Xf^+d\mu-\int_Xf^-d\mu$と定める．定積分の値が有界である時に，$f$を\textbf{$\mu$-可積分}という．
+    \end{enumerate}
+\end{definition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $f=\sum^m_{k=0}b_k\chi_{B_k}$とも表せるとする．すると，$X$の２つの分割$(A_j),(B_k)$の共通細分を考えることで，
+        \begin{align*}
+            \sum^n_{j=1}a_j\mu(A_j)&=\sum^n_{j=1}\sum^m_{k=0}a_j\mu(A_j\cap B_k)&各A_jを(A_j\cap B_k)_{k\in m+1}に細分\\
+            &=\sum^n_{j=0}\sum^m_{k=1}b_k\mu(A_j\cap B_k)&A_j\cap B_0=\emptyset\;(j\ge 1),A_0\cap B_k=\emptyset\;(k\ge 1)\\
+            &=\sum^m_{k=1}b_k\mu(B_k)
+        \end{align*}
+        よりwell-definednessがわかる．
+        \item $(g_k)$を非負値単関数の増大列で$f$に収束するとする．
+        すると任意の$k\in\N$について，これが定める積分の増大列について
+        \[\int_Xfd\mu=\lim_{n\to\infty}\int_Xf_nd\mu\ge\int_Xg_kd\mu\]
+        が成り立つから，補題\ref{lemma-integral-for-simple-functions}の(3)より，
+        \[\int_Xfd\mu=\lim_{n\to\infty}\int_Xf_nd\mu\ge\lim_{k\to\infty}\int_Xg_kd\mu\]
+        が従う．まったく逆の結果も同様に成り立つ．よって，well-definednessがわかる．
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[非負値単関数の紡ぐ論理：極限への不等式関係の持ち上げ]\label{lemma-integral-for-simple-functions}
+    $f,g:X\to\o{\R}_{\ge 0}$を非負値単関数とする．
+    \begin{enumerate}
+        \item $\int_X(f+g)d\mu=\int_Xfd\mu+\int_Xgd\mu$．
+        \item $\forall_{x\in X}\;f(x)\le g(x)\Rightarrow\int_Xfd\mu\le\int_X gd\mu$．
+        \item 非負値単関数の単調増加列\footnote{(2)より，有界な単調列の各項積分も有界な単調列となり，極限は$[0,\infty]$上各点収束する．}$(f_n)$が，非負値単関数$g:X\to\R$に対して$\lim_{n\to\infty}f_n(x)\ge g(x)$を満たすとき，$\lim_{n\to\infty}\int_Xf_nd\mu\ge\int_Xgd\mu$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 仮定より，$f+g=\sum_{j,k}(a_j+b_k)\chi_{A_j\cap B_k}$と表せる．$A_j,B_k$に測度が有限でないものがあるとき，関係は$\infty=\infty$となり成り立つ．測度が有限のとき，
+        \begin{align*}
+            \sum_{j,k}(a_j+b_k)\chi_{A_j\cap B_k}&=\sum_ja_j\sum_k\chi_{A_j\cap B_k}+\sum_kb_k\sum_j\chi_{A_j\cap B_k}\\
+            &=\sum_ja_j\sum_k\chi_{A_j}+\sum_kb_k\sum_j\chi_{B_k}.
+        \end{align*}
+        \item $\sum_{j=1}^na_j\chi_{A_j}\le\sum^m_{k=1}b_k\chi_{B_k}$のとき，細分$(A_j\cap B_k)_{(j,k)\in n+1\times m+1}$上で考えて，$a_{j,k}=a_j,b_{j,k}=b_k$と定めると，
+        \[\int_Xfd\mu=\sum_{k,j}a_j\chi_{A_j\cap B_j}\le\sum_{k,j}b_k\chi_{A_j\cap B_j}=\int_Xgd\mu\]
+        を得る．
+        \item 
+        単関数$g$の台を$A:=\{x\in X\mid g(x)>0\}$とする．$(f_n)$は非負値だから，$A=\emptyset$なら結論は従う．$A\ne\emptyset$とすると，
+        非負値$\alpha:=\min_{x\in A}g(x),\beta:=\max_{x\in A}g(x)$が定まる．
+        よって，
+        \[A_n(k):=\Brace{x\in X\mid f_n(x)\ge g(x)-\frac{1}{k}}\]
+        と定めると，各$(A_n(k))_{k=1,2,\cdots}$は単調増大列で$A$に収束する．
+        ここで，$A$の測度によって評価の仕方が変わる．
+        \begin{description}
+            \item[$\mu(A)=\infty$のとき] 任意の$n,k$について，\begin{align*}
+                \int_Xf_nd\mu&\ge\int_Xf_n\chi_{A\cap A_n(k)}d\mu&1\ge\chi_{A\cap A_n(k)}と(2)より\\
+                &\ge\paren{\alpha-\frac{1}{k}}\mu(A\cap A_n(k))&A_n(k)上ではf_nは下から抑えられる
+            \end{align*}
+            $n$は十分大きくできるから，$\int_Xf_nd\mu=\infty$を得る．
+            \item[$\mu(A)<\infty$のとき] 任意の$n,k$について， \begin{align*}
+                \int_Xf_nd\mu&\ge\int_Xf_n\chi_{A\cap A_n(k)}d\mu&1\ge\chi_{A\cap A_n(k)}と(2)より\\
+                &\ge\int_X\paren{g-\frac{1}{k}}\chi_{A\cap A_n(k)}d\mu+\paren{\int_Xg\chi_{A\setminus A_n(k)}d\mu-\int_Xg\chi_{A\setminus A_n(k)}d\mu}\\
+                &\ge\int_Xg\mu-\frac{1}{k}\mu(A\cap A_n(k))-\beta\mu(A\setminus A_n(k))
+            \end{align*}
+            と下から抑えられる．まず$n$を十分大きく取ると3項目が消え，第2項は$-\frac{1}{k}\mu(A)$となり，$k$も十分大きく取れるから，$\int_Xfd\mu\ge\int_Xgd\mu$がわかる．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    (3)の消息は極めて技巧的である．天才的な不等式評価．
+\end{remarks}
+
+\begin{lemma}[非負値可測関数の紡ぐ論理]\label{lemma-integral-for-nonnegative-measurables}
+    $f,g$を非負値可測関数とする．
+    \begin{enumerate}
+        \item $\int_X(f+g)d\mu=\int_Xfd\mu+\int_Xgd\mu$．
+        \item $\forall_{x\in X}\;f(x)\le g(x)\Rightarrow\int_Xfd\mu\le\int_Xgd\mu$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[可積分性の特徴付け]\label{thm-characterization-of-integrability}
+    $(X,\B,\mu)$上の可測関数$f:X\to\o{\R}$または$f:X\to\C$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $f$は可積分．
+        \item $f^+,f^-$が可積分．
+        \item $\abs{f}$が可積分．
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}[Lebesgue可積分性と広義Riemann積分]\mbox{}\label{remark-Lebesgue-integral-and-Riemann-integral}
+    \begin{enumerate}
+        \item $\int^\infty_0\frac{\sin x}{x}dx$は$(0,\infty)$広義Riemann積分可能だが，$\int^\infty_0\abs{f(x)}dx$は調和級数を含みLebesgue可積分ではない．
+        \item $\int^1_0\int^\infty_0\frac{\sin x}{x}dxdy$は広義Riemannの意味でもLebesgueの意味でも積分可能でないが，累次積分は可能である．
+    \end{enumerate}
+\end{remark}
+
+\subsection{性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分$\int\cdot d\mu:\B\times\Meas(X,\o{\R})\to\o{\R}$は，
+    $\B$上の集合の直和と$\Meas(X,\o{\R})$上の関数の和とそれぞれのスカラー倍について，$\R$-双線型写像である．
+    これは積分を$g(x)$と$d\mu(x)$との掛け算（ただし掛け算はあくまでも，無限に細分可能かもしれないが，可測集合の上で行われる）として作ったことが成功したことを意味する．
+    名実ともに，積分は局所的データの足し上げとなり，微分形式の積分としてコホモロジーへと受け継がれる．\footnote{The integration of differential forms induces a more general notion of integration, namely integration in differential cohomology and hence integration in generalized cohomology. Here the choice of a measure is replaced by a choice of orientation in generalized cohomology.\url{https://ncatlab.org/nlab/show/integral}}
+    こうして，加法的集合関数の例が構成できた．
+\end{tcolorbox}
+
+\begin{theorem}\label{thm-properties-of-integral}
+    $f,g:X\to\o{\R}$を可測関数とする．
+    \begin{enumerate}
+        \item $\mu(A)=0\Rightarrow\int_Afd\mu=0$．
+        \item $f$が可積分であるとする．$\Abs{\int_Xfd\mu}\le\int_X\abs{f}d\mu$．
+        \item (Chebyshev) 任意の$a,p>0$について，$\mu\paren{\Brace{\abs{f}\ge a}}\le\frac{1}{a^p}\int_X\abs{f}^pd\mu$．
+        \item $f,g$は可積分とする．$f\le g\;\ae\Rightarrow\int_X fd\mu\le\int_Xgd\mu$．特に，$f= g\;\ae\Rightarrow\int_X fd\mu=\int_Xgd\mu$．
+        \item $\forall_{A\in\B}\int_Afd\mu=0\Lrarrow f=0\;\ae$
+        \item $\int_X\abs{f}d\mu=0\Lrarrow f=0\;\ae$
+        \item $\abs{f}\le g\;\ae$かつ$g$が可積分ならば，$f$も可積分である．
+        \item $f$が可積分ならば，$\abs{f}<\infty\;\ae$
+        \item $a\in\R$とする．$f,g$が可積分ならば，$af,f+g$も可積分であり，
+        \begin{align*}
+            \int_Xafd\mu&=a\int_Xfd\mu,&\int_X(f+g)d\mu&=\int_Xfd\mu+\int_Xgd\mu.
+        \end{align*}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 単関数$f=\sum^n_{j=1}a_j\chi_{A_j}$の場合について$\int_Afd\mu$を示せば，単調単関数列の収束先である非負値可測関数も，その差である可測関数も，積分が零であるとわかる．
+        $\int_Afd\mu=\sum^n_{j=1}a_j\chi_{A\cap A_j}=0$．
+        \item 
+        拡張実数$\o{\R}$上の三角不等式より，
+        \[\Abs{\int_Xfd\mu}\le\Abs{\int_Xf^+d\mu}+\Abs{\int_Xf^-d\mu}=\int_X\abs{f}d\mu.\]
+        \item 意味は明確である．ある値$y=a$で切って，そこで短冊形に下方集合を取ると，その面積は$f^p$の定める面積よりも小さい．
+        式で表すと，
+        \[\int_X\abs{f}^pd\mu\ge\int_Xa^p\chi_{\{\abs{f}\ge a\}}d\mu=a^p\mu\paren{\Brace{\abs{f}\ge a}}\]
+        \item $f,g$が非負値の場合について示せば良い．
+        \begin{align*}
+            f&=f\chi_{\Brace{f\le g}}+f\chi_{\Brace{f>g}}\\
+            &\le g\chi_{\Brace{f\le g}}+f\chi_{\Brace{f>g}}
+        \end{align*}
+        より，(1)から測度$0$の集合上での積分は$0$だから，
+        \[\int_Xfd\mu\le\int_Xg\chi_{\{f\le g\}}d\mu+\int_Xf\chi_{\{f>g\}}d\mu\le\int_Xgd\mu.\]
+        \item $\Leftarrow$は，
+        \begin{align*}
+            \int_Afd\mu&=\int_Af\chi_{\{f\ne 0\}}d\mu+\int_Af\chi_{\{f=0\}}d\mu\\
+            &=0+0=0
+        \end{align*}
+        と，第１項は集合の測度が$0$，第２項は関数の値が$0$であるという，２つの$0$の和に分解できる．
+        $\Rightarrow$を示す．
+        分解$\Brace{\abs{f}>0}=\cup^\infty_{n=1}\Brace{\abs{f}\ge\frac{1}{n}}$を用いる．
+        Chebyshevの不等式より，それぞれの測度は
+        \[\mu\paren{\Brace{\abs{f}>0}}\le n\int_X\abs{f}d\mu\]
+        と評価できる．
+        この右辺は，可測集合上の積分に分解して仮定を使うと，
+        \begin{align*}
+            \int_X\abs{f}d\mu&=\int_Xf^+d\mu+\int_Xf^-d\mu\\
+            &=\int_{\{f>0\}}fd\mu-\int_{\{f<0\}}fd\mu=0
+        \end{align*}
+        より，測度が$0$とわかる．測度$0$の集合の可算和は，測度の劣加法性より$0$である．
+        \item 
+        $\Leftarrow$は$f=0\ae$のとき，$\abs{f}=0\ae$であるから，(5)の$\Leftarrow$の$A=X$の場合である．
+        $\Rightarrow$は，
+        $\forall_{A\in\B}\;\int_Afd\mu=0$が従うことからわかる．実際，任意の$A\in\B$に対して，(2)も使って，
+        \begin{align*}
+            \Abs{\iint_Afd\mu}&\le\int_A\abs{f}d\mu\le\int_X\abs{f}d\mu=0.
+        \end{align*}
+        \item 
+        \begin{align*}
+            \int_X\abs{f}d\mu&=\int_X\abs{f}\chi_{\{\abs{f}\le g\}}d\mu\\
+            &\le\int_Xg\chi_{\{\abs{f}\le g\}}d\mu=\int_Xgd\mu
+        \end{align*}
+        であるから，可積分性の特徴付け\ref{thm-characterization-of-integrability}より．
+        \item 任意の$n\in\N_+$に対して，Chebyshevの不等式の精緻化より次の議論が成り立つ．
+        \begin{align*}
+            \mu\paren{\Brace{\abs{f}=\pm\infty}}&\le\mu\paren{\Brace{\abs{f}\ge n}}\\
+            &\le\frac{1}{n}\int_{\Brace{\abs{f}\ge n}}\abs{f}d\mu\le\frac{1}{n}\int_X\abs{f}d\mu
+        \end{align*}
+        $n$は任意に大きく取れるから，$\{\pm\infty\}$を取る点は測度$0$．
+        \item $f+g,af$は
+        \begin{align*}
+            \int_X\abs{f+g}d\mu&\le\int_X\paren{\abs{f}+\abs{g}}d\mu<\infty
+        \end{align*}
+        より可積分．
+        また，$f+g$は$(f+g)^+-(f+g)^-$と$(f^+-f^-)+(g^+-g^-)$との２通りで，非負値可測関数の和に分解できるから，積分の線形性\ref{lemma-integral-for-nonnegative-measurables}より，
+        \[\int_X(f+g)^+d\mu-\int_X(f+g)^-d\mu=\int_Xfd\mu+\int_Xgd\mu.\]
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    (2)の積分についての三角不等式が，測度論に議論を外在化したために，単なる三角不等式に本当に帰着している．
+\end{remarks}
+
+\begin{theorem}[不定積分は絶対連続な加法的集合関数である]\label{thm-indefinite-integral-is-absolutely-continuous}
+    $f$を可積分とし，この時に定まる完全加法的集合関数（不定積分）$\Phi(-):=\int_{-}\abs{f}d\mu:\B\to\R$を考える．
+    $\mu(A)\to 0$のとき，不定積分の値も（$A\in\B$の取り方に依らず）一様に$0$に収束する：
+    \[\forall_{\epsilon>0}\;\exists_{\delta>0}\;\forall_{A\in\B}\;\mu(A)<\delta\Rightarrow\int_A\abs{f}d\mu<\epsilon.\]
+\end{theorem}
+\begin{proof}
+    $\mu\paren{\Brace{f>0}}=0$とすると不定積分は零関数で，絶対連続性を自明に満たす．よって$\mu\paren{\Brace{f>0}}=0$，すなわち$\int_X\abs{f}d\mu=0\Lrarrow f=0\;\ae$と併せて（積分の性質\ref{thm-properties-of-integral}），$0<\int_X\abs{f}d\mu$とする．
+
+    $\epsilon>0$と，$\abs{f}$に収束する非負値単関数の増加列$(f_n)$を任意に取ると，ある$n_0\in\N$が存在して，$\int_Xf_{n_0}d\mu>0$かつ$\int_X(\abs{f}-f_{n_0})d\mu<\frac{\epsilon}{2}$を満たす．
+    あとはこれに対して$\delta>0$をうまく取れば良い．これには，非負値単関数$f_{n_0}=\sum^N_{k=1}a_k\chi_{A_k}$について，$\delta<\frac{\epsilon}{2}\paren{\max_{1\le k\le N}a_k}^{-1}$を満たすように取る．
+    すると，$\mu(A)<\delta$を満たす$A\in\B$について，
+    \begin{align*}
+        \int_A\abs{f}d\mu&=\int_A\paren(\abs{f}-f_{n_0})d\mu+\int_Af_{n_0}d\mu\\
+        &\le\frac{\epsilon}{2}+\int_A\max_{1\le k\le N}a_kd\mu\\
+        &<\frac{\epsilon}{2}+\max_{1\le k\le N}a_k\cdot\mu(A)<\epsilon
+    \end{align*}
+    と評価できる．
+\end{proof}
+\begin{remarks}
+    不定積分の絶対連続性とは，積分域$A\in\B$を十分小さくすればいくらでも絶対値を$0$に近づけられることをいう．
+\end{remarks}
+
+\subsection{変数変換}
+
+\begin{definition}
+    $(X,\B),(Y,\cC)$を可測空間とする．可測空間の射$\varphi:X\to Y$を$\forall_{C\in\cC}\;\varphi^{-1}(C)\in\B$を満たす写像として定める．これを$\B/\C$-可測ともいう．
+\end{definition}
+
+\begin{theorem}
+    測度空間$(X,\B,\mu)$と測度空間の射$\varphi:X\to Y$について，像測度$\nu:=\mu_*$を$\nu(C):=\mu(\varphi^{-1}(C))\;(C\in\cC)$で定める．このとき，次が成り立つ．
+    \begin{enumerate}
+        \item $f\circ\varphi$が$\mu$-可積分であることと，$f$が$\nu$-可積分であることは同値．
+        \item $\int_Xf(\varphi(x))d\mu(x)=\int_Yf(y)d\mu(y)$．
+    \end{enumerate}
+\end{theorem}
+
+\section{項別積分と収束定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分を非負値単関数単調列の極限の言葉で定めたため，その関手性により，Riemannの場合よりずっと簡単に種々の可換条件を得る．
+    なお，一般に積分等式・不等式の条件はa.e.の分だけ緩められる．$E\setminus N$上で考えれば良いからである．
+\end{tcolorbox}
+
+\subsection{単調収束定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分を非負値単関数単調列の極限として定めたが，
+    これは一般の非負値関数の単調列の極限を保つ．
+\end{tcolorbox}
+
+\begin{theorem}[monotone convergence theorem]\label{thm-monotone-convergence-theorem}
+    非負値のa.e.-単調増加列$(f_n)$は可測関数$f$に収束するとする\footnote{可測関数列の極限は可測である\ref{prop-limit-of-sequence-of-measurable-function}．関数の単調増加列は収束する，各点について考えれば良い．}：$\forall_{n\in\N}\;0\le f_n\le f_{n+1}\;\ae\;\land f_n\xrightarrow{n\to\infty}f\;\ae$
+    このとき，\[\lim_{n\to\infty}\int_Xf_nd\mu=\int_Xfd\mu.\]
+    \[\xymatrix{
+        (f_n)\ar[r]^-{\int_X\cdot d\mu}\ar[d]_-{\lim_{n\to\infty}}&\paren{\int_Xf_nd\mu}\ar[d]^-{\lim_{n\to\infty}}\\
+        f\ar[r]^-{\int_X\cdot d\mu}&\int_Xfd\mu
+    }\]
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[有限化算譜] $\mu(f_n^{-1}(\infty))>0$となる$n\in\N$が存在するとき，等式は$\infty=\infty$として成立する．よって，任意の$n\in\N$について$\mu(f_n^{-1}(\infty))=0$と仮定すると，$\mu\paren{\cup_{n=1}^\infty f_n^{-1}(\infty)}=0$であるから，初めから$X$上で$f_n$は有限と仮定して良い．
+        \item[零集合算譜] 単調性，収束性が失敗する集合を
+        \begin{align*}
+            N_n&:=\Brace{x\in X\mid f_n>f_{n+1}},&N_\infty&:=\Brace{x\in X\mid\lim_{n\to\infty}f_n(x)\ne f(x)}
+        \end{align*}
+        と定めると，いずれも測度は$0$より，$N:=N_\infty\cup\bigcup_{n\in\N}N_n$の測度も$0$．これについて，
+        \begin{align*}
+            \wt{f}_n(x)&:=\begin{cases}
+                f_n(x),&x\notin N,\\
+                0,&x\in N.
+            \end{cases},&\wt{f}(x)&:=\begin{cases}
+                f(x),&x\notin N,\\
+                0,&x\in N.
+            \end{cases}
+        \end{align*}
+        と定めると，$(\wt{f}_n)$は$\wt{f}$に収束する単調増加列で，
+        \begin{align*}
+            \int_Xf_nd\mu&=\int_X\wt{f}_nd\mu,&\int_Xfd\mu&=\int_X\wt{f}d\mu,
+        \end{align*}
+        が成り立つから，初めからa.e.の条件は除いて考えて良い．
+        \item[対角線構成]
+        各$f_n$に収束する非負値単関数の単調列を$(f_{n,k})_{k\in\N}$とし，$g_k:=\max_{1\le n\le k}f_{n,k}$とおくと，$\lim_{k\to\infty}g_k=f$である．実際，$\forall_{k\in\N}\forall_{n=1,\cdots,k}\;f_{n,k}\le g_k$であるが，これの$k\to\infty$の極限を考えると，任意の$n\in\N$について$f_n=\lim_{k\to\infty}f_{n,k}\le\lim_{k\to\infty}g_k\le f$．次に$n\to\infty$を考えて，$\lim_{k\to\infty}g_k=f$．
+        \item[結論]
+        よって，非負値単関数の増加列$(g_k)$を用いて$\int_Xfd\mu=\lim_{k\to\infty}\int_Xg_kd\mu$と表せるが，$g_k=\max_{1\le n\le k}f_{n,k}\le\max_{1\le n\le k}f_n=f_k$より，$\int_Xg_kd\mu\le\int_Xf_kd\mu$と併せて，
+        $\int_Xfd\mu\le\lim_{k\to\infty}\int_Xf_kd\mu$を得る．逆向きの不等号は$f_k\le f$より$\int_Xf_kd\mu\le\int_Xfd\mu$であり\ref{thm-properties-of-integral}(4)，この左辺の$k\to\infty$の極限を取ることで解る．
+    \end{description}
+\end{proof}
+\begin{remark}
+    $X$が一点集合で$\mu$がその上で有限のとき，これは単調列$(f_n)$が上界$f\in\R$を持つならば収束することを含意している．
+\end{remark}
+
+\begin{corollary}
+    ほとんど至るところ非負な可測関数列$(f_n)$について，
+    \[\sum^\infty_{n=1}\int_Xf_nd\mu=\lim_{k\to\infty}\int_X\sum^k_{n=1}f_nd\mu=\int_X\sum^\infty_{n=1}f_nd\mu.\]
+\end{corollary}
+\begin{proof}
+    単調増加列$\paren{\sum^k_{n=1}f_n}_{k\in\N}$についての単調収束定理より．
+\end{proof}
+\begin{remark}
+    \cite{伊藤}ではこちらを先に証明している．確かに，単関数近似定理\ref{thm-simple-function-approximation}を，任意の非負可測関数$f$について，$\int_Efd\mu=\sum^\infty_{n=1}\int_Eg_nd\mu$を満たす単関数表示$f(x)=\sum^\infty_{n=1}g_n(x)$が存在する，と書き直すと，
+\end{remark}
+
+\subsection{Fatouの補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度の劣加法性$\forall_{\{A_i\}_{i\in\N}\subset\calB}\;\mu\paren{\liminf_{i\to\infty}A_i}\le\liminf_{i\to\infty}\mu(A_i)$と同様，極限の像が，$\R$内の真の始対象となる．
+    下極限が必ず存在する理由は単調列になるからであるから，証明は単調収束定理を自然に経由する．
+\end{tcolorbox}
+
+\begin{theorem}[Fatou's lemma]
+    殆ど至る所非負な可測関数列$(f_n)$について，
+    \[\liminf_{n\to\infty}\int_Xf_nd\mu\ge\int_X\liminf_{n\to\infty}f_nd\mu.\]
+\end{theorem}
+\begin{proof}
+    $\liminf_{n\to\infty}f_n=\sup_{n\ge 1}\paren{\inf_{k\ge n}f_k}=:\sup_{n\ge 1}g_n$とおくと，
+    \begin{enumerate}
+        \item $f_n\ge g_n\;\ae$と言える．よって，$\liminf_{n\to\infty}\int_Xf_nd\mu\ge\liminf_{n\to\infty}\int_Xg_nd\mu=\lim_{n\to\infty}g_nd\mu$（積分の性質\ref{thm-properties-of-integral}(4)）．単調増加列$\paren{\int_Xg_nd\mu}_{n\in\N}$には$[0,\infty]$上極限が存在することに注意．
+        \item  $(g_n)$は$\liminf_{n\to\infty}f_n$に収束する単調増加列であるから，$\lim_{n\to\infty}\int_Xg_nd\mu=\int_X\liminf_{n\to\infty}f_n$．
+    \end{enumerate}
+\end{proof}
+
+\subsection{Lebesgueの優収束定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可積分な優関数（殆ど至る所で十分）が取れる場合，概収束と積分は交換する．
+    積分についての反例は調和級数の閾値である$a=-1$のとき，すなわち$\frac{1}{x}$を考えるとたくさん作れる．
+\end{tcolorbox}
+
+\begin{theorem}[Lebesgue convergence theorem]\label{thm-Lebesgue-convergence-theorem}
+    可測関数列$(f_n)$について，(1)$\Rightarrow$(2)が成り立つ．
+    \begin{enumerate}
+        \item 非負値の可積分関数$h$が存在して，各$f_n$が殆ど至る所で抑えられる：$\forall_{n\in\N}\;\abs{f_n}\le h\;\ae$
+        \item $\liminf_{n\to\infty}\int_Xf_nd\mu\ge\int_X\liminf_{n\to\infty}f_nd\mu$かつ$\limsup_{n\to\infty}\int_Xf_nd\mu\le\int_X\limsup_{n\to\infty}f_nd\mu$．
+    \end{enumerate}
+    特に，$(f_n)$が$f$に概収束するとき，
+    \[\lim_{n\to\infty}\int_Xf_nd\mu=\int_Xfd\mu.\]
+\end{theorem}
+\begin{proof}
+    条件(1)は次のように(1)$\Rightarrow$(2)となる．
+    \begin{enumerate}
+        \item $\abs{f_n}\le h\;\ae$とは，殆ど至る所$h+f_n\ge 0\lor h-f_n\ge 0$が成り立つことに同値．
+        \item このとき，Fatouの補題より，殆ど至る所で
+        \begin{align*}
+            \liminf_{n\to\infty}\int_X(h+f_n)d\mu&\ge\int_X(h+f)d\mu\\
+            \Lrarrow\liminf_{n\to\infty}\int_Xf_nd\mu&\ge\int_Xfd\mu.
+        \end{align*}
+        が成り立ち，かつ，
+        \begin{align*}
+            \liminf_{n\to\infty}\int_X(h-f_n)d\mu&\ge\int_X(h-f)d\mu\\
+            \Lrarrow\limsup_{n\to\infty}\int_Xf_nd\mu&\le\int_Xfd\mu.
+        \end{align*}
+        が成り立つ．$\liminf_{n\to\infty}(-f_n)=-\limsup_{n\to\infty}f_n$に注意．
+    \end{enumerate}
+\end{proof}
+\begin{remark}[優関数が取れない場合は定理が成立することもしないこともある]
+    $X=(0,1]$とし，Lebesgue測度を考える．
+    \begin{description}
+        \item[成り立たない例] \[f_n(x):=\begin{cases}
+            \frac{1}{x},&x\in\Square{\frac{1}{2n},\frac{1}{n}},\\
+            0,&\otherwise.
+        \end{cases}\]とすると，$\forall_{n\in\N}\;\abs{f_n}\le h$を満たす$h$は$\forall_{x\in X}\;\frac{1}{x}<h(x)$が必要だから，可積分ではない：$\int_Xhdx=\infty$．
+        しかし，$X\cap\Square{\frac{1}{2n},\frac{1}{n}}\xrightarrow{n\to\infty}\emptyset$より，$\lim_{n\to\infty}f_n=0$となるから，$\int_Xfdx=0$だが，$\int_Xf_ndx=\log 2$．
+        \item[成り立つ例]
+        \[f_n(x):=\begin{cases}
+            \frac{1}{x},&x\in\Square{\frac{1}{2n},\frac{1}{n}},\\
+            0,&\otherwise.
+        \end{cases}\]とすると，同様に優関数は存在しない．
+        しかし，$\int_Xf_nd\mu=\log\paren{1+\frac{1}{n}}\xrightarrow{n\to\infty}0=\int_Xfdx$．
+    \end{description}
+\end{remark}
+\begin{remark}[微分と積分との交換に向けて]
+    Lebesgueの優収束定理は連続な族$(f_t)_{t>t_0}$に拡張できる．
+\end{remark}
+
+\begin{corollary}[有界関数列の積分は収束する]
+    $\mu$を有限とする：$\mu(X)<\infty$．
+    可測関数列$(f_n)$はそれぞれ殆ど至る所有界$\exists_{M>0}\;\forall_{n\in\N}\;\abs{f_n}\le M\;\ae$で，$(f_n)$が$f$に概収束するとき，
+    \[\lim_{n\to\infty}\int_Xf_nd\mu=\int_Xfd\mu.\]
+\end{corollary}
+\begin{proof}
+    $h:=M$とおけば，条件$\mu(X)<\infty$より，$h$は可積分：$\int_Xhd\mu=\mu(X)M\in\R$．
+    これについてLebesgueの優収束定理より従う．
+\end{proof}
+
+\begin{corollary}[一様収束する可積分関数列の積分は収束する]
+    $\mu$を有限とする：$\mu(X)<\infty$．
+    可積分関数の列$(f_n)$が一様に$f$に概収束するならば，$f$も可積分で，
+    \[\lim_{n\to\infty}\int_Xf_nd\mu=\int_Xfd\mu.\]
+\end{corollary}
+\begin{proof}
+    一様に概収束することより，$\exists_{N\in\N}\;\forall_{n\ge N}\;\forall_{x\in X}\;\abs{f_n(x)-f_N(x)}<1\;\ae$
+    よって，特に，殆ど至る所で$\abs{f_n(x)}<\abs{f_N(x)}+1$が成り立つ．\footnote{三角不等式より，$\abs{f_n(x)}=\abs{f_N(x)+(f_n(x)-f_N(x))}\le\abs{f_N(x)}+\abs{f_n(x)-f_N(x)}<\abs{f_N(x)}+1$}
+    よって，$h:=\abs{f_N(x)}+1$と定数関数を優関数に取れば，これは$\mu(X)<\infty$より可積分である．
+\end{proof}
+
+\begin{remark}[測度が有限でない場合の反例]
+    $\mu(X)=\infty$のときの反例は，例えば$X=(0,\infty)$で$\frac{1}{x}$を考えれば良い．
+    \[f_n(x):=\begin{cases}
+        \frac{1}{x},&x\in[n,2n],\\
+        0,&\otherwise.
+    \end{cases}\]とすると，これは$\forall_{n\in\N}\;\abs{f_n(x)}\le 1$が成り立つから有界であり，また$\lim_{n\to\infty}f_n(x)=0$に一様収束するが，$\int_Xf_ndx=\log 2$．
+\end{remark}
+
+\subsection{Vitaliの収束定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Lebesgueの優収束定理の描像と精緻化]
+    $(f_n)$が$f$に概収束するとき，Egorovの定理\ref{thm-Egorov}より，一様収束でない部分$A$の測度は任意に小さく取れる．
+    すなわち，殆どの部分$A^\comp$上では一様収束するから積分と極限が交換可能で，$A$上で生じる剰余項が飼い慣らせれば良い．
+    そのための十分条件が，至る所で抑えられる可積分な優関数の存在であり，あるいはもっと緩めるとVitaliの収束定理を得る．
+\end{tcolorbox}
+
+\begin{discussion}
+    測度の有界性$\mu(X)<\infty$を仮定すると，Lebesgueの優収束定理は次のようにも証明できる．このとき，優関数$h$の存在は条件としては強く，これを緩めることを考えることができる(Vitaliの収束定理)．
+    まず，積分の性質\ref{thm-properties-of-integral}(7)より優関数の存在する$f_n,f$は可積分であるから，$N:=\cup^\infty_{n=1}\Brace{\abs{f_n}=\infty}\cup\{\abs{f}=\infty\}$は零集合であり，$f_n,f$はこの上で零であると仮定して良い．
+    この設定の下で，$h$で至る所抑えることができる列$(f_n)$が$f$に概収束するとき，$\forall_{\epsilon>0}\;\exists_{N>0}\;\forall_{n\ge N}\;\Abs{\int_X(f-f_n)d\mu}<\epsilon$を示せば良い．
+
+    任意に$\epsilon>0$を取ると，積分の絶対連続性\ref{thm-indefinite-integral-is-absolutely-continuous}より，$\delta>0$が存在して，$\forall_{A\in\B}\;\mu(A)<\delta\Rightarrow\int_Ahd\mu<\epsilon$．
+    またEgorovの定理\ref{thm-Egorov}より，$\mu(A)<\delta$を満たす$A\in\B$であって，$(f_n)$が$A^\comp$上一様収束するものが取れる：$\exists_{N>0}\;\forall_{n\ge N}\;\sup_{x\in A^\comp}\abs{f_n(x)-f(x)}<\epsilon$．
+    よって，これらの事実より，
+    \begin{align*}
+        \Abs{\int_X(f-f_n)d\mu}&\le\Abs{\int_{A^\comp}(f-f_n)d\mu}+\Abs{\int_A(f-f_n)d\mu}\\
+        &\le\int_{A^\comp}\abs{f-f_n}d\mu+\int_A\abs{f-f_n}d\mu\\
+        &\le\epsilon\mu(A^\comp)+2\epsilon.&\because \int_A\abs{f-f_n}d\mu\le\int_A(\abs{h}+\abs{h})d\mu.
+    \end{align*}
+    と評価できるから，$\mu(A^\comp)\le\mu(X)<\infty$ならば，$\int_Xfd\mu=\lim_{n\to\infty}\int_Xf_nd\mu$が従う．
+    第二項の評価は，わざわざ優関数$h$を経由する必要はない．
+\end{discussion}
+
+\begin{definition}[uniformly integrable, have uniformly absolutely continuous integrals]
+    可積分関数の族$\F\subset L^1(X,\A,\mu)$について，\footnote{\url{https://en.wikipedia.org/wiki/Vitali_convergence_theorem}}
+    \begin{enumerate}
+        \item $\F$が\textbf{一様可積分}であるとは，$\lim_{M\to\infty}\sup_{f\in\F}\int_{\Brace{\abs{f}>M}}\abs{f}d\mu=0$が成り立つことをいう．
+        \item $\F$が\textbf{一様に絶対連続積分を持つ}とは，$\lim_{\mu(A)\to 0}\sup_{f\in\F}\int_A\abs{f}d\mu=0$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Vitali]
+    $\mu(X)<\infty$なる測度空間$(X,\B,\mu)$上の$(f_n)$が一様可積分かつ$f_n\to f\;\ae$かつ$\abs{f(x)}<\infty\;\ae$ならば，$\lim_{n\to\infty}\int_X\abs{f_n-f}d\mu=0$．
+\end{theorem}
+
+\subsection{微分と積分の可換性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可測関数$f$の微分とは，$\lim_{h\to\infty}\frac{f(x,\alpha+h)-f(x,\alpha)}{h}$と可測関数の（連続）極限として定義されているので，結局可測関数の極限と積分の交換の問題である．
+    なお，積分も極限として定義されているから，極限構成の可換性に他ならない．
+\end{tcolorbox}
+
+\begin{theorem}
+    関数$f:X\times(a,b)\to\R$がぞれぞれの引数について次の条件を満たすとする．
+    \begin{enumerate}
+        \item $f$は$X$上可積分である：$\forall_{\alpha\in(a,b)}\;\int_Xf(x,\alpha)d\mu(x)\in\R$．
+        \item $f$は$(a,b)$上可微分であり，その偏導関数について可積分な優関数$\varphi:X\to\R$が存在する：$\forall_{(x,\alpha)\in X\times(a,b)}\;\Abs{\pp{}{\alpha}f(x,\alpha)}\le \varphi(x)$．
+    \end{enumerate}
+    このとき，積分$\int_Xf(x,\alpha)d\mu(x)$も$\alpha$-可微分で，
+    \[\dd{}{\alpha}\int_Xf(x,\alpha)d\mu(x)=\int_X\pp{}{\alpha}f(x,\alpha)d\mu(x).\]
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        \dd{}{\alpha}\int_Xf(x,\alpha)d\mu(x)&=\lim_{h\to0}\frac{1}{h}\paren{\int_Xf(x,\alpha+h)d\mu-\int_Xf(x,\alpha)d\mu}\\
+        &=\lim_{h\to0}\int_X\frac{1}{h}\paren{f(x,\alpha+h)-f(x,\alpha)}d\mu\\
+        &=\lim_{h\to0}\int_X\pp{}{\alpha}f(x,\alpha+\theta h)d\mu&\exists_{\theta\in(0,1)}
+    \end{align*}
+    より，結局$\lim_{h\to0}$と積分の交換の問題である．
+    Lebesgueの優収束定理と仮定(2)より結論が従う．
+\end{proof}
+
+\section{直積測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=直積測度を積分形で捉える]
+    直積測度の構成は，$\sigma$-有限性の過程の下では極めて自然なものが一意的に存在する．
+    $\sigma$-有限性がないと存在はするが一意性は崩れる．
+
+    証明においては，各$x\in X$についての切り口という妙義（$x,y$の$\pr_1,\pr_2$についてのファイバーの$Y,X$での像）を用いて，底空間$(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$という足場を上手に使うことが肝要になる．
+    すると，
+    \[\mu_Z(E)=\int_X\mu_Y(E_x)d\mu_X=\int_Y\mu_X(E_y)d\mu_Y\]
+    と表現できる（$x\in X$で切っても$y\in Y$で切っても当然同じになるべき）から，積分論の結果（収束定理）が流用できる．
+\end{tcolorbox}
+
+\begin{definition}[直積$\sigma$-加法族, rectable]
+    ２つの測度空間$(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$に対して，直積空間$Z:=X\times Y$を考える．
+    \begin{enumerate}
+        \item $K=E\times F\;(E\in\B_X,F\in\B_Y)$の形で表される集合を\textbf{矩形集合}または\textbf{長方形}という．矩形集合全体からなる集合を\[\cC:=\Brace{A\times B\subset Z\mid A\in\B_X,B\in\B_Y}\]で表す．
+        \item $\cC$を含む最小の$\sigma$-集合体$\sigma(\cC)$を$\B_Z$または$\B_X\times\B_Y$と表し，\textbf{直積$\sigma$-集合体}という．\footnote{逆像$\sigma$-集合代数(pullback $\sigma$-algebra)の合併$\pr_1^*(\B_X)\cup\pr_2^*(\B_Y)$が生成する$\sigma$-集合代数と考えても良い．}
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[矩形集合の有限直和は集合体]\mbox{}\label{lemma-finite-sum-of-rectangles}
+    \begin{enumerate}
+        \item 長方形全体の集合を含む最小の集合体$\A(\cC)$は，互いに素な長方形の有限直和$\Brace{\sum_{i=1}^nC_i\subset Z\;\middle|\;C_i\in C,n\in\N}=:\A$に等しい．
+        \item $E\in\B_Z$ならば，$\forall_{x\in X}\;E_x:=\{y\in Y\mid (x,y)\in E\}=\pr_2(\pr_1^{-1}(x))\in\B_Y$．
+        \item $E\in\B_Z$ならば，$\forall_{y\in Y}\;E^y:=\{x\in X\mid (x,y)\in E\}=\pr_1(\pr_2^{-1}(y))\in\B_X$．
+    \end{enumerate}
+    \[\xymatrix{
+        X&&Y\\
+        &E\ar[ul]^-{\pr_1}\ar[ur]_-{\pr_2}
+    }\]
+    この$x,y$の$\pr_1,\pr_2$についてのファイバーの$Y,X$での像を\textbf{切り口}または\textbf{断面}と呼ぶことにする．
+    $X,Y$での像は一点集合でこれが可測であるならば，ファイバーが$\cC$に含まれることになる．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[方針] \begin{enumerate}[(i)]
+                \item $E,F\in C\Rightarrow E\cap F\in\cC$．
+                \item $E\in\cC\Rightarrow E^\comp(=Z\setminus E)\in\mathfrak{K}$．
+            \end{enumerate}
+            の２つを証明すれば，任意の$A:=\sum_{i=1}^nC_i\mathfrak{K}$について，$A^\comp=\cap_{i=1}^nC_i^\comp$より(i),(ii)から$A^\comp\in\mathfrak{K}$，$A,B\in\mathfrak{K}$ならば$A\cup B=A+(B\cap A^\comp)\in\mathfrak{K}$が(i),(ii)より従い，$\mathfrak{K}$は$\cC$を含んだ最小の集合体であることが分かる．
+            \item[証明] \begin{enumerate}[(i)]
+                \item $E,F\in\cC$より，$A,C\in\B_X,B,D\in\B_Y$が存在して，$E=A\times B,F=C\times D$と表せるから，$E\cap F=(A\times B)\cap(C\times D)=(A\cap C)\times(B\cap D)\in\cC$．
+                \item $E\in\cC$より，$A\in\B_X,B\in\B_Y$が存在して，$E=A\times B$と表せる．$(x,y)\in E^\comp\Lrarrow x\notin A\lor b\notin B$なので，
+                \begin{align*}
+                    E^\comp&=(A\times B)^\comp\\
+                    &=(A^\comp\times Y)\cup(X\times B^\comp)\\
+                    &=(A^\comp\times(B\cup B^\comp))\cup((A\cup A^\comp)\times B^\comp)\\
+                    &=(A^\comp\times B)\sqcup(A^\comp\times B^\comp)\sqcup(A\times B^\comp)\in\mathfrak{K}.
+                \end{align*}
+            \end{enumerate}
+        \end{description}
+        \item 
+        \begin{description}
+            \item[方針] \[\D:=\Brace{E\in\B_Z\;\middle|\;\forall_{x\in X,y\in Y}\;E_x\in\B_Y,E_y\in\B_X}\]
+            と定めて，$\D=\B_Z=\sigma(\cC)$を導く．$\D$が$\cC$を含む$\sigma$-集合体であることが示せれば，$\B_Z=\sigma(\cC)\subset\D\subset\B_Z$より，$\D=\B_Z$が従う．
+            \item[$\cC\subset\D$]
+            任意の$A\times B\in\cC$に対して，
+            \begin{align*}
+                (A\times B)_x&=\begin{cases}B,&x\in A,\\\emptyset,&x\notin A\end{cases},&(A\times B)_y&=\begin{cases}A,&y\in B,\\\emptyset,&y\notin B\end{cases},
+            \end{align*}
+            であるから，$\emptyset\in\B_X,\B_Y,B\in\B_Y,A\in\B_X$より，$A\times B\in\D$．
+            \item[$\D$は$\sigma$-集合体である] \mbox{}
+            \begin{enumerate}[(i)]
+                \item 任意に$E\in\D$を取る．$(X\times Y\setminus E)_x=Y\setminus E_x\in\B_Y\;(\because E\in\D よりE_x\in\B_Y)$かつ$(X\times Y\setminus E)_y=X\setminus E_y\in\B_X$より，$E^\comp\in\D$．
+                \item 任意の互いに素な列$\{E_n\}_{n\in\N}\subset\D$について，$\B_X,\B_Y$が$\sigma$-集合体であることより，
+                \begin{align*}
+                    \paren{\sumn E_n}_x&=\sumn(E_n)_x\in\B_Y,&\paren{\sumn E_n}_y&=\sumn(E_n)_y\in\B_X,
+                \end{align*}
+                が成り立つから，$\sumn E_n\in\D$．
+            \end{enumerate}
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[直積測度の積分表示]\label{lemma-integral-expression-of-product-measure}
+    補題\ref{lemma-finite-sum-of-rectangles}より，有限加法族$\A(\cC)$の任意の元は長方形の有限直和$\sum_{k=1}^NA_k\times B_k\;(A_k\in\B_X,B_k\in\B_Y)$の形で表せるから，
+    $\A(\cC)$上の関数$\mu_Z:\A(\cC)\to[0,\infty]$を\[\mu_Z(E):=\sum_{k=1}^N\mu_X(A_k)\mu_Y(B_k)\quad\paren{E=\cup_{k=1}^NA_k\times B_k\in\A(\cC)}\]
+    で定める．このとき，
+    \begin{enumerate}
+        \item $\mu_Z$の値は直和の取り方に依らず一意的に定まり，有限加法的測度を定める．
+        \item $E\in\A(\cC)$について，$X\to[0,\infty];x\mapsto\mu_Y(E_x)$は$\B_X$-可測関数で，$Y\to[0,\infty];y\mapsto\mu_X(E_y)$は$\B_Y$-可測関数で，
+        \[\mu_Z(E)=\int_X\mu_Y(E_x)d\mu_X=\int_Y\mu_X(E_y)d\mu_Y.\]
+        \item $\mu_Z$は$\A(\cC)$上$\sigma$-加法的でもある．
+        \item $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$が$\sigma$-有限ならば，$(Z,\A(\cC),\mu_Z)$も$\sigma$-有限である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item (2)の表現より，積分$\int_X\mu_Y(E_x)d\mu_X=\sum_{k=1}^N\mu_Y(B_k)\mu_X(A_k),\int_Y\mu_X(E_y)d\mu_Y$は$E$の直和分割の取り方に依らないことからwell-definednessは従う．
+        有限加法性は(3)に含意される．
+        \item 任意の$E\in\A(\cC)$について，$A_k\in\B_X,B_k\in\B_Y$が存在して$E=\sum_{k=1}^NA_k\times B_k$と表せる．このとき，任意の$x\in X$について，
+        \[E_x=\sum^N_{k=1}(A_k\times B_k)_x=\bigcup_{k\in[N],x\in A_k}B_k\]
+        が成り立つから，$\mu_Y(E_x)=\sum_{k=1}^N\mu_Y(B_k)\chi_{A_k}(x)$と表せる（$E_x$の$\mu_Z$-測度は，$x\in A_k$を満たす度に$\mu_Y(B_k)$であり，$x\notin A_k$が起こらないなら$0$である）．
+        この$x$についての関数は明らかに可測である．
+
+        これを積分すると，
+        \[\int_X\mu_Y(E_x)d\mu_X=\sum_{k=1}^N\mu_Y(B_k)\mu_X(A_k)=\sum_{k=1}^N\mu_Y(B_k)\mu_X(A_k)\]
+        を得る．$\int_Y\mu_X(E_y)d\mu_Y=\sum_{k=1}^N\mu_X(A_k)\mu_Y(B_k)$も同様にして従う．
+        \item 
+        有限加法的測度についての$\sigma$-加法性の特徴付け\ref{lemma-sigma-additivity-of-finitely-additive-measure-in-terms-of-monotone-sequence}より，
+        $\A(\cC)$の$E$に収束する任意の単調増大列$(E_n)$について，$\lim_{n\to\infty}\mu_Z(E_n)=\mu(E)$を示せば良い．
+
+        切り口も空間$X$において単調増大列$(E_n)_x\nearrow E_x$を定めるから，測度$\mu_Y$の性質\ref{lemma-character-of-measure}(4)より，$\mu_Y((E_n)_x)\nearrow\mu_Y(E_x)$．
+        ここで，$(\mu_Y((E_n)_-))_{n\in\N}$は非負値な$\B_x$-可測関数の単調増加列であるから，単調収束定理\ref{thm-monotone-convergence-theorem}と(2)より，
+        \[\lim_{n\to\infty}\mu_Z(E_n)=\lim_{n\to\infty}\int_X\mu_Y((E_n)_x)d\mu_X=\int_X\mu_Y(E_x)d\mu_X=\mu_Z(E).\]
+        \item 
+        \begin{align*}
+            X=\cupn A_n,&A_n\in\B_X,\mu_X(A_n)<\infty,&Y=\cupn B_n,&B_n\in\B_Y,\mu_Y(B_n)<\infty,
+        \end{align*}
+        を満たす単調増加列$(A_n),(B_n)$を取る．これに対して，$E_n:=A_n\times B_n$とおけば，
+        \[Z=\cupn E_n\quad\mu_Z(E_n)=\mu_X(A_n)\mu_Y(B_n)<\infty\]
+        を満たす．
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[product measure]
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な測度空間とする．このとき，$\mu_Z(A\times B)=\mu_X(A)\mu_Y(B)\;(A\times B\in Z)$を満たす$(Z,\sigma(\cC))$上の測度$\mu_Z:\sigma(\cC)\to[0,\infty]$は一意的に存在する（Hahn-Kolmogorovの拡張定理\ref{lemma-Hahn-Kolmogorov}）．これを\textbf{直積測度}という．
+\end{definition}
+\begin{remark}
+    完備測度空間の直積は完備とは限らない．
+\end{remark}
+
+\section{Fubiniの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=積分の可換性]
+    Fubiniの定理とは，「直積空間での積分は，$x\in X$から切って考えても$y\in Y$から切って考えても同じ」
+    ことを表す定理である．補題\ref{lemma-integral-expression-of-product-measure}より，長方形の有限直和で表される元$\A(\cC)\subset\B_Z$については成立を確認したが，これが生成する$\sigma$-加法族上でも成り立つことを確認する必要がある．
+    これは単調族定理\ref{thm-monotone-class-theorem}などを上手に活用する．
+    \begin{enumerate}
+        \item Fubiniの定理の根本は，$E\in\B_Z$の測度は$x\in X$から切って足し上げても，$y\in Y$から切って足し上げても変わらないwell-defined性を意味する．
+        \item 積分論の議論と平行で，可測関数$f:Z\to[0,\infty]$をその上で足し上げても可測．したがって，（無限大の場合も含めて）積分の値もwell-defined．
+        \item $Z$上の可積分関数$f:Z\to[-\infty,\infty]$は，各$x\in X,y\in Y$で見ると殆ど至る所可積分であるから，零集合上の値の違いを無視すれば，この積分の値もやはりwell-definedである．
+    \end{enumerate}
+\end{tcolorbox}
+
+\subsection{Fubiniの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{itemize}
+        \item 非負値可測関数については，可積分性に関係なく積分の交換ができる（値が発散する場合も含めて）．しかし一般に符号が変わる場合は，可積分性を仮定しない限りは可換でないことがある．
+        \item 命題$E$の真理集合が零でないならば，ある零でない集合$E_X\in\B_X$上で，その切り口$E_x\;(x\in E_X)$の$\mu_Y$測度が常に正である．
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{theorem}[Fubini I：単関数]\label{thm-Fubini-I}
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な測度空間とする．
+    このとき，任意の$E\in\B_X\times\B_Y$に対して，
+    \begin{enumerate}
+        \item $\mu_Y(E_-):X\to[0,\infty];x\mapsto\mu_Y(E_x)$は$\B_X$-可測関数である．
+        \item $\mu_X(E_-):Y\to[0,\infty];y\mapsto\mu_X(E_y)$は$\B_Y$-可測関数である．
+        \item $\mu_X,\mu_Y$の直積測度$\mu_Z$に対して，次が成り立つ：
+        \[\mu_Z(E)=\int_X\mu_Y(E_x)d\mu_X=\int_Y\mu_X(E_y)d\mu_Y.\]
+    \end{enumerate}
+    したがって特に，$\mu(E)<\infty$ならば$\mu_Y(E_x)<\infty\;\mu_X\Ae x$，かつ$\mu_Y\Ae y$に対して$\mu_X(E_y)<\infty$である．\footnote{さらに特別な場合として，$\mu_Z(Z)<\infty$ならば$\mu_X(X)<\infty,\mu_Y(Y)<\infty$も含む．}
+    また双対的に，$\mu(E)>0$ならば，零でない$E_X\in\B_X$が存在して$\mu_Y(E_x)>0\;(\forall_{x\in E_x})$，かつ，零でない$E_Y\in\B_Y$が存在して$\mu_X(E_y)>0\;(\forall_{y\in E_y})$が成り立つ．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] $\sigma$-有限性より，列
+        \begin{align*}
+            \{A_k\}_{k\in\N}\subset\B_X,&A_k\nearrow X\;\forall_{k\in\N}\;\mu_X(A_k)<\infty,&\{B_k\}_{k\in\N}\subset\B_Y,&B_k\nearrow Y\;\forall_{k\in\N}\;\mu_Y(B_k)<\infty,
+        \end{align*}
+        が取れる．ここで，$F_k:=A_k\times B_k$とおき，任意の$k\in\N$に対して
+        \[\D_k:=\Brace{E\in\B_X\times\B_Y\mid E\cap F_kが\mathrm{(1),(2),(3)}を満たす}\]
+        とおいて，単調族定理\ref{thm-monotone-class-theorem}により$\D_k=\B_X\times\B_Y$を示す．
+        というのも，補題\ref{lemma-integral-expression-of-product-measure}より$\A(\cC)$の元は(1),(2),(3)をすでに満たすから$\A(\cC)\subset\D_k$であることより，
+        $\D_k$が単調族であることを示せば，\[\B_X\times\B_Y=\sigma(\A(\cC))\overset{単調族定理}{=}\M(\A(\cC))\subset\M(\D_k)=\D_k\subset\B_X\times\B_Y\]より，$\D_k=\B_X\times\B_Y$が従う．
+
+        すると，$F_k\nearrow Z$より，任意の$E\in\B_X\times\B_Y$に対して$\exists_{k\in\N}\;E\subset F_k$だから，$E\in\B_X\times\B_Y=\D_k$は$E$が(1),(2),(3)を満たすことを含意する．
+        \item[単調増加列についての閉性]
+        任意の単調増加列$\{E_n\}_{n\in\N}\subset\D_k,E_n\nearrow E$について，$E\cap F_k\in\D_k$を示す．
+        このとき，任意の$x\in X,y\in Y$に対して，$n\to\infty$のとき
+        \begin{align*}
+            (E_n\cap F_k)_x&\nearrow(E\cap F_k)_x,&(E_n\cap F_k)_y&\nearrow(E\cap F_k)_y,
+        \end{align*}
+        より，測度の性質\ref{lemma-character-of-measure}(4)より，可測関数の単調増加列$(\mu_Y((E_n\cap F_k)_x))_{n\in\N}$も，任意の$x\in X$について，
+        \begin{align*}
+            \mu_Y((E_n\cap F_k)_x)&\nearrow\mu_Y((E\cap F_k)_x),&\mu_X((E_n\cap F_k)_y)&\nearrow\mu_X((E\cap F_k)_y),
+        \end{align*}
+        を満たす．すると，可測関数の性質\ref{prop-limit-of-sequence-of-measurable-function}より$\mu_Y((E\cap F_k)_-):X\to[0,\infty]$も可測で，$\mu_X((E\cap F_k)_-):Y\to[0,\infty]$も可測だから，$E\cap F_k$も(1),(2)を満たす．
+        また単調収束定理\ref{thm-monotone-convergence-theorem}より，
+        \[\mu_Z(E\cap F)\overset{可測関数の性質\ref{prop-limit-of-sequence-of-measurable-function}}{=}\lim_{n\to\infty}\mu_Z(E_n\cap F)=\lim_{n\to\infty}\int_X\mu_Y((E_n\cap F)_x)d\mu_X\overset{単調収束定理}{=}\int_X\mu_Y((E\cap F_k)_x)d\mu_X.\]
+        よって，$E\cap F_k$は(3)も満たすから，$E\cap F_k\in\D_k$．
+        \item[単調減少列についての閉性]
+        単調減少列$\{E_n\}_{n\in\N}\subset\D_k,E_n\searrow E$についても，$E\cap F_k$は$\mu_Y(B_k),\mu_X(A_k)<\infty$より，
+        測度の性質\ref{lemma-character-of-measure}(5)から，各$x\in X$について
+        $\infty>\mu_Y(B_k)\ge\mu_Y((E_n\cap F_k)_x)\searrow\mu_Y((E\cap F_k)_x)\;(n\to\infty)$より，
+        (1),(2)を満たす．
+        またLebesgueの優収束定理\ref{thm-Lebesgue-convergence-theorem}より，
+        全く同じ等式が成り立ち，
+        (3)も満たす．
+    \end{description}
+\end{proof}
+
+\begin{theorem}[Fubini II：非負値可測関数]\label{thm-Fubini-II}
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な測度空間とし，$f:X\times Y\to[0,\infty]$を$\B_Z$-非負値可測関数とする．
+    \begin{enumerate}
+        \item $f(x,-):Y\to[0,\infty]$は$\B_Y$-可測で，$\int_Yf(-,y)d\mu_Y$は$\B_X$-可測．
+        \item $f(-,y):X\to[0,\infty]$は$\B_X$-可測で，$\int_Xf(x,-)d\mu_X$は$\B_Y$-可測．
+        \item \[\int_{Z}f(z)d\mu_Z=\int_X\paren{\int_Yf(x,y)d\mu_Y}d\mu_X=\int_Y\paren{\int_Xf(x,y)d\mu_X}d\mu_Y.\]
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$f$が非負値単関数の場合] $\exists_{E\in\B_Z}\;f=\chi_E$のとき，$\chi_E(x,-):Y\to[0,\infty]$は$\B_Y$-可測で，$\int_Y\chi_E(-,y)d\mu_Y=\mu_Y(E_-):X\to[0,\infty]$は$\B_X$-可測（切り口についてのFubiniの定理\ref{thm-Fubini-I}）．
+        また，切り口についてのFubiniの定理\ref{thm-Fubini-I}(3)より，
+        \begin{align*}
+            \int_Zfd\mu_Z=\mu_Z(E)&=\int_X\mu_Y(E_x)d\mu_X=\int_Y\mu_X(E_y)d\mu_Y\\
+            &=\int_X\paren{\int_Y\chi_E(-,y)d\mu_X}d\mu_Y=\int_Y\paren{\int_X\chi_E(x,-)d\mu_Y}d\mu_X.
+        \end{align*}
+        \item[$f$が非負値可測関数の場合] 
+        非負値単関数の増加列$(f_n)$が存在して，$f_n\nearrow f$が成り立つので，(1),(2)は可測関数の極限は可測\ref{prop-limit-of-sequence-of-measurable-function}であることより，(3)は単調収束定理\ref{thm-monotone-convergence-theorem}より従う．
+    \end{description}
+\end{proof}
+
+\begin{theorem}[Fubini III：可積分関数]\label{thm-Fubini-III}
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な測度空間とし，$f:Z\to[-\infty,\infty]$を$\mu_Z$-可積分関数とする．
+    \begin{enumerate}
+        \item $f(x,-):Y\to[-\infty,\infty]$は$\B_Y$-可測で，かつ，$\mu_X$-$\ae x$に関して$\mu_Y$-可積分であり，\[g(x):=\begin{cases}\int_Yf(x,y)d\mu_Y,&f(x,-)が可積分のとき,\\0,&\otherwise.\end{cases}\]と定めると，$g$は$\mu_X$-可積分．
+        \item $f(-,y):X\to[-\infty,\infty]$は$\B_X$-可測で，かつ，$\mu_Y$-$\ae y$に関して$\mu_X$-可積分であり，\[h(y):=\begin{cases}\int_Xf(x,y)d\mu_X,&f(-,y)が可積分のとき,\\0,&\otherwise.\end{cases}\]と定めると，$h$は$\mu_Y$-可積分．
+        \item \[\int_Zfd\mu_Z=\int_Xgd\mu_X=\int_Yhd\mu_Y.\]
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] (1)について示す．$f=:f^+-f^-\;(f^+,f^-:Z\to[0,\infty])$と定めれば，Fubiniの定理II\ref{thm-Fubini-II}より，$f(x,-)$は可測関数の和なので可測．
+        よって，可積分性について議論する．可積分性が崩れる集合を
+        \[E:=\Brace{x\in X\;\middle|\;\int_Yf^+(x,y)d\mu_Y=+\infty または \int_Yf^-(x,y)d\mu_Y=-\infty}\]
+        と定めて，$\mu_X(E)=0$と示せば良い．
+        \item[可積分性]
+        任意の$n\in\N$について
+        \[E\subset\Brace{x\in X\;\middle|\;\int_Y\abs{f(x,y)}d\mu_Y\ge n}\]
+        が成り立つ．Fubiniの定理II\ref{thm-Fubini-II}より，非負値関数$\abs{f(x,-)}$の積分$\int_Yf(-,y)d\mu_Y$は可測だから，積分が$\infty$に発散する場合も含めて次のように評価できる：
+        \begin{align*}
+            \mu_X(E)&\le\mu_X\paren{\Brace{x\in X\;\middle|\;\int_Y\abs{f(x,y)}d\mu_Y\ge n}}\\
+            &\le\frac{1}{n}\int_X\paren{\int_Y\abs{f(x,y)}d\mu_Y}d\mu_X\\
+            &=\frac{1}{n}\int_X\abs{f(z)}d\mu_Z
+        \end{align*}
+        $f$は可積分としたから積分$\int_X\abs{f(z)}d\mu_Z$は有限である．したがって，$n=1,2,\cdots$は任意としたから，$\mu_X(E)=0$を得る．
+        よって，$f(x,-):Y\to[-\infty,\infty]$は殆ど至る所可積分．
+
+        $g$は定め方から，$\int_X\abs{g(x)}d\mu_X<\infty$より（$\mu_X(X)<\infty$は$f$の可積分性に含意されている），可積分である（可積分性の特徴付け\ref{thm-characterization-of-integrability}）．
+        \item[積分の交換]
+        \begin{align*}
+            \int_Zfd\mu_Z&\overset{def}{=}\int_Zf^+d\mu_Z-\int_Zf^-d\mu_Z\\
+            &\overset{\mathrm{Fubini II}}{=}\int_X\paren{\int_Yf^+fd\mu_Y}d\mu_X-\int_X\paren{\int_Yf^-d\mu_Y}d\mu_X\\
+            &=\int_{X\setminus E}\paren{\int_Yf^+fd\mu_Y}d\mu_X-\int_{X\setminus E}\paren{\int_Yf^-d\mu_Y}d\mu_X\\
+            &=\int_{X\setminus E}\paren{\int_Yfd\mu_Y}d\mu_X=\int_Xgd\mu_X.
+        \end{align*}
+    \end{description}
+\end{proof}
+
+\begin{remark}[Fubiniの定理の暗黙の前提]
+    以下では，零集合上での値（が発散するか）の違いを無視して，$g$と$\int_Yf(x,y)d\mu_Y$とは同一視する．
+\end{remark}
+
+\begin{corollary}[Fubiniの定理の論理的解釈]
+    $E\in\B_Z$を$Z$上の命題とする．
+    \begin{enumerate}
+        \item $\mu_Z(E)>0$ならば，$\exists_{E_X\in\B_X}\;\mu_X(E_X)>0\land[\forall_{x\in E_X}\;\mu_Y(E_x)>0]$．
+        \item $[\exists_{A\in\B_X,B\in\B_Y}\;\mu_X(A)>0\land\mu_Y(B)>0\land(\forall_{\mu_X\Ae\; x\in A}\;\mu_Y(E_x)=\mu_Y(Y))]\Rightarrow [\forall_{\mu_Y\Ae\; y\in B}\;\mu_X(E_y)=\mu_X(X)]$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{itembox}[l]{直積の普遍性についての考察}
+    \begin{itemize}
+        \item 直積空間上の可測（可積分）関数は，成分毎に見ても可測（可積分）である（そして値が一致する）とは，Fubiniの定理の主張である．
+        \item $f$が各成分毎に可測でも，$Z=X\times Y$上の関数として可測であるとは限らない．実際，可測性どころか２段階の可積分性が満たされて，$\int_Xd\mu_X\int_Yfd\mu_Y$も$\int_Yd\mu_Y\iint_Xfd\mu_X$も存在する場合でも，$Z$上(Lebesgue)可測でない$f$の例が，超限帰納法によって構成できる．
+    \end{itemize}
+\end{itembox}
+
+\subsection{完備測度の場合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    応用上はこちらの方が重要で，形式的にはa.e.が新たに挿入されるだけで内容は全く同じ．
+\end{tcolorbox}
+
+\begin{theorem}[Fubini I：完備測度空間上の単関数]
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な完備測度空間とし，$(Z,\B_Z,\mu_Z)$をこれらの直積測度空間の完備化とする．
+    任意の$E\in\B_Z$について，
+    \begin{enumerate}
+        \item $\mu_1\Ae x\in X$に対して$E_x\in\B_Y$，$\mu_2\Ae y\in Y$に対して$E_y\in\B_X$．
+        \item $\mu_2(E_-):X\to[0,\infty]$は$\B_X$-可測であり，$\mu_1(E_-):Y\to[0,\infty]$は$\B_Y$-可測．
+        \item \[\int_X\mu_Y(E_x)d\mu_X(x)=\int_Y\mu_X(E_y)d\mu_Y(y)==\mu_Z(E)\]
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Fubini II：完備測度空間上の非負値可測関数]\label{thm-Fubini-II-on-complete-space}
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な完備測度空間とし，$(Z,\B_Z,\mu_Z)$をこれらの直積測度空間の完備化とする．
+    非負値$\B_Z$-可測関数$f:Z\to[0,\infty]$について，次が成り立つ：
+    \begin{enumerate}
+        \item 殆ど至る所の$x\in X$に対して，$f(x,-):Y\to[0,\infty]$は$\B_Y$-可測であり，したがって積分$\int_Yf(-,y)d\mu_Y:X\to[0,\infty]$が定まる．ここで，
+        \[g(x):=\begin{cases}\int_Yf(x,y)d\mu_Y,&f(x,-)が\B_Y可測のとき,\\0,&\otherwise.\end{cases}\]と定めると，$g$は$\B_X$-可測．
+        \item 殆ど至る所の$y\in Y$に対して，$f(-,y):X\to[0,\infty]$は$\B_X$-可測であり，したがって積分$\int_Xf(x,-)d\mu_X:Y\to[0,\infty]$が定まる．ここで，
+        \[h(y):=\begin{cases}\int_Xf(x,y)d\mu_X,&f(-,y)が\B_X可測のとき,\\0,&\otherwise.\end{cases}\]と定めると，$h$は$\B_Y$-可測．
+        \item \[\int_Zf(z)d\mu_Z=\int_Xg(x)d\mu_X=\int_Yh(y)d\mu_Y.\]
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Fubini III：完備測度空間上の可積分関数]\label{thm-Fubini-III-on-complete-space}
+    $(X,\B_X,\mu_X),(Y,\B_Y,\mu_Y)$を$\sigma$-有限な完備測度空間とし，$(Z,\B_Z,\mu_Z)$をこれらの直積測度空間の完備化とする．
+    $\mu_Z$-可積分関数$f:Z\to[-\infty,\infty]$について，次が成り立つ：
+    \begin{enumerate}
+        \item 殆ど至る所の$x\in X$について，$f(x,-):Y\to[-\infty,\infty]$は$\B_Y$-可測であり，$\mu_Y$-可積分である．ここで，
+        \[g(x):=\begin{cases}\int_Yf(x,y)d\mu_Y,&f(x,-)が\B_Y可測のとき,\\0,&\otherwise.\end{cases}\]と定めると，$g$は$\B_X$-可測かつ$\mu_X$-可積分．
+        \item 殆ど至る所の$y\in Y$について，$f(-,y):X\to[-\infty,\infty]$は$\B_X$-可測であり，$\mu_X$-可積分である．ここで，
+        \[h(y):=\begin{cases}\int_Xf(x,y)d\mu_X,&f(-,y)が\B_X可測のとき,\\0,&\otherwise.\end{cases}\]と定めると，$h$は$\B_Y$-可測かつ$\mu_Y$-可積分．
+        \item \[\int_Zf(z)d\mu_Z=\int_Xg(x)d\mu_X=\int_Yh(y)d\mu_Y.\]
+    \end{enumerate}
+\end{theorem}
+
+\section{Lebesgue積分の性質}
+
+\begin{theorem}[平行移動不変性]\label{thm-invariance-of-Lebesgue-integral}
+    Lebesgue可測関数$f:\R^d\to\o{\R}$が，定積分$\int_{\R^d}fdx$を持つならば，これが任意の$y\in\R^d$に対して定める関数$f(x+y):\R^d\to\o{\R}$と$f(-x):\R^d\to\o{\R}$も定積分をもち，
+    \[\int_{\R^d}f(x+y)dx=\int_{\R^d}f(-x)dx=\int_{\R^d}f(x)dx.\]
+\end{theorem}
+
+\begin{theorem}
+    $f:\R^d\to\o{\R}$がLebesgue積分可能な関数ならば，
+    \[\lim_{\abs{y}\to 0}\int_{\R^d}\abs{f(x+y)-f(x)}dx=0.\]
+\end{theorem}
+
+\section{Lebesgue積分とRiemann積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    狭義Riemann積分可能ならばLebesgue積分可能である．値が一致するためには，狭義Riemann積分可能であるか，開区間$(a,b)$上の任意閉区間上で狭義Riemann積分可能で，$\abs{f}$もRiemann積分可能である必要がある\ref{remark-Lebesgue-integral-and-Riemann-integral}．
+\end{tcolorbox}
+
+\subsection{狭義Riemann積分はLebesgue可積分}
+
+\begin{definition}[Riemann積分とDarbouxの定理]
+    $f:I:=[a,b]\to\R$を有界関数とする（Riemann可積分であるための必要条件であるため）．\footnote{Riemann可積分ならば積分値が有限なのだから，関数は有界である．}
+    \begin{enumerate}
+        \item 分割$\Delta:a=x_0<x_1<\cdots<x_n=b$について，これが定める関数\begin{align*}
+            M_\Delta(x)&:=\sum^n_{k=1}\sup_{x_{k-1}\le y\le x_k}f(y)\chi_{[x_{k-1},x_k]}(x),&m_\Delta(x)&:=\sum^n_{k=1}\inf_{x_{k-1}\le y\le x_k}f(y)\chi_{[x_{k-1},x_k]}(x)
+        \end{align*}
+        は単関数で，Borel可測関数（したがって特にLebesgue可測）である．
+        \item 各小区間の端点（分割$\Delta$の分点）の和は測度零なので，Lebesgue積分が存在する：
+        \begin{align*}
+            \int_IM_\Delta(x)dm&=\sum^n_{k=1}\sup_{x_{k-1}\le y\le x_k}f(y)(x_k-x_{k-1})=:S_\Delta[f],&\int_Im_\Delta(x)dm&=\sum^n_{k=1}\inf_{x_{k-1}\le y\le x_k}f(y)(x_k-x_{k-1})=:s_\Delta[f].
+        \end{align*}
+        これはRiemann和を上下から抑える．
+        \item Darbouxの定理：$\lim_{\abs{\Delta}\to 0}S_\Delta[f]=:S[f]\in\R,\lim_{\abs{\Delta}\to 0}s_\Delta[f]=:s[f]\in\R$が存在する．これをDarbouxの上積分と下積分という．
+        \item 次が成り立つ：有界関数$I\to\R$について，Riemann可積分であることと$S[f]=s[f]$が成り立つことは同値．
+    \end{enumerate}
+\end{definition}
+
+\begin{notation}
+    $S[f],s[f]$は極限の取り方$\abs{\Delta}\to0$が特殊で，列の極限ではないので，改めてBorel可測関数の列の極限として定め直す．
+    分割の列$(\Delta_n)$であって，$\Delta_{n+1}$は$\Delta_n$の細分，$\lim_{n\to\infty}\abs{\Delta_n}=0$を満たすものを具体的に１つ取り，これが定める単関数の列$(M_{\Delta_n}),(m_{\Delta_n})$を考える．
+    分割$\Delta_n$の分点の集合を$D_n$とすると，$D:=\cupn D_n$も零集合である．
+    すると$(M_{\Delta_n}(x)),(m_{\Delta_n}(x))$は有界な単調列を定めるから，
+    \begin{align*}
+        M(x)&=\begin{cases}\lim_{n\to\infty}M_{\Delta_n}(x),&x\in I\setminus D,\\0,&x\in D.\end{cases},&m(x)&=\begin{cases}\lim_{n\to\infty}m_{\Delta_n}(x),&x\in I\setminus D,\\0,&x\in D.\end{cases}
+    \end{align*}
+    が存在する．もう一つ関数を
+    \begin{align*}
+        U(x)&:=\lim_{\epsilon\to 0}\sup_{y\in[a,b],\abs{x-y}<\epsilon}f(y),&L(x)&:=\lim_{\epsilon\to0}\inf_{y\in[a,b],\abs{x-y}<\epsilon}f(y),
+    \end{align*}
+    と定めると，次が成り立つ．
+\end{notation}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $U,L:[a,b]\to\R$はBorel可測であり，$\forall_{x\in I}\;L(x)\le f(x)\le U(x)$が成り立つ．
+        \item 任意の$x\in I$について，$f$が連続であることと$U(x)=L(x)$であることは同値．
+        \item $x\in I\setminus D$ならば，$M(x)=U(x),m(x)=L(x)$が成り立つ．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[コンパクト集合上のRiemann積分]
+    $d$次元有界閉矩形$R=[a_1,b_1]\times\cdots\times[a_d,b_d]\;(-\infty<a_i<b_i<\infty)$上の有界関数$f:R\to\R$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は$R$上Riemann可積分である．
+        \item $f$は$R$上殆ど至る所連続である．
+    \end{enumerate}
+    特に，殆ど至る所連続ならば，有界閉矩形上Lebesgue可積分であること\ref{prop-continuous-function-is-Lebesgue-measurable}，そして値が一致すること\ref{thm-Lebesgue-integral-of-continuous-function}に注意．
+\end{theorem}
+\begin{proof}
+    補題(3)より，殆ど至る所の$x\in R$で$\lim_{n\to\infty}M_{\Delta_n}(x)=U(x),\lim_{n\to\infty}m_{\Delta_n}(x)=L(x)$である．
+    $M_{\Delta_n},m_{\Delta_n}$にはBorel可測で有界な関数（すなわちLebesgue可積分な関数）
+    \[\abs{M_{\Delta_n}(x)},\abs{m_{\Delta_n}(x)}\le 2\sup_{x\in I}\abs{f(x)}\]
+    が存在するから，Lebesgueの優収束定理\ref{thm-Lebesgue-convergence-theorem}より，
+    \[S[f]\overset{def}{=}\lim_{n\to\infty}S_{\Delta_n}[f]=\lim_{n\to\infty}\int_IM_n(x)dm=\int_IU(x)dm.\]
+    同様にして，$s[f]=\int_IL(x)dm$．
+    したがって，
+    \begin{align*}
+        fがI上\textrm{Riemann}可積分&\Leftrightarrow S[f]=s[f]\\
+        &\Leftrightarrow \int_I(U-L)dm=0\\
+        &\Leftrightarrow U-L=0\;m\Ae x&\because U-L\ge 0より\ref{thm-properties-of-integral}\textrm{(6)から}
+    \end{align*}
+\end{proof}
+\begin{remark}
+    (1)と(2)の同値性自体は，（無限でも良い）開区間上の広義Riemann積分についても成り立つ．
+\end{remark}
+
+\subsection{連続関数の場合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    広義Riemann積分可能な符号変化する開区間上の関数は，Lebesgue積分可能でない可能性がある：$f:(0,\infty)\to\R;x\mapsto\frac{\sin x}{x}$など．
+\end{tcolorbox}
+
+\begin{theorem}[連続関数の積分]\mbox{}\label{thm-Lebesgue-integral-of-continuous-function}
+    \begin{enumerate}
+        \item コンパクト集合$K\subset\R^d$上の連続関数$f:K\to\R$について，Lebesgue積分とRiemann積分とは等しい．
+        \item 開矩形（無限でも良い区間の積）$J\subset\R^d$上の非負値連続関数$f:J\to[0,\infty]$について，Lebesgue積分は，値が発散する場合も含め，広義Riemann積分に等しい．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[方針] コンパクト集合上の連続関数は有界なので，(2)と違って，$f\ge 0$の場合について示して，$f=f^+-f^-$を考えると，一般の場合についても結論を得る．
+            \item[Riemann積分とLebesgue積分との関係]
+            区間$K$を全ての$n$方向に$2^n$等分して，そのマス目による分割$K=K_{n1}+\cdots+K_{nk_n}\;(k_n=2^{nN})$を考える．
+            各ブロック$K_{nj}$の中の任意の一点$x_{nj}\in K_{nj}$をとって$\alpha_{nj}:=f(x_{nj})$，$\beta_{nj}:=\inf\Brace{f(x)\in\R_{\ge0}\mid x\in K_{nj}}$と定める．
+            すると，Riemann積分の意味での各小区間$K_{nj}$の体積は，Lebesgue測度$\mu(K_{nj})$だから，
+            \[\lim_{n\to\infty}\sum_{j=1}^{k_n}\alpha_{nj}\mu(K_{nj})=:\int fdx\]
+            と定まる．一方で，
+            $f_n(x):=\sum_{j=1}^{k_n}\beta_{nj}\chi_{K_{nj}}(x),\delta_n:=\max_{1\le j\le k_n}\abs{\alpha_{nj}-\beta_{nj}}$とおくと，
+            $(f_n)$は単調増加な単関数列で，$f$の単関数近似になっているから，
+            $f$のLebesgue積分は
+            \[\lim_{n\to\infty}\int f_nd\mu=:\int fd\mu\]
+            と定まる．
+            \item[両者の一致]
+            ここで，
+            $(f_n)$は単調増加であり，$f$の$K$上の一様連続性(Heine-Cantorの定理)より，$\lim_{n\to\infty}f_n(x)=f(x)$は一様収束で，$\lim_{n\to\infty}\delta_n=0$だから，
+            \[\Abs{\sum_{j=1}^{k_n}\alpha_{nj}\mu(K_{nj})-\int f_nd\mu}\le\sum_{j=1}^{k_n}\abs{\alpha_{nj}-\beta_{nj}}\mu(K_{nj})\le\delta_n\mu(K)\xrightarrow{n\to\infty}0.\]
+            よって，両者は一致する．
+        \end{description}
+        \item \begin{description}
+        \item[方針] $\sigma$-有限性と同じ発想で，$J$に収束するコンパクト集合の単調増加列$(K_n)$をとって考える．
+            \item[積分の定義] 広義Riemann積分は$\lim_{n\to\infty}\int_{K_n}fdx=\int_Jfdx$と定義されるのであった．一方で，各コンパクト集合$K_n$に対して，この上に台を持つ非負値単関数の単調増加列$(f_n)$を$f_n:=\sum_{j=1}^{k_n}\alpha_{nj}\chi_{kj}(x)\;\paren{ただし\sum_{j=1}^{k_n}K_{nj}=K_n}$と作れるから，Lebesgue積分の定義は$\lim_{n\to\infty}\int_Jf_nd\mu=\int_Jfd\mu$と表せる．
+            \item[結論] (1)より，コンパクト集合上でRiemann積分とLebesgue積分とは一致するから，
+            \[\int_Jf_nd\mu=\int_{K_n}f_ndx\le\int_{K_n}fdx=\int_{K_n}fd\mu\le\int_Jfd\mu.\]
+            $n\to\infty$を考えると，結論を得る．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    Riemann積分では分割区間をいじり，広義Riemann積分では区間で極限を取る．一方でLebesgue積分は単関数列をいじり，関数列の極限を考える．
+\end{remarks}
+
+\chapter{加法的集合関数}
+
+\begin{quotation}
+    Posの射(poset categoryの間の関手)＝完全加法性という射の性質を純粋に考える．
+    値域は完備な束である必要はなく，$\R$とする集合関数を考える（$\mu(A+ B)=\mu(A)+\mu(B)=\infty-\infty$などの状況は出現しない）．
+    集合関数の線形代数ともいうべき，加法性についての一般理論を構築する．
+\end{quotation}
+
+\section{加法的集合関数とその変動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=加法的集合関数という概念：表現可能関手！？]
+    積分とは測度が定める加法的集合関数である．
+    ということでこれを一般化した，「有限で加法的な集合関数」というクラスとその関数空間を考えたい．
+    これは負の値を取ることも許す．
+    これを符号付測度(signed measure)という．電荷(charge)とも呼ばれる．
+    すると，加法性とは単調性を導くくらいに意外に強い条件で，測度とは，拡張符号付測度のうち，符号が一定な退化した場合として理解できる．
+    加法的集合関数は２つの有限測度の差(Jordan分解)として理解でき，測度は下変動$\u{V}$が零関数に退化した場合である．
+\end{tcolorbox}
+
+\subsection{加法性への注目の動機}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実は集合関数に$\sigma$-加法性＝極限を保つことを仮定するだけで，加法単位元同士が対応するが，
+    posetの射（単調関数）にはならず，零集合の違いが残る．
+    posetの射にもなる加法的集合関数とは（有界な）測度に他ならないが，
+    符号付測度が測度であるための必要十分条件は$\Phi\ge 0$のみである．
+    実は，符号付測度をうまく２つの測度の線型結合へ分解する算譜が存在する．
+
+    また，この一般的な設定から$\Phi(\emptyset)=0$が出てくるので，解析の$\R_{\ge 0}$と$\R_{\le 0}$とで分けて議論するのは代数的にも深いところに理由を持つことが解る．
+\end{tcolorbox}
+
+\begin{definition}[$\sigma$-additive set function / (finite) signed measure / charge]
+    可測空間$(X,\B)$上の実集合関数$\Phi:\B\to\R$が，
+    \begin{enumerate}
+        \item 完全加法性$\Phi\paren{\sum^\infty_{n=1}E_n}=\sum^\infty_{n=1}\Phi(E_n)$を満たす時，これを\textbf{加法的集合関数}という．
+        \item $\Im\Phi\subset\R_{\ge 0}$のとき単調増加といい，$\Im\Phi\subset\R_{\le 0}$である時を単調減少という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[加法的集合関数の表現]\mbox{}\label{exp-representation-of-additive-set-function}
+    \begin{enumerate}
+        \item 有界な測度$\mu:\B\to[0,\infty)$について，ある直和分解$X=X_1+X_2,a,b\in\R_{\ge 0}$に対して，$\Phi(-)=a\mu(-\cap X_1)-b\mu(-\cap X_2)$とおくと，これは再び完全加法性を満たす．
+        これは$a=0$または$X_1$が零集合である時単調減少となり，$b=0$または$X_2$が零集合である時単調増加となる．
+        次の補題より，$\mu(\emptyset)=0$であるから，
+        \item (集合関数と見たときの積分) 測度空間$(X,\B,\mu)$と$X$上の$\mu$-可積分な関数$f:X\to\R$について，$\Phi(-)=\int_{-}f(x)d\mu(x)$は加法的集合関数である．
+        \item (Dirac測度) $\delta(E)=\begin{cases}1,&0\in E,\\0,&0\notin E.\end{cases}$．
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}\mbox{}\label{lemma-additive-set-function}
+    \begin{enumerate}
+        \item (単位元の保存) 加法的な集合関数は$\Phi(\emptyset)=0$を満たす．
+        \item (well-definedness) 単調増加な加法的集合関数は$\forall_{E_1,E_2\in\B}\;E_1\subset E_2\Rightarrow\Phi(E_1)\le\Phi(E_2)$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\emptyset+\emptyset=\emptyset$\footnote{$\emptyset\cup\emptyset=\emptyset$かつ$\emptyset\cap\emptyset=\emptyset$という主張．}
+        であるから，加法性より$\Phi(\emptyset)=\Phi(\emptyset)+\Phi(\emptyset)$．
+        \item $\Im\Phi\subset\R_{\ge 0}$のとき，任意の$E_1\subset E_2$について，$\Phi(E_2)=\Phi(E_1)+\Phi(E_2\setminus E_1)\ge\Phi(E_1)$を満たし，単調減少であるときも同様である．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[極限の保存]\label{prop-limits-of-additive-set-function}
+    $\Phi:\B\to\R$を加法的集合関数，$(A_n)$を$\B$-列とする．
+    \begin{enumerate}
+        \item $(A_n)$が単調であるとき，$\Phi(\lim_{n\to\infty}A_n)=\lim_{n\to\infty}\Phi(A_n)$．
+        \item $\Phi$が単調増加ならば，$\Phi(\liminf_{n\to\infty}A_n)\le\liminf_{n\to\infty}\Phi(A_n)$，$\Phi(\limsup_{n\to\infty}A_n)\ge\limsup_{n\to\infty}\Phi(A_n)$．したがって特に，$(A_n)$が収束するならば$\Phi(\lim_{n\to\infty}A_n)=\lim_{n\to\infty}\Phi(A_n)$である．
+        \item しかし実は一般に，$(A_n)$が収束するとき，$\Phi(\lim_{n\to\infty}A_n)=\lim_{n\to\infty}\Phi(A_n)$である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 単調増加列$(A_n)$の定める互いに素な集合の列$\paren{A_n\setminus A_{n-1}}_{n\in\N}=:(B_n)_{n\in\N}$と単調減少列の定める互いに素な列$(A_{n-1}\setminus A_{n})_{n\in\N}=:(B_n)_{n\in\N}$にそれぞれ注目して加法性を用いる．
+        \begin{description}
+            \item[単調増加列] $\lim_{n\to\infty}A_n=\lim_{n\to\infty}\sum^n_{i=1}B_i$より，
+            \[\Phi\paren{\lim_{n\to\infty}A_n}=\Phi\paren{\lim_{n\to\infty}\sum^n_{i=1}B_i}=\lim_{n\to\infty}\Phi\paren{\sum^n_{i=1}B_i}=\lim_{n\to\infty}\Phi(A_n)\]
+            が成り立つ．最右辺は実数上の有界な単調列であるから確かに収束する．最左辺は集合の単調列は極限集合と持つこと\ref{lemma-monotone-convergence}より．
+            \item[単調減少列] 
+            補集合が定める単調増加列$(A_1\setminus A_n)_{n\in\N}$に注目すれば良い：
+            \[\Phi(A_1)-\Phi\paren{\lim_{n\to\infty}A_n}=\Phi\paren{\lim_{n\to\infty}(A_1\setminus A_n)}=\lim_{n\to\infty}\Phi(A_1\setminus A_n)=\Phi(A_1)-\lim_{n\to\infty}\Phi(A_n).\]
+        \end{description}
+        \item 単調増加な加法的集合関数とは，有限な測度のことに他ならない．したがって，測度の性質\ref{lemma-character-of-measure}(6),(7)より．
+        \item Jordan分解$\Phi=\o{V}-\abs{\u{V}}$を考えると，それぞれは測度であるから，極限を保存する．したがって任意の加法的集合関数は極限を保存する．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[この極限を保つという性質，ある種の連続性なのでは？]
+    (1)は測度の性質\ref{lemma-character-of-measure}(4),(5)の結果と同値である．この証明には，符号付測度にはない測度特有の性質である$\Phi\ge 0$を使っていないため，そのまま拡張できる．
+    違いは，符号付測度は有界だから(5)の単調減少列に必要だった有界性条件$\mu(A_1)<\infty$は自明に満たす．
+    (2)で(1)を特別な場合として含んでいることに注意．
+\end{remarks}
+
+\subsection{変動と測度のJordan分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=集合関数の上限は任意の集合で定まり，変動という．これは測度になり，加法的集合関数は２つの測度の差として表現される．]
+    $\Phi$が定める集合関数$V:\B\to\R$が考えられる．この対応$V_{-}:\Map(\B,\R)\epi\Map(\B,\R)$は完備化というか，単調化というか，そういう操作である．
+    これは，極限構成$\o{V}:=\sup\Phi,\u{V}:=\inf\Phi$と，$0$を挟んで双対を結合$V:=\o{V}-\u{V}$することで定める．
+    すると，これも有界な符号付測度となる．
+    これは変分・変動という意味も持つ．
+    これは一様ノルムに他ならない？
+    これが，積分論における長さ積分や，コンパクト集合上の最大値などと同じ使い方ができる．
+    だが裏を返すと，$\Phi$の式を適切なタイミングで$V$を用いて抑える工程が
+    証明の難所となるし，この不等式評価は本質的に極限が定める射なのであるから，その背後の圏論的構造が見えにくくなる．
+    非常に不思議である，任意に取った$\Phi\in\sMap(\B,\R)$が，標準的に取れる同じ空間の元$V_\Phi\in\sMap(\B,\R)$によって評価が進むのである．
+    これは$\B$に入っている豊かな構造から由来しているはずだが，他で見たことのない奇妙な数理構造である．
+    Jordan分解の証明の，普遍性を用いた証明で思いついたのだが，これはおそらく圏$\sMap(\B,\R)$の中で直和対象$\o{V}+\u{V}$か$\Phi$かは知らないが，同型を除いて一意ということの証明である．
+    全く同じような消息が表現定理・分解定理と呼ばれるものなのかもしれない．
+    いや，そもそもJordan分解は表現である（例\ref{exp-representation-of-additive-set-function}）．
+\end{tcolorbox}
+
+\begin{definition}[upper variation, lower variation, total variation]\mbox{}
+    \begin{enumerate}
+        \item $\o{V}(\Phi,E)=\o{V}_\Phi(E):=\sup\{\Phi(A)\in\R\mid A\subset EかつA\in\B\}$を\textbf{上変動}という．
+        \item $\u{V}(\Phi,E)=\u{V}_\Phi(E):=\inf\{\Phi(A)\in\R\mid A\subset EかつA\in\B\}$を\textbf{下変動}という．
+        \item このとき$\Phi(\emptyset)=0$より，$\u{V}_\Phi(E)\le 0\le\o{V}_\Phi(E)$である．$V(\Phi,E)=V_\Phi(E):=\abs{\o{V}(\Phi,E)}+\abs{\u{V}(\Phi,E)}$を\textbf{全変動}または\textbf{絶対変動}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[変動は有界である]
+    加法的集合関数$\Phi:\B\to\R$の変動$\Phi$を考える．
+    \begin{enumerate}
+        \item $V(X)=\infty$ならば，次を満たす集合列$(X_n)$が存在する：$X_{n+1}\subset X_n,V(X_n)=\infty,\abs{\Phi(X_n)}\ge n$．
+        \item $\u{V},\o{V},V:\B\to\R$が定まる（値が全て有限である）．\footnote{構成$V_-:\Map(\B,\R)\epi\Map(\B,\R)$が全射であることをいう．}
+        \item $\Phi:\B\to\R$は（有限であるだけでなく）有界である．
+        \item したがって$V$も有界である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $n=0$のときは$X_0:=X$と定めれば良い．仮定より，この上での変動は$V(X_0)=V(X)=\infty$で，$\Phi(X)$の値は知らないが$\abs{\Phi(X_0)}\ge 0$ではある．
+        $n>0$として，$V(X_n)=\infty,\abs{\Phi(X_n)}\ge n$とする．
+        このとき，$\o{V}_\Phi(X_n)=\infty$または$\u{V}_\Phi(X_n)=-\infty$である．
+        つまり，$\sup_{A\subset X_n}\abs{\Phi(A)}=\infty$．
+
+        ここで単に$\abs{\Phi(E)}\ge n+1$を満たす$E\subset X_n$をとっても，$V(E)=\infty$の性質が引き継がれない．
+        そこで，$\abs{\Phi(E)}\ge\abs{\Phi(X_n)}+(n+1)$を満たす$E\subset X_n$を取る．
+        一般に，任意の$A,E\subset X_n$について，加法性より
+        \[\Phi(A)=\Phi(A\cap E)+\Phi(A\cap(X_n\setminus E))\]
+        だから，$\abs{\Phi(A)}$の値は
+        \[\abs{\Phi(A)}\le\abs{\Phi(A\cap E)}+\abs{\Phi(A\cap(X_n\setminus E))}\le\abs{V(E)}+\abs{V(X_n\setminus E)}\]
+        と評価できる．$A\in\B\cap P(X_n)$を変数とみたとき，最左辺の上限は$\infty$であるから，最右辺の上限も$\infty$である．したがって，$V(E)=\infty$または$V(X_n\setminus E)=\infty$．
+        
+        ここまで一般論であり，以降$E\subset X_n$の構成がうまくいっていることをみる．
+        前者の時は，$X_{n+1}:=E$と定めると，$\abs{\Phi(E)}\ge\abs{\Phi(X_n)}+(n+1)\ge 2n+1\ge n+1$．
+        後者の時は，$X_{n+1}:=X_n\setminus E$と定めると，$E$での値を十分大きく取っているので，$\abs{\Phi(X_{n+1})}=\abs{\Phi(X_n)-\Phi(E)}=\abs{\Phi(E)}-\abs{\Phi(X_n)}\ge n+1$．
+        \item $V:\B\to\R$が有界と示せば，$\o{V},\u{V}$が有界であることが必要．
+        仮に有界でないとすると，(1)を満たす単調減少列$(X_n)$が取れる．これは収束するから，この極限集合$E:=\lim_{n\to\infty}X_n$について，$\Phi(E)=\infty$である．よって，$\Phi:\B\to\R$が有界であることに矛盾．
+        \item 関数$\abs{\Phi}:\B\to\R_{\ge 0}$の像は半径$\abs{V(X)}\in\R$の閉円板に収まる．
+        \item (3)より$\o{V},\u{V}$も有界．したがって$V$も有界．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[有界な符号付測度の全変動は有界である]
+    (1)が一番の消息を洗い出している，ここら辺でHahnの分解定理の音が聞こえてくる．
+    $X_n$上の変分$V(X_n)$が無限大だと，うまく選べばその無限の泉を含んだままの降下列$X_{n+1}\subset X_n$を作る算譜が存在する．
+    しかしその算譜がまさに深淵で，まさにどこから拾ってきたのか分からない不等式評価を集合関数で展開している．
+\end{remarks}
+
+\begin{theorem}[変動も加法的である：Jordan decomposition]\mbox{}\label{thm-Jordan-decomposition}
+    \begin{enumerate}
+        \item 符号付測度$\Phi:\B\to\R$の定める変動$\o{V},\u{V},V:\B\to\R$も再び符号付測度である．
+        \item $\Phi=\o{V}+\u{V}$を満たす．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\o{V}$の加法性を導く．$E=\sum^\infty_{n=1}E_n$を任意にとる．
+        \begin{description}
+            \item[$\o{V}\paren{\sum^\infty_{n=1}E_n}\le\sum^\infty_{n=1}\o{V}(E_n)$] 任意の$A\subset E$について，$A$に$(E_n)$が定める分割を入れると，各$\o{V}(E_n)$はそこでの$\Phi(A\cap E_n)$の値の上限であるから，$\Phi(A)=\sum^\infty_{n=1}\Phi(A\cap E_n)\le\sum^\infty_{n=1}\o{V}(E_n)$．最左辺の値の上限が$\o{V}\paren{\sum^\infty_{n=1}E_n}$である．
+            \item[$\o{V}\paren{\sum^\infty_{n=1}E_n}\ge\sum^\infty_{n=1}\o{V}(E_n)$] $(E_n)$の部分集合列$(A_n)$を，$\Phi(A_n)>\o{V}(E_n)-\frac{\epsilon}{2^n}$を満たすようにとる（このような$A$が存在する）．すると，$\Phi$の加法性より，$\o{V}(E)\ge\Phi(\lim_{n\to\infty}A_n)=\lim_{n\to\infty}\Phi(A_n)>\lim_{n\to\infty}\o{V}(E_n)-\epsilon$．
+        \end{description}
+        \item Jordan分解を導く．任意の$E\in\B$をとる．
+        任意の$A\subset E$に対して，$\Phi(E)=\Phi(A)+\Phi(E\setminus A)$である．\footnote{私の自然な方針としては，$A$が$\Phi$の上限を出すときの$A\subset E$であるとき，$E\setminus A$は$\Phi$の下限を取ることを示す方針である．すると簡単な論理パズルとなる．}
+        これに対して，
+        \[\Phi(A)=\Phi(E)-\Phi(E\setminus A)\begin{cases}
+            \ge\Phi(E)-\o{V}(E)\\
+            \le\Phi(E)-\u{V}(E)
+        \end{cases}\]
+        と評価できる．最左辺の上限を考えると$\o{V}(E)+\u{E}\le\Phi(E)$を得て，下限を考えると$\o{V}(E)+\u{V}(E)\ge\Phi(E)$を得る．\footnote{まじでこんな証明どこから思いつくんだと思うのだが，これが普遍性を利用した証明に似ていないか？片方ずつ射を構築して同型であることを導いているのである．}
+        \item $\u{V}:=\Phi-\o{V}$の完全加法性は，右辺から従う．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[普遍性を用いた証明？]
+    この(1)と各変動の値域を考え合わせると，$\o{V},\abs{\u{V}},V$は有限な測度$\B\to[0,\infty)$となる．すると，性質\ref{lemma-character-of-measure}にあるような，単調性，劣加法性などが一気に出てくる．
+    すると，(2)は，符号付測度$\Phi$は上下変動と呼ばれる測度$\o{V},\abs{\u{V}}$を（ある種の極限構成で）定め，それらの和で表せる：$\Phi=\o{V}-\abs{\u{V}}$．上に単調なやつと下に単調なやつの２独立成分があったから，全体では単調とは限らないのである．
+    直感的にはJordan分解とは，$\Phi(E)$の値は，$\Phi$の制限の上限値と下限値を探索してきて，足し合わせれば良い．
+    それにしても(2)の証明はどこから思いつくんだと思うのだが，これが普遍性を利用した証明に似ていないか？片方ずつ射を構築して同型であることを導いているのである．
+\end{remarks}
+
+\begin{tbox}{red}{Jordan分解の風景}
+    加法的集合関数$\B\to\R$とは，$\B$は可算和については完備なBoole代数（多分，少なくとも束）であり，
+    $\R$は線型順序であるが，加法性の要求として$\B$のrootは原点$0$に対応する．
+    すると$\B$の一層目の歩み出しは完全に２つの方向に別れるはずであり，片方は$\R_{\ge 0}$へ，片方は$\R_{\le 0}$へ写される．
+    するとそのあとの葉は，加法性により写される値は決定する．\footnote{CABAとしての$P(X)$の特徴付けが思い出される．complete atomicでないとこの議論はできない．}
+    これが完全に加法的集合関数$\B\to\R$の振る舞いを定めるだろう．
+    では，それぞれの世界では測度の消息（単調・劣加法）を持つか？
+    ということが自然な疑問となる．
+    Jordan分解はこの疑問への肯定的な答えである．
+\end{tbox}
+
+\subsection{Hahnの分解定理：符号付測度の定める分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    軌道分解みたいな．というか本当に軌道分解の双対じゃないのか．いや，「定める同値関係」の類か？
+    
+    $\Phi$は束$\B$を２つの半束に分ける．
+    まさか完全加法性だけからこんな大樹が咲くとは思わなかった．
+    まず根が対応する．
+
+    この事実にかまけて，複素数値加法的集合関数$\Phi:\B\to\C$については，全変動を$V_\Phi(E):=\sup\sum^n_{j=1}\abs{\Phi(E_j)}$と定め，
+    ここから完全加法性を証明する．
+\end{tcolorbox}
+
+\begin{theorem}[Hahn decomposition theorem]\label{thm-Hahn-decomposition-theorem}
+    $X$の加法的集合関数$\Phi:\B\to\R$に対して，$X$の直和分割$A+(X\setminus A)$であって，$\u{V}(A)=\o{V}(X\setminus A)=0$を満たすものが存在する．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] この$A$は，$A:=\argmax\o{V}(X)$と定めれば良い．が，直接ではなく，列$(A_n)$の極限として構成する．
+        \item[$(A_n)$の準備] $\o{V}(X)=\sup_{A\subset X}\Phi(A)$であったから，各$n\in\N$に対して，$(\o{V}(A_n)+\u{V}(A_n)=)\Phi(A_n)\ge\o{V}(X)-\frac{1}{2^n}$なる$A_n\in\B$が取れる．すると$(0\le)\o{V}(X\setminus A_n)\le\frac{1}{2^n}$かつ$(0\ge)\u{V}(A_n)\ge-\frac{1}{2^n}$であることを示す．
+        \begin{enumerate}[(a)]
+            \item $\o{V}(A_n)\ge\Phi(A_n)\ge\o{V}-\frac{1}{2^n}=\o{V}(A_n)+\o{V}(X\setminus A_n)-\frac{1}{2^n}$より，$\frac{1}{2^n}\ge\o{V}(X\setminus A_n)$．
+            \item $\u{V}(A_n)=\o{V}(X)-\o{V}(A_n)-\frac{1}{2^n}\ge-\frac{1}{2^n}$．
+        \end{enumerate}
+        \item[構成の成功] ここで，$A:=\liminf_{n\to\infty}A_n$とおけば，これが定理の条件を満たす．実際，
+        \begin{enumerate}[(a)]
+            \item $X\setminus A=\limsup_{\nu\to\infty}=\cap^\infty_{n=1}\cup_{\nu=n}^\infty (X\setminus A_\nu)\subset\cup^\infty_{\nu=n}(X\setminus A_\nu)$より，有限な測度$\o{V}$の劣加法性から，$\o{V}(X\setminus A)\le\sum^\infty_{\nu=n}\o{V}(X\setminus A_\nu)=\frac{1}{2^{n-1}}$．$n$は任意より，$\o{X\setminus A}=0$．
+            \item $\abs{\u{V}}$も有限な測度だから，$\abs{\u{V}(A)}\le\liminf_{n\to\infty}\abs{\u{V}(A_n)}=\lim_{n\to\infty}\frac{1}{2^n}=0$．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    構成の方針は$A:=\argmax\o{V}(X)$である．$\Phi:\B\to\R$は，束$\B$を下から辿ると，１歩目で正か負かに踏み出す（踏み出さない場合，すなわち$\Phi(\{a\})=0$なる$a\in A$が存在する場合は$A$の取り方の一意性が崩れるが，いずれにしろ本質的に一意である）．
+    このような$\{a\}$の全体$A$は，完全加法性より，$A:=\argmax\o{V}(X)$となる部分集合$A\in\B$を探せば良い．
+\end{remarks}
+\begin{remarks}
+    これは$\Phi$は，非負値な$\Phi|_{P(A)\cap\B}$と，非正値な$\Phi|_{P(X\setminus A)\cap B}$とに分解できることを言っている．
+    それぞれは，$\Phi(-)=\Phi(-\cap A)+\abs{\Phi(E\cap X\setminus-)}$と表現できる．
+    符号付測度（表現可能関手）の空間は，２次元実線型空間をなすとしたら，標準的な基底の取り方があるのだろうか？ひとまず，任意の$\Phi$が定める基底$\o{V}_\Phi,\u{V}_\Phi$を表現可能関手に極めて近い形$\o{V}_\Phi(-):=\sup_{A\subset-}\Phi(A)$で得ることができた．
+\end{remarks}
+
+\begin{theorem}[全変動の表現(特徴付け)]
+    $\Phi:\B\to\R$を加法的集合関数とする．集合$E\subset X$のあらゆる有限分割$E=\sum^n_{i=1}E_i$を考えるとき，$V(E)=\sup\sum^n_{j=1}\abs{\Phi(E_j)}$と表現できる．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] 一般に$V(E_j)\ge\abs{\Phi(E_j)}$より，$V(E)=\sum^n_{j=1}V(E_j)\ge\sum^n_{j=1}\abs{\Phi(E_j)}$である．あとは，ある分割が存在して，等号が成立することを示せば良い．
+        \item[正しい分解] 等号を成立させる分解は，Hahnの分解\ref{thm-Hahn-decomposition-theorem}による$X=A+B$である：$\u{V}(A)=0,\o{V}(B)=0$．$E_1:=E\cap A,E_2:=E\cap B$とすれば， \begin{align*}
+            V(E)&=V(E_1)+V(E_2)=\o{V}(E_1)+\abs{\u{V}(E_1)}+\o{V}(E_2)+\abs{\u{V}(E_2)}\\
+            &=\o{V}(E_1)+\abs{\u{V}(E_2)}=\Phi(E_1)+\abs{\Phi(E_2)}.
+        \end{align*}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    このような，集合の分割の構造に仮託した表現が測度論・積分論の本質だろう．
+    これを暴き出すのが加法的集合関数論．
+    だがこの定理はどうも気に入らない，任意の有限分割というよりも，本質はHahnの分解である．
+\end{remarks}
+
+\section{絶対連続集合関数と特異集合関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    加法的集合関数は２つの有限測度の差(Jordan分解)で表現されること，Hanhの分離を定めることを見た．
+    このような加法的集合関数のうち，絶対連続なクラスに注目すると必ず積分の形で表現され，
+    全ての加法的集合関数は絶対連続な部分と特異な部分の和として理解できる(Radon-Nikodymの定理)．
+\end{tcolorbox}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    不定積分は加法的集合関数\ref{exp-representation-of-additive-set-function}の中でも特に，絶対連続なクラスに一致する．
+    絶対連続とは，$\mu$-零集合での値は$0$であること．対偶を取れば，$0$でない値を取るならばその集合の測度は$0$でない．
+    特異とは，台が$\mu$-零集合であること．
+\end{tcolorbox}
+
+\begin{definition}[absolutely continuous]
+    測度空間$(X,\B,\mu)$上の加法的集合関数$\Phi:\B\to\R$について，
+    \begin{enumerate}
+        \item $\Phi$が$\mu$に関して\textbf{絶対連続}とは，$\forall_{E\in\B}\;\mu(E)=0\Rightarrow\Phi(E)=0$が成り立つことをいう．
+        \item $\Phi$が$\mu$に関して\textbf{特異}とは，$\exists_{E_0\in\B}\;\mu(E_0)=0\land[\forall_{E\subset X\setminus E_0}\;\Phi(E)=0]$が成り立つことをいう．すなわち，$\exists_{E_0\in\B}\;\forall_{E\in\B}\;\Phi(E)=\Phi(E\cap E_0)$である．
+        \item $\Phi$が\textbf{連続}であるとは，$X=\R^d$の一点集合（したがって高々可算な集合）$E$について$\Phi(E)=0$を満たすことをいう．一方で，高々可算な集合$A\in\B$が存在して$\Phi(\R^d\setminus A)=0$を満たすものを\textbf{純粋不連続}であるという．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    絶対連続かつ特異な集合関数は零関数$\Phi=0$に限る．もし零でない値を$E\in\B$で取るならば，$\mu(E)=0$または$\mu(E)>0$のいずれかであり，前者なら絶対連続ではなくなり，後者ならば特異ではなくなる．
+\end{remark}
+\begin{example}[絶対連続な加法的集合関数]\mbox{}\label{exp-absolutely-continuous-set-functions}
+    \begin{enumerate}
+        \item $X$上可積分な関数$f:X\to\R$について，その不定積分$F:\B\to\R$は$\mu$に関して絶対連続な加法的集合関数である\ref{thm-indefinite-integral-is-absolutely-continuous}．
+    \end{enumerate}
+\end{example}
+\begin{example}[特異な加法的集合関数]\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}[絶対連続性・特異性の変動による特徴付け]\mbox{}
+    \begin{enumerate}
+        \item $\Phi$が絶対連続であることと，$\o{V}_\Phi,\u{V}_\Phi$がいずれも絶対連続であることとは同値．
+        \item $\Phi$が特異であることと，$\o{V}_\Phi,\u{V}_\Phi$がいずれも特異であることとは同値．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[$\Rightarrow$] $\Phi$を絶対連続とする．任意に$\mu$-零集合を取った時に，$\o{E}=\u{E}=0$を示せば良い．いま，$\forall_{A\subset E}\;\mu(A)=0$だから$\Phi(A)=0$で，$\o{V}(E)\overset{def}{=}\sup_{A\subset E}\Phi(A)=0$．
+            \item[$\Leftarrow$] 任意に$\mu$-零集合を取った時に$\o{E}=\u{E}=0$を仮定すると，Jordan分解\ref{thm-Jordan-decomposition}より，$\Phi(E)=\o{V}-\abs{\u{V}}=0-0=0$．
+        \end{description}
+        \item \begin{description}
+            \item[$\Rightarrow$] $\Phi$を特異とすると，$\mu$-零集合$E_0\in\B$が存在して，$\forall_{E\subset E_0^\comp}\;\Phi(E)=0$．この時，任意の$E\subset E_0^\comp$について，$(0\le)\o{V}(E)\le\o{V}(E^\comp)=\sup_{E\subset E_0^\comp}\Phi(E)=0$．
+            \item[$\Leftarrow$] $\o{V},\u{V}$を特異とすると，$\mu$-零集合$E_1,E_2\in\B$が存在して，$\forall_{E\subset E_1^\comp}\;\o{V}(E)=0$かつ$\forall_{E\subset E_2^\comp}\;\u{V}(E)=0$．$E_0:=E_1\cup E_2\in\B$と定めると，任意の$E\subset E_0^\comp=E_1^\comp\cap E_2^\comp$について，$\Phi(E)=\o{V}(E)-\abs{\u{V}(E)}=0-0=0$．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{corollary}[絶対連続性・特異性の線型伝播]\label{cor-linearity-of-continuousness}
+    $\Phi,\Psi$をともに絶対連続とし，$a,b\in\R$とする．$F:=a\Phi+b\Psi$も絶対連続である．
+\end{corollary}
+
+\begin{theorem}[絶対連続性の$\epsilon$-$\delta$論法による特徴付け]
+    次の２条件は同値である．
+    \begin{enumerate}
+        \item $\Phi$は絶対連続である．
+        \item $\forall_{\epsilon>0}\;\exists_{\delta>0}\;\forall_{E\in\B}\;\mu(E)<\delta_\epsilon\Rightarrow\abs{\Phi(E)}<\epsilon$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(2)$\Rightarrow$(1)] 任意の$\mu$-零集合$N$について，$\Phi(N)=0$を示せば良い．すると，任意の$\delta>0$について$\mu(N)<\delta$であるから，任意の$\epsilon>0$について$\abs{\Phi(N)}<\delta$が必要．したがって，$\Phi(N)=0$が従う．\footnote{対偶を考えれば明らか．実際，$[\exists_{N\in\B}\;\mu(N)=0\land\Phi(N)\ne 0]\Rightarrow[\exists_{\epsilon>0}\;\forall_{\delta>0}\;\mu(E)<\delta\land\abs{\Phi(E)}>\epsilon]$は，$E=N$とすれば従う．}
+        \item[(1)$\Rightarrow$(2)] $\Phi$は絶対連続であるが，$\exists_{\epsilon>0}\;\forall_{\delta>0}\;\exists_{E\in\B}\;\mu(E)<\delta\land\abs{\Phi(E)}\ge\epsilon$と仮定し矛盾を導く．この$\epsilon>0$と$\frac{1}{n}>0$に対して，$\mu(E_n)<\frac{1}{2^n},\Phi(E_n)\ge\epsilon$を満たす$\B$の列$(E_n)$が取れる．これに対して，$E_0:=\limsup_{n\to\infty}\overset{def}{=}\cap_{n=1}^\infty\cup_{\nu=n}^\infty E_\nu$とおくと$E_0\in\B$で，任意の$n\in\N$に対して$\mu(E_0)\le\sum^\infty_{\nu=n}\mu(E_\nu)\le\sum^\infty_{\nu=n}\frac{1}{2^n}=\frac{1}{2^{n-1}}$を満たすから$\mu(E_0)=0$である．しかし，いま単調増加集合関数＝有限測度$\o{V}$について$\o{V}(E_0)\ge\limsup_{n\to\infty}\o{V}(E_n)\ge\limsup_{n\to\infty}\Phi(E_n)\ge\epsilon$より\ref{prop-limits-of-additive-set-function}，矛盾．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    確かに絶対連続性は，連続性(Lebesgue測度に関する絶対連続性)の一般化となっている．
+    が，この連続性が，零集合上のLebesgue積分の値が$0$になることと同値であるとは驚いた．
+    この証明の(1)$\Rightarrow$(2)で$E_0$を$\limsup_{n\to\infty}E_n$として構成しているのは，絶対連続性の変動による特徴付けにおいて$E_0:=E_1\cup E_2$とした議論の可算個への拡張になっている．
+\end{remarks}
+
+\begin{theorem}[特異性の$\epsilon$-$\delta$論法による特徴付け]
+    次の２条件は同値である．
+    \begin{enumerate}
+        \item $\Phi$は特異である．
+        \item $\forall_{\epsilon>0}\;\exists_{E\in\B}\;\mu(E)<\epsilon\land V_\Phi(X\setminus E)<\epsilon$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Radon-Nikodymの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    加法的集合関数は絶対連続部分と特異部分に分解でき，絶対連続な部分は何かしらの関数の不定積分\ref{exp-absolutely-continuous-set-functions}としての表現を持つ．
+    すなわち，不定積分$L^1\epi\sMap(X,\R)$は全射である．
+    しかしこれが成り立つ前提には，空間$X$にある種の有限性が必要になる．これは測度が有限であることを少し緩めた，$\sigma$-有限性である．
+\end{tcolorbox}
+
+\begin{definition}[$\sigma$-finite]
+    測度空間$(X,\B,\mu)$について，
+    \begin{enumerate}
+        \item $\mu$が有限な測度であるとは，$\Im\mu\subset\R$であることをいう．$A\in\B$が有限測度であるとは，$\mu(A)<\infty$であることをいう．
+        \item 測度$\mu$が\textbf{$\sigma$-有限}であるとは，$X=\cup^\infty_{n=1}X_n,\mu(X_n)<\infty$を満たす列$(X_n)$が存在することをいう．
+        \item $A\in\B$が$\sigma$-有限な測度を持つとは，$A=\cup^\infty_{n=1}X_n,\mu(X_n)<\infty$を満たす列$(X_n)$が存在することをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[$\sigma$-有限性の特徴]\label{lemma-sigma-finite}
+    $(X,\B,\mu)$は$\sigma$-有限とする：$X=\cup^\infty_{n=1}X_n,\mu(X_n)<\infty$を満たす列$(X_n)$が存在する．
+    \begin{enumerate}
+        \item $\Phi$が任意の$X_n$上で絶対連続／特異ならば，$X$上で絶対連続／特異である．
+        \item 特に$\mu$は有限で，$\Phi$は零関数ではなく，単調増加とする：$\Im\Phi\subset\R_{\ge 0}$．
+        この$\Phi$が特異でないならば，$\exists_{n\in\N}\;\exists_{E_n\in\B}\;\paren{\mu(E_n)>0}\land\paren{\forall_{E\subset E_n}\;\Phi(E)\ge\frac{1}{n}\mu(E)}$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $X_n:=X_n\setminus(\cup_{\nu=1}^{n-1}X_\nu)$と定め直すことで，列$(X_n)$は互いに素に取れる．$N$を任意の$\mu$-零集合とし，$N_n:=N\cap X_n$と定めると，$(N_n)$も互いに素で，$\mu(N_n)\le\mu(N)=0$より$\mu(N_n)=0$．各$(N_n\subset )X_n$上で$\Phi$は絶対連続だから，$\Phi(N_n)=0$である．よって，$\sigma$-加法性より，$\Phi(N)=\sumn\Phi(N_n)=0$．
+        \item \begin{description}
+            \item[方針] 
+        $\mu(X)<\infty$だから，$\Phi_n(E):=\Phi(E)-\frac{1}{n}\nu(E)$は各$n\in\N$について加法的集合関数を定める．これについてHahnの分解定理\ref{thm-Hahn-decomposition-theorem}より，集合$E_n\in\B$が存在して，
+        \begin{align*}
+            \forall_{E\subset E_n}\;&\Phi(E)\ge\frac{1}{n}\mu(E),&\forall_{E\subset E_n^\comp}\;&\Phi(E)\le\frac{1}{n}\mu(E),
+        \end{align*}
+        が成り立つ．この列$(E_n)$について，$\exists_{n\in\N}\;\mu(E_n)>0$を示せば良い．
+            \item[成功]
+        $\forall_{n\in\N}\;\mu(E_n)=0$と仮定して矛盾を導く．$E_0:=\cupn E_n$も零集合となり，また$\forall_{E\subset E_0^\comp}\;\forall_{n\in\N}\;(0\le)\Phi(E)\le\frac{1}{n}\mu(E)\le\frac{1}{n}\mu(X)$より，$\forall_{E\subset E_0^\comp}\;\Phi(E)=0$である．すなわち，$\Phi$は特異であることが従うが，これは条件に矛盾．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    (3)のステートメントは証明しやすいように書かれているために状況が理解しにくいが，$\Phi$が３つの仮定を満たす時（特に特異でない時），ある零でない集合$B\in\B$と$n\in\N_+$が存在して，$\Phi$を測度$\mu$を用いて$B$上で下から抑えることが出来る：$\forall_{E\subset B}\;\Phi(E)\ge\frac{1}{n}\mu(E)$．$\frac{1}{n}$ではなく，一般の$\epsilon>0$で評価しようとすると，列が作れないので最初の議論が失敗する．
+\end{remarks}
+
+\begin{theorem}[Radon-Nikodym, Lebesgue decomposition, density function / Radon-Nikodym derivative]\label{thm-Radon-Nykodym}
+    $\sigma$-有限な測度空間$(X,\B,\mu)$上の任意の加法的集合関数$\Phi:\B\to\R$について，
+    \begin{enumerate}
+        \item 絶対連続な加法的集合関数$F:\B\to\R$と特異な加法的集合関数$\Psi:\B\to\R$が存在して，$\Phi=F+\Psi$と表せる．
+        \item この分解は一意的である．
+        \item この加法的集合関数$F$について，$X$上の$\mu$-$\ae$で一意的に定義された可積分関数$f:X\to\R$が存在して，$F(-)=\int_{-}f(x)d\mu(x)$と表せる．この$f$を\textbf{密度関数}という．\footnote{特に確率論の文脈では\textbf{確率密度関数}という．}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Hahn分解\ref{thm-Hahn-decomposition-theorem}より，ある分割$X=A+B$について，$\Phi$は$A$上$\o{V}+0$，$B$上$0+\u{V}$に等しいから，集合関数$0$は絶対連続かつ特異であることに注意して，
+    $\Phi$が単調増加（＝有限測度）であるときについて示せば十分である\ref{cor-linearity-of-continuousness}：$\Phi\ge0$．\footnote{実際，Lebesgue分解$\o{V}=\o{F}+\o{\Phi},\u{V}=\u{F}+\u{\Phi}$について，$\Phi=(\o{F}-\u{F})+(\o{\Phi}-\u{\Phi})$としても良い．はず．}
+    また，$\sigma$-有限性の仮定と補題\ref{lemma-sigma-finite}(1)より，$\mu(X)<\infty$の仮定の下で証明すれば十分である．
+    \begin{enumerate}
+        \item 
+        \begin{description}
+            \item[証明の方針] 
+                非負値可測関数からなる集合$\F$を
+                \[\F:=\Brace{\varphi\in\Hom_\Meas(X,[0,\infty])\;\middle|\;\begin{array}{l}\varphi は\mu\text{-}可積分で，その不定積分F_\varphi が\\\forall_{E\in\B}\;F_\varphi(E)=\int_E\varphi d\mu\le\Phi(E)を満たす\end{array}}\]
+                と定めると，$0\in\F$より$\F\ne\emptyset$．
+                基本的な構成としては，$\F$の元である関数$\varphi:X\to[0,\infty]$が定める絶対連続な加法的集合関数$F_\varphi$が$X$で取る値＝最大値の上限を$(0\le)\alpha:=\sup_{\varphi\in\F}F_\varphi(X)\le\Phi(X)<\infty$とし，これを実現する密度関数$f:X\to[0,\infty]\in\F$を１つ上手く構成し，$F:=F_f$とする．
+                これは$\forall_{E\in\B}\;F(E)\le\Phi(E)$を満たし，実は$F_f(X)=\alpha$も満たす．こうして構成した$F$に対して$\Psi:=\Phi-F(\ge 0)$と定めると，これは特異になることを証明する．
+            \item[絶対連続部分$F$と密度関数$f$の構成]
+            ある$\F$の列$(\varphi_n)$が存在して，$\lim_{n\to\infty}F_{\varphi_n}(X)=\alpha$を満たすものが取れる．ここで，$f(x):=\sup_{n\ge 1}\varphi_n(x)$と定めるとこれは$f\in\F$を満たす非負値可測関数である（可測関数の極限は可測\ref{prop-limit-of-sequence-of-measurable-function}）こと，すなわち$\forall_{E\in\B}\;F_f(E)\le\Phi(E)$を示す．これは$F_f(X)=\alpha$を含意することを示す．
+            \begin{enumerate}[(a)]
+                \item $f_n:=\max_{1\le i\le n}\varphi_i(x)$と置くと，任意の$E\in\B$に対して$E=\cup_{\nu=1}^nE(f_n=\varphi_\nu)$が成り立つ．$E_\nu\subset E(f_n=\varphi_n)$を満たす細分$(E_\nu)$であって，$E=\sum^n_{\nu=1}E_\nu$を満たすものが取れる．\footnote{$\varphi_1,\cdots,\varphi_n$が$x\in E$で同じ値を取るかもしれない．これを適当に配分して互いに交わらないようにする．}
+                これについて，
+                \begin{align*}
+                    \int_Ef_n(x)d\mu(x)&=\sum_{\nu=1}^n\int_{E_\nu}f_n(x)d\mu(x)\\
+                    &=\sum^n_{\nu=1}\int_{E_\nu}\varphi_n(x)d\mu(x)\\
+                    &=\sum^n_{\nu=1}F_{\varphi_\nu}(E_\nu)\le\sum_{\nu=1}^n\Phi(E_\nu)=\Phi(E).
+                \end{align*}
+                列$(f_n(x))_{n\in\N}$は単調増加で，$\lim_{n\to\infty}f_n(x)=\sup_{n\ge 1}\varphi_n(x)=f(x)$であるから，単調収束定理\ref{thm-monotone-convergence-theorem}と積分の性質\ref{thm-properties-of-integral}(4)$f_n\ge f_{n+1}\Rightarrow\int_Ef_nd\mu\le\int_Ef_{n+1}d\mu$より，
+                \[F_f(E)=\lim_{n\to\infty}\int_Ef_n(x)d\mu(x)\le\Phi(E).\]
+                よって，$f\in\F$である．
+                \item また，同様に単調収束定理\ref{thm-monotone-convergence-theorem}と積分の性質\ref{thm-properties-of-integral}(4)$f_n\ge\varphi_n\Rightarrow\int_Ef_nd\mu\ge\int_E\varphi_nd\mu$より，
+                \[\alpha\ge F_f(X)=\lim_{n\to\infty}\int_Xf_n(x)d\mu(x)\ge\lim_{n\to\infty}\int_X\varphi_n(x)d\mu(x)=\alpha.\]
+            \end{enumerate}
+            \item[特異部分$\Psi$の構成]
+            次に$\Psi:=\Phi-F_f$と定めると，$F_f$は不定積分で特に加法的集合関数だから，$\Psi$も単調増加な加法的集合関数（＝有限な測度）である．
+            $\Psi=0$のときは特異で，$\Phi=F_f$がJordan分解を定めるから，$\Psi\ne 0$と仮定し，$\Psi$が特異であることを示せば良い．
+            特異でないと仮定して矛盾を導く．$\mu(X)<\infty$で$\Psi$は特異で$\Psi\ne 0$としたから，ある自然数$n\ge 1$と測度が正な集合$E_n\in\B$が存在して，$\forall_{E\subset E_n}\;\Psi(E)\ge\frac{1}{n}\nu(E)$が成り立つ\ref{lemma-sigma-finite}(2)．
+            よって，これに対して単関数を$g:=\frac{1}{n}\chi_{E_n}$と定めると，$f+g$はやはり$X$上非負値の可積分関数で（可積分関数の和は可積\ref{thm-properties-of-integral}(9)），
+            任意の$E\in\B$に対して，
+            \begin{align*}
+                F_{f+g}(E)&=\int_Ef(x)d\mu(x)+\int_Eg(x)d\mu(x)\\
+                &=F_f+\frac{1}{n}\mu(E\cap E_n)\\
+                &\le F_f(E)+\Psi(E\cap E_n)\\
+                &\le F_f(E)+\Psi(E\cap E_n)+\Psi(E\cap E_n^\comp)&\Psi\ge 0\\
+                &\le F_f(E)+\Psi(E)=\Phi(E)
+            \end{align*}
+            より，$f+g\in\F$である．しかし，同様の評価で$\mu(E_n)>0$より
+            \[F_{f+g}(X)=F_f(X)+\frac{1}{n}\mu(E_n)>F_f(X)=\alpha\]
+            が従ってしまい，これは$\alpha$の定義に矛盾する．
+        \end{description}
+        \item 絶対連続な加法的集合関数$F_1,F_2$と特異な加法的集合関数$\Psi_1,\Psi_2$について，$\Phi=F_1+\Psi_1=F_2+\Psi_2$と表せたとする．
+        すると$F_1-F_2=\Psi_2-\Psi_1$であるが，この両辺は絶対連続かつ特異だから，恒等的に$0$である．従って，$F_1=F_2,\Psi_1=\Psi_2$．
+        \item 積分の性質$f_1=f_2\;\ae\Rightarrow\int_Ef_1d\mu\int_Ef_2d\mu$\ref{thm-properties-of-integral}(4)より，
+        $f$は$\mu$-$\ae x$に対して確定する．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[列を巧みに用いた構成]
+    \item 任意の可測集合$E\subset X$上での積分$\int_Efd\mu$が$\Phi(E)$を超えない中で，最大にする密度関数$f$が，Radon-Nykodymの密度関数（$\Phi$との差がたかだか特異な加法的集合関数）である．
+    $F_\varphi(X)$を最小上界にする$\varphi\in\F$に収束する点列$(\varphi_n)$が取れるから，これに対して$f(x):=\sup_{n\in\N}\varphi_n(x)$とすると，これは単調増加列$(\max_{1\le i\le n}\varphi_n(x))_{n\in\N}$の極限でもあるから，単調収束定理により積分と極限が交換するし，その極限でも$F_f(E)\le\Phi(E)$の性質は保たれる．
+    この$f$について$F_f(X)$が最小上界を取る元であること，すなわち結局最大値$\max_{\varphi\in\F}\varphi(X)$であったこと
+    により，$\Psi$は特異になる．
+\end{remarks}
+\begin{counterexample}
+    $(X,\B,\mu)$が$\sigma$-有限でない場合は，次の反例がある．
+\end{counterexample}
+
+\section{直線上の絶対連続関数}
+
+\subsection{絶対連続性}
+
+\begin{definition}[absolutely continuous, functions of bounded variation]
+    $F:[a,b]\to\R$を有界な関数とする．
+    \begin{enumerate}
+        \item $F$が絶対連続であるとは，次が成り立つことをいう：$\forall_{\epsilon>0}\;\exists_{\delta>0}\;\forall_{\{(a_i,b_i]\}_{i=1}^n:互いに素な[a,b]内の有限区間列}\;\sum_{i=1}^n(b_i-a_i)<\delta\Rightarrow\sum^n_{i=1}\abs{F(b_i)-F(a_i)}<\epsilon$．\footnote{特に，絶対連続ならば連続．}
+        \item $F$が有界変動であるとは，次が成り立つことをいう：$\exists_{M>0}\;\forall_{\Delta:[a,b]の有限分割}\;\sum^n_{i=1}\abs{F(x_i)-F(x_{i-1})}\le M$．
+    \end{enumerate}
+\end{definition}
+
+\section{Lebesgue-Stieltjes積分}
+
+\section{Lebesgue測度の性質}
+
+\chapter{関数空間}
+
+\section{測度空間上の関数空間：$L^p$}
+
+\section{測度空間上の関数空間：$M,S$}
+
+\section{Euclid空間上の関数空間}
+
+\subsection{合成積}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    合成積は解析では$\R^d$の加法群の上に定められるが，
+    一般的には群上の環値関数について定義される．半直積のようなものである．
+    微分はこの積についてLeibniz則を満たし，Fourier解析はこの積について関手性を持つ．
+    圏論化がDay合成積というものになる．
+\end{tcolorbox}
+
+\begin{definition}[convolution]
+    Lebesgue可積分関数$f,g,h:\R^d\to[-\infty,\infty]$に対して，
+    \begin{enumerate}
+        \item $f(x-\cdot)g(\cdot):\R^d\to[-\infty,\infty]$は殆ど至る所Lebesgue可積分である．
+        \item $f\star g(x):=\int_{\R^d}f(x-y)g(y)dm(y)$で定まる関数$f\star g:\R^d\to[-\infty,\infty]$は殆ど至る所Lebesgue可積分であり，$\norm{f\star g}_1\le\norm{f}_1\norm{g}_1$が成り立つ．すなわち：
+        \[\int_{\R^d}\abs{f\star g(x)}dm\le\int_{\R^d}\abs{f(x)}dm\int_{\R^d}\abs{g(x)}dm.\]
+        \item (可換) 殆ど至る所で$f\star g=g\star f$が成り立つ．すなわち：
+        \[f\star g(x)=\int_{\R^d}f(x-y)g(y)dy=\int_{\R^d}g(x-y)f(y)dy.\]
+        \item (結合的) 殆ど至る所で$f\star (g\star h)=(f\star g)\star h$が成り立つ．
+    \end{enumerate}
+\end{definition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[$f(x-y)g(y):\R^{2d}\to\o{\R}$のLebesgue可測性] 定理\ref{prop-pararell-shift-of-Lebesgue-measurable-function}より従う．すると，$\abs{f(x-y)g(y)}$も可測である（$h=h^+-h^-$に対して$\abs{h}=h^++h^-$であるため）．
+            \item[$f(x-y)g(y):\R^{2d}\to\o{\R}$のLebesgue可積分性] 完備空間についてのFubiniの定理\ref{thm-Fubini-II-on-complete-space}より，非負値Lebesgue可測関数$\abs{f(x-y)g(y)}$について，一変数化$\abs{f(x-\cdot)g(\cdot)}:\R^d\to[0,\infty];y\mapsto\abs{f(x-y)}\abs{g(y)}$は殆ど至る所Lebesgue可測であり，
+            $\int_{\R^d}\abs{f(x-y)}\abs{g(y)}dm(y)$が定まり，$x\in\R^d$上殆ど至る所Lebesgue可測である．
+            さらに，
+            \begin{align*}
+                \int_{\R^{2d}}\abs{f(x-y)}\abs{g(y)}dm(z)&=\int_{\R^d}\paren{\int_{\R^d}\abs{f(x-y)}\abs{g(y)}dm(y)}dm(x)\\
+                &=\int_{\R^d}\paren{\int_{\R^d}\abs{f(x-y)}\abs{g(y)}dm(x)}dm(y)\\
+                &=\int_{\R^d}\abs{g(y)}\paren{\int_{\R^d}\abs{f(x-y)}dm(x)}dm(y)\\
+                &=\int_{\R^d}\abs{g(y)}dm(y)\int_{\R^d}\abs{f(x)}dm(x)<\infty&\because 平行移動不変性\ref{prop-pararell-shift-of-Lebesgue-measurable-function}
+            \end{align*}
+            より，$f(x-y)g(y)$は$\R^{2d}$上可積分である．
+            したがって，可積分関数についてのFubiniの定理\ref{thm-Fubini-III-on-complete-space}より，一変数化$y\mapsto f(x-y)g(y)$も殆ど至る所の$x\in\R^d$について可積分である．
+            $\abs{f(x-y)\abs{g(y)}}:\R^d\to[0,\infty]$は$y$の関数としてLebesgue可積分である．
+        \end{description}
+        \item $f(x-y)g(y)$は$\R^{2d}$上可積分であるから，可積分関数についてのFubiniの定理\ref{thm-Fubini-III-on-complete-space}より，一変数化$y\mapsto f(x-y)g(y)$も殆ど至る所の$x\in\R^d$について可積分である上に，その積分は殆ど至る所の$x\in\R^d$について可積分である．
+        \item 
+        $t:=x-y$とおく変数変換より，
+        \begin{align*}
+            (f\star g)(x)&=\int_{\R^d}f(x-y)g(y)dy\\
+            &=\int_{\R^d}f(t)g(x-t)dt\\
+            &=(g\star f)(x)
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\chapter{Hilbert空間：序説}
+
+\chapter{Hilbert空間：いくつかの例}
+
+\chapter{一般の測度論と積分論}
+
+\chapter{Hausdorff測度とfracktal}
+
+\begin{thebibliography}{9}
+    \bibitem{伊藤}
+    伊藤清三『ルベーグ積分入門』
+    \bibitem{Tao}
+    Terence Tao \href{https://terrytao.files.wordpress.com/2012/12/gsm-126-tao5-measure-book.pdf}{"Introduction to Measure Theory"}
+\end{thebibliography}
+
+\end{document}
