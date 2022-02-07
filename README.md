@@ -1,0 +1,2 @@
+# StatisticalNature
+これから来る数理自然の数理的本質を考える
