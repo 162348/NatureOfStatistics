@@ -2,7 +2,7 @@
 \title{今日の代数学}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/github/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -461,6 +461,13 @@ title=]
 
 \section{単因子論}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般の単項イデアル整域について，標準形の理論が成り立つ．
+    これは，有限生成な単項イデアル整域係数加群について，構造定理が成り立つことによる．
+    単因子の計算法は，行列式因子が与える（定理の証明抽出）．
+\end{tcolorbox}
+
 \begin{notation}[fundamental matrix]
     次の基本行列の定める左作用を考える（行基本変形）．これらの基本行列はユニモジュラーである．
     \begin{enumerate}
@@ -473,7 +480,7 @@ title=]
 
 \begin{definition}[unimodular]
     環$M_n(\Z)$の可逆元を\textbf{単模行列}といい，これがなす群を$\GL_n(\Z)$で表す．
-    一般の可換環$R$について，環$M_n(R)$の元で行列式が単元になる行列を単模行列という．
+    一般の単項イデアル整域$R$について，環$M_n(R)$の元で行列式が単元になる行列を単模行列という．
     $R$が体のとき，行列が単模であることと正則であることは同値．
 \end{definition}
 
@@ -495,9 +502,14 @@ title=]
     \[A=\begin{pmatrix}2&4&0\\0&8&0\\4&0&12\end{pmatrix}\]
 \end{example}
 
-\begin{corollary}
-    $A\in M_n(\Z)$がユニモジュラー行列であるとき，$A$は基本行列の積として表せる．
+\begin{corollary}[ユニモジュラー行列の特徴付け]
+    $A\in M_n(\Z)$がユニモジュラー行列であるとき，$A$は基本行列の積として表せる（し，逆もなりたつ）．
 \end{corollary}
+\begin{proof}
+    ユニモジュラー行列について，その$n$次の行列式因子は$d_n=\abs{\det A}=e_1\cdots e_n=1$となる（行列式因子は最大公約数なので正の値である）．
+    ゆえに，$e_i$の間の整除関係より，$\forall_{i\in[n]}\;e_i=1$を得る．
+    すなわち，基本行列の積$P,Q$が存在して，$PAQ=E\Leftrightarrow A=P^{-1}Q^{-1}$と基本行列の積で表せる．
+\end{proof}
 
 \subsection{体係数多項式の行列}
 
@@ -509,9 +521,15 @@ title=]
 \begin{definition}
     $n$次の$x$-行列$A(x)$のすべての$k$次小行列式の（モニックな）最大公約数を，$A(x)$の$k$次\textbf{行列式因子}といい，$d_k(x)$で表す．$d_k(x)=0$とは，$k$次小行列式がすべて$0$であることとする．
 \end{definition}
-\begin{lemma}
+\begin{lemma}[行列式因子は行列の相似類を特徴付ける]
     相似な行列の間で，$n$個の行列式因子は一致する．
 \end{lemma}
+\begin{proof}
+    基本変形によって，行列式因子は変わらないことを示せば良い．
+
+    基本変形のうち，行の交換・他の行に$K^*$-倍を加える変換は，$A(x)$の小行列全体の集合を，各元の単元倍しか変えないため，
+    行列式因子を変えない．
+\end{proof}
 
 \begin{theorem}
     任意の$n$次$x$-行列$A(x)$は，一意的な標準形$\diag(e_1,\cdots,e_r,0,\cdots,0)$に対等である．
@@ -520,17 +538,65 @@ title=]
 \begin{proof}\mbox{}
     \begin{description}
         \item[存在] $n>1$についての数学的帰納法により証明する．
-        
+        \begin{enumerate}
+            \item $A(x)=O$のとき，これはすでに標準形である．$A(x)\ne0$のとき，基本変形によって，$A(x)$と対等な行列であって，$(1,1)$-成分が$0$でないものが存在する．
+            そのようなものの中で，$(1,1)$-成分の次数が最小であるものを一つ取る．基本変形により，特に$(1,1)$-成分がモニックであるもの
+            \[B(x)=\begin{pmatrix}e_1&b_{12}&\cdots&b_{1n}\\b_{21}&\ddots&\ddots&\vdots\\b_{n1}&\cdots&\cdots&b_{nn}\end{pmatrix}\]
+            が取れる．
+            \item この$B(x)$の第１行・第１列の成分は，すべて$e_1$で割り切れる．
+            
+            実際，$e_1\not{|}b_{1j}$と仮定すると，$K[x]$は$\deg:K[x]\setminus\{0\}\to\N$をEuclid関数とするEuclid整域だから，ある$r,q\in K[x]$が存在して，$\deg(r)<\deg(e_1)$かつ$b{1j}=e_1q+r$を満たす．
+            すると，$b_{1,j}$を$(1,1)$-成分へ移動し，$e_1$の$q$倍を引くと，$B(x)$の取り方に矛盾する．
+            こうして，$B(x)$と対等な行列
+            \[C(x)=\begin{pmatrix}e_1&0&\cdots&0\\0&c_{22}&\ddots&c_{2n}\\\vdots&\ddots&\ddots&\vdots\\0&c_{n2}&\cdots&c_{nn}\end{pmatrix}\]
+            を得る．
+            \item 帰納法の仮定より，$(c_{ij})_{2\le i,j\le n}$と対等な行列$\diag(e_2,\cdots,e_r,0,\cdots,0)$が存在する．これについて，$e_1|e_2$を示せば良い．
+            $e_2=e_1q+r$かつ$r=0\lor\deg(r)\le\deg(e_1)$である．
+            $r\ne 0$ならば，基本変形により，$C(x)$に対等な行列で$(1,1)$-成分が$r$であるものが作れる．これは$e_1$の選び方に矛盾するから，$r=0$である．
+        \end{enumerate}
+        すなわち，$C(x)$は$D(x)=\diag(e_1,\cdots,e_r,0,\cdots,0)$に対等である．
+        \item[一意性] 
+        $D(x)$の$n$個の行列式因子は明らかに
+        \[d_k(x)\begin{cases}
+            e_1(x)\cdots e_k(x),&k\le r,\\
+            0,&k>r,
+        \end{cases}\]
+        である．これより，$\forall_{k\in[r]}\;e_k=\frac{d_k}{d_{k-1}}$と表せるから，$(d_k)$が一意的であるのと同様に，$(e_k)$も一意的である．
     \end{description}
 \end{proof}
+\begin{remarks}
+    なるほど，環上の加群論はたしかに環論の応用である．
+\end{remarks}
 
 \section{有限生成アーベル群の基本定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    有限次元線型空間論における定理$V\simeq K^n$の，一般の$R$-有限生成加群への一般化である．
-    可逆性の特徴付けは，行列式が$K^\times$であることとなる．
+    有限次元線型空間論における定理$V\simeq K^n$の，一般の単項イデアル整域$R$上の$R$-有限生成加群への一般化である．
+    可逆性の特徴付けは，行列式が$R^\times$であることとなる．
+    ここでは，$R=\Z$の場合について示す．
 \end{tcolorbox}
+
+\begin{theorem}
+    $R$を単項イデアル整域，$M$を自由$R$-加群で$\rank M=m$とする．
+    このとき，$M$の任意の$R$-部分加群$N$も自由$R$-加群で，$\rank N\le m$が成り立つ．
+\end{theorem}
+
+\begin{example}[線形空間論との違い]
+    $M=\Z,N=2\Z$とすると，$N\subset M$であるが，$\rank M=\rank N$である．
+\end{example}
+
+\begin{theorem}
+    $M$を有限生成自由$\Z$-加群，$N$を$M$の$\Z$-部分加群とする．
+    このとき，$N$も自由$\Z$-加群で$\rank N\le\rank M$となり，
+    また，$e_1|e_2|\cdots|e_s$を満たす一意的な$e_1,\cdots,e_s\in\N$が存在し，
+    $M$のある基底$\{u_1,\cdots,u_r\}$について，$\{e_1u_1,\cdots,e_su_s\}\;(s\le r)$が$N$の基底になるように出来る．
+\end{theorem}
+
+\begin{corollary}
+    有限生成なアーベル群$M$は，次の巡回群の直積と同型になる：$\Z^r\times\Z/\brac{e_1}\times\cdots\times\Z/\brac{e_s}$．
+    ただし，$e_i$は$2$以上の自然数で，$e_1|\cdots|e_s$を満たし，$r$と$e_1,\cdots,e_s$は$M$に対して一意的に定まる．
+\end{corollary}
 
 \chapter{テンソル積とテンソル代数}
 
