@@ -3,7 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -41,6 +42,8 @@ title=測度論的確率論という枠組み]
     確率空間は測度空間の一種と見る．
     確率変数は関数空間の元と見て，平均は作用素と見て構成する．\footnote{こうして，量子論と確率論が関数解析を舞台として合流する．}
 \end{tcolorbox}
+
+\subsection{Kolmogorovの公理}
 
 \begin{notation}[mutually exclusive]\mbox{}
     \begin{enumerate}
@@ -108,8 +111,22 @@ title=測度論的確率論という枠組み]
 \begin{definition}[stochastic process]
     確率変数の族$(X_t)_{t\in T}$を，特に$T$が全順序集合のとき，\textbf{確率過程}と言う．
 \end{definition}
+
+\subsection{$\sigma$-加法性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    事象とその確率なる概念が数学では$\sigma$-加法性に当たることを考察するのにもっとも直感的な例として，
+    コイントスを繰り返す行為を一つの空間内で表現したい場合，部分集合の族は自然$\sigma$-代数をなす．
+\end{tcolorbox}
+
 \begin{example}
-    Brownian motion, Ornstein-Uhlenbeck process and Lévy process.
+    素朴に，$n$回試行を行ったときの標本空間は$\Om_n:=\Map([n],2)$であり，事象のなす$\sigma$-加法族は$P(\Om_n)$である．
+
+    一方で，$\Om:=\Map(\N,2)$を全体集合とすると，$n$回試行を行ったときの事象のなす部分集合族は，
+    $\om^n\in\Om_n$に対して，$A(\om^n):=\Brace{\om\in\Om\mid\forall_{i\in[n]}\;\om_i=\om_i^n}$とすると，
+    対応$A_n:P(\Om_n)\to P(\Om);B\mapsto A(B):=\cup_{\om^n\in B}A(\om^n)$を用いて，$\cF_n:=\Im A_n\subset P(\Om)$は，$\sigma$-加法族の構造を持つ．
+    逆に，それ以外の構造は見出し難い．
 \end{example}
 
 \section{事象という概念：測度論からの結果}\label{sec-event}
@@ -368,8 +385,16 @@ title=]
     前者に母をつけて区別することもある．
 \end{tcolorbox}
 
+\subsection{確率変数に対する線型作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率変数なる枠組みを採用すると，確率測度は$\Meas(X,\R)$上の線型作用素を定め，これを$E$で表す．
+    ここから派生した作用素が重要な特徴量を定める．
+\end{tcolorbox}
+
 \begin{definition}[(population) mean / expectation, (population) variance]
-    作用素$\Meas(X,\R)\to\R$を定める．一般に$\Meas(X,V)\to V$で定まる．
+    線型作用素$\Meas(X,\R)\to\R$を定める．一般に$\Meas(X,V)\to V$で定まる．
     \begin{enumerate}
         \item $E[X]:=\int_\Om X(\om)P(d\om)$が実数であるとき，特に離散の場合は$\sum_{\om\in\Om}X(\om)P\{\om\}$を\textbf{$X$の（母）平均}という．\footnote{標本平均と区別していう．平均は位置(location)母数の例で，分散は尺度(scale)母数の例である．}
         \item $E(X,A):=E(X1_A)$と定める．
@@ -383,6 +408,24 @@ title=]
 \begin{definition}[entropy]
     Shanonnのエントロピーとは自己情報量$I(p):=-\log_2p\;(p\in\X)$が定める積分作用素$H:\Meas(\X,\R)\to[0,\log\al]$である．
 \end{definition}
+
+\subsection{統計的推論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    統計的推論において，確率論の枠組みをどのように用いるかを比較対象する．
+\end{tcolorbox}
+
+\begin{definition}[frequentist probability]
+    現実の事象の確率とは，仮想的に試行を繰り返したときの，相対頻度の極限として得られる極限分布として想定し，
+    我々が眼前にする現象はこれの実現値であるという仮定をおいて行われる統計的推論である．
+
+    想定した真の確率分布の特性量の計算や，真の確率分布に対する標本からの推定などが含まれる．
+\end{definition}
+\begin{example}[頻度主義的推論]
+    偏差値は，統計的な分布が正規分布で近似できることを暗黙裡に認めて算出している．
+    この仮定が数理的に妥当であることは，確率論の結果による．
+\end{example}
 
 \section{確率不等式}
 
@@ -412,7 +455,7 @@ title=]
     まさかそんなに当然な評価の変形だったのか．
 \end{remarks}
 
-\section{$\sigma$-加法族が定める構造}
+\section{$\sigma$-加法族が定める構造（要再考）}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -460,23 +503,265 @@ Entropy is a measure of disorder, given by the amount of information necessary t
     また，$\log$の底は分野によってさまざまである．Shanonnのentropyでは$2$，
 \end{remarks}
 
-\chapter{確率変数の基本性質}
+
+
+
+
+\chapter{有界測度論}
 
 \begin{quotation}
-    前章で準備した公理と数学を用いて，どのように確率という概念に迫るかの数学手法を考える．
+    確率分布を測度として定式化したが，まずは，有界な測度（を正規化したもの）としての純粋な性質を調べる．
+    \begin{enumerate}
+        \item 確率変数に収束の概念が多様に定義できる．
+        その方法は確率変数の可測性に依らないので，なるべく一般的な形で述べる．
+        \item 次に，確率変数の標準的な構成法を測度論の形で与える．実際に確率測度なる対象が存在することの保証も数学的には肝要である．
+    \end{enumerate}
+\end{quotation}
 
-    偏差値は，統計的な分布が正規分布で近似できることを暗黙裡に認めて算出している．これらの観念が定理として得られる．
-    まずBayesの定理や大数の弱法則が極めて簡潔に導出できる．これは一体何であるか？
+\section{確率測度の収束}
 
-    これらの道具は全て数学が包含できる．確率という概念から本質的に数学的な構造を湛えた観念であり，さらには近似も数学的な行為である．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    確率変数は，確率測度を押し出す．この構造を用いて確率変数の収束「法則収束」を定義するから，まずは測度の収束を論じる．
 
-    分布の近似のアルゴリズムが計算機自然であるとするなら，この世の中は関数解析である．量子論の頃から，人の使う数理モデルは本質的に漸近して行っている．
+    測度を，関数の双対空間の元と考える．
+    すると，測度のなす空間$M(X)$とは作用素の空間$C(X)^*$であるから，そこで収束の議論をするのは函数解析学に他ならない．
+    測度の弱収束とは$w^*$-収束に他ならず，確率測度のなす空間$P(X)$はこの位相についてコンパクトである．
+    経験過程は極点の凸結合であると捉えられる．極点の凸結合の極限で真の分布を探そうとする営みが経験過程論であるか！？
+\end{tcolorbox}
 
-    古典的な確率論を特徴付けてきたところの数学的な概念は，試行の独立性と確率変数の独立性の概念である．
-    Laplace, Poisson, Chebyshev, Markov, von Mises, Bernsteinの古典的研究は，独立な確率変数列についての基礎的な研究であり，Markov, Bernsteinによる現代的な研究は，完全な独立性よりも弱めたMarkov性の条件を課して考察している．
-    このようにして，独立性の概念に，確率論固有の問題意識，少なくともその萌芽が見られる\cite{Kolmogorov}．
+\subsection{汎関数としての測度}
 
-    確率論もどこか圏論的である．確率論で重要な概念である独立性とは，確率変数＝射がある種の可換性を満たすことをいう．
+\begin{notation}
+    $X$をHausdorff空間，$X$のBorel集合体を$\A$，Borel $\sigma$-集合体を$\B$で表し，$\A$上の有限加法的な正則有限符号付測度の空間を$M_f(X)$，$\B$上の$\sigma$-加法的な正則有限符号付測度の空間を$M_\sigma(X)$で表す．
+    これらに全変動ノルムを入れると，加法的集合関数は有界変動だから，ノルム空間となる．明らかに，$M_f(X)\subset C_b(X)^*$である．
+\end{notation}
+
+\begin{proposition}[Alexandrov]
+    $X$を任意の正規空間とする．任意の有界汎関数$\Lambda\in C_b(X)^*$に対して，ただ一つの$\mu\in M_f(X)$が存在して，$\forall_{f\in C_b(X)}\;\Lambda(f)=\int_Xfd\mu$を満たし，$\norm{\Lambda}=\norm{\mu}$を満たす．
+    すなわち，Banach空間として$C_b(X)^*\simeq_\Ban M_f(X)$．
+\end{proposition}
+
+\begin{proposition}[Riesz-Markov-Kakutani]
+    コンパクトハウスドルフ空間$X$について，$C_b(X)=C(X)$であることに注意する．
+    \begin{enumerate}
+        \item 任意の有界汎関数$\Lambda\in C_b(X)^*$に対して，ただ一つの$\mu\in M_\sigma(X)$が存在して，$\forall_{f\in C_b(X)}\;\Lambda(f)=\int_Xfd\mu$を満たし，$\norm{\Lambda}=\norm{\mu}$を満たす．
+        \item さらに$\Lambda$が正である場合，対応する$\mu$も正値である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{収束の対応}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    古典的な弱収束の概念は，Borel確率空間に値を取るBorel確率変数について定義された．
+    しかし，可分でない空間に値を取る場合は，Borel完全加法族は非常に大きいため，Borel可測性は条件として強すぎる．
+    たとえそのような関数の極限がBorel可測であっても，である（この重要な例が経験過程である）．
+    これは非常に不自然で，関数解析的な視点からは地を這っているように無明である．
+    Skorokhodは可分となるような距離を見つけたが，この方向の対処よりも抜本的な解決がほしい．
+    Dudleyが，一様ノルムについてのBanach空間と見たまま，弱収束の定義を拡張する方向を開拓し，Hoffmann-Jorgensenが外積分の基盤を作った．
+\end{tcolorbox}
+
+\begin{definition}
+    Borel可測空間$(X,\B(X))$上の確率測度の空間$P(X)\subset C_b(X)^*$の列$(\mu_n)$について，
+    \begin{enumerate}
+        \item 各点収束$\forall_{E\in\B(X)}\;\mu_n(E)\to\mu(E)$は弱収束に対応する．
+        \item $\forall_{f\in C_b(X)}\;\int_Xfd\mu_n\to\int_Xfd\mu$，平均で表すと$\forall_{f\in C_b(X)}\;E[f(X_n)]\to E[f(X)]$は$*$-弱収束($\sigma(C_b(X)^*,C_b(X))$-位相)に対応する．しかしこれは「測度の弱収束」と呼ばれる．これを$\mu_n\Rightarrow\mu$と表す．これは確率変数列の分布収束・法則収束に対応する．
+        \item さらに条件を弱めて$\forall_{f\in C_c(X)}\;\int_Xfd\mu_n\to\int_Xfd\mu$は$\sigma(C_b(X)^*,C_c(X))$-位相に対応し，\textbf{漠収束}と呼ばれる．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    $*$-弱収束の特徴付けをportmanteau定理と呼ぶのであった．
+\end{remark}
+
+\subsection{位相構造}
+
+\begin{notation}
+    Borel確率測度のなす空間を$P(X)$と表す．
+    距離空間$X$上のDirac測度全体の集合を$\Delta\subset P(X)\subset C_b(X)^*$で表す．
+\end{notation}
+\begin{lemma}
+    $X$は，$*$-弱位相における$\Delta$と位相同型である．
+\end{lemma}
+
+\begin{lemma}
+    $\Delta$は$P(X)$内の点列閉集合である．
+    すなわち，$\Delta$内の点列は$\Delta$内に$w^*$-収束する．\footnote{一般に部分集合$A\subset X$の閉包$\o{A}$は点列閉包$B$を含むが，点列閉包と一致するのは一般に$X$が距離空間の場合のみ．}
+\end{lemma}
+
+\begin{lemma}
+    $X$を全有界な距離空間とする．$X$上の有界な一様連続関数の集合$U(X)\subset C_b(X)$は，一様ノルムの下で可分なBanach空間となる．
+\end{lemma}
+
+\begin{theorem}
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $X$は可分な距離空間である．
+        \item $P(X)$は距離付け可能で可分である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}[Prokhorov距離]
+    $B_\ep(E):=\{x\in X\mid\rho(x,E)<\ep$と表す．
+    \[\eta(\mu,\nu):=\inf\Brace{\ep>0\mid\forall_{E\in\B(X)}\;\mu(E)\le\nu(B_\ep(E))+\ep\land\nu(E)\le\mu(B_\ep(E))+\ep}\]
+    は距離を定め，これが定める位相は$*$-弱位相に一致する．
+\end{example}
+
+\begin{theorem}[可算稠密部分集合の構成]
+    $X$を可分距離空間，$D$をその可算な稠密部分集合とする．
+    このとき，$D$の有限部分集合を台とするような確率測度のなす集合$F(D)$は，$P(X)$において稠密である．
+\end{theorem}
+
+\begin{corollary}
+    $D$が可分である時，Dirac測度としての標準的な埋め込み$D\mono\M(D)$の像の凸包は稠密である．
+\end{corollary}
+
+\begin{theorem}[コンパクト性]
+    距離空間$X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item $P(X)$は$w^*$-コンパクトである．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[完備性]
+    可分な距離空間$X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$は完備である．
+        \item $P(X)$は完備である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $D$がポーランドである時，$\M(D)$もポーランドである．
+\end{theorem}
+
+\begin{definition}[uniformly tight]
+    確率測度の族$\Gamma\subset P(X)$が\textbf{一様に緊密}であるとは，
+    $\forall_{\ep>0}\;\exists_{K\overset{\text{cpt}}{\subset} X}\;\forall_{\mu\in\Gamma}\;\mu(K)\ge 1-\ep$．
+\end{definition}
+
+\begin{theorem}[緊密性とは，相対コンパクト性の特徴付けである]
+    $X$を完備可分距離空間とする．確率測度の族$\Gamma\subset P(X)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\Gamma$は$*$-弱位相について相対コンパクトである．
+        \item $\Gamma$は一様に緊密である．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{幾何構造}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    経験過程は重要な意味を持つ．これを，極点の凸結合として幾何学的に説明できないか？
+    経験過程の有限性は実用性に通じるが，これは組み合わせ論的な本質も備えているのではないか？
+\end{tcolorbox}
+
+\begin{proposition}
+    コンパクトハウスドルフ空間$X$上のBanach代数$C(X)=C_b(X)$を考える，但しノルムは一様ノルムとした．
+    $C(X)$の双対空間を$M(X)$，$P(X):=\Brace{\mu\in M(X)\mid\norm{\mu}\le 1,\mu(1)=1}$を確率測度のなす部分空間とする．
+    \begin{enumerate}
+        \item $P(X)$は$M(X)$の凸集合である．
+        \item $P(X)$は$w^*$-コンパクトである．
+        \item $P(X)$の極点はDirac測度$\delta_x\;(x\in X),\forall_{f\in C(X)}\;\delta_x(f)=f(x)$である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\mu_1,\mu_2\in P(X)$と$\lambda\in(0,1)$を任意に取ると，$\lambda\mu_1+(1-\lambda)\mu_2\in P(X)$がわかる．
+        \item 線型汎函数$\ev_1:M(X)\to\bF;\mu\mapsto\mu(1)$は$w^*$-位相について連続である
+        $M(X)=(C(X))^*$の閉単位球$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}である．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    コンパクトハウスドルフ空間$X$上の確率測度は，$C(X)$上において，有限な台を持つ測度（＝Radon chargeが定める積分の空間）によって各点近似（各点収束の位相で近似）が出来る．
+\end{remarks}
+
+
+\section{積分の拡張}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    まずは，関数解析の力を借りて，積分を非可測な関数に対しても延長する，Hoffmann-Jorgensenの理論を展開する．
+    この議論は一般の局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$に関して展開できる．
+\end{tcolorbox}
+
+\begin{definition}[outer integral]
+    $(\Om,\A,P)$を確率空間，$T:\Om\to\o{\R}$を写像とする．
+    \begin{enumerate}
+        \item $E^*[T]:=\inf\Brace{E[U]\in\R\mid U\ge T,U\in\Meas(\Om,\o{\R}),E[U]\in\R}$を，押し出された測度$T_*P$に関する$\o{\R}$上のRadon上積分とする．
+        \item 写像列$(X_n:\Om_n\to\Om)$がBorel可測関数$X:\Om_\infty\to\Om$に弱収束するとは，$\forall_{f\in C_b(\Om)}\;E^*[f(X_n)]\to E[f(X)]$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\section{確率変数列の収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    次に，確率変数列に対して収束を定義する．
+\end{tcolorbox}
+
+\subsection{概収束}
+
+\subsection{確率変数列の一様可積分性}
+
+\section{一般の試行と確率測度}
+
+\begin{definition}[null set, complete]\mbox{}\label{def-complete-measure}
+    \begin{enumerate}
+        \item $P(N)=0$を満たす$P$-可測集合$N$を，$P$-零集合という．
+        \item 任意の$P$-零集合の，任意の部分集合も全て$P$-可測（したがって零）である時，$P$を完備確率測度という．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Lebesgue expantion]
+    任意の確率測度$P$に対し，完備拡張は必ず存在し，最小のものが一意に定まる．これを$P$のLebesgue拡大という．
+\end{proposition}
+
+\section{確率測度の拡張定理}
+
+\begin{definition}[regular probability measure]\label{def-regular-measure}
+    位相空間上の確率測度を考える．
+    \begin{enumerate}
+        \item 定義域がBorel classと一致するものを，\textbf{Borel確率測度}という．
+        \item Borel確率測度のLebesgue拡大を\textbf{正則確率測度}という．
+    \end{enumerate}
+\end{definition}
+
+\section{確率測度の直積}
+
+\section{標準確率空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体に対するEuclid空間のように，標準的な空間を用意するために，同型の理論を整備し，$(\R,\mu)$の同型類を特徴づける．
+\end{tcolorbox}
+
+\begin{definition}[canonical measure]\label{def-canonical-measure}
+    $P$を$\Omega$上の完備な確率測度とする．$(\Omega,P)$が，正則確率測度を備えた実数空間$(\R,\mu)$に同型である時，$(\Omega,P)$を\textbf{標準確率空間}と呼ぶ．
+\end{definition}
+
+\begin{definition}[pushforward measure]
+    $S$上の測度$P$の，可測関数$f:S\to T$による
+    像測度を，$Pf^{-1}$または$f_*P$で表す．
+\end{definition}
+
+\begin{lemma}
+    $P$が完備ならば$Q$も完備である．
+\end{lemma}
+
+\chapter{確率論の基礎概念}
+
+\begin{quotation}
+    単なる可測関数と測度としての範囲を超える確率変数・確率分布特有の概念と，その極限の取り扱いを議論する．
+    大事な概念は独立性と収束である．
+    \begin{enumerate}
+        \item 古典的な確率論を特徴付けてきたところの数学的な概念は，試行の独立性と確率変数の独立性の概念である．
+        確率変数列の独立性は，確率測度が定める関係である．
+        Laplace, Poisson, Chebyshev, Markov, von Mises, Bernsteinの古典的研究は，独立な確率変数列についての基礎的な研究であり，Markov, Bernsteinによる現代的な研究は，完全な独立性よりも弱めたMarkov性の条件を課して考察している．
+        このようにして，独立性の概念に，確率論固有の問題意識，少なくともその萌芽が見られる\cite{Kolmogorov}．
+        なお独立性とは，測度$P:\F\to[0,1]$が，積$\cap$なる演算に対して可換（準同型）であること：$P(A\cap B)=P(A)\cdot P(B)$と理解できる．
+    \end{enumerate}
 \end{quotation}
 
 \section{確率測度の変換：条件付き確率とBayesの定理}
@@ -838,12 +1123,86 @@ title=]
     \end{align*}
 \end{proof}
 
-\section{Markov連鎖}
+\section{可分完全確率測度}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    互いに独立な試行の列（確率変数の列）の一般化を考える．
+    Kolmogorovは晩年完全性を追加した．
+    伊藤清の教科書では可分性も追加した．
+    完全性は像測度に遺伝する．
+    可分性はどこで効いてくるかはわからない．
 \end{tcolorbox}
+
+\begin{definition}[perfect (Kolmogorov)]\label{def-perfect-measure}
+    完備な確率空間$(S,\mu)$上の任意の$\mu$-可測関数$f:S\to\R$に対し，
+    像測度$\mu_*f$が正則になるとき，確率測度$\mu$を\textbf{完全}という．
+\end{definition}
+
+\begin{definition}[separating family, separable]\mbox{}
+    \begin{enumerate}
+        \item $S$上の集合族$\A$が分離族であるとは，$\forall_{s_1\ne s_2\in S}\;\exists_{A\in\A}\;1_A(s_1)\ne 1_A(s_2)$を満たすことをいう．
+        \item 完備確率測度$\mu$について，$\dom(\mu)$が可算分離族を含むとき，$\mu$を\textbf{可分}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $\mu$を$S$上の確率測度，$f:S\to T$を可測関数とする．
+    像測度$\nu:=\mu f^{-1}$は完全である．
+\end{theorem}
+
+\section{事象と確率変数}
+
+\begin{notation}[extension]
+    条件$\alpha\subset\Omega$について，$\alpha$を成立させるような元からなる集合$\{\alpha\}:=\{\omega\in\Omega\mid \alpha(\omega)\}$を$\alpha$の外延という．
+    すると，$\{X(\omega)\le a\}=X^{-1}((-\infty,a])$などと表せる．
+\end{notation}
+
+\begin{definition}[almost surely]
+    $P\{\alpha\}=1$のとき，事象$\alpha$は\textbf{ほとんど確実に}起こるといい，$\alpha(\omega)\as$と書く．
+\end{definition}
+
+\begin{definition}[random variable]
+    $(\Omega,P)$上の$P$-可測実関数を\textbf{実確率変数}と呼ぶ．
+\end{definition}
+
+\section{条件付き期待値作用素}
+
+
+
+\section{部分$\sigma$-加法族に関する条件付き期待値}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    条件付き期待値の存在はRadon-Nykodymの定理により，一意性は零集合を除いて一致する．
+\end{tcolorbox}
+
+\begin{definition}
+    次の条件を満足する確率変数$Y$を，$\cG$に関する$X$の条件付き期待値と呼ぶ．
+    \begin{enumerate}
+        \item $Y$は$\cG$-可測．
+        \item $Y$は可積分で，任意の$A\in\cG$に対して$\int_AX(\om)P(d\om)=\int_AY(\om)P(d\om)$．
+    \end{enumerate}
+    この$Y$を$E[X|\cG]$で表す．
+\end{definition}
+
+\begin{lemma}[well-definedness]\mbox{}
+    \begin{enumerate}
+        \item $E[X|\cG]$は存在する．
+        \item $E[X|\cG]$は$P$-零集合を除いて一意である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}[条件付き確率]
+    $(\Om_j)_{j\in\N}$を$\Om$の分割で，$P[\Om_j]>0$とする．
+    $\cG:=\sigma[\Om_j|j\in\N]$と定めると，可積分確率変数$X$に関して，
+    \[E[X|\cG]=\sum_{j\in\N}\frac{E[X1_{\Om_j}]}{P(\Om_j)}1_{\Om_j}\quad\as\]
+\end{example}
+
+\chapter{独立確率変数列の和}
+
+\begin{quotation}
+    確率過程論への入門として，独立確率変数列の和に関して成り立つ極限定理を調べる．
+\end{quotation}
 
 \section{大数の法則}
 
@@ -1120,7 +1479,80 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
         分布を近似するにあたって，偏差が大きい部分の挙動を捉える．
-    \end{tcolorbox}
+\end{tcolorbox}
+
+
+
+
+
+\chapter{確率過程}
+
+\section{関数空間CとD}
+
+\section{確率過程に関する一般事項}
+
+\section{情報と情報増大系}
+
+\begin{definition}[adapted]
+    $F=(F_t)_{t\in T}$を情報系，$X=(X_t)_{t\in T}$を確率過程とする．
+    \begin{enumerate}
+        \item $\forall_{t\in T}\;X_t$が$\F_t$-可測のとき，$X$は$F$に\textbf{適合}するという．
+        \item $\forall_{t\in T}\;X_t$が$\F_{t-1}$-可測のとき，$X$は$F$で\textbf{可予測}であるという．
+    \end{enumerate}
+\end{definition}
+
+\section{停止時}
+
+\section{離散時変数のマルチンゲール}
+
+\begin{theorem}[Doob–Meyer decomposition theorem]
+    任意の$(\F_n)$-劣マルチンゲール$(X_n)$は，$\F$-マルチンゲールな$M=(M_n)$と可予測な増大列$A=(A_n)$で$A_0=0,A_n\in L^1(\F_{n-1})\;(n=1,2,\cdots)$とに一意的に分解される：$X_n=M_n+A_n$．
+\end{theorem}
+
+\chapter{Markov過程}
+
+\section{Markov連鎖}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    互いに独立な試行の列（確率変数の列）の一般化を考える．
+\end{tcolorbox}
+
+\chapter{Martingale}
+
+\section{Introduction}
+
+回帰モデル$X_i=f(X_{i-1},\cdots,X_{i-p})+\ep_i$において，
+サンプリングが均等でないときなど，$\ep_i$は何か連続的な確率過程を積分して定まる，と考えると
+数理モデルとして非常に自然である．連続関数$f$について，
+\[Y_t=Y_0+\int^t_0f(Y_s)ds+W_t\]
+とし，$W_{t_i}-W_{t_{i-1}}\sim\N(0.t_i-t_{i-1})$を標準Weiner過程とする．
+
+このようなモデルのうち，特に株価の対数を$Y_t$とおいたときに使われるパラメトリックモデルに，
+\textbf{Vasicek過程}
+\[Y_t=Y_0-\int^t_0\al_1(Y_s-\al_2)ds+\beta W_t\]
+などがあり，離散的観測$\{Y{t_0},\cdots,Y_{t_n}\}$に基づいて未知パラメータ$\al_1,\al_2,\beta$の推定を考える．
+このときにマルチンゲール理論が使える．
+
+その理由は，martingaleというクラスの形式的定義が，自然に統計モデルの「ノイズの直交性」の拡張となっていると考えられるためである．
+これは独立性の仮定による代数規則$E[\ep_i\ep_j]=0$の抽出となっているのである．
+
+大きな応用分野として生存解析におけるcensored data\footnote{消息不明になる瞬間があること．癌の再発データにおいて，他の原因による死亡など．}の解析がある．
+このとき，$N_t$を死亡数，$Y_t$をcensorされずに残っている観測対象数，癌の再発時刻の分布関数を$F$，密度関数を$f$とすると，
+\[N_t-\int^t_0\al(s)Y_sds\qquad\al(t)=\frac{f(t)}{1-F(t)}\]
+はマルチンゲールになる．$\al$はハザード関数といい，患者が時刻$t$で生存しているという条件の下，その時間に死亡する条件付き確率となる．
+このマルチンゲールの期待値は常に$0$だから，$N_t$の不偏推定量が見つかったことになる．
+なお，
+\[\int^t_0\frac{1}{Y_s}(dM_s-\al(s)Y_sds)\]
+もマルチンゲールとなることがわかる．
+
+\section{semimartingale}
+
+
+
+
+
+
 
 \chapter{離散確率分布}
 
@@ -2669,340 +3101,10 @@ title=]
 
 \section{従属性}
 
-\chapter{条件付き期待値}
 
-\section{部分$\sigma$-加法族に関する条件付き期待値}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    条件付き期待値の存在はRadon-Nykodymの定理により，一意性は零集合を除いて一致する．
-\end{tcolorbox}
 
-\begin{definition}
-    次の条件を満足する確率変数$Y$を，$\cG$に関する$X$の条件付き期待値と呼ぶ．
-    \begin{enumerate}
-        \item $Y$は$\cG$-可測．
-        \item $Y$は可積分で，任意の$A\in\cG$に対して$\int_AX(\om)P(d\om)=\int_AY(\om)P(d\om)$．
-    \end{enumerate}
-    この$Y$を$E[X|\cG]$で表す．
-\end{definition}
 
-\begin{lemma}[well-definedness]\mbox{}
-    \begin{enumerate}
-        \item $E[X|\cG]$は存在する．
-        \item $E[X|\cG]$は$P$-零集合を除いて一意である．
-    \end{enumerate}
-\end{lemma}
-
-\begin{example}[条件付き確率]
-    $(\Om_j)_{j\in\N}$を$\Om$の分割で，$P[\Om_j]>0$とする．
-    $\cG:=\sigma[\Om_j|j\in\N]$と定めると，可積分確率変数$X$に関して，
-    \[E[X|\cG]=\sum_{j\in\N}\frac{E[X1_{\Om_j}]}{P(\Om_j)}1_{\Om_j}\quad\as\]
-\end{example}
-
-\chapter{確率変数の収束}
-
-\begin{quotation}
-    確率変数に収束の概念が多様に定義できる．
-    その方法は確率変数の可測性に依らないので，なるべく一般的な形で述べる．
-\end{quotation}
-
-\section{確率測度の収束}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    確率変数は，確率測度を押し出す．この構造を用いて確率変数の収束「法則収束」を定義するから，まずは測度の収束を論じる．
-
-    測度を，関数の双対空間の元と考える．
-    すると，測度のなす空間$M(X)$とは作用素の空間$C(X)^*$であるから，そこで収束の議論をするのは函数解析学に他ならない．
-    測度の弱収束とは$w^*$-収束に他ならず，確率測度のなす空間$P(X)$はこの位相についてコンパクトである．
-    経験過程は極点の凸結合であると捉えられる．極点の凸結合の極限で真の分布を探そうとする営みが経験過程論であるか！？
-\end{tcolorbox}
-
-\subsection{汎関数としての測度}
-
-\begin{notation}
-    $X$をHausdorff空間，$X$のBorel集合体を$\A$，Borel $\sigma$-集合体を$\B$で表し，$\A$上の有限加法的な正則有限符号付測度の空間を$M_f(X)$，$\B$上の$\sigma$-加法的な正則有限符号付測度の空間を$M_\sigma(X)$で表す．
-    これらに全変動ノルムを入れると，加法的集合関数は有界変動だから，ノルム空間となる．明らかに，$M_f(X)\subset C_b(X)^*$である．
-\end{notation}
-
-\begin{proposition}[Alexandrov]
-    $X$を任意の正規空間とする．任意の有界汎関数$\Lambda\in C_b(X)^*$に対して，ただ一つの$\mu\in M_f(X)$が存在して，$\forall_{f\in C_b(X)}\;\Lambda(f)=\int_Xfd\mu$を満たし，$\norm{\Lambda}=\norm{\mu}$を満たす．
-    すなわち，Banach空間として$C_b(X)^*\simeq_\Ban M_f(X)$．
-\end{proposition}
-
-\begin{proposition}[Riesz-Markov-Kakutani]
-    コンパクトハウスドルフ空間$X$について，$C_b(X)=C(X)$であることに注意する．
-    \begin{enumerate}
-        \item 任意の有界汎関数$\Lambda\in C_b(X)^*$に対して，ただ一つの$\mu\in M_\sigma(X)$が存在して，$\forall_{f\in C_b(X)}\;\Lambda(f)=\int_Xfd\mu$を満たし，$\norm{\Lambda}=\norm{\mu}$を満たす．
-        \item さらに$\Lambda$が正である場合，対応する$\mu$も正値である．
-    \end{enumerate}
-\end{proposition}
-
-\subsection{収束の対応}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    古典的な弱収束の概念は，Borel確率空間に値を取るBorel確率変数について定義された．
-    しかし，可分でない空間に値を取る場合は，Borel完全加法族は非常に大きいため，Borel可測性は条件として強すぎる．
-    たとえそのような関数の極限がBorel可測であっても，である（この重要な例が経験過程である）．
-    これは非常に不自然で，関数解析的な視点からは地を這っているように無明である．
-    Skorokhodは可分となるような距離を見つけたが，この方向の対処よりも抜本的な解決がほしい．
-    Dudleyが，一様ノルムについてのBanach空間と見たまま，弱収束の定義を拡張する方向を開拓し，Hoffmann-Jorgensenが外積分の基盤を作った．
-\end{tcolorbox}
-
-\begin{definition}
-    Borel可測空間$(X,\B(X))$上の確率測度の空間$P(X)\subset C_b(X)^*$の列$(\mu_n)$について，
-    \begin{enumerate}
-        \item 各点収束$\forall_{E\in\B(X)}\;\mu_n(E)\to\mu(E)$は弱収束に対応する．
-        \item $\forall_{f\in C_b(X)}\;\int_Xfd\mu_n\to\int_Xfd\mu$，平均で表すと$\forall_{f\in C_b(X)}\;E[f(X_n)]\to E[f(X)]$は$*$-弱収束($\sigma(C_b(X)^*,C_b(X))$-位相)に対応する．しかしこれは「測度の弱収束」と呼ばれる．これを$\mu_n\Rightarrow\mu$と表す．これは確率変数列の分布収束・法則収束に対応する．
-        \item さらに条件を弱めて$\forall_{f\in C_c(X)}\;\int_Xfd\mu_n\to\int_Xfd\mu$は$\sigma(C_b(X)^*,C_c(X))$-位相に対応し，\textbf{漠収束}と呼ばれる．
-    \end{enumerate}
-\end{definition}
-\begin{remark}
-    $*$-弱収束の特徴付けをportmanteau定理と呼ぶのであった．
-\end{remark}
-
-\subsection{位相構造}
-
-\begin{notation}
-    Borel確率測度のなす空間を$P(X)$と表す．
-    距離空間$X$上のDirac測度全体の集合を$\Delta\subset P(X)\subset C_b(X)^*$で表す．
-\end{notation}
-\begin{lemma}
-    $X$は，$*$-弱位相における$\Delta$と位相同型である．
-\end{lemma}
-
-\begin{lemma}
-    $\Delta$は$P(X)$内の点列閉集合である．
-    すなわち，$\Delta$内の点列は$\Delta$内に$w^*$-収束する．\footnote{一般に部分集合$A\subset X$の閉包$\o{A}$は点列閉包$B$を含むが，点列閉包と一致するのは一般に$X$が距離空間の場合のみ．}
-\end{lemma}
-
-\begin{lemma}
-    $X$を全有界な距離空間とする．$X$上の有界な一様連続関数の集合$U(X)\subset C_b(X)$は，一様ノルムの下で可分なBanach空間となる．
-\end{lemma}
-
-\begin{theorem}
-    次の２条件は同値．
-    \begin{enumerate}
-        \item $X$は可分な距離空間である．
-        \item $P(X)$は距離付け可能で可分である．
-    \end{enumerate}
-\end{theorem}
-
-\begin{example}[Prokhorov距離]
-    $B_\ep(E):=\{x\in X\mid\rho(x,E)<\ep$と表す．
-    \[\eta(\mu,\nu):=\inf\Brace{\ep>0\mid\forall_{E\in\B(X)}\;\mu(E)\le\nu(B_\ep(E))+\ep\land\nu(E)\le\mu(B_\ep(E))+\ep}\]
-    は距離を定め，これが定める位相は$*$-弱位相に一致する．
-\end{example}
-
-\begin{theorem}[可算稠密部分集合の構成]
-    $X$を可分距離空間，$D$をその可算な稠密部分集合とする．
-    このとき，$D$の有限部分集合を台とするような確率測度のなす集合$F(D)$は，$P(X)$において稠密である．
-\end{theorem}
-
-\begin{corollary}
-    $D$が可分である時，Dirac測度としての標準的な埋め込み$D\mono\M(D)$の像の凸包は稠密である．
-\end{corollary}
-
-\begin{theorem}[コンパクト性]
-    距離空間$X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $X$はコンパクトである．
-        \item $P(X)$は$w^*$-コンパクトである．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}[完備性]
-    可分な距離空間$X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $X$は完備である．
-        \item $P(X)$は完備である．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    $D$がポーランドである時，$\M(D)$もポーランドである．
-\end{theorem}
-
-\begin{definition}[uniformly tight]
-    確率測度の族$\Gamma\subset P(X)$が\textbf{一様に緊密}であるとは，
-    $\forall_{\ep>0}\;\exists_{K\overset{\text{cpt}}{\subset} X}\;\forall_{\mu\in\Gamma}\;\mu(K)\ge 1-\ep$．
-\end{definition}
-
-\begin{theorem}[緊密性とは，相対コンパクト性の特徴付けである]
-    $X$を完備可分距離空間とする．確率測度の族$\Gamma\subset P(X)$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $\Gamma$は$*$-弱位相について相対コンパクトである．
-        \item $\Gamma$は一様に緊密である．
-    \end{enumerate}
-\end{theorem}
-
-\subsection{幾何構造}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    経験過程は重要な意味を持つ．これを，極点の凸結合として幾何学的に説明できないか？
-    経験過程の有限性は実用性に通じるが，これは組み合わせ論的な本質も備えているのではないか？
-\end{tcolorbox}
-
-\begin{proposition}
-    コンパクトハウスドルフ空間$X$上のBanach代数$C(X)=C_b(X)$を考える，但しノルムは一様ノルムとした．
-    $C(X)$の双対空間を$M(X)$，$P(X):=\Brace{\mu\in M(X)\mid\norm{\mu}\le 1,\mu(1)=1}$を確率測度のなす部分空間とする．
-    \begin{enumerate}
-        \item $P(X)$は$M(X)$の凸集合である．
-        \item $P(X)$は$w^*$-コンパクトである．
-        \item $P(X)$の極点はDirac測度$\delta_x\;(x\in X),\forall_{f\in C(X)}\;\delta_x(f)=f(x)$である．
-    \end{enumerate}
-\end{proposition}
-\begin{proof}\mbox{}
-    \begin{enumerate}
-        \item $\mu_1,\mu_2\in P(X)$と$\lambda\in(0,1)$を任意に取ると，$\lambda\mu_1+(1-\lambda)\mu_2\in P(X)$がわかる．
-        \item 線型汎函数$\ev_1:M(X)\to\bF;\mu\mapsto\mu(1)$は$w^*$-位相について連続である
-        $M(X)=(C(X))^*$の閉単位球$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}である．
-    \end{enumerate}
-\end{proof}
-\begin{remarks}
-    コンパクトハウスドルフ空間$X$上の確率測度は，$C(X)$上において，有限な台を持つ測度（＝Radon chargeが定める積分の空間）によって各点近似（各点収束の位相で近似）が出来る．
-\end{remarks}
-
-
-\section{積分の拡張}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    まずは，関数解析の力を借りて，積分を非可測な関数に対しても延長する，Hoffmann-Jorgensenの理論を展開する．
-    この議論は一般の局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$に関して展開できる．
-\end{tcolorbox}
-
-\begin{definition}[outer integral]
-    $(\Om,\A,P)$を確率空間，$T:\Om\to\o{\R}$を写像とする．
-    \begin{enumerate}
-        \item $E^*[T]:=\inf\Brace{E[U]\in\R\mid U\ge T,U\in\Meas(\Om,\o{\R}),E[U]\in\R}$を，押し出された測度$T_*P$に関する$\o{\R}$上のRadon上積分とする．
-        \item 写像列$(X_n:\Om_n\to\Om)$がBorel可測関数$X:\Om_\infty\to\Om$に弱収束するとは，$\forall_{f\in C_b(\Om)}\;E^*[f(X_n)]\to E[f(X)]$を満たすことをいう．
-    \end{enumerate}
-\end{definition}
-
-\section{概収束}
-
-\chapter{確率測度の全て}
-
-\section{一般の試行と確率測度}
-
-\begin{definition}[null set, complete]\mbox{}\label{def-complete-measure}
-    \begin{enumerate}
-        \item $P(N)=0$を満たす$P$-可測集合$N$を，$P$-零集合という．
-        \item 任意の$P$-零集合の，任意の部分集合も全て$P$-可測（したがって零）である時，$P$を完備確率測度という．
-    \end{enumerate}
-\end{definition}
-
-\begin{proposition}[Lebesgue expantion]
-    任意の確率測度$P$に対し，完備拡張は必ず存在し，最小のものが一意に定まる．これを$P$のLebesgue拡大という．
-\end{proposition}
-
-\section{確率測度の拡張定理}
-
-\begin{definition}[regular probability measure]\label{def-regular-measure}
-    位相空間上の確率測度を考える．
-    \begin{enumerate}
-        \item 定義域がBorel classと一致するものを，\textbf{Borel確率測度}という．
-        \item Borel確率測度のLebesgue拡大を\textbf{正則確率測度}という．
-    \end{enumerate}
-\end{definition}
-
-\section{確率測度の直積}
-
-\section{標準確率空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    多様体に対するEuclid空間のように，標準的な空間を用意するために，同型の理論を整備し，$(\R,\mu)$の同型類を特徴づける．
-\end{tcolorbox}
-
-\begin{definition}[canonical measure]\label{def-canonical-measure}
-    $P$を$\Omega$上の完備な確率測度とする．$(\Omega,P)$が，正則確率測度を備えた実数空間$(\R,\mu)$に同型である時，$(\Omega,P)$を\textbf{標準確率空間}と呼ぶ．
-\end{definition}
-
-\begin{definition}[pushforward measure]
-    $S$上の測度$P$の，可測関数$f:S\to T$による
-    像測度を，$Pf^{-1}$または$f_*P$で表す．
-\end{definition}
-
-\begin{lemma}
-    $P$が完備ならば$Q$も完備である．
-\end{lemma}
-
-\section{多変量分布}
-
-\chapter{確率論の基礎概念}
-
-\section{可分完全確率測度}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Kolmogorovは晩年完全性を追加した．
-    伊藤清の教科書では可分性も追加した．
-    完全性は像測度に遺伝する．
-    可分性はどこで効いてくるかはわからない．
-\end{tcolorbox}
-
-\begin{definition}[perfect (Kolmogorov)]\label{def-perfect-measure}
-    完備な確率空間$(S,\mu)$上の任意の$\mu$-可測関数$f:S\to\R$に対し，
-    像測度$\mu_*f$が正則になるとき，確率測度$\mu$を\textbf{完全}という．
-\end{definition}
-
-\begin{definition}[separating family, separable]\mbox{}
-    \begin{enumerate}
-        \item $S$上の集合族$\A$が分離族であるとは，$\forall_{s_1\ne s_2\in S}\;\exists_{A\in\A}\;1_A(s_1)\ne 1_A(s_2)$を満たすことをいう．
-        \item 完備確率測度$\mu$について，$\dom(\mu)$が可算分離族を含むとき，$\mu$を\textbf{可分}という．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}
-    $\mu$を$S$上の確率測度，$f:S\to T$を可測関数とする．
-    像測度$\nu:=\mu f^{-1}$は完全である．
-\end{theorem}
-
-\section{事象と確率変数}
-
-\begin{notation}[extension]
-    条件$\alpha\subset\Omega$について，$\alpha$を成立させるような元からなる集合$\{\alpha\}:=\{\omega\in\Omega\mid \alpha(\omega)\}$を$\alpha$の外延という．
-    すると，$\{X(\omega)\le a\}=X^{-1}((-\infty,a])$などと表せる．
-\end{notation}
-
-\begin{definition}[almost surely]
-    $P\{\alpha\}=1$のとき，事象$\alpha$は\textbf{ほとんど確実に}起こるといい，$\alpha(\omega)\as$と書く．
-\end{definition}
-
-\begin{definition}[random variable]
-    $(\Omega,P)$上の$P$-可測実関数を\textbf{実確率変数}と呼ぶ．
-\end{definition}
-
-\section{条件付き期待値作用素}
-
-\chapter{確率過程}
-
-\section{関数空間CとD}
-
-\section{確率過程に関する一般事項}
-
-\section{情報と情報増大系}
-
-\begin{definition}[adapted]
-    $F=(F_t)_{t\in T}$を情報系，$X=(X_t)_{t\in T}$を確率過程とする．
-    \begin{enumerate}
-        \item $\forall_{t\in T}\;X_t$が$\F_t$-可測のとき，$X$は$F$に\textbf{適合}するという．
-        \item $\forall_{t\in T}\;X_t$が$\F_{t-1}$-可測のとき，$X$は$F$で\textbf{可予測}であるという．
-    \end{enumerate}
-\end{definition}
-
-\section{停止時}
-
-\section{離散時変数のマルチンゲール}
-
-\begin{theorem}[Doob–Meyer decomposition theorem]
-    任意の$(\F_n)$-劣マルチンゲール$(X_n)$は，$\F$-マルチンゲールな$M=(M_n)$と可予測な増大列$A=(A_n)$で$A_0=0,A_n\in L^1(\F_{n-1})\;(n=1,2,\cdots)$とに一意的に分解される：$X_n=M_n+A_n$．
-\end{theorem}
 
 \chapter{線型推測論}
 
@@ -3186,38 +3288,6 @@ title=]
 
     今日，漸近展開法も確率過程にまでその領域を広げ，新しい確率統計学が発展しつつあるが，このような新領域を理解する上でも，独立確率変数列における現象を理解することが重要である．
 \end{quotation}
-
-\chapter{Martingale}
-
-\section{Introduction}
-
-回帰モデル$X_i=f(X_{i-1},\cdots,X_{i-p})+\ep_i$において，
-サンプリングが均等でないときなど，$\ep_i$は何か連続的な確率過程を積分して定まる，と考えると
-数理モデルとして非常に自然である．連続関数$f$について，
-\[Y_t=Y_0+\int^t_0f(Y_s)ds+W_t\]
-とし，$W_{t_i}-W_{t_{i-1}}\sim\N(0.t_i-t_{i-1})$を標準Weiner過程とする．
-
-このようなモデルのうち，特に株価の対数を$Y_t$とおいたときに使われるパラメトリックモデルに，
-\textbf{Vasicek過程}
-\[Y_t=Y_0-\int^t_0\al_1(Y_s-\al_2)ds+\beta W_t\]
-などがあり，離散的観測$\{Y{t_0},\cdots,Y_{t_n}\}$に基づいて未知パラメータ$\al_1,\al_2,\beta$の推定を考える．
-このときにマルチンゲール理論が使える．
-
-その理由は，martingaleというクラスの形式的定義が，自然に統計モデルの「ノイズの直交性」の拡張となっていると考えられるためである．
-これは独立性の仮定による代数規則$E[\ep_i\ep_j]=0$の抽出となっているのである．
-
-大きな応用分野として生存解析におけるcensored data\footnote{消息不明になる瞬間があること．癌の再発データにおいて，他の原因による死亡など．}の解析がある．
-このとき，$N_t$を死亡数，$Y_t$をcensorされずに残っている観測対象数，癌の再発時刻の分布関数を$F$，密度関数を$f$とすると，
-\[N_t-\int^t_0\al(s)Y_sds\qquad\al(t)=\frac{f(t)}{1-F(t)}\]
-はマルチンゲールになる．$\al$はハザード関数といい，患者が時刻$t$で生存しているという条件の下，その時間に死亡する条件付き確率となる．
-このマルチンゲールの期待値は常に$0$だから，$N_t$の不偏推定量が見つかったことになる．
-なお，
-\[\int^t_0\frac{1}{Y_s}(dM_s-\al(s)Y_sds)\]
-もマルチンゲールとなることがわかる．
-
-\section{semimartingale}
-
-
 
 \begin{thebibliography}{99}
     \bibitem{Voevodsky}

@@ -3,10 +3,11 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \newcommand{\frakP}{\mathfrak{P}}
-\newcommand{\G}{\mathbf{G}}
+\renewcommand{\G}{\mathbf{G}}
 \newcommand{\Cr}{\C\setminus[\Delta(0,1/r)]}
 \newcommand{\Pone}{\P^1(\C)}
 \setcounter{chapter}{-1}
@@ -21,9 +22,7 @@
     「二次方程式を一般的に解く為には所謂虚数が必要であることが早く認められたのである。実数と虚数とを総括して、ガウス以来それを複素数と称する。
     数の範囲を複素数まで拡張することは、方程式論のみでなく、現今の数学の各部門に於て緊要であって、実数のみに関する問題に於ても、それを複素数の立場から考察するとき、明瞭に解決される場合が多い。
     これは次元の拡張であって、恰も上空から瞰下するとき、地上の光景が明快に観取せられるようなものである。」
-    \begin{flushright}
-        ――高木貞治『代数学講義』
-    \end{flushright}
+        高木貞治「代数学講義」
     \begin{itemize}
         \item 複素数の言葉を得ることによって，あまりに大き過ぎて捕らえられなかった模様が見えてくる．
         \item 数の体系を位相的に拡張することで，その射＝正則関数はさらに振る舞いがよくなる．こうして得る圏は層をなすので，見通しが良くなる．これが複素解析の実態だろう．
@@ -1887,9 +1886,9 @@ $\R^3$内の原点を中心とした単位球面を$S^2$とし，$N:=\begin{pmat
     \[ f(z) = \log|z| + i\arg z. \]
 \end{discussion}
 
-\begin{definition}[principle value]
+\begin{definition}[principle value]\label{def-principle-value-of-log}
     以上の議論に基づいて，
-    現状議論できる最大元の定義域としては$\C\setminus(-\infty,0]$上において，
+    現状議論できる最大限の定義域としては$\C\setminus(-\infty,0]$上において，
     偏角の主値$\arg:\C\to(-\pi,\pi)$を用いて，関数$\Log:\C\setminus(-\infty,0]\to\C$を次のように定めることができる：
     \[ \Log(z):=\log|z|+i\arg z. \]
     これを\textbf{対数関数の主値}という．
@@ -1935,7 +1934,6 @@ $\R^3$内の原点を中心とした単位球面を$S^2$とし，$N:=\begin{pmat
     原点からの変位$z_0\in\C\setminus\{0\}$に対して，半径$r:=|z_0|$の範囲で
     冪級数展開ができる．
 \end{definition}
-
 
 \chapter{複素積分とCauchyの定理}
 
@@ -4755,10 +4753,11 @@ title=]
 \begin{quotation}
     正則関数の標準形について考察する．
     \begin{enumerate}
-        \item 有理関数の部分分数分解を$\C$上の有理型関数$\C\to\hatC$に一般化する．
+        \item 有理関数の部分分数分解を$\C$上の有理型関数$\C\to\hatC$に一般化する．これは「有理型関数の可算個の極の主要部をすべて引くと，整関数が残る」という理論である．
         \item 多項式の因数分解を整関数に一般化する．
     \end{enumerate}
     それぞれ無限和と無限積の収束の問題となる．
+    これらの議論により，多項式と有理関数の関係と同様，有理型関数は，整関数$/$整関数と表示できることがわかる．
 \end{quotation}
 
 \section{有理型関数の部分分数展開}
@@ -4991,7 +4990,7 @@ title=]
     先ほどは和だったが，積の標準形の理論を立てたい．
 \end{tcolorbox}
 
-\begin{discussion}
+\begin{discussion}[モチベーション]
     多項式$P$の零でない根を重複度を込めて$a_1,\cdots,a_m$とし，$z=0$での零点の位数を$l\ge 0$とすると，定数$c\ne 0$を用いて
     \[P(z)=z^lc\prod_{n=1}^m(1-\frac{z}{a_n})\]
     と表せる．
@@ -5005,25 +5004,86 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
     title=無限積という概念]
     安直に部分積の極限と考えると，何も証明できない理論を得る．
+    そこで，「有限項を除いて$0$でない数に収束する列」を無限積の極限とする．
 \end{tcolorbox}
 
-\begin{definition}[無限積の収束]\mbox{}
+\begin{definition}[複素数の無限積の収束]\mbox{}
     \begin{enumerate}
         \item 
     複素数列$(z_n)_{n\in\N}$に対し，無限積$\prod_{n\in\N}z_n$が収束するとは，
     \[\exists N\in\N,\;\exists \alpha_N\in\C,\;\alpha_N=\lim_{m\to\infty}\prod_{n=N}^mz_n\ne 0\]
     が成り立つことをいう．
-        \item この時，極限値を$\prod_{n\in\N}z_n:=$
+        \item この時，無限積の極限値を$\prod_{n\in\N}z_n:=\al_N\prod^{N-1}_{k=1}z_k$とする．
     \end{enumerate}
 \end{definition}
 
-\subsection{無限積の収束}
-
 \begin{lemma}
-    無限積$\prod_{n=1}^\infty z_n$が収束するならば，$\lim_{n\to\infty}z_n=1$である．
+    この定義は，(1)の条件を満たす$N\in\N$，ひいては$\al_N\in\C^\times$の取り方に依らない．
 \end{lemma}
 
+\begin{definition}[関数列の無限積の収束]\mbox{}
+    \begin{enumerate}
+        \item 関数列$(f_n)$の無限積$\prod^\infty_{n=1}f_n$が収束するとは，$\exists_{N\in\N}\;F_N(z):=\lim_{m\to\infty}\prod^m_{n=N}f_n(z)$が収束し，零点を持たない．
+        \item 無限積を$\prod^\infty_{n=1}f_n:=F_N\prod^{N-1}_{n=1}f_n$と定め，$F_m$が一様収束するとき，無限積が一様収束するという．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[対数微分]
+    領域$D$上の零でない正則関数の列$(f_n)$に対して，$F_n:=\prod^\infty_{n=1}f_n$は広義一様収束するとする．
+    このとき，$F$は正則であり，
+    \[\frac{F'}{F}=\prod^\infty_{n=1}\frac{f'_n}{f_n}\]
+    が成り立つ．
+\end{lemma}
+
+\subsection{無限積の収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\begin{lemma}[無限積の収束に必要な自明な必要条件]
+    無限積$\prod_{n=1}^\infty z_n$が収束するならば，$\lim_{n\to\infty}z_n=1$である．
+\end{lemma}
+\begin{proof}
+    ある$M\in\N$が存在して，$P_m:=\prod^m_{n=M}z_n$は$\al\ne0$に収束する．このとき，
+    \[\lim_{m\to\infty}z_m=\lim_{m\to\infty}\frac{P_m}{P_{m-1}}=\frac{\al}{\al}=1.\]
+\end{proof}
+
+\begin{discussion}
+    そこで，無限積を$\prod^\infty_{n=1}(1+a_n)$と見ることを考える．これが収束するには，$\lim_{n\to\infty}a_n=0$が必要．
+    無限積の収束の判定では最初の有限項は無視して良いから，最初から$\abs{a_n}<1$を仮定しても実用性を失わない．
+    すると，列$(1+a_n)$は右半平面上の点列である．
+    $z$が負の実軸上にないときは，$\log z$を虚部の値域が$(-\pi,\pi)$に含まれるように取れる．
+    これを対数の主値といい，$\Log:\C\setminus(-\infty,0]\to\C$で表すのであった\ref{def-principle-value-of-log}．
+\end{discussion}
+
+\begin{theorem}[無限積が収束することの特徴付け]
+    $\Delta$内の点列$(a_n)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\prod^\infty_{n=1}(1+a_n)$は収束する．
+        \item $\sum^\infty_{n=1}\Log(1+a_n)$は収束する．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    $\Delta$内の点列$(a_n)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\sum^\infty_{n=1}\abs{a_n}<\infty$．
+        \item $\sum^\infty_{n=1}\abs{\Log(1+a_n)}<\infty$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    関数列$(f_n)$について，$\sum_{n\in\N}f_n$が一様収束すれば，$\prod_{n\in\N}(1+f_n)$も一様収束する．
+\end{theorem}
+
 \subsection{Weierstrassの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    零点に当たる離散集合と重複度を指定することにより，これに対応する整関数を構成し，無限積で表示できる．
+\end{tcolorbox}
 
 \begin{theorem}[Weierstrass]\mbox{}\label{thm-Weierstrass-pre}
     \begin{enumerate}
@@ -5033,8 +5093,116 @@ title=]
         広義一様収束する
     \end{enumerate}
 \end{theorem}
+\begin{proof}
+    一般の複素領域における証明は\ref{thm-Weierstrass-zero}．
+    ここでは構成的に証明する．
+\end{proof}
+
+\begin{example}
+    $\N$に１位の零点を持つ整関数は，$P_n(z)=z/n$ととれて，次のような積表示を持つ：
+    \[\tcboxmath{e^{g(z)}\prod^{\infty}_{n=1}\paren{1-\frac{z}{n}}e^{z/n}}\]
+\end{example}
+\begin{remark}[genus]
+    これは，$(P_n)$を常に１次式として取っている．
+    実は，ある自然数$k\in\N$に対して，$0$でない$a_n$に関する和$\sum_{n\in\N,a_n\ne0}\abs{a_n}^{-k-1}$が有限であるとき，$P_n(z)$として$k$次式を取れる．
+    このような$k\in\N$の最小値を，列$(a_n)$の\textbf{種数}といい，$a_n=n$の場合，種数は１である．
+\end{remark}
+
+\begin{corollary}
+    $\C$上の有理型関数$F$は，２つの整関数$f,g$の商$f/g$として表せる．
+\end{corollary}
+
+\begin{example}
+    \[\tcboxmath{\sin\pi z=\pi z\prod_{n\in\Z\setminus\{0\}}\paren{1-\frac{z}{n}}e^{z/n}=\pi z\prod^\infty_{n=1}\paren{1-\frac{z^2}{n^2}}}\]
+\end{example}
 
 \section{Gamma関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gamma関数は，積分を通じて定義され，関数等式$\Gamma(z+1)=z\Gamma(z)$によって延長されて得る$\C$上の有理型関数で，
+    無限積表示の重要な例を与える．
+\end{tcolorbox}
+
+\subsection{定義と性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分の表示により定義できるのは右半平面上の正則関数であるが，性質$\Gamma(z+1)=z\Gamma(z)$を用いて，$\C$上の有理型関数に延長できる．
+    構成は，$\Gamma_{-1}:=\frac{\Gamma(z+1)}{z}$とする．
+\end{tcolorbox}
+
+\begin{definition}
+    \[\Gamma(z):=\int^\infty_0e^{-t}t^{z-1}dt\quad\Re z>0\]
+    は，右半平面上の正則関数を定める．
+\end{definition}
+\begin{proof}
+    \[D_\delta:=\Brace{z\in\C\mid\delta<\Re z<1/\delta}\quad\delta\in(0,1)\]
+    とおく．$\abs{e^{-t}t^{z-1}}=\abs{e^{-t}t^{\Re z-1}t^{t\Im z}}=\abs{e^{-t}t^{\Re z-1}}$より，
+    任意の$z\in D_\delta$について，
+    \begin{align*}
+        \int^\infty_0\abs{e^{-t}t^{z-1}}&\le\int^1_0e^{-t}t^{\delta-1}dt+\int^\infty_1e^{-t}t^{1/\delta-1}dt\\
+        &\le\int^1_0t^{\delta-1}dt+c_\delta\int^\infty_1e^{-t/2}dt<\infty.
+    \end{align*}
+    ただし，$c_\delta:=\max_{t\ge 1}e^{-t/2}t^{1/\delta-1}$とした．
+    よって，$\Gamma_\ep(z):=\int^{1/\ep}_\ep e^{-t}t^{z-1}dt$とすると，これは$\ep\to0$のとき$D_\delta$上で一様に$\Gamma$に収束する（$z\in D_\delta$は任意に取ったので）．
+    定理\ref{thm-propagation-of-regularity-through-compact-convergence}より，各$\Gamma_\ep$が$D_\delta$上で正則であることを示せば十分．
+
+    $\gamma$を$D_\delta$内の$C^1$級閉曲線とするとき，Fubiniの定理より，
+    \begin{align*}
+        \int_\gamma\Gamma_\ep(z)dz&=\int_\gamma\int^{1/\ep}_\ep e^{-t}t^{z-1}dtdz\\
+        &=\int^{1/\ep}_{\ep}e^{-t}\int_\Gamma t^{z-1}dzdt=0.
+    \end{align*}
+    よって，Moreraの定理\ref{thm-Morera}より，$\Gamma_\ep$は正則．
+\end{proof}
+
+\begin{theorem}
+    $\Re z>0$について，
+    $\Gamma(z+1)=z\Gamma(z)$．特に，$\forall_{n\in\N}\;\Gamma(n)=(n-1)!$．
+\end{theorem}
+\begin{proof}
+    部分積分による．
+    小さな$\ep>0$について，
+    \[\int^{1/\ep}_\ep\dd{}{t}(e^{-t}t^z)dt=-\int^{1/\ep}_\ep e^{-t}t^zdt+z\int^{1/\ep}_\ep e^{-t}t^{z-1}dt.\]
+    $\ep\to0$の極限を考えると，右辺は$\Gamma(z+1)+z\Gamma(z)$に，左辺は$0$に収束する．
+\end{proof}
+
+\begin{discussion}[複素平面全体への延長]
+    
+\end{discussion}
+
+\subsection{反転公式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gamma関数を$\C$上の有理型関数に延長すると，いままでの複素関数論が応用できる．
+\end{tcolorbox}
+
+\begin{theorem}[Gamma関数の反転公式]
+    有理型関数として等しい：$\Gamma(z)\Gamma(1-z)=\frac{\pi}{\sin\pi z}$．
+    特に，$z=1/2$のときより，$\Gamma(1/2)=\sqrt{\pi}$．
+    また特に，$\Gamma$は$\C$上に零点を持たない．
+\end{theorem}
+
+\begin{corollary}
+    \[\frac{1}{\Gamma(z)}=ze^{g(z)}\prod^\infty_{n=1}\paren{1+\frac{z}{n}}e^{-z/n}\]
+    で，オイラー定数
+    \[\gamma:=\lim_{n\to\infty}\paren{\sum^n_{k=1}\frac{1}{n}-\log n}\]
+    を用いて，$g(z)=\gamma z$と表せる．
+\end{corollary}
+
+\subsection{ベータ関数}
+
+\begin{definition}
+    \[B(z,w):=\int^1_0(1-t)^{z-1}t^{w-1}dt\quad(\Re z>0,\Re w>0).\]
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $B(z,w)=\frac{\Gamma(z)\Gamma(w)}{\Gamma(z+w)}$．
+        \item $B(z,w)=\int^\infty_0\frac{u^{z-1}}{(1+u)^{z+w}}du$．
+    \end{enumerate}
+\end{proposition}
 
 \part{複素解析学II}
 

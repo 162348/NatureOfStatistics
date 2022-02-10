@@ -2,7 +2,8 @@
 \title{今日の代数学}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/github/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -516,6 +517,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $M_n(K[x])$の元を，$x$-行列と呼ぶこととすると，これは$M_n(K)$の一般化である．
+    また，これは行列係数の多項式環$M_n(K)[x]$と自然に同一視できる．
 \end{tcolorbox}
 
 \begin{definition}
@@ -567,6 +569,75 @@ title=]
 \begin{remarks}
     なるほど，環上の加群論はたしかに環論の応用である．
 \end{remarks}
+
+\begin{corollary}[行列の相似性の特徴付け]
+    $x$-行列$A(x),B(x)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $A,B$は対等である．
+        \item $A,B$の階数$r$と単因子$e_1,\cdots,e_r$が一致する．
+        \item $B=PAQ$となるような２つの可逆行列$P,Q\in\GL_n(K[x])$が存在する．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}\mbox{}
+    \begin{enumerate}
+        \item $x$-行列が可逆であることと，単位行列に対等であることとは同値．
+        \item 任意の可逆行列は基本行列の積として表せる．
+        \item 可逆行列は，左または右基本変形のどちらか一方のみで単位行列に変換される．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{特性行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $x$-行列に対して単因子論が必要であったが，$M_n(K)$の標準形の理論にどうつながるかといえば，特性行列としてつながる．
+\end{tcolorbox}
+
+\begin{definition}[characteristic matrix]
+    行列$A\in M_n(K)$に対し，$x$-行列$xE-A$を，$A$の\textbf{特性$x$-行列}という．
+\end{definition}
+
+\begin{definition}[degree]
+    \[A(x)=A_0x^k+A_1x^{k-1}+\cdots+A_{k-1}x+A_k,\quad A_0\ne O\]
+    によって，自然な同一視$M_n(K[x])\simeq M_n(K)[x]$が導かれる．
+    このとき$k$を，$A(x)$の\textbf{冪次数}という．
+\end{definition}
+
+\begin{theorem}
+    $A,B\in M_n(K)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $A,B$は相似である：$A\sim B$．すなわち，$\exists_{P\in\GL_n(K)}\;B=P^{-1}AP$．
+        \item 特性$x$-行列$xE-A,xE-B$は対等である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $A\in M_n(K)$は，${}^t\!A$に相似である．
+\end{corollary}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 冪次数$k$の$x$-行列$P(x)\in M_n(K[x])$が
+        \begin{align*}
+            P(x)&=P_0x^k+P_1x^{k-1}+\cdots+P_{k-1}x+P_k,\quad P_0\ne O,\\
+            P(x)&=P_1(x)(xE-B)+P
+        \end{align*}
+        と表されるとする．このとき，
+        \[P=P_0B^k+P_1B^{k-1}+\cdots+P_{k-1}B+P_k\]
+        となる．
+        \item 冪次数$k$の$x$-行列$Q(x)\in M_n(K[x])$が
+        \begin{align*}
+            Q(x)&=Q_0x^l+Q_1x^{l-1}+\cdots+Q_{l-1}x+Q_l,\quad Q_0\ne O,\\
+            Q(x)&=(xE-A)Q_1(x)+Q
+        \end{align*}
+        と表されるとする．このとき，
+        \[Q=A^lQ_0+A^{l-1}Q_1+\cdots+AQ_{l-1}+Q_l\]
+        となる．
+    \end{enumerate}
+\end{proposition}
+
+\section{Jordan標準形と最小多項式}
 
 \section{有限生成アーベル群の基本定理}
 
