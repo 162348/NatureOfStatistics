@@ -2,7 +2,7 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -2087,8 +2087,11 @@ title=]
 \chapter{Hilbert Space}
 
 \begin{quotation}
-    完備な距離を内積が誘導する場合をHilbert空間という．些細な違いかもしれないが，理論がフルパワーを発するのはこの場合のみである．
+    完備な距離を内積が誘導する場合をHilbert空間という．
+    これは，標準的なペアリングが存在するBanach空間論と見れる．
+    些細な違いかもしれないが，理論がフルパワーを発するのはこの場合のみである．
     特に，Banach空間上の作用素にはほとんど一般論が成り立たない．
+    例えばHilbert空間には，標準的なペアリングを通じてRieszの表現が存在する．
 
     Banach空間上に，内積$L^p(X)\times L^q(X)\ni(f,g)\mapsto\brac{f,g}:=\int f\o{g}$によって，
     $(L^p(X))^*\simeq L^q(X)$なる同型が誘導される\ref{thm-duality-of-Lp}．
@@ -2096,6 +2099,13 @@ title=]
 \end{quotation}
 
 \section{内積}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hilbert空間には内積という名前の標準的なペアリングが存在する．
+    これを通じてRieszの表現が存在し，また直交性の概念が定義される．
+    これは基底論にも影響を与え，Hilbert空間の分類は有限次元線型空間論の延長に落ちる．
+\end{tcolorbox}
 
 \subsection{半双線型形式とセミノルムの関係}
 
@@ -2616,6 +2626,14 @@ Fourier展開は$L^2$-ノルムで収束する．
 title=]
     $B(H)$は作用素ノルムと随伴について，単位的な$C^*$-環となる．
     実は$H$はEuclid空間の自然な一般化であまり面白くない．自己準同型の空間$B(H)$が主な対象であり，$H$の幾何学について多くのことを教えてくれる．
+    \begin{enumerate}
+        \item まず，$B(H)$の$C^*$-環としての構造を定式化し，$*:B(H)\to B(H)$に関する不変部分空間$B(H)_\sa$の元として自己共役作用素とその順序．
+        そしてその内部に閉凸錐をなす正作用素とその例としての直交射影を調べる．直交射影への分解を対角化という．
+        \item 引き続いて，Hilbert空間の距離構造に注目して，これを保つ自己射としてのユニタリ作用素と，これらすべてを含む正規作用素などのクラスを調べる．ユニタリ作用素への分解が可能であることをRusso-Dye-Gradner定理が保証する．
+        \item 最後に，自己共役作用素を調べる際に頻出した構造である数域についてまとめ，そのスペクトルとの関係もみながら，作用素の具体例をまとめる．
+    \end{enumerate}
+    以上の$B(H)$と$B(H)_\sa$の構造は，一般の$C^*$-代数$A$と$\Re A$の骨組みでもある．
+    Hilbert空間上の作用素を調べるのに必要な道具でもある．
 \end{tcolorbox}
 
 \begin{notation}
@@ -2629,12 +2647,14 @@ title=]
     これが作用素の研究の第一歩となる．
 \end{history}
 
-\subsection{随伴}
+\subsection{随伴作用素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Hilbert空間では，内積を通じて作用素の間に対応がつく．
-    これを随伴と呼ぶ．これは行列の共役転置の一般化に他ならない．
+    Hilbert空間では，標準的なペアリングを通じて任意の有界線型作用素を表現できるのであった．
+    これは随伴と呼ばれる対合$*:B(H)\to B(H)$を作用素の間に定める．
+    こちらの構造はさらに奥が深い．
+    これは行列の共役転置の一般化である．
     またこうして自己共役性の概念が内積から作用素へ流入する．
 \end{tcolorbox}
 
@@ -2723,16 +2743,25 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     自己共役作用素はノルムに対して特殊な振る舞いをする．
-    まず$B(H)$を調べる方法として，距離構造に注目する．
-    すると正規作用素などの性質は純粋に距離の言葉のみでも捉えられる．
+    特に，作用素ノルムの特徴付け$\norm{T}=\sup_{x\in\partial B}\abs{(Ax|x)}\;(T\in B(H)_\sa)$は本質的であり，
+    自己共役作用素を調べるのに，半内積$(T-|-)$の構造と，これについての一般化Cauchy-Schwartzの不等式$\abs{(Ax|y)}\le\sqrt{(Ax|x)(Ay|y)}$を多用する．
 \end{tcolorbox}
 
 \begin{definition}[self-adjoint / hermitian]\mbox{}
     \begin{enumerate}
         \item 乗法についての反準同型$*:B(H)\to B(H)$が対合な共役線型写像で，等長同型でもあるとき，$(B(H),*)$を$B^*$-代数という．$C^*$-性$\norm{T^*T}=\norm{T}^2$も満たすとき，$C^*$-代数という．\footnote{最初に定義したI. E. Segal in 1947で，$C$は"Closed"から取られた．\url{https://en.wikipedia.org/wiki/C*-algebra}}
-        \item $T\in B(H)$が$T=T^*$を満たすとき，これを自己共役作用素という．これを$B_\sa(H)=B(H)^{\Brace{*}}$と表すと，$B(H)$の閉な実部分空間となる．
+        \item $T\in B(H)$が$T=T^*$を満たすとき，これを自己共役作用素という．これを$B_\sa(H)=B(H)^{\Brace{*}}$\footnote{群作用に対する不変式の記法を踏襲した．}と表すと，$B(H)$の閉な実部分空間となる．
     \end{enumerate}
 \end{definition}
+
+\begin{example}[随伴]\mbox{}
+    \begin{enumerate}
+        \item 乗算作用素\ref{operator-multiplication}については$M^*_\varphi=M_{\o{\varphi}}$となる．よって，$\varphi\in L^\infty(^mu)$が実数値である場合に限り，自己共役である．$\abs{\phi}=1$である場合に限り，ユニタリである．
+        \item $k$を核とする積分作用素$K$\ref{operator-integral-transformation}については$K^*$は$k^*(x,y)=\o{k(y,x)}$を核とする積分作用素となる．よって，$k(x,y)=\o{k(y,x)}\;\ae[\mu\times\mu]$である場合に限り，自己共役である．
+        \item shift作用素\ref{operator-unilateral-shift}は方向が逆になる：$S^*(\al_1,\al_2,\cdots)=(\al_2,\al_3,\cdots)$．これを\textbf{後方シフト(backward shift)}と呼ぶ．
+        \item 複素Hilbert空間$H$上の作用素$A\in B(H)$について，$B:=\frac{A+A^*}{2},C:=\frac{A-A^*}{2}$をそれぞれ実部と虚部と呼び，自己共役である．
+    \end{enumerate}
+\end{example}
 
 \begin{corollary}[自己共役作用素の特徴付け]
     $\bF=\C$のとき，次の２条件は同値．
@@ -2746,25 +2775,35 @@ title=]
     $H$が実Hilbert空間という仮定のみでは，その上の任意の作用素$A\in B(H)$に対して$\brac{Ah,g}\in\R$が常に成り立つので，特徴付けにならないことに注意．
 \end{remark}
 
-\begin{proposition}
+\begin{proposition}[自己共役作用素の作用素ノルム]\label{prop-operator-norm-of-self-adjoint-operator}
     $A$を自己共役作用素とする．このとき，作用素ノルムは
-    \[\norm{A}=\sup\Brace{\abs{(Ax|x)}\in\R\mid\norm{x}=1}\]
+    \[\norm{A}=\sup\Brace{\abs{(Ax|x)}\in\R\mid\norm{x}=1}=\sup_{x\ne0}\frac{\abs{(Ax|x)}}{\norm{x}^2}.\]
     とも表せる．
 \end{proposition}
+\begin{remarks}[数域]
+    これはRayleigh商の値域になっている．数域半径と深い関係にある．
+\end{remarks}
 
-\begin{corollary}
+\begin{corollary}[半内積の非退化性]\label{cor-nondegeneratedness-of-semi-inner-product}
     $A$を自己共役作用素とする．このとき，$\forall_{x\in H}\;(Ax|x)=0\Rightarrow A=0$．
     なお，$H$が複素Hilbert空間ならば，一般の$A$について成り立つ．
 \end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 自己共役作用素の作用素ノルムの性質\ref{prop-operator-norm-of-self-adjoint-operator}により，$\forall_{x\in H}\;(Ax|x)=0\Rightarrow\norm{A}=0\Rightarrow A=0$が従うことによる．
+        \item ？？
+    \end{enumerate}
+\end{proof}
 
-\subsection{Hilbの同型}
+\subsection{位相線形空間としての同型}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    ${}^*:B(H)\to B(H)$というのはある種${}^\op$のように使える．　
+    ${}^*:B(H)\to B(H)$というのはある種${}^\op$のように使える．
+    作用素の可逆性は，随伴の消息を以て特徴付けることが出来る．
 \end{tcolorbox}
 
-\begin{proposition}
+\begin{proposition}\label{prop-Ker-of-adjoint-operator}
     任意の$T\in B(H)$に対して，$\Ker T^*=(\Im T)^\perp$．
 \end{proposition}
 \begin{proof}
@@ -2772,8 +2811,11 @@ title=]
     $y\in\Ker T^*\Rightarrow (T(H)|y)=0$より，$y\in(T(H))^\perp$．
     逆に$y\in(T(H))^\perp\Rightarrow (H|T^*y)=0\Rightarrow T^*y\in H^\perp=\{0\}$．
 \end{proof}
+\begin{remark}
+    双対的な関係は$(\Ker A)^\perp=\oo{\Im A^*}$までしか成り立たない．
+\end{remark}
 
-\begin{proposition}
+\begin{proposition}\label{prop-characterization-of-invertibleness-of-operator}
     $T\in B(H)$について，次の６条件は同値．
     \begin{enumerate}
         \item $T$は可逆：$T^{-1}\in B(H)$．
@@ -2796,16 +2838,47 @@ title=]
     \end{description}
 \end{proof}
 
+\subsection{Hilbの射}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hilbの射は等長同型（＝全写な等長写像）であった．
+    一般にMetでは計量写像(short map)を射とする．
+    そこでは，等長写像がモノ射となる．
+\end{tcolorbox}
+
+\begin{proposition}[モノ射の内積による特徴付け]\label{prop-characterization-of-isometry}
+    $V:H\to K$を線型写像とする．
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $V$は等長写像である．
+        \item $\forall_{h,g\in H}\;(Vh|Vg)=(h|g)$．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(2)$\Rightarrow$(1)] $\forall_{h\in H}\;\norm{Vh}^2=(Vh|Vh)=(h|h)=\norm{h}^2$より，$V$は等長である．
+        \item[(1)$\Rightarrow$(2)] $\forall_{\lambda\in\bF}\;\norm{h+\lambda g}^2=\norm{Vh+\lambda Vg}^2$について，極化恒等式を用いると，
+        \[\norm{h}^2+2\Re\o{\lambda}(h|g)+\abs{\lambda}^2\norm{g}^2=\norm{Vh}^2+2\Re\o{\lambda}(Vh|Vg)+\abs{\lambda}^2\norm{Vg}^2\]
+        より，$\forall_{\lambda\in\bF}\;\Re\o{\lambda}(h|g)=\Re\o{\lambda}(Vh|Vg)$．
+        $\bF=\R$のとき，$\lambda=1$とすると結論を得る．$\bF=\C$のとき，$\lambda=1,i$とすると結論を得る．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    内積とノルムをつなぐものが極化恒等式である．
+\end{remarks}
+
 \subsection{正規作用素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    正規であるという可換性条件は，距離的な翻訳がある．
-    スペクトル定理は，正規作用素は対角化可能であることを主張する．
+    正規であるという可換性条件は，距離的な特徴付けがある．
+    随伴とノルム的に判別不可能ならば，正規である．
+    スペクトル定理は，正規作用素なるクラスが正確に対角化可能であることを主張する．
 \end{tcolorbox}
 
 \begin{definition}[normal]
-    作用素$T\in B(H)$について，次の２条件は同値．
+    作用素$T\in B(H)$について，次の２条件は同値．$\F=\C$のとき，(3)も同値．
     \begin{enumerate}
         \item $T^*T=TT^*$．
         \item (metrically identical) $\norm{Tx}=\norm{T^*x}$．
@@ -2819,37 +2892,194 @@ title=]
         \item[(2)$\Rightarrow$(1)] 極化恒等式から$\forall_{x,y\in H}\;(T^*Tx|y)=(TT^*x|y)$を得る．具体的には，
         \[\norm{Tx}^2-\norm{T^*x}^2=(Tx|Tx)-(T^*x|T^*x)=((TT^*-T^*T)x|x)\]
         であるが，交換子作用素$TT^*-T^*T$は自己共役であるから，任意の$x\in H$について，この式が常に$0$になるのは$TT^*=T^*T$と等価．
+        \item[(1)$\Leftrightarrow$(3)] $A=B+iC$とおく．
+        \begin{align*}
+            A^*A&=B^2+C^2+(BC-CB)i\\
+            AA^*&=B^2+C^2+(CB-BC)i
+        \end{align*}
+        より，$A^*A=AA^*\Leftrightarrow BC=CB$．
     \end{description}
 \end{proof}
 
-\begin{lemma}
+\begin{example}
+    自己共役作用素とユニタリ作用素は正規である．多くの書籍はスペクトル分解をこのクラスに限る．
+    また，半正定値作用素\ref{def-positive-operator}も正規である．
+\end{example}
+
+\begin{proposition}[等長写像の特徴付け]\label{prop-characterization-of-isometry-2}
+    $A\in B(H)$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $A$は等長写像である．
+        \item $A^*A=I$．
+        \item $\forall_{h,g\in H}\;(Ah|Ag)=(h|g)$．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Leftrightarrow$(3)] 等長写像の特徴付け\ref{prop-characterization-of-isometry}に他ならない．
+        \item[(2)$\Leftrightarrow$(3)] $\forall_{h,g\in H}\;(A^*Ah|g)=(Ah,Ag)$より，$A^*A=I$と同値．
+    \end{description}
+\end{proof}
+
+\begin{proposition}[同型の特徴付け]
+    $A\in B(H)$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $A^*A=AA^*=I$．
+        \item $A$は全写な等長写像，すなわちユニタリである．
+        \item $A$は正規な等長写像である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 等長写像の特徴付け\ref{prop-characterization-of-isometry-2}より$A$は等長で，また可逆であるから特に全写．
+        \item[(2)$\Rightarrow$(3)] $A$について，ユニタリならば等長だから，$A^*A=I$．また一般に，全写な等長写像$A$の逆写像$A^{-1}$も全写な等長写像である．よって，$(A^{-1})^*A^{-1}=I\Leftrightarrow(AA^*)^{-1}=I$．
+        \item[(3)$\Rightarrow$(1)] 等長写像の特徴付け\ref{prop-characterization-of-isometry-2}より，$A^*A=I$．$A$は正規だから，$AA^*=I$も成り立つ．
+    \end{description}
+\end{proof}
+
+\begin{corollary}
+    $A$が自己共役ならば，$\forall_{h\in H}\;(Ah|h)=0\Rightarrow A=0$．
+\end{corollary}
+
+\begin{corollary}[正規作用素の可逆性]\label{prop-characterization-of-invertibleness-of-normal-operator}
     正規作用素$T\in B(H)$について，次の２条件は同値．
     \begin{enumerate}
         \item $T$は可逆．
         \item $T$ is bounded away from zero．
     \end{enumerate}
-\end{lemma}
+\end{corollary}
+\begin{proof}
+    作用素の可逆性の特徴付け\ref{prop-characterization-of-invertibleness-of-operator}と，正規性の特徴付け$\norm{Tx}=\norm{T^*x}$より．
+\end{proof}
 
 \subsection{半正定値作用素}
 
-\begin{definition}[positive (semi-definite)]
-    $T\in B(H)$が\textbf{半正定値}であるとは，$T=T^*$かつ$\forall_{x\in H}\;(Tx|x)\ge 0$を満たすことをいう．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    半正定値作用素は，density matrix formalismを通じて，量子状態を表す．
+    自己共役作用素のうち，特別なクラスである．
+    大雑把には，複素平面内で，自己共役作用素は実数，正作用素は非負実数と見れる．
+\end{tcolorbox}
+
+\begin{definition}[positive (semi-definite)]\label{def-positive-operator}
+    $T\in B(H)$が\textbf{半正定値}であるとは，$T=T^*$かつ$\forall_{x\in H}\;(Tx|x)\ge 0$を満たすことをいう．\footnote{２つ条件があるように見えるが，$\bF=\C$かつ$T$が$H$全域で定義されているとき，半正定値性は自己共役性を含意する\ref{lemma-characterization-of-self-adjointness}．これは極化恒等式による．}
     これを「\textbf{作用素$T$は正である}」と省略して良い，$T\ge 0$と表す．正定値であることは$T>0$で表す．
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[正作用素の閉凸錐]\label{lemma-positive-closed-cone-of-positive-operator}
     $T_1,T_2\in B(H)$を半正定値とする．
     \begin{enumerate}
         \item $T_1+T_2$も半正定値：半正定値は作用素は凸錐をなす．
-        \item $T_1T_2$は一般には半正定値とも自己共役とも限らない．
+        \item 正作用素の凸錐は閉集合である．
+        \item $T_1T_2$は一般には半正定値とも自己共役とも限らないが，この積が自己共役であるとき，正である．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\forall_{x\in H}\;(T_1x+T_2x|x)=(T_1x|x)+(T_2x|x)\ge0$．
+        \item 閉性は，Cauchy列$(T_n)$を取ることによる．極限$T:=\lim_{n\to\infty}T_n$は正ではないと仮定する：$\exists_{x\in H}\;(Tx|x)<0$．$\ep:=-(Tx|x)>0$とおくと，$\exists_{N\in\N}\;\forall_{n\ge N}\;\norm{T_n-T}\le\ep/\norm{x}^2$だから，これについて，
+        \[\Abs{(T_nx|x)-(Tx|x)}=\abs{((T_n-T)x|x)}\le\ep.\]
+        よって，$T_n$が正であることに矛盾．
+        \item 二乗根補題\ref{prop-square-root-lemma}より，$ST=(S^{1/2})^2T=S^{1/2}TS^{1/2}\ge S^{1/2}0S^{1/2}=0$．
+        $\forall_{x\in H}\;(ABx|x)=(\sqrt{A}\sqrt{A}Bx|x)=(B\sqrt{A}x|\sqrt{A})\ge0$と言ってもよい．
+    \end{enumerate}
+\end{proof}
 
-\begin{proposition}\mbox{}
+
+\subsection{自己共役作用素の順序}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    幾何学的には，自己共役作用素のなす閉・実・順序部分空間$B(H)_\sa$の内部で閉凸錐をなす．
+    しかしこの順序は束にさえならず，より深い考察には二乗根補題を必要とする．
+\end{tcolorbox}
+
+\begin{proposition}[ordering by positive operator]\mbox{}
     \begin{enumerate}
         \item 自己共役な作用素は，$B(H)$の閉な実部分空間をなす．これを$B(H)_\sa$と表す．
-        \item この部分空間内の半正定値作用素のなす凸錐は，順序$S\le T:\Leftrightarrow T-S\ge 0$をなす．
+        \item $B(H)_\sa$は，順序$S\le T:\Leftrightarrow T-S\ge 0$を備える．
     \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $0\in B(H)$．$*:B(H)\to B(H)$は共役線型であるから，実数倍は関係$T=T^*$を変えず，和についても閉じている．
+        また，ノルム閉性については，$(T_n)$を$B(H)_\sa$のCauchy列とすると，収束先$T:=\lim_{n\to\infty}T_n$を持つ．$*:B(H)\to B(H)$は等長写像だから，像$(T_n^*)$もCauchy列で，収束先$T^*$を持ち，$*:B(H)\to B(H)$は特に連続だから，$T=\lim_{n\to\infty}T_n=\lim_{n\to\infty}T_n^*=T^*$．
+        \item \begin{enumerate}[(a)]
+            \item $S\le S\Leftrightarrow S-S=0\ge 0$は，零写像は半正定値だから，常に成り立つ．
+            \item $S\le T$かつ$T\le S$のとき，$\forall_{x\in H}\;(Tx|x)=(Sx|x)$であるから，$T=S$．これは，自己共役作用素の作用素ノルムの性質\ref{prop-operator-norm-of-self-adjoint-operator}により，$\forall_{x\in H}\;(Ax|x)=0\Rightarrow\norm{A}=0\Rightarrow A=0$が従うことによる．
+            \item 推移律は明らか．
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[数域：自己共役作用素に特徴的な対象]\label{lemma-numerical-range}
+    写像
+    \[\xymatrix@R-2pc{
+        B:B(H)_\sa\ar[r]&\Map(H,\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        T\ar@{|->}[r]&(T-|-)=:B_T(-)
+    }\]
+    を考える．
+    \begin{enumerate}
+        \item これは線型社像ではない，計量写像である．特に，有界．
+        \item 単射である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    等長同型であることを示せば，特に有界であること，すなわちこの写像のwell-definednessが従う．
+
+    まず，$\forall_{x\in B}\;\norm{(Tx|x)}\le\norm{Tx}\norm{x}\le\norm{x}^2\norm{T}\le\norm{T}$より，$\norm{(T-|-)}\le\norm{T}$．
+    逆は，任意の$x\in H$について，$(Tx|Tx)$を合成$x\mapsto Tx\mapsto (Tx|Tx)$と見ると，
+\end{proof}
+
+\begin{proposition}[自己共役作用素の順序]\label{prop-order-of-self-adjoint-operator}
+    $S,T\in B(H)_\sa$について，
+    \begin{enumerate}
+        \item $S\le T$ならば，$\forall_{A\in B(H)}\;A^*SA\le A^*TA$．
+        \item $0\le S\le T$ならば，$\norm{S}\le\norm{T}$．特に，正作用素$S\ge$について，$S\le I$と$\norm{S}\le1$とは同値．
+        \item $-I\le T\le I$と$\norm{T}\le 1$は同値．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $\bF=\R,\C$のいずれの場合も，自己共役作用素$T$について，$\forall_{x\in H}\;(Tx|x)\in\R$を満たすことに注意．
+    \begin{enumerate}
+        \item \begin{align*}
+            \forall_{y\in H}\;((T-S)y|y)\ge0&\Leftrightarrow\forall_{x\in H}\;((T-S)Ax|Ax)\ge0\\
+            &\Leftrightarrow\forall_{x\in H}\;(A^*(T-S)Ax|x)\ge0.
+        \end{align*}
+        なお，$A^*TA-A^*SA=A^*(T-S)A$は線型写像についてしか成り立たないことに注意．
+        \item 半内積$(S-|-):H\times H\to\bF$についてのCauchy-Schwartzの不等式，仮定$0\le S\le T$より，任意の単位ベクトル$x,y\in\partial B$について，
+        \begin{align*}
+            \abs{(Sx|y)}^2\le(Sx|x)(Sy|y)\le(Tx|x)(Ty|y)\le\norm{T}^2
+        \end{align*}
+        であるから，$\norm{S}^2\le\norm{T}^2$が従う．なお，左辺の上限が$\norm{S}^2$に等しいことは，等長同型\ref{lemma-correspondence-between-sesquilinearform-and-operator}による．
+        特に，$T=I$とすると，$0\le S\le I\Leftrightarrow\norm{S}\le 1$．
+        \item $\norm{T}\le 1$ならば，Cauchy-Schwartzの不等式より$\abs{(Tx|x)}\le\norm{x}^2=(x|x)$．
+        絶対値の場合分けより，$-I\le T\le I$が従う．
+        よって，$-I\le T\le I$を仮定して$\norm{T}\le 1$を導く．
+        仮定より，
+        \begin{align*}
+            (T(x+y)|x+y)&\le(I(x+y)|x+y),&(T(x-y)|x-y)&\ge(-I(x-y)|x-y)\\
+            \Leftrightarrow\quad(T(x+y)|x+y)&\le\norm{x+y}^2,&-(T(x-y)|x-y)&\le\norm{x-y}^2.
+        \end{align*}
+        これと中線定理を併せて，特に単位ベクトル$x,y\in\partial B$について，
+        \begin{align*}
+            &(T(x+y)|x+y)-(T(x-y)|x-y)&\le &2(\norm{x}^2+\norm{y}^2)\\
+            \Leftrightarrow\quad&4\Re(Tx|y)&\le&4.
+        \end{align*}
+    \end{enumerate}
+    $x,y\in\partial B$は任意に取ったから，等長同型対応\ref{lemma-correspondence-between-sesquilinearform-and-operator}を通じて，
+    $\norm{T}\le 1$を得る．
+\end{proof}
+
+\begin{theorem}[有界単調収束定理\cite{Eidelman}]
+    $A_0\le A_1\le\cdots\le A_n\le\cdots\le A$を$B(H)_\sa$の有界な単調増加列とする．
+    このとき，ある有界作用素$B$が存在して，これに各点収束する．
+\end{theorem}
+
+\begin{proposition}[\cite{Eidelman}]
+    $A\in B(H)_\sa$は$\exists_{m,M\in\R}\;m I\le A\le MI$を満たすとし，$P\in\R[x]$を$\forall_{z\in[m,M]}\;P(z)\ge0$を満たす多項式とする．
+    このとき，$P(A)\ge0$．
 \end{proposition}
 
 \subsection{二乗根補題}
@@ -2857,97 +3087,200 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     正作用素は正規作用素の代表例だが，その正規たる所以を解明する．
+    基本的にはスペクトル定理の帰結でもある．
+
+    正作用素は凸錐をなすが，その中に二乗根が必ず見つかる．
+    可逆性は，順序構造を用いて特徴付けることが出来る．
+    また正作用素の逆は再び正である．
 \end{tcolorbox}
 
-\begin{proposition}
-    $S,T\in B(H)_\sa$について，
-    \begin{enumerate}
-        \item $S\le T$ならば，$\forall_{A\in B(H)}\;A^*SA\le A^*TA$．
-        \item さらに$0\le S$であるとき，$\norm{S}\le\norm{T}$．特に，$S\le I$ならば$\norm{S}\le1$．
-        \item $-I\le T\le I$と$\norm{T}\le 1$は同値．
-    \end{enumerate}
-\end{proposition}
-
 \begin{lemma}
-    正係数を持つ多項式の列$\{p_n\}\subset\R_{>0}[x]$であって，和$\sum_{n\in\N}p_n$が$[0,1]$上$t\mapsto 1-(1-t)^{1/2}$に一様収束するものが存在する．
+    正係数を持つ多項式の列$\{p_n\}\subset\R_{>0}[x]$であって，
+    和$\sum_{n\in\N}p_n$が$[0,1]$上で関数$t\mapsto 1-(1-t)^{1/2}$に一様収束するものが存在する．
 \end{lemma}
 
-\begin{proposition}[square root lemma]
+\begin{proposition}[square root lemma]\label{prop-square-root-lemma}
     半正定値な作用素$T\in B(H)$について，
     \begin{enumerate}
-        \item ただ一つの半正定値な作用素$T^{1/2}$が存在して，$(T^{1/2})^2=T$を満たす．
+        \item ただ一つの半正定値な作用素$T^{1/2}\ge0$が存在して，$(T^{1/2})^2=T$を満たす．
         \item $A\in B(H)$が$T$と可換ならば，$T^{1/2}$と可換である．
     \end{enumerate}
 \end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+        \begin{description}
+            \item[存在] 任意の$\al\ge 0$に対して，$(\al T)^{1/2}:=\al^{1/2}T^{1/2}$と対応させれば良いから，$T\le I$を仮定して存在を示せば良い．
+            $S:=I-T$とすると，$0\le S\le I$を満たす．
+            いま．補題の多項式列$\{p_n\}\subset\R_{\ge 0}[x]$に対して$S_n:=p_n(S)$と定めると，和$\sum_{n\in\N}p_n$は一様収束するから，
+            \[\forall_{\ep>0}\;\exists_{n_0\in\N}\;\forall_{m\ge n_0}\;\forall_{t\in[0,1]}\;0\le\sum_{n=n_0}^mp_n(t)=\sum\al_kt^k\le\ep.\]
+            $t=S$を代入すると，
+            \[\Abs{\sum^m_{n=n_0}S_n}\le\sum\al_k\norm{S^k}\le\sum\al_k\le\ep.\]
+            よって，$\sum S_n$はCauchy列だから，$0\le R\le I$を満たすある作用素$R$に一様収束する．
+            これについて，$T^{1/2}:=I-R$と定めれば良い．
+            \item[一意性]
+        \end{description}
+        \item $T^{1/2}$は，$I,T$からなる多項式の一様収束極限として構成したから，$T$と可換ならば$T^{1/2}$とも可換である．
+    \end{enumerate}
+\end{proof}
 
-\begin{proposition}
+\begin{corollary}
+    $A\ge 0$かつ$(Ax,x)=0$ならば，$Ax=0$．
+\end{corollary}
+\begin{proof}
+    $A$の二乗根$X:=\sqrt{A}$を取ると，$(Ax|x)=(Xx|Xx)=0$．内積の非退化性より，$Xx=0$．よって，$Ax=0$．
+\end{proof}
+\begin{remark}
+    一般の場合は\ref{cor-nondegeneratedness-of-semi-inner-product}に示してあるが，正作用素については二乗根補題より直接従う．
+\end{remark}
+
+\begin{proposition}[正作用素の可逆性]
     半正定値な作用素$T\in B(H)$について，
     \begin{enumerate}
         \item $T$が可逆であることと，$\exists_{\ep>0}\;T\ge\ep I$は同値．
-        \item $T^{-1}\ge 0$ならば，$T^{1/2}$は可逆で，$(T^{-1})^{1/2}=(T^{1/2})^{-1}$．
-        \item $T\le S$ならば，$S^{-1}\le T^{-1}$．
+        \item $T$が可逆であるとき，逆作用素も正$T^{-1}\ge 0$で，$T^{1/2}$も可逆で，$(T^{-1})^{1/2}=(T^{1/2})^{-1}=:T^{-1/2}$．
+        \item 可逆な$T$に対して$T\le S$ならば$S$も可逆で，$S^{-1}\le T^{-1}$．
     \end{enumerate}
 \end{proposition}
-
-\subsection{射影}
-
-\begin{definition}[(orthogonal) projection]\mbox{}
+\begin{proof}\mbox{}
     \begin{enumerate}
-        \item 閉部分空間$X\le H$について，直交分解$H=X+X^\perp$が導く作用素$P:H\to H;y\mapsto x$は$\norm{P}\le 1$かつ$P^2=P$を満たす，半正定値作用素である．これを\textbf{直交射影}という．
+        \item \begin{description}
+            \item[$\Leftarrow$] $T\ge\ep I$と仮定する．すると，２つの作用素$T-\ep I,T+\ep I$はいずれも正で，互いに可換であるから，積$T^2-\ep^2I$も正である：$T^2\ge\ep^2I$．
+            よって，
+            \[\norm{Tx}^2=(T^2x|x)\ge\ep^2(x|x)=\ep^2\norm{x}^2.\]
+            すなわち，$0$に対して有界であるから，$T$は可逆\ref{prop-characterization-of-invertibleness-of-operator}．
+            \item[$\Rightarrow$]
+            $T$が可逆ならば$0$に対して有界であるから，$\exists_{\ep>0}\;(T^2x|x)\norm{Tx}^2\ge^2\norm{x}^2=\ep^2(x|x)$より，$T^2\ge\ep^2I$．
+            いま，$\Leftarrow$より$T+\ep I$は可逆であり，その逆も正（(2)の結果を先に用いた）．
+            すると，$T-\ep I=(T^2-\ep^2I)(T+\ep I)^{-1}$と見ると，２つの可換な正作用素の積だから，これも正である．
+        \end{description}
+        \item $\forall_{x\in H}\;(T^{-1}Tx|Tx)=(Tx|x)\ge0$であるから，$T$が可逆であるとき特に$\Im T=H$であることと併せると，$T^{-1}\ge0$を得る．
+        (1)の$\Rightarrow$で$T^2\ge\ep^2I$から$T\ge\ep I$を導いた議論を繰り返すことにより，$T^{1/2}\ge\ep^{1/2}I$を得るから，(1)より可逆で正な逆作用素$(T^{1/2})^{-1}$を持つ．
+        二乗根の一意性より，$(T^{1/2})^{-1}=(T^{-1})^{1/2}$．
+        \item $T\le S$とすると，(1)より$S$も可逆で，また(2)より$S^{-1/2}$も存在する．
+        自己共役作用素の順序の性質\ref{prop-order-of-self-adjoint-operator}(1)より，$S^{-1/2}TS^{-1/2}\le S^{-1/2}SS^{-1/2}=I$．
+        $C^*$-性と自己共役作用素の順序の性質\ref{prop-order-of-self-adjoint-operator}(2)より，
+        \[\norm{T^{1/2}S^{-1/2}}^2=\norm{(T^{1/2}S^{-1/2})^*T^{1/2}S^{-1/2}}=\norm{S^{-1/2}TS^{-1/2}}\le 1.\]
+        すると再び$C^*$性と$*:B(H)\to B(H)$が等長写像であることより，
+        \[\norm{T^{1/2}S^{-1}T^{1/2}}=\norm{S^{-1/2}T^{1/2}}^2=\norm{T^{1/2}S^{-1/2}}^2\le1.\]
+        よって，$T^{1/2}S^{-1}T^{1/2}\le I$を得る．
+        再び自己共役作用素の順序の性質\ref{prop-order-of-self-adjoint-operator}(1)より，$S^{-1}\le T^{-1/2}IT^{-1/2}=T^{-1}$．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    正規作用素の可逆性はbounded away from zeroのみであった\ref{prop-characterization-of-invertibleness-of-normal-operator}．
+    正作用素については，これをさらに緩めることができる．
+\end{remarks}
+
+\subsection{直交射影と対角化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=対角化とは，直交射影への標準分解をいう．]
+    直交射影は，正作用素の代表例であり，$0\le P\le I$に位置する．
+    また作用素の中でも最も基本的なもので，実解析における特性関数のような役割を持つ．
+    単関数は直交射影の有限和に当たる．
+    これへの分解が対角化の理論である．
+\end{tcolorbox}
+
+\begin{definition}[orthogonal projection / orthoprojection]
+        一般に，冪等律を満たす線型作用素$P:H\to H,P^2=P$を射影という．射影が自己共役であるとき，\textbf{直交射影}であるという．\footnote{前者を冪等作用素，後者を射影と呼び分けることもある．この場合直交射影とは，直交分解が定める射影のことを指す．}
+\end{definition}
+\begin{example}[直交射影の直交分解による特徴付け]\mbox{}
+    \begin{enumerate}
+        \item 閉部分空間$X\le H$について，直交分解$H=X+X^\perp$が導く作用素$P:H\to H;y\mapsto x$は$\norm{P}\le 1$かつ$P^2=P$を満たす半正定値作用素である．よってこれは\textbf{直交射影}である．
         \item 逆に，任意の自己共役な冪等作用素$P:H\to H$に対して，$X:=\Im P$とおくとこれは閉部分空間で，任意の$x^\perp\in X^\perp$に対して$\norm{Px^\perp}^2=(x^\perp|P^2x\perp)=0$より，$P$は直交射影である．$I-P$は$\Im(I-P)=X^\perp$を満たす直交射影である．
     \end{enumerate}
-\end{definition}
+    以上の観察より，直交射影$P$について，$\Im P\perp\Ker P$すなわち$\Im P\perp\Im(I-P)$が成り立つ．
+\end{example}
 \begin{remarks}[diagonalizable]\mbox{}
     \begin{enumerate}
         \item 射影は実解析における特性関数にあたる．
         \item 単関数は$T=\sum_{i\in[n]}\lambda_iP_i$にあたる．
         \item ある正規直交基底$(e_j)_{j\in J}$と有界集合$\{\lambda_j\}_{j\in J}\subset\bF$が存在して，$\forall_{x\in H}\;Tx=\sum_{j\in J}\lambda_j(x|e_j)e_j=\sum_{j\in J}\lambda_jP_j\;(P_j:H\epi\bF e_j)$と表せるとき，$T$は\textbf{対角化可能}という．このとき，$(e_j)$を固有ベクトル，$(\lambda_j)$を固有値という．$(x|e_j)$は$x$の$j$-座標である．
-        なお，この無限和は強位相については収束する（各点収束）が，そのほかは保証されない．
+        
+        なお，無限和$T=\sum_{j\in J}\lambda_jP_j$は作用素の強位相については収束する（各点収束）が，そのほかは保証されない．
     \end{enumerate}
 \end{remarks}
 
-\begin{lemma}
-    $T$が対角化可能であるとする．
+\begin{lemma}[一般の射影の性質]\label{lemma-property-of-projection}
+    $P^2=P\in B(E)$を満たすとする．$E_1:=\Im P,E_2:=\Ker P$とする．
     \begin{enumerate}
-        \item $T^*$の固有ベクトルも$(e_j)$，固有値は$(\o{\lambda_j})$である．
-        \item $TT^*=T^*T$である．すなわち，$T$は正規．
+        \item $P|_{E_1}=\id_{E_1}$．
+        \item $Q:=I-P$は$\Im P=\Ker Q,\Ker P=\Im Q$を満たす射影である．
+        \item $E=E_1\oplus E_2$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[直交射影の特徴付け]
+    $E$を射影とし，$E\ne 0$とする．次の６条件は同値．
+    \begin{enumerate}
+        \item $\Ker E=(\Im E)^\perp$．
+        \item $E$はある閉部分空間$M$についての直交射影である．
+        \item $\norm{E}=1$．
+        \item $E$は自己共役である．
+        \item $E$は正規である．
+        \item $E$は正である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[対角化可能作用素の性質]
+    $T$が対角化可能であるとする：$T=\sum_{j\in J}\lambda_jP_j$．
+    \begin{enumerate}
+        \item $T^*$も対角化可能で，固有ベクトルは$(e_j)$，固有値は$(\o{\lambda_j})$である．
+        \item $T$は正規：$TT^*=T^*T$．
         \item $T$が自己共役であることと，固有値が全て実数であることは同値．
         \item $T$が半正定値であることと，固有値が全て非負実数であることは同値．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $T^*x=\sum\o{\lambda_j}(x|e_j)e_j$より．
+    \end{enumerate}
+\end{proof}
 
-\begin{proposition}
+\begin{proposition}[有限次元線型空間論]
     $H$が有限次元であるとき，任意の正規な作用素は対角化可能である．
+    また，互いに可換な正規な作用素は，同時対角化可能である．
 \end{proposition}
+\begin{proof}
+    有限次元線型空間論による．
+\end{proof}
 
-\subsection{ユニタリ作用素}
+\subsection{Hilbの（自己）同型}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    全ての座標変換はユニタリ作用素で記述される．
+title=ユニタリ作用素]
+    いままではHilbert空間を位相線形空間の延長として扱い，射は有界線型写像としてきたが，
+    ここで距離構造に注目する．ユニタリ作用素は，真の意味での自己射である．
+    可逆な有界線型写像がユニタリであるための必要十分条件は$V^{-1}=V^*$である．
+
+    全ての基底変換はユニタリ作用素で記述されるのであった\ref{prop-characterization-of-isomorphism-of-Hilbert-spaces}．
     よって，この分だけ条件を緩めることに価値がある．
-    部分群の系列
-    \[U(H)\mono\GL(H)\mono B(H)\]
-    が考えられる．
+    ユニタリー部分群
+    \[U(H)\mono\GL(H)=B(H)^\times\]
+    が考えられ，この$B(H)$への作用による共役類を考える．
+    これをユニタリー同値という．
 \end{tcolorbox}
 
 \begin{definition}[unitary operator / orthogonal operator]
-    $H$の自己等長同型を\textbf{ユニタリ作用素}という．実線型空間については，直交作用素ともいう．
+    $H$の自己等長同型を\textbf{ユニタリ作用素}という（全写な等長写像であることと同値）：$\forall_{x\in H}\;\norm{Ux}=\norm{x}$かつ$\Im U=H$．実線型空間については，直交作用素ともいう．
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[ユニタリ作用素の特徴付け]\label{lemma-characterization-of-unitary-operator}
     ユニタリ作用素$U\in B(H)$について，
     \begin{enumerate}
         \item $U$は内積を保つ．
-        \item $U^*U=I$．
+        \item $U^*U=I$（実はこれは等長写像の特徴付け）．
         \item 正規である：$UU^*=U^*U=I$．
-        \item 一般の作用素$V\in B(H)$が可逆で$V^{-1}=V^*$を満たすなら，$V$はユニタリである．
+        \item 一般の作用素$V\in B(H)$が可逆でかつ$V^{-1}=V^*$を満たすなら，$V$はユニタリである．
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{enumerate}
-        \item 極化恒等式\ref{prop-polarization-identity}より，等長写像ならば内積を保つことに注意．
-        \item $(Ux|Uy)=(x|U^*Uy)=(x|y)$より，補題\ref{lemma-correspondence-between-sesquilinearform-and-operator}から，$U^*U=I$．
+        \item 極化恒等式\ref{prop-polarization-identity}より，等長写像ならば内積を保つこと\ref{prop-characterization-of-isometry}に注意．
+        \item $(Ux|Uy)=(x|U^*Uy)=(x|y)$より，補題\ref{lemma-correspondence-between-sesquilinearform-and-operator}の全単射から，$U^*U=I$．
+        \item 明らか．
+        \item $\norm{Ux}^2=(U^*Ux|x)=\norm{x}^2$より等長．可逆なら全写．
     \end{enumerate}
 \end{proof}
 
@@ -2961,69 +3294,223 @@ title=]
 
 \subsection{部分等長作用素と極分解}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    自己共役作用素は実数，正作用素は正実数と見れるのであった．
+    $C^*$-代数の元の標準形がほしい．
+    $\forall_{\lambda\in\C}\;\lambda=\abs{\lambda}e^{i\theta}$に対応する作用素の概念は，$\abs{A}:=(A^*A)^{1/2}$と表せるが，$e^{i\theta}$に対応する作用素のクラスは，新たに用意する必要がある．
+\end{tcolorbox}
+
 \begin{definition}[partial isometry, initial subspace, final subspace]
-    作用素$U\in B(H)$が\textbf{部分等長作用素}であるとは，閉部分集合$X$が存在して，制限$U|_X$は等長写像で，$U|_{X^\perp}=0$を満たすことをいう．
-    $X$を\textbf{初期部分空間}，$\Im U$を最終部分空間という．
+    作用素$U\in B(H)$が\textbf{部分等長作用素}であるとは，閉部分集合$X=(\Ker U)^\perp=\oo{\Im U^*}$が存在して，制限$U|_X$は等長写像で，$U|_{X^\perp}=0$を満たすことをいう．
+    $X$を\textbf{初期部分空間}，$\Im U$を\textbf{最終部分空間}という．
 \end{definition}
-\begin{lemma}\mbox{}
+\begin{remarks}
+    $\Ker U=X^\perp$は閉であるから，$X=(\Ker U)^\perp=\oo{\Im U^*}$は必然的に閉である．
+\end{remarks}
+\begin{lemma}[部分等長写像の特徴付け]\mbox{}
     \begin{enumerate}
-        \item このとき，$X^\perp=\Ker U,X=\dbloverline{(\Im U^*)}$である．
-        \item $P:=U^*U$とおくと，$\forall_{x\in X}\;Px=x,\;\forall_{x^\perp\in X^\perp}\;Px^\perp=0$．すなわち，$P$は射影である．
-        \item (2)は部分等長作用素を特徴付ける．すなわち，作用素$U\in B(H)$について$U^*U$が射影となるとき，$U,U^*$は部分等長作用素である．$U^*$を$U$の\textbf{部分逆}(partial inverse)という．
+        \item $P:=U^*U$とおくと，$\forall_{x\in X}\;Px=x,\;\forall_{x^\perp\in X^\perp}\;Px^\perp=0$．すなわち，$P$は直交射影である：$P^2=P\land P^*=P$．
+        \item (1)は部分等長作用素を特徴付ける．すなわち，作用素$U\in B(H)$について$U^*U$が直交射影となるとき，$U,U^*$は部分等長作用素である．$U^*$を$U$の\textbf{部分逆}(partial inverse)という．
+    \end{enumerate}
+    結局，次の６条件は同値である．
+    \begin{enumerate}
+        \item $U$は部分等長作用素である．
+        \item $U^*$は部分等長作用素である．
+        \item $U^*U$は直交射影である．
+        \item $UU^*$は直交射影である．
+        \item $UU^*U=U$．
+        \item $U^*UU^*=U^*$．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $x^\perp\in X^\perp=\Ker U$に対して，$U^*Ux=U^*0=0$は明らか．
+        等長写像の特徴付け\ref{lemma-characterization-of-unitary-operator}より，$X$上で$U^*U=I$である．
+        \item $X:=\Im U^*U$とおくと，射影はこの上で恒等だから，$\forall_{x\in X}\;\norm{Ux}^2=(Ux|Ux)=(U^*Ux|x)=(x|x)=\norm{x}^2$より，$X$上で等長．$X^\perp=(\Im U^*U)=\Ker U^*U$より，$\forall_{x\in X^\perp}\;(Ux|Ux)=(U^*Ux|x)=(0|x)=0$．
+        
+        一般に，$U$が部分等長写像であるとき，$U^*$も部分等長写像である．
+        $U(I-P)=0$である．よって，$(UU^*)^2=UU^*UU^*=UPU^*=UU^*$から，$UU^*$も直交射影である．
+        よって，前述の議論を繰り返せば良い．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    部分等長写像は，$0$と等長写像とに分解できる作用素をいう．
+    等長写像はepi：$U^*U=I$として特徴付けられるから，射影の言葉で部分等長写像が特徴付けられることは自然である．
+\end{remarks}
 
 \begin{example}[unilateral shift operator]
-    $S$は等長作用素だが，ユニタリーではない（すなわち全射でない）例となっている．
+    可分Hilbert空間$H$上のシフト作用素\ref{operator-unilateral-shift}
+    \[S\paren{\sum\al_ne_n}=\sum\al_ne_{n+1}\]
+    は等長作用素だが，ユニタリーではない（すなわち全射でない）例となっている．
+    また$S,S^*$は部分等長作用素である．
+    $S:H\to\{e_1\}^\perp$は等長作用素であり，$S^*S=I$（たしかに射影である）．
+    一方で，$SS^*=P_{\Brace{e_1}^\perp}$であり，$S^*$は$\{e_1\}^\perp$上では$H$に値を取る部分等長写像である．
 \end{example}
 
 \begin{theorem}[polar decomposition (von Neumann)]\mbox{}
     \begin{enumerate}
-        \item 任意の作用素$T\in B(H)$に対して，ただ一つの半正定値作用素$\abs{T}\in B(H)$が存在して，$\forall_{x\in H}\;\norm{Tx}=\norm{\abs{T}x}$を満たす．
-        \item $\abs{T}=(T^*T)^{1/2}$である．
-        \item ただ一つの部分等長写像$U$が存在して，$\Ker U=\Ker T,U\abs{T}=T$を満たす．特に，$U^*U\abs{T}=U^*T=\abs{T},\;UU^*T=T$である．
+        \item 任意の作用素$T\in B(H)$に対して，ただ一つの半正定値作用素$\abs{T}:=(T^*T)^{1/2}\in B(H)$が存在して，$\forall_{x\in H}\;\norm{Tx}=\norm{\abs{T}x}$を満たす．特に，$\Ker T=\Ker\abs{T}$．
+        \item ただ一つの部分等長写像$U$が存在して，$\Ker U=\Ker T,U\abs{T}=T$を満たす．
+        \item $U^*U\abs{T}=U^*T=\abs{T},\;UU^*T=T$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 一意性を示せば良い．
+        ある正作用素$S\ge0$が$\forall_{x\in H}\;\norm{Tx}=\norm{Sxx}$を満たすならば，$(S^2x|x)=\norm{Sx}^2=\norm{Tx}^2=(T^*Tx|x)$である．これより，$T^*T$も正だから，$S^2=T^*T$が従う\ref{cor-nondegeneratedness-of-semi-inner-product}．
+        二乗根の一意性より，$S=(T^*T)^{1/2}$である．
+        \item $T,\abs{T}$は任意の$x\in H$に対して像のノルムが等しいから，核も等しい．よって，$\Ker T=\Ker\abs{T}=(\Im\abs{T})^\perp$\ref{prop-Ker-of-adjoint-operator}．
+        \begin{description}
+            \item[存在] まず，任意の$y=\abs{T}x\in\Im\abs{T}$に対して，$U_0y=U_0\abs{T}x:=Tx$と定めると，これは等長作用素$U_0:\Im\abs{T}\to\Im T$である：$\norm{U_0y}=\norm{Tx}=\norm{\abs{T}x}=\norm{y}$．
+            連続延長\ref{prop-extension-of-operator-on-dense-subset}により，等長な延長$\o{U_0}:\oo{\Im\abs{T}}\to\oo{\Im T}$が得られる．
+            さらに，$\Ker T=(\Im\abs{T})^\perp$上では零とすることで，$U\abs{T}=T$を満たす部分等長写像$U$を得る．これはたしかに$\Ker U=\Ker T$を満たす．
+            \item[一意性] 
+            $V$を，$\Ker V=\Ker T,V\abs{T}=T$を満たす部分等長写像とする．
+            すると，まず$U=V\on\;\oo{\Im\abs{T}}$が必要で，その直交補空間ではいずれも$0$であるから，$U=V$が必要．
+        \end{description}
+        \item $U^*U$は構成から$\oo{\Im\abs{T}}$への直交射影だから，$U^*U\abs{T}=\abs{T}$．
+        $T=U\abs{T}$より，$U^*T=\abs{T}$．
+        この両辺に$U$を乗じると$UU^*T=U\abs{T}=T$．
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}[随伴作用素の極分解]
+    $T=U\abs{T}$を極分解とすると，$T^*=\abs{T}U^*=U^*(U\abs{T}U^*)$より，符号は$U^*$で，絶対値は$U\abs{T}U^*$である．
+\end{corollary}
+\begin{remark}
+    和，積の極分解には殆ど法則がない．
+\end{remark}
+
+\begin{theorem}
+    $T\in B(H)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item あるユニタリ作用素$U$について，$T=U\abs{T}$と極分解される．
+        \item $T,T^*$の核が同次元である：$\Ker T\simeq_\Hilb\Ker T^*$．
     \end{enumerate}
 \end{theorem}
 
-\begin{proposition}
-    $T\in B(H)$が可逆であるとき，部分等長写像$U$はユニタリである．
-\end{proposition}
+\begin{corollary}\label{cor-polar-decomposition-of-invertible-operators}
+    $T\in B(H)$が可逆であるとき，極分解に含まれる部分等長写像$U$はユニタリである．
+\end{corollary}
+\begin{proof}
+    ここでは定理に依らず，単独で証明する．
+
+    $T=U\abs{T}$を極分解とすると，$\Ker U=\Ker T$で，$\Im U=\oo{\Im T}$．
+    $T$が可逆のとき$\Ker U=0,\Im U=H$が従うから，部分等長写像$U$はユニタリである．
+\end{proof}
+
+\begin{corollary}
+    $T\in B(H)$を正規とする．
+    このとき，$T,T^*,\abs{T}$と可換なユニタリ作用素$W$が存在して，$T=W\abs{T}$と極分解できる．
+\end{corollary}
 
 \subsection{Russo-Dye-Gardner定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-the norm of an operator can be calculated using only the unitary elements of the algebra. \footnote{\url{https://en.wikipedia.org/wiki/Russo\%E2\%80\%93Dye_theorem}}
+title=ユニタリ作用素への分解]
+    極分解をしたなら，$\C\simeq\R^2$に対応する分解も欲しくなる．これは$B\cap B(H)_\sa$上のみで存在する．
+    結局，$\norm{S}\le 1$を満たす有界作用素は，ユニタリ作用素の凸結合（特に平均）として表せる．
+    さらに，$B(H)_\sa$は$B(H)$を生成するから，任意の作用素はユニタリ作用素の線型結合である．
 \end{tcolorbox}
 
-\begin{lemma}
-    $T=T^*$かつ$\norm{T}\le 1$ならば，作用素$U:=T+i(I-T^2)^{1/2}$はユニタリであり，$T=\frac{1}{2}(U+U^*)$である．
+\begin{lemma}[単位球内の自己共役作用素の表示]
+    $T=T^*$かつ$\norm{T}\le 1$ならば，作用素$U:=T+i(I-T^2)^{1/2}$はユニタリであり，$T=\frac{1}{2}(U+U^*)$と表せる．
 \end{lemma}
+\begin{proof}
+    $I-T\ge0$かつ$I+T\ge0$で互いに可換であるから，$I-T^2\ge0$である\ref{lemma-positive-closed-cone-of-positive-operator}(2),\ref{prop-order-of-self-adjoint-operator}(3)．
+    よってたしかに二乗根を持つ．
+    $UU^*=U^*U=I$がわかるから，$U$はユニタリである．
+    正作用素は自己共役であることに注意すれば，$T=\frac{1}{2}(U+U^*)$は明らか．
+\end{proof}
 
 \begin{lemma}
     $S\in B(H)$かつ$\norm{S}<1$ならば，任意のユニタリ作用素$U$に対して，ユニタリ作用素$U_1,V_1$が存在して，$S+U=U_1+V_1$を満たす．
 \end{lemma}
+\begin{proof}
+    $U=I$の場合について示せば，両辺に$U^*$を左から乗ずることで一般の結論を得る．
+
+    $\norm{S}=\norm{S^*}<1$の仮定より，三角不等式$\norm{x}-\norm{y}\le\norm{x-y}$から，
+    \[\norm{Sx+x}\ge\norm{x}-\norm{Sx}\ge(1-\norm{S})\norm{x}\]
+    より，$I+S,I+S^*$はいずれも$0$に対して有界である．よって，作用素の可逆性の特徴付け\ref{prop-characterization-of-invertibleness-of-operator}より，
+    $I+S$は可逆である．
+    よって，極分解$I+S=V\abs{I+S}$において，$V$はユニタリである\ref{cor-polar-decomposition-of-invertible-operators}．
+    $\norm{I+S}\le\norm{I}+\norm{S}<2$より，補題から，正作用素$\abs{I+S}$はあるユニタリ作用素$W$を用いて$\abs{I+S}=W+W^*$と表せる．
+    以上より，
+    \[S+I=V(W+W^*)=VW+VW^*.\]
+\end{proof}
 
 \begin{proposition}[Russo-Dye-Gardner theorem (66)]
     $T\in B(H)$かつ$\exists_{n>2}\norm{T}<1-\frac{2}{n}$ならば，ユニタリ作用素$U_1,\cdots,U_n$が存在して，
     \[T=\frac{1}{n}(U_1+U_2+\cdots+U_n).\]
 \end{proposition}
+\begin{proof}
+    $S:=\frac{1}{n-1}(nT-I)$とおくと，$nT=(n-1)S+IT$で，
+    \[\norm{S}\le\frac{1}{n-1}(n\norm{T}-1)<\frac{1}{n-1}(n-3)<1\]
+    を満たすから，補題を$n-1$回繰り返し適用すると，
+    \begin{align*}
+        nT&=(n-1)S+I=(n-2)S+(S+I)=(n-2)S+(V_1+U_1)\\
+        &=(n-3)S+(S+V_1)+U_1=(n-3)S+(V_2+U_2)+U_1\\
+        &=(n-4)S+(S+V_2)+U_2+U_1\\
+        &=(n-4)S+(V_3+U_3)+U_2+U_1=\cdots\\
+        &=(S+V_{n-2})+U_{n-2}+\cdots+U_1=U_n+U_{n-1}+U_{n-2}+\cdots+U_1.
+    \end{align*}
+\end{proof}
+\begin{remarks}
+    $B(H)$の開球の元は，ユニタリ作用素の凸結合（特に平均）で表せる．
+    球面上の元はこの限りではなく，シフト作用素が反例である．
+\end{remarks}
+
+\begin{corollary}[同じ論文で紹介されている系]
+    $C^*$-代数$A$のユニタリ元の全体を$U(A)$で表す．ノルム空間$B$への線型写像$f:A\to B$について，$\sup_{U\in U(A)}\norm{f(U)}$．
+\end{corollary}
+\begin{remarks}
+    the norm of an operator can be calculated using only the unitary elements of the algebra. \footnote{\url{https://en.wikipedia.org/wiki/Russo\%E2\%80\%93Dye_theorem}}
+\end{remarks}
 
 \subsection{数域半径}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    作用素ノルムと$(T-|-)$なる半内積（の制限）との関係の観察\ref{prop-operator-norm-of-self-adjoint-operator}から，
+    $C^*$-代数の手法に数域$\Im(T-|-)$を考えることは自然である（参考：\ref{lemma-numerical-range}）．
+    その半径は作用素ノルムと同値なノルムを定め，正規作用素については作用素ノルムと同じノルムを定める．
+    さらにスペクトル半径と数域半径が一致するとき，spectraloid作用素といい，正規作用素はこれにも当てはまる．
+\end{tcolorbox}
+
 \begin{definition}[numerical radius]
     $H$を複素Hilbert空間，$T\in B(H)$とする．$T$の\textbf{数域半径}とは，
-    \[\nnorm{T}=\sup\Brace{\abs{(Tx|x)}\in\R\mid x\in H,\norm{x}\le 1}\]
-    をいう．
+    \[\nnorm{T}=\sup\Brace{\abs{(Tx|x)}\in\R_+\mid x\in H,\norm{x}\le 1}\]
+    をいう．なお，$T\in B(H)_\sa$のとき，作用素ノルムは
+    \[\norm{T}=\sup\Brace{\abs{(Tx|x)}\in\R_+\mid x\in H,\norm{x}=1}\]
+    と表せること\ref{prop-operator-norm-of-self-adjoint-operator}に注意．
+    一般に命題が成り立つ．
 \end{definition}
+\begin{remark}[numerical range]
+    $W:=\Brace{(Tx|x)\in\C\mid x\in H,\norm{x}= 1}=\Brace{\frac{x^*Tx}{x^*x}\in\C\;\middle|\;x\in H,x\ne 0}$を数域という．
+\end{remark}
 
-\begin{notation}
-    $\Re(T):=\frac{1}{2}(T+T^*)$．
+\begin{notation}[自己共役部分]
+    $\Re(T):=\frac{1}{2}(T+T^*)$．$T$が自己共役のとき，これは$T$自身に一致する．
 \end{notation}
 
-\begin{proposition}
+\begin{proposition}[数域半径は同値なノルムを定める]
     $\nnorm{\cdot}$は$B(H)$上のノルムで，$\forall_{T\in B(H)}\;\frac{1}{2}\norm{T}\le\nnorm{T}\le\norm{T}$を満たす．
 \end{proposition}
+\begin{proof}
+    $\nnorm{T}$の斉次性と劣加法性は明らかで，非退化性は後半の主張から従う．また，Cauchy-Schwartzの不等式より$\nnorm{T}\le\norm{T}$もわかる．
+    よって，$\norm{T}\le 2\nnorm{T}$を示せば良い．
+    任意の単位ベクトル$x,y\in H$について，極化恒等式と中線定理より
+    \begin{align*}
+        4\abs{(Tx|y)}&=\Abs{\sum^3_{k=0}i^k(T(x+i^ky)|x+i^ky)}\\
+        &\le\nnorm{T}(\norm{x+y}^2+\norm{x-y}^2+\norm{x+iy}^2+\norm{x-iy}^2)\\
+        &=\nnorm{T}2(\norm{x}^2+\norm{y}^2+\norm{x}^2+\norm{iy}^2)=8\nnorm{T}
+    \end{align*}
+    これで，半双線型形式のノルムについて$\norm{(T-|-)}\le2\nnorm{T}$を得たが，等長同型\ref{lemma-correspondence-between-sesquilinearform-and-operator}より結論を得る．
+\end{proof}
+\begin{remarks}
+    また，一般の線型写像について，有界であることと$\nnorm{T}<\infty$になることは同値になる．
+\end{remarks}
 
 \begin{proposition}
     $\forall_{T\in B(H)}\;\nnorm{T}=\max\Brace{\norm{\Re(\theta T)}\in\R_+\mid\theta\in\C,\abs{\theta}=1}$．
@@ -3037,7 +3524,31 @@ the norm of an operator can be calculated using only the unitary elements of the
     \end{enumerate}
 \end{proposition}
 
-\subsection{Hilbert空間上の作用素の例}
+\subsection{数域}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    自己共役作用素$T$に対して，$R(T,x):=\frac{(Tx|x)}{(x|x)}$をRayleigh商といい\ref{prop-operator-norm-of-self-adjoint-operator}，固有値の数値計算に利用される．\footnote{\url{https://ja.wikipedia.org/wiki/レイリー商}}
+    そしてこの値域を数域という．
+    $T$がエルミート行列$M$のとき数域は実数に含まれ，$R(M,x)\in[\lambda_\mathrm{min},\lambda_\mathrm{max}]$となる．
+\end{tcolorbox}
+
+\begin{proposition}[Hausdorff-Toeplitz]
+    $T\in B(H)$について，数域$W(T)$は凸集合である．$H$が有限次元のとき，$W(T)$はコンパクトである．
+\end{proposition}
+
+\begin{proposition}
+    $T\in B(H)$を正規作用素とする．数域の閉包$\oo{W(T)}$とスペクトルの閉凸包$\oo{\Conv(\sigma(T))}$とは等しい．また，$\oo{W(T)}$の極点$x$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $x\in W(T)$．
+        \item $x$は$T$の固有値である．
+    \end{enumerate}
+\end{proposition}
+\begin{remark}
+    工学では，この定理を利用して，$T$の固有値を$W(T)$の形から推定する．\footnote{\url{https://en.wikipedia.org/wiki/Numerical_range}}
+\end{remark}
+
+\subsection{例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3048,18 +3559,18 @@ title=]
     また，作用素の随伴は，「転置」の要素は隠れて，複素共役を取ることに似る．
 \end{tcolorbox}
 
-\begin{theorem}[multiplication operator and its symbol]
-    $(X,\Om,\mu)$を$\sigma$-有限な測度空間とし，$H:=L^2(X,\Om,\mu)=:L^2(\mu)$とする．任意の$\varphi\in L^\infty(\mu)$に対して，post-compositionの定める写像
+\begin{theorem}[multiplication operator and its symbol]\label{operator-multiplication}
+    $(X,\Om,\mu)$を$\sigma$-有限な測度空間とし，$H:=L^2(X,\Om,\mu)=:L^2(\mu)$とする．任意の$\varphi\in L^\infty(\mu)$に対して，これと積を取る写像
     \[\xymatrix@R-2pc{
         M_\varphi:L^2(\mu)\ar[r]&L^2(\mu)\\
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
         f\ar@{|->}[r]&\varphi\cdot f
     }\]
-    は，$M_\varphi\in B(L^2(\mu))$を満たし，$\norm{M_\varphi}=\norm{\varphi}_\infty$を満たす．
+    は，有界で$M_\varphi\in B(L^2(\mu))$，等長である：$\norm{M_\varphi}=\norm{\varphi}_\infty$．
     $\varphi$を\textbf{乗算作用素}$M_\varphi$の\textbf{記号}という．
 \end{theorem}
 
-\begin{theorem}[integral operator / transform and its kernel]
+\begin{theorem}[integral operator / transform and its kernel]\label{operator-integral-transformation}
     $(X,\Om,\mu)$を測度空間，$k:X\times X\to\bF$を次を満たす$\Om\times\Om$-可測関数とする：
     \begin{align*}
         \int_X\abs{k(x,y)}d\mu(y)\le c_1,&\ae[\mu],&\int_X\abs{k(x,y)}d\mu(x)\le c_2,&\ae[\mu].
@@ -3073,10 +3584,10 @@ title=]
     は有界線型作用素で，ノルムは$\norm{K}\le(c_1c_2)^{1/2}$を満たす．
 \end{theorem}
 
-\begin{example}[Volterra operator]
-    $k:[0,1]\times[0,1]\to\R$を集合$\{(x,y)\in[0,1]\times[0,1]\mid y<x\}$の特性関数とする．
+\begin{example}[Volterra operator]\label{operator-Volterra}
+    $k:[0,1]\times[0,1]\to2\mono\R$を集合$\{(x,y)\in[0,1]\times[0,1]\mid y<x\}$の特性関数とする．
     これを核とする積分作用素$V:L^2(0,1)\to L^2(0,1);f\mapsto Vf(x)=\int^1_0k(x,y)f(y)dy=\int^x_0f(y)dy$をVolterra作用素という．
-    これは不定積分としての積分作用素である．\footnote{ヴォルテラ積分方程式は、人口学や、粘弾性物質の研究、保険数学に現れる再生方程式などへと応用されている。}
+    これは不定積分を定める積分作用素である．\footnote{ヴォルテラ積分方程式は、人口学や、粘弾性物質の研究、保険数学に現れる再生方程式などへと応用されている。}
 \end{example}
 
 \begin{example}[matrix multiplication]
@@ -3087,7 +3598,7 @@ title=]
     Volterra作用素は，不定積分概念の作用素化であろうか．
 \end{example}
 
-\begin{example}[unilateral shift]
+\begin{example}[unilateral shift]\label{operator-unilateral-shift}
     \[\xymatrix@R-2pc{
         S:l^2\ar[r]&l^2\\
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
@@ -3097,15 +3608,9 @@ title=]
     これをシフト作用素という．
 \end{example}
 
-\begin{example}[随伴]\mbox{}
-    \begin{enumerate}
-        \item 乗算作用素については$M^*_\varphi=M_{\o{\varphi}}$となる．
-        \item $k$を核とする積分作用素$K$については$K^*$は$k^*(x,y)=\o{k(y,x)}$を核とする積分作用素となる．
-        \item shift作用素は方向が逆になる：$S^*(\al_1,\al_2,\cdots)=(\al_2,\al_3,\cdots)$．これを\textbf{後方シフト(backward shift)}と呼ぶ．
-    \end{enumerate}
-\end{example}
+\section{$C^*$-代数}
 
-\subsection{一般の$*$-代数}
+\subsection{$*$-代数の定義}
 
 \begin{definition}[involution, anti-involution, star algebra, Banach star algebra]\mbox{}
     \begin{enumerate}
@@ -3129,9 +3634,11 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    （$X$が局所コンパクトハウスドルフ空間である時，）$C_c(X)\subset C_b(X)$の関係と$B_f(H)\subset B(H)$の関係は非常に似ている．
+    （$X$が局所コンパクトハウスドルフ空間である時，）
+    有界連続関数の中でコンパクト台を持つもの$C_c(X)\subset C_b(X)$の関係と，有界作用素の中で有限ランクを持つもの$B_f(H)\subset B(H)$の関係は非常に似ている．
     These classes describe local phenomena on $H$ and on $X$.\cite{AnalysisNow}
-    そこで，$C_c(X)$の完備化として得た$C_0(X)$に対応するクラスを，作用素論でも構成することを考える．
+    そこで，$C_c(X)$の完備化として得た$C_0(X)$に対応するクラス"$B_0(H)$"を，作用素論でも構成することを考える．
+    このクラスはある種の有限的な性質を持つ．
 \end{tcolorbox}
 
 \subsection{定義}
@@ -3162,7 +3669,7 @@ title=]
     よって，ネットとして，$\norm{P_\lmd x-x}$は$0$に収束する．
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}[stability of compact operator]
     $T\in B(H)$について，次の５条件は同値．
     \begin{enumerate}
         \item $T\in\dbloverline{B_f(H)}$．
@@ -3173,16 +3680,17 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{notation}
+\begin{definition}[compact operator]
+    定理の同値な条件を満たす作用素を\textbf{コンパクト作用素}という．
     無限遠で消えるため，コンパクト作用素の空間は$B_0(H)$と表すが，$K(H),C(H)$も一般的である．
-\end{notation}
+\end{definition}
 
 \begin{lemma}
     コンパクト作用素の空間$B_0(H)\subset B(H)$は
     \begin{enumerate}
         \item ノルム閉で自己共役なイデアルである．
         \item (1)の条件を満たすもので最小のものである．特に$H$が可分である場合は唯一の非自明な閉イデアルである．
-        \item $H$が無限次元であるとき，$I\notin B_0(H)$．
+        \item $H$が無限次元であるとき，$I\notin B_0(H)$．が，その場合でも，有限ランクの射影からなる近似的単位元を持つ．
     \end{enumerate}
 \end{lemma}
 
@@ -3203,6 +3711,13 @@ title=]
     $B(H)$は２つの役割を持つ．１つは$C_b$であるが，もう一つは$L^\infty(X)$である．そのためにはLebesgue測度にあたる概念が必要であるが，これが跡である．
     このような測度論との交差が特に美しい．いつしか積分もただの線型作用素であったし，級写像も積分作用素の特殊な例なのであった．
 \end{quotation}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    前節では$B_f(H)$を$C_c(X)$に，$B_0(H)$を$C_0(X)$に，$B(H)$を$C_b(X)$に見立てたが，$B(H)$は同時に$L^\infty(X)$に似た振る舞いもする．
+
+    有限次元線型空間論では，跡だけがまるで異邦人のような特異な存在であった．
+\end{tcolorbox}
 
 \chapter{Spectral Theory}
 
@@ -3864,7 +4379,120 @@ title=]
 
 \section{始域・延長・グラフ}
 
+\subsection{定義域}
 
+\begin{definition}[operator in a Hilbert space, domain, densely defined, extension]
+    Hilbert空間$H$\textbf{内}の作用素$T$とは，$H$の部分空間$D(T)$上の作用素$T:D(T)\to H$をいう．
+    $D(T)$を\textbf{定義域}という．
+    \begin{enumerate}
+        \item $\oo{D(T)}=H$が成り立つとき，$T$は\textbf{稠密に定義されている}という．
+        \item $D(S)\subset D(T),S=T\on D(S)$が成り立つとき，$T$は$S$の\textbf{延長}であるといい，$T\subset S$で表す．たしかに$T=S\Leftrightarrow T\subset S\land T\supset S$が成り立つ．
+        \item 値域を$R(T):=T(D(T))$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[定義域の演算]
+    作用素$S,T$に対して，$S+T,ST,T^{-1}$の定義域を次のように定める．
+    \begin{enumerate}
+        \item $D(S+T)=D(S)\cap D(T)$．
+        \item $D(ST)=D(T)\cap T^{-1}(D(S))$．
+        \item $D(T^{-1})=R(T),R(T^{-1})=D(T)$．
+    \end{enumerate}
+    とすると，和と積は結合的であるが，分配的ではない．
+    また，$T$が単射でない限り，逆$T^{-1}$は集合論的な逆写像と相違する．？
+\end{definition}
+
+\begin{lemma}
+    $S,T$が単射であるとき，$(ST)^{-1}=T^{-1}S^{-1}$が成り立つ．
+\end{lemma}
+
+\subsection{随伴}
+
+\begin{definition}
+    $H$内の稠密に定義された作用素$T:D(T)\to H$に対して，
+    \[D(T^*):=\Brace{x\in H\mid y\mapsto(Ty|x)\in B(D(T),H)}\]
+    とする．このとき，Rieszの表現定理より，$\forall_{y\in D(T)}\;\forall_{x\in D(T^*)}\;\exists!_{T^*x\in H}\;(y|T^*x)=(Ty|x)$．
+    よって，$T^*:D(T^*)\to H$が定まる．これを$T$の\textbf{随伴}という．
+\end{definition}
+
+\begin{lemma}
+    $S,T,S+T,ST$は稠密に定義されているとする．
+    \begin{enumerate}
+        \item $S\subset T\Rightarrow T^*\subset S^*$である．
+        \item $S^*+T^*\subset(S+T)^*$．
+        \item $T^*S^*\subset(ST)^*$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    $T$が稠密に定義されているとき，$\Ker T^*=(R(T))^\perp$．
+    特に，$\Brace{x\in D(T^*)\mid T^*x=\o{\lambda}x}=R(T-\lambda I)^\perp$．
+\end{lemma}
+
+\subsection{対称作用素}
+
+\begin{definition}[symmetric]
+    稠密に定義された作用素$S$が\textbf{対称}であるとは，$\forall_{x,y\in D(S)}\;(Sx|y)=(x|Sy)$を満たすことをいう．
+\end{definition}
+
+\begin{lemma}[対称作用素の随伴による特徴付け]
+    稠密に定義された作用素$S$について，次の２条件は同値．
+    $\bF=\C$のとき，(3)とも同値．
+    \begin{enumerate}
+        \item $S$は対称である．
+        \item $S\subset S^*$．
+        \item $\forall_{x\in D(S)}\;(Sx|x)\in\R$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    対称作用素$S$と$\lambda=\al+i\beta\in\C$について，
+    \begin{enumerate}
+        \item $\forall_{x\in D(S)}\;\norm{(S-\lambda I)x}^2=\norm{(S-\al I)x}^2+\beta^2\norm{x}^2$．
+        \item $\beta\ne0$ならば，$S-\lambda I$は単射で，$(S-\lambda I)^{-1}$は$\abs{\beta}^{-1}$によって抑えられる．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[maximal symmetric, self-adjoint]
+    対称作用素$S$であって，任意の対称作用素$T$に対して$S\subset T\Rightarrow S=T$を満たすものを，\textbf{極大対称作用素}という．
+    $S=S^*$のとき，$S$を\textbf{自己共役}であるという．
+\end{definition}
+
+\begin{lemma}
+    任意の自己共役作用素は極大対称的である．
+\end{lemma}
+
+\subsection{閉作用素}
+
+\begin{definition}[closed operator]
+    $H$内の作用素$T$のグラフ$G(T)=\Brace{(x,Tx)\in H\oplus H\mid x\in D(T)}$が$H\oplus H$内で閉集合であるとき，これを\textbf{閉作用素}という．
+\end{definition}
+
+\begin{lemma}
+    $T$を閉作用素とする．
+    $D(T)$内の$x$に収束する列$(x_n)$について，$(Tx_n)$が$y$に収束するならば，$x\in D(T)$かつ$Tx=y$が成り立つ．
+\end{lemma}
+\begin{example}
+    全域で定義されている閉作用素は有界である．
+    $D(T)=D(T^*)=H$を満たす作用素は有界である．
+    特に，全域で定義されている対称作用素は，自己共役で有界である．
+\end{example}
+
+\begin{definition}[closable / preclosed, closure, core]\mbox{}
+    \begin{enumerate}
+        \item $H$内の作用素$T$が\textbf{可閉}または\textbf{前閉}であるとは，グラフ$G(T)$のノルム閉包が，ある作用素$\o{T}$のグラフになっていることをいう．
+        このとき，$\o{T}$は$T$を含む最小の閉作用素であり，$T$の\textbf{閉包}という．
+        \item 閉作用素$T$と$D(T)$の部分空間$D_0$について，$T_0:=T|_{D_0}$の閉包が$T$であるとき，$D_0$を$T$の\textbf{核}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $H$内の作用素$T$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $T$は可閉である．
+        \item $D(T)$内の$0$に収束する列$(x_n)$について，$(Tx_n)$のただ一つの集積点は$0$である．
+    \end{enumerate}
+\end{lemma}
 
 \section{Cayley変換}
 
@@ -4979,7 +5607,7 @@ title=]
     $d$が定める積分核$\exp(-\lambda\cdot d(-,-))$を適切なクラスから選ぶことを考える．
 \end{tcolorbox}
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
     \bibitem{AnalysisNow}
     Gert K. Pederson "Analysis Now"
     \bibitem{作用素環}
@@ -4994,6 +5622,8 @@ title=]
     Kolmogorov, Fomin 『関数解析の基礎』
     \bibitem{藤田}
     藤田宏，黒田成俊，伊藤清三『関数解析』
+    \bibitem{Eidelman}
+    Eidelman, Yuli, Vitali D. Milman, and Antonis Tsolomitis. 2004. Functional analysis: an introduction. Providence (R.I.): American mathematical Society.
 \end{thebibliography}
 
 \end{document}

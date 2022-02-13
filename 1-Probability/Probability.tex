@@ -120,7 +120,7 @@ title=]
     コイントスを繰り返す行為を一つの空間内で表現したい場合，部分集合の族は自然$\sigma$-代数をなす．
 \end{tcolorbox}
 
-\begin{example}
+\begin{example}[確率空間を取り直すのではなく，$\sigma$-加法族を発展させる]
     素朴に，$n$回試行を行ったときの標本空間は$\Om_n:=\Map([n],2)$であり，事象のなす$\sigma$-加法族は$P(\Om_n)$である．
 
     一方で，$\Om:=\Map(\N,2)$を全体集合とすると，$n$回試行を行ったときの事象のなす部分集合族は，
@@ -129,18 +129,28 @@ title=]
     逆に，それ以外の構造は見出し難い．
 \end{example}
 
-\section{事象という概念：測度論からの結果}\label{sec-event}
+\begin{definition}[cylinder set]
+    この枠組みを一般化する．可測空間$(S,\cS)$に値を取る試行を繰り返す試行の標本空間を$\Om:=S^\N$とする．
+    その部分空間$C\subset\Om$であって，ある$n\in\N$を用いて
+    \[C=C(t_1,\cdots,t_n;A_1,\cdots,A_n):=\Brace{\om\in\Om\mid\forall_{i\in[n]}\;\om_{t_i}\in A_i}\qquad\text{ただし，}t_i\in\N,A_i\in\cS\]
+    と表せるとき，これを\textbf{柱状集合}という．
+    これは第$t_i$回の試行の結果を指定して得られる事象である．
+    $\Om$上の$\sigma$-代数としては，柱状集合をすべて含むものを取る．
+\end{definition}
+
+\section{有界測度論の確率論的解釈}\label{sec-event}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=測度論の復習]
+title=有界測度論]
     測度とは，部分集合＝事象に対して「全体に占める割合」を定める．
     類等式ではないが，全事象をどのように分解するかが特徴量となる（エントロピー）．
+    そこで，有界測度論の枠組みを確率論的に解釈する方法を以下に示す．
 \end{tcolorbox}
 
 \subsection{極限の定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=事象列には極限なる演算を定義したい]
     極限とは「十分遠くでは変わらない」ことである．距離空間では点列の極限が距離で定義できたが，
     $\F$には擬距離しか定まらない．
     しかし，$\F$には特別に，列の極限の定義が，論理によって定められる．
@@ -203,17 +213,25 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-測度$\mu:\F\to[0,1]$は，$\F$上の擬距離$d(A,B):=\mu(A\triangle B)$について連続であることは示せる．
-しかし，前節で定義した「集合列の極限」が定める位相は，この擬距離が誘導する位相とは異なる．
-注\ref{remark-topology-of-sigma-algebra}のように，$\infty$と$0$は区別できないフィルターとなっている．
+    確率の素朴な加法性に対して，その$\sigma$-加法性も考えたいとは，数学的には連続性を考えたいということである．
+    $\F$内に定義した極限の構造に対して，これを保存することをいう．
+
+    測度$\mu:\F\to[0,1]$は，$\F$上の擬距離$d(A,B):=\mu(A\triangle B)$について連続であることは示せる．
+    しかし，前節で定義した「集合列の極限」が定める位相は，この擬距離が誘導する位相とは異なる．
+    注\ref{remark-topology-of-sigma-algebra}のように，$\infty$と$0$は区別できないフィルターとなっている．
 \end{tcolorbox}
 
 \begin{proposition}[測度の連続性と劣加法性]\label{prop-character-of-measurable-sets}
-    一般の測度空間$(\Omega,\calF,\mu)$の可測集合の列$(A_i):\N\to\calF$について，次が成り立つ．
+    可測空間$(\Omega,\calF)$の可測集合の列$(A_i):\N\to\calF$について，次が成り立つ．
     \begin{enumerate}
-        \item $A_1\subset A_2\subset \cdots\subset A_n\subset\cdots$のとき，$\lim_{n\to\infty}\mu(A_n)=\mu(\cup_{n=1}^\infty A_n)$．
-        \item $A_1\supset A_2\supset \cdots\supset A_n\supset\cdots$かつ$\mu(A_1)<\infty$のとき，$\lim_{n\to\infty}\mu(A_n)=\mu(\cap_{n=1}^\infty A_n)$．
-        \item (subadditivity) $\mu(\cup^n_{i=1}A_i)\le\sum^n_{i=1}\mu(A_i)\;(n\in\N)$．
+        \item 次の４条件は同値．
+        \begin{enumerate}[(a)]
+            \item $\mu:\F\to[0,1]$は測度である．
+            \item 単調増加列$(A_n)$に対して，$\lim_{n\to\infty}\mu(A_n)=\mu(\cup_{n=1}^\infty A_n)$．
+            \item 単調減少列$(A_n)$に対して，$\lim_{n\to\infty}\mu(A_n)=\mu(\cap_{n=1}^\infty A_n)$．
+            \item $\emptyset$に収束する単調減少列$(A_n)$に対して，$\lim_{n\to\infty}P(A_n)=0$．
+        \end{enumerate}
+        \item (subadditivity) 測度$\mu$に対して，$\mu(\cup^n_{i=1}A_i)\le\sum^n_{i=1}\mu(A_i)\;(n\in\N)$．
     \end{enumerate}
 \end{proposition}
 \begin{proof}\mbox{}
@@ -249,8 +267,8 @@ title=]
 \subsection{初等的極限定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-$\limsup:\F^\N\to\F$の性質を考える．
+title=有界測度論の初等的な結論に，確率論的な解釈を与えることが出来る．]
+    $\limsup:\F^\N\to\F$の性質を考える．
 \end{tcolorbox}
 
 \begin{proposition}[集合に関するFatouの補題]
@@ -311,6 +329,11 @@ $\limsup:\F^\N\to\F$の性質を考える．
 
 \subsection{確率不等式}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=有界測度論としては初等的でも，確率論的には非自明で名前がほしい結果は多い]
+    
+\end{tcolorbox}
+
 \begin{proposition}[Bonferroniの不等式]
     \[P\paren{\cap_{i=1}^nA_i}\ge\sum^n_{i=1}P(A_i)-(n-1)\]
     等号成立条件は，$A^\comp_1,\cdots,A^\comp_n$が背反のとき．
@@ -318,6 +341,73 @@ $\limsup:\F^\N\to\F$の性質を考える．
 \begin{proof}
     $A^\comp_1,\cdots,A^\comp_n$について，劣加法性より．
 \end{proof}
+
+\section{確率変数論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有界測度空間への米田埋め込みが，確率論の世界への跳躍である．
+    確率変数とは，$(\R,\B_1(\R))$への表現に他ならない．
+    この観点から，合成$g\circ X_i$を$g(X_i)$などと書く上に，始域$\Om$は自由に取って考察することとなる．
+
+    また，測度を無理やり可測関数の押し出しと見る場面は少ないかもしれないが，確率論においては，たしかに
+    確率変数は確率分布を一般化する．
+\end{tcolorbox}
+
+\begin{proposition}[確率変数の構成]
+    確率変数$X_1,\cdots,X_n$と可測関数$g:\R^n\to\R$に対して，$Y:=g(X_1,\cdots,X_n)$は再び可測関数である．
+\end{proposition}
+
+\section{分布関数論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R$上のRadon積分には，Lebesgue-Stieltjes積分という名のついた古典的構成法があるのであった．
+    これにより，分布関数とこれが定める積分（すなわち測度）とは一対一対応する．
+\end{tcolorbox}
+
+\begin{definition}[distribution function]
+    実確率変数$X$の定める
+    $(\R,\B_1(\R))$上の確率測度$\mu$について，関数$F:\R\to[0,1];x\mapsto\mu((-\infty,x])$を，$X$または$\mu$の\textbf{分布関数}という．
+\end{definition}
+\begin{remark}
+    $F(x):=\mu((-\infty,x))$と定めると，左半連続なバージョンで同様の議論が展開可能である．
+\end{remark}
+
+\begin{lemma}
+    $(\R,\B_1(\R))$上の確率測度$\mu$の分布関数を$F$とする．
+    \begin{enumerate}
+        \item $F$は広義単調増加である．
+        \item $\lim_{x\to\infty}F(x)=1,\lim_{x\to\infty}F(x)=0$をみたす有界関数である．
+        \item 右半連続である．
+        \item $F(x-):=\lim_{y\nearrow x}F(y)$と表すと，$\mu(\{x\})=F(x)-F(x-)$を満たす．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    右半連続関数$F:\R\to[0,1]$に対して，Stieltjes積分$\int(-)dF:C_c(\R)\to\R$，またその延長としてLebesgue-Stieltjes積分$\int(-)dF:\L^1(\R)\to\R$が定まる．
+    すなわち，確率分布$\mu$が一意に定まる．
+    逆に，$\R$上の任意のRadon積分に対して，これに等しい分布関数とそれが定めるStieltjes積分が存在するから，確率分布と分布関数は一対一対応する．
+\end{remarks}
+
+\begin{definition}[discrete, absolute continuous, density, singular]
+    分布関数$F:\R\to\R$について，
+    \begin{enumerate}
+        \item $F$が\textbf{不連続}であるとは，Lebesgue-Stieltjes測度$dF$がデルタ測度の可算和も許した凸結合で表せるときをいう．
+        \item $F$が\textbf{絶対連続}であるとは，Lebesgue-Stieltjes測度$dF$が，Lebesgue測度$dx$に対して絶対連続であることをいう：$dF\ll dx$．このとき，$F$は密度関数$p$を定める：$F(x)=\int_{-\infty}^xp(y)dy$．
+        \item $F$が\textbf{特異}であるとは，$F$は関数として連続であるが，Lebesgue-Stieltjes測度$dF$がLebesgue測度$dx$と互いに特異であるときをいう：$\exists_{A\in\B_1(\R)}\;dF(A)=1\land m(A)=0$．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    $F$が連続であることと，これが定めるRadon積分が連続であること$\forall_{x\in X}\;\int[\{x\}]=0$は一般に同値になる．
+\end{remark}
+
+\begin{example}
+    Cantor関数などは，特異型分布関数の例である．
+\end{example}
+
+\begin{theorem}[Lebesgue decomposition]
+    任意の分布関数$F:\R\to\R$は，不連続分布関数$F_1$，絶対連続分布関数$F_2$，特異分布関数$F_3$が一意的に存在して，これらの線型結合で表せる．
+\end{theorem}
 
 \section{確率空間の生息圏：可測空間の圏}
 
@@ -372,10 +462,10 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\section{統計量：可測関数の空間上の作用素}
+\section{可測関数の空間上の線型汎関数としての測度}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=統計的問題では線型汎関数の推定が主眼となる所以である]
     標本空間$\X^n$上の関数$\X^n\to\R$を統計量という．
     これは像測度$P^X$に依らずに算出される．
     
@@ -383,6 +473,8 @@ title=]
     したがって，この値や，他の積分核を採用した線型汎関数を用いて，分布を関数解析の方法で特徴づけることを考える．\footnote{まるでErgode理論のような理論展開である．}
     これが分布の特徴量の考え方であり，統計量はその有限な／経験的な場合である．
     前者に母をつけて区別することもある．
+
+    したがって，平均を推定する問題は，線型汎関数を推定する問題と同値である．
 \end{tcolorbox}
 
 \subsection{確率変数に対する線型作用素}
@@ -398,12 +490,14 @@ title=]
     \begin{enumerate}
         \item $E[X]:=\int_\Om X(\om)P(d\om)$が実数であるとき，特に離散の場合は$\sum_{\om\in\Om}X(\om)P\{\om\}$を\textbf{$X$の（母）平均}という．\footnote{標本平均と区別していう．平均は位置(location)母数の例で，分散は尺度(scale)母数の例である．}
         \item $E(X,A):=E(X1_A)$と定める．
-        \item $V[X]:=E[(X-EX)^2]$が実数であるとき，これを\textbf{分散}という．
-        \item $V(X,Y):=E[(X-EX)(Y-EY)]=E[XY]-E[X]E[Y]$を\textbf{共分散}$\Meas(X,\R)\times\Meas(X,\R)\to\R$という．
+        \item $\Var[X]=V[X]:=E[(X-EX)^2]$が実数であるとき，これを\textbf{分散}という．
+        \item $\Cov(X,Y)=V(X,Y):=E[(X-EX)(Y-EY)]=E[XY]-E[X]E[Y]$を\textbf{共分散}$\Meas(X,\R)\times\Meas(X,\R)\to\R$という．
         \item $\sigma(X)=\sqrt{V(X)}$を\textbf{標準偏差}という．
         \item $R(X,Y):=\frac{V(X,Y)}{\sigma(X)\sigma(Y)}$を\textbf{相関係数}という．
     \end{enumerate}
 \end{definition}
+
+\subsection{他の測度に関する線型作用素}
 
 \begin{definition}[entropy]
     Shanonnのエントロピーとは自己情報量$I(p):=-\log_2p\;(p\in\X)$が定める積分作用素$H:\Meas(\X,\R)\to[0,\log\al]$である．
@@ -427,7 +521,12 @@ title=]
     この仮定が数理的に妥当であることは，確率論の結果による．
 \end{example}
 
-\section{確率不等式}
+\subsection{積分作用素に関する確率不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分作用素に関する測度論的結果に，確率論的な解釈を与える．
+\end{tcolorbox}
 
 \begin{theorem}[Chebyshevの不等式]\label{thm-Chebyshev-inequality}\mbox{}
     \begin{enumerate}
@@ -454,6 +553,22 @@ title=]
 \begin{remarks}[平均値から標準偏差の$a$倍以上離れる確率は$\frac{1}{a^2}$以下である．]
     まさかそんなに当然な評価の変形だったのか．
 \end{remarks}
+
+\begin{lemma}
+    凸関数$\psi:\R\to\R$について，$X,\psi(X)\in\L^1(X)$のとき，
+    \[\psi(E[X])\le E[\psi(X)].\]
+\end{lemma}
+
+\begin{lemma}
+    共役指数$p,q\in[1,\infty]$について，$\norm{fg}_1\le\norm{f}_p\norm{g}_q$．
+    特に$p=q=2$のとき$E[XY]\le\sqrt{E[X^2]E[Y^2]}$で，さらに$Y=1$のとき$(E[X])^2\le E[X^2]$．
+\end{lemma}
+
+\subsection{Lebesgue空間の包含関係}
+
+\begin{theorem}
+    確率空間において，$p<q\in[1,\infty]$のとき，$\L^q(X)\subset\L^p(X)$かつ$\norm{-}_p\le\norm{-}_q$である．
+\end{theorem}
 
 \section{$\sigma$-加法族が定める構造（要再考）}
 
@@ -2924,6 +3039,14 @@ title=]
 \section{確率変数の独立性と期待値}
 
 \section{多次元連続分布}
+
+\subsection{正規分布}
+
+\begin{definition}
+    $m\in\R^d$，$V\in M_d(\R)$を正定値実対称行列として，$(\R^d,\B(\R^d))$上の測度
+    \[\mu_{m,V}(dx)=\frac{1}{(2\pi)^{d/2}(\det V)^{1/2}}\exp\paren{-\frac{1}{2}(x-m)\cdot V^{-1}(x-m)}dx\]
+    を，平均値$m$，共分散行列$V$に関する\textbf{正規分布}という．
+\end{definition}
 
 \section{指数型分布族}
 
