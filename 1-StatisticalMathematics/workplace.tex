@@ -1,0 +1,38 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{研究ノート}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{研究展望}
+
+\begin{quotation}
+    \begin{enumerate}
+        \item 二重ロバスト推定とDouble Machine Learning．
+        \item 高次の影響関数への推定手法(Robinsが開拓)は因果推論ではとても有望視されている．Gateaux微分ではだめでも，Malliavin微分で理論を創れないか？これはrobust統計学の塗り替えに当たる試みになってしまう．
+        \item Gaussian近似．鈴木太慈先生と今泉先生の分野に近い．
+    \end{enumerate}
+    １で売れて，２を温めるしかない．
+\end{quotation}
+
+\begin{thebibliography}{99}
+    \bibitem{Locally Robust Semiparametric Estimation}
+    \href{https://arxiv.org/abs/1608.00033}{Victor Chernozhukov, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney K. Newey, James M. Robins - Locally Robust Semiparametric Estimation}
+    \bibitem{Characterization of parameters with a mixed bias property}
+    \href{https://arxiv.org/abs/1904.03725}{Andrea Rotnitzky, Ezequiel Smucler, James M. Robins - Characterization of parameters with a mixed bias property}
+    生物統計分野の研究者が，二重ロバスト推定が有効ないままでにない関数クラスを発見した．
+    これの必要十分条件を特定できないだろうか？
+    \bibitem{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
+    \href{https://arxiv.org/abs/1802.08667}{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
+    \bibitem{ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
+    \href{https://arxiv.org/abs/2012.15678}{Masaaki Imaizumi, Taisuke Otsu - ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
+    \bibitem{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
+    \href{https://arxiv.org/abs/1212.6885}{Victor Chernozhukov, Denis Chetverikov, Kengo Kato - GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,401 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{確率論}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{線型推測論}
+
+\begin{quotation}
+    線型推測論が統計モデルの線形代数である．
+\end{quotation}
+
+\section{射影行列と逆行列}
+
+\section{カイ２乗分布}
+
+\section{フィッシャー・コクランの定理}
+
+\section{$t$分布と$F$分布}
+
+\section{ガウス・マルコフモデル}
+
+\section{仮説検定}
+
+\section{平均の検定}
+
+\section{重回帰分析}
+
+\section{一元配置}
+
+\section{二元配置}
+
+\chapter{統計的決定理論}
+
+\begin{quotation}
+    統計的決定問題が設定されたとき，決定問題の下で起こる確率現象を解明するのが数理統計学の課題であって，特定の決定関数を無条件に是とするものではない．
+\end{quotation}
+
+\section{枠組み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    決定すべきは関数＝射である．
+    その文脈は8-組で表現できる．
+\end{tcolorbox}
+
+\begin{definition}[statistical decision problem, sample space, decision / action space, loss function, nonrandomized, randomized decision function (Abraham Wald)]
+    次の8-組$(\X,\A,\P,\Theta,\D,\B,W,\Delta)$を\textbf{統計的決定問題}という．
+    \begin{enumerate}
+        \item $(\X,\A)$は可測空間で，\textbf{標本空間}という．
+        \item $\Theta$はパラメータの空間で，$\P:=(P_\theta)_{\theta\in\Theta}$は$(\X,\A)$の確率分布の族．
+        \item $(\D,\B)$は可測空間で，\textbf{決定空間}または\textbf{行動空間}という．
+        \item 第二変数について可測な関数$W:\Theta\to\Meas(\D,\R_+)$を\textbf{損失関数}という．
+        \item $\Delta$は決定関数の族とする．
+        \begin{enumerate}[(a)]
+            \item 可測写像$\delta:\X\to\D$を\textbf{非確率的決定関数}という．
+            \item 第一変数については$(\D,\B)$上の確率測度，第二変数については$\X$上の$\A$-可測関数となる関数$\delta:\B\times\X\to[0,1]$を\textbf{確率的決定関数}という．
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    非確率決定関数$\delta:\X\to\D$が与えられたとき，任意の$B\in\B$に対して$\wt{\delta}(B|x):=1_{\Brace{\delta(x)\in B}}$で$\wt{\delta}:\B\times\X\to[0,1]$が定まるから，
+    確率的決定関数の方がより一般的な設定となる．
+\end{remark}
+
+\begin{example}[平均値の推定量の決定]
+    $(\X,\A):=(\R^n,\B_n)$，$\P_1:=\Brace{P=P_*^n\in\M(\R^n)\mid P_*は\R 上の確率分布で\int_\R x^2P_*(dx)<\infty}$，$\Theta:=\P_1$とする．
+    決定空間は平均値の全体としたいから$(\D,\B):=(\R,\B_1)$．
+    推定量$\Delta:=\Brace{T_1,T_2,T_3}$はそれぞれ$T_1:=X_1,T_2:=\sum^n_{j=1}\frac{X_j}{n},T_3:=X_n$という非確率的決定関数の族で，損失関数は$W(P,a):=(a-\mu_1(P))^2$とする．
+
+    すると，損失関数$W$から定まる危険関数は
+    \begin{align*}
+        R(P,T_i)&=\int W(P,T_i(x_1,\cdots,x_n))P(dx_1,\cdots,dx_n)\quad(P\in\P_1)\\
+        &=\Var_P[T_i]
+    \end{align*}
+    となる．こうして，$R(P,T_1)=R(P,T_3)=\Var_P[X_1],R(P,T_2)=\frac{\Var_P[X_1]}{n}$となり，$T_2$が危険関数$R$を最小にするとわかる．
+\end{example}
+
+\begin{definition}[risk function, admissible]
+    \textbf{危険関数}$R:\Theta\times\Delta\to\R$を次のように定める．
+    \begin{enumerate}
+        \item 確率的な決定関数$\delta:\B\times\X\to[0,1]$については，$R(\theta,\delta):=\int_\X\int_\D W(\theta,a)\delta(da|x)P_\theta(dx)$と定める．
+        \item 非確率的な決定関数$\delta:\X\to\D$については，$R(\theta,\delta):=\int_\X W(\theta,\delta(x))P_\theta(dx)$と定める．
+    \end{enumerate}
+    ２つの決定関数$\delta_1,\delta_2\in\Delta$について，
+    \begin{enumerate}
+        \item $\forall_{\theta\in\Theta}\;R(\theta,\delta_1)\le R(\theta,\delta_2)$が成り立つとき，$\delta_1$と$\delta_2$は\textbf{同程度に良い}決定関数であるという．
+        \item 同程度に良い決定関数がさらに$\exists_{\theta_0\in\Theta}\;R(\theta_0,\delta_1)<R(\theta_0,\delta_2)$を満たすとき，$\delta_1$は$\delta_2$より\textbf{一様に良い}決定関数であるという．
+        \item 「一様に良い」という関係は順序を定める．$\Delta$に最大元が存在せず，極大元$\delta_*$のみが存在するとき，\textbf{許容的}であるという．
+    \end{enumerate}
+\end{definition}
+
+\section{十分性と完備性}
+
+\subsection{十分統計量}
+
+\section{指数型分布族}
+
+\section{統計的推定}
+
+\section{統計的仮説検定}
+
+\subsection{枠組み}
+
+\begin{definition}[hypothesis testing, null hypothesis, alternative hypothesis, significance level, critical region]
+    確率空間$(\X,P)$に対して，事前に与えられた設定$\alpha\in(0,1),H_0,H_1$から定められる部分集合$\X_1\subset\X$を検定という．
+    \begin{enumerate}
+        \item 仮説検定において，仮説とは，母数または確率分布に関する（メタ）条件をいう．
+        \item 検定される仮説$H_0$を\textbf{帰無仮説}といい，それに対立する仮説$H_1$を\textbf{対立仮説}という．
+        \item 文脈としては，$H_0$を棄却し$H_1$の成立を示すことで社会的な意味を見出そうという文脈に当てはまるように$H_0,H_1$を選ぶ．
+        \item $P(H_0)$の値に意味を持たせるための指標を\textbf{有意水準}という．$\alpha=0.05,0.01$などが用いられる．
+        \item $\X_1\subset\X$を$\alpha$と$H_0,H_1$の意義から事前に定めて\textbf{棄却域}といい，観測値$x$が$x\in\X_1$のとき棄却し，$x\notin\X_1$のとき採択する．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}\label{exp-hypothesis-testing}
+    $\alpha=0.05$とする．20回中事象$E$が13回起こったとする．帰無仮説$H_0$を$P(E)=1/2$とし，対立仮説$H_1$を$P(E)>1/2$とする．
+    すると，棄却域は$x_0\in\N$を用いて$\X_1=\Brace{x\in[20]\mid x\ge x_0}$と定めるのが良いと考えられる．
+    いま，
+    \[\sum^{20}_{k=14}\begin{pmatrix}20\\k\end{pmatrix}\paren{\frac{1}{2}}^{20}\approx 0.0577\]
+    より，$13<x_0$であって，観測値$13$は$\X_1$には入らないから，棄却できない．
+    「確率$0.05$程度の事象が偶々起こった」と解釈する方が選択される．
+\end{example}
+
+\begin{definition}[type I error, type II error]
+    $H_0$が正しいのに$H_0$を棄却してしまう誤りを\textbf{第一種の誤り}または\textbf{偽陽性}といい，$H_1$が正しいのに$H_0$を採択してしまう誤りを\textbf{第二種の誤り}または\textbf{偽陰性}という．
+\end{definition}
+
+\subsection{ランダム化検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    検定の構成法の例をあげる．
+    検定＝棄却域の良さは，第一種の誤りの確率を有意水準$\alpha$で制限した後に，その範囲内で第二種の誤りの確率を最小化することで得られる．
+\end{tcolorbox}
+
+\begin{example}
+    例\ref{exp-hypothesis-testing}について，$x_0=15$とすると，
+    \[\sum^{20}_{k=15}\begin{pmatrix}20\\k\end{pmatrix}\paren{\frac{1}{2}}^{20}\approx 0.0207\]
+    より，棄却域のサイズは5\%を大きく切って2\%程度となってしまう．
+    そこで，$14<x_0<15$にあたる棄却域を構成したいが，$x_0\in\Z$の値は変えられない．
+    そこで，\textbf{棄却域をランダム化}する．
+    \[\begin{pmatrix}20\\k\end{pmatrix}\paren{\frac{1}{2}}^{20}\varphi+\sum^{20}_{k=15}\begin{pmatrix}20\\k\end{pmatrix}\paren{\frac{1}{2}}^{20}=\alpha=0.05\]
+    を満たす$\varphi\in(0,1)$を用いて，観測値$x=14$に対しては確率$\varphi$で$H_0$を棄却し，確率$1-\varphi$で$H_0$を採択することとする．
+\end{example}
+
+\subsection{形式化}
+
+\begin{definition}[test / critical (function), size, level-$\alpha$-test, power function, uniformly most powerful (UMP) test]
+    確率分布族$\P=(P_\theta)_{\theta\in\Theta}\subset\M(\X,A)$を考える．
+    \begin{enumerate}
+        \item 棄却域$\X_1\subset\X$の定めるパラメータ空間の分割$\Theta=\Theta_0+\Theta_1$を考え，帰無仮説を$H_0:\theta\in\Theta_0$で表し，対立仮説を$H_1:\theta\in\Theta_1$と表す．
+        \item $\abs{\Theta_i}=1$の場合を単純仮説といい，そうでない場合を複合仮設という．\footnote{$\Theta$が１次元で，$H_0:\theta=\theta_0,H_1:\theta\ne\theta_0$の形のときを\textbf{両側検定}，$H_0:\theta\le\theta_0,H_1:\theta>\theta_0$の形のときを\textbf{片側検定}という．}
+        \item 可測関数$\varphi:\X\to[0,1]$を\textbf{検定（関数）}という．$\exists_{A\in\A}\;\varphi=1_A$であるとき検定$\varphi$は非確率的である．
+        \item $\sup_{\theta\in\Theta_0}E_\theta[\varphi]$を$\varphi$の\textbf{大きさ}という．大きさが$\alpha$以下の検定を\textbf{水準$\alpha$検定}という．水準$\alpha$検定の全体を$\Phi_\alpha\subset\Meas(\X,[0,1])$で表す．
+        \item $\beta_\varphi:\Theta_1\to[0,1];\theta\mapsto E_\theta[\varphi]$を\textbf{検定出力関数}という．$1-\beta_\varphi(\theta)$は第二種の誤りの確率を表す．
+        \item $\forall_{\varphi\in\Phi_\alpha}\;\beta_{\varphi_0}(\theta)\ge\beta_\varphi(\theta)$を満たす検定$\varphi_0\in\Phi_\alpha$を\textbf{一様最強力検定}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}[統計的決定理論の枠組みでの解釈]
+    決定空間は，採択する仮説の添字からなる空間$\D:=2=\{0，1\}$である($0$が受容，$1$が棄却)．
+    損失関数は
+    \[W(\theta,a)=\begin{cases}
+        1_{\{1\}}(a),&\theta\in\Theta_0,\\
+        1_{\{0\}}(a),&\theta\in\Theta_1.
+    \end{cases}\]
+    で，検定関数$\varphi$は確率的決定関数
+    \[\delta_\varphi(dz|x)=\varphi(x)\ep_1(dz)+(1-\varphi(x))\ep_0(dz)\]
+    に対応する．ただし，$\ep_a$はデルタ測度とした．したがって危険関数は
+    \begin{align*}
+        R(\theta,\delta_\varphi)&=\int_\X\int_\D W(\theta,z)\delta_\varphi(dz|x)\ep_0(dz)\\
+        &=\begin{cases}
+            E_\theta[\varphi],&\theta\in\Theta_0,\\
+            1-E_\theta[\varphi],&\theta\in\Theta_1.
+        \end{cases}
+    \end{align*}
+    となり，$\Phi_\alpha=\Brace{\varphi\in\Meas(\X,[0,1])\mid\sup_{\theta\in\Theta_0}R(\theta,\delta_\varphi)\le\alpha}$と表せる．
+    決定関数の全体は$\Delta\subset\Phi_\alpha$となる．
+
+    $\Delta$の中に入る一番自然な順序は一様順序で，これによる最大元が存在するときこれをUMPと呼ぶ．
+\end{remarks}
+
+\begin{definition}[nuisance parameter, goodness of fit test]\mbox{}
+    \begin{enumerate}
+        \item $\Theta$が２次元以上で，特定のパラメータにしか興味がないとき，分割$\Theta_1+\Theta_2$は商空間となる．この時の興味のない母数を\textbf{局外母数}または\textbf{撹乱母数}という．
+        \item 帰無仮説を「確率変数が正規分布に従う」という命題にする場合，特に\textbf{分布の適合度検定}と呼ぶ．適合度検定や「確率分布が独立である」などの数学的な仮定が現実のデータと矛盾がないかチェックするための検定のクラスを\textbf{統計的モデルの診断}という．
+    \end{enumerate}
+\end{definition}
+
+\section{区間推定}
+
+\chapter{大標本理論}
+
+\begin{quotation}
+    非線形モデル・非ガウスモデルに対しては，統計量の分布が複雑なため，標準的な統計的決定理論を適用するのは困難であるが，
+    これに替わって漸近的方法に基づく大標本理論が有力な解析手段となる．
+    ここで，正規近似に基づく１次の漸近理論を扱う．
+\end{quotation}
+
+\section{最尤推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Ronald Fisher 1912-22が開発．
+    最尤推定量は一致性を満たすが，この現象はより広いクラスについて成り立つ．
+\end{tcolorbox}
+
+\begin{problem}
+    可測空間$(\X,\A)$上の分布族$(P_\theta)_{\theta\in\Theta}$について，独立な観測値$x_1,\cdots,x_n$から$\theta$を推定する問題を考える．
+\end{problem}
+
+\begin{definition}[MLE: maximum likelihood estimator]
+    $(\X,\A)$上の$\sigma$-有限測度$\nu$に関して$P_\theta$が絶対連続であるとし，微分を$p(x,\theta):=dP_\theta/d\nu(x)$と表す．
+    \begin{enumerate}
+        \item $L_n(\theta):=\prod^n_{j=1}p(x_j,\theta)$を\textbf{尤度関数}という．これは，ある$\theta\in\Theta$について，これが定める分布$P_\theta$から観測値$x_1,\cdots,x_n$が得られる条件付き確率に当たる．
+        \item 各$(x_1,\cdots,x_n)\in\X^n$に対して，尤度関数を最大にする$\wt{\theta_n}(x_1,\cdots,x_n)\in\Theta$を対応させる関数$\wt{\theta_n}:\X^n\to\Theta$を\textbf{最尤推定量}という．\footnote{ここでは推定量は可測という仮定は置かない．}
+    \end{enumerate}
+\end{definition}
+\begin{remark}[$M$-推定量としての最尤推定量]
+    単調増加関数との合成を考えて，対数尤度関数$l_n:=\log\circ L_n$の最大化を考えるにあたって，パラメータの空間$\Theta$が可微分構造を持つとき，
+    ランダムな方程式$\partial_\theta l_n(\theta)=0$の解としての最尤推定量を特徴付けることが出来る．
+    これを\textbf{尤度方程式}という．
+    このとき出現した対数尤度の微分を\textbf{スコア関数}$S(x,\theta):=\pp{}{\theta}l(\theta,x)$という．
+\end{remark}
+
+\begin{remarks}[最尤推定量の一致性]
+    大数尤度関数$l_n(\theta):=\log L_n(\theta)=\sum_{j=1}^n\log p(x_j,\theta)$は，独立同分布に従う確率変数の和である．よって，大数の法則により，真値$\theta_0\in\Theta$について，
+    \[\forall_{\theta\in\Theta}\quad\frac{1}{n}[l_n(\theta)-l_n(\theta_0)]\to\int\log\paren{\frac{p(x,\theta)}{p(x,\theta_0)}}P_{\theta_0}(dx)\quad P_{\theta_0}\text{-}\as\]
+    が成り立つ．
+    $P:\Theta\to\{P_\theta\}$が単射であるという識別可能性条件を仮定すると，相対エントロピーの非負性より，真値$\theta_0$はこの右辺を最大にする唯一の点となる．
+    そこで，左辺を最大にする推定量が$\wt{\theta_n}$なのであったから，$n\to\infty$のとき，$\wt{\theta}_n\to\theta_0$が予想される．
+    あとは，任意の$\theta\in\Theta$に対する一様性を確認すれば良い．
+\end{remarks}
+
+\begin{lemma}
+    可測空間$(\Om,\F)$上の$\sigma$-有限測度$\nu$に関して絶対連続な確率測度$P,Q$について，その微分を$p(\om):=dP/d\nu(\om),q(\om):=dQ/d\nu(\om)$とおく．
+    このとき，
+    \[\int_\Om\log\paren{\frac{p(\om)}{q(\om)}}P(d\om)\le 0\]
+    で，等号成立条件は$P=Q$のとき．
+\end{lemma}
+
+\begin{definition}[consistency]
+    パラメータの推定量$\theta_n:\X^n\to\Theta$について，
+    \begin{enumerate}
+        \item 任意の$\theta\in\Theta$について，これが真値であったとき，$\wt{\theta_n}\to\theta\as\;(n\to\infty)$が成り立つとき，この推定量は\textbf{強一致性}を持つという．
+        \item 推定量$\wt{\theta_n}$が可測で，任意の$\theta\in\Theta$について，これが真値であったとき，$\wt{\theta_n}\xrightarrow{p}\theta\;(n\to\infty)$が成り立つとき，この推定量は\textbf{弱一致性}を持つという．
+    \end{enumerate}
+\end{definition}
+
+\begin{tbox}{red}{}
+    たったこれだけの議論で，相対エントロピーなる確率測度間の距離概念と，実数の乗法群と加法群の間の準同型$\R_{>0}\to\R$としての対数関数とのいずれもが出てくるとは思わなかった．
+    「尤度」なる意味論と「相対エントロピー」という意味論とが繋がることが一番の驚き．
+\end{tbox}
+
+\section{一様対数の法則}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最尤推定量の性質を確認するためには，$\theta\in\Theta$に依らずに一様に収束することを確認すれば良い．
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $(\X,\A,P)$の可算無限直積$(\o{\X},\o{\A},\o{P})$上に，$\pi_n:=(\pr_1,\cdots,\pr_n):\o{\X}\to\X^n$で$\X^n$上の可測関数を引き戻して議論する．
+        \item $U:\X\times\Theta\to(-\infty,\infty]$に対して，
+        \[\o{U_n}(\theta)=\o{U_n}(x,\theta)=\frac{1}{n}\sum^n_{j=1}U(x_j,\theta)\]
+        と表す．ただし，$x=(x_1,\cdots,x_n)\in\X^n$とした．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+    $(\Theta,d)$を距離空間，$\Theta_1\subset\Theta$をコンパクト集合，$U:\X\times\Theta\to[-\infty,\infty]$を関数とし，以下の条件を仮定する：
+    \begin{enumerate}[({A}1)]
+        \item $\forall_{x\in\X}\;\theta\mapsto U(x,\theta)$は下半連続．
+        \item $\forall_{\theta\in\Theta}\;r$が十分に小さければ，$x\mapsto\inf_{\theta'\in\Theta,d(\theta',\theta)<r}U(x,\theta')$は可測．
+        \item ある可積分関数$M:\X\to\R$が存在して，$\forall_{(x,\theta)\in\X\times\Theta}\;U(x,\theta)\ge M(x)$．
+    \end{enumerate}
+    このとき，$\o{U}(\theta):=\int_\X U(x,\theta)P(dx)\in(-\infty,\infty]$に対して，
+    \begin{enumerate}
+        \item 
+        \[\liminf_{n\to\infty}\inf_{\theta\in\Theta_1}\o{U_n}(\theta)\ge\inf_{\theta\in\Theta_1}\o{U}(\theta)\quad\as\]
+        \item $\o{U}$は下半連続．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[一様大数の法則]
+    $(\Theta,d)$を距離空間，$\Theta_1\subset\Theta$をコンパクト集合，$U:\X\times\Theta\to[-\infty,\infty]$を関数とし，以下の条件を仮定する：
+    \begin{enumerate}[({A}1)]
+        \item $\forall_{x\in\X}\;U(x,-):\Theta\to\R$は連続．
+        \item $\forall_{\theta\in\Theta}\;U(-,\theta):\X\to\R$は可測．
+        \item ある可積分関数$M\in\L^1(\X)$が存在して，$\forall_{(x,\theta)\in\X\times\Theta}\;\abs{U(x,\theta)}\le M(x)$．
+    \end{enumerate}
+    このとき，$\o{U}(\theta):=\int_\X U(x,\theta)P(dx)\in\R$は連続で，
+    \[\lim_{n\to\infty}\sup_{\theta\in\Theta_1}\abs{\o{U_n}(\theta)-\o{U}(\theta)}=0\quad\as\]
+\end{theorem}
+
+\section{最小コントラスト推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最尤推定の枠組みを一般化し，このクラスについてより一般的な形で一致性を示す．
+\end{tcolorbox}
+
+\begin{definition}[contrast function, minimum contrast estimator]
+    $(\Theta,d)$を距離空間，$(\o{\X},\o{\A},P)$を確率空間とする．
+    \begin{enumerate}
+        \item \textbf{コントラスト関数}とは，関数$\o{\Psi}:\o{\X}\times\Theta\to(-\infty,\infty]$をいう．
+        \item これを最小にする写像$\wt{\theta}:\o{\X}\to\Theta$を\textbf{最小コントラスト推定量}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    尤度関数は$L_n:\X^n\times\Theta\to[0,1]$と定め，これを最大化したが，一致性の議論の中で，真の分布との対数尤度の差$\abs{l_n(\theta)-l_n(\wt{\theta})}$の最小化を考えた．
+\end{example}
+
+\section{$M$-推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Huberが1964年に最尤推定を一般化し，"maximum likelihood-type"の頭文字から$M$-推定量のクラスを定めた．\footnote{\url{https://en.wikipedia.org/wiki/M-estimator}}
+
+\end{tcolorbox}
+
+\begin{definition}
+    $\Theta\subset\R^p$とする．関数$\psi:\X\times\Theta\to\R^p$に対して，
+    \[\o{\psi_n}(\theta)=\o{\psi_n}(x,\theta)=\frac{1}{n}\sum^n_{j=1}\psi(x_j,\theta)\]
+    とおき，$\o{\psi_n}(\wh{\theta_n})=0$を満足する未知パラメータの推定量$\wt{\theta_n}$を\textbf{$M$-推定量}という．
+    $\psi$を\textbf{推定関数}という．
+\end{definition}
+
+\begin{example}
+    最小コントラスト推定量は，$\partial_\theta\Psi_n(\theta)=0$なる推定関数に対応する$M$-推定量である．
+\end{example}
+
+\section{推定量の漸近正規性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一致性は大数の法則に当たるならば，その真値への収束の速度が同様に気になる．これが漸近正規性である．
+    これを，$M$-推定量について議論する．
+\end{tcolorbox}
+
+\section{ワンステップ推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $M$-推定量は推定関数の零点として定まるが，実際に方程式を解くことは容易でない場合も多い．
+    一方で，有効でないが，一致性をもつ推定量は容易に見つかることがしばしばある．
+    このとき，それを用いて，最尤推定量と同じ漸近分散を持つ推定量を構成できる．
+\end{tcolorbox}
+
+\section{$M$-推定量の存在}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cramerによる．
+\end{tcolorbox}
+
+\section{頑健推定}
+
+\section{尤度比検定}
+
+\section{多項分布の検定}
+
+\section{尤度比確率場の局所漸近構造}
+
+\section{情報量規準}
+
+\section{密度推定}
+
+\section{$U$-統計量}
+
+\chapter{漸近展開とその応用}
+
+\begin{quotation}
+    中心極限定理は分布の正規近似であるが，
+    Edgeworthによる展開はその近似をより精密にしたものである．
+    標本数がそれほど大きくない実際的な状況では，分布のより精密な近似を基礎として統計量を構成することが必要になる．
+
+    今日，漸近展開法も確率過程にまでその領域を広げ，新しい確率統計学が発展しつつあるが，このような新領域を理解する上でも，独立確率変数列における現象を理解することが重要である．
+\end{quotation}
+
+\begin{thebibliography}{99}
+    \bibitem{吉田}
+    吉田朋広『数理統計学』(朝倉書店，2006)
+    \bibitem{竹村}
+    竹村彰道『現代数理統計学』（学術図書，2020）
+    \bibitem{久保川}
+    久保川達也『現代数理統計学の基礎』（共立出版，2017）
+    \bibitem{西山陽一}
+    西山陽一『マルチンゲール理論による統計解析』（近代科学社，2011）
+    \bibitem{Bhattacharya}
+    Rabi Bhattacharya - Course in Mathematical Statistics and Large Sample Theory
+\end{thebibliography}
+
+\end{document}

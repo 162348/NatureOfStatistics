@@ -3,6 +3,7 @@
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
 \input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1237,8 +1238,11 @@ title=双対空間の元の存在]
     $\varphi:\bF x\to\bF$を，$\varphi(\al x)=\al\norm{x}$で定めると，$\norm{\varphi}=1$である．
     これはノルム$\norm{-}$より大きくないままの$X$上への延長が存在するが，$\norm{\al x}=1$を満たす$\al x\in\bF x$について$\varphi(\al x)=1$であるから，$\norm{\varphi}=1$のままである．
 \end{proof}
-\begin{remarks}
+\begin{remarks}[state]
     汎関数による点の分離能力は十分に高い．定理\ref{thm-Spectrum-is-compact}などに使う．
+    また，ノルム空間$X$が単位的$C^*$-代数であるとき，この条件を満たす汎関数を\textbf{状態}という．\footnote{\url{https://ncatlab.org/nlab/show/state on a star-algebra}}
+    局所コンパクトハウスドルフ空間上の連続関数環$C(X)$上の状態とは，確率測度が定める積分である．
+    ヒルベルト空間$H$上に表現された$C^*$-環の状態とは，任意の単位ベクトル$\xi\in B(H)$が定める汎関数$T\mapsto(T\xi|\xi)$であり，この操作は物理量の測定の期待値を与える．
 \end{remarks}
 
 \begin{corollary}
@@ -1305,7 +1309,7 @@ title=]
     \begin{enumerate}
         \item 有限次元線型空間は回帰的である．
         \item $L^p$空間は$1<p<\infty$のとき，回帰的である．
-        \item Rieszの双対定理より，任意の可分Hilbert空間は回帰的である．
+        \item Rieszの表現定理より，任意のHilbert空間は回帰的である．
     \end{enumerate}
 \end{example}
 
@@ -2417,13 +2421,13 @@ title=]
 
 \subsection{弱位相とその特徴付け}
 
-\begin{definition}[weak topology on Hilbert space]
+\begin{definition}[weak topology on Hilbert space]\label{def-weak-topology-on-H(B)}
     Hilbert空間$H$上の弱位相とは，有界な線型汎函数の集合$H^*$が定める始位相をいう．
     これは，標準的な同型$\Phi:H\to H^*$ \ref{prop-isometry-of-Hilbert-dual}により，$H^*$上の$w^*$-位相を引き戻したものに一致する．
     よって特に，Alaogluの定理\ref{thm-Alaoglu}より，$H$内の単位球は弱コンパクトである．
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lemma-characterization-of-bounded-operator-on-Hilbert-space}
     任意のHilbert空間の作用素$T:H\to H$について，次の２条件は同値．
     \begin{enumerate}
         \item $T\in B(H)$である（$H$のノルム位相について連続，すなわち，有界）．
@@ -3608,27 +3612,6 @@ title=]
     これをシフト作用素という．
 \end{example}
 
-\section{$C^*$-代数}
-
-\subsection{$*$-代数の定義}
-
-\begin{definition}[involution, anti-involution, star algebra, Banach star algebra]\mbox{}
-    \begin{enumerate}
-        \item 二乗が恒等写像となるような準同型を\textbf{対合}という．恒等射自身も対合である．反準同型でもある対合を\textbf{反対合}と呼ぶ．
-        \item 対合を備えた可換環$K$について，$K$-$*$-代数$A$とは，$K$-双線型写像$\cdot:A\times A\to A$と$K$-反線型写像${}^*:A\to A$を備えた$K$-加群$A$であって，次の２条件を満たすものをいう：
-        \begin{enumerate}[(a)]
-            \item ${}^*$は台となる$K$-加群$A$上に対合を定める：$\forall_{x\in A}\;x^{**}=x$．
-            \item ${}^*$は乗法$*$上に反準同型を定める：$\forall_{x,y\in A}\;(xy)^*=y^*x^*$．
-        \end{enumerate}
-        \item $K=\C$であり，$C$-$*$-代数$A$がBanach代数でもあるとき，これをBanach $*$-代数という．このとき，$*:A\to A$は等長同型である条件も課す．
-    \end{enumerate}
-\end{definition}
-
-\begin{example}\mbox{}
-    \begin{enumerate}
-        \item Banach $*$-代数$B$について，半対合${}^*:B\to B$が台となるBanach代数$B$上のノルムと両立するとき，これを特に$C^*$-代数と呼ぶ．
-    \end{enumerate}
-\end{example}
 
 \section{コンパクト作用素}
 
@@ -3638,7 +3621,7 @@ title=]
     有界連続関数の中でコンパクト台を持つもの$C_c(X)\subset C_b(X)$の関係と，有界作用素の中で有限ランクを持つもの$B_f(H)\subset B(H)$の関係は非常に似ている．
     These classes describe local phenomena on $H$ and on $X$.\cite{AnalysisNow}
     そこで，$C_c(X)$の完備化として得た$C_0(X)$に対応するクラス"$B_0(H)$"を，作用素論でも構成することを考える．
-    このクラスはある種の有限的な性質を持つ．
+    このクラスはある種の有限的な性質を持ち，$B(H)$の閉イデアルをなす．
 \end{tcolorbox}
 
 \subsection{定義}
@@ -3647,7 +3630,7 @@ title=]
     Hilbert空間$H$上の作用素$T:H\to H$について，
     \begin{enumerate}
         \item $T$が\textbf{有限ランク}であるとは，$\Im T$が$H$の有限次元部分空間であることをいう（したがって特に閉\ref{prop-finite-subspaces}）．
-        \item 有限ランクな有界作用素全体$B_f(H)$は，$B(H)$内の部分空間であり，かつイデアルである．
+        \item 有限ランクな有界作用素全体$B_f(H)$は，$B(H)$内の部分代数であり，かつイデアルである．
         \item $B_f(H)$はイデアルとして自己共役である：$(B_f(H))^*=B_f(H)$．
     \end{enumerate}
 \end{definition}
@@ -3658,7 +3641,7 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}[近似的単位元の構成]
     $B_f(H)$には射影からなるネット$(P_\lambda)_{\lambda\in\Lambda}$が存在し，$\forall_{x\in H}\;\norm{P_\lambda x-x}\to 0$を満たす．
 \end{lemma}
 \begin{proof}
@@ -3679,30 +3662,112 @@ title=]
         \item $B$上の任意のネットは，$T$での像が$H$上で収束するような部分ネットを持つ．
     \end{enumerate}
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $x$に弱収束する$B$のネット$(x_\lambda)_{\lambda\in\Lambda}$を任意に取る．任意の$\ep>0$に対して，仮定より，$S\in B_f(H)$が存在して$\norm{S-T}<\ep/3$を満たすから，
+        \begin{align*}
+            \norm{Tx_\lambda-Tx}&=\norm{(T-S)x_\lambda-(T-S)x+Sx_\lambda-Sx}\\
+            &\le2\norm{T-S}+\norm{Sx_\lambda-Sx}\\
+            &\le\frac{2}{3}\ep+\norm{Sx_\lambda-Sx}.
+        \end{align*}
+        いま，任意の$B(H)$の元は弱-弱連続\ref{lemma-characterization-of-bounded-operator-on-Hilbert-space}だから，$Sx_\lambda$は$Sx$に弱収束する．
+        $\Im S$は有限次元であるから，この正規直交基底を$\{e_1,\cdots,e_n\}$とおくと，各線型汎関数$(-|e_j)$は弱連続だから，
+        ノルムと内積の関係性
+        \[\norm{Sx_\lambda-Sx}^2=\sum_{j\in[n]}\abs{(S(x_\lambda-x)|e_j)}^2\to0\]
+        より，ノルムについても収束する．
+        以上より，$\norm{Tx_\lambda-Tx}<\ep$であるから，$T$は弱-ノルム連続である．
+        \item[(2)$\Rightarrow$(3)]
+        任意のHilbert空間は回帰的で，$H$の単位球$B$は弱コンパクト\ref{def-weak-topology-on-H(B)}であったから，$T(B)$はノルムコンパクトである．
+        \item[(3)$\Rightarrow$(4)]
+        一般に，任意のHausdorff空間のコンパクト集合は閉であるから，$T(B)=\oo{T(B)}$．
+        \item[(4)$\Rightarrow$(5)]
+        $T(B)$は相対コンパクトであるから，任意の$T(B)$のネットは収束する部分ネットを持つ．したがって，その像も収束する．
+        \item[(5)$\Rightarrow$(1)]
+        補題の通りの射影からなるネット$(P_\lambda)_{\lambda\in\Lambda}$を取る．
+        これについて，$(P_\lambda T)$は$B_f(H)$のネットになるが，これが$T$にノルム収束することを示す．
+        仮に収束しないと仮定すると，$\ep>0$が存在して，任意の$\lambda\in\Lambda$に対して単位ベクトル$x_\lambda$が存在して，$\norm{(P_\lambda T-T)x_\lambda}\ge\ep$．
+        仮定より，ネット$(Tx_\lambda)$はある極限$y$にノルム収束すると仮定してよく，このとき補題より，
+        \begin{align*}
+            \ep&\le\norm{(I-P_\lambda)Tx_\lambda}\le\norm{(I-P_\lambda)(Tx_\lambda-y)}+\norm{(I-P_\lambda)y}\\
+            &\le\norm{Tx_\lambda-y}+\norm{(I-P_\lambda)y}\to0.
+        \end{align*}
+        よって矛盾．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    $B_f(H)$の元の像は有限次元であるから，そこではノルム位相と弱位相が一致する．
+    これが(1)の消息となる．
+\end{remarks}
 
 \begin{definition}[compact operator]
     定理の同値な条件を満たす作用素を\textbf{コンパクト作用素}という．
     無限遠で消えるため，コンパクト作用素の空間は$B_0(H)$と表すが，$K(H),C(H)$も一般的である．
 \end{definition}
 
-\begin{lemma}
-    コンパクト作用素の空間$B_0(H)\subset B(H)$は
+\begin{lemma}[コンパクト作用素の空間の描像]
+    コンパクト作用素の空間$B_0(H)=\oo{B_f(H)}\subset B(H)$は
     \begin{enumerate}
         \item ノルム閉で自己共役なイデアルである．
         \item (1)の条件を満たすもので最小のものである．特に$H$が可分である場合は唯一の非自明な閉イデアルである．
-        \item $H$が無限次元であるとき，$I\notin B_0(H)$．が，その場合でも，有限ランクの射影からなる近似的単位元を持つ．
+        \item $H$が無限次元であるとき，非単位的な部分代数である：$I\notin B_0(H)$．が，その場合でも，有限ランクの射影からなる近似的単位元を持つ．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 自己共役性が保たれる．
+        \item 
+    \end{enumerate}
+\end{proof}
 
-\subsection{性質}
+\subsection{正規なコンパクト作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $B_0(H)$には射影からなる近似的単位元が存在することを確認したが，
+    正規コンパクト作用素は，固有値の言葉で特徴付けることが出来る．
+\end{tcolorbox}
 
 \begin{lemma}
     $T\in B(H)$が対角化可能であるとき，
     \begin{enumerate}
         \item $T$はコンパクトである．
-        \item 正規直交基底$(e_j)_{j\in J}$に属する固有値$(\lambda_j)_{j\in J}$は$c_0(J)$の元である．
+        \item 正規直交基底$(e_j)_{j\in J}$に対応する固有値$(\lambda_j)_{j\in J}$は$c_0(J)$の元である．
     \end{enumerate}
 \end{lemma}
+
+\begin{lemma}
+    $x\in H$を正規作用素$T\in B(H)$の固有ベクトルとし，対応する固有値を$\lambda\in\C$とする．
+    \begin{enumerate}
+        \item $x$は$T^*$の固有ベクトルであり，対応する固有値は$\o{\lambda}$である．
+        \item $T$の他の固有値に対応する固有ベクトルは$x$に直交する．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    複素Hilbert空間$H$上の正規なコンパクト作用素$T$は，$\abs{\lambda}=\norm{T}$を満たす固有値$\lambda\in\C$を持つ．
+\end{lemma}
+
+\begin{theorem}[正規コンパクト作用素の特徴付け]
+    $H$を複素Hilbert空間，$T\in B(H)$とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $T$は正規なコンパクト作用素である．
+        \item $T$は対角化可能で，その固有値は無限遠で消える．
+    \end{enumerate}
+\end{theorem}
+
+\begin{notation}
+    $x,y\in H$に対して，$x\odot y\in B(H)$を$(x\odot y)z=(z|y)x$で定まる$\Im x\odot y=\bF x$を満たす階数$1$の作用素とする．
+    この構成は半双線型写像$H\times H\to B_f(H)$を定める．
+    すると，$\norm{e}=1$について，$e\cdot e$は$\C e$への射影である．
+\end{notation}
+
+\begin{remarks}
+    正規なコンパクト作用素は，ある正規直交基底$(e_j)_{j\in J}$が存在して，ノルム収束する級数$T=\sum_{j\in J}\lambda_je_j\odot e_j$と表せるクラスである．
+    このとき，$T$のスペクトルは$\Sp(T)=\{\lambda_j\}_{j\in J}\cup\{0\}$と表せる．
+\end{remarks}
+
+\subsection{Fredholm作用素}
 
 \section{跡}
 
@@ -3710,6 +3775,8 @@ title=]
     関数論とヒルベルト空間上の作用素論との類比において，$C_0,B_0$と$C_c,B_f$は対応するが，
     $B(H)$は２つの役割を持つ．１つは$C_b$であるが，もう一つは$L^\infty(X)$である．そのためにはLebesgue測度にあたる概念が必要であるが，これが跡である．
     このような測度論との交差が特に美しい．いつしか積分もただの線型作用素であったし，級写像も積分作用素の特殊な例なのであった．
+
+    跡が積分に当たることを強烈に示唆する例が，Shannonのエントロピーが事象$\rho$に対して$-E[\rho\log\rho]$であるのに対して，von Neumannエントロピーが密度行列$\rho$に対して$-\Tr(\rho\log\rho)$である．
 \end{quotation}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -3786,17 +3853,21 @@ title=]
     \end{quote}
 \end{tcolorbox}
 
-\subsection{定義と例}
+\subsection{定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     Banach代数はBanのモノイド対象であるが，定義に単位性は入らない（半群対象）．
     しかし，標準的な単位化が存在するから，ここでは単位性を暗黙に仮定する．
+    ということで，単位的なBanach代数とは，ノルムが$1$な単位元が存在するノルム代数を言う．
+    ノルム代数とは劣乗法的なノルムを備えた代数をいう．
+    代数とは体による作用を備えた環，または環の構造も持つ線型空間を言う．
 \end{tcolorbox}
 
 \begin{definition}[algebra, normed -, Banach -, unital, essential ideal]\mbox{}
     \begin{enumerate}
-        \item \textbf{代数}$\A$とは，ある結合的な双線型写像$\cdot:\A\times \A\to \A$について環の構造も持つ線型空間$\A$をいう．
+        \item \textbf{代数}$\A$とは，ある結合的な双線型写像$\cdot:\A\times \A\to \A$について（単位的とは限らない）環の構造も持つ線型空間$\A$をいう．
+        \item 部分代数とは，乗法について閉じているような部分線型空間をいう．
         \item $\A$が\textbf{ノルム代数}であるとは，劣乗法性を満たすノルム$\norm{xy}\le\norm{x}\norm{y}$を備えた代数を言う．
         \item ノルム代数$\A$がそのノルム位相について完備であるとき，\textbf{Banach代数}という．
         \item ある元$I\in\A$が存在して$\forall_{A\in\A}\;IA=AI=A$を満たすとき，ノルム代数$\A$は単位的であるという．
@@ -3864,6 +3935,63 @@ title=]
     後に議論する単位化によって$\norm{I}=1$として良いように，ノルムの劣乗法性は作用素ノルムが模範となっている．
 \end{remarks}
 
+\subsection{代数の射}
+
+\begin{definition}
+    代数$A,B$について，
+    \begin{enumerate}
+        \item $\varphi:A\to B$が代数の射であるとは，積を保つ線型写像であることをいう．
+        \item 単位元を保つとき，$\varphi$を単位的という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    代数の射$\varphi:A\to B$について，
+    \begin{enumerate}
+        \item $\Ker\varphi$は$A$のイデアルである．
+        \item $\Im\varphi$は$B$の部分代数である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    ノルム代数$A,B$と，その間の２つの連続な代数の準同型$\varphi,\psi:A\to B$について，ある$A$をノルム代数として生成する集合$S$（すなわち，$S$の生成する閉部分代数が$A$である）上で一致するならば，これらは写像として等しい．
+\end{lemma}
+
+\begin{example}[disk algebra]
+    円板代数$A(D)$に対して，$\lambda\in\o{D}$が定める評価写像$\ev_\lambda:A(D)\to\C$は連続な代数の準同型である．
+    また，任意の連続な代数の準同型で零でないもの（これを指標というのであった\ref{def-character}）はこの形を持つ．
+    この条件を満たすBanach代数，すなわち指標がすべて評価者像となるBanach代数を，自然な一様環\ref{def-uniform-algebra}という．
+    これは，恒等写像と包含写像$z:\o{D}\mono\C$とが生成する閉部分代数は$A(D)$自身であることによる．
+\end{example}
+
+\subsection{部分代数と生成}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 部分代数の閉包は再び部分代数である．
+        \item Banach代数の閉じた部分代数はBanach代数である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    $(B_\lambda)_{\lambda\in\Lambda}$を部分代数の族とする．
+    \begin{enumerate}
+        \item $\cap_{\lambda\in\Lambda}B_\lambda$も部分代数である．
+        \item 任意の集合$S\subset A$に対して，これを含む最小の部分代数が定まる．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}
+    一点$a\in A$が生成する部分代数は$\Brace{a^n\in A\mid n\in\N}$によって与えられる．
+\end{example}
+
+\begin{example}[Stone-Weierstrassの定理]
+    単位円周$\T:=\partial\Delta$上の連続関数全体の代数$C(\T)$内で，包含写像$z:\T\mono\C$とその共役$\o{z}:\T\mono\C$とが生成する閉部分代数は$C(\T)$自身になる．
+    すなわち，この２つの生成する部分代数は$C(\T)$内で稠密である．
+\end{example}
+
+\subsection{Banach代数の単位化}
+
 \begin{proposition}[Banach代数の単位化]
     $\A$を単位元のない零でないBanach代数とする．
     このとき，基礎体との直和空間$\A_I:=\A\oplus\bF$に次のように積を定めると，単位元$I:=(0,1)$を持つBanach代数となり，写像$i:\A\to\A_I:A\mapsto(A,0)$は余次元１を持つ本質閉イデアルに$\A$を等長に埋め込む．
@@ -3914,9 +4042,127 @@ title=]
     局所コンパクトハウスドルフ空間上の代数$C_0(X)$はBanach代数で，単位的であることは$X$がコンパクトであることに同値．
 \end{example}
 
+\subsection{$*$-代数の定義}
+
+\begin{definition}[involution, anti-involution, star algebra, Banach star algebra]\mbox{}
+    \begin{enumerate}
+        \item 二乗が恒等写像となるような準同型を\textbf{対合}という．恒等射自身も対合である．反準同型でもある対合を\textbf{反対合}と呼ぶ．
+        \item 対合を備えた可換環$K$について，$K$-$*$-代数$A$とは，$K$-双線型写像$\cdot:A\times A\to A$と$K$-反線型写像${}^*:A\to A$を備えた$K$-加群$A$であって，次の２条件を満たすものをいう：
+        \begin{enumerate}[(a)]
+            \item ${}^*$は台となる$K$-加群$A$上に対合を定める：$\forall_{x\in A}\;x^{**}=x$．
+            \item ${}^*$は乗法$*$上に反準同型を定める：$\forall_{x,y\in A}\;(xy)^*=y^*x^*$．
+        \end{enumerate}
+        \item $K=\C$であり，$C$-$*$-代数$A$がBanach代数でもあるとき，これを\textbf{Banach $*$-代数}という．$*:A\to A$は等長同型である条件$\norm{xx^*}=\norm{x}^2$（これを$B^*$-条件という）も課すとき，$B^*$-代数ともいう．
+        \item Banach $*$-代数$B$について，半対合${}^*:B\to B$が台となるBanach代数$B$上のノルムと両立するとき：$\norm{a^*a}=\norm{a}\norm{a^*}$（これを$C^*$-性という），これを特に$C^*$-代数と呼ぶ．
+        \item 実は$C^*$-条件と$B^*$-条件とは同値になるため，現在は前者の用語しか使われない．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{example}
+
+\subsection{例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここでは$\bF=\C$とする．
+\end{tcolorbox}
+
+\subsubsection{可換な例}
+
+\begin{example}[位相空間上の関数の代数]\mbox{}
+    \begin{enumerate}
+        \item 集合$S$上の有界な関数$l^\infty(S)$は，各点毎の和・積・スカラー倍と一様ノルムによって，単位的なBanach代数をなす．
+        \item 位相空間$\Om$上の有界連続関数$C_b(\Om)$は，その閉部分代数をなす．よって，単位的Banach代数である．
+        \item 局所コンパクトハウスドルフ空間$\Om$上の無限遠点で消える関数$C_0(\Om):=\Brace{f\in C_b(\Om)\mid\forall_{\ep>0}\;\{\abs{f(\om)}\ge\ep\}\text{ is compact}}$は，この閉部分代数で，よってBanach代数である．
+        これが単位的であることは$\Om$がコンパクトであることに同値．これは$C_0(\Om)=C(\Om)$であることに同値．
+        \item これらはいずれも，各点毎の複素共役を対合として，$C^*$-代数となる．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[可測関数の代数]\mbox{}
+    \begin{enumerate}
+        \item 測度空間$(\Om,\mu)$上の本質的に有界な可測関数全体の集合$L^\infty(\Om,\mu)$は，上述の代数と同じ演算と本質的上限ノルムによって，単位的Banach代数をなす．
+        \item $\Om$を可測空間とすると，その上の有界な可測関数全体の空間$B_\infty(\Om)$は，一般の有界な関数の空間$l^\infty(\Om)$の中の閉部分代数をなす．よって，単位的Banach代数である．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[正則関数の代数(disk / disc algebra, Hardy space]\mbox{}
+    \begin{enumerate}
+        \item 単位開円板$D:=\Delta$上で正則な関数全体の空間$A(D)$は連続関数全体の空間$C(\o{D})$の閉部分代数で，したがって単位的Banach代数である．
+        これを\textbf{円板代数}という．これが，Banach代数上の理論（Neumann級数展開など）の霊性源となる．
+        実は，$A(D)=H^\infty(D)\cap C(\o{D})$が成り立ち，Hardy空間の閉部分代数でもある．
+        \item 単位開円板$D$上の有界正則関数のなす空間$H^\infty(D)$は，一様ノルムについてBanach代数をなす．これを\textbf{Hardy代数}という．
+    \end{enumerate}
+\end{example}
+
+\subsubsection{Gelfand変換の用語}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度のなす空間の弱位相はBanach空間の弱位相の定義の15年前にRadonが考えていた．
+    この測度代数(measure algebra)は$C(X)$（の部分環）の双対空間の初期に考えられた例である．
+\end{tcolorbox}
+
+\begin{definition}[uniform algebra, natural, Banach function algebra]\label{def-uniform-algebra}
+    $X$をコンパクトハウスドルフ空間とする．
+    \begin{enumerate}
+        \item $X$上の連続関数のなす一様ノルムについての$C^*$-環$C(X)=C_b(X)$の閉部分環（したがってBanach代数）であって，すべての定数関数を含み，$X$の点を分離するものを\textbf{一様環}という．
+        \item $X$上の一様環$A$の極大イデアルが，ある点$x\in X$について，そこで消失する関数のイデアル$M_x$であるとき，これを\textbf{自然}であるという．
+        \item 一般に，ノルムを考えず，$C(X)$の部分代数を\textbf{関数代数}といい，一様環は$C(X)$とその関数代数に一様ノルムを入れた場合に当たる．
+    \end{enumerate}
+\end{definition}
+
+\begin{corollary}
+    単位的な可換Banach代数$A$が$\forall_{a\in A}\;\norm{a^2}=\norm{a}^2$を満たすとき，あるコンパクトハウスドルフ空間$X$が存在して，$A$はその上のある一様環と同型になる．
+\end{corollary}
+
+\begin{example}[測度のなす代数(measure algebra)]
+    局所コンパクトハウスドルフな群$G$上のRadon測度全体$M(G)$はBanach空間をなす．
+    これは畳み込みを積とするとBanach代数となる．
+\end{example}
+
+\subsubsection{非可換な例}
+
+\begin{example}[群環：可測関数の代数で積を合成ではなく畳み込みとしたもの]
+    局所コンパクト群$G$上のHaar測度$\mu$について，$\mu$-可積分関数全体はBanach空間$L^1(G)$をなす．
+    積を畳み込みとすると，Banach代数となる．
+\end{example}
+
+\begin{example}[Banの内部ホム]\mbox{}
+    \begin{enumerate}
+        \item ノルム空間$X$の有界自己作用素全体の空間$B(X)$は，和・スカラー倍を各点で定め，積を合成とすることで，作用素ノルムについてノルム代数となり，$X$がBanach代数であるとき$B(X)$もBanach代数である．コンパクト作用素はこの閉イデアルをなす．随伴を対合として$C^*$-代数をなす．
+        \item 行列代数$M_n(\C)$は作用素の代数$B(\C^n)$に同型であるから，単位的Banach代数である．
+        \item 上三角行列全体の空間は，$M_n(\C)$の部分代数をなす．
+    \end{enumerate}
+\end{example}
+
+
+
 \subsection{イデアルと商}
 
-\subsubsection{商}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    非単位的環を扱う際に重要な橋渡しをする概念として，モジュラーイデアルがある．
+\end{tcolorbox}
+
+\begin{definition}[modular / regular]
+    イデアル$I$が\textbf{単模}であるとは，$\exists_{u\in A}\;\forall_{a\in A}\;a-au\in I\land a-ua\in I$を満たすことをいう．
+\end{definition}
+\begin{remarks}
+    実は正しくは「単模イデアルを含む極大イデアルは存在する」であり，一般の単位的環$A$の任意のイデアルは単模であるから一般に極大イデアルを持つが，単位的とは限らない環については，必ずしも極大イデアルを持つとは限らない．
+\end{remarks}
+
+\begin{example}
+    局所コンパクトハウスドルフ空間$\Om$上の任意の元$\om\in\Om$に対して，
+    \[M_\om:=\Brace{f\in C_0(\Om)\mid f(\om)=0}\]
+    はモジュラーイデアルである．
+    実際，ある関数$u\in C_0(\Om)$で$u(\om)=1$を満たすものが存在するから，$\forall_{f\in C_0(\Om)}\;f-uf\in M_\om$．
+    これは$M\oplus \C u=C_0(\Om)$を満たすから余次元$1$で，極大イデアルでもある．
+\end{example}
 
 \begin{lemma}[quotient]
     $\A$をBanach代数，$\I\subset \A$をイデアルとする．
@@ -3941,7 +4187,11 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsubsection{正則表現}
+\begin{lemma}
+    イデアル$I$がモジュラーであることと，$A/I$が単位的であることとは同値．
+\end{lemma}
+
+\subsection{正則表現}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3978,7 +4228,7 @@ title=]
     以降，これを暗黙の仮定とする．
 \end{remark}
 
-\subsubsection{近似的単位元}
+\subsection{近似的単位元}
 
 \begin{definition}[approximate unit/ identity]
     Banach代数$\A$の\textbf{近似的単位元}とは，単位球$B\subset\A$上のネット$(E_\lambda)_{\lambda\in\Lambda}$で，$\forall_{A\in\A}\;\lim E_\lambda A=\lim AE_{\lambda}=A$を満たすものを言う．
@@ -4002,7 +4252,7 @@ title=]
     $P_r:\partial\Delta\to[0,\infty);z\mapsto\sum^\infty_{n=-\infty}r^{\abs{n}}z^n\;\;(r\in(0,1))$をPoisson核とすると，ネット$(P_r)_{r\in(0,1)}$は$L^1(\partial\Delta)$を畳み込みについてBanach代数とみたときの近似的単位元である．
 \end{example}
 
-\subsubsection{可逆性}
+\subsection{可逆性}
 
 \begin{definition}[invertible]
     単位的なBanach代数$\A$において，元$A\in\A$が\textbf{可逆}であるとは，ある$B,C\in\A$が存在して$BA=AC=I$を満たすことを言う．
@@ -4198,7 +4448,7 @@ title=]
     どうして$C(X)$と書いたときは体への写像であるかといえば，これは指標という概念で群にまで遡る．
 \end{tcolorbox}
 
-\begin{definition}[character, spectral topology]
+\begin{definition}[character, spectral topology]\label{def-character}
     $\A$を単位的$C^*$-代数とする．
     \begin{enumerate}
         \item $\A$の\textbf{指標}とは，全射（即ち零でない）連続線型準同型$\A\epi\C$のことをいう．\footnote{一般の群と体について定義される．}
@@ -4207,6 +4457,9 @@ title=]
         $\A$が単位的でないとき，これは局所コンパクトとなる．
     \end{enumerate}
 \end{definition}
+\begin{remark}
+    冪集合$P(X)$を$2$上の線型空間だと思えば，集合論の特性関数の用語と一致する．
+\end{remark}
 
 \begin{notation}
     Banach代数$\A$の極大イデアル全体のなす空間を$M(\A)$で表す．
@@ -5287,7 +5540,7 @@ title=]
     実電荷$\Phi$について，全変動とは$\abs{\Phi}=\Phi_++\Phi_-$に他ならない．
 \end{remark}
 
-\begin{proposition}[Riesz–Markov representation theorem]\label{prop-Riesz-Markov-3}
+\begin{proposition}[Riesz-Markov representation theorem]\label{prop-Riesz-Markov-3}
     $X$上の有限Radon電荷の空間$M(X)$にノルム$\norm{\Phi}=\abs{\Phi}(1)$を考えたものは，Banach空間$(C_0(X))^*$に等長同型である．
 \end{proposition}
 

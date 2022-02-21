@@ -3,13 +3,13 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \renewcommand{\C}{\mathcal{C}}
 \renewcommand{\Z}{\mathcal{Z}}
-\usepackage[deluxe]{otf}
+%\usepackage[deluxe]{otf}
 \begin{document}
-\mgfamily
 \tableofcontents
 
 \chapter{統計モデル}
@@ -217,8 +217,12 @@ title=]
 \chapter{セミパラメトリックモデル}
 
 \begin{quotation}
-    Not accounting for missing data properly when analyzing data can lead to severe biases.
-    A special case of missing data includes censored data, which occur frequently in the area of survival analysis.\cite{Tsiatis}
+    一部の特徴はパラメータ付けすることが可能なほど知見があり，一方で残りは生の関数のまんま残しておくモデルをセミパラメトリックモデルという．
+    このようなモデルは複雑な構造ゆえ，（解析的な解決は無理で）アルゴリズム的な実装のみが可能な，非線形な推定過程を必要とする．
+    そこで，\textbf{最も重要な手続きは漸近理論}となり，実際のサンプルサイズに対するパフォーマンスは，シミュレーションと数値実験によって検証されることとなる．
+
+    観察研究などで，欠測データへの配慮を行わないこと（"complete case analysis"と呼ばれて，解析ソフトはデフォルトでこの挙動を行うものも多い）は深刻なバイアスをもたらしかねない．
+    欠測データと言っても，"censored data"を含む．これは生存解析でよく直面する．\cite{Tsiatis}
 
     一致で漸近正規な統計量をsemiparametric estimatorという．
     これの存在や探し方は，影響関数の幾何学から重大な示唆がある．
@@ -240,6 +244,12 @@ $E(Y|X)=\mu(X,\beta)$
 
 \subsection{Proportional Hazards Model}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    We assume the treatment effect can be modeled multiplicatively (parametrically) on some completely unknown scale.
+    Such models have arisen in a wide variety of contexts in recent years, particularly in economics, epidemiology, and astronomy.\cite{Bickel}
+\end{tcolorbox}
+
 Coxにより72年に導入された生存解析におけるモデル．
 
 \begin{align*}
@@ -258,6 +268,8 @@ Coxにより72年に導入された生存解析におけるモデル．
     なお，確率関数とは，可測関数$h\circ Z$を表す．
     内積$(h_1|h_2):=E[h_1^Th_2]$を共分散内積と呼ぶ．
 \end{example}
+
+
 
 \chapter{影響関数の幾何}
 
@@ -3515,8 +3527,6 @@ title=]
 \begin{thebibliography}{99}
     \bibitem{久保木・鈴木}
     久保木久孝・鈴木武『セミパラメトリック推測と経験過程』(朝倉書店 統計ライブラリー，2015)
-    \bibitem{Kosorok}
-    Michael R. Kosorok "Introduction to Empirical Processes and Semiparametric Inference" (Springer, 2008)
     \bibitem{吉田}
     吉田朋広『数理統計学』(朝倉書店，2006)
     \bibitem{竹村}
@@ -3525,8 +3535,16 @@ title=]
     久保川達也『現代数理統計学の基礎』（共立出版，2017）
     \bibitem{渡辺澄夫}
     渡辺澄夫『代数幾何と学習理論』（森北出版，2006）
+    \bibitem{Bickel}
+    Bickel - Efficient and Adaptive Estimation for Semiparametric Models (1993)
+    厳密な議論がなされている．実証科学者には難しすぎるとのことでTsiatisが書かれた．
+    \bibitem{Pfanzagl}
+    Pfanzagl - Estimation In Semiparametric Model
+    \bibitem{Kosorok}
+    Michael R. Kosorok "Introduction to Empirical Processes and Semiparametric Inference" (Springer, 2008)
     \bibitem{Tsiatis}
     Anastasios A. Tsiatis "Semiparametric Theory and Missing Data" (2006)
+    最初の５章は欠測データのないセミパラメトリックモデルを扱い，パラメータに対する推定量の構成法を議論する．特に幾何的な手法を見る．
     \bibitem{van der Vaart and Wellner}
     van der Vaart and Wellner "Weak Convergence and Empirical Processes"
 \end{thebibliography}

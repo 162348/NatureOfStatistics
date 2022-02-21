@@ -3,7 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -26,22 +27,119 @@
     因果推論は莫大な霊性源とならないはずがない．
 \end{quotation}
 
-\section{Rubin因果モデル}
+\section{歴史}
 
-\section{構造的因果モデル}
+\begin{history}[調査観察データに対する因果推論の潮流]\mbox{}
+    \begin{enumerate}
+        \item Donald Rubinの因果モデルは手法としては「欠測データ解析の方法論」として結実した．EMアルゴリズムと多重代入法など．
+        その後のMCMC法を用いたベイズ統計学の発展にも寄与し，統計学のパラダイムに大きな変化をもたらした．
+        \item もう一つの流れが，モデル仮定をなるべくおかずに推定することを目指すセミパラメトリック推定法である．Huberの$M$-推定，Liang \& Zegerの一般化推定方程式など．
+        医学データなど，経時的多変量データや，共変量が多い場合の解析に強い．
+        \item 共変量と結果変数の回帰関係を仮定せずに，共変量の影響を削除する傾向スコアが頻繁に利用されるようになったが，これもRubinのセミパラメトリック解析の一種である．
+        \item さらに，Pearl流の手法としては「構造方程式モデル」と「ベイジアンネットワーク」とに代表される．Wrightのパス解析のノンパラメトリックモデルへの拡張と言える．\footnote{\href{https://www.jstage.jst.go.jp/article/jjb/32/2/32_119/_article/-char/ja/}{構造的因果モデルについて．黒木 学, 小林 史明}}
+    \end{enumerate}
+\end{history}
+
+\begin{history}[セミパラメトリックモデル]
+    医学や経済学での調査観察研究では共変量を非常に多く考える必要があるため，線型の回帰モデルではデータの説明力が低く，またカーネル法などのノンパラメトリック法ではいわゆる「次元の呪い」の問題が完全には解決できない．
+    CS的に後者を解決する突破口ももちろんある．
+\end{history}
+
+\section{潜在反応モデル}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    半事実，潜在反応などの用語が出来た．
+    このモデルの上に立脚した統計的因果推論には，Rubin流のRCMs(Rubin's Causal Models)とPearl流の構造的因果モデル(SCMs)との２つがある．
+    Judea Pearlはベイジアンネットワークの理論を体系的に整備した人工知能研究者である．グラフィカルモデルがよく用いられ，実際Judea Pearlの論文はすべてグラフ用語でも記述されている（この表記の重要性は強調されるが，必ずしも理論的に不可分ではない）．
+\end{tcolorbox}
+
+\begin{definition}[potential outcome model]
+    
+\end{definition}
+
+\begin{axiom}[counterfactual model, causal effect, Fundamental Problem of Causal Inference]\mbox{}
+    \begin{enumerate}
+        \item ある行為をした場合による事実と，反事実の乖離を\textbf{因果関係}という．
+        \item ある行為をした場合としなかった場合の結果変数の差$X_{a=1}-X_{a=0}$を\textbf{因果効果}という．
+        \item 同時に２つの変数$X_{a=1},X_{a=0}$を両方とも観測することは出来ない．このことを\textbf{因果推論の根本問題}という．ここに，反事実のwell-definednessと，統計的推論が入る余地がある．
+        故にこの定立を\textbf{反事実モデル}という．統計的な推論が集団レベルにしかなされ得ない限界を強調して\textbf{平均因果効果}ともいう．
+    \end{enumerate}
+\end{axiom}
+
+\begin{definition}[intermediate variable, moderator variable, covariate / control variable / confounding factor]
+    独立変数，従属変数の他に，
+    \begin{enumerate}
+        \item 独立変数の関数で，従属変数がその関数であるような変数を，\textbf{中間変数}または媒介変数という．これを介して起こる因果効果を間接効果という．\footnote{間接効果と直接効果を併せたものを総合効果といい，社会科学では多くこれを取り扱うことになる．}
+        \item 独立変数がこの関数となっているような変数を，\textbf{調整変数}という．この変数が定める同値類で，従属変数と独立変数との関係が大きく変わるような変数である．
+        \item 従属変数と独立変数が，いずれもこの関数であるような変数を\textbf{共変量}や統制変数という．医学分野では交絡要因ともいう．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    これらの峻別，特に中間変数を共変量と誤認することは因果効果を過小評価することに繋がる．
+\end{remark}
+
+\section{研究の種類}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=すべてが実験になる]
+    独立変数への研究者による介入があるかどうかで，実験研究と観察研究を分けることが出来る．
+    独立変数の群別への割り当てが無作為であるかどうかで，さらに細かく分類することが出来る．
+
+    因果効果は処置の有無が産む差と定義したのが潜在反応モデルであるが，
+    因果推論の根本問題どころか，処置を施すこと自体が不可能な場合が多い．
+\end{tcolorbox}
+
+\subsection{実験研究}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \textbf{実験研究}または統制実験という．
+\end{tcolorbox}
+
+\begin{definition}[experimental / treatment group, control group]
+    無作為割当について，処置を行った群を\textbf{実験群}または\textbf{処置群}，行っていない群を\textbf{対照群}という．
+\end{definition}
+
+\subsection{調査観察研究}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item ランダム化比較試験などは，無作為割り当てを伴う．計量経済学では社会実験ともいう．EBMにおいてはメタアナリシス＝システマティックレビューの次に根拠が高いとされる．
+        \item メタアナリシス＝システマティックレビューなど，１次研究の結果を統合するプロセスを\textbf{Research synthesis}という．
+        \item 一般に\textbf{相関研究}(correlational study)や\textbf{観察研究}(observational study)は，無作為割当を伴わない研究を言う．計量経済学では，独立変数の値が共変量の値によって確率的に決定され，いわゆる独立変数に\textbf{内生性}がある場合の研究を言う．
+        \item 政策評価では，自然実験なる概念もある(EBPM)．これは2021にノーベル経済学賞の主題であった．似た概念を，EBMではコホート研究という．\footnote{特定の要因に曝露した集団と曝露していない集団を一定期間追跡し、研究対象となる疾病の発生率を比較することで、要因と疾病発生の関連を調べる観察研究の一種である。要因対照研究（factor-control study）とも呼ばれる。}
+        \item EBMでさらに一段階下の観察研究が，後ろ向きコホート研究とも呼ばれる，症例対照研究である．\footnote{疾病に罹患した集団を対象に、曝露要因を観察調査する。次に、その対照として罹患していない集団についても同様に、特定の要因への曝露状況を調査する。}
+    \end{enumerate}
+\end{example}
+
+\section{RCMs：Rubin因果モデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    因果推論の根本問題を，欠測データの枠組みで捉える．
+    このとき用いることが出来る情報は，共変量情報である．
+    このときに行う解析法は，パラメトリックだと非線形関係を取りこぼし，ノンパラメトリックでは共変量がそもそも多いために次元の呪いに陥る．
+    そこで，特に関心のある部分はパラメトリックに仮定し，共変量が影響する関心のない部分はモデリングを避ける．これをセミパラメトリックモデルという．
+\end{tcolorbox}
+
+\section{SCMs：構造的因果モデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
     数値への意味論の付与の仕方はただ一通りのみ許す定立を反事実モデルという．
-    すなわち，因果効果の測定は，相関係数とは何の関係もなく\footnote{相関関係と因果関係の乖離を一般に疑似創刊という．}，（平均）因果効果と呼ばれる数量によって評価する．
+    すなわち，因果効果の測定は，相関係数とは何の関係もなく\footnote{相関関係と因果関係の乖離を一般に疑似相関という．}，（平均）因果効果と呼ばれる数量によって評価する．
+
     次の問題として，構造的因果モデル$M$に数学的対象を付与する関手をあてがう．
     この方式は創造的行為であり，線型非線形を飛び交う議論になる．
 
     構造的因果モデルの定義がやけに数学基礎論的に提示されたことが希望をくすぐる．
     これはこれから種々の数学手法を導入し，最終的には計算機の上に実装することが究極の祈りではなかろうか？
+
+    参考：\footnote{\href{https://www.jstage.jst.go.jp/article/jjb/32/2/32_119/_article/-char/ja/}{構造的因果モデルについて．黒木 学, 小林 史明}}
 \end{tcolorbox}
 
-\subsection{反事実モデルと構造方程式モデルと因果グラフ}
+\subsection{構造方程式モデルと因果グラフ}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -57,15 +155,6 @@ title=]
         \item 右上には個体名／添字を書く．反変ベクトルであるためである．
     \end{enumerate}
 \end{notation}
-
-\begin{axiom}[counterfactual model, causal effect, Fundamental Problem of Causal Inference]\mbox{}
-    \begin{enumerate}
-        \item ある行為をした場合による事実と，反事実の乖離を\textbf{因果関係}という．
-        \item ある行為をした場合としなかった場合の結果変数の差$X_{a=1}-X_{a=0}$を\textbf{因果効果}という．
-        \item 同時に２つの変数$X_{a=1},X_{a=0}$を両方とも観測することは出来ない．このことを\textbf{因果推論の根本問題}という．ここに，反事実のwell-definednessと，統計的推論が入る余地がある．
-        故にこの定立を\textbf{反事実モデル}という．統計的な推論が集団レベルにしかなされ得ない限界を強調して\textbf{平均因果効果}ともいう．
-    \end{enumerate}
-\end{axiom}
 
 \begin{axiom}\mbox{}
     \begin{enumerate}
@@ -118,19 +207,20 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\subsection{試験方法：ランダム化比較試験}
+\subsection{グラフィカルモデリング}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    試験法として一番有名なものであり，データに対して標準的な取り扱いができる．
-    しかし，一般には介入することができない＝観察研究となるので，因果探索が要請される．
+    宮川雅巳氏の著書が草分け．
 \end{tcolorbox}
 
-\section{潜在反応モデル}
+\begin{discussion}[工学分野が主流]
+    例えば社会科学分野であまり使われていない理由は，中間変数間の部分的な独立性や変数の親子関係などの仮定が明確である場合が少ないからである．むしろそれらの確定が目的のひとつだったりする．
+\end{discussion}
 
-\begin{definition}[potential outcome model]
-    
-\end{definition}
+\section{因果効果の推定}
+
+無作為割当が出来ない場合は，共変量を利用することで，無作為割当の状態を推定し，因果効果の推定値を出すことになる．
 
 \section{因果探索の基本問題}
 
@@ -229,6 +319,55 @@ title=]
 \begin{theorem}
     LiNGAMの仮定を置いた場合，３つのモデルの因果グラフは識別可能である．\cite{清水08}
 \end{theorem}
+
+\chapter{欠測データの扱い}}
+
+\begin{quotation}
+    偏りのあるデータからの統計的な因果推論を考える．
+    全てがデータになる。全てがアルゴリズムになる。そして、全てが実験になる。世界全体がデータと実験の塊になった世界。
+
+    \cite{星野}の話題は３つ．
+    \begin{enumerate}
+        \item 実験が行われていない研究で得られるデータからの統計的な因果推論．
+        \item 偏った抽出による標本・データを用いることで生じるバイアス（これを\textbf{選択バイアス}と呼ぶ）の統計的調整．労働経済学者のHeckmanが草分け．実は，人工知能分野での「領域適応(domain adaptation)」や「共変量シフト」とも関連が深い．
+        インターネット調査などでは，レスポンスをする人自体に偏りがあるので，マーケティング分野で積極的に利用されるようになってきた．
+        \item 複数の情報源から得られたデータを統計的に融合させて行うデータ融合．特に大きなプラットフォームを持つ主体が，消費者のカテゴリーを超えた購買行動やクロスメディアコミュニケーションを分析するために興隆した．
+    \end{enumerate}
+    \textbf{背景情報＝共変量}を積極的に利用することで，欠測データの部分を予測できる可能性がある．
+    (2),(3)の話題は，統計的因果推論と同型の問題構造を有しているので，(1)に集中すれば良い．
+
+    現実の構造を見抜いて，それに対応する数理構造を創る．これは想像と創造である．
+
+    さらに，セミパラメトリックモデルで置かれた仮定になるべく依存せずに関心のある量の推測を精度良く行う，ロバスト解析が重要になる．
+\end{quotation}
+
+\section{欠損の分類}
+
+\begin{definition}[monotone missingness]
+    欠測パターンについて，
+    (1),(2),(3)などで，「ある変数が欠測であれば，別の変数でも必ず欠測がある」という関係がすべての対象者で成立するとき\textbf{単調欠測}という．
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 各変数レベルでの無返答(item nonresponse)．
+        \item 打ち切りと切断(truncation)．後者は閾値を超えた観測数そのものも不明．または部分的なデータで全体を代表させる測定(surrogate measurements)．
+        \item 脱落(dropout)やパネルの摩耗(attrition)．またはnoncommpliance．
+        \item 調査全体への不参加(unit nonresponse)．
+        \item rounding．
+        \item 連続データの離散化．
+    \end{enumerate}
+    狭義の欠測は(3)まで．(4)は選択バイアスを産む．(5),(6)を含めて不完全データともいう．
+\end{example}
+
+\begin{definition}[Rubin (76)]
+    欠測のメカニズムについて，欠測するかどうかは，
+    \begin{enumerate}
+        \item MCAR: Missing Completely at Random：モデリングに用いている変数に依らない．
+        \item MAR: Missing at Random：欠測値には依存せず，観測できた値に依存する．
+        \item NMAR: Nonmissing at Random：欠測値そのものと，観測していない他の値にも依存する．
+    \end{enumerate}
+\end{definition}
 
 \chapter{漸近展開}
 
@@ -576,8 +715,8 @@ title=]
     "Confidence Intervals for Policy Evaluation in Adaptive Experiments"
     \bibitem{吉田}
     "Malliavin calculus and asymptotic expansion for martingales" (1997).
-    \bibitem{誉賛}
-
+    \bibitem{星野}
+    星野崇宏『調査観察データの統計科学』
 \end{thebibliography}
 
 \end{document}
