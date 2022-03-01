@@ -226,6 +226,12 @@ title=]
 
     一致で漸近正規な統計量をsemiparametric estimatorという．
     これの存在や探し方は，影響関数の幾何学から重大な示唆がある．
+
+    \begin{enumerate}
+        \item 最尤推定法は，共変量$x$と結果変数$y$の間のパラメトリックなモデルを立て，その中では「最適」かもしれない．
+        \item 傾向スコア・マッチングでは，傾向スコア$e(x)=\pr(z=1|x)$の推定が大事になる．すなわち，共変量$x$と割当$z$の間の回帰関係をパラメトリックに解析するが，その後の結果変数と共変量の間には回帰モデルを仮定する必要がない．
+        \item 割当変数$z$は大抵一次元で，モデルの誤設定の可能性は低いので，ロバストであると言える．\footnote{Drake 1993}が，もっと祈りを高く，二重にロバストであることを考えたい．
+    \end{enumerate}
 \end{quotation}
 
 \section{例}
@@ -269,7 +275,172 @@ Coxにより72年に導入された生存解析におけるモデル．
     内積$(h_1|h_2):=E[h_1^Th_2]$を共分散内積と呼ぶ．
 \end{example}
 
+\section{傾向スコア・マッチング}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Rosenbaum and Rubin 1983．
+    強く無視できる割当条件を満たすときの，平均処置効果の不偏推定量の標準的構成法である．
+    また，多次元な共変量を１つのスカラー変数に集約することができれば，その１変数の上で層別化などを行うことができるため，従来のマッチングや層別での問題が回避される．
+    なおこれは，まず傾向スコアを推定する必要が生じるため，二段階推定法となる．
+    が，「推定した傾向スコアを用いても，推定の偏りは真の傾向スコアを用いた場合と同様である」ということが明らかになっている(Drake, 1993)．
+    \footnote{If treatment assignment is strongly ignorable given $x$, then the difference between treatment and control means at each value, and consequently pair matching, subclassification and covariance adjustment on a balancing score can produce unbiased estimates of the avarage treatment effect.}
+\end{tcolorbox}
+
+\subsection{強く無視できる割当条件}
+
+傾向スコア$e(x)$を事前に定めている実験が無作為割当実験である．
+一方で，割当がランダムでない場合は，まず傾向スコア$e(x)$の推定が問題になる．\footnote{logitモデルなどのパラメトリックモデルが使われることが多い．}
+
+\begin{definition}
+    割当が無作為に近いことを，\textbf{強く無視できる}という．
+    無作為割当では，結果変数は，$x$の下では割当と独立である：$(r_1,r_0)\indep z|x$．
+    また，$\pr(z_i|x)\in(0,1)$である．
+    割当が無作為ではないながらも，次の条件が保証されることをいう：
+    \[(r_1,r_0)\indep z|v,\quad 0<\pr(z=1|v)<1\]
+\end{definition}
+
+\begin{lemma}
+    割当が強く無視できるとき，Rubin 1978の意味でも無視できる（すなわち，「無視できる欠測」である）．
+    が，逆は成り立たない．
+\end{lemma}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    バランシングスコアは，共変量の値域の空間に定める同値類の細かさの順序について有界束をなし，最大元が$b(x)=x$で，最小元が$b(x)=e(x)$である．
+\end{tcolorbox}
+
+\begin{definition}[balancing score, propensity score]
+    共変量$x$の関数を考える．
+    \begin{enumerate}
+        \item \textbf{バランシングスコア}$b(x)$とは，これによって共変量$x$を条件付けると，割付$z$と独立になるような関数を言う：$z\indep x|b(x)$．\footnote{David's (1979) notation}すなわち，$b(x)$を与えたときの$x$の条件付き分布が，$z=0,1$に依らず同一になるような，共変量の対応付けを言う．
+        \item $e(x):=\pr(z=1|x)$によって定まる共変量の関数を，\textbf{傾向スコア}という．これは，共変量$x$を仮定したときに，処置を受ける傾向を表している．RCTでは$e=1/2$という定数関数となる．
+        傾向スコアは，バランシングスコア$b(x)$の中で，最も粗い同値関係を定めるものとして特徴付けられる．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    バランシングスコアは共変量の関数と定義されているが，これは共変量の値域に同値類を作るための装置に他ならない．
+    傾向スコアとは，そのようにして関数概念を運用するという巧妙な形式科学である．
+\end{remarks}
+
+\begin{example}
+    $b(x)=x$はバランシングスコアである．この$b(x)$で条件づけたとき，$x$の分布はデルタ分布になる．
+    特に，バランシングスコアは存在する．
+\end{example}
+
+\begin{lemma}[バランシングスコアと傾向スコアの特徴付け]
+    $b$を共変量の関数とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $b$はバランシングスコアである．
+        \item $b(x)$は$e(x)$より細かい同値類を定める：関数$f$が存在して，$e(x)=f(z(x))$と表せる．
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}[Cochran and Rubin (1973)]
+    特に，割当と共変量とは，傾向スコアが与えられたとき，条件付き独立である：
+    $x\indep z|e(x)$．
+\end{corollary}
+
+\subsection{平均処置効果の推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    割当が強く無視できるとき，
+    $b(x)$が取る各値において，平均処置効果は，それぞれの群の平均の差によって不偏推定可能である．
+\end{tcolorbox}
+
+\begin{theorem}
+    割当が$x$について強く無視できるとする．
+    このとき，割当は任意のバランシングスコア$b(x)$についても強く無視できる：
+    \[\Square{\forall_{x}\;(r_1,r_0)\indep z|x\land\pr(z=1|x)\in(0,1)}\Longrightarrow\Square{\forall_{b}\;\forall_{x}\;(r_1,r_0)\indep z|b(x)\land\pr(z=1|b(x))\in (0,1)}.\]
+\end{theorem}
+
+\begin{theorem}
+    割当が$x$について強く無視でき，$b(x)$をバランシングスコアとする．
+    このとき，
+    \[E[r_1|b(x),z=1]-E[r_0|b(x),z=0]=E[r_1-r_0|b(x)].\]
+\end{theorem}
+
+\begin{corollary}[pair matching on balancing scores]
+    割当は強く無視できるとする．また，母集団から，$b(x)$の値と，それに対応する単位であって，それぞれの群の中から$z_i=1$を満たす単位$i$と$z_j=0$を満たす単位$j$が抽出されたとする．
+    このとき，$E[r_1-r_0|b(x)]=E[y_i-y_j]$が成り立つ．
+\end{corollary}
+
+\begin{corollary}[subclassification(層別解析)]
+    
+\end{corollary}
+
+\begin{corollary}[covariance adjustment(共分散分析)]
+    
+\end{corollary}
+\begin{remark}
+    共分散分析は分散分析(ANOVA)と回帰分析を組み合わせた，一般化線形モデルである．
+\end{remark}
+
+\subsection{傾向スコアの推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    傾向スコアの経験測度から構成される推定量から，$x$上のsample balanceを構成できる．
+\end{tcolorbox}
+
+\begin{definition}
+    $P_N$を標本から得た確率測度とする．
+    $\wh{e}(a):=P_N(z=1|x=a)$によって，傾向スコア$e(x)$を推定することを考える．
+\end{definition}
+
+\begin{theorem}
+    $\wh{e}(a)\in(0,1)$ならば，$P_N(z=0,x=a|\wh{e}(x)=\wh{e}(a))\Rightarrow P_N(z=0|\wh{e}(x)=\wh{e}(x))P_N(x=a|\wh{e}(z)=\wh{e}(a))$．
+\end{theorem}
+
+\subsection{IPW推定法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Rubin 1985による，層別標本抽出におけるHorovitz and Thompson 1952の拡張．
+\end{tcolorbox}
+
+\begin{definition}[IPW: inverse probability weighting]
+    $y_0,y_1$の周辺平均の推定を考える．
+
+    $y$の値の，なんらかの確率測度についての期待値ではなく，傾向スコアの逆数が定める積分を考える：
+    \[\wh{E}(y_1):=\frac{\sum\frac{z_i}{e_i}y_i}{\sum\frac{z_i}{e_i}},\quad\wh{E}(y_0):=\frac{\sum\frac{1-z_i}{1-e_i}y_i}{\sum\frac{1-z_i}{1-e_i}}\]
+    強く無視できる割当条件が成立するとき，真の傾向スコアがわかっているなら不偏推定量となり，傾向スコアを推定値で代用しても一致推定量となる．
+\end{definition}
+\begin{remark}
+    IPW推定量は，母数ベクトル$(E(y_1),E(y_0))$，推定関数$\paren{\frac{z}{e}(y-E[y_1]),\frac{1-z}{1-e}(y-E[y_0])}$についての$m$-推定量でもある．
+\end{remark}
+
+\subsection{kernelマッチング}
+
+\section{傾向スコア解析の拡張}
+
+\subsection{一般化推定方程式におけるIPW推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Liang and Zeger 1986
+\end{tcolorbox}
+
+\subsection{一般化傾向スコア}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Imbens 2000は，割当変数が2値でない場合にも傾向スコアが利用できるように拡張した．
+\end{tcolorbox}
+
+\section{一般的な周辺パラメトリックモデルの推定}
+
+\section{二重にロバストな推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Robins et al. 1994は，推定方程式に$z=0$群の共変量データを用いた項を付加することでデータ利用効率を向上し，推定量の分散を減少させる\textbf{augmented inverse probability weighted estimator}を開発した．
+    これは実は局所有効なセミパラメトリック推定量になる．
+    現在では「共変量で結果変数を説明する回帰関数の形で表された項を付加することで局所有効なセミパラメトリック推定量を構成する」手続きは一般化されている．
+\end{tcolorbox}
 
 \chapter{影響関数の幾何}
 
@@ -3547,6 +3718,8 @@ title=]
     最初の５章は欠測データのないセミパラメトリックモデルを扱い，パラメータに対する推定量の構成法を議論する．特に幾何的な手法を見る．
     \bibitem{van der Vaart and Wellner}
     van der Vaart and Wellner "Weak Convergence and Empirical Processes"
+    \bibitem{Asymptotic Statistics}
+    Van der Vaart, A. W. (2000). Asymptotic statistics, volume 3. Cambridge university press.
 \end{thebibliography}
 
 \end{document}

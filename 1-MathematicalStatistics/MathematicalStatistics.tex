@@ -13,35 +13,436 @@
 
 \begin{quotation}
     線型推測論が統計モデルの線形代数である．
+
+    Andersonによる標準的教科書"An Introduction to Multivariate Statistical Analysis" (1958)が多変量解析の，
+    George BoxとJenkinsによるTime Series Analysis, Forecasting and Control" (1976)が時系列解析の最初の金字塔であるが，
+    これらはいずれも線形モデルを扱っている．
+    大規模計算機時代を迎えて以降，非線形モデルが発展の中心となったが，応用における一次近似と，その後の非線形解析の方向性を見るための試金石としての意味で，線形モデルの意義は不動である．
+    例えば，数学的に整理された解析力学を差し置いて，工学の場面ではNewton的力学がもっとも重要になることに等しい．
+    実際，$X$のデザインを非線形にすることが可能であるから，線形性の仮定は応用上は強い制約ではない．
+
+    また，正規近似の手法で用いられる，正規分布から派生する確率分布（カイ2乗分布，$t$分布，$F$分布）についてまとめる．
 \end{quotation}
 
 \section{射影行列と逆行列}
 
+\subsection{射影}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Euclid空間$\R^n$では，任意の自己作用素は有界でである．
+    よって，冪等律を満たす行列を射影行列といい，さらに自己共役であるものを直交射影という．
+\end{tcolorbox}
+
+\begin{lemma}[射影の特徴付け]
+    線型写像$P:\R^n\to\R^n$について，
+    \begin{enumerate}
+        \item $P\circ P=P$．
+        \item $\R^n=\Im P\oplus\Ker P$と表せる．
+    \end{enumerate}
+    また，次の２条件とも同値．
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item $Q\in\GL_n(\R)$が存在して，$Q^{-1}PQ=\diag[1,\cdots,1,0,\cdots,0]$．
+        \item $\rank P+\rank(I_n-P)=n$．
+    \end{enumerate}
+    なお，このとき$\rank P=\Tr P=r$である．
+\end{lemma}
+
+\begin{lemma}
+    射影$P\in M_n(\R)$について，
+    \begin{enumerate}
+        \item $P$は直交射影である．
+        \item $P^\top=P$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{一般化逆行列}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 行列$A\in M_{mn}(\R)$の列ベクトルではられる線型空間を$L[A]\subset\R^n$と表す．
+        \item $X\in M_{np}(\R)$に対して，$L[X]$が定める直交射影を$P_X$で表す．
+        \item $H\in M_{pq}(\R)$は$L[H]\subset L[X^\top]$かつ$\rank H=q$を満たすとする．
+        \[L[X|H]:=X((\Im H)^\perp)=\Brace{X\gamma\in\R^n\mid\gamma\in\Ker H^\top=(\Im H)^\perp}\]
+        への直交射影を$P_{X|H}$で表す．$r:=\rank X$とする．
+        なお，$\forall_{T\in B(H)}\;\Ker T^*=(\Im T)^\perp$なので，$\Ker H^\top=(\Im H)^\perp$．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[generalized inverse matrix]
+    行列$A\in M_{mn}(\R)$に対して，$AA^-A=A$を満足する$A^-\in M_{nm}(\R)$を，$A$の\textbf{一般化逆行列}という．
+\end{definition}
+
+\begin{lemma}
+    行列$A\in M_{mn}(\R)$について，
+    \begin{enumerate}
+        \item 一般逆$A^-$は存在する．
+        \item 一意とは限らない．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item ある$B\in\GL_m(\R),C\in\GL_n(\R)$について，$D:=BAC=\diag[1,\cdots,1,0,\cdots,0]$．$A^-:=CD^\top B$とおくと，
+        $A=B^{-1}DC^{-1}$より，
+        $AA^-A=ACD^\top BA=B^{-1}DC^{-1}CD^\top BB^{-1}DC^{-1}=B^{-1}DD^\top DC^{-1}=B^{-1}DC^{-1}=A$．
+        \item $A:=(1\;0;0\;0)$について，$A$自身も，$B:=(1\;1;0\;0)$も一般逆である．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+    $X\in M_{np}(\R)$とする．$X^\top X$の任意の一般化逆行列$(X^\top X)^-$に対して，$P_X=X(X^\top X)^-X^\top$．
+\end{theorem}
+
+\begin{theorem}
+    $X\in M_{np}(\R)$とする．$X^\top X$の任意の一般化逆行列$(X^\top X)^-$に対して，$G:=(X^\top X)^-H$と定める．
+    このとき，$G^\top X^\top XG$は正則であり，\[P_{X|H}=P_X-XG(G^\top X^\top XG)^{-1}G^\top X^\top.\]
+    また，$\rank P_{X|H}=r-q$である．
+\end{theorem}
+
+\subsection{ブロック行列の逆}
+
+\begin{notation}
+    $A\in M_p(\R),B\in M_{pq}(\R),C\in M_{qp}(\R),D\in M_{q}(\R)$について，$M:=[A\;B;C\;D]\in M_{p+q}(\R)$とする．
+    $D\in\GL_q(\R)$のとき$F:=A-BD^{-1}C$，$A\in\GL_p(\R)$のとき$G:=D-CA^{-1}B$とおく．
+\end{notation}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item $D$が正則であるとき，$\abs{M}=\abs{F}\abs{D}$．特に，$D,M$が正則であることと，$D,F$が正則であることとは同値．
+        \item $D,M$が正則であるとき，
+        \[M^{-1}=\begin{bmatrix}F^{-1}&-F^{-1}BD^{-1}\\-D^{-1}CF^{-1}&D^{-1}+D^{-1}CF^{-1}BD^{-1}\end{bmatrix}.\]
+        \item $A$が正則であるとき，$\abs{M}=\abs{A}\abs{G}$．特に，$A,M$が正則であることと，$A,G$が正則であることとは同値．
+        \item $A,M$が正則であるとき，
+        \[M^{-1}=\begin{bmatrix}A^{-1}+A^{-1}BG^{-1}CA^{-1}&-A^{-1}BG^{-1}\\-G^{-1}CA^{-1}&G^{-1}\end{bmatrix}.\]
+    \end{enumerate}
+\end{proposition}
+
 \section{カイ２乗分布}
+
+\begin{notation}
+    Gamma分布$G(\al,\nu):\R_{>0}^2\to P(\R,\B_1)$の確率密度関数は
+    \[g(x;\al,\nu)=\frac{1}{\Gamma(\nu)}\al^\nu x^{\nu-1}e^{-\al x}1_{x>0},\qquad\Gamma(\nu)=\int^\infty_0t^{\nu-1}e^{-t}dt.\]
+    と表せる．
+\end{notation}
+
+\begin{definition}[noncentral chi-square distribution with $k$ degree of freedom and noncentrality parameter $\delta$]
+    $(X_j)_{j\in[k]}$を$X_1\sim N(\nu,1),X_j\sim N(0,1)\;(j=2,\cdots,k)$を満たす独立な実確率変数列とする．
+    このとき，二乗和で定まる確率変数$Y:=\sum^k_{j=1}X^2_j$が定める分布を\textbf{自由度$k$，非心率$\delta=\mu^2$の非心カイ2乗分布}といい，$\chi^2(k,\delta)$で表す．
+\end{definition}
+\begin{remark}
+    $\delta=0$のとき，$\chi^2(k)=\chi^2(k,0)$をカイ2乗分布という．
+    自由度$k=0$の非心カイ2乗分布は$x=0$上のデルタ測度とし，非心率は$\delta=0$とする．
+\end{remark}
+
+\begin{proposition}
+    $\chi^2(k,\delta=\mu^2)$について，
+    \begin{enumerate}
+        \item 確率密度関数は$f(x):=e^{-\frac{\mu^2}{2}}\sum^\infty_{r=0}\frac{1}{r!}\paren{\frac{\mu^2}{2}}^rg\paren{x;\frac{1}{2},r+\frac{k}{2}}$．
+        \item 特性関数は
+        \[\varphi(u)=e^{-\frac{\mu^2}{2}}\sum^\infty_{r=0}\frac{1}{r!}\paren{\frac{\mu^2}{2}}^r(1-2iu)^{-r-\frac{k}{2}}=(1-2iu)^{-\frac{k}{2}}\exp\paren{\frac{\mu^2iu}{1-2iu}}\]
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $X_j\sim N(\mu_j,1)\;(j\in[k])$を独立な実確率変数列とする．このとき，$\delta:=\sum^k_{j=1}\mu^2_j$とすると，$\sum^k_{j=1}X^2_j\sim\chi^2(k,\delta)$．
+\end{corollary}
+
+\begin{corollary}
+    $(X_j)\;(j\in[k])$を，$\chi^2(k_j,\delta_j)$に従う独立同分布確率変数列とする．このとき，$\sum^k_{j=1}X_j\sim\chi^2\paren{\sum^k_{j=1}k_j,\sum^k_{j=1}\delta_j}$．
+\end{corollary}
 
 \section{フィッシャー・コクランの定理}
 
+\begin{proposition}
+    $A_i\in M_n(\R)\;(i\in[k])$は$\sum_{i=1}^kA_i=I_n$を満たすとする．
+    このとき，次の４条件は同値．
+    \begin{enumerate}
+        \item $\forall_{i\in[k]}\;A_i^2=A_i$．
+        \item $\forall_{i,j\in[k]}i\ne j\Rightarrow A_iA_j=O$．
+        \item $\R^n=\bigoplus_{i=1}^k\Im A_i$と直和分解される．
+        \item $\sum^k_{i=1}\rank A_i=n$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{notation}
+    $\mu:=(\mu_1,\cdots,\mu_n)^\top\in\R^n$，$Y=(Y_1,\cdots,Y_n)^\top\sim N_n(\nu,I_n)$とする．
+\end{notation}
+
+\begin{theorem}[Fisher-Cochran]
+    $A_i\in M_n(\R)\;(i\in[k])$は$\sum_{i=1}^kA_i=I_n$を満たす対称行列の列とする．
+    $Q_i:=Y^\top AiY,\rank A_i=:n_i$とおく．このとき，次の５条件は同値．
+    \begin{enumerate}
+        \item $\exists_{\delta_i\ge0}\;Q_i\sim\chi^2(n_i,\delta_i)$かつ$Q_1,\cdots,Q_k$は独立．
+        \item $\sum^k_{j=1}n_i=n$．
+        \item $\forall_{i\in[k]}\;A^2_i=A_i$．
+        \item $\forall_{i,j\in[k]}\;i\ne j\Rightarrow A_iA_j=O$．
+        \item $\R^n=\bigoplus_{i\in[k]}\Im A_i$．
+    \end{enumerate}
+    さらにこのとき，$\delta_i=\mu^\top A_i\mu$と表わせ，特に$\sum^n_{j=1}\mu_j^2=\sum^k_{i=1}\delta_i$．
+\end{theorem}
+
+\begin{corollary}
+    $A\in M_n(\R)$を対称行列とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $\exists_{\delta\ge0}\;\exists_{k\in\Z_+}\;Q:=Y^\top AY\sim\chi^2(k,\delta)$．
+        \item $A^2=A$．
+    \end{enumerate}
+    このとき，$k=\rank A,\delta=\mu^\top A\mu$が成り立つ．
+\end{corollary}
+
+\subsection{独立性}
+
+\begin{corollary}
+    $A_i\in M_n(\R)\;(i=1,2)$を対称行列とし，$Q_i:=Y^\top A_iY$は非心カイ2乗分布に従うとする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $Q_1\indep Q_2$．
+        \item $A_1A_2=O$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{lemma}
+    $A,B\in M_n(\R)$を対称な射影行列とする：$A^2=A,B^2=B$．
+    差は非負値行列とする：$A-B\ge 0$．
+    このとき，
+    \begin{enumerate}
+        \item $AB=BA=B$．
+        \item $(A-B)^2=A-B$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}
+    $A_i\in M_n(\R)\;(i=0,1,2)$を$A_0=A_1+A_2$を満たす対称行列とし，$Q_i:=Y^\top A_iY$は$Q_j\sim\chi^2(n_j,\delta_j)\;(j=0,1),Q_2\ge0\as$とする．
+    このとき，$n_2:=n_0-n_1,\delta_2=\delta_0-\delta_1$について
+    \begin{enumerate}
+        \item $Q_2\sim\chi^2(n_2,\delta_2)$．
+        \item $Q_1\indep Q_2$．
+    \end{enumerate}
+\end{theorem}
+
 \section{$t$分布と$F$分布}
+
+\subsection{$t$分布}
+
+\begin{definition}[noncentral $t$-distribution]
+    $Y\sim\chi^2(n),X\sim N(0,1)$は独立であるとする．このとき，$X:=\frac{Z}{\sqrt{\frac{Y}{n}}}$が定める分布を，\textbf{自由度$n$，非心率$\delta$の非心$t$分布}といい，$t(n,\delta)$で表す．
+    特に$\delta=0$のとき$t(n):=t(n,0)$を\textbf{自由度$n$の$t$分布}という．
+\end{definition}
+
+\begin{proposition}[確率密度関数]
+    
+\end{proposition}
+
+\subsection{$F$分布}
+
+\begin{definition}[noncentral $F$-distribution]
+    $Y_1\sim\chi^2(m,\delta),Y_2\sim\chi^2(n)$は独立であるとする．このとき，$X:=\frac{Y_1/m}{Y_2/m}$が定める分布を，\textbf{自由度$m,n$，非心率$\delta$の非心$F$分布}といい，$F(m,n,\delta)$で表す．
+    特に$\delta=0$のとき$F(m,n):=F(m,n,0)$を\textbf{自由度$m,n$の$F$分布}という．
+\end{definition}
+
+\begin{proposition}[確率密度関数]
+    
+\end{proposition}
 
 \section{ガウス・マルコフモデル}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $Y=X\beta+\ep$なる形で表せるモデルを線型回帰モデルといい，$X\in\R^p$の次元が$p\ge2$を満たすとき，重回帰という．
+    この誤差項$\ep$について，$E[\ep]=0$かつ$\Var[\ep]=\sigma^2I_n$なる仮定(Gauss-Markov assumption)をおいた線型回帰モデルを\textbf{Gauss-Markovモデル}という．
+\end{tcolorbox}
+
+\begin{notation}[Gauss-Markov model]
+    $n$個の実確率変数$Y_i\;(i\in[n])$が，定数関数$x_i,\beta:\Om\to\R^p$と，期待値$0$かつ互いに無相関で等分散を持つ$E[\ep_i]=0,E[\ep_i\ep_j]=\sigma^2\delta_{ij}$を満たす確率変数列$\ep_i:\Om\to\R$\footnote{独立ならば無相関である．}について
+    \[Y_i=x_i^\top\beta+\ep_i\]
+    なる関係を満たすとする．添字$i\in[n]$は観測の単位を表し，
+    $x_i$を，$E[Y_i]$を説明する$p$個の要因を並べた変数，$\sigma^2$は観測の分散を表すパラメータである．
+    \[Y:=\begin{bmatrix}Y_1\\\vdots\\Y_n\end{bmatrix},\quad\ep:=\begin{bmatrix}\ep_1\\\vdots\\\ep_n\end{bmatrix},\quad X:=\begin{bmatrix}x^\top_1\\\vdots\\x^\top_n\end{bmatrix}\]
+    をそれぞれ$n$次元ベクトル値確率変数と$n\times p$次元定行列とすると，モデルは
+    \[Y=X\beta+\ep,\quad E[\ep]=0,\quad\Var[\ep]=\sigma^2I_n.\]
+    と表せる．すなわち，
+    \[\P:=\Brace{\nu\in P(\R^n,\B_n)\mid\exists_{\beta\in\R^p} E[\nu]=X\beta,\exists_{\sigma\in(0,\infty)}\;\Var[\nu]=\sigma^2I_n}\]
+    なるモデルである（正規分布よりも遥かに広いクラスである）．
+\end{notation}
+
+\subsection{正規方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    結局，線型汎関数$\beta\mapsto c^\top\beta$が推定可能であるとき，正規方程式の解から最良線形不偏推定量が構成できる．
+    これが$M$-推定量の雛形となる．
+\end{tcolorbox}
+
+\begin{definition}[sum of squared residuals, normal equation]
+    未知パラメータ$\beta\in\R^p$の推定を考える．
+    \[Q(\beta)=\SSR(\beta)=:=(Y-X\beta)^\top(Y-X\beta)=\sum^n_{i=1}(Y_i-x_i^\top\beta)^2\]
+    について，$\wh{\beta}:=\argmin Q(\beta)$とすればよい．
+    特にこれは，\textbf{正規方程式}
+    \[\dd{Q}{\beta}=0\Leftrightarrow X^\top X\beta=X^\top Y\]
+    の解である．
+    この解は$L[X^\top X]=L[X^\top]$より，この解は常に存在し，$X^\top X$が正則であるとき一意的に存在する．
+\end{definition}
+
+\begin{theorem}
+    $Y\in\R^n$とする．正規方程式の任意の解$\wh{\beta}$に対して，
+    \begin{enumerate}
+        \item $X\wh{\beta}=P_XY$．
+        \item $\abs{Y-X\beta{\beta}}=\min_{\beta\in\R^p}\abs{Y-X\beta}$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{最良線型不偏推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    未知パラメータ$\beta,\sigma^2$の関数（主に線型汎関数）$g(\beta,\sigma^2)$の推定を考える．
+    どの$(\beta,\sigma^2)\in\Pi\subset\R^p\times(0,\infty)$が真の値であろうと，良い結果がほしいとなると，これを不偏性という．
+\end{tcolorbox}
+
+\begin{definition}[unbiased estimator]
+    統計量$\delta(Y):\Meas(\X,\R)\to\R$について，
+    \[\forall_{(\beta,\sigma^2)\in\Pi}\quad E_{\beta,\sigma^2}[\delta(Y)]=g(\beta,\sigma^2)\]
+    が成り立つとき，これを\textbf{不偏推定量}であるという．
+\end{definition}
+
+\begin{definition}[estimable]
+    $c\in\R^p$について，$c\in L[X^\top]$のとき，線型汎関数$\R^p\ni\beta\mapsto c^\top\beta\in\R$を\textbf{推定可能}であるという．
+\end{definition}
+
+\begin{theorem}
+    $a\in\R^n,c\in\R^p,\beta\in\R^p$について，
+    \begin{enumerate}
+        \item 次の２条件は同値．
+        \begin{enumerate}[(a)]
+            \item 確率変数$Y$の線型関数$a^\top Y$が$\beta$の線型関数$c^\top\beta$の不偏推定量である．
+            \item $X^\top a=c$．
+        \end{enumerate}
+        \item 次の２条件は同値．
+        \begin{enumerate}
+            \item 線型関数$c^\top\beta$の線形不偏推定量が存在する．
+            \item $c^\top\beta$は推定可能である．
+        \end{enumerate}
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    線型関数$c^\top\beta$は推定可能であるとする．
+    このとき，
+    \begin{enumerate}
+        \item $c^\top$と$c^\top\wh{\beta}$は，ある$b\in\R^p$を用いて$c=X^\top Xb,c^\top\wh{\beta}=b^\top X^\top Y$と表される．
+        \item $c^\top\wh{\beta}$は正規方程式の解$\wh{\beta}$の取り方に依らず，$c^\top\beta$の線形不偏推定量である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[BLUE: best linear unbiased estimator]
+    $\beta$の線型関数$c^\top\beta$は推定可能であるとする．
+    このとき，正規方程式の任意の解$\wh{\beta}$に対して，$c^\top\wh{\beta}$は$c^\top\wh{\beta}$の\textbf{最良線型不偏推定量}である：
+    \[\forall_{(\beta,\sigma^2)\in\Pi}\quad\Var[c^\top\wh{\beta}]=\min\Brace{\Var[a^\top Y]\ge0\mid a^\top Y\text{は}c^\top\beta\text{の線形不偏推定量}}.\]
+    ただし，$\Var$とは，真値が$(\beta,\sigma^2)$であるときの分散を表す．
+\end{theorem}
+
+\begin{theorem}[BLUEの特徴付け]
+    次の３条件は同値である．
+    \begin{enumerate}
+        \item 線型統計量$a^\top Y$は線型関数$c^\top\beta$の最良線型不偏推定量である．
+        \item $c^\top\beta$は推定可能で，任意の真値$(\beta,\sigma^2)\in\Pi$に対して，$c^\top\wh{\beta}=a^\top Y\as$
+        \item $X^\top a=c$かつ$a\in L[X]$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{分散共分散行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\subsection{分散の推定}
+
 \section{仮説検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ある部分集合$\Theta_0\subset\Theta:=\R^p$の部分集合について，
+    問題
+    \[H_0:\; H^\top\beta=d\quad\vs\quad H_1:\; H^\top\beta\ne d\]
+    を検定することを考える．
+    Gauss-Markovモデルに対して，さらに誤差項の分布の正規性$\ep\sim N_n(0,\sigma^2I_n)$を仮定する．
+    この仮定は，誤差分布を楕円形分布に拡張することや，ロバスト推測論によって乗り越えられる．
+\end{tcolorbox}
+
+\subsection{理論}
+
+\begin{notation}
+    $R_0^2:=\min_{\beta\in\R^p}\abs{Y-X\beta}^2$とし，$r:=\rank X<n$を仮定する．
+\end{notation}
+
+\begin{theorem}
+    任意の真値$(\beta,\sigma^2)\in\Pi$について，$\frac{R^2_0}{\sigma^2}\sim\chi^2(n-r)$．
+\end{theorem}
+
+\begin{theorem}
+    次を仮定する．
+    \begin{enumerate}[({A}1)]
+        \item $H\in M_{p,q}(\R)\;(q<p)$は$L[H]\subset L[X^\top]$かつ$\rank H=q$を満たすとする．
+        \item $d\in\R^q$について，$\Theta_0=\Brace{\beta\in\R^p\mid H^\top\beta=d}$と表せるとする．
+    \end{enumerate}
+    このとき，$R^2_1:=\Brace{\beta\in\Theta_0}\abs{Y-X\beta}^2$について，
+    \begin{enumerate}
+        \item 任意の真値$(\beta,\sigma^2)\in\Pi$について，$R^2_0$と$R^2_1-R^2_0$は独立であり，$\frac{R^2_0}{\sigma^2}\sim\chi^2(n-r)$，かつ，
+        ある$\sigma\in\R_+$に対して，$\frac{R^2_1-R^2_0}{\sigma^2}\sim\chi^2(q,\delta)$．特に，
+        \[\frac{(R^2_1-R^2_0)/q}{R^2_0/(n-r)}\sim F(q,n-r,\delta).\]
+        \item 真値$\beta$が$\beta\in\Theta_0$を満たすならば，$\frac{R^2_1-R^2_0}{\sigma^2}\sim\chi^2(q)$であり，特に
+        \[\frac{(R^2_1-R^2_0)/q}{R^2_0/(n-r)}\sim F(q,n-r).\]
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    
+\end{proposition}
+
+\subsection{応用}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    このように，$F$分布に基づく検定を$F$-検定という．
+    このように，データのなすベクトルの2次形式による，データの変動の分解を基に検定を構成する手法を\textbf{分散分析}(ANOVA: ANalysis Of VAriance)と呼ぶ．
+\end{tcolorbox}
 
 \section{平均の検定}
 
 \section{重回帰分析}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    重回帰分析においては，\textbf{切片項$\beta_0$を含むGauss-Markovモデル}が用いられる．
+\end{tcolorbox}
+
+\begin{discussion}
+    \[y=\beta_0+\beta_1x_1+\cdots+\beta_px_p+\ep\]
+    なる関係で説明したい．$n$個の観測$Y_i\;(i\in[n])$を説明したい場合，ベクトル表記で$Y=X\beta+\ep$とまとめられるが，$i\in[n]$が個体番号を表すとき，誤差項の独立性は成り立つであろう．
+    こうして，Gauss-Markovモデルにたどり着く．
+\end{discussion}
+
 \section{一元配置}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=one-way ANOVA]
+    
+\end{tcolorbox}
 
 \section{二元配置}
 
 \chapter{統計的決定理論}
 
 \begin{quotation}
+    （意志）決定理論の立場から推定と検定を考察する．
+    統計的な推定を行うことは，特定の損失関数を採用して，これについて統計的決定問題を解くことに等しい．
+
     統計的決定問題が設定されたとき，決定問題の下で起こる確率現象を解明するのが数理統計学の課題であって，特定の決定関数を無条件に是とするものではない．
 \end{quotation}
 
-\section{枠組み}
+\section{統計推論の枠組み}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -49,17 +450,19 @@ title=]
     その文脈は8-組で表現できる．
 \end{tcolorbox}
 
+\subsection{Waldの定義}
+
 \begin{definition}[statistical decision problem, sample space, decision / action space, loss function, nonrandomized, randomized decision function (Abraham Wald)]
     次の8-組$(\X,\A,\P,\Theta,\D,\B,W,\Delta)$を\textbf{統計的決定問題}という．
     \begin{enumerate}
         \item $(\X,\A)$は可測空間で，\textbf{標本空間}という．
         \item $\Theta$はパラメータの空間で，$\P:=(P_\theta)_{\theta\in\Theta}$は$(\X,\A)$の確率分布の族．
         \item $(\D,\B)$は可測空間で，\textbf{決定空間}または\textbf{行動空間}という．
-        \item 第二変数について可測な関数$W:\Theta\to\Meas(\D,\R_+)$を\textbf{損失関数}という．
+        \item 第二変数について可測な関数$W:\Theta\times\D\to\R_+$を\textbf{損失関数}という．
         \item $\Delta$は決定関数の族とする．
         \begin{enumerate}[(a)]
             \item 可測写像$\delta:\X\to\D$を\textbf{非確率的決定関数}という．
-            \item 第一変数については$(\D,\B)$上の確率測度，第二変数については$\X$上の$\A$-可測関数となる関数$\delta:\B\times\X\to[0,1]$を\textbf{確率的決定関数}という．
+            \item 第一変数についてのcurrying $\X\to\Map(\B,[0,1])$は$(\D,\B)$上の確率測度を与え，第二変数についてのcurrying $\B\to\Map(\X,[0,1])$は$\X$上の$\A$-可測関数となる関数$\delta:\B\times\X\to[0,1]$を\textbf{確率的決定関数}という．
         \end{enumerate}
     \end{enumerate}
 \end{definition}
@@ -81,6 +484,8 @@ title=]
     となる．こうして，$R(P,T_1)=R(P,T_3)=\Var_P[X_1],R(P,T_2)=\frac{\Var_P[X_1]}{n}$となり，$T_2$が危険関数$R$を最小にするとわかる．
 \end{example}
 
+\subsection{危険関数}
+
 \begin{definition}[risk function, admissible]
     \textbf{危険関数}$R:\Theta\times\Delta\to\R$を次のように定める．
     \begin{enumerate}
@@ -95,26 +500,170 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\section{十分性と完備性}
+\section{統計量の十分性と完備性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    統計量とは可測関数$T:(\X,\A)\to(\cT,\B)$をいう．
+    考えている確率分布族$\{P_\theta\}_{\theta\in\Theta}\subset P(\X,\A)$に応じて，$T$がその構造を保つかどうかが変わる．
+    が，一般的に好ましい性質が定義できる．
+\end{tcolorbox}
 
 \subsection{十分統計量}
+
+\begin{notation}
+    可測関数$T:(\X,\A)\to(\cT,\B)$を考える．確率分布族$\{P_\theta\}_{\theta\in\Theta}\subset P(\X,\A)$についての条件付き確率$P_\theta[A|T=t]$が，母数$\theta\in\Theta$に依存しないとき，$T$を得てしまえば，これはデータの持つ情報のすべてを持っていると言える．
+\end{notation}
+
+\begin{definition}[sufficient statistic]
+    $T:\X\to\cT$が$\{P_\theta\}$に関して\textbf{十分}であるとは，次が成り立つことをいう：
+    \begin{quote}
+        任意の$A\in\A$に対して，$\B$-可測関数$q(A|-):\B\to\R$が存在して，
+        \[\forall_{B\in\B}\;\forall_{\theta\in\Theta}\quad\int_Bq(A|t)P_\theta^\perp(dt)=P_\theta[A\cap T^{-1}(B)].\]
+    \end{quote}
+\end{definition}
+
+\begin{example}[order statistic]
+    確率分布族
+    \[\P:=\Brace{P\in P(\R^n)\mid\forall_{\sigma\in S_n}\;P^\sigma=P}\]
+    を考えているとき，$x=(x_1,\cdots,x_n)$の各成分を小さい順に並べて出来る列$t(x)=(x_{(1)},\cdots,x_{(n)})$へ写す可測関数$T:\R^n\to\R^n;x\mapsto t(x)$を\textbf{順序統計量}という．
+\end{example}
+
+\subsection{因子分解定理}
+
+\subsection{Rao-Blackwellの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    決定関数としては，十分統計量の関数のみを考えれば十分であることを定立する．
+\end{tcolorbox}
+
+\subsection{完備性}
+
+\begin{definition}[complete, boundedly complete]\mbox{}
+    \begin{enumerate}
+        \item 分布族$\P\subset P(\X,\A)$が\textbf{[有界的]完備}であるとは，
+        任意の[有界]可測関数$f:\X\to\R$に関して$\forall_{\theta\in\Theta}\;E_\theta[f]=0\Rightarrow f=0\;\P\text{-}\as$が成り立つことという．
+        ただし，$\P\text{-}\as$とは，任意の$P\in\P$について$P$-$\as$であることをいう．
+        \item 可測関数$T:\X\to\cT$が\textbf{[有界的]完備}であるとは，
+        $(\cT,\B)$上に引き起こされる分布族$(P^T_\theta)_{\theta\in\Theta}$が[有界的]完備であることをいう．
+    \end{enumerate}
+\end{definition}
 
 \section{指数型分布族}
 
 \section{統計的推定}
 
+\subsection{不偏推定}
+
+\begin{definition}[unbiased estimator, $U$-estimable]
+    確率分布族$(P_\theta)$に対して，
+    \begin{enumerate}
+        \item $\forall_{\theta\in\Theta}\;E_\theta[\delta]=\theta$を満たす推定量$\delta$を\textbf{不偏推定量}という．
+        \item パラメータの関数$g:\Theta\to\Theta$に対して不偏推定量が存在するとき，$g$を\textbf{$U$-推定可能}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{最適性・有効性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般に不偏推定量は複数ある．そこで，設定した損失関数に応じて，「最適」な推定量を選ぶ必要がある．
+    一般には二乗損失を考えるため，分散を最適性の指標とし，分散が最も小さい推定量を\textbf{有効(efficient)}であるという．
+\end{tcolorbox}
+
+\begin{notation}
+    統計的決定理論の枠組みで不偏推定問題を考えると，次の通りになる．
+    \begin{enumerate}
+        \item 標本空間$(\X,\A)$上の確率分布族$(P_\theta)_{\theta\in\Theta}$を考える．
+        \item 決定空間は，$\D\subset\R^p$を凸ボレル集合，$\B$はその上のボレル集合族とする．
+        \item 損失関数$W$は凸とする．
+        \item $\Delta:=\Delta_g$は$p$次元関数$g(\theta)$の不偏推定量を非確率論的決定関数$\delta:\X\to\D$と観て，その全体
+    \end{enumerate}
+    $\Delta_g\ne\emptyset$，すなわち，$g:\Theta\to\Theta^p$は$U$-推定可能とする．
+\end{notation}
+
+\begin{theorem}[Lehmann-Scheffe]
+    $T$を分布族$\P$に対する完備十分統計量とする．
+    任意の不偏推定量$\delta\in\Delta_g$に対して，$\delta_0:=E[\delta|T]$とすると，$\delta_0$は$g(\theta)$の最良の不偏推定量である：$\forall_{g'\in\Delta_g}\;\forall_{\theta\in\Theta}\;R(\theta,\delta_0)\le R(\theta,\delta')$．
+\end{theorem}
+\begin{remarks}
+    一般には，$p=1$次元とし，損失関数は二乗損失$W(\theta,a)=[a-g(\theta)]^2$を考えることが多い．このとき，危険関数は$R(\theta,\delta)=\Var_\theta[\delta]$となる．
+    したがって，分散を次の「最適性」の指標とする．
+\end{remarks}
+
+\begin{definition}[UMVUE: uniformly minumum variance unbiased estimator]
+    $g(\theta)$の任意の不偏推定量$\delta'\in\Delta_g$に対して，$\forall_{\theta\in\Theta}\;\Var_\theta[\delta]\le\Var_\theta[\delta']$を満たす不偏推定量$\delta$を\textbf{一様最小分散不偏推定量}という．
+\end{definition}
+
+\subsection{Cramer-Raoの不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Fisher情報量は，スコア関数の２次のモーメントと定義される．また，KL情報量の二次の項としても登場する．
+    これを用いて算出される，不偏推定量の「最適性」の情報理論的限界を，不偏推定量の分散行列の下界を与えることで示す定理を，Cramer-Raoの不等式という．
+    したがって，Cramer-Raoの不等式の下界を達成する不偏推定量が存在するならば，それはUMV不偏推定量である．
+\end{tcolorbox}
+
+\begin{definition}
+    パラメータ$\theta=(\theta_i)\in\R^q$に依存する確率密度関数$p_\theta(x)$に対して，
+    \[I_{ij}(\theta):=\int_\X\pp{}{\theta_i}\log p_\theta(x)\cdot\pp{}{\theta_j}\log p_\theta(x)\cdot p_\theta(x)\mu(dx)\]
+    として定まる行列$I(\theta)$を\textbf{Fisher情報行列}という．
+    特に$q=1$の場合，Fisher情報量という．
+\end{definition}
+
+\begin{notation}
+    パラメータの関数$g:\Theta\to\Theta^p$について，$J(\theta):=\pp{g}{\theta}$を$p\times q$-行列とする．
+\end{notation}
+
+\begin{theorem}[Cramer-Rao]
+    
+\end{theorem}
+
+\subsection{ベイズ推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ベイズ決定関数とミニマックス決定関数の関係を考える．
+\end{tcolorbox}
+
+\begin{notation}
+    次の統計的決定問題を考える．
+    \begin{enumerate}
+        \item 標本空間$(\X,\A)$上の確率分布族$(P_\theta)_{\theta\in\Theta}$について，$\Theta$が可測であるとする．
+        \item 損失関数$W:\Theta\times\D\to\R_+$は可測，危険関数$R(-,\delta):\Theta\to\R$を可測とする．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[prior distribution, Bayes risk, Bayes estimator, minimax decision function]\mbox{}
+    \begin{enumerate}
+        \item 先験的な確率分布$\pi\in P(\Theta)$を\textbf{事前分布}という．
+        \item $R(\pi,\delta):=\int_\Theta R(\theta,\delta)\pi(d\theta)$を，$\pi$に関する$\delta$の\textbf{ベイズリスク}という．
+        \item ベイズリスクを最小にする決定関数$\delta$を\textbf{ベイズ決定関数}という．これに対応するものが推定量であるとき，\textbf{ベイズ推定量}という．
+        \item 一方で，リスク関数の上限$\sup_{\theta\in\Theta}R(\theta,\delta)$を最小にする決定関数を\textbf{ミニマックス決定関数}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{非許容性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $p$変量正規分布族$(N_p(\theta,\sigma^2I_p))_{\theta\in\R^p}$の位置母数の推定量$\o{x}=n^{-1}\sum^n_{j=1}x_j$はUMV不偏推定量であるが，$p\ge3$のとき非許容である．
+\end{tcolorbox}
+
 \section{統計的仮説検定}
 
-\subsection{枠組み}
+\subsection{仮説検定の枠組み}
 
 \begin{definition}[hypothesis testing, null hypothesis, alternative hypothesis, significance level, critical region]
     確率空間$(\X,P)$に対して，事前に与えられた設定$\alpha\in(0,1),H_0,H_1$から定められる部分集合$\X_1\subset\X$を検定という．
     \begin{enumerate}
         \item 仮説検定において，仮説とは，母数または確率分布に関する（メタ）条件をいう．
-        \item 検定される仮説$H_0$を\textbf{帰無仮説}といい，それに対立する仮説$H_1$を\textbf{対立仮説}という．
+        \item 疑いの目が向けられており，検定される仮説$H_0$を\textbf{帰無仮説}といい，それに対立する仮説$H_1$を\textbf{対立仮説}という．
         \item 文脈としては，$H_0$を棄却し$H_1$の成立を示すことで社会的な意味を見出そうという文脈に当てはまるように$H_0,H_1$を選ぶ．
-        \item $P(H_0)$の値に意味を持たせるための指標を\textbf{有意水準}という．$\alpha=0.05,0.01$などが用いられる．
+        \item 仮設$H_0$の下で計算した確率が「小さい」とはどういう意味かを形式化した指標を\textbf{有意水準}という．$\alpha=0.05,0.01$などが用いられる．
         \item $\X_1\subset\X$を$\alpha$と$H_0,H_1$の意義から事前に定めて\textbf{棄却域}といい，観測値$x$が$x\in\X_1$のとき棄却し，$x\notin\X_1$のとき採択する．
+        $\X_1$は，$H_0$の下では非常に稀だが，$H_1$の下ではそうでもないような観測値の集合である．
     \end{enumerate}
 \end{definition}
 
@@ -156,10 +705,10 @@ title=]
     \begin{enumerate}
         \item 棄却域$\X_1\subset\X$の定めるパラメータ空間の分割$\Theta=\Theta_0+\Theta_1$を考え，帰無仮説を$H_0:\theta\in\Theta_0$で表し，対立仮説を$H_1:\theta\in\Theta_1$と表す．
         \item $\abs{\Theta_i}=1$の場合を単純仮説といい，そうでない場合を複合仮設という．\footnote{$\Theta$が１次元で，$H_0:\theta=\theta_0,H_1:\theta\ne\theta_0$の形のときを\textbf{両側検定}，$H_0:\theta\le\theta_0,H_1:\theta>\theta_0$の形のときを\textbf{片側検定}という．}
-        \item 可測関数$\varphi:\X\to[0,1]$を\textbf{検定（関数）}という．$\exists_{A\in\A}\;\varphi=1_A$であるとき検定$\varphi$は非確率的である．
+        \item 可測関数$\varphi:\X\to[0,1]$を\textbf{検定（関数）}という．$\exists_{A\in\A}\;\varphi=1_A$であるとき検定$\varphi$は非確率的である．\footnote{単純に棄却域とそうでない域に分割するため．そうでない場合は，ランダム化検定の方法論を取り入れたことになる．}
         \item $\sup_{\theta\in\Theta_0}E_\theta[\varphi]$を$\varphi$の\textbf{大きさ}という．大きさが$\alpha$以下の検定を\textbf{水準$\alpha$検定}という．水準$\alpha$検定の全体を$\Phi_\alpha\subset\Meas(\X,[0,1])$で表す．
         \item $\beta_\varphi:\Theta_1\to[0,1];\theta\mapsto E_\theta[\varphi]$を\textbf{検定出力関数}という．$1-\beta_\varphi(\theta)$は第二種の誤りの確率を表す．
-        \item $\forall_{\varphi\in\Phi_\alpha}\;\beta_{\varphi_0}(\theta)\ge\beta_\varphi(\theta)$を満たす検定$\varphi_0\in\Phi_\alpha$を\textbf{一様最強力検定}という．
+        \item $\forall_{\varphi\in\Phi_\alpha}\;\forall_{\theta\in\Theta_1}\;\beta_{\varphi_0}(\theta)\ge\beta_\varphi(\theta)$を満たす検定$\varphi_0\in\Phi_\alpha$を\textbf{一様最強力検定}という．
     \end{enumerate}
 \end{definition}
 \begin{remarks}[統計的決定理論の枠組みでの解釈]
@@ -192,7 +741,44 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\subsection{Neyman-Pearsonの補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    サイズ$\al$の検定の中で，検出力$\beta$が最も大きい検定の存在を保証し，尤度比検定によって達成されることを主張する補題．
+    「$\al$を決めておき、その中で検出力が最も大きい検定法を選択する」という方針をネイマン・ピアソンの基準という。
+\end{tcolorbox}
+
+\subsection{単調尤度比と複合仮説の検定}
+
+\subsection{一般化されたNeyman-Pearsonの補題}
+
+\subsection{不偏検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一様最強力検定は一般には存在しない．
+\end{tcolorbox}
+
+\subsection{両側$t$-検定}
+
+\subsection{不変検定}
+
 \section{区間推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    パラメータ$\theta\in\Theta$に対して，区間$S(x)$を考えることを，区間推定という．
+\end{tcolorbox}
+
+\begin{definition}[confidence coefficient, confidence region]
+    写像$S:\X\to P(\Theta)$は，$\al\in(0,1)$を所与の定数として，次の２条件をみたすとする：
+    \begin{enumerate}
+        \item $\forall_{\theta\in\Theta}\;\Brace{x\in\X\mid \theta\in S(x)}\in\A$．
+        \item $\forall_{\theta\in\Theta}\;P_\theta[\theta\in S(x)]\ge1-\al$
+    \end{enumerate}
+    このとき，$1-\al$を\textbf{信頼係数}，$S$を\textbf{信頼域}という．
+\end{definition}
 
 \chapter{大標本理論}
 
@@ -217,7 +803,7 @@ title=]
 \begin{definition}[MLE: maximum likelihood estimator]
     $(\X,\A)$上の$\sigma$-有限測度$\nu$に関して$P_\theta$が絶対連続であるとし，微分を$p(x,\theta):=dP_\theta/d\nu(x)$と表す．
     \begin{enumerate}
-        \item $L_n(\theta):=\prod^n_{j=1}p(x_j,\theta)$を\textbf{尤度関数}という．これは，ある$\theta\in\Theta$について，これが定める分布$P_\theta$から観測値$x_1,\cdots,x_n$が得られる条件付き確率に当たる．
+        \item $L_n(\theta):=\prod^n_{j=1}p(x_j,\theta)$によって定まる関数$\X^n\times\Theta\to\R$を\textbf{尤度関数}という．これは，ある$\theta\in\Theta$について，これが定める分布$P_\theta$から観測値$x_1,\cdots,x_n$が得られる条件付き確率に当たる．
         \item 各$(x_1,\cdots,x_n)\in\X^n$に対して，尤度関数を最大にする$\wt{\theta_n}(x_1,\cdots,x_n)\in\Theta$を対応させる関数$\wt{\theta_n}:\X^n\to\Theta$を\textbf{最尤推定量}という．\footnote{ここでは推定量は可測という仮定は置かない．}
     \end{enumerate}
 \end{definition}
@@ -225,7 +811,11 @@ title=]
     単調増加関数との合成を考えて，対数尤度関数$l_n:=\log\circ L_n$の最大化を考えるにあたって，パラメータの空間$\Theta$が可微分構造を持つとき，
     ランダムな方程式$\partial_\theta l_n(\theta)=0$の解としての最尤推定量を特徴付けることが出来る．
     これを\textbf{尤度方程式}という．
-    このとき出現した対数尤度の微分を\textbf{スコア関数}$S(x,\theta):=\pp{}{\theta}l(\theta,x)$という．
+    このとき出現した対数尤度の微分を（標準化されていない）\textbf{スコア関数}$S(x,\theta):=\pp{}{\theta}l(\theta,x)$という．
+    \begin{align*}
+        L_n(\theta):=\prod^n_{j=1}p(x_j,\theta)\text{の最大化}&\Leftrightarrow l_n(\theta):=\log L_n(\theta)=\sum^n_{j=1}\log p(x_j,\theta)\text{の最大化}\\
+        &\Leftrightarrow S_n(x,\theta):=\pp{}{\theta}l_n(\theta)=\sum^n_{j=1}\pp{}{\theta}\log p(x_j,\theta)\text{の零点を探す}
+    \end{align*}
 \end{remark}
 
 \begin{remarks}[最尤推定量の一致性]
@@ -323,18 +913,21 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     Huberが1964年に最尤推定を一般化し，"maximum likelihood-type"の頭文字から$M$-推定量のクラスを定めた．\footnote{\url{https://en.wikipedia.org/wiki/M-estimator}}
-
+    このセミパラメトリックな一般化を経験尤度法(Owen 1988)という．
 \end{tcolorbox}
 
-\begin{definition}
-    $\Theta\subset\R^p$とする．関数$\psi:\X\times\Theta\to\R^p$に対して，
+\begin{definition}[estimating function / equation]
+    $\Theta\subset\R^p$とする．関数$\psi:\X\times\Theta\to\R^p$に対して，$x_1,\cdots,x_n$が定める経験分布についての平均を
     \[\o{\psi_n}(\theta)=\o{\psi_n}(x,\theta)=\frac{1}{n}\sum^n_{j=1}\psi(x_j,\theta)\]
-    とおき，$\o{\psi_n}(\wh{\theta_n})=0$を満足する未知パラメータの推定量$\wt{\theta_n}$を\textbf{$M$-推定量}という．
-    $\psi$を\textbf{推定関数}という．
+    とおき，推定方程式$\o{\psi_n}(\wh{\theta_n})=0$の零点となるような，未知パラメータの推定量$\wt{\theta_n}$を\textbf{$M$-推定量}という．
+    $\o{\psi_n}$を\textbf{目的関数}または\textbf{効用関数}，$\psi$を\textbf{推定関数}という．
 \end{definition}
 
-\begin{example}
-    最小コントラスト推定量は，$\partial_\theta\Psi_n(\theta)=0$なる推定関数に対応する$M$-推定量である．
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 最尤推定量は，スコア関数を推定関数とする$M$-推定量であり，尤度方程式$S_n(x,\theta)=\partial_\theta l(\theta,x)=0$の零点として特徴付けられる．
+        \item 最小コントラスト推定量は，$\partial_\theta\Psi_n(\theta)=0$なる推定関数に対応する$M$-推定量である．
+    \end{enumerate}
 \end{example}
 
 \section{推定量の漸近正規性}
@@ -345,14 +938,88 @@ title=]
     これを，$M$-推定量について議論する．
 \end{tcolorbox}
 
-\section{ワンステップ推定量}
+\subsection{一致性を持つ$M$-推定量の漸近分布}
+
+\begin{notation}
+    モデルの可微分構造を仮定：$\Theta\subset\R^p$を可測集合とする．推定関数$\psi:\X\times\Theta\to\R^p$とし，$\psi(x,-)$は連続とする．
+    $\psi_n(\theta):=\bP_n\psi(x,\theta)=\sum_{j=1}^n\psi(x_j,\theta)$と定める．
+    $\o{\psi}_n(\theta):=\bE_n[\psi(\theta)]=\frac{1}{n}\psi_n(\theta)$，
+    $\o{\psi}(\theta):=\int_\X\psi(x,\theta)P(dx)$と定める．
+\end{notation}
+
+\begin{theorem}[漸近正規性の十分条件]\label{thm-asymptotic-normality}
+    $\theta_0\in\Theta^\circ$とし，$B\subset\Theta$を$\theta_0$の開近傍とする．
+    次の５条件を仮定する．
+    \begin{enumerate}[({E}1)]
+        \item 推定関数$\psi:\X\times\Theta\to\R^p$は$B$上$C^1$級．
+        \item $\psi(-,\theta)$は可測．
+        \item $\psi(x,\theta_0)\in\L^2(P;\R^p)$で，$P\psi(x,\theta_0)=0$．
+        \item $\exists_{M\in\L^1(\X,\R)}\;\forall_{x\in\X,\theta\in B}\;\abs{\partial_\theta\psi(x,\theta)}\leq M(x)$．
+        さらに，$\Gamma:=-P\partial_\theta\psi(x,\theta_0)$は正則．
+        \item 確率変数列$\wt{\theta}_n:\X^n\to\Theta$が$\wh{\theta}_n\xrightarrow{p}$かつ$\psi_n(\wh{\theta}_n)=o_p(\sqrt{n})$を満足する．
+    \end{enumerate}
+    このとき，
+    \[\sqrt{n}(\wh{\theta}_n-\theta_0)-\Gamma^{-1}\frac{1}{\sqrt{n}}\psi_n(\theta_0)=o_p(1)\quad(n\to\infty).\]
+    特に，$\Sigma:=\Gamma^{-1}\Phi(\Gamma^{\top})^{-1}$，$\Phi:=\int_\X\phi\phi^{\top}(x,\theta_0)P(dx)$について，
+    \[\sqrt{n}(\wh{\theta}_n-\theta_0)\xrightarrow{d}N_p(0,\Sigma)\quad(n\to\infty).\]
+\end{theorem}
+
+\subsection{最尤推定量での例}
+
+\subsection{一般化モーメント法での例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    Lars HansenはPearson 1894によるモーメント法を拡張してファイナンスに応用し，2013年のノーベル経済学賞を受賞した．
+    モーメントに限らず，真の分布を特徴付ける別の母数$\psi$で計算しやすいものがあったら，これに変換することで
+    $M$-推定量を構成する．
+\end{tcolorbox}
+
+\begin{definition}
+    $\{P_\theta\}_{\theta\in\Theta}\subset P(\X)$を分布族，$g:\X\to\R^p$を所与の関数とする．
+    $\psi(x,\theta):=g(x)-\int_\X g(y)P_\theta(dy)$とすると，真値$\theta_0\in\Theta$について$E[\psi(x,\theta_0)]=0$である．
+    このとき，次の識別可能条件がなりたつとする
+    \[\theta_1\ne\theta_2\Rightarrow\int_\X g(y)P_{\theta_1}(dy)\ne\int_\X g(y)P_{\theta_1}(dy).\]
+    このとき，$\psi(x,\theta)$の$x$に関する$P_{\theta_0}$-平均の零点は$\theta_0$に限る．
+    そこで，この$\psi$を推定関数とした$M$-推定量$\wh{\theta}^\dagger_n$，すなわち次の$\theta$についての方程式の解を\textbf{$g$に関するモーメント推定量}という：
+    \[\o{\psi}_n(x,\theta):=\bP_n[\psi(x,\theta)]=\frac{1}{n}\sum_{j=1}^n\psi(x_j,\theta)=0\]
+    あるいは，あるノルム$\norm{-}$について，$\norm{\o{\psi}_n(x,\theta)}$を最小にする$\wh{\theta}$を探す．
+    このとき，推定関数$\psi$を\textbf{モーメント関数}という．
+
+    このとき，次の条件が成り立てば，モーメント推定量は一致性と漸近正規性を持つ．
+    一方で，最尤推定量のものより漸近分散は大きい．
+    最尤法は一般化モーメント法の特殊な場合とみなせる．
+\end{definition}
+
+\section{LeCamのワンステップ推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=一致推定量さえ見つかれば，漸近分散は逆Fisher情報行列まで改善できる標準的算譜がある]
     $M$-推定量は推定関数の零点として定まるが，実際に方程式を解くことは容易でない場合も多い．
     一方で，有効でないが，一致性をもつ推定量は容易に見つかることがしばしばある．
     このとき，それを用いて，最尤推定量と同じ漸近分散を持つ推定量を構成できる．
+
+    推定量の漸近有効性は，数値解析のようなNewton反復法を採用すれば良いことは初等的に思いつくが，
+    実はこの手続きは１回で最尤推定量と同等にまで改善される．\footnote{\url{https://www.ma.imperial.ac.uk/~das01/MyWeb/M3S3/Handouts/OneStep.pdf}}
 \end{tcolorbox}
+
+\begin{definition}[one-step estimator]
+    $\Theta$-値確率変数列$(\wh{\theta}_n^0)$から，新たな推定量の系列$(\wh{\theta}_n)$を
+    \[\wh{\theta}_n:=\wh{\theta}^0_n-(\partial_\theta\psi_n(\wh{\theta}^0_n))^{-1}\psi_n(\wh{\theta}^0_n)\]
+    で定めると，これは
+    \[\X^*_n:=\Brace{x\in\X^n\mid\wh{\theta}^0_n\text{において}\psi_n\text{は微分可能で}\partial_\theta\psi_n(\wh{\theta}^0_n)\text{は正則で}\wh{\theta}_n\in\Theta}\]
+    上で定まるから，これを$\X$上に可測に延長する．延長の仕方は任意で良い．
+    こうして得た$(\wh{\theta}_n)$を\textbf{$(\wh{\theta}_n^0)$を初期推定量とするワンステップ推定量}という．
+\end{definition}
+
+\begin{theorem}[ワンステップ推定量が漸近正規であるための十分条件]
+    $\theta_0\in\Theta^\circ$，$B\subset\Theta$を$\theta_0$の開近傍とする．
+    条件(E1)~(E4)を仮定し，次の条件を仮定する：
+    \begin{enumerate}[({E}1)]\setcounter{enumi}{5}
+        \item 初期推定量の列$\wh{\theta}^0_n:\X^n\to\Theta$が$\sqrt{n}$-一致性を持つ：$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$．
+    \end{enumerate}
+    このとき，ワンステップ推定量$\wh{\theta}_n$に対して，定理\ref{thm-asymptotic-normality}と同様の結果が成り立つ．
+\end{theorem}
 
 \section{$M$-推定量の存在}
 
@@ -363,7 +1030,66 @@ title=]
 
 \section{頑健推定}
 
+\subsection{影響関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    影響関数は，有界線型作用素$T:P(\X)\to\Theta$の特別な微分とみなせる．
+\end{tcolorbox}
+
+\begin{notation}
+    推定関数$\Psi:\X\times\Theta\to\R^p$に対して，写像$T:P(\X)\to\Theta$は$\int_\X\psi(x,T(P))P(dx)=0$を満足すると仮定する．
+    このとき，$P$が経験測度（デルタ測度の凸結合）であるとき，$\wt{\theta_n}:=T(P_n)$は推定関数$\Psi$に関する$M$-推定量である．
+    写像$T:P(\X)\to\Theta$はその延長である．
+    デルタ測度は凸集合$P(\X)$の極点であり，Krein-Milmanの定理より，その凸包は$P(\X)$上弱稠密であることに注意．
+    もし$T$が有界線型作用素ならば，一意的な連続延長がある．
+\end{notation}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 確率測度$P\in P(\X)$に対して，$x\in\X$が定めるデルタ測度との$\ep\in[0,1]$が定める凸結合を$P^x_\ep:=(1-\ep)P+\ep\delta_x\in P(\X)\;(x\in\X,\ep\in[0,1])$と定める．
+        \item $T$について，$P\in P(\X)$における$\ep\in[0,1]$に関する微分係数$\IF(x;T,P):=\dd{}{\ep}T(P^x_\ep)|_{\ep=0}=\Gamma(P)^{-1}\psi(x,T(P))$を関数$\X\to\Theta$とみたとき，これを\textbf{$T$の$P$における影響関数}という．
+        これは，各点$x\in\X$に観測を得た場合に，$M$-推定量を与える写像$T$がどれほど影響を受けるかを表す指標とみなせる．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    正規母集団$N(\theta,1)$の位置母数$\theta$に対する最尤推定量$\wt{\theta_n}$の影響関数は$\IF(x;T,N(\theta,1))=x-\theta$となる．したがって，$x\in\R$の絶対値が大きいほど，最尤推定量への影響が大きいため，ここに異常値が来ると，大きく推論に影響する危険がある．
+\end{example}
+
+\subsection{バイアスロバスト推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    頑健統計では，外れ値による影響がなるべく小さい$M$-推定量を構成することを考える．
+\end{tcolorbox}
+
+\begin{definition}[bias robust estimation]
+    $(P_\theta)_{\theta\in\Theta}$をモデルとする．
+    ある定数$M\in\R$が存在して，$\Gamma_\theta:=\Gamma(P_\theta)$について$\abs{\Gamma^{-1}_\theta\psi(x,\theta)}\le M$を満たす$\psi$が定める$M$-推定量を\textbf{$B$-ロバスト推定量}という．
+\end{definition}
+
+\begin{example}
+    最尤推定量は，漸近分散が最小という意味では最適であるが，一般に影響関数は有界にはならない．
+\end{example}
+
+\subsection{Fisherの一致性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Fisherの一致性を仮定すると，最適な不偏ロバスト推定量を構成できる．
+\end{tcolorbox}
+
+\begin{definition}[Fisher consistency]
+    写像$T:P(\X)\to\Theta$が，モデル$(P_\theta)$について，$T(P_\theta)=\theta$を満たすとき，\textbf{Fisher一致性を満たす}という．
+\end{definition}
+
 \section{尤度比検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    初等統計で扱われるカイ$2$乗検定の根拠は，この漸近理論によって明らかになる．
+\end{tcolorbox}
 
 \section{多項分布の検定}
 
@@ -378,12 +1104,90 @@ title=]
 \chapter{漸近展開とその応用}
 
 \begin{quotation}
-    中心極限定理は分布の正規近似であるが，
+    中心極限定理は，正規近似に基づく，分布の一次の漸近理論であった．
     Edgeworthによる展開はその近似をより精密にしたものである．
     標本数がそれほど大きくない実際的な状況では，分布のより精密な近似を基礎として統計量を構成することが必要になる．
 
     今日，漸近展開法も確率過程にまでその領域を広げ，新しい確率統計学が発展しつつあるが，このような新領域を理解する上でも，独立確率変数列における現象を理解することが重要である．
+
+    キュムラント関数をよく使う．その関係で，テンソルがよく出る．
+    また，最尤推定量の漸近展開に出てくる係数の一部は接続係数にほかならない．
 \end{quotation}
+
+\section{漸近展開}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    平均$0$，分散共分散行列$\Sigma>O$の$d$次元確率変数列$\{Z_j\}_{j\in\N}$は独立同分布に従うとする．
+    中心極限定理によると，
+    \[S_n=\frac{1}{\sqrt{n}}\sum^n_{j=1}Z_j\xrightarrow{d}N_d(0,\Sigma)\quad(n\to\infty)\]
+    であるが，この正規近似はあまり精度は良くないため，標本数$n$が小さい時にはより良い近似が必要になる．
+
+    数学的には，これは$X$の特性関数$\varphi_X(u)=E[e^{iu\cdot X}]\;(u\in\R^d)$の漸近展開理論に等価である．
+\end{tcolorbox}
+
+\begin{definition}
+    確率変数$X:\X\to\R^d$に対して，
+    \[\chi_r(u;X):=i^r\kappa_r[u\cdot X]=(\partial_\ep)^r_0\log\varphi_{u\cdot X}(\ep)\]
+    を\textbf{キュムラント関数}という．ただし，$(\partial_\ep)^r_0$とは，$\ep$で$r$回偏微分をして$\ep=0$を代入したものをいう．
+    これはキュムラント母関数の$r$次項係数（を$u$の関数と観たもの）である．
+\end{definition}
+
+\section{平滑化補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    分布の差と特性関数の差の関係を与える補題を準備する．
+\end{tcolorbox}
+
+\section{特性関数の展開}
+
+\section{漸近展開の正当性の証明}
+
+\section{漸近展開の変換}
+
+\section{最尤推定量の漸近展開}
+
+\section{漸近展開と情報幾何}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\section{ブートストラップ法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ブートストラップ法では，データから作った分布$\wh{P}_n$から，さらに標本を取る．そこから，リサンプリング法とも言われる．
+    パラメトリックモデルではプラグイン推定量$P_{\wh{\theta}_n}$，ノンパラメトリックモデルでは経験分布などを取る．
+\end{tcolorbox}
+
+\begin{notation}
+    $(X_j)$を確率分布$P$に従う独立な実確率変数列とし，$R_n(\mathbf{X}_n,P):\X\to\R$を確率変数とする．
+    $R_n(\mathbf{X}_n,P)$の分布関数を
+    \[H_n(x;P):=\int_{\R^n}1_{R_n(\mathbf{x},P)\le x}P_n(d\mathbf{x})\]
+    と定め，$H_n(c_\al;P)=\al\in(0,1)$を満たす点$c_\al$を求める問題を考える．
+\end{notation}
+\begin{example}
+    $P$が未知で，$\theta=\theta(P)$の信頼区間を構成したいとき，推定量$\wt{\theta_n}(\mathbf{X}_n)$から定まる確率変数$R_n(\mathbf{X}_n,P):=\sqrt{n}(\wt{\theta_n}(\mathbf{X}_n)-\theta(P))$の分位点$c_\al$を求めたい．
+\end{example}
+
+\begin{definition}
+    $\wh{P}_n$を$P$の推定量とする．
+    \begin{enumerate}
+        \item 真の分布関数$H_n(x;P)$に対する近似$H_n(x;\wh{P}_n):=\int_{\R^n}1_{R_n(\mathbf{x},\wh{P}_n)\le x}(\wh{P}_n)^n(d\mathbf{x})$を，\textbf{ブートストラップ分布}という．
+        \item 推定分布$\wh{P}_n$に従う大きさ$n$の無作為標本$\bX^*=(X^*_1,\cdots,X^*_n)$を\textbf{ブートストラップ標本}という．
+    \end{enumerate}
+\end{definition}
+\begin{remark}[computer-intensive]
+    推定分布$\wt{P}_n$が複雑であるとき，
+    積分$H_n(x;\wh{P}_n)$はモンテカルロ法で近似する．
+    これが，ブートストラップ法が計算機集約的と言われる所以である．
+\end{remark}
+\begin{remark}[studentization]
+    $R_n(\bX_n,P)$をステューデント化された確率変数で置き換えることで，ブートストラップ分布の近似精度の改善が可能である．
+\end{remark}
 
 \begin{thebibliography}{99}
     \bibitem{吉田}

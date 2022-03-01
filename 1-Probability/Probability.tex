@@ -3357,7 +3357,7 @@ title=]
 \subsection{Beta分布}
 
 \begin{definition}[beta distribution]
-    $(\X,\B_1)$上の\textbf{（第１種）ベータ分布}$B_E(\al,\beta)\;(\al,\beta\in\R_{>0})$とは，
+    $(\X,\B_1)$上の\textbf{（第１種）ベータ分布}$\Beta(\al,\beta)=B_E(\al,\beta)\;(\al,\beta\in\R_{>0})$とは，
     確率密度関数
     \[f(x):=\frac{1}{B(\al,\beta)}x^{\al-1}(1-x)^{\beta-1}1_{(0,1)}(x)\]
     が定める確率分布をいう．ただし，$B(\al,\beta)=\int^1_0x^{\al-1}(1-x)^{\beta-1}dx$．
@@ -3522,11 +3522,229 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\subsection{逆正規分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフト付きのBrown運動の到達時間の分布として現れる．
+\end{tcolorbox}
+
+\begin{definition}[inverse Gaussian distribution]
+    確率密度関数
+    \[f(x;\delta,\gamma)=1_{(0,\infty)}(x)\frac{\delta e^{\gamma\delta}}{\sqrt{2\pi}}x^{-3/2}\exp\paren{-\frac{1}{2}\paren{\gamma^2x+\frac{\delta^2}{x}}}\]
+    で定まる確率分布$\IG(\delta,\gamma):\R_{>0}\times\R_{\ge0}\to P(\R)$を\textbf{逆正規分布}という．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $\gamma>0$のとき，確率密度関数は
+        \[f(x)=1_{(0,\infty)}(x)\paren{\frac{\delta^2}{2\pi}}^{1/2}x^{-3/2}\exp\paren{-\frac{\delta^2(x-\delta\gamma^{-1})^2}{2(\delta\gamma^{-1})^2x}}\]
+        とも表せる．
+        \item $\gamma=0$のとき，確率密度関数は，$c:=\delta^2$と定めて，
+        \[f(x;c)=1_{(0,\infty)}(x)\sqrt{\frac{c}{2\pi}}x^{-3/2}\exp\paren{-\frac{c}{2x}}\]
+        と表せる．これが定める分布を\textbf{Levy分布}といい，$\Levy(c):=\IG(c^{1/2},0)$と表す．
+        \item $\IG(\delta,\gamma)$の積率母関数は，
+        \begin{align*}
+            M(s)&=\int^\infty_0e^{sx}f(x)dx\\
+            &=\exp\paren{\delta\paren{\gamma-\sqrt{\gamma^2-2s}}}&s\le\frac{\gamma^2}{2},\gamma\ge0\\
+            &=\exp\paren{\gamma\delta\paren{1-\sqrt{1-\frac{2s}{\gamma^2}}}}&s\le\frac{\gamma^2}{2},\gamma>0.
+        \end{align*}
+        \item $\IG(\delta,\gamma)$の特性関数は$\varphi(u)=\exp\paren{\gamma\delta\paren{1-\sqrt{1-\frac{2iu}{\gamma^2}}}}$となる．
+        \item キュムラント母関数は$\log\varphi(u)=\frac{\delta}{\gamma}iu+\sum^\infty_{r=2}(2r-3)(2r-5)\cdots 1\cdot\frac{\delta}{\gamma^{2r-1}}\cdot\frac{(iu)^r}{r!}$で，キュムラントは
+        \begin{align*}
+            \kappa_1&=\al_1=\frac{\delta}{\gamma},&\kappa_r=(2r-3)(2r-5)\cdots 1\cdot\frac{\delta}{\gamma^{2r-1}}
+        \end{align*}
+        \item Levy分布$\Levy(c)$のLaplace変換は
+        \[\int^\infty_0e^{-\lambda x}f(x)dx=e^{-\sqrt{c\lambda}}\quad(\lambda\in\R_+)\]
+        である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{逆Gamma分布}
+
+\begin{proposition}
+    $X\sim\Gamma(n/2,n/2)\;(n\in\N)$とし，確率変数$Y:=1/X$を考えると，
+    この確率密度関数は
+    \begin{align*}
+        f_Y(y)&=f_X(1/y)y^{-2}\\
+        &=\frac{(n/2)^{n/2}}{\Gamma(n/2)}(1/y)^{n/2-1}\exp\paren{-\frac{n/2}{y}}y^{-2}\\
+        &=\frac{(n/2)^{n/2}}{\Gamma(n/2)}y^{-n/2-1}\exp\paren{-\frac{n/2}{y}}&y>0
+    \end{align*}
+    と表せる．
+\end{proposition}
+\begin{proof}
+    $y>0$のとき$P[Y\le y]=P[X\ge 1/y]$である．
+\end{proof}
+
+\subsection{Laplace分布}
+
+\begin{definition}
+    密度関数
+    \[f(x)=\frac{1}{2}e^{-\abs{x}}\]
+    が定める分布を\textbf{標準Laplace分布（両側指数分布）}という．
+\end{definition}
+
+\begin{lemma}
+    \begin{enumerate}
+        \item 特性関数は$\varphi(u)=(1+u^2)^{-1}$．
+        \item $X,Y,X',Y'$が独立に標準正規分布$N(0,1)$に従うとする．このとき，$V:=XY+X'Y'$は密度$f$を持つLaplace分布に従う．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Marcenko-Pastur分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\MP(\lambda,1)$分布はWishart行列の固有値の標本スペクトル分布の漸近分布として導出された．
+\end{tcolorbox}
+
+\begin{definition}
+    パラメータ$(\lambda,\sigma^2)\in\R^2_{>0}$が定める定数$a:=\sigma^2(1-\sqrt{\lambda})^2,b:=\sigma^2(1+\sqrt{\lambda})^2$について，
+    確率密度関数
+    \[f(x;\lambda,\sigma^2):=\frac{1}{2\pi\sigma^2}\frac{\sqrt{(b-x)(x-a)}}{\lambda x}1_{[a,b]}(x)+1_{[1,\infty)}(\lambda)\paren{1-\frac{1}{\lambda}}\delta_0(x)\]
+    が定める分布$\MP(\lambda,\sigma^2):\R_{>0}^2\to P(\R)$を\textbf{Marcenko-Pastur分布}という．
+\end{definition}
+
+\begin{lemma}
+    $X\sim\MP(\lambda,\sigma^2)$ならば，$\sigma^{-2}X\sim\MP(\lambda):=\MP(\lambda,1)$．
+\end{lemma}
+
+\begin{proposition}
+    $X_{ij}\sim\iid N(0,1)\;(i\in[d],j\in[n])$を成分とする$d\times n$ランダム行列$X$に対し，$n^{-1}XX^\perp$の固有値を$0\le\lambda_1\le\cdots\le\lambda_d$とする．
+    \begin{enumerate}
+        \item 標本スペクトル分布は$\mu_{d,n}(dx):=\frac{1}{d}\sum^d_{i=1}\delta_{\lambda_i}(dx)$で与えられる．
+        \item $d=d_n$が$\frac{d_n}{n}\to\lambda\in(0,\infty)$を満たすとき，$\mu_{d_n,n}\xrightarrow{d}\MP(\lambda)$を満たす．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Pearson系}
+
+\begin{definition}
+    $\R$上の確率密度関数$p$であって，微分方程式
+    \[\dd{}{x}\log p(x)=\frac{(x-\lambda)-a}{b_2(x-\lambda)^2+b_1(x-\lambda)+b_0}\]
+    を満たす
+    \[p(x)=C\exp\paren{\int\frac{(x-\lambda)-a}{b_0+b_1(x-\lambda)+b_2(x-\lambda)^2}dx}\]
+    の形をした分布を\textbf{Pearson系}という．
+    以降，$\lambda=0$とする．
+    \begin{enumerate}
+        \item I型分布とは，$p(x)=C\paren{1-\frac{x}{a_1}}^{m_1}\paren{1-\frac{x}{a_2}}^{m_2}\;(x\in(a_1,a_2))$の形のものをいう．ただし，$a_1<0<a_2,m_1,m_2>-1$．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item Beta分布はI型Pearson分布である．
+        \item 
+    \end{enumerate}
+\end{example}
+
+\subsection{Poisson分布確率変数の和差}
+
+\begin{definition}\label{def-Hermite-and-Skellam}
+    独立な$Y\sim\Pois(\al),Z\sim\Pois(\beta)$に対して，
+    \begin{enumerate}
+        \item $X=Y+2Z$の分布を，パラメータ$(\al,\beta)\in\R_{>0}^2$の\textbf{Hermite分布}とよび，$\Hermite(\al,\beta)$で表す．
+        \item $X=Y-Z$の分布を，パラメータ$(\al,\beta)\in\R_{>0}^2$の\textbf{Skellam分布}とよび，$\Skellam(\al,\beta)$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item Hermite分布の特性関数は，$\varphi(u)=\exp\paren{\al(e^{iu}-1)+\beta(e^{2iu}-1)}$．
+        \item Hermite分布の確率母関数は$g(z)=\exp\paren{\al(z-1)+\beta(z^2-1)}$．
+        \item Skellam関数の特性関数は$\varphi(u)=\exp\paren{\al(e^{iu}-1)+\beta(e^{-iu}-1)}$．
+    \end{enumerate}
+\end{lemma}
+
 \section{確率変数の独立性と期待値}
+
+\subsection{独立な確率変数の積の期待値}
+
+\begin{notation}
+    $X_j:(\Om,\F,P)\to(\X_j,\B_j)$を確率変数とする．
+\end{notation}
+
+\begin{proposition}
+    $n\ge 2$を整数とする．可測関数$f_j:\X_j\to\o{\R}$について，$f_j(X_j)\in\L^1(\Om,\F,P)$とする．
+    このとき，$X_1,\cdots,X_n$が独立ならば，積$\prod^n_{i=1}f_i(X_i)$も可積分で，
+    \[E\Square{\prod^n_{i=1}f_i(X_i)}=\prod^n_{i=1}E[f_i(X_i)]\]
+    を満たす．
+\end{proposition}
+\begin{remark}
+    複素数値可測関数にも一般化出来る．
+\end{remark}
+
+\begin{corollary}
+    任意の有界可測関数$f_i$について
+    \[E\Square{\prod^n_{i=1}f_i(X_i)}=\prod^n_{i=1}E[f_i(X_i)]\]
+    が成り立つならば，$X_1,\cdots,X_n$は独立である．
+\end{corollary}
+
+\subsection{確率変数の独立性と共分散}
+
+\begin{proposition}
+    $X,Y\in\L^1(\Om,\F,P)$を独立とする．このとき，$\Cov[X,Y]=0$．
+\end{proposition}
+
+\subsection{確率変数の独立性と特性関数}
+
+\begin{notation}
+    多変量確率変数$Y$の特性関数を$\varphi_Y$と表す．
+    $X_j\;(j\in[n])$を$d_j$次元確率変数とする．
+    $X:=(X_1,\cdots,X_n)$は$d:=\sum_{j=1}^nd_j$次元確率変数である．
+    $X,X_j$の特性関数は
+    \[\varphi_X(u)=E\Square{e^{i\sum^n_{j=1}u_j\cdot X_j}}\;(u\in\R^d),\qquad\varphi_{X_j}(u_j)=E\Square{e^{iu_j\cdot X_j}}\;(u_j\in\R^{d_j})\]
+    となる．
+\end{notation}
+
+\begin{theorem}[Kac]\label{thm-Kac}
+    確率変数列$X_1,\cdots,X_n$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X_1,\cdots,X_n$は独立である．
+        \item $\varphi_X=\varphi_{X_1}\otimes\cdots\otimes\varphi_{X_n}:=\prod_{j=1}^n\varphi_{X_j}(u_j)$である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $d$次元確率変数の列$X_1,\cdots,X_n$が独立ならば，
+    \[\varphi_{\sum_{j=1}^nX_j}(u)=\prod^n_{j=1}\varphi_{X_j}(u)\;(u\in\R^d)\]
+\end{corollary}
+
+\subsection{独立同分布に従う確率変数列}
+
+\begin{notation}
+    $X_1,\cdots,X_n$が$\R^d$に値を取る$\iid$であって，$E[X_1]=\mu,\Var[X_1]=\Sigma$であることを，$X_1,\cdots,X_n\sim\iid(\mu,\Sigma)$で表す．
+\end{notation}
 
 \section{多次元連続分布}
 
-\subsection{正規分布}
+\subsection{多次元の確率密度関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Radon-Nikodymの定理より，$\R^d$上の絶対連続分布と確率密度関数は一対一対応する．
+\end{tcolorbox}
+
+\begin{notation}
+    $\R^d$の矩形$\prod^d_{i=1}(a_i,b_i]$の全体を$\E^d$と表す．
+\end{notation}
+
+\subsection{確率密度関数と独立性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    独立性と特性関数について成り立つKacの定理\ref{thm-Kac}と同様の状況が，確率密度関数についても成り立つ．
+\end{tcolorbox}
+
+\begin{proposition}
+    $P^X$が確率密度関数$p$を持つとする．このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $X_1,\cdots,X_n$は独立．
+        \item $p=\bigotimes^n_{i=1}p_i\;\ae$．
+    \end{enumerate}
+    ただし，$p_i$は$X_i$の周辺密度関数とした．
+\end{proposition}
+
+\subsection{多変量正規分布}
 
 \begin{definition}
     $\mu\in\R^d$，$\Sigma\in M_d(\R)$を正定値実対称行列として，$(\R^d,\B(\R^d))$上の測度
@@ -3536,10 +3754,65 @@ title=]
 
 \begin{proposition}
     $d$次元正規分布$N_d(0,\Sigma)$の特性関数は
-    \[\varphi(u)=\exp(i\mu\cdot u-\frac{1}{u}u^\perp\Sigma u)\]
+    \[\varphi(u)=\exp\paren{i\mu\cdot u-\frac{1}{2}u^\top\Sigma u}\]
 \end{proposition}
 
+\begin{corollary}
+    キュムラント母関数は$\psi(u)=\log\varphi(u)=i\mu\cdot u-\frac{1}{2}u^\top\Sigma u$で，特に３次以上のキュムラントはすべて消えている．
+\end{corollary}
+
+\begin{proposition}[多次元正規確率変数の成分間の独立性]
+    $Y_1:=(X_1,\cdots,X_{k_1})^\top,\cdots,Y_l=(X_{k_{l-1}},\cdots,X_d)^\top\;(l\ge 2)$のように，$X$を$l$個の確率変数$Y_1,\cdots,Y_l$に分ける．
+    この分割に対して，$\Sigma$のブロック$\Sigma_{a,b}:=\Cov[Y_a,Y_b]\;(a,b\in[l])$を考える．
+    \begin{enumerate}
+        \item $Y_1,\cdots,Y_l$は独立．
+        \item $\forall_{a,b\in[l]}\;a\ne b\Rightarrow\Sigma_{a,b}=O$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Dirichlet分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ベータ分布の高次元化である．
+\end{tcolorbox}
+
+\begin{definition}
+    $\Delta_p:=\Brace{(x_1,\cdots,x_p)\in\R_{>0}^p\mid\sum^p_{i=1}x_i<1}\;(p\in\N)$について，
+    \[f(x_1,\cdots,x_p)=\frac{\Gamma(\nu)}{\prod^{p+1}_{i=1}\Gamma(\nu_i)}\paren{\prod^d_{i=1}x_i^{\nu_i-1}}\paren{1-\sum^p_{i=1}x_i}^{\nu_{p+1}-1}1_{\Delta_p}(x_1,\cdots,x_p)\qquad\nu_i>0,\nu:=\sum^{p+1}_{i=1}\nu_i\]
+    が定める分布を\textbf{Dirichlet分布}$\Dirichlet(\nu_1,\cdots,\nu_{p+1}):\R_{>0}^{p+1}\to P(\R^p)$という．
+\end{definition}
+
+\begin{lemma}
+    $(X_1,\cdots,X_p)\sim\Dirichlet(\nu_1,\cdots,\nu_{p+1})$とする．
+    \[\forall_{j\in[p]}\;X_j\sim\Beta\paren{\nu_j,\sum_{i\ne j}\nu_i}\]
+\end{lemma}
+
 \section{指数型分布族}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここから，分布の性質の議論から，分布族の性質を考えることへ，視点を移し，「確率分布へのパラメータの入り方」を議論する．
+\end{tcolorbox}
+
+\begin{definition}
+    $\P=\{P_\theta\}_{\theta\in\Theta}\subset P(\X)$を参照測度$\nu$に対する絶対連続確率分布の族とし，$p_\theta$をそのRadon-Nikodym微分とする．
+    \[p_\theta(x)=g(x)\exp\paren{\sum^m_{i=1}a_i(\theta)T_i(x)-\psi(\theta)}\]
+    と表せるとき，$\P$を\textbf{指数型分布族}という．
+\end{definition}
+
+\begin{definition}[指数型分布族の生成]
+    参照測度$\nu$に関する密度関数$g$を考える：$g\ge0,\int g(x)\nu(dx)=1$．
+    \[\Theta_0(g):=\Brace{\theta\in\R^p\;\middle|\;\int e^{\theta\cdot x}g(x)\nu(dx)<\infty}\]
+    とおくと，$\{0\}\in\Theta_0(g)\ne\emptyset$である．
+    $g$のキュムラント母関数を$\psi(\theta):=\log\paren{\int e^{\theta\cdot x}g(x)\nu(dx)}$と表すとき，密度関数
+    \[f(x|\theta):=g(x)\exp\paren{x\cdot\theta-\psi(\theta)}\quad\theta\in\Theta_0(g)\]
+    を，\textbf{$g(x)\nu(dx)$で生成される$p$次の自然指数型分布族}という．
+\end{definition}
+
+\begin{lemma}
+    $\Theta_0(g)$は凸集合である．これを\textbf{自然パラメータ空間}という．
+\end{lemma}
 
 \section{指数分散モデル}
 

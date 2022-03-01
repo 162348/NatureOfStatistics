@@ -3759,15 +3759,120 @@ title=]
 \begin{notation}
     $x,y\in H$に対して，$x\odot y\in B(H)$を$(x\odot y)z=(z|y)x$で定まる$\Im x\odot y=\bF x$を満たす階数$1$の作用素とする．
     この構成は半双線型写像$H\times H\to B_f(H)$を定める．
-    すると，$\norm{e}=1$について，$e\cdot e$は$\C e$への射影である．
+    すると，$\norm{e}=1$について，$e\odot e$は$\C e$への射影である．
 \end{notation}
 
-\begin{remarks}
+\begin{remarks}[正規なコンパクト作用素についてのスペクトル写像定理の消息]
     正規なコンパクト作用素は，ある正規直交基底$(e_j)_{j\in J}$が存在して，ノルム収束する級数$T=\sum_{j\in J}\lambda_je_j\odot e_j$と表せるクラスである．
-    このとき，$T$のスペクトルは$\Sp(T)=\{\lambda_j\}_{j\in J}\cup\{0\}$と表せる．
+    これは，$J_0:=\Brace{j\in J\mid\lambda_j\ne0}$が有限集合であるか，係数列$(\lambda_j)_{j\in J_0}$は$0$に収束するかのいずれかであるからである．
+    このとき，$T$のスペクトルは集積点$0$を併せて，$\Sp(T)=\{\lambda_j\}_{j\in J}\cup\{0\}$と表せる．
+    ここで，$*$-代数の等長準同型
+    \[\xymatrix@R-2pc{
+        C(\Sp(T))\ar[r]&B(H)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&f(T):=\sum_{j\in J}f(\lambda_j)e_j\odot e_j
+    }\]
+    を考えると，$f(T)\in B_0(H)$であることは，$f(0)=0$であることに同値であることがわかる．
+    特に$f(z)=\sum\al_{nm}z^n\o{z}^m$と表せる場合を考えると，$f(T)=\sum\al_{nm}T^nT^{*m}$となる．
 \end{remarks}
 
 \subsection{Fredholm作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Calkin代数$B(H)\epi B(H)/B_0(H)$上に同じ像を定める作用素は，同値類を定める．
+    これは応用上重要である．
+    この同値類についての不変量が重要な意味を持つこととなる．
+\end{tcolorbox}
+
+\begin{definition}[Calkin algebra]
+    $B_0(H)$は閉イデアルであるから，商$B(H)/B_0(H)$は商ノルムについてBanach代数を定める．
+    これを\textbf{Calkin代数}という．\footnote{Wikipediaによると$H$が可分である場合のみを指す，指数理論と作用素環論の対象である．}
+\end{definition}
+
+\begin{lemma}
+    Calkin代数$B(H)/B_0(H)$は$C^*$-代数である．
+\end{lemma}
+
+\begin{definition}[compact perturbation]
+    $S,T\in B(H)$が$S-T\in B_0(H)$を満たすとき，片方はもう片方の\textbf{コンパクトな摂動}であるという．
+    すなわち，Calkin代数上に同じ像を定めることをいう．
+\end{definition}
+
+\begin{proposition}[Atkinson's theorem]
+    $T\in B(H)$について，次の４条件は同値．これらを満たす作用素を\textbf{Fredholm作用素}といい，その全体を$F(H)$で表す．
+    \begin{enumerate}
+        \item ある作用素$S\in B(H)$が一意的に存在して$\Ker S=\Ker T^*$かつ$\Ker S^*=\Ker T$が成り立ち，$ST,TS$はそれぞれ$(\Ker T)^\perp,(\Ker T^*)^\perp$上への有限な余次元を持つ射影を定める．
+        \item ある作用素$S\in B(H)$が存在して，$ST-I,TS-I$はいずれもコンパクトである．
+        \item $T$は$B(H)/B_0(H)$で見れば可逆である．
+        \item $\Ker T,\Ker T^*$は有限次元で，$\Im T$は閉である．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    $F(H)$は積で閉じており，自己共役である($*$作用素について閉じている)．
+\end{remarks}
+
+\begin{definition}
+    $T\in F(H)$をFredholm作用素とする．
+    $\Index T:=\dim\Ker T-\dim\Ker T^*$を\textbf{指数}という．
+    このとき，射影$P,Q$を$ST=I-P,TS=I-Q$と定めると，$\Index T=\rank P-\rank Q$でもある．
+    $F(H)$の部分集合を
+    \[F_n(H):=\Brace{T\in F(H)\mid\Index T=n}\quad n\in\Z\]
+    で定めると，$\forall_{n\in\Z}\;F_n(H)\ne\emptyset$．シフト作用素\ref{operator-unilateral-shift}$S$について，$\forall_{n\in\N}\;S^n\in F_{-n}(H),S^{*n}\in F_n(H)$が成り立つため．
+\end{definition}
+
+\begin{lemma}
+    $T\in F(H)$とする．
+    \begin{enumerate}
+        \item $R\in B(H)$を可逆とすると，$\Index RT=\Index TR=\Index T$．
+        \item $\Index T^*=-\Index T$．
+        \item $T$の部分逆を$S$とすると，$\Index S=-\Index T$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Fredholmの交代定理}
+
+\begin{lemma}
+    $A\in B_f(H)$ならば，$I+A\in F_0(H)$．
+\end{lemma}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意の$T\in F_0(H)$について，部分等長作用素$V\in B_f(H)$が存在して，$T+V$は可逆である．
+        \item $A\in B_0(H)$ならば，$T+A\in F_0(H)$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}[Fredholm alternative]
+    $A\in B_0(H)$，$\lambda\in\C\setminus\{0\}$とする．
+    このとき，$\lambda I-A\in B(H)$は可逆であるか，または，$\lambda$は$A$の有限な重複度を持った固有値である．
+    後者の場合，$\o{\lambda}$は$A^*$の固有値で，同じ重複度を持つ．
+\end{corollary}
+\begin{remarks}
+    コンパクト作用素のスペクトルは，$\{0\}$と，$T$の固有値のみからなる．
+    特に，$\C$の可算部分集合で，$0$のみを集積点とする．
+\end{remarks}
+
+\subsection{Fredholm作用素の連結部分}
+
+\begin{theorem}
+    任意のFredholm作用素$T\in F(H)$とコンパクト作用素$A\in B_0(H)$について，$\Index(T+A)=\Index T$．
+\end{theorem}
+
+\begin{proposition}
+    任意のFredholmクラス$F_n(H)$は$B(H)$の開集合である．
+\end{proposition}
+
+\begin{proposition}
+    $T_1\in F_n(H),T_2\in F_m(H)$について，$T_1T_2\in F_{n+m}(H)$．
+\end{proposition}
+
+\begin{remarks}
+    $G:=B(H)/B_0(H)$を乗法群とし，$G_0$を単位元を含む連結成分とする．すなわち，ある$A\in B(H)/B_0(H)$について$\exp A$と表せる元が生成する部分群とする．
+    このとき，$G_0$は$G$内で開かつ閉で，$G/G_0$は離散群で$G$の連結成分を特徴付ける．
+    今回，$G/G_0\simeq\Z$である．
+    そして，Fredholm作用素$T$の指数とは，作用素$F(H)\epi G\epi G/G_0=\Z$による$T$の像である．
+\end{remarks}
 
 \section{跡}
 
@@ -3785,6 +3890,8 @@ title=]
 
     有限次元線型空間論では，跡だけがまるで異邦人のような特異な存在であった．
 \end{tcolorbox}
+
+
 
 \chapter{Spectral Theory}
 

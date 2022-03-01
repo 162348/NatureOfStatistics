@@ -50,22 +50,38 @@
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     半事実，潜在反応などの用語が出来た．
+    $E[y_1]-E[y_0]$をはじめに定義したのはRubin 1974で，
+    Rosenbaum \& Rubin 1983は「平均処置効果」と言い直した．
+
     このモデルの上に立脚した統計的因果推論には，Rubin流のRCMs(Rubin's Causal Models)とPearl流の構造的因果モデル(SCMs)との２つがある．
     Judea Pearlはベイジアンネットワークの理論を体系的に整備した人工知能研究者である．グラフィカルモデルがよく用いられ，実際Judea Pearlの論文はすべてグラフ用語でも記述されている（この表記の重要性は強調されるが，必ずしも理論的に不可分ではない）．
 \end{tcolorbox}
 
-\begin{definition}[potential outcome model]
-    
-\end{definition}
-
-\begin{axiom}[counterfactual model, causal effect, Fundamental Problem of Causal Inference]\mbox{}
-    \begin{enumerate}
-        \item ある行為をした場合による事実と，反事実の乖離を\textbf{因果関係}という．
-        \item ある行為をした場合としなかった場合の結果変数の差$X_{a=1}-X_{a=0}$を\textbf{因果効果}という．
-        \item 同時に２つの変数$X_{a=1},X_{a=0}$を両方とも観測することは出来ない．このことを\textbf{因果推論の根本問題}という．ここに，反事実のwell-definednessと，統計的推論が入る余地がある．
-        故にこの定立を\textbf{反事実モデル}という．統計的な推論が集団レベルにしかなされ得ない限界を強調して\textbf{平均因果効果}ともいう．
-    \end{enumerate}
+\begin{axiom}[counterfactual model / approach]
+    ある行為をした場合による事実と，反事実の乖離を\textbf{因果関係}という．
+    この定立を\textbf{反事実モデル}という．
 \end{axiom}
+
+\begin{definition}[potential outcome, Fundamental Problem of Causal Inference, causal effect, average treatment effect]\mbox{}
+    \begin{enumerate}
+        \item 独立変数の値域の濃度と同数の，仮想的な従属変数を\textbf{潜在的な結果変数}という．
+        「仮想的な」というのは，独立変数は１つの値にしか実現しないので，１つを除いて欠測することが約束されていることをいう．
+        このことを\textbf{因果推論の根本問題}(Holland 1986)という．
+        \item 潜在的な結果変数の差$y_1-y_0$を\textbf{因果効果}という．
+        一方で，潜在的な結果変数は１つを除いて欠測することが約束されているため，畢竟\textbf{平均処置効果}$E[y_1-y_0]=E[y_1]-E[y_0]$を考えることとなる．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    もし群別が無作為ならば，独立変数と（潜在的な）従属変数はすべて独立であるから，欠測を無視して，観測された各群の平均値の差で平均処置効果を不偏推定出来る．
+\end{remark}
+
+\begin{definition}[avarage treatment effecti on the treated, avarage treatment effect on the untreated, quantile treatment effect]\mbox{}
+    \begin{enumerate}
+        \item $TET:=E[y_1-y_0|z=1]$を\textbf{処置群での平均介入効果}という．政策評価など，こちらのほうが重要視される場面もある．
+        \item $TEU:=E[y_1-y_0|z=0]$を\textbf{対照群での因果効果}という．
+        \item $Q_\al(a)$を，変数$a$の$100\times(1-\al)$パーセント分位点とする．$Q_\al(y_1)-Q_\al(y_0)$を\textbf{分位点での因果効果}という．所得の分布など，期待値でない特性値に関心がある場面もある．
+    \end{enumerate}
+\end{definition}
 
 \begin{definition}[intermediate variable, moderator variable, covariate / control variable / confounding factor]
     独立変数，従属変数の他に，
@@ -220,7 +236,86 @@ title=]
 
 \section{因果効果の推定}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
 無作為割当が出来ない場合は，共変量を利用することで，無作為割当の状態を推定し，因果効果の推定値を出すことになる．
+\end{tcolorbox}
+
+\begin{definition}[marginal structural model]\mbox{}
+    \begin{enumerate}
+        \item 共変量$x$の影響を除去した，潜在的な結果変数の周辺期待値を考えることを，\textbf{周辺構造モデル}という．
+        \item 共変量の値に依存しない量を得るために，共変量の分布について平均を取ることを，\textbf{共変量についての周辺化}または\textbf{共変量調整}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{強く無視できる割当条件}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    RCTのように比較が出来るための，共変量$x$が満たすべき条件である．
+\end{tcolorbox}
+
+\begin{axiom}[strongly ignorable treatment assignment (Rosenbaum \& Rubin 1983), conditional effect, marginal effect]
+    割当は，共変量のみに依存し，結果変数には依存しないとする仮定を\textbf{強く無視できる割当}という．
+    これは，船内的な結果変数$(y_1,\cdots,y_n)$が，割当変数$z$と，共変量$x$の値についての条件付き確率について独立であること$(v_1,v_0)\indep z|x$と同値．
+    また，これは欠測がRAMであることの十分条件である．
+    このとき，共変量の値を所与とした結果変数の条件付き期待値の差$E[y_1-y_0|x]$を\textbf{条件付き効果}，共変量の影響を除去したあとの因果効果を\textbf{周辺効果}という．
+\end{axiom}
+
+\begin{lemma}[mean independence]
+    共変量が同じ対象者については，処置群と対照群で潜在的な結果変数の期待値は同じである：
+\end{lemma}
+
+\subsection{マッチング（均衡化）}
+
+処置群と対照群で，共変量の値が等しい対象者の組を考える．
+当然，共変量の次元が多いと難しくなる（\textbf{次元問題}）．
+また，共変量の分布が大きくずれると，その部分についてはマッチング不可能（\textbf{サポート問題}）．
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 共変量ベクトルが一致することを要請することを，完全マッチングという．
+        \item Mahalanobis距離によるマッチング(Rubin, 1980)．これは質的変数が共変量となることに弱い．
+        \item 最近傍マッチング，caliperマッチング．
+    \end{enumerate}
+\end{example}
+
+\subsection{サブグループ解析（恒常化・限定）}
+
+条件付き効果を推定する．
+
+\subsection{層別解析}
+
+ある程度粗い同値類を作って解析する．
+
+\subsection{回帰分析}
+
+各群ごとに回帰関数$E[y_i|z=i,x]$を推定し，その差の標本平均を取る．
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 共分散分析モデル
+        \item パス解析モデル
+        \item Cox回帰
+        \item 多群の構造方程式モデル
+    \end{enumerate}
+    いずれも，回帰関数を誤って設定すると大きなバイアスを生じる．パラメトリックな手法の限界である．
+\end{example}
+
+\begin{problem}\mbox{}
+    \begin{enumerate}
+        \item 結果変数と共変量のモデリングが必要である．
+        \item 直接因果効果の推定値は得られない．
+    \end{enumerate}
+\end{problem}
+
+この問題を解決するために，傾向スコア解析法など，ノンパラメトリック・セミパラメトリックな手法が要請される．
+特に，潜在的な結果変数と説明変数との間はパラメトリックな仮定を置くが，共変量$x$とその他の変数の間には回帰関係を仮定せずに解析するとなると，これはセミパラメトリックモデルとなる．
+
+\begin{example}[局所多項式回帰 Stone 1977：ノンパラメトリック]
+    バンド幅をどう指定するか，次元の呪いなどの問題点が残る．
+    突破口があるならCSであるが，社会科学分野で解析手法として用いられることはまだあまりない．
+\end{example}
 
 \section{因果探索の基本問題}
 
@@ -320,7 +415,7 @@ title=]
     LiNGAMの仮定を置いた場合，３つのモデルの因果グラフは識別可能である．\cite{清水08}
 \end{theorem}
 
-\chapter{欠測データの扱い}}
+\chapter{欠測データの扱い}
 
 \begin{quotation}
     偏りのあるデータからの統計的な因果推論を考える．
@@ -341,7 +436,12 @@ title=]
     さらに，セミパラメトリックモデルで置かれた仮定になるべく依存せずに関心のある量の推測を精度良く行う，ロバスト解析が重要になる．
 \end{quotation}
 
-\section{欠損の分類}
+\section{欠測の分類}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    欠測メカニズムのモデル$p(m|\phi)$をモデルに盛り込む．
+\end{tcolorbox}
 
 \begin{definition}[monotone missingness]
     欠測パターンについて，
@@ -361,12 +461,60 @@ title=]
 \end{example}
 
 \begin{definition}[Rubin (76)]
-    欠測のメカニズムについて，欠測するかどうかは，
+    欠測のメカニズム$p(m|y,\phi)$について，欠測するかどうかは，
     \begin{enumerate}
         \item MCAR: Missing Completely at Random：モデリングに用いている変数に依らない．
         \item MAR: Missing at Random：欠測値には依存せず，観測できた値に依存する．
         \item NMAR: Nonmissing at Random：欠測値そのものと，観測していない他の値にも依存する．
     \end{enumerate}
+    の３種類がある．$p(m|y,\phi)$とは，(2)の場合を考えている．
+\end{definition}
+
+\begin{example}
+    入試成績と，入学後の成績とのデータの組など，選抜効果はMARを産む．
+\end{example}
+
+\section{枠組み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    欠測データに対する最尤推定は，
+    「完全尤度」なる量の最大化を考えることとなる．
+\end{tcolorbox}
+
+\subsection{選択モデル}
+
+\begin{definition}[selection model, complete data likelihood, distinctness, ignorable missingness]
+    $y=(y_1^\perp,y^\perp_2)^\perp$を完全データのベクトルとし，$p(y|\theta)$を完全データのモデル，$p(m|y,\phi)$を欠損の有無を表す確率変数$m:\Om\to2$に関するモデルとする．
+    \begin{enumerate}
+        \item ２つの同時分布が，直積測度$p(y,m|\theta,\phi)=p(y|\theta)p(m|y,\phi)$によって表せるとき，これを\textbf{選択モデル}という．結合確率$p(y,m|\theta,\phi)$を，\textbf{完全データの尤度}ともいう．
+        \item このように，母数$\theta,\phi$について変数分離可能である性質のことを，\textbf{分離性}という．
+        \item ランダムな欠損(MARまたはMCAR)であり，かつ，分離性を満たす欠損を\textbf{無視できる欠測}という．
+        \item 欠測データについての平均$p(y_1,m|\theta,\phi)=\int p(y|\theta)p(m|y,\phi)dy_2$を，\textbf{完全尤度}という．\footnote{ここでの「完全」は完全データというときの「完全」とは違い，観測されたデータを完全に利用しているという意味である．}
+    \end{enumerate}
+\end{definition}
+\begin{remark}[無視できる欠測について]\mbox{}
+    \begin{enumerate}
+        \item MARのとき，完全尤度は$p(y_1,m|\theta,\phi)=p(y_1|\theta)p(m|y_1,\phi)$をなる．これを\textbf{観測データの尤度}という．そこでこの場合は，$p(y_1|\theta)$についての最尤推定のみを考えれば良いので，「無視できる」という．
+        \item MCARのときも同様に，$p(y_1,m|\theta,\phi)=p(y_1|\theta)p(m|\phi)$が成り立つ．
+    \end{enumerate}
+\end{remark}
+
+\subsection{パターン混合モデル}
+
+\begin{definition}[pattern mixture model]
+    同時分布が$p(y,m|\xi,\om)=p(y|m,\xi)p(m|\om)$．
+\end{definition}
+
+\subsection{共有パラメータモデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最近利用される．
+\end{tcolorbox}
+
+\begin{definition}[shared parameter model]
+    潜在変数として変量効果$\beta$を仮定し，この下で条件付き独立となる$p(y,m|\xi,\om,\beta)=p(y|\beta,\xi)p(m|\beta,\om)$とき，\textbf{共有パラメータモデル}という．
 \end{definition}
 
 \chapter{漸近展開}

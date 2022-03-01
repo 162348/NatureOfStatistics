@@ -12,13 +12,402 @@
 \chapter{研究展望}
 
 \begin{quotation}
+    ネタ帳
     \begin{enumerate}
         \item 二重ロバスト推定とDouble Machine Learning．
         \item 高次の影響関数への推定手法(Robinsが開拓)は因果推論ではとても有望視されている．Gateaux微分ではだめでも，Malliavin微分で理論を創れないか？これはrobust統計学の塗り替えに当たる試みになってしまう．
         \item Gaussian近似．鈴木太慈先生と今泉先生の分野に近い．
     \end{enumerate}
     １で売れて，２を温めるしかない．
+
+    Fisher情報量はKL情報量の二次形式．
+    基本的に解析学と同じ発展経路をたどるんだろうな．
+
+    頑健性が反脆弱性になったら機械学習なんじゃないのか？ミスから学ぶ．
+
+    影響関数が存在するようなパラメータ付けを正則というらしい．となると統計モデルの解析学はここからじゃないと始まらないじゃないか！
 \end{quotation}
+
+\section{頑健性についてのノート}
+
+\begin{usage}
+    古典的な統計手法は，仮定された正規分布よりも尾が重い標本分布に対してとても感度が高く，
+    すなわち外れ値に対して脆弱である．
+    これをdistributional distortionに対するdistributional robustnessという．
+    一部ではresistant統計量ともいう．
+    そして，robustの語を，モデル設定や推定量についての仮定への違反に対して使うために控える．
+    だが，通常robustnessといったとき，distributional robustnessを指す．
+    外れ値を，経験分布とデルタ分布との凸結合によって表して，これのGateaux片側微分係数によって定まる影響関数で，頑健性の定義とするのがひとつの流儀である．
+    これを$B$-ロバスト統計量とよんでいる．
+\end{usage}
+
+\begin{enumerate}
+    \item $B$-ロバスト統計量は，バイアスについて頑健である．
+\end{enumerate}
+
+\begin{example}
+    確率分布の中心的傾向(central tendency)の指標として，算術平均は脆弱であるが，中央値は頑健である．
+    $M$-推定量は普通頑健な方である．
+\end{example}
+
+\section{Locally Robust Semiparametric Estimation}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    1st stepに対して頑健なGMM推定量を定める局所頑健＝直交モーメント関数の標準的構成法．
+    1st stepというのは，モデル選択や正則化が産むバイアスを含むので，特に機械学習に応用先がある．
+\end{tcolorbox}
+
+\subsection{疑問点}
+
+\begin{enumerate}
+    \item Many economic and causal parameters depend on nonparametric or high dimensional first steps.
+    全般的に"first step"が何を指しているかわからない．
+
+\end{enumerate}
+
+\subsection{Introduction}
+
+この論文では，一般化モーメント法の推定関数＝モーメント関数を，局所頑健＝直交に構成する方法を示す．
+これが定める一般化モーメント推定量を，ここでは脱偏済み推定量(debiased estimator)という．
+\begin{quote}
+    We show that such moment functions can be constructed by adding
+    to identifying moment functions the nonparametric influence function from the effect of the
+    first step on identifying moments.
+\end{quote}
+
+\subsection{Debiased GMM estimator}
+
+\begin{notation}
+    $\theta\in\Theta\subset\R^p$を母数，$\gamma:\Xi\to\R$を未知関数（局外母数），
+    $W:\Om\to\X$を観察されたデータ，$w\in\X$をその実現値とする．
+    真値$\theta_0\in\Theta,\gamma_0\in\Xi\times\R$に関して$E[g(W,\gamma_0,\theta_0)]=0$を満たす$g:\to\R^q$を所与の関数とする．
+    $\theta_0\in\Theta$は$E[g(W,\gamma_0,\theta)]=0$を満たす唯一の値であるという識別性条件（すなわち，$\theta_0$を，一般化モーメント$E[g(W,\gamma_0,\theta)]$の値で識別できる．このことを\textbf{"identifying moment function $g$"}と呼んでいる）を仮定する．
+\end{notation}
+
+\begin{discussion}
+    まず，$\wh{\gamma}$を$\gamma_0$のfirst-step推定量としよう．
+    すると，plug-in methodとして，観測値$w_i$と推定値$\wh{\gamma}$を代入して
+    $g(w_i,\gamma,\theta)$を推定関数とし，経験測度について平均を取ると，標本モーメントの推定量$\frac{\sum_{i=1}^ng(w_i,\wh{\gamma},\theta)}{n}$を得る．
+    これの特定のノルム(論文ではquadratic formと表現されてる)を最小にする$\theta$を，"plug-in" GMM estimatorとすれば良い．
+    しかし，この推定量は，最初の$\wh{\gamma}$を得たときのモデル選択，ひいては正則化法に多大な影響を受ける．\footnote{星野先生の本では，first-stepは無限次元ではなく，傾向スコアに関するパラメトリックモデルだとして並行な議論をしている．時代は進んだ．}
+\end{discussion}
+
+\subsubsection{直交モーメント関数への準備}
+
+$F$をモデルのCDFとし，$F_0$を真の累積分布関数とする．
+推定量$\wh{\gamma}$に対して，
+$F$の関数$\gamma(F)$が存在して，$F=F_0$のときこれは推定量$\wh{\gamma}$の確率収束極限であるとする．
+
+$H$を別の分布関数とし，凸結合$F_\tau:=(1-\tau)F_0+\tau H$を考える．
+絶対連続性など理想的な状況が揃い，$E[g(W,\gamma(F_\tau),\theta)]$の$\tau=0$における右Gateaux微分係数の微分$\phi$を影響関数という：
+\[\dd{}{\tau}E[g(W,\gamma(F_\tau),\theta)]=\int\phi(w,\gamma_0,\al_0,\theta)H(dw)\]
+どういう統計量$T$についての影響関数かというと，一般化モーメント$\mu(F):=E[g(W,\gamma(F),\theta)]$に関する影響関数である．
+
+この影響関数$\phi(w,\gamma,\al,\theta)$を\textbf{ノンパラメトリック影響関数}といい，
+最初の推定量$\gamma$が，標本モーメントの推定値$\mu(F)$に与える局所的な影響を記述しているとみなせる．
+
+ただし，$E[\phi(W,\gamma_0,\al_0,\theta)]=0$を満たすとする．
+
+\begin{definition}[orthogonal moment function]
+    識別可能性を持つ一般化モーメント関数(identifying moment function)$g$と，ノンパラメトリック影響関数（の微分）$\phi$の和
+    \[\psi(W,\gamma,\al,\theta):=g(W,\gamma,\theta)+\phi(W,\gamma,\al,\theta)\]
+    を\textbf{直交モーメント関数}という．
+\end{definition}
+\begin{remarks}
+    $\phi$が，$\gamma$の影響を打ち消すから，$\psi$は頑健になる，ということか！
+    条件$E[\phi(W,\gamma_0,\al_0,\theta)]=0$により，任意の経験測度について，$\wh{\phi}_n\xrightarrow{p}0$が成り立つ．
+    よって，$\phi$の影響はこの意味ではなく，ただ$\wh{\gamma}_l$のfirst-order effectを打ち消すだけの役割を果たす．
+    また$\wh{\phi}$の構成も，モデルの仮定に依らず，関数解析の言葉でノンパラメトリックに指定している．
+\end{remarks}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\gamma,\al$の推定量による$\psi$の期待値への影響の１次の項は消える．
+        \item $\theta$の推定量による$\phi$の期待値への影響の１次の項は消える．
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{cross-fitting}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    "plug-in" methodと違って，$\theta$も第一段階で推定してしまうのか．
+
+    そして，このようなことをする理由は，平均を取るところの標本の選び方からバイアスを抜くため．
+    ある種のリサンプリング法？
+\end{tcolorbox}
+
+この$\psi$を用いて，debiased GMM estimatorを構成するのだが，ここで\textbf{cross-fitting}を用いる．
+これはsample splittingの一種である．
+標本の添字集合$[n]$を$L$個に分割し，$\wh{\gamma}_l,\wh{\al}_,\wh{\theta}_l\;(l\in[L])$を，成分$I_l\subset[n]$に属する標本を使わずに算出した推定量とする．
+そして，脱偏済み標本モーメント関数$\wh{\psi}$を
+\[\wh{g}(\theta)=\frac{1}{n}\sum^L_{l=1}\sum_{i\in I_l}g(W_i,\wh{\gamma}_l,\theta),\quad\wh{\phi}=\frac{1}{n}\sum^L_{l=1}\sum_{i\in I_l}\phi(W_i,\wh{\gamma}_l,\wh{\al}_l,\wh{\theta}_l)\]
+について
+\[\wh{\psi}(\theta)=\wh{g}(\theta)+\wh{\phi}\]
+と定め，特定の正な半正定値行列$\wh{W}$について，
+$\wh{\theta}:=\argmin_{\theta\in\Theta}\wh{\psi}(\theta)^\top\wh{W}\wh{\psi}(\theta)$
+としてdebiased GMM estimator $\wh{\theta}$を定義すれば良い．
+
+\begin{remark}[$\theta$の第一段階推定量について]
+    $\wh{\theta}_l$についてだが，通常のGMMとして
+    \[\wh{\theta}_l:=\argmin_{\theta\in\Theta}\wh{g}_l(\theta)^\top\wh{\Upsilon}_l\wh{g}_l(\theta),\quad\wh{g}_l(\theta)=\frac{1}{n-n_l}\sum_{l'\ne l}\sum_{i\in I_{l'}}g(W_i,\wh{\gamma}_{l'},\theta)\]]
+    と定めても良い．ただし，$\wh{\Upsilon}_l$の構成には$I_l$に入っていない標本のみを使い，cross-fittingを取り入れる．
+    このあとにdebiased GMMを計算するセットを，何度か繰り返して最終的なdebiased GMMとしても良い（本当か？）
+\end{remark}
+
+\subsubsection{効率}
+
+こうして得たdebiased GMMの効率は，以下の３つの要因のみのよる．
+\begin{enumerate}
+    \item モーメント関数$g$の選び方
+    \item 第一段階推定量$\wh{\gamma},\wh{\al},\wh{\theta}$
+    \item 重み付け行列$\wh{W}$
+\end{enumerate}
+(3)については別の議論で済んでいて，標準的な取り方$\Psi$がある．
+
+\subsubsection{例１：条件付き共分散}
+
+\begin{example}
+    $W=(X,Y,Z)$を観測データ，$\al_0(X):=E[Z|X]$を共変量と割当の関係，$\gamma_0(X):=E[Y|X]$を共変量と平均処置効果の関係とする．
+    モーメント関数を$g:=\al_0\otimes\gamma_0$と定めて，$\theta_0=E[Z\gamma_0(X)]=E[\al_0(X)\gamma_0(X)]=E[E[Z|X]\cdot E[Y|X]]$と仮定する．
+    このような設定は，条件付き共分散の平均$E[\Cov(Z,Y|X)]=E[ZY]-\theta_0$などに登場する．
+
+    このとき，
+    \[g(w,\gamma,\theta):=z\gamma(x)-\theta,\quad\phi(w,\gamma,\al)=\al(x)[y-\gamma(x)]\]
+    と定めると，
+\end{example}
+
+\subsubsection{例２：条件付き分位点の関数}
+
+\subsection{例３：}
+
+\subsection{Neyman直交性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gateaux微分における展開で一次項が消えていることをいう．
+    どういう内積を仮定しているんだ？
+\end{tcolorbox}
+
+\begin{definition}
+    未知関数$\gamma,\al$が，モーメント$\o{\psi}(\gamma,\al,\theta):=E[\psi(W,\gamma,\al,\theta)]$に１次の影響を及ぼさないことを，\textbf{Neyman直交}するという．
+    すなわち，$F$を変数$W$の累積分布関数とするとき，$\wh{\al}\xrightarrow{p}\al(F)$と表すと，影響関数$\phi(w,\gamma,\al,\theta)$の識別可能性条件より，$0=E_F[\phi(W,\gamma(F),\al(F),\theta)]$が成り立つ．
+    $F_\tau=(1-\tau)F_0+\tau H$を代入して$\tau=0$について微分することで，
+    \begin{align*}
+        0&=\pp{}{\tau}\int\phi(w,\gamma(F_\tau),\al(F_\tau),\theta)(-F_0+H)(dw)\\
+        &=\int\phi(w,\gamma_0,\al_0,\theta)H(dw)+\pp{}{\tau}E[\phi(W,\gamma(F_\tau),\al(F_\tau),\theta)]\\
+        &=\pp{}{\tau}E[g(W,\gamma(F_\tau),\theta)]+\pp{}{\tau}E[\phi(W,\gamma(F_\tau),\al(F_\tau),\theta)]=\pp{}{\tau}\o{\psi}(\gamma(F_\tau),\al(F_\tau),\theta)
+    \end{align*}
+    を得て，たしかに１次の微分係数がきえている．
+    これは$(\gamma(F_\tau),\al(F_\tau))$に関する方向微分だと思えるはず．
+\end{definition}
+
+\begin{theorem}
+    次の３条件が成り立つとき，Neyman直交性を満たす．
+    \begin{enumerate}
+        \item ノンパラメトリック影響関数の識別可能性（とは少しずれるらしい）：$E[\phi(W,\gamma_0,\al_0,\theta)]=0$．
+        \item 影響関数の微分可能性：ある$\o{\tau}>0$が存在して，任意の$\tau\in[0,\o{\tau})$について$\int\phi(w,\gamma(F_\tau),\al(F_\tau),\theta)F_\tau(dw)=0$．
+        \item 連続性：$\int\phi(w,\gamma(F_\tau),\al(F_\tau),\theta)F_0(dw)$，$\int\phi(W,\gamma(F_\tau),\al(F_\tau),\theta)H(dw)$はいずれも$\tau=0$で連続．
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{二重ロバスト性へむけて}
+
+\begin{theorem}[$\al$の十分条件]
+    $\al$が次の２条件を満たすならば，$E[\phi(W,\gamma_0,\al,\theta)]=0$．よって，$\o{\psi}=E[\psi(W,\gamma_0,\al,\theta)]=0$．
+    \begin{enumerate}
+        \item $F_\al$が存在して，$\al(F_\al)=\al$かつ$\exists_{\o{\tau}>0}\;\forall_{t\in\o{\tau}}\;\gamma(F^\al_\tau)=\gamma_0$．
+        \item $\dd{}{\tau}\int g(w,\gamma(F^\al_\tau),\theta)F_\al(dw)=\int\phi(w,\gamma_0,\al,\theta)F_0(dw)$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[$\gamma$の十分条件]\label{thm-3}
+    $\gamma$のノルム$\norm{-}$と，$\gamma_0$を含む集合$\Gamma$と，累積分布関数の集合$\H$は次の４条件を満たすならば，$\forall_{\delta\in\Gamma}\;\o{\psi}_\gamma(\delta,\al_0,\theta_0)=0$
+    \begin{enumerate}
+        \item $\al(F_\tau)=\al_0$で，Neyman直交性を満たす．
+        \item $\o{\psi(\gamma,\al_0,\theta_0)}$は$\gamma_0$にて，$\Gamma$に近接してHadamard微分可能で，$\Gamma$上で定義された偏導関数$\o{\psi_\gamma}(\delta,\al_0,\theta_0)$を持つ．
+        \item $\gamma(F_\tau)$は$\tau=0$にてHadamard微分可能．
+        \item $\Brace{\pp{\gamma(F_\tau)}{\tau}}_{H\in\H}$の閉包は$\Gamma$に等しい．
+    \end{enumerate}
+    また，$\o{\psi}(\gamma,\al_0,\theta_0)$は$\gamma_0$の近傍で二階連続微分可能で，近傍にて$\exists_{C\in\R}\;\norm{\o{\psi}(\gamma,\al_0,\theta_0)}\le C\norm{\gamma-\gamma_0}^2$．
+\end{theorem}
+
+\subsection{Plug-in GMMとの比較}
+
+\subsection{$\al_0$の自動推定}
+
+\subsection{二重ロバスト性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ノンパラメトリック影響関数を，identifying モーメント関数$g$に加える，という手法で，二重ロバスト性を満たす$\psi$を構成できる条件を与える．
+\end{tcolorbox}
+
+\begin{discussion}
+    一般に，局外母数$\gamma$を正しく推定することは困難なので，二重ロバスト性はもはや必須となりつつある．
+    これは，モーメント関数$g$に関するクラスで，ある二重ロバスト条件を満たすことをいう．
+    いままでノンパラメトリック影響関数のmean zero conditionは$E[\phi(W,\gamma_0,\al_0,\theta)]=0$としてきたが，$E[\phi(W,\gamma,\al_0,\theta)]=E[\phi(W,\gamma_0,\al,\theta)]=0$と強める．
+\end{discussion}
+
+\subsubsection{二重ロバスト性の特徴付け}
+
+\begin{definition}
+    $\Gamma$を$\gamma$の第一段階推定量のありえる値域となる位相線型空間とする．
+    \[\forall_{\gamma\in\Gamma}\;\forall_{\al,\theta}\quad0=\o{\psi}(\gamma,\al_0,\theta_0)=\o{\psi}(\gamma_0,\al,\theta)\]
+    を満たすとき，モーメント$\o{\psi}$は二重に頑健であるという．
+\end{definition}
+
+\begin{corollary}
+    $\Gamma$を線型空間とする．
+    $\o{\psi}(\gamma,\al_0,\theta_0)$が$\gamma$について線型で，定理3\ref{thm-3}の条件が成り立つとき，二重に頑健である．
+\end{corollary}
+\begin{proof}
+    定理3\ref{thm-3}の意味での$\Gamma$は$\gamma$の近傍であり，局所的な集合であったが，これが生成する線型空間の全体にまで，性質$\o{\psi}(\gamma,\al_0,\theta_0)=0$が延長できるため．
+\end{proof}
+
+\begin{theorem}[Gateaux微分のことばで述べ直す]
+    $\Gamma$を線型空間とする．
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $\psi(w,\gamma,\al,\theta)$は二重に頑健である．
+        \item $\o{\psi}(\gamma,\al_0,\theta_0)$は$\gamma$についてaffineで，$\forall_{\gamma\in\Gamma}\;\pp{\o{\psi}((1-\tau)\gamma_0+\tau\gamma,\al_0,\theta_0)}{\tau}|_{\tau=0}=0$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $g(W,\gamma,\theta_0)$と$\phi(W,\gamma,\al_0,\theta_0)$が$\gamma$について線型であるとき，これが定める$\o{\psi}(\gamma,\al,\theta)$は二重に頑健である．
+\end{corollary}
+
+\subsubsection{第一推定量の条件付きモーメント条件下での二重頑健推定量の構成法}
+
+\begin{discussion}
+    第一段階推定量$\gamma_0$は，ある線型汎関数$\lambda(W,-):\Gamma\to\R$について，
+    $E[\lambda(W,\gamma_0)|X]=0$を満たすとする．$X$は共変量や操作変数を想定すれば良い．
+
+    この下で2SLS(two stage least squares)推定量$\wh{\gamma}$を考えると，$\gamma(F):=\argmin_{\gamma\in\Gamma}E_F[(E_F[\lambda(W,\gamma)|X])^2]$として，$\phi(w,\gamma,\al,\theta)$が存在するとき，ある$\al(x,\theta)$について，
+    \[\phi(w,\gamma,\al,\theta)=\al(x,\theta)\lambda(W,\gamma)\]
+    が成り立つ．
+    特に，$\phi$は$\gamma$について線型である．
+    よって，$\psi$の線形性は$g$の線形性による．
+\end{discussion}
+
+\begin{theorem}
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $\psi(W,\gamma,\al,\theta)=g(W,\gamma,\theta)+\al(X)\lambda(W,\gamma)$は二重に頑健である．
+        \item $\forall_{\gamma\in\Gamma}\;E[g(W,\gamma,\theta_0)]=-E[\al_0(X)\lambda(W,\gamma)]$．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    有効スコアの場合に似ている関数形をもっているらしい．
+\end{remarks}
+
+\begin{example}
+    $\gamma$を回帰関数，$\lambda(W,\gamma)=Y-\gamma(X)$を誤差を表す線型汎関数，$m(w,\gamma)$を線型汎関数とし，$\theta_0=E[m(W,\gamma_0)]$の推定を目指す．
+    モーメント関数を$g(w,\gamma,\theta):=m(w,\gamma)-\theta$とおくと，これは識別可能な上に$\gamma$について線型で，
+    $\lambda$もaffineだから，定理8の前提条件を満たす．
+    よって，
+    \begin{corollary}
+        $\al_0(x)\in\L^2(\X)$が存在し，$\forall_{\gamma(X)\in\L^2(\X)}\;E[m(W,\gamma)]=E[\al_0(X)\gamma(X)]$ならば，$\psi(w,\gamma,\al,\theta)=m(w,\gamma)-\theta+\al(x)[y-\gamma(x)]$は二重に頑健である．
+    \end{corollary}
+\end{example}
+
+\subsubsection{局外母数が共変量の確率密度関数であるときの二重頑健推定量の構成}
+
+\subsubsection{識別可能性}
+
+\begin{theorem}
+    
+\end{theorem}
+
+\subsubsection{plug-in GMM推定量の部分的頑健性}
+
+\begin{definition}
+    モーメント関数$g$が\textbf{部分的に頑健}であるとは，$\exists_{\o{\gamma}\ne\gamma_0}\;E[g(W,\theta_0,\o{\gamma})]=0$がなりたつことをいう．
+\end{definition}
+
+\subsection{漸近理論}
+
+\section{Characterization of parameters with a mixed bias property}
+
+\subsection{Introduction}
+
+\begin{notation}
+    $P$に独立に従う確率ベクトル$O:\Om\to\D$の列$O^n:\Om\to\D^n$を考える．
+    モデルを$\M:=(P_\eta)_{\eta\in\eta}$とし，汎関数$\chi(\eta)\in\R$の推定を試みる．
+\end{notation}
+
+\begin{discussion}[debiased-GMMの動機：ワンステップ推定量]
+    前の論文のように，plug-in推定量$\chi(\wh{\eta})$は$\sqrt{n}$-一致性を持たない：$\chi(\wh{\eta})-\chi(\eta)\ne O_p(1/\sqrt{n})$．
+    よって，漸近有効性が足りないから，バイアスを減らす余地がある．
+    一つの解決法は，ワンステップ推定量（のセミパラメトリック化）である．
+    $\chi_\eta^1$をうまく選ぶことで，$\wh{\chi}:=\chi(\wt{\eta})+\bP_n\chi^1_{\wh{\eta}}$をワンステップ推定量とする．
+    $\chi^1_\eta$の上手な選び方は，前の論文のように，影響関数とすることである．
+\end{discussion}
+
+\begin{discussion}[影響関数を採用する動機]
+    正規分布に収束させたい項$\sqrt{n}(\wh{\chi}-\chi(\eta))$は
+    \[\sqrt{n}(\wh{\chi}-\chi(\eta))=\sqrt{n}(\chi(\wh{\eta})-\chi(\eta)+E_\eta(\chi^1_{\wh{\eta}}))+\bG_n(\chi^1_{\wh{\eta}}-\chi^1_\eta)+\bG(\chi^1_\eta)\]
+    と展開できる．
+    \begin{enumerate}[(a)]
+        \item 第3項$\bG_n(\chi^1_{\wh{\eta}})=\sqrt{n}\bP_n(\chi^1_\eta-E_\eta(\chi^1_{\wh{\eta}}))$は正規分布に収束する．
+        \item 第2項$\bG_n(\chi^1_{\wh{\eta}}-\chi^1_\eta)$は$o_p(1)$である．一般にモデル$\M$が大きくないとき(Donskerであるとき)はこれが示せ，一般の場合もcross-fittingによりこれが可能になる．
+        $\D_n$を複数に分割し，一部で推定量を構成し，残った部分でワンステップ推定量を構成する．
+        これを繰り返し，全部の平均を最終的な推定量とする．
+        \item 第1項が$o_p(1)$ならば，$\sqrt{n}(\wh{\chi}-\chi(\eta))$は正規分布に確率収束する．
+    \end{enumerate}
+    すなわち，$\chi(\wh{\eta})-\chi(\eta)-E_\eta(\chi^1_{\wh{\eta}})=o_p(n^{-1/2})$が満たされれば良い．
+    $E_\eta(\chi^1_{\wh{\eta}})$が，$\chi(\eta)$の方向$\wh{\eta}-\eta$への微分係数となっていれば良いわけである．
+\end{discussion}
+
+影響関数が存在するようなパラメータ付けを正則という．
+
+\subsubsection{枠組み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    因果推論における指数型分布族？
+
+    このmixed bias propertyということばで，いままでの２つのクラス（Robins et al 2008とChernozhukov et al 2018）をまとめ上げた．
+    モーメント関数の識別可能性条件などは，自動的に満たされる．
+\end{tcolorbox}
+
+\begin{notation}
+    $\M$はノンパラメトリックとする：任意の$P\in\M$におけるパラメトリックなサブモデルのスコアが生成する閉線形空間は$L_2(P)$に等しい．
+    $\chi(\eta)$を正則なパラメータ付けとし，$\chi^1_\eta$をその一意な影響関数とする．次のmixed bias propertyを満たすとする．
+\end{notation}
+
+\begin{definition}[mixed bias property]
+    任意のパラメータ$\eta\in\eta$について，関数$a(Z):=a(Z;\eta)$と$b(Z):=b(Z;\eta)$が存在し，また$\eta$に依らない関数$S_{ab}:=s_{ab}(O):\D\to\R;o\mapsto s_{ab}(o)$が存在して，
+    \[\forall_{\eta'\in\eta}\quad\chi(\eta')-\chi(\eta)+E_\eta(\chi^1_{\eta'})=E_\eta[S_{ab}(a'(Z)-a(Z))(b'(Z)-b(Z))]\]
+    が成り立つ．ただし，$a'(Z)=a(Z;\eta'),b'(Z)=b(Z;\eta')$と表した．
+\end{definition}
+\begin{remarks}
+    これは，$\chi(\eta)+\chi^1_\eta$は，$a,b$という２つの関数を通じてのみ$\eta$に依存しており，したがってワンステップ推定量$\wh{\chi(\eta)}$は推定量$\wh{a},\wh{b}$を通じてのみ$\wh{\eta}$に依存する．
+
+    このことにより，$\int(\wh{a}(z)-a(z))^2dP_\eta(z)=O_p(\gamma_{a,n})$かつ$\int(\wh{b}(z)-b(z))^2dP_\eta(z)=O_p(\gamma_{b,n})$を満たすとき，
+    $\chi(\wh{\eta})-\chi(\eta)-E_\eta(\chi^1_{\wh{\eta}})=O_p(\gamma_{a,n}\gamma_{b,n})$が成り立つ．
+    だから，cross-fittingが採用されたならば，$\wt{\chi}$は\textbf{rate double robustness property}を持つ．
+    すなわち，$\gamma_{a,n}=o(1),\gamma_{b,n}=o(1),\gamma_{a,n}\gamma_{b,n}=o(n^{-1/2})$が成り立つならば，$\sqrt{n}(\wt{\chi}-\chi(\eta))$は平均$0$の正規分布に収束する．
+
+\end{remarks}
+
+\subsection{mixed bias propertyを持った影響関数の特徴付け}
+
+\subsection{局外関数の特徴付け}
+
+\subsection{例}
+
+\subsection{Final remarks}
+
+\section{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
+
+\section{Double Debiased Machine Learning for Treatment and Structural Parameters}
+
+\section{ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
+
+\section{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
 
 \begin{thebibliography}{99}
     \bibitem{Locally Robust Semiparametric Estimation}
@@ -29,6 +418,8 @@
     これの必要十分条件を特定できないだろうか？
     \bibitem{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
     \href{https://arxiv.org/abs/1802.08667}{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
+    \bibitem{Double Debiased Machine Learning for Treatment and Structural Parameters}
+    \href{https://arxiv.org/abs/1608.00060}{Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, James Robins - Double Debiased Machine Learning for Treatment and Structural Parameters}
     \bibitem{ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
     \href{https://arxiv.org/abs/2012.15678}{Masaaki Imaizumi, Taisuke Otsu - ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
     \bibitem{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}

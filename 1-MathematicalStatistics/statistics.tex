@@ -57,6 +57,7 @@
     \item この枠組み（相関分析など）に沿って，30sからは自然な形で多変量に拡張された．Fisher自身も多くの貢献をしたが，Hotelling, Wilks, Wishartらの仕事が基礎になっている．
     \item 多変量推測統計のAndersonによる標準的教科書"An Introduction to Multivariate Statistical Analysis"は1958年に刊行された．この頃には多変量正規分布と線型モデルに基づく推測理論の基礎は確立していた．
     \item 1970s以降の計算機時代では，今日ではほとんどのデータは多変量データであり，取り立てて多変量分析と言わなくても，新たな統計手法は押し並べて多変量データを扱う手法となっている．
+    今日の統計パッケージの中にある探索的データ解析や射影追跡などは，正規分布を前提としない，非線形的手法である．
 \end{enumerate}
 \cite{フロンティア１}の序文．
 
@@ -93,12 +94,13 @@ title=]
 
 \begin{quotation}
     確率変数列$X_1,\cdots,X_n$の実現値と見做し得るデータに対する統計解析を多変量解析と呼ぶならば，確率過程の実現値と見做し得るデータに対する統計解析を時系列解析という．
+    そこで，
 \end{quotation}
 
 \section{歴史}
 
 \begin{enumerate}
-    \item 1940sよりWienerやKolmogorovにより弱定常過程のスペクトル解析と予測の理論が確立される．特に連続時間の確率過程の理論が精緻に発展した．
+    \item 1940sよりWienerやKolmogorovにより弱定常過程のスペクトル解析と予測の理論が確立される．特に連続時間の確率過程の理論の精緻な発展の原動力となった．
     \item 1976年刊行のGeorge BoxとJenkinsによるTime Series Analysis, Forecasting and Control"が，自己回帰移動平均(ARMA)モデルと呼ばれる線型モデルの構築と予測のための標準的な手続きが確立した．これ以降はARMAモデルの限界を乗り越えることを念頭に，非線形モデルなどさまざまな手法が提案されることになる．
 \end{enumerate}
 
