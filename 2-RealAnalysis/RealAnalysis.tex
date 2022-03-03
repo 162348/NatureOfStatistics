@@ -3,7 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \renewcommand{\B}{\mathcal{B}}
 \begin{document}
@@ -806,12 +807,12 @@ title=]
     確率の概念が自然に定義できるのがDynkin族で，ここからの生成が焦点となる．
 \end{tcolorbox}
 
-\begin{definition}[Dynkin family]
-    集合族$\D\subset P(X)$がDynkin族であるとは，次の３条件を満たすことをいう．
+\begin{definition}[Dynkin family / $\lambda$-system]
+    集合族$\D\subset P(X)$が\textbf{Dynkin族}または\textbf{$\lambda$-系}であるとは，次の３条件を満たすことをいう．
     \begin{enumerate}
         \item $X\in\D$．
         \item $\forall_{A,B\in\D}\;A\subset B\Rightarrow B\setminus A\in\D$．
-        \item $\forall_{(A_i)_{i\in\N}:\N\to\D}\;[\forall_{i\ne j\in\N}\;A_i\cap A_j=\emptyset]\Rightarrow \sum_{i\in\N}A_i\in\D$．
+        \item $\forall_{(A_i)_{i\in\N}:\N\to\D}\;[\forall_{i\ne j\in\N}\;A_i\cap A_j=\emptyset]\Rightarrow \sum_{i\in\N}A_i\in\D$．この条件は，(2)の下で$\D\supset\{A_n\}\nearrow A\Rightarrow A\in\D$と同値．
     \end{enumerate}
 \end{definition}
 
@@ -828,12 +829,18 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{definition}
-    集合族$\A$が有限共通部分について閉じているとき，これを\textbf{乗法族}という．
+\subsection{乗法族}
+
+\begin{definition}[multiplicative class / $\pi$-system]
+    集合族$\A$が$X\in\A$かつ有限共通部分について閉じているとき，これを\textbf{乗法族}または\textbf{$\pi$-系}という．
 \end{definition}
 
 \begin{theorem}
     $\A$を乗法族とする．$\D(\A)=\sigma(\A)$である．
+\end{theorem}
+
+\begin{theorem}[一意延長定理]
+    $\P$を$\pi$-系とする．このとき，$\sigma(\P)$上の２つの確率測度$\mu_1,\mu_2$が$\P$上で一致するならば，$\sigma(\P)$上でも一致する．
 \end{theorem}
 
 \section{可測関数}
