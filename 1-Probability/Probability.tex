@@ -112,6 +112,14 @@ title=測度論的確率論という枠組み]
     確率変数の族$(X_t)_{t\in T}$を，特に$T$が全順序集合のとき，\textbf{確率過程}と言う．
 \end{definition}
 
+\begin{lemma}
+    関数の族$\{X_n\}\subset\Map(\Om,\R)$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $(X_n)$は確率過程である．
+        \item $X:\N\times\Om\to\R$は$\B(\N)\times\F/\B(\R)$-可測である．
+    \end{enumerate}
+\end{lemma}
+
 \subsection{$\sigma$-加法性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1685,6 +1693,21 @@ title=確率変数が独立のとき，作用素に種々の関手性が生じ�
     独立な確率変数のさまざまな性質は，対応する直交関数の性質と完全に類似しているものとみなされるようになった\cite{Kolmogorov}．
 \end{tcolorbox}
 
+\subsection{確率変数の独立性}
+
+\begin{definition}
+    $S_k$値確率変数列$(X_k)_{k\in[n]}$が独立とは，
+    \[\forall_{A_1\in\cS_1,\cdots,A_n\in\cS_n}\;P[X_k\in A_k,k\in[n]]=\prod^n_{k=1}P[X_k\in A_k]\]
+\end{definition}
+
+\begin{lemma}[well-definedness]\label{lemma-independentness-variable-and-algebra}
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $(X_n)$は独立．
+        \item $(\sigma(X_n))$は独立．
+    \end{enumerate}
+\end{lemma}
+
 \subsection{独立な確率変数に対する関手性}
 
 \begin{proposition}[実空間の議論への持ち上げ]\label{prop-積関数の期待値}
@@ -1909,7 +1932,7 @@ title=]
     すると，$\{X(\omega)\le a\}=X^{-1}((-\infty,a])$などと表せる．
 \end{notation}
 
-\section{部分$\sigma$-加法族に関する条件付き期待値}
+\section{条件付き期待値}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
@@ -2006,7 +2029,7 @@ title=]
     \begin{enumerate}
         \item 線形性：$\forall_{a,b\in\R}\;E[aX+bY|\cG]=aE[X|\cG]+bE[Y|\cG]\;\as$．\footnote{除外集合$N_{a,b}$は任意の$a,b\in\R$について一様に取ることは一般には出来ない．}
         \item 正：$X\ge0\as\Rightarrow E[X|\cG]\ge0\as$．特に，$X\le Y\as\Rightarrow E[X|\cG]\le E[Y|\cG]\as$．
-        \item $X\in\Meas_\cG(\Om,\R)$，$Y,XY\in\L^1(\Om,\F)$のとき，$E[XY|\cG]=XE[Y|\cG]\as$．特に，$E[X|\cG]=X\as$．
+        \item $X\in\Meas_\cG(\Om,\R)$，$XY\in\L^1(\Om,\F)$のとき，$E[XY|\cG]=XE[Y|\cG]\as$．特に，$E[X|\cG]=X\as$．
         \item $\H\subset\cG$を部分$\sigma$-代数とする．$E[E[X|\cG]|\H]=E[X|\H]\as$．特に，$E[E[X|\cG]]=E[X]$．
         \item $\sigma(X)$と$\cG$とが独立ならば，$E[X|\cG]=E[X]\as$．したがって，$f:\R\to\R$をBorel可測関数とすると，$f(X)\in\L^1(\Om,\F)\Rightarrow E[f(X)|\cG]=E[f(X)]\as$．
     \end{enumerate}
@@ -2181,7 +2204,7 @@ title=]
 
 \section{確率不等式}
 
-\begin{theorem}[Kolmogorov]
+\begin{theorem}[Kolmogorov]\label{thm-Kolmogorov-inequality}
     実確率変数列$\{X_n\}\subset\L^2(\Om,\F,P)$は独立で，$E[X_n]=0,\Var[X_n]<\infty$を満たすとする．このとき，
     \[\forall_{a>0}\quad P\paren{\max_{1\le k\le n}\Abs{\sum^k_{i=1}X_i}\ge a}\le\frac{1}{a^2}\sum^n_{i=1}\Var[X_i]\]
     が成り立つ．
@@ -2621,15 +2644,76 @@ title=]
     \[\int e^{nf(x)}\mu_n(dx)\approx\exp\paren{n\sup_{x\in X}\abs{f(x)-I(x)}}\quad(n\to\infty)\]
 \end{lemma}
 
-\chapter{確率過程}
+\chapter{マルチンゲール}
+
+\begin{quotation}
+    確率変数の族を確率過程という．個々の確率変数の値域となる位相空間を状態空間という．
+    確率変数族には独立性の概念が拡張できたが，これは応用上自然ではない．
+    遥かに緩いクラスとして，マルチンゲールを定義する．
+    1930年代に，独立確率変数の和の理論を整備する過程で豊かに育ったKolmogorovのアイデアを一般化して，Levyがマルチンゲールの概念を発明し，Doobが理論を立てた．
+
+    連続確率過程のマルチンゲールは，離散化したあとに適当な連続極限を取ることで，離散の場合の議論に帰着させることが出来る．
+
+    解析学に可測関数，連続関数，解析関数というようなクラスがあるように，確率論にもマルチンゲール，加法過程，Markov過程，定常過程などのクラスがある．
+    解析学に指数関数，Bessel関数などの特殊関数があるように，確率論にもWeiner過程，Poisson過程というような特殊過程がある．
+    ただし，分類の指導方針が全く違う．確率論の指導原理は独立性であってきた．
+\end{quotation}
 
 \section{関数空間CとD}
+
+\subsection{ポーランド空間}
+
+\begin{lemma}
+    ポーランド空間（完備可分距離空間）の可算積はポーランド空間である．
+\end{lemma}
+
+\begin{theorem}
+    $S$上のポーランド位相$\tau$とHausdorff位相$\tau_1$を考える．$\tau_1\subset\tau$ならば，これらが定めるBorel $\sigma$-代数は一致する：$\B_\tau(S)=\B_{\tau_1}(S)$．
+\end{theorem}
+
+\subsection{Kolmogorov $\sigma$-代数}
+
+\begin{definition}
+    集合$T$上の関数の空間$\F\subset\Map(T,\R)$における$\sigma$-代数を考える．
+    任意の$t\in T$に対して，射影$\ev_t:\F\to\R$が可測となるような$\F$上の$\sigma$加法族$\B$の中で最小のものを$\B_K(\F)$で表し，$\F$上の\textbf{Kolmogorov $\sigma$-加法族}という．
+\end{definition}
+
+\begin{lemma}
+    $\B_K(\F)=\bigvee_{t\in T}\pi^{-1}_t(\B^1)$である．すなわち，Kolmogorov $\sigma$-代数は，$\{\pi^{-1}_t(\B^1)\}_{t\in T}$が束$P(\F)$の中でなす下限となる．
+\end{lemma}
+
+\subsection{$D$空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    関数解析では考察の対称となったことはないようであるが，確率論では$C$と同様に重要である．
+\end{tcolorbox}
+
+\begin{notation}
+    $I\subset\R$を開区間とする．
+\end{notation}
+
+\begin{definition}
+    $f:I\to\R$が\textbf{第1種不連続}または\textbf{cadlag}または右連続であるとは，$I$上の各点で，右連続かつ有限な左極限が存在することを言う．
+    これらの全体を$D(I)$で表す．
+\end{definition}
 
 \section{確率過程に関する一般事項}
 
 \section{情報と情報増大系}
 
-\begin{definition}[adapted]
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    情報は$\sigma$-部分代数で，データは確率変数で表すとしたら，２つの構造が何らかの意味で整合して居る必要がある．これを適合的という．
+\end{tcolorbox}
+
+\subsection{適合的な情報系}
+
+\begin{definition}[filtration / reference family]
+    $\F$の部分$\sigma$-加法族の広義単調増大列$(\F_n)$を，\textbf{フィルトレーション}または\textbf{（増加）情報系}という：$0\le s\le t\Rightarrow \F_s\subset\F_t$．
+\end{definition}
+
+\begin{definition}[adapted, predictable]
     $F=(F_t)_{t\in T}$を情報系，$X=(X_t)_{t\in T}$を確率過程とする．
     \begin{enumerate}
         \item $\forall_{t\in T}\;X_t$が$\F_t$-可測のとき，$X$は$F$に\textbf{適合}するという．
@@ -2637,26 +2721,373 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\begin{example}[canonical filtration]
+    確率過程$(X_n)$に対して，$\F_n:=\sigma[X_1,\cdots,X_n]$で定まる列$(\F_n)$は適合的な情報系である．
+    これを\textbf{自然な増加情報系}という．
+\end{example}
+
+\subsection{情報系の連続性}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 情報系$(\F_t)$が\textbf{右連続}であるとは，$\F_{t+}:=\bigcap_{\ep>0}\F_{t+\ep}$としたとき，$\forall_{t\ge0}\;\F_t=\F_{t+}$が成り立つことをいう．
+        \item 確率過程$(X_t)$が\textbf{右連続}であるとは，任意の$t\in T$に対して$X_t\in D(\Om)$がcadlagであることをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    確率過程$(X_n)$に対して，$\F_t:=\cap_{\ep>0}\sigma[X_s\mid s\le t+\ep]$と定めると，右連続で適合的な$\sigma$-部分代数となる．
+\end{example}
+
 \section{停止時}
-
-\section{離散時変数のマルチンゲール}
-
-\begin{theorem}[Doob–Meyer decomposition theorem]
-    任意の$(\F_n)$-劣マルチンゲール$(X_n)$は，$\F$-マルチンゲールな$M=(M_n)$と可予測な増大列$A=(A_n)$で$A_0=0,A_n\in L^1(\F_{n-1})\;(n=1,2,\cdots)$とに一意的に分解される：$X_n=M_n+A_n$．
-\end{theorem}
-
-\chapter{Markov過程}
-
-\section{Markov連鎖}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    互いに独立な試行の列（確率変数の列）の一般化を考える．
+    確率過程$(X_n)$を調べる時，時刻$\N$をランダムに抽出して調べたいことがある．
+    ランダムな時刻のうち，特に振る舞いが良いクラスを用意する．
 \end{tcolorbox}
 
-\chapter{Martingale}
+\subsection{定義と例}
 
-\section{Introduction}
+\begin{definition}[Markov time / stopping time]\mbox{}
+    \begin{description}
+        \item[離散]$\o{\N}:=\N\cup\{\infty\}$-値確率変数$\tau:(\Om,\F)\to(\o{\N},\B(\o{\N}))$\footnote{$\B(\o{\N})=P(\o{\N})$に注意}が$(\F_n)$-\textbf{Markov時刻}または\textbf{停止時刻}であるとは，
+        \[\forall_{n\in\N}\quad\{\tau\le n\}:=\Brace{\om\in\Om\mid\tau(\om)\le n}\in\F_n\]
+        を満たすことをいう．
+        \item[連続] $\tau:\Om\to[0,\infty]$が$(\F_t)$-Markov時刻であるとは，$\forall_{t\ge0}\;\{\tau\le t\}:=\Brace{\om\in\Om\mid\tau(\om)\le t}\in\F_t$が成り立つことを言う．
+    \end{description}
+\end{definition}
+\begin{remarks}
+    ランダムな時刻$\tau:\Om\to\o{\N}$が，時刻$n$の前であるかあとであるかという事実だけは，$\F_n$によって判断出来るとき，これを停止時刻というのである．
+\end{remarks}
+
+\begin{lemma}[離散の場合の特徴付け]
+    $\tau:\Om\to\o{\N}$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\tau$はMarkov時刻である．
+        \item $\forall_{n\in\N}\;\{\tau=n\}\in\F_n$である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    $\tau:\Om\to[0,\infty]$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $\tau$はMarkov時刻である．
+        \item $\forall_{t\ge0}\;\Brace{\tau<t}\in\F_t$．
+        \item $\forall_{t\ge0}\;\Brace{\tau>t}\in\F_t$．
+        \item $\forall_{t\ge0}\;\Brace{\tau\ge t}\in\F_t$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}[離散の例]\mbox{}
+    \begin{enumerate}
+        \item 定値関数はMarkov時刻である．
+        \item \textbf{到達時刻}(first hitting time)とは，$(\F_n)$-適合確率過程$(X_n)$対して，任意の事象$A\in\B(\R)$に対し，
+        \[\tau_A(\om):=\min\Brace{n\in\o{\N}\mid X_n(\om)\in A}\]
+        で定まる時刻である．
+        $\{\tau_A\le n\}=\bigcup_{i\in[n]}\Brace{X_i\in A}$より，Markov時刻である．
+        \item ある一定額$\al$以上を賭けたら即座に賭けを中止すると決めているとき，この時刻はMarkov時刻である．
+        \item \textbf{最終脱出時刻}(last exit time)とは，$(\F_n)$-適合確率過程$(X_n)$対して，任意の事象$A\in\B(\R)$に対し，
+        \[\sigma_A(\om):=\max\Brace{n\in\o{\N}\mid X_n(\om)\in A}+1\]
+        とすると，これは確率変数ではあるが，Markov時刻にはならない．「これが最後か？」を判定するには，さらに先の情報が必要だからである．
+    \end{enumerate}
+\end{example}
+
+\begin{example}
+    $(X_t)$の集合$A\subset\R^d$への到達時刻は
+    \[\tau_A(\om):=\inf\Brace{t>0\mid X_t(\om)\in A}\]
+    で定める．$A$が開または閉であるとき，$\tau_A$はMarkov時刻になる．
+\end{example}
+
+\subsection{構成}
+
+\begin{theorem}[Markov時刻の構成]
+    $\tau,\sigma$をMarkov時刻とする．このとき，$\tau\lor\sigma,\tau\land\sigma,\tau+\sigma$はいずれもMarkov時刻である．
+\end{theorem}
+
+\subsection{情報量}
+
+\begin{definition}
+    $\tau$を$(\F_n)$-Markov時刻とする．$\tau$が定める$\F$の部分$\sigma$-代数
+    \[\F_\tau:=\Brace{A\in\F\mid\forall_{n\in\N}\;A\cap\Brace{\tau\le n}\in\F_n}\]
+    を\textbf{$\tau$時までの情報量}という．
+\end{definition}
+\begin{remarks}
+    $A\in\F_\tau$であるとは，$\tau$が$n$時以前に起こっているという追加情報もつけた事象$A\cap\Brace{\tau\le n}$は$\F_n$によって判断可能であることをいう．
+    $\tau$が定数$m$のとき，$\F_\tau=\F_m$となる．
+\end{remarks}
+
+\begin{theorem}
+    $\tau,\sigma$をMarkov時刻とする．次が成り立つ．
+    \begin{enumerate}
+        \item $\F_\tau$は$\sigma$-代数である．
+        \item $\tau$は$\F_\tau$-可測である．
+        \item $\tau\le\sigma$ならば$\F_\tau\subset\F_\sigma$．
+    \end{enumerate}
+\end{theorem}
+
+\section{離散時変数のマルチンゲール}
+
+\subsection{定義}
+
+\begin{definition}[martingale, submartingale]
+    確率過程$(X_n)$が\textbf{情報系$(\F_n)$についてマルチンゲール}であるとは，次の３条件が成り立つことをいう：
+    \begin{enumerate}
+        \item $(\F_n)$-適合的である：$\forall_{n\in\N}\;X_n:\F_n$ measurable.
+        \item 可積分列である：$\forall_{n\in\N}\;E[\abs{X_n}]<\infty$．
+        \item martingale性：$\forall_{n\in\N}\;E[X_{n+1}|\F_n]=X_n\;\as$
+    \end{enumerate}
+    (3)の代わりに$\forall_{n\in\N}\;E[X_{n+1}|\F_n]\ge X_n\;\as$が成り立つとき，\textbf{劣マルチンゲール}であるといい，
+    $\forall_{n\in\N}\;E[X_{n+1}|\F_n]\le X_n\;\as$が成り立つとき，\textbf{優マルチンゲール}であるという．
+\end{definition}
+\begin{remarks}
+    (3)は$\forall_{A\in\F_n}\;E[X_{n+1}1_A]=E[X_n1_A]$と同値．
+    これが成り立つならば，繰り返し期待値の法則より，$m>n\ge1\Rightarrow E[X_m|\F_n]=X_n\;\as$であり，特に，$E[X_n]$は$n$に依らず一定である．
+    また，$(X_n)$が劣マルチンゲールであることと，$(-X_n)$が優マルチンゲールであることとは同値．
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $\{Z_n\}\subset\L^1(\Om)$を期待値$0$かつ独立な確率変数列とし，$\F_n$として自然な情報系を取る．和$X_n:=\sum^n_{k=1}Z_k$はマルチンゲールである．
+        $E[X_{n+1}|\F_n]=E[X_n+Z_{n+1}|\F_n]=E[X_n|\F_n]+E[Z_{n+1}|\F_n]$であるが，第1項は$X_n$は$\F_n$可測であるから，$E[X_n|\F_n]=X_n$．また，$\sigma(Z_{n+1})$と$\F_n$は独立だから\ref{lemma-independentness-variable-and-algebra}，$E[Z_{n+1}|\F_n]=E[Z_{n+1}]=0\;\as$．
+        これはKolmogorovの不等式\ref{thm-Kolmogorov-inequality}ですでにあった消息である．
+        \item $(\F_n)$を情報系とし，$X\in\L^1(\Om)$を可積分確率変数とする．$X_n:=E[X|\F_n]$とおけば，$(X_n)$はマルチンゲールである．
+        実際，$E[X_{n+1}|\F_n]=E[E[X|\F_{n+1}]|\F_n]\overset{\as}{=}E[X|\F_n]=X_n$．
+    \end{enumerate}
+    (1)の状況は公平な賭けなどの意味論を持つ．コイントスをして，表なら$+x$円，裏なら$-x$円の賭けで，所持金を$X_n$とすると，これはマルチンゲールである．
+\end{example}
+
+\begin{lemma}[劣マルチンゲール性の保存]\mbox{}
+    \begin{enumerate}
+        \item $\psi:\R\to\R$は下に凸，$(X_n)$をマルチンゲールとする．このとき，$\forall_{n\in\N}\;E[\abs{\psi(X_n)}]<\infty$ならば，$(\psi(X_n))$は劣マルチンゲールである．
+        特に，ある$p\ge1$に関して$E[\abs{X_n}^p]<\infty$ならば，$(\abs{X_n}^p)$は劣マルチンゲールである．
+        \item 下に凸な関数$\psi:\R\to\R$はさらに広義単調増加であるならば，$(X_n)$が劣マルチンゲールの場合でも，$(\psi(X_n))$は劣マルチンゲールになる．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Doob分解}
+
+\begin{theorem}[Doob-Meyer decomposition theorem]
+    任意の$(\F_n)$-劣マルチンゲール$(X_n)$は，$\F$-マルチンゲールな$M=(M_n)$と可予測な広義増加過程$A=(A_n)$，すなわち，$0=A_0\le A_1\le\cdots,A_n\in L^1(\F_{n-1})\;(n=1,2,\cdots)$\footnote{マルチンゲールに対して$A_n\in L^1(\F_{n-1})$とは，$\F_{n-1}$-可測の意味しかない．}を満たす列$(A_n)$とに一意的に分解される：$X_n=M_n+A_n\;\as$．
+\end{theorem}
+
+\subsection{Doobの任意抽出定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ２つのランダム関数$X,\tau$の交錯を考える．
+\end{tcolorbox}
+
+\begin{definition}
+    $(\F_n)$-適合な確率過程$(X_n)$と，$\N$-値Markov時刻$\tau$に対して，$X_\tau:\Om\to\R$を$X_\tau(\om):=X_{\tau(\om)}(\om)$で定める．
+\end{definition}
+
+\begin{lemma}
+    $X_\tau:\Om\to\R$は
+    \begin{enumerate}
+        \item $\F$-可測である．
+        \item $\F_\tau$-可測である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $X_\tau$は可測関数の合成$X\circ (\tau,\id):\Om\to\N\times\Om\to\R$であるため．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}[有界停止時刻によるマルチンゲール性の保存]
+    $(X_n)$を劣マルチンゲール，$\tau,\sigma$を$\tau\le\sigma$を満たす有界なMarkov時刻とする．このとき，$X_\tau,X_\sigma$は共に可積分で，$E[X_\sigma|\F_\tau]\ge X_\tau\;\as$．
+    $(X_n)$がマルチンゲールであるとき，等号成立．
+\end{theorem}
+
+\begin{corollary}[optional sampling theorem]
+    $(X_n)$を$(\F_n)$-劣マルチンゲール，$(\tau_k)$を有界な$(\F_n)$-マルコフ時刻の広義単調増加列とする．
+    このとき，$Y_k:=X_{\tau_k}$は$(\F_{\tau_k})$-劣マルチンゲールである．
+\end{corollary}
+
+\subsection{Doobの不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣マルチンゲールに対しては，$\max_{1\le k\le n}X_K$に関する評価を，$X_n$のみを用いて与えられる．
+    一般の確率過程では決して成り立たない．
+    この背後にはKolmogorovの不等式\ref{thm-Kolmogorov-inequality}がある．
+\end{tcolorbox}
+
+\begin{theorem}[Doob inequality]\label{thm-Doob-inequality}
+    $(X_n)$を劣マルチンゲールとする．このとき，$X_n^+:=X\lor0$とすると，任意の$a>0$について，次が成り立つ．
+    \begin{enumerate}
+        \item \[P\paren{\max_{1\le k\le n}X_k\ge a}\le\frac{1}{a}E\Square{X_n1_{\Brace{\max_{1\le k\le n}X_k\ge a}}}\le\frac{1}{a}E[X_n^+]\]
+        \item \[P\paren{\min_{1\le k\le n}X_k\le -a}\le\frac{1}{a}E[X_n-X_1]-\frac{1}{a}E\Square{X_n1_{\Brace{\min_{1\le k\le n}X_k\le -a}}}\le\frac{1}{a}E[X_n^+]-\frac{1}{a}E[X_1].\]
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $\{M_n\}\subset\L^p(\Om)$を$p\ge1$乗可積分なマルチンゲールとする．
+    このとき，任意の$a>0$に対して，
+    \[P\paren{\max_{1\le k\le n}\abs{M_k}\ge a}\le\frac{1}{a^p}E[\abs{M_n}^p].\]
+\end{corollary}
+
+\subsection{劣マルチンゲールの収束定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣マルチンゲールの正部分の期待値が「有界」ならば，$X_n$は概収束極限を持つ．
+    その証明では，劣マルチンゲールの上向き横断回数の評価が肝要になる．
+\end{tcolorbox}
+
+\subsubsection{martingale変換}
+
+\begin{definition}[martingale transformation]
+    可予測な過程$(H_n)$と$(\F_n)$-適合的な過程$(X_n)$に対して，新たな確率過程$(X'_n):=((H\cdot X)_n)$を次のように定める
+    \[X'_n=(H\cdot X)_n:=\begin{cases}
+        \sum^n_{k=2}H_k(X_k-X_{k-1}),&n\ge 2,\\
+        0,&n=1.
+    \end{cases}\]
+    $(H\cdot X)_n$を$X_n$の\textbf{マルチンゲール変換}という．
+    連続時間の場合は，確率積分$\int^t_0HdX$となる．
+\end{definition}
+\begin{remarks}
+    $(H_n)$は戦略を表し，$(X_n)$は$\Z$上のランダムウォークとすれば，これによる変換$(H\cdot X)_n$は$n$時に所持している利益分の金額となる．
+\end{remarks}
+
+\begin{example}
+    倍賭けの戦略は，次のように表せる．
+    \[H_n:=\begin{cases}
+        2H_{n-1},&Z_{n-1}=-1,\\
+        1,&Z_{n-1}=1.
+    \end{cases}\]
+\end{example}
+
+\begin{theorem}
+    可予測な確率過程$(H_n)$は有界な列とする：$\forall_{n\in\N}\;\sup_{\om\in\Om}\abs{H_n(\om)}<\infty$．
+    このとき，次が成り立つ．
+    \begin{enumerate}
+        \item $(X_n)$がマルチンゲールならば，$(X'_n)=((H\cdot X)_n)$もマルチンゲールである．
+        \item $(X_n)$が劣マルチンゲールで，$(H_n)$が非負ならば，$(X'_n)=((H\cdot X)_n)$も劣マルチンゲールである．
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{上渡回数定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    マルチンゲールは，（少なくとも期待値については）単調に増加する傾向があり，いつまでも区間$[a,b]$付近にとどまってはいないか，概収束をする．
+\end{tcolorbox}
+
+\begin{definition}[upcrossing number]\mbox{}
+    \begin{enumerate}
+        \item 実数$a<b$について，列$(\sigma_j)$を次のように定めると，Markov時刻の狭義単調増加列となる：
+        \begin{align*}
+            \sigma_1&:=\min\Brace{n\ge 1\mid X_n\le a},&\sigma_2&:=\min\Brace{n>\sigma_1\mid X_n\ge b},\\
+            \sigma_{2k+1}&:=\min\Brace{n>\sigma_{2k}\mid X_n\le a},&\signa_{2k+2}&:=\min\Brace{n>\sigma_{2k+1}\mid X_n\ge b}.
+        \end{align*}
+        \item Markov時刻の狭義単調増加列に対して，$U_n:=\max_{k\in\N\mid\sigma_{2k}\le n}$と定めると，$\N$-値確率変数の列となる．
+        成分$U_n$を，\textbf{時刻$n$までの$a\nearrow b$間の上向き横断回数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $(X_n)$が劣マルチンゲールならば，
+    \[E[U_n]\le\frac{1}{b-a}E[(X_n-a)^+].\]
+\end{theorem}
+
+\subsubsection{劣マルチンゲールの収束定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣マルチンゲールに対しても，有界列は収束することに対応する結果が成り立つ．
+\end{tcolorbox}
+
+\begin{theorem}
+    劣マルチンゲール$(X_n)$は$\sup_{n\in\N}E[X_n^+]<\infty$を満たすとする．このとき，ある確率変数$X$が存在して$X=\lim_{n\to\infty}X_n\;\as$かつ可積分$X\in\L^1(\Om)$である．
+\end{theorem}
+\begin{remarks}
+    劣マルチンゲールに対して，有界性条件$\sup_{n\in\N}E[X_n^+]<\infty$は，平均の一様有界性$\sup_{n\in\N}E[\abs{X_n}]<\infty$に同値．
+\end{remarks}
+
+\subsection{積率不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Doobの不等式\ref{thm-Doob-inequality}を，マルチンゲールの$p$次のモーメントに関する評価式に書き直せる．
+\end{tcolorbox}
+
+\subsubsection{Doobの不等式の一般化}
+
+\begin{theorem}
+    $p>1$について，$\{M_n\}\susbet\L^p(\Om)$を$p$乗可積分なマルチンゲールとする．このとき，
+    \[E\Square{\max_{1\le k\le n}\abs{M_k}^p}\le\paren{\frac{p}{p-1}}^pE[\abs{M_n}^p].\]
+\end{theorem}
+
+\subsubsection{Burkholderの不等式}
+
+\begin{notation}
+    $\{M_n\}\subset\L^2(\Om)$を，$M_0=0$を初項とする2乗可積分なマルチンゲールとする．
+    このとき，$\forall_{n\in\N}\;E[M_n]=0$である．
+\end{notation}
+
+\begin{definition}
+    $p\ge 1$について，
+    マルチンゲール$(M_n)$の\textbf{$p$次変分}または\textbf{$p$次変動}とは，次で定まる実数列$([M]_n)$をいう：
+    \[[M]_n:=\sum^n_{k=1}\abs{M_k-M_{k-1}}^p.\]
+    特に$p=1$のとき，\textbf{変分}あるいは\textbf{全変動}という．
+\end{definition}
+
+\begin{proposition}
+    2次変分$[M]_n$は，次の２条件をみたす：
+    \begin{enumerate}
+        \item $(M_n^2-[M]_n)$はマルチンゲールである．
+        \item $([M]_n)$は増加過程である：$0=[M]_0\le[M]_1\le\cdots$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+    $(M^2_n)$は劣マルチンゲールだから，Doob分解$M_n^2=N_n+A_n$を持つ．このとき，$(M_n^2-A_n)$はマルチンゲールであるが，$(A_n)$も命題の2条件を満たす．
+    $(A_n)$も$(M_n)$の2次変分と呼び，$(\brac{M}_n)$で表す．
+    $(\brac{M}_n)$は可予測でもあるが，一般に$([M]_n)$はそうではない．明確な区別が必要である．
+    一方で，連続マルチンゲールにおいては，２つの概念は１つに退化する．
+\end{remark}
+
+\begin{theorem}[Burkholder-Davis-Gundy]
+    $(M_n)$を$M_0=0$を満たす$p$乗可積分なマルチンゲールとする．
+    このとき，次が成り立つ：
+    \[\forall_{p\ge 1}\;\exists_{c_p,C_p>0}\quad c_pE\Square{[M]^{p/2}_n}\le E\Square{\max_{1\le k\le n}\abs{M_k}^p}\le C_pE\Square{[M]^{p/2}_n}.\]
+\end{theorem}
+\begin{remarks}
+    右辺は，Doobの不等式の$E[\abs{M_n}^p]$を$E[[M]_n^{p/2}]$で置き換えたものになっている．$p=2$のとき両者は一致するが，応用上は2次変分の方が計算しやすいことが多い．
+\end{remarks}
+
+\section{連続時変数のマルチンゲール}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    離散の場合のマルチンゲールは可積分性を仮定していたが，その全貌は右連続性である．
+\end{tcolorbox}
+
+\begin{definition}
+    右連続な確率過程$(X_t)$が$(\F_t)$-マルチンゲールであるとは，次の３条件を満たすことをいう．
+    \begin{enumerate}
+        \item $(\F_t)$-適合である：$\forall_{t\ge0}\;X_t$は$\F_t$-可測．
+        \item 可積分である：$\forall_{t\ge0}\;X_t\in\L^1(\Om,\F)$．
+        \item $\forall_{0\le s\le t}\;E[X_t|\F_s]=X_s\;\as$
+    \end{enumerate}
+    条件(3)の代わりに$\forall_{0\le s\le t}\;E[X_t|\F_s]\ge X_s\;\as$をみたすとき，$(\F_t)$-劣マルチンゲールという．
+\end{definition}
+
+\subsection{Doobの不等式}
+
+\subsection{Doobの任意抽出定理}
+
+\subsection{劣マルチンゲールの収束定理}
+
+\subsection{Doob-Meyer分解}
+
+\subsection{Burkholderの不等式}
+
+\section{統計推測への応用}
 
 回帰モデル$X_i=f(X_{i-1},\cdots,X_{i-p})+\ep_i$において，
 サンプリングが均等でないときなど，$\ep_i$は何か連続的な確率過程を積分して定まる，と考えると
@@ -2682,10 +3113,106 @@ title=]
 \[\int^t_0\frac{1}{Y_s}(dM_s-\al(s)Y_sds)\]
 もマルチンゲールとなることがわかる．
 
-\section{semimartingale}
 
 
 
+\chapter{Markov過程}
+
+\begin{quote}
+    互いに独立な試行の列（確率変数の列）の，マルチンゲールとは別の方向への一般化を考える．
+    独立性は一切の過去の履歴に依らないが，Markov性は，現在の状態のみに依存する性質を指す．
+
+    Brown運動は状態空間，時間パラメータのいずれも連続な場合であり，Poisson過程は状態空間は離散的である例である．
+    状態空間が離散的な場合，Markov連鎖ともいう．
+
+    $x_{n+1}$の$x_n$への依存の仕方は経時変化しないという，時間的一様性の仮定をおいて議論する．
+\end{quote}
+
+\section{Kolmogorovの拡張定理}
+
+\section{離散時間のMarkov連鎖}
+
+\begin{notation}
+    $I$を可算集合とし，これを状態空間とする．
+    見本過程は列$\N\to I$となり，経時的に$I$上を動き回りことになる．
+\end{notation}
+
+\subsection{確率行列}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $\one$はすべての成分が$1$であるような縦ベクトルも表す．
+        \item $\delta_i$で，$i$成分のみが$1$でそれ以外が$0$であるようなベクトルを表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[stochastic matrix]\mbox{}
+    \begin{enumerate}
+        \item $I$上の\textbf{確率ベクトル}$(\nu_i)_{i\in I}$とは，$I$上の確率質量関数$I\to[0,1]$をいう．
+        \item （可算個の成分を持ち得る）行列$\bP=(p_{ij})_{i,j\in I}$が\textbf{確率的}であるとは，各$i$行ベクトル$(p_{ij})_{j\in I}$がそれぞれ$I$上の確率ベクトルを定めることをいう．
+        意味論として，成分$p_{ij}$は，現状態$i$から次の時刻$j$に遷移する確率を定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    行列$\bP$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $\bP$は確率的である．
+        \item $f\ge0\Rightarrow\bP f\ge0$かつ$\bP\one=\one$．
+        \item 横ベクトル$\nu$が確率ベクトルならば，$\nu\bP$も確率ベクトルである．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    確率行列$\bP=(p_{ij}),\bP'=(p'_{ij})$の積は確率行列である．
+\end{lemma}
+
+\subsection{Markov連鎖の定義と構成}
+
+\begin{definition}[transition matrix, Markov chain]
+    $I$-値確率変数列$\{X_n\}\subset\Meas(\Om,I)$が，\textbf{初期分布$\nu$，遷移行列$\bP$を持つ空間$I$上のMarkov連鎖}であるとは，次が成り立つことをいう：
+    \[\forall_{n\in\N}\;\forall_{i_0,\cdots,i_n\in I}\;P(X_0=i_0,\cdots,X_n=i_n)=\nu_{i_0}p_{i_0i_1}\cdots p_{i_{n-1}i_n}.\]
+\end{definition}
+
+\begin{proposition}
+    適当な確率空間の上に，初期分布$\nu$と遷移行列$\bP$をもつMarkov連鎖が存在する．
+\end{proposition}
+
+\begin{example}
+    $\bP=(p_{ij})$の行ベクトルが$i$に依らずすべて同じであるとき，$(X_n)$は独立同試行に従う確率変数列となる．
+\end{example}
+
+\subsection{Markov性}
+
+\subsection{強Markov性}
+
+\section{到達確率と差分方程式}
+
+\section{有限状態空間上のMarkov連鎖}
+
+\subsection{不変分布とエルゴード性}
+
+\subsection{大数の法則}
+
+\section{正方格子上のランダムウォーク}
+
+\subsection{再帰性と非再帰性}
+
+\subsection{単純ランダムウォークの再帰性と非再帰性}
+
+\section{連続時間Markov過程}
+
+\subsection{Chapman-Kolmogorovの不等式}
+
+\subsection{加法過程}
+
+\section{Brown運動}
+
+\subsection{定義}
+
+\subsection{性質}
+
+\section{Poisson過程}
 
 
 
