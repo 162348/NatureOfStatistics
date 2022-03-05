@@ -9,7 +9,7 @@
 \begin{document}
 \tableofcontents
 
-\chapter{枠組み}
+\chapter{因果推論}
 
 \begin{quotation}
     統計的因果推論の研究は次の２つに分類できる．
@@ -45,11 +45,78 @@
     CS的に後者を解決する突破口ももちろんある．
 \end{history}
 
-\section{潜在反応モデル}
+\section{枠組み}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    半事実，潜在反応などの用語が出来た．
+    因果推論の枠組みは，推定したい目的量を，理想化された介入のことばによって定義することを可能にする．
+    （この形式的成果は，きっと因果推論の他にも使えるが，概念上因果と結びつきが深い）．
+    現実には出来ない設定に対して，同一視可能な設定を作り上げる手法を考える，と捉えると，営みは圏論的である．
+    Pearlのgraphical criteriaは極めてpromisedだと思う．
+    潜在反応と構造方程式はその例である．
+\end{tcolorbox}
+
+\begin{notation}[outcomes that would have been observed under some intervention]\mbox{}
+    \begin{enumerate}
+        \item $A$をどのような処置を行ったかを表す独立変数とする．
+        \item $Y^a$によって，$A=a$とした場合の独立変数$Y$の実現値とする．
+        \item $T$-次元の場合，多重指数記法$\o{A}_T:=(A_1,\cdots,A_T)$を採用すると，$Y^{\o{a}_T}$で表す．
+        \item $G:\X\to\A$を確率的な介入(stochastic intervention)とする．これは，共変量$X:\Om\to\X$の値に対して，$A=1$を分配する確率$g(x)$を表す確率密度関数である．$Y^G$で，この処置を行った場合の反応を表す．
+    \end{enumerate}
+\end{notation}
+
+\subsection{汎関数推定}
+
+\begin{notation}
+    真の分布$\bP$に対して，$\bP\in\P$を満たす統計モデル$\P$を立てる．
+    これ自体を推定するのではなく，パラメータなど，汎関数$\psi(\bP)$の推定を考える．
+\end{notation}
+
+\begin{example}
+    汎関数の推定量$\wh{\psi}$を立てるのに，次のような手法が考えられる．
+    \begin{enumerate}
+        \item パラメトリックベイズ，MLE（最尤推定法）
+        \item ノンパラメトリックな最尤推定法，plug-in．
+        \item ノンパラメトリック影響関数に基づいた手法．double machine learningやtargeted leaerningともいう．
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+    統計学的な数理的課題と，因果論的な話題はいつだって区別するべきである．
+    「どうやって」推定するか，と，「何を」推定するべきか．
+    反事実標本上の確率分布を$\bP^*$としたとき，
+    $\psi^*(\bP^*)=\psi(\bP)$と標本分布$\bP$に翻訳するところまでが因果推論における形式論で，
+    その後起こることは純粋な汎関数推定の問題であり，
+    数理的な状況に対処する段階とを峻別するべきである．
+\end{remark}
+
+\begin{example}[因果推論以外の文脈で生じる汎関数推定]\mbox{}
+    \begin{enumerate}
+        \item integrated squared density：$\psi=\int p(x)^2dx$．
+        \item entropy：$\psi=-\int p(x)\log p(x)dx$．
+        \item support size：$\psi=\Sigma_x1_{\Brace{p(x)>0}}$．
+        \item mutual information：$\psi=\int\int p(x,y)\log\frac{p(x,y)}{p(x)p(y)}dxdy$．
+    \end{enumerate}
+\end{example}
+
+\subsection{潜在反応モデル}
+
+\begin{axiom}[ATE]
+    次を仮定する．
+    \begin{enumerate}
+        \item Positivity：$\exists_{\delta>0}\;\bP[\bP[A=a|X]\ge\delta]=1$．
+        \item Consistency：$A=a\Rightarrow Y=Y^a$．
+        \item Ignorability：$A\indep Y^a|X$．
+    \end{enumerate}
+\end{axiom}
+
+このとき，
+\[E[Y|X,A=a]=E[Y^a|X,A=a]=E[Y^a|X]\]
+より，$E[Y^a]$という仮想上の量を，$E[E[Y|X,A=a]]$という求めることが可能な量によって推定出来る．
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    反事実，潜在反応などの用語が出来た．
     $E[y_1]-E[y_0]$をはじめに定義したのはRubin 1974で，
     Rosenbaum \& Rubin 1983は「平均処置効果」と言い直した．
 
@@ -94,6 +161,14 @@ title=]
 \begin{remark}
     これらの峻別，特に中間変数を共変量と誤認することは因果効果を過小評価することに繋がる．
 \end{remark}
+
+\subsection{区間推定の営み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    空想上の量$\psi^*$は点推定可能でないときの方が良い．そのときでも，$\psi^*$のboundsが求まるときは多い．
+    そこで，代わりにboundsを推定することを考えることが出来る．Manskiなど．
+\end{tcolorbox}
 
 \section{研究の種類}
 
@@ -516,6 +591,80 @@ title=]
 \begin{definition}[shared parameter model]
     潜在変数として変量効果$\beta$を仮定し，この下で条件付き独立となる$p(y,m|\xi,\om,\beta)=p(y|\beta,\xi)p(m|\beta,\om)$とき，\textbf{共有パラメータモデル}という．
 \end{definition}
+
+\chapter{汎関数推定}
+
+\begin{quotation}
+    Causal inference is over.
+
+    サンプル数を$n$とすると，$\P$上の汎関数$\psi(P)\in\R$を推定する関数$\wh{\psi}:\X^n\to\R$を作る．
+\end{quotation}
+
+\section{有効理論導入}
+
+\begin{definition}[influence function of estimator]
+    推定量$\wh{\psi}$が影響関数$\phi$を持つとは，$\sqrt{n}$-一致性と漸近正規性(CANと略す)
+    \[\sqrt{n}(\wh{\psi}-\psi)=\sqrt{n}\bP_n\phi +o_P(1)\Rightarrow N(0,\Var[\phi])\]
+    が成り立つことをいう．
+\end{definition}
+\begin{remark}[plug-in method]
+    ノンパラメトリックモデルでは，$\sqrt{n}$-CANは高々1つしか存在しない．
+    そこで，最も自然なアプローチは，分布の第一段階推定$\wh{P}$を用いて，
+    plug-in $\psi(\wh{P})$とすることである．
+    しかしこれは，一般には$\sqrt{n}$-一致性を持たず，また信頼区間を定めない．
+    $\wh{P}$が特定の推定量で，強い正則条件を持つ場合に良い振る舞いをする．
+\end{remark}
+
+\begin{example}[第一段階によるバイアスが残る]
+    plug-inにより汎関数$\psi=\int p(x)^2dx=E[p(X)]$を推定することを考える．
+    推定量を$\wh{p}$として，$\wh{\psi}:=\bP_n[\wh{p}(X)]$とする．
+    次が成り立つ：
+    \[\wh{\psi}-\psi=(\bP_n-P)p+P(\wh{p}-p)+o_P(n^{-1/2}).\]
+    初項は中心極限定理より$O_P(n^{-1/2})$である．
+    第二項はCauchy-Schwartzによると$\abs{P(\wh{p}-p)}\le\norm{\wh{p}-p}$．
+    あるHolder $\beta$に対して，$O_P(n^{-\beta(2\beta+d)})$となる．
+
+    $\wh{p}$が一致性を持つ限り，plug-in推定量も一致性を持つが，$\wh{p}$由来のバイアスが残っており，収束は遅い．
+
+    しかし，$\wh{\psi}$としてkernel estimator
+    \[\wh{p}(t):=\bP_n\paren{\frac{1}{h}K\paren{\frac{X-t}{h}}}\]
+    を選び，$K$はhigher-order kernelで，$h\sim n^{-1/(\beta+d)}$で，かつ$\beta>d$であるならば，
+    第二項は
+    \[P(\wh{p}-p)=(\bP_n-P)p+o_P(n^{-1/2})=O_P(n^{-1/2})\]
+    と評価できる．
+
+    問題は，
+    \begin{enumerate}
+        \item $\beta>d$の範囲で，これが最適であるか？
+        \item $\beta\le d$の場合どうすればよいのか？
+        \item 滑らかさの構造以外に依れないか？
+        \item 別のgeneric nuisance estimatorを使いたい場合は？
+    \end{enumerate}
+    これらの疑問が，nonparametric efficient theoryと影響関数に手招いている．
+    これが準備すれば，kernel estimator with careful tuningを用いなくて済み，よりunderlying structureに無頓着になることが出来，double machine learningなどの柔軟な手法が取れる．
+\end{example}
+
+\section{ノンパラメトリックな有効性の下界}
+
+
+\begin{definition}
+    有限次元の実パラメータで添字付けられない集合$\P\subset P(\R)$を，セミパラメトリックモデルという．
+\end{definition}
+
+\begin{example}[semiparametric model]\mbox{}
+    \begin{enumerate}
+        \item ノンパラメトリックモデル．はじめのセミパラメトリックモデルは，Begun et al. (83)により"parametric-nonparametric models"と呼ばれた．
+        \item GEE(Generalized Method of Moment)，$m$-推定量，制限モーメントモデル．これは部分的に回帰関数を仮定するもので，
+        $Y=\mu(X;\psi)+\ep$とし，$\psi\in\R^d$を興味のある母数，$\ep$は$E[\ep|X]=0$のみを仮定する局外母数とする．すなわち，$E[Y|X]=\mu(X;\psi)$のみが仮定となる．
+        \item Coxモデル：$T$を生存時間，$Z=(X,T)$とし，条件付きhazardの比のみを$\frac{\lambda(t|X=x)}{\lambda(t|X=0)}=\exp(x^\top\psi)$と仮定する．
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+    因果推論問題においては，観察研究とは違って，実験計画（傾向スコアなど）が既知の場合が多い．一方で，反応は全く未知のことが多いので，パラメトリックな仮定をおくことを避けたいのである．
+    一方で，実験もしていない場合は，ノンパラメトリックモデルのみが，合理的なモデルとなる．
+    この場合でも，影響関数・経験過程論・サンプル分割が必要になるが，機械学習を用いた場合でも，$\sqrt{n}$-収束や，有効な信頼区間を得ることが出来る．
+\end{remark}
 
 \chapter{漸近展開}
 
