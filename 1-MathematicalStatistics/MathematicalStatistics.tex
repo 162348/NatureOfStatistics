@@ -796,6 +796,8 @@ title=]
     最尤推定量は一致性を満たすが，この現象はより広いクラスについて成り立つ．
 \end{tcolorbox}
 
+\subsection{MLE}
+
 \begin{problem}
     可測空間$(\X,\A)$上の分布族$(P_\theta)_{\theta\in\Theta}$について，独立な観測値$x_1,\cdots,x_n$から$\theta$を推定する問題を考える．
 \end{problem}
@@ -818,6 +820,8 @@ title=]
     \end{align*}
 \end{remark}
 
+\subsection{一致性}
+
 \begin{remarks}[最尤推定量の一致性]
     大数尤度関数$l_n(\theta):=\log L_n(\theta)=\sum_{j=1}^n\log p(x_j,\theta)$は，独立同分布に従う確率変数の和である．よって，大数の法則により，真値$\theta_0\in\Theta$について，
     \[\forall_{\theta\in\Theta}\quad\frac{1}{n}[l_n(\theta)-l_n(\theta_0)]\to\int\log\paren{\frac{p(x,\theta)}{p(x,\theta_0)}}P_{\theta_0}(dx)\quad P_{\theta_0}\text{-}\as\]
@@ -838,7 +842,7 @@ title=]
     パラメータの推定量$\theta_n:\X^n\to\Theta$について，
     \begin{enumerate}
         \item 任意の$\theta\in\Theta$について，これが真値であったとき，$\wt{\theta_n}\to\theta\as\;(n\to\infty)$が成り立つとき，この推定量は\textbf{強一致性}を持つという．
-        \item 推定量$\wt{\theta_n}$が可測で，任意の$\theta\in\Theta$について，これが真値であったとき，$\wt{\theta_n}\xrightarrow{p}\theta\;(n\to\infty)$が成り立つとき，この推定量は\textbf{弱一致性}を持つという．
+        \item 推定量$\wt{\theta_n}$が可測で，任意の$\theta\in\Theta$について，これが真値であったとき，$\wt{\theta_n}\xrightarrow{p}\theta\;(n\to\infty)$が成り立つとき，すなわち，$\wt{\theta}_n-\theta=o_p(1)$が成り立つとき，この推定量は\textbf{弱一致性}を持つという．
     \end{enumerate}
 \end{definition}
 
@@ -1016,7 +1020,7 @@ title=一致推定量さえ見つかれば，漸近分散は逆Fisher情報行�
     $\theta_0\in\Theta^\circ$，$B\subset\Theta$を$\theta_0$の開近傍とする．
     条件(E1)~(E4)を仮定し，次の条件を仮定する：
     \begin{enumerate}[({E}1)]\setcounter{enumi}{5}
-        \item 初期推定量の列$\wh{\theta}^0_n:\X^n\to\Theta$が$\sqrt{n}$-一致性を持つ：$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$．
+        \item 初期推定量の列$\wh{\theta}^0_n:\X^n\to\Theta$が$\sqrt{n}$-一致性を持つ：$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$．\footnote{条件$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$は，弱一致性$\wh{\theta}^0_n-\theta_0=o_p(1)$を含意することに注意．これに加えて，収束レートが$n^{-1/2}$であることをいう．}
     \end{enumerate}
     このとき，ワンステップ推定量$\wh{\theta}_n$に対して，定理\ref{thm-asymptotic-normality}と同様の結果が成り立つ．
 \end{theorem}

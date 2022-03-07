@@ -598,11 +598,12 @@ title=]
     Causal inference is over.
 
     サンプル数を$n$とすると，$\P$上の汎関数$\psi(P)\in\R$を推定する関数$\wh{\psi}:\X^n\to\R$を作る．
+    一般に巨大なモデル$\P$の推定は難しいが，その上の汎関数ならば，随分と豊かな理論が揃ってきた．
 \end{quotation}
 
 \section{有効理論導入}
 
-\begin{definition}[influence function of estimator]
+\begin{definition}[influence function for estimator]\label{def-IF-for-estimator}
     推定量$\wh{\psi}$が影響関数$\phi$を持つとは，$\sqrt{n}$-一致性と漸近正規性(CANと略す)
     \[\sqrt{n}(\wh{\psi}-\psi)=\sqrt{n}\bP_n\phi +o_P(1)\Rightarrow N(0,\Var[\phi])\]
     が成り立つことをいう．
@@ -644,8 +645,15 @@ title=]
     これが準備すれば，kernel estimator with careful tuningを用いなくて済み，よりunderlying structureに無頓着になることが出来，double machine learningなどの柔軟な手法が取れる．
 \end{example}
 
-\section{ノンパラメトリックな有効性の下界}
+\section{セミパラメトリックモデルの有効性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    理論的に肝要なのは，パラメトリックモデルに対してCramer-Raoの不等式が与えるような下界を，
+    セミパラメトリックモデルに対して拡張することである．
+\end{tcolorbox}
+
+\subsection{セミパラメトリックモデル}
 
 \begin{definition}
     有限次元の実パラメータで添字付けられない集合$\P\subset P(\R)$を，セミパラメトリックモデルという．
@@ -658,6 +666,8 @@ title=]
         $Y=\mu(X;\psi)+\ep$とし，$\psi\in\R^d$を興味のある母数，$\ep$は$E[\ep|X]=0$のみを仮定する局外母数とする．すなわち，$E[Y|X]=\mu(X;\psi)$のみが仮定となる．
         \item Coxモデル：$T$を生存時間，$Z=(X,T)$とし，条件付きhazardの比のみを$\frac{\lambda(t|X=x)}{\lambda(t|X=0)}=\exp(x^\top\psi)$と仮定する．
     \end{enumerate}
+    また，非Euclid空間上の汎関数に関するパラメトリックな仮定をおいた場合も，自然にセミパラメトリックモデルを生じる．
+    $\gamma(v):=E[Y^1-Y^0|V=v]$とし，共変量$V$を高次元あるいは連続な成分を持つとすると，$\gamma(v;\psi)\;(\psi\in\R^q)$として，パラメトリックな部分を抽出することは自然である．
 \end{example}
 
 \begin{remark}
@@ -665,6 +675,193 @@ title=]
     一方で，実験もしていない場合は，ノンパラメトリックモデルのみが，合理的なモデルとなる．
     この場合でも，影響関数・経験過程論・サンプル分割が必要になるが，機械学習を用いた場合でも，$\sqrt{n}$-収束や，有効な信頼区間を得ることが出来る．
 \end{remark}
+
+\subsection{古典的下界の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cramer-Raoの結果は，古典的なパラメトリックモデルに対する下界を与える結果である．
+\end{tcolorbox}
+
+\begin{discussion}
+    $(P_\theta)_{\theta\in\Theta}$が滑らかで，$T$は$\psi(\theta)$の不偏推定量であるとする．
+    このとき，
+    \[\Var[T]\ge\frac{\psi'(\theta)^2}{E[s^2_\theta]}.\]
+    ただし，$s_{\theta^*}:=\pp{}{\theta}\log p_\theta(z)|_{\theta=\theta^*}$はスコアである．
+
+    This is also a lower bound in \textbf{asymptotic minimax sense}:
+    \[\forall_{\wh{\psi}:\X^n\to\R}\quad\inf_{\delta>0}\liminf_{n\to\infty}\sup_{\norm{\theta'-\theta}<\delta}E_{\theta'}\Square{l\paren{\sqrt{n}\paren{\wh{\psi}-\psi(\theta')}}}\ge E\Square{l\paren{N\paren{0,\frac{\psi'(\theta)^2}{E[s^2_\theta]}}}}\]
+\end{discussion}
+
+\begin{definition}[parametric submodel]
+    ノンパラメトリックモデル$\P$の\textbf{パラメトリックな部分モデル}$\P_\ep:=\{P_\ep\}_{\ep\in\R}\subset\P$とは，真値を含む：$P=P_0$ものをいう．
+\end{definition}]
+\begin{example}
+    $E[h]=0,\norm{h}_\infty<M,\ep<1/M$について，真値$p$に対して
+    $p_\ep(z):=p(z)(1+\ep h(z))$とすると，$p_\ep(z)\ge0$．
+\end{example}
+
+\subsection{pathwise differentiablity}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    このpathwise differentiabilityが大事で，これを用いてplug-in推定量のバイアスを修正する．
+\end{tcolorbox}
+
+\begin{problem}
+    部分モデル$\P_\ep$に対する下界$\frac{\psi'(P_\ep)^2}{E[s^2_\ep]}$を考える．ただし，
+    \[\psi'(P_\ep)=\pp{}{\ep}\psi(P_\ep)|_{\ep=0},\quad s_\ep=s_\ep(z)=\pp{}{\ep}\log p_\ep(z)|_{\ep=0}.\]
+\end{problem}
+
+\begin{discussion}
+    仮に，1次のvon Mises-type展開
+    \[\psi(Q)-\psi(P)=\int\phi(Q)d(Q-P)+R_2(Q,P),\qquad P[\phi]=0,P[\phi^2]<\infty\]
+    が可能だとすると，道ごとの微分可能性
+    \[\pp{}{\ep}\psi(P_\ep)|_{\ep=0}=\int\phi(z;P)s_\ep(z)dP(z)\]
+    が従う．この時点で$\P$をなんかの多様体だと思ってるよなあ．
+\end{discussion}
+
+\begin{definition}[influence function, influence curve, gradient (for a functional)]
+    上述のvon Mises展開を許す関数$\psi$を，推定したい汎関数$\psi$に関する\textbf{影響関数}または\textbf{影響曲線}または\textbf{勾配}という．
+\end{definition}
+
+\subsection{有効影響関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\Var[\phi]$は，Cramer-Raoの下界の，ノンパラメトリックな対応物である．このときの$\phi$を，efficient influence functionという．
+    asymptotic minimaxの意味で，$\sqrt{n}(\wh{\psi}-\psi)\Rightarrow N(0,\Var[\phi])$に優る推定量はない．なおこの式は，推定量$\wh{\psi}$の影響関数の定義式\ref{def-IF-for-estimator}と同じ．
+\end{tcolorbox}
+
+\begin{problem}
+    ノンパラメトリックモデル$\P$の下界を，asymptotic minimaxの意味で与えたい．すなわち，すべての部分モデルの下界の中で最大のものを与えたい．
+\end{problem}
+\begin{discussion}
+    $\psi$が道ごとに微分可能ならば，Cauchy-Schwarzの不等式より，
+    \[\sup_{\P_\ep}\frac{\psi'(P_\ep)^2}{E[s^2_\ep]}=\sup_{h}\frac{P[\phi h]^2}{P[h^2]}\le P(\phi^2)=\Var[\phi]\]
+    等号成立は，$\phi$が有効な部分モデルのスコア(valid submodel score)である場合．ただし，$\phi$がvalid scoreであるとは，$\phi$が接空間内にあることをいう．接空間とは，score spaceの閉包をいう．
+\end{discussion}
+
+\begin{definition}[efficient influence function]
+    平均$0$で有限な分散を持つ$\phi:\X^n\to\R$であって，任意の部分モデル$\{P_\ep\}\subset\P$に対して
+    \[\pp{}{\ep}\psi(P_\ep)|_{\ep=0}=\int\phi(z;P)s_{\ep}(z)dP(z)\]
+    を満たすものを，\textbf{有効影響関数}という．
+\end{definition}
+
+\begin{theorem}[uniqueness of EIF]
+    $\cT$を接空間，$\phi$を影響関数，$\Pi$を射影演算子とする．このとき，$\Pi(\phi|\cT)$がただ一つの有効影響関数である．
+\end{theorem}
+
+\subsection{影響関数の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    影響関数$\phi$の形がわかっているとき，弱い仮定を置くことで有効な推定量を構成できる．
+\end{tcolorbox}
+
+\begin{discussion}[影響関数の求め方]\mbox{}
+    \begin{enumerate}
+        \item pathwise derivative $\psi'(P_\ep)$を計算し，$\phi$について解く．
+        \item データは離散だとして，point mass contaminationの方向に対するGateaux微分を計算するほうがしばしば簡単になる（吉田先生の本にあった方法）．
+        \item 単純な影響関数を既知として，連鎖律やLeibniz則によって構成する．
+    \end{enumerate}
+\end{discussion}
+
+\begin{example}[平均]
+    $\psi=E[Z]=\int zdP(z)$の影響関数は，
+    \begin{align*}
+        \psi'(P_\ep)&=\pp{}{\ep}\int zdP_\ep(z)|_{\ep=0}=\int z\pp{}{\ep}dP_\ep(z)|_{\ep=0}\\
+        &=\int z\paren{\pp{}{\ep}\log dP_\ep(z)}dP_\ep(z)|_{\ep=0}\\
+        &=\int(z-\psi)\paren{\pp{}{\ep}\log dP_\ep(z)}|_{\ep=0}dP(z)
+    \end{align*}
+    より，$\psi(z;P)=z-\psi$が有効影響関数で，von Mises展開は$R_2=0$について成り立つ．
+    また，最適な推定量は$\wh{\psi}=\bP_n[Z]$で，
+    \[\Var[\sqrt{n}(\wh{\psi}-\psi)]=\Var[Z]=\Var[\phi].\]
+\end{example}
+
+\section{ノンパラメトリック推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    続いて上界を考えたい．つまり，普通の機械学習によっても$P$が推定できるような推定量の構成法を作りたい．
+\end{tcolorbox}
+
+\begin{notation}
+    $\bP[f]=\bP[f(Z)]=\int f(z)d\bP(z)$とする．
+\end{notation}
+
+\subsection{導入}
+
+\begin{problem}
+    von Mises展開可能な$\psi$
+    \[\psi(\Q)-\psi(\bP)=\int\phi(\Q)d(\Q-\bP)+R_2(\Q,\bP)\]
+    を考える．このとき，plug-in推定量は，$\wh{\bP}[\phi(\bP)]=0$より，
+    \[\psi(\wh{\bP})-\psi(\bP)=-\int\phi(\wh{\bP})d\bP+R_2(\wh{\bP},\bP)\]
+    となり，１次のバイアスを持つ．まずは，これを推定することを考えたい．
+\end{problem}
+\begin{discussion}
+    $\wh{\psi}:=\psi(\wh{\bP})+\bP_n[\phi(\wh{\bP})]$をワンステップ推定量とすると，
+    次のように展開できる．
+    \begin{align*}
+        \wh{\psi}-\psi&:=\Square{\psi(\wh{\bP})+\bP_n[\phi(\wh{\bP})]}-\psi
+        =(\bP_n-\bP)\phi(\wh{\bP})+R_2(\wh{\bP},\bP)\\
+        &=(\bP_n-\bP)(\phi(\wh{\bP})-\phi(\bP))+(\bP_n-\bP)\phi(\bP)+R_2(\wh{\bP},\bP).
+    \end{align*}
+    \begin{enumerate}
+        \item 分散が縮んでいくような項の標本平均．
+        \item 固定された関数に対する標本平均$\bP_n[\phi(\bP)]$に他ならない．これはCLTにより収束する．
+        \item NP条件を与えられたとき，無視できる．
+    \end{enumerate}
+    (1),(3)を処理できれば，最適な推定量が得られる．
+    これらは，古典的にいう推定方程式とワンステップ推定(one-step correction)に対応する．
+\end{discussion}
+
+\subsection{経験過程と標本分割}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標本分割法により，経験過程論の精緻な議論はある意味廃された．
+\end{tcolorbox}
+
+\begin{problem}
+    $\bG_n:=\sqrt{n}(\bP_n-\bP)$としたとき，
+    \begin{enumerate}
+        \item $R_1:=\bG_n(\phi(\wh{\bP})-\phi(\bP))$．
+        \item $R_2:=\sqrt{n}R_2(\wh{\bP},\bP)$．
+    \end{enumerate}
+    が$0$に$\bP$-確率収束することを示したい．
+    これが示せれば，$\sqrt{n}(\wh{\psi}-\psi)\Rightarrow N(0,\Var[\phi])$を得る．これは最適性を意味する．
+\end{problem}
+\begin{discussion}
+    結論から言うと，$R_1$については，次のいずれかが成り立つ時，解決できる．
+    \begin{enumerate}
+        \item $\phi(\bP)$が複雑すぎない時（経験過程論による）
+        \item $\wh{\bP},\bP_n$を分割してoverfittinを防ぐ（標本分割法による）
+    \end{enumerate}
+    $R_2$については，基本的にはあまり一般的な結論は引き出せず，ケースバイケースで対処する必要がある．
+    しかし，今までのbias-corrected estimatorでない方法とは違って，複雑なノンパラメトリックモデルにおいても，$R_2$は結局無視できるほどに収束が早い．
+    一般のplug-inなどでは，この項は収束するのが非常に遅い．
+\end{discussion}
+
+\begin{lemma}[19.24 van der Vaart (2000)]
+    次を仮定する．
+    \begin{enumerate}[({A}1)]
+        \item $\wh{f},f\in\F$をDonkserクラス$\F$の元とする．
+        \item $\norm{\wh{f}-f}^2=o_\bP(1)$．
+    \end{enumerate}
+    このとき，
+    \[\bG_n\wh{f}=\bG_nf+o_\bP(1)\]
+\end{lemma}
+
+\subsection{第二の剰余項}
+
+\section{open problems}
+
+\begin{enumerate}
+    \item 新たな汎関数についてはどうする？
+    \item $\sqrt{n}$-収束が達成不可能な場合はどうする？
+    \item $\psi$が道ごとに微分可能でない場合はどうする？
+\end{enumerate}
 
 \chapter{漸近展開}
 

@@ -2980,7 +2980,7 @@ title=]
         \item 実数$a<b$について，列$(\sigma_j)$を次のように定めると，Markov時刻の狭義単調増加列となる：
         \begin{align*}
             \sigma_1&:=\min\Brace{n\ge 1\mid X_n\le a},&\sigma_2&:=\min\Brace{n>\sigma_1\mid X_n\ge b},\\
-            \sigma_{2k+1}&:=\min\Brace{n>\sigma_{2k}\mid X_n\le a},&\signa_{2k+2}&:=\min\Brace{n>\sigma_{2k+1}\mid X_n\ge b}.
+            \sigma_{2k+1}&:=\min\Brace{n>\sigma_{2k}\mid X_n\le a},&\sigma_{2k+2}&:=\min\Brace{n>\sigma_{2k+1}\mid X_n\ge b}.
         \end{align*}
         \item Markov時刻の狭義単調増加列に対して，$U_n:=\max_{k\in\N\mid\sigma_{2k}\le n}$と定めると，$\N$-値確率変数の列となる．
         成分$U_n$を，\textbf{時刻$n$までの$a\nearrow b$間の上向き横断回数}という．
@@ -3016,7 +3016,7 @@ title=]
 \subsubsection{Doobの不等式の一般化}
 
 \begin{theorem}
-    $p>1$について，$\{M_n\}\susbet\L^p(\Om)$を$p$乗可積分なマルチンゲールとする．このとき，
+    $p>1$について，$\{M_n\}\subset\L^p(\Om)$を$p$乗可積分なマルチンゲールとする．このとき，
     \[E\Square{\max_{1\le k\le n}\abs{M_k}^p}\le\paren{\frac{p}{p-1}}^pE[\abs{M_n}^p].\]
 \end{theorem}
 

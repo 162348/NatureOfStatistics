@@ -1126,7 +1126,7 @@ title=]
     結局，有界線型作用素列が一様有界であることを示すには，任意の$x\in X$について$\ev_x$の像が収束列を定めることを示せば良い．
 \end{tcolorbox}
 
-\begin{theorem}[作用素族は各点有界ならば一様有界]
+\begin{theorem}[作用素族は各点有界ならば一様有界 (Banach-Steinhaus)]
     $B(X,Y)$の族$(T_\lambda)$について，
     各点有界（全ての$x\in X$について列$(T_\lambda x)$が$Y$で有界）ならば，
     作用素ノルム$\{\norm{T_\lambda}\in\R\mid\lambda\in\Lambda\}$も有界である．
@@ -1139,9 +1139,17 @@ title=]
     $(x,y)\in X\times Y_\Lambda$に収束する列$(x_n,Tx_n)$を任意にとり，$Tx=y$を示せば良い．
     各$\lambda\in\Lambda$について$T_\lambda$は連続であるから，$T_\lambda x=\pr_\lambda(y)$．これは$y=Tx$を意味する．
 \end{proof}
-\begin{remark}
+\begin{remark}[Banach-Steinhaus]
     $Y$は一般のノルム空間とできる．
     基本的には，積作用素のノルムが上界として見つかるのが原理である．
+    次のように，対偶命題について
+    一般化されて主張されることもある(Rudin)\footnote{ある点$x\in X$が存在して，$\{\norm{T_\lambda}\}$は有界でない，というだけでなく，そのような$x$は\textbf{稠密な}開集合の可算共通部分として取れる．}：
+    $X$をBanach空間，$Y$をノルム空間とし，$\{\Lambda_\al\}_{\al\in A}\subset B(X,Y)$を集合とする．
+    このとき，次のうちどちらか一方のみが，必ず成り立つ．
+    \begin{enumerate}
+        \item 作用素ノルムが有界である：$\exists_{M<\infty}\;\forall_{\al\in A}\;\norm{\Lambda_\al}\le M$．
+        \item $X$のある稠密な$G_\delta$-集合\footnote{開集合の可算共通部分によって表現される集合}が存在して，$\forall_{x\in G_\delta}\;\sup_{\al\in A}\norm{\Lambda_\al x}=\infty$．
+    \end{enumerate}
 \end{remark}
 
 \begin{corollary}[作用素ネットが各点有界であることの十分条件]

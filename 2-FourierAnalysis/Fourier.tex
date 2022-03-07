@@ -3,7 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -11,11 +12,6 @@
 \chapter{Fourier級数}
 
 \section{Hilbert空間の正規直交系}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    これから展開されるFourier級数論とは，Hilbert空間$L^2(I)$において，正規直交系$(e^{int})$が完全であることを示す旅路である．
-\end{tcolorbox}
 
 \begin{notation}\mbox{}
     \begin{enumerate}
@@ -26,44 +22,10 @@ title=]
     \end{enumerate}
 \end{notation}
 
-\begin{definition}[orthonormal system, complete]
-    区間$I:=(-\pi,\pi]$上の二乗可積分な複素関数の空間$L^2(I)$を考える．
-    \begin{enumerate}
-        \item 内積$L^2(I)\times L^2(I)\to\C$を$(f,g):=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)\o{g(t)}dt$とする．
-        \item 族$\{\varphi_n\}\subset L^2(I)$が$(\varphi_n,\varphi_m)=\delta_{nm}$を満たすとき，これを$L^2(I)$の\textbf{正規直交系}という．
-        \item 任意の$L^2(I)$の元が正規直交系によって展開可能であるとき，すなわち，$\forall_{n\in\N}\;(x,\varphi_n)=0\Rightarrow x=0$が成り立つとき，これを\textbf{完全}であるという．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}
-    Hilbert空間$H$において，
-    \begin{enumerate}
-        \item 完全正規直交基底は存在する．
-        \item $H$が可分ならば，可算なものが存在する．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    Hilbert空間$H$において，次の３条件は同値．
-    \begin{enumerate}
-        \item $\{\varphi_n\}$は完全な正規直交系をなす．
-        \item $\{\varphi_n\}$の一次結合全体は，$H$で稠密になる．
-        \item (Fourier級数展開) 任意の$x\in H$について，$x=\sum_n(x,\varphi_n)\varphi_n$．
-    \end{enumerate}
-\end{theorem}
-
-\begin{proposition}
-    $\paren{\frac{1}{\sqrt{2\pi}}\varphi_n(t):=e^{int}}_{n\in\Z}$は，$L^2((-\pi,\pi])$の正規直交系である．
-\end{proposition}
-
-\begin{lemma}\label{lemma-norm-is-continuous}
-    ノルム空間上のノルムと内積は連続である．
-\end{lemma}
-
 \section{Fourier係数の性質}
 
 \begin{proposition}[表示]
-    $f(t)=\sum^{\infty_{n=-\infty}}c_ne^{int}$が$t\in(-\pi,\pi]$上一様収束する時，
+    $f(t)=\sum^\infty_{n=-\infty}c_ne^{int}$が$t\in(-\pi,\pi]$上一様収束する時，
     \[c_n=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-int}dt\]
     が必要．
 \end{proposition}
@@ -177,9 +139,454 @@ title=]
     と表せる．
 \end{definition}
 
+\chapter{関数解析的なFourier級数論}
+
+\begin{quotation}
+    Hilbert空間の同型$H\simeq_\Hilb l^2(A)$をなす場合に限れば，Fourier級数論は極めて明晰に展開される．
+    その動機がわかるように，三角級数論から精緻化していく．
+    三角級数は，連続関数に対する多項式が一様近似可能であるように，任意の周期関数を一様近似可能である．
+    この手法は任意の正規直交系に対して一般化でき，これをFourier級数というのである．
+
+    一方で，$L^1(T)$などのFourier級数論は，内積が使えないBanach空間となるので，Banach空間論を用いたより精緻な議論をする．
+\end{quotation}
+
+\section{三角級数論}
+
+\begin{notation}
+    $\T\subset\C$を，絶対値が$1$の複素数がなす単位円とする．
+\end{notation}
+\begin{discussion}
+    今後，$T$上の関数を考えるが，$T$上の関数$F$は，$\R$上の周期$2\pi$を持つ関数$f$の全体と，$f(t)=F(e^{it})$によって対応を持つ．
+    以降，$L(T)$と$L_{2\pi}$とを同一視し，$f\in L_{2\pi}$に対して$f(e^{it})$を$f(t)$と略記する．
+\end{discussion}
+
+\begin{notation}
+    Lebesgue可測で周期$2\pi$を持つ$\R$上の複素関数全体の集合であって，
+    \[\norm{f}_p:=\paren{\frac{1}{2\pi}\int^\pi_{-\pi}\abs{f(t)}^pdt}^{1/p}\]
+    が有限になるものを$L^p(T)\;(1\le p<\infty)$で表す．
+    いま，$L^p(T)$は，$\mu$をLebesgue測度として，$L^p(T,\mu)$のノルムを$2\pi$で割ったものとなっている．
+    これは$\norm{1}_p=1$となるための便宜である．
+    一方で，$L^\infty(T)=L^\infty(T,\mu)$となる．
+    $C(T)$は一様ノルムを備え，$C_b(T)$と一致する．
+\end{notation}
+
+\subsection{三角級数の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $2\pi$周期関数といえば三角多項式である．これによって任意の周期関数を近似する．
+\end{tcolorbox}
+
+\begin{definition}[trigonometric polynomials]
+    次の形を持つ有限和を，\textbf{三角多項式}という．
+    \[f(t)=a_0+\sum^N_{n=1}a_n\cos nt+b_n\sin nt=\sum^N_{n=-N}c_ne^{int}\quad(t\in\R,a_n,b_n,c_n\in\C)\]
+\end{definition}
+
+\begin{notation}
+    $u_n(t):=e^{int}\;(n\in\Z)$と表す．
+    \[(f,g):=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)\o{g(t)}dt\]
+    とすると，これは$L^2(T)$上に内積を定め，ノルムと整合する．
+\end{notation}
+
+\begin{lemma}[trigonometric system]
+    $(u_n)_{n\in\Z}$は$L^2(T)$の正規直交系である：
+    \[(u_n,u_m)=\frac{1}{2\pi}\int^\pi_{-\pi}e^{i(n-m)t}dt=\begin{cases}
+        1,&n=m,\\
+        0,&n\ne m.
+    \end{cases}\]
+    これを三角多項式系という．
+\end{lemma}
+
+\subsection{三角多項式系の稠密性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実は$\{u_n\}\subset L^2(T)$は稠密な部分空間を生成する．これが示せれば，$\{u_n\}$が基底であること（正規直交系としての極大性）を得る．
+    これは，有界閉区間$I\subset\R$内について，$C(I)$内で多項式系は稠密であること(Stone-Weierstrass)を，$I$上の周期関数に限れば三角多項式系ですでに稠密であるという消息に精緻化したものと見れる．
+\end{tcolorbox}
+
+\begin{theorem}
+    任意の$f\in C(T)$に対して，三角多項式$P$が存在して一様に近似できる：
+    $\forall_{f\in C(T)}\;\forall_{\ep>0}\;\exists_{P}\;\forall_{t\in\R}\abs{f(t)-P(t)}<\ep$．
+    特に，三角多項式系は$L^2(T)$で稠密である．
+\end{theorem}
+\begin{proof}
+    $T$はコンパクトであるから$C_c(T)=C(T)$で，$C(T)$は$L^2(T)$上稠密である．
+\end{proof}
+
+\subsection{Fourier級数の言葉による一般化}
+
+\begin{theorem}[Fejer]
+    $f\in C(T)$の定めるFourier級数の部分和の算術平均は，$f$に一様収束する．
+\end{theorem}
+
+\section{Fourier級数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    この三角級数についての研究結果の精緻化は，Fourier級数の言葉を用いてなされる．
+\end{tcolorbox}
+
+\begin{definition}[Fourier coefficient, Fourier series, partial sum]
+    $f\in L^1(\T)$について，
+    \begin{enumerate}
+        \item $\wh{f}(n):=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-int}dt\;(n\in\Z)$を\textbf{Fourier係数}という．
+        \item $f$の定める\textbf{Fourier級数}とは，$\sum^\infty_{-\infty}\wh{f}(n)e^{int}$をいう．
+        \item Fourier級数の部分和を$s_N(t):=\sum^N_{-N}\wh{f}(n)e^{int}$で表す．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}[Fourier係数とはなにか]
+    三角多項式$f(t)=\sum^N_{n=-N}c_ne^{int}$を見ると，上述の部分和の定義は自然である．
+    また，$c_n=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-int}dt$と表せる．これは，$e^{int}$の係数だけ定数に落ちるので抽出可能で，他の項は$2\pi$周期を持つ（あるいは複素平面上の周回積分な）ので積分すると$0$である．
+    これは実は正規直交基底$(u_n(t)=e^{int})_{n\in\Z}$に対して，$c_n=(f|u_n)$となっている．
+    一般に，$(u_\al)_{\al\in A}$を正規直交基底とするHilbert空間$H$の元$x\in H$に対して，$\wh{x}(\al):=(x,u_\al)\;(\al\in A)$によって定まる族$(\wh{x}(\al))_{\al\in A}$を$x$の\textbf{Fourier係数}という．
+\end{remarks}
+
+\section{Fourier級数とは正規直交基底論に他ならない}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=めっちゃ幾何学的だしHilbert空間的な行為！]
+    直交系$\{u_\al\}_{\al\in A}$の部分列$(u_\al)_{\al\in F}$が定める（$x\in H$の）Fourier部分和は，$M_F$上におけるその点$x$の最良の近似になる．
+    ということは，その極限たるFourier級数は，$x$自身に収束することが期待される．
+
+    このように，Fourier変換の理論とは，直交系に対して，それぞれの成分を考えて足し合わせるという極めてEuclid空間的な発想の，無限化によって複雑に思えるようになっただけである．
+\end{tcolorbox}
+
+\begin{lemma}[有限な正規直交系についての観察]\label{lemma-finite-Fourier}
+    $\{u_\al\}_{\al\in A}$をHilbert空間$H$の直交系とし，$F\subset A$を有限部分集合とする．
+    $\{u_\al\}_{\al\in F}$の生成する部分空間を$M_F$で表す．
+    \begin{enumerate}
+        \item $\varphi:A\to\C$は$F$内に台を持つとする．このとき，$y=\sum_{\al\in F}\varphi(\al)u_\al\in M_F$について，
+        \begin{enumerate}[(a)]
+            \item $\forall_{\al\in A}\;\wh{y}(\al)=\varphi(\al)$を満たし，
+            \item $\norm{y}^2=\sum_{\al\in F}\abs{\varphi(a)}^2$を満たす．
+        \end{enumerate}
+        \item $x\in H$とし，$F$の定める部分和を$s_F(x)=\sum_{\al\in F}\wh{x}(\al)u_\al$とする．このとき，
+        \begin{enumerate}[(a)]
+            \item $\forall_{s\in M_F}\;s\ne s_F(x)\Rightarrow\norm{x-s_F(x)}<\norm{x-s}$で，
+            \item $\sum_{\al\in F}\abs{\wh{x}(\al)}^2\le\norm{x}^2$．
+        \end{enumerate}
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $(u_\al)$が正規直交基底であることから従う．
+        \begin{enumerate}[(a)]
+            \item $\wh{y}(\al)=(y,u_\al)=\varphi(\al)$．
+            \item $y$は有限和で表せているから，ノルムの定義$\norm{y}^2=(y|y)=\paren{\sum_{\al\in F}\wh{y}(\al)u_\al,\sum_{\al\in F}\wh{y}(\al)u_\al}=\sum_{\al\in F}\abs{\wh{y}(\al)}^2$より．
+        \end{enumerate}
+        \item 
+        \begin{enumerate}[(a)]
+            \item $x\in H$を任意に取る．その$F$に関するFourier部分和を$s_F:=s_F(x)\in M_F$とすると，このFourier係数は
+            \[\wh{s_F}(\al)=(s_F,u_\al)=\wh{x}(\al)\]
+            に他ならないわけだから，$x$と$s_F$とでは，$(u_\al)_{\al\in F}$に関しては係数は一致する．
+            すなわち，$x-s_F$なる項は，$M_F$と直交する：$\forall_{\al\in F}\;x-s_F\perp u_\al$．
+
+            任意の$s\in M_F$について，$s_F-s\in M_F$だから，これも$(x-s_F)\perp(s_F-s)$であるから，Pythagorasの恒等式より，
+            \[\norm{x-s}^2=\norm{(x-s_F)+(s_F-s)}^2=\norm{x-s_F}^2+\norm{s_F-s}^2.\]
+            \item 特に$s=0$の場合を考えると，$\norm{x-s_F}^2+\norm{s_F}^2=\norm{x}^2$．よって，$\norm{s_F}^2=\sum_{\al\in F}\abs{\wh{x}(\al)}^2\le\norm{x}^2$．
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[Fourier級数の動作原理]\mbox{}
+    \begin{enumerate}
+        \item つまり，有限の範囲では，正規直交基底$(u_\al)$の有限部分に対して，そのFourier係数とは，その基底に対する展開係数に他ならず，ノルムについてもEuclid空間で見慣れたPythagorasの定理が成り立つ．
+        さらに，$P$を正規直交系$(u_\al)$の有限線型結合全体のなす部分空間とすると，Fourier係数を定める変換$\F:P\iso C_c(A)=:l^2_c(A)$は等長同型であることも述べている．
+        \item は，$x\in H$のFourier級数の（任意の）部分和$s_F$は，直交関係$(x-s_F)\perp M_F$を持つ．すなわち，部分和を考えている範囲$F\subset A$が定める部分空間$M_F$内の，$x$に対する最良の近似である．
+        これがFourier級数の原理である．
+    \end{enumerate}
+\end{remarks}
+
+\section{無限化の準備}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    この有限範囲の観察を無限化することを考えるが，その手順は添字集合$A$上の数え上げ測度に関するLebesgue積分に従う．
+    $\sum_{\al\in A}\varphi(\al)$を，有限な部分和の上限とする定義の仕方は奇妙に思えるかもしれないが，これはLebesgue積分の定義に他ならない．
+\end{tcolorbox}
+
+\begin{definition}[無限和の定義]\label{def-infinite-sum}
+    添字集合$A$上の数え上げ測度を$\mu$と表し，その上の$p$乗可積分関数全体の空間を$l^p(A):=L^p(\mu)$で表す．
+    $l^2(A)$は，$(\varphi,\psi):=\sum_{\al\in A}\varphi(\al)\o{\psi(\al)}$を内積として，Hilbert空間を定める．
+    また，$l^2(A)=L^2(\mu)$であり，$A$上のコンパクト集合とは有限集合に他ならないから，有限な台を持つ関数の全体は$l^2(A)$上で稠密である．
+    特に，$\varphi\in l^2(A)$ならば，集合$\Brace{\al\in A\mid \varphi(\al)\ne0}$は高々可算である．
+
+    故に，$\varphi(\al)\in[0,\infty]$について，$\sum_{\al\in A}\varphi(\al):=\sup_{F\subset A,\abs{F}<\infty}\sum_{\al\in F}\varphi(\al)$とする．
+\end{definition}
+\begin{proof}
+    $A_n:=\Brace{\al\in A\mid\abs{\varphi(a)}>\frac{1}{n}}$とおく．このとき，
+    \[\sum_{\al\in A_n}\abs{n\varphi(\al)}^2\le n^2\sum_{\al\in A}\abs{\varphi(\al)}^2\in\R\]
+    より，各$A_n$は有限集合だから，$\Brace{\al\in A\mid \varphi(\al)\ne0}=\cup_{n\in\N}A_n$は高々可算である．
+\end{proof}
+
+\begin{lemma}[連続延長が等長同型であり続けるための条件]\label{lemma-continuous-extension-of-isometry}
+    $X,Y$を距離空間とし，$f:X\to Y$を連続写像とする．このとき，さらに次の３条件が満たされれば，$f$は等長同型である．
+    \begin{enumerate}
+        \item $X$は完備である．
+        \item $X$の稠密部分集合$X_0$が存在して，$f|_{X_0}$は等長である．
+        \item $f(X_0)$は$Y$上稠密である．
+    \end{enumerate}
+\end{lemma}
+\begin{remark}
+    $f$が全写であるという結論だけでも十分強い．
+\end{remark}
+
+\section{Hilbert空間論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可分Hilbert空間$H$の正規直交基底$(u_\al)_{\al\in A}$が定めるFourier係数の対応$H\to l^2(A)$は等長同型である．
+    そして，Fourier変換は$H$の内積と$l^2(A)$の内積とを結びつける：Parsevalの恒等式．
+    これは正規直交基底であることの特徴付けにもなる．
+\end{tcolorbox}
+
+\begin{theorem}[Bessel inequality, Riesz-Fischer theorem]\label{thm-Bessel-and-Riesz-Fischer}
+    $(u_\al)_{\al\in A}$を$H$の正規直交系とし，$P$を$(u_\al)$が有限生成する空間(有限線型和全体のなす空間)とする．
+    \begin{enumerate}
+        \item $\forall_{x\in H}\;\sum_{\al\in A}\abs{\wh{x}(\al)}^2\le\norm{x}^2$．
+        \item Fourier係数の対応
+        \[\xymatrix@R-2pc{
+            \F:H\ar[r]&l^2(A)\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            x\ar@{|->}[r]&\F[x]:=\wh{x}
+        }\]
+        は連続な線型写像で，$\o{P}$への制限は等長同型$\o{P}\simeq l^2(A)$を定める．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 有限の場合の$\sum_{\al\in F}\abs{\wh{x}(\al)}^2\le\norm{x}^2$という消息\ref{lemma-finie-Fourier}(2)(b)と，無限和の定義\ref{def-infinite-sum}より，
+        $\sum_{\al\in A}\abs{\wh{x}(\al)}^2=\sup_{F\subset A,\abs{F}<\infty}\sum_{\al\in F}\abs{\wh{x}(\al)}^2\le\norm{x}^2$と従う．
+        \item 
+        \begin{enumerate}[(a)]
+            \item まず，$\F$のwell-defined性は(1)のBesselの不等式により，$\wh{x}:A\to\R$はたしかに（数え上げ測度について）二乗可積分である．
+            \item 線形性は，Fourier係数は内積を通じて定義しているので明らか：$\F[ax+by]=\wh{ax+by}=a\wh{x}+b\wh{y}=a\F[x]+b\F[y]$．
+            \item 連続性は(1)のBesselの不等式により，$\norm{\F[y]-\F[x]}_2=\norm{\wh{y}-\wh{x}}_2\le\norm{y-x}$から従う．
+            \item 有限の場合の観察\ref{lemma-finite-Fourier}(1)より，$\F$は任意の$P$の元を，$C_c(A)$上に全写に写し，さらに等長同型である．
+            \item $\o{P}$は完備空間$H$の閉部分集合であるから完備，$l^2_c(A)=C_c(A)$は$l^2(A)$内で稠密なので，
+            よって補題\ref{lemma-continuous-extension-of-isometry}より，連続な延長$\o{\F}:\o{P}\to l^2(A)$は等長同型である．
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    Besselの不等式は，有限の場合にてFourier部分和は$M_F$への射影であると観測した\ref{def-infinite-sum}から，（射影がノルム減少的なので）長さは当然短くなる．
+    無限和はその上限と定義したので，不等号は保存される，というのみの話である．
+
+\end{remarks}
+
+\begin{remark}
+    証明の(2)(e)部分は$L^2(T)$が稠密である（Hilbert空間である）ことによるため，$L^p$空間が完備であるという事実をRiesz-Fisherの定理とも呼ばれている．
+\end{remark}
+
+\begin{theorem}[Parseval's identity：正規直交基底の特徴付け]\label{thm-Parseval}
+    $(u_\al)_{\al\in A}$を$H$の正規直交系する．このとき，次の４条件は同値：
+    \begin{enumerate}
+        \item $(u_\al)$は完全である／基底である：$H$内の極大な正規直交系である．
+        \item $(u_\al)$の有限線型結合全体の集合$P$は$H$上稠密である．
+        \item $\forall_{x\in H}\;\sum_{\al\in A}\abs{\wh{x}(\al)}^2=\norm{x}^2$．
+        \item (Parseval's identity) $\forall_{x,y\in H}\;\sum_{\al\in A}\wh{x}(\al)\o{\wh{y}(\al)}=(x,y)$．\footnote{右辺は$\wh{x},\wh{y}\in l^2(A)$の内積である．}
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $P$は稠密でないと仮定すると，$P^\perp\ne0$は零でない元を含む（直交分解定理の系）．
+        よって，このうちノルムが$1$であるものを$\{u_\al\}_{\al\in A}$に追加した集合は再び正規直交系で，極大性に矛盾する．
+        \item[(2)$\Rightarrow$(3)] 
+        Riesz-Fischerの定理\ref{thm-Bessel-and-Riesz-Fischer}(2)より，$H$と$l^2(A)$とは等長同型である：$\norm{\wh{x}}^2_2=\norm{x}^2$．
+        \item[(3)$\Rightarrow$(4)] $H$も$l^2(A)$もHilbert空間であるから，
+        それぞれの空間で極化恒等式
+        \[4(x|y)=\norm{x+y}^2-\norm{x-y}^2+i\norm{x+iy}^2-i\norm{x-iy}^2\]
+        を用いて，ノルムの等式$\norm{\wh{x}}^2_2=\norm{x}^2$は内積の等式$(\wh{x}|\wh{y})=(x|y)$に書き直せる．
+        \item[(4)$\Rightarrow$(1)]
+        (1)が成り立たないとすると，$\{u_\al\}_{\al\in A}$のすべてと直交する元$u\ne0\in H$が取れる．
+        この元について，ノルムは$(u,u)=\norm{u}^2>0$であるが，対応するFourier係数はすべて$0$なので，Parsevalの恒等式に反する．
+    \end{description}
+\end{proof}
+
+Hilbert空間の同型とは，内積を保存する線型作用素をいうから，次が結論づけられたことになる．
+
+\begin{corollary}
+    $(u_\al)_{\al\in A}$は$H$の正規直交基底であるとし，$\wh{x}(\al):=(x,u_\al)$をFourier係数とする．
+    このとき，写像$\wh{-}:H\to l^2(A)$はHilbert空間の同型である．
+\end{corollary}
+
+\begin{tbox}{red}{}
+    $H=L^2(T)$の場合について考えてみると，Fourier展開は$L^2(T)\sim_\Hilb l^2(\Z)$を与える．
+    Riesz-Fischerの定理より，二乗和が絶対収束する数列$(c_n)\in l^2(\Z)$に対して，必ず$c_n=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-int}dt\;(n\in\Z)$を満たす周期関数$f\in L^2(T)$が一意的に存在する．
+    またParsevalの定理より，$\norm{f-s_N}^2_2=\sum_{\abs{n}\ge N}\abs{\wh{f}(n)}^2$であるから，$N\to\infty$のときこのノルムは$0$に収束する．よって，$f$のFourier級数は$f$に$L^2$-収束する．
+    一方で，概収束を示すには，より精緻な議論を要する．
+\end{tbox}
+
+\section{Hilbert空間の分類}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hilbert空間の分類は$l^2(A),l^2(B)$の空間に移して考えることで即時に決着がつき，これがFourier変換論の最初の帰結になる．
+    まず任意のHilbert空間は基底を持つことを示せれば，Hilbと$l^2(-)$の間に対応がついたことになり，あとは$l^2(A)\sim_\Hilb l^2(B)\Leftrightarrow A\sim_\Set B$を示せば良い．
+\end{tcolorbox}
+
+\section{連続関数のFourier級数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+以降，Banach空間論の技術を援用して，より一般の内積が使えない場合のFourier級数論を展開する．
+\end{tcolorbox}
+
+\subsection{殆どの連続関数はFourier展開に失敗する}
+
+\begin{problem}
+    Fourier変換は二乗可積分関数上に同型$\F:L^2(T)\iso l^2(\Z)$を定め，特にParsevalの定理より，任意の$f\in L^2(T)$について，Fourier級数は$L^2$-収束するのであった．
+    よって特にCauchy列であるから，Egoroffの定理より，Fourier級数列の部分列が存在して，$f$に概収束する．
+    では，$L^2(T)$の元とはいわず一般に，$f\in C(T)$のFourier級数はいつ各点収束するのか？：どんな$f\in C(T)$と$x\in\R$について，$\lim_{n\to\infty}s_n(f;x)=f(x)$か？
+\end{problem}
+
+\begin{definition}[Dirichlet kernel]
+    Dirichlet核を$D_n(t):=\sum^n_{k=-n}e^{ikt}$と定めると，Fourier部分和は
+    \[s_n(f;x)=\sum_{k=-n}^ne^{inx}\cdot\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-ikt}=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)D(x-t)dt\]
+    と表せる．すなわち，ただの有限和ではなく，積分と見れる．
+\end{definition}
+
+\begin{discussion}[一様有界性の原理より，すべての連続関数のFourier級数が概収束する訳ではない]
+    \[s^*(f;x):=\sup_{n\in\N}\abs{s_n(f;x)}\]
+    とおく．$\Lambda_nf:=s_n(f;0)$として，$\Lambda_n:C(T)\to\R$を定めると，Fourier部分和とはDirichlet核を積分核とする積分でもあったから，これはBanach空間$C(T)$上の有界線型汎関数である．
+    こうして得た作用素の族$(\Lambda_n)_{n\in\N}$のそれぞれについて，作用素ノルムは三角不等式により
+    \[\norm{\Lambda_n}\le\frac{1}{2\pi}\int^\pi_{-\pi}\abs{D_n(t)}dt=\norm{D_n}_1\]
+    と評価できる．
+    実は，$\norm{\Lambda_n}\to\infty\;(n\to\infty)$である．
+    よって，Banach-Steinhausの定理より，ある稠密な$G_\delta$-集合$E_0\subset C(T)$が存在して，
+    その上では$\{\Lambda_n\}$は有界でない．すなわち，
+    $\forall_{f\in E_0}\;s^*(f;0)=\infty$．
+\end{discussion}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[Dirichlet核の列は発散する] \begin{align*}
+            e^{it/2}D_n(t)&=e^{it/2}\sum_{k=-n}^ne^{ikt},&e^{-it/2}D_n(t)&=e^{-it/2}\sum_{k=-n}^ne^{ikt},
+        \end{align*}
+        の片々を引いて，
+        \begin{align*}
+            2i\sin xD_n(t)&=e^{ikt}e^{it/2}-e^{-ikt}e^{-it/2}=2i\sin\paren{n+\frac{1}{2}}t\\
+            D_n(t)&=\frac{\sin\paren{n+\frac{1}{2}}t}{\sin(t/2)}.
+        \end{align*}
+        これより，
+        \begin{align*}
+            \norm{D_n}_1&>\frac{2}{\pi}\int^\pi_0\Abs{\sin\paren{n+\frac{1}{2}}t}\frac{dt}{t}=\frac{2}{\pi}\int^{(n+1/2)\pi}_0\abs{\sin t}\frac{dt}{t}\\
+            &>\frac{2}{\pi}\sum^n_{k=1}\frac{1}{k\pi}\int^{k\pi}_{(k-1)\pi}\abs{\sin t}dt=\frac{4}{\pi^2}\sum^n_{k=1}\frac{1}{k}\to\infty
+        \end{align*}
+        と評価できる．
+        \item[$\Gamma_n$の列のノルムはDirichlet核のノルムに一致する]
+        任意の$n\in\N$を取る．列$\{f_i\}\subset L^1(T)$であって，$\Lambda_n(f_j)\xrightarrow{j\to\infty}\norm{D_n}_1$であるものが取れれば，$\norm{\Lambda_n}=\norm{D_n}_1$がわかる．
+        \[g(t):=\begin{cases}
+            1,&D_n(t)\ge0,\\
+            -1,&D_n(t)<0.
+        \end{cases}\]
+        と定めると，これは可積分だから，ある$\{f_j\}\subset C(T)$が存在して，$-1\le f_j\le 1$を満たし，$g$に各点で収束する．
+        よって，Lebesgueの優収束定理より，
+        \[\lim_{j\to\infty}\Lambda_n(f_j)=\lim_{j\to\infty}\frac{1}{2\pi}\int^\pi_{-\pi}f_(-t)D_n(t)dt=\frac{1}{2\pi}\int^\pi_{-\pi}g(-t)D_n(t)dt=\norm{D_n}_1.\]
+    \end{description}
+\end{proof}
+
+\begin{proposition}
+    任意の$x\in\R$に対して稠密な$G_\delta$集合$E_x\subset C(T)$が存在して，$\forall_{f\in E_x}\;s^*(f;x)=\infty$が成り立つ．
+\end{proposition}
+
+\begin{theorem}
+    稠密な$G_\delta$-集合$E\subset C(T)$が存在して，次を満たす：
+    \begin{quotation}
+        任意の$f\in E$に対して，集合$Q_f:=\Brace{x\in\R\mid s^*(f;x)=\infty}$は$\R$の稠密な$G_\delta$-集合である．
+    \end{quotation}
+\end{theorem}
+
+実は，$E$と$Q_f$は非可算無限集合である．
+
+\begin{proposition}
+    完備距離空間$X$は孤立点を持たないとする．このとき，$G_\delta$-である可算な稠密部分集合は存在しない．
+\end{proposition}
+
+\begin{tbox}{red}{}
+    以上より，結論としては，$C(T)$のうちほとんどの関数（稠密）は，$\R$上のうちほとんどの点（稠密）でFourier級数は発散する．
+\end{tbox}
+
+\subsection{条件を緩めることによって解決可能}
+
+\begin{definition}
+    $0<\al\le 1$について，$\al$-次のLipschitz条件を満たす関数$f:[a,b]\to\C$を
+    \[M_f:=\sup_{s\ne t}\frac{\abs{f(s)-f(t)}}{\abs{s-t}^\al}<\infty.\]
+    と定める．その全体を$\Lip\al$と表す．
+\end{definition}
+
+\begin{proposition}
+    $\Lip\al$はノルム$\norm{f}=\abs{f(a)}+M_f$あるいはノルム$\norm{f}=M_f+\sup_{x\in[a,b]}\abs{f(x)}$についてBanach空間となる．
+\end{proposition}
+
+\begin{proposition}
+    ある$0<\al\le 1$について，$f\in C(T)\cap\Lip\al$は，そのFourier級数は$f$に各点収束する．
+\end{proposition}
+
+\section{可積分関数のFourier係数}
+
+\chapter{実数上のFourier変換}
+
+\begin{quotation}
+    
+\end{quotation}
+
+\section{Formal Property}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $dx$を$\R$上のLebesgue測度，$m$をそれを$\sqrt{2\pi}$で割ったものとする：
+        \[\int_\R f(x)dm(x)=\frac{1}{\sqrt{2\pi}}\int_\R f(x)dx.\]
+        \item $p$-ノルムの定義も変わる：
+        \[\norm{f}_p:=\paren{\int_\R\abs{f(x)}^pdm(x)}^{1/p}\quad(1\le p<\infty).\]
+        \item 畳み込み：
+        \[(f*g)(x):=\int_\R f(x-y)g(y)dm(y)\quad(x\in\R)\]
+        \item $f\in L^1$に対して，
+        $t\in\R$によって定まる積分核$e^{-ixt}$によって積分したものを\textbf{Fourier変換}$\wh{-}:L^1\to L^1$といい，次のように表す：
+        \[\hat{f}(t):=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R)\]
+        \item $L^p(\R),C_0(\R)$を$L^p,C_0$と略記する．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $\R$から，$\C$の乗法部分群$S^1$への群準同型を\textbf{指標}という：$\abs{\varphi(t)}=1,\varphi(s+t)=\varphi(s)\varphi(t)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $f\in L^1,\al,\lambda\in\R$とする．Fourier変換は，指標による積を平行移動に，平行移動を指標による積に変換し，畳み込みを各点積に変換する：
+    \begin{enumerate}
+        \item $g(x)=f(x)e^{i\al x}\Rightarrow\wh{g}(t)=\wh{f}(t-\al)$．
+        \item $g(x)=f(x-\al)\Rightarrow\wh{g}(t)=\wh{f}(t)e^{-i\al t}$．
+        \item $g\in L^1\land h=f*g\Rightarrow\wh{h}(t)=\wh{f}(t)\wh{g}(t)$．
+    \end{enumerate}
+    また，次が成り立つ：
+    \begin{enumerate}\setcounter{enumi}{3}
+        \item $g(x)=\o{f(-x)}\Rightarrow\wh{g}(t)=\o{\wh{f}(t)}$．
+        \item $g(x)=f(x/\lambda)\land\lambda>0\Rightarrow g(t)=\lambda f(\lambda t)$．
+        \item $g(x)=-ixf(x)\land g\in L^1\Rightarrow\wh{f}$は微分可能で$\wh{f}'(t)=\wh{g}(t)$．
+    \end{enumerate}
+    (6)にように，微分を$ti$による積に変換することから，Fourier変換は常微分方程式論でも応用される．
+\end{theorem}
+\begin{remarks}
+    以上の結果は，ひとえに$m$の平行移動不変性と，任意の$t\in\R$について積分核$x\mapsto e^{itx}$は$\R$の指標であることによる．
+    なお，$\R$の連続な指標はすべて指数関数によって表現される．
+\end{remarks}
+
+\section{The Inversion Theorem}
+
+\section{The Plancherel Theorem}
+
+\section{The Banach Algebra $L^1$}
+
 \begin{thebibliography}{9}
     \bibitem{Korevaar}
     J. Korevaar "Fourier Analysis and Related Topics"
+    \bibitem{新井仁之}
+    新井仁之『フーリエ解析と関数解析学』
+    \bibitem{Rudin}
+    Rudin "Real and Complex Analysis" 3rd
 \end{thebibliography}
 
 \end{document}
