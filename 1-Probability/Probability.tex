@@ -660,6 +660,8 @@ Entropy is a measure of disorder, given by the amount of information necessary t
 
 \begin{quotation}
     確率分布を測度として定式化したが，まずは，有界な測度（を正規化したもの）としての純粋な性質を調べる．
+    有界な測度は直ちに局所有限でかつ内部正則であるので，Radon測度である．
+    そしてRadon測度が有限であるとき，（外部）正則なBorel測度である．
     \begin{enumerate}
         \item 測度の収束には種々の位相が考えられ，修羅の相を呈している．ここで重要になる有界測度特有の概念に緊密性があり，有界測度の列が緊密であるとき，３つの関数のクラス$C_c(X),C_0(X),C_b(X)$が定める収束概念は一致する．
         その上，緊密な確率測度列の収束先は再び確率測度となる．
@@ -977,7 +979,7 @@ title=]
 \end{remarks}
 
 \begin{definition}[(uniformly) tight / tendue]
-    確率測度の族$\Gamma\subset P(X)$が\textbf{（一様に）緊密}であるとは，
+    確率測度の族$\Gamma\subset P(X)$が\textbf{（一様に）緊密}\footnote{測度が内部正則であることも「緊密」というので，それから見れば「一様に緊密」と言いたくなる．}であるとは，
     $\forall_{\ep>0}\;\exists_{K\overset{\text{cpt}}{\subset} X}\;\forall_{\mu\in\Gamma}\;\mu(K)\ge 1-\ep$．
 \end{definition}
 

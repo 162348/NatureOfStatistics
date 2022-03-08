@@ -6094,6 +6094,12 @@ title=上半平面から単体ポリゴンの内部上への共形変換]
 
 \section{共役調和関数}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実調和関数は，ある正則関数が存在してその実部だと考えることが出来る．
+    その正則関数の虚部を，元の調和関数の共役調和関数という．
+\end{tcolorbox}
+
 \begin{definition}[harmonic function]\mbox{}
     \begin{enumerate}
         \item $\partial_z:=\frac{1}{2}(\partial_x-i\partial_y),\partial_{\o{z}}:=\frac{1}{2}(\partial_x+i\partial_y):C^1(\R^2)\to C^1(\R^2)$を\textbf{Cauchy-Riemann作用素}という．
@@ -6164,6 +6170,30 @@ title=上半平面から単体ポリゴンの内部上への共形変換]
     \end{enumerate}
 \end{example}
 
+\begin{notation}[Hodge双対の幾何学的意味]
+    正則な曲線$\gamma$に関する右法線微分を$\partial_Nu=\sin\theta(t)\partial_x-\cos\theta(t)\partial_yu$と定義すると，
+    \[\int_\gamma *du=\int_{\gamma}\partial_Nu\abs{dz}.\]
+\end{notation}
+
+\begin{theorem}[Greenの公式]
+    $D$を区分的$C^1$級境界を持つ有界領域，$u,v$を$[D]$上の$C^1$関数で，$D$上で調和であるものとする．このとき，
+    \[\int_{\partial D}(u\partial_Nv-v\partial_Nu)\abs{dz}=0.\]
+\end{theorem}
+
+\begin{theorem}[平均値の性質]
+    $D:=\Brace{z\in C\mid0<\abs{z}<\rho}$とする．$u$を$D$上の調和関数とすると，$r$に依らない定数$A,B\in\C$が存在して，任意の$r\in(0,\rho)$に対して，
+    \[\frac{1}{2\pi r}\int_{\abs{z}=r}u\abs{dz}=A+B\log r.\]
+\end{theorem}
+
+\begin{corollary}
+    $u$が領域$D$で調和であれば，$\Delta(z_0,R)\subset D$に対して，
+    \[\frac{1}{2\pi}\int^{2\pi}_0u(z_0+Re^{i\theta})d\theta=u(z_0).\]
+\end{corollary}
+
+\begin{corollary}[最大値・最小値の原理]
+    領域$D$上の調和関数が$D$内で最大値または最小値を持てば，$u$は定数である．
+\end{corollary}
+
 \section{Poisson積分}
 
 \begin{definition}\mbox{}
@@ -6185,6 +6215,10 @@ title=上半平面から単体ポリゴンの内部上への共形変換]
 \begin{theorem}[the solution to the Dirichlet problem]
     任意の境界上の連続関数$u\in C^0(\partial\Delta(0,R))$に対して，$P[u]$は，境界値問題$\Delta U=0\quad\on\Delta(0,R),U=u\quad\on\partial\Delta(0,R)$の一意な解を与える．
 \end{theorem}
+
+\section{一般のDieichlet問題}
+
+\section{Green関数}
 
 \chapter{大域的解析関数}
 

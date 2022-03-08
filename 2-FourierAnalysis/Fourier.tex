@@ -9,7 +9,11 @@
 \begin{document}
 \tableofcontents
 
-\chapter{Fourier級数}
+\chapter{級数論}
+
+
+
+\chapter{Fourier級数導入}
 
 \section{Hilbert空間の正規直交系}
 
@@ -404,6 +408,13 @@ title=]
     \end{description}
 \end{proof}
 
+\begin{corollary}[Hilbert空間の元のFourier係数と有限次元線型空間の「線型独立性」とが対応する]
+    $(u_\al)_{\al\in A}$を$H$の正規直交基底とする．このとき，$x,y\in H$のFourier係数が写像$A\to\C$として一致する$\wh{x}=\wh{y}$ならば，$x=y$である．
+\end{corollary}
+\begin{proof}
+    $x-y$を考えると，このFourier係数はすべて$0$である．よって，Parsevalの恒等式の特別な場合（定理の(3)）より，$0=\norm{x-y}^2$．よって，$x=y$．
+\end{proof}
+
 Hilbert空間の同型とは，内積を保存する線型作用素をいうから，次が結論づけられたことになる．
 
 \begin{corollary}
@@ -429,11 +440,17 @@ title=]
 \section{連続関数のFourier級数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=連続関数のFourier級数が各点収束するための条件を探す]
 以降，Banach空間論の技術を援用して，より一般の内積が使えない場合のFourier級数論を展開する．
 \end{tcolorbox}
 
 \subsection{殆どの連続関数はFourier展開に失敗する}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Fourier変換は，Dirichlet核との畳み込みの極限と見れるため，この作用素的な考察によって，ほとんどの$\R$上の点（稠密）上でFourier級数は収束しない関数が$C(T)$のほとんど（稠密）であることがわかる．
+    逆を言えば，任意の$x\in\R$について，その上で収束するFourier級数を持つ連続関数の全体は，$C(T)$のBaireの第一類部分集合をなす．
+\end{tcolorbox}
 
 \begin{problem}
     Fourier変換は二乗可積分関数上に同型$\F:L^2(T)\iso l^2(\Z)$を定め，特にParsevalの定理より，任意の$f\in L^2(T)$について，Fourier級数は$L^2$-収束するのであった．
@@ -443,7 +460,7 @@ title=]
 
 \begin{definition}[Dirichlet kernel]
     Dirichlet核を$D_n(t):=\sum^n_{k=-n}e^{ikt}$と定めると，Fourier部分和は
-    \[s_n(f;x)=\sum_{k=-n}^ne^{inx}\cdot\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-ikt}=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)D(x-t)dt\]
+    \[s_n(f;x)=\sum_{k=-n}^ne^{inx}\cdot\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-ikt}=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)D(x-t)dt=(f*D_n)(x)\]
     と表せる．すなわち，ただの有限和ではなく，積分と見れる．
 \end{definition}
 
@@ -525,6 +542,115 @@ title=]
 
 \section{可積分関数のFourier係数}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    では，$L^2$までは行かなくとも，もっと緩い可積分性によって$C(T)$の条件を緩めるとどうか？
+\end{tcolorbox}
+
+\begin{theorem}[Riemann-Lebesgueの補題]
+    任意の$f\in L^1(T)$に関して，対応するFourier係数$\wh{f}:\Z\to\C$は，$\wh{f}\in C_0(\Z)$である．
+    \[\F[f](n)~\wh{f}(n)=\frac{1}{2\pi}\int^\pi_{-\pi}f(t)e^{-int}dt\xrightarrow{\abs{n}\to\infty}0.\]
+\end{theorem}
+
+これは，$L^1(\R)\sim C_0(\Z)=:c_0$なるRiesz-Fischerの再来のような関係を期待させる．\footnote{$Z$に離散位相を入れると，$\Z$は局所コンパクトハウスドルフで，まさに$c_0=C_0(\Z)$である．}
+任意の，無限遠点で消失する係数列$(a_n)$に対して，これをFourier係数として持つ可積分関数$f\in L^1(T)$は存在するか？
+これは直感的には極めて存在しそうであるが，開写像定理より否と証明される．
+
+\begin{theorem}[Riemann-Lebesgueの補題の部分逆は成り立つ]
+    Fourier係数の対応
+    \[\xymatrix@R-2pc{
+        \F:L^1(T)\ar[r]&c_0\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&\wh{f}
+    }\]
+    は単射な有界線型作用素であるが，全射ではない．
+\end{theorem}
+
+\section{Poisson積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Poisson積分とは，$T$上のRadon測度$\mu_z$を，$[-\pi,\pi]$上のLebesgue測度に変換したときに生じる積分核$P_r(\theta-t)$に関する畳み込みである．
+    
+\end{tcolorbox}
+
+\begin{notation}
+    $K$をコンパクトハウスドルフ空間，$H$をそのコンパクト部分集合とする($K=[\Delta]$の境界の一般化)．
+    ノルム$\norm{f}_E:=\sup_{x\in E}\abs{f(x)}\;(E\subset K)$に関して，
+    $A\subset C(K)$は$1\in A$を満たし，$\forall_{f\in A}\;\norm{f}_K=\norm{f}_H$を満たす関数のなす線型部分空間とする．
+    これは最大値の原理を満たす連続関数全体の空間となる：$\forall_{f\in A,x\in K}\;\abs{f(x)}\le\norm{f}_H$．
+    これはすなわち，任意の点$x\in K$について，評価作用素$\ev_x:M\to\bF$はノルム$1$の有界線型汎関数である．
+    なお，$M$とは，
+    制限作用素$|_H:C(K)\to C(H)$の$A$への制限は全単射な等長同型$A\iso |_H(A)=:M\subset C(H)$を引き起こすときの像とした．
+    特に，任意の$M$の元は$A$の元であるような$K$全体への一意な延長を持つ．
+    
+    よって，$\ev_x:M\to\bF$は，延長$\Lambda:C(H)\to\bF$を持ち，これは再びノルム$1$である：$\Lambda 1=1,\norm{\Lambda}=1$．
+    実はこのことから，$\Lambda\in (C(H))^*$は正な線型汎関数であることが従う．
+    するとRieszの表現定理より，$H$上のあるRadon測度（正則なBorel測度）$\mu_x$が存在して，
+    \[\forall_{f\in C(H)}\;\Lambda f=\int_Hfd\mu_x\]
+    と表現される．特に，$f\in A$については$f(x)=\int_Hfd\mu_x$．
+\end{notation}
+
+\begin{proposition}
+    任意の$x\in K$に対応した境界$H$上の測度$\mu_x$が存在して，任意の$f\in A$に対して次が成り立つ：
+    \[f(x)=\int_Hfd\mu_x.\]
+\end{proposition}
+
+$\mu_x$の一意性は一般には言えないが，次のような状況では成り立つ．
+
+\begin{example}[Poisson積分の設定]
+    $K:=[\Delta],H:=T=\partial\Delta$とする．このとき，任意の多項式$f$は最大値の原理を満たす：$\norm{f}_U=\norm{f}_T$．
+    そこで，$A\subset C([\Delta])$を，多項式の全体を含み，$\forall_{f\in A}\;\norm{f}_U=\norm{f}_T$を満たす関数の線型部分空間とする．
+    このとき，任意の$z\in\Delta$に対して，$T$上のBorel測度$\mu_z$が存在して
+    \[f(z)=\int_Tfd\mu_z\quad(f\in A)\]
+    を満たす．
+\end{example}
+
+\begin{definition}
+    \[P_r(\theta-t)=\sum^\infty_{n=-\infty}r^{\abs{n}}e^{in(\theta-t)}\quad t,\theta\in\R\]
+    を\textbf{Poisson核}という．これは，次のようにも表現できる：
+    \[P_r(\theta-t)=\frac{1-r^2}{1-2r\cos(\theta-t)+r^2}.\]
+    特に，$\forall_{0\le r<1}\;P_r(\theta-t)\ge0$である．
+    なお，$r\to1$の極限について，$(P_r)$はBanach代数$L^1(T)$の近似的単位元をなす．
+\end{definition}
+\begin{proof}
+    $z=re^{i\theta}$とすると，$(ze^{-it})^{n}=r^ne^{in(\theta-t)}$で，この実部と$r^{\abs{-n}}e^{-in(\theta-t)}$の実部は一致する．
+    よって，$P_r(\theta-t)$の実部は，次の式の実部に一致する：
+    \[1+2\sum^\infty_{n=1}(ze^{-it})^n=\frac{e^{it}+z}{e^{it}-z}=\frac{1-r^2+2ir\sin(\theta-t)}{\abs{1-ze^{-it}}^2}.\]
+\end{proof}
+
+\begin{theorem}[Poisson積分]
+    $A\subset C([\Delta])$を線型部分空間とする．$A$が多項式の全体を含み，$\forall_{f\in A}\;\sup_{z\in\Delta}\abs{f(z)}=\sup_{z\in T}\abs{f(z)}$を満たすならば，
+    任意の$f\in A$と$z\in\Delta$について，次のPoisson積分表現が出来る：
+    \[f(z)=\frac{1}{2\pi}\int^\pi_{-\pi}\frac{1-r^2}{1-2r\cos(\theta-t)+r^2}f(e^{it})dt\quad(z=re^{i\theta})\]
+\end{theorem}
+\begin{remarks}
+    逆に，任意の$T$上の可積分関数$f:T\to\C$を与えた時，これの単位円板上への延長$\o{f}:[\Delta]\to\C$であって，
+    $\sup_{z\in U}\abs{\o{f}(z)}=\sup_{z\in T}\abs{f(z)}$を満たすもの（これは調和性に同値）が一意に存在する．
+    この自然な対応を掴むのが関数解析．
+\end{remarks}
+
+\section{半平面上のPoisson核}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $H(t):=e^{-\abs{t}}$と定める．
+        \item そのFourier変換を$h_\lambda(x):=(H(\lambda t),e^{-itx})=\int^\infty_{-\infty}H(\lambda t)e^{itx}dm(t)\;(\lambda>0)$と定める．これを\textbf{上半平面におけるPoisson核}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[上半平面のPoisson核の性質]\mbox{}
+    \begin{enumerate}
+        \item $h_\lambda(x)=\sqrt{\frac{2}{\pi}}\frac{\lambda}{\lambda^2+x^2}$．
+        \item $\int^\infty_{-\infty}h_\lambda(x)dm(x)=1$．
+        \item $0<H(t)\le 1$．$H(\lambda t)\xrightarrow{\lambda\to0}1$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}
+    $f\in L^p(\R)\;(p\in[1,\infty])$に対して，$(f*h_\lambda)(x)$は上半平面上で定義された$x+i\lambda\in\bH$の調和関数である．
+\end{theorem}
+
 \chapter{実数上のFourier変換}
 
 \begin{quotation}
@@ -532,6 +658,12 @@ title=]
 \end{quotation}
 
 \section{Formal Property}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    周期関数$f\in L^2(T)$や$f\in L^1(T)$に関するFourier変換を，まずFourier係数列への対応$\F:L^1(T)\to C_0(\Z)=c_0$として考えた．では$\Z$上から$\R$上へと拡張しようとすると，ほとんどの$f\in C(T)$では失敗するが，$f\in L^p(T)\;(1<p\le\infty)$では殆ど至る所の$x\in\R$で成功する．
+    一般の関数$f\in L^1(\R)$については，Fourier変換を実数上の関数として調べる．
+\end{tcolorbox}
 
 \begin{notation}\mbox{}
     \begin{enumerate}
@@ -554,7 +686,7 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}[Fourier変換の関手性]
     $f\in L^1,\al,\lambda\in\R$とする．Fourier変換は，指標による積を平行移動に，平行移動を指標による積に変換し，畳み込みを各点積に変換する：
     \begin{enumerate}
         \item $g(x)=f(x)e^{i\al x}\Rightarrow\wh{g}(t)=\wh{f}(t-\al)$．
@@ -567,26 +699,154 @@ title=]
         \item $g(x)=f(x/\lambda)\land\lambda>0\Rightarrow g(t)=\lambda f(\lambda t)$．
         \item $g(x)=-ixf(x)\land g\in L^1\Rightarrow\wh{f}$は微分可能で$\wh{f}'(t)=\wh{g}(t)$．
     \end{enumerate}
-    (6)にように，微分を$ti$による積に変換することから，Fourier変換は常微分方程式論でも応用される．
 \end{theorem}
 \begin{remarks}
     以上の結果は，ひとえに$m$の平行移動不変性と，任意の$t\in\R$について積分核$x\mapsto e^{itx}$は$\R$の指標であることによる．
     なお，$\R$の連続な指標はすべて指数関数によって表現される．
 \end{remarks}
 
+\begin{remark}[(6)の逆]
+    微分を$ti$による積に変換することから，Fourier変換は常微分方程式論でも応用される．
+    $f,f'\in L^1$のとき，$\wh{f'}=it\wh{f}(t)$である．
+\end{remark}
+
 \section{The Inversion Theorem}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    元の世界に戻す方法があって初めて，Formal Propertyが応用上の意味を持つ．
+\end{tcolorbox}
+
+\subsection{可積分条件}
+
+\begin{discussion}[Fourier級数に関する逆転公式]
+    Fourier係数列が
+    \[c_n=(f,e^{inx})=\frac{1}{2\pi}\int^\pi_{-\pi}f(x)e^{-inx}dx\quad(n\in\Z)\]
+    であった場合，元の関数は$f(x)=\sum^\infty_{n=-\infty}c_ne^{inx}\in L^2(T)$となるのであった．
+    しかし，$f$の級数の収束は各点においては定まらない．
+    しかし，追加で$c_n\in L^1(\mu)=l^\infty$を仮定すれば，級数は一様収束するから，Fourier級数は$f$に殆ど至る所収束する．
+\end{discussion}
+
+\begin{notation}
+    任意の関数$f\in\Map(\R,\C)$と点$y\in\R$について，$f$の$y$-平行移動を
+    \[f_y(x)=f(x-y)\]
+    で表す．
+\end{notation}
+
+\begin{lemma}
+    $f\in L^p\;(1\le p<\infty)$に対する
+    平行移動写像
+    \[\xymatrix@R-2pc{
+        \R\ar[r]&L^p(\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        y\ar@{|->}[r]&f_y=(f\cdot-y)
+    }\]
+    は一様連続である．
+\end{lemma}
+
+\begin{proposition}
+    $\F:L^1\to C_0$がノルム減少的な写像(short map)であることを定立する．
+    \begin{enumerate}
+        \item $f\in L^1$ならば$\wh{f}\in C_0$である．
+        \item $\norm{\wh{f}}_\infty\le\norm{f}_1$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{灯台}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正関数$H$と，そのFourier変換$h_\lambda$であって積分が明らかなものの組を把握しておく．
+    これはなんでも良いが，Poisson核とする．
+\end{tcolorbox}
+
+\begin{proposition}
+    $f\in L^1$ならば，
+    \[(f*h_\lambda)(x)=\int^\infty_{-\infty}H(\lambda t)\wh{f}(t)e^{ixt}dm(t).\]
+\end{proposition}
+
+\begin{proposition}
+    $g\in L^\infty$は$x\in\R$において連続であるとする．このとき，
+    \[\lim_{\lambda\to 0}(g*h_\lambda)(x)=g(x).\]
+\end{proposition}
+
+\begin{proposition}
+    $f\in L^p\;(1\le p<\infty)$について，$\lim_{\lambda\to0}\norm{f*h_\lambda-f}_p=0$．
+\end{proposition}
+
+\subsection{逆転公式}
+
+\begin{theorem}[The Inversion Theorem]
+    $f,\wh{f}\in L^1$で，
+    \[g(x)=\int^\infty_{-\infty}\wh{f}(t)e^{ixt}dm(t)\quad(x\in\R)\]
+    を満たすとする．このとき，$g\in C_0$かつ$f=g\;\ae$
+\end{theorem}
+
+\begin{theorem}[The Uniqueness Theorem]
+    $f\in L^1$かつ$\wh{f}=0$ならば，$f(x)=0\;\ae$
+\end{theorem}
 
 \section{The Plancherel Theorem}
 
 \section{The Banach Algebra $L^1$}
 
+\section{急減少関数空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可積分関数の$\F$による像は可積分とは限らない．
+    そこで，$\F$が保存する性質を探したい．
+    そのうち一つは急減少性である．
+    $\F$は複素Frechet空間$S(\R^n)\subset C^\infty(\R^n)$上に線型自己同型を定める．
+\end{tcolorbox}
+
+\subsection{多重指数}
+
+\begin{definition}
+    集合$\N^d$に各点和と$l_1$-ノルム$\abs{\al}:=\al_1+\cdots+\al_d$，階乗$\al!=\al_1!\cdots\al_d!$を備えた区間
+    の元を多重指数という．
+    \begin{enumerate}
+        \item 二項係数について$\begin{pmatrix}\al\\\beta\end{pmatrix}=\begin{pmatrix}\al_1\\\beta_1\end{pmatrix}\cdots\begin{pmatrix}\al_d\\\beta_d\end{pmatrix}$とする．
+        \item $f\in C^d(\R^d)$に対する偏微分について，$\partial^\al f=\frac{\partial^{\al_1+\cdots+\al_d}}{\partial x_1^{\al_1}\cdots\partial x_d^{\al_d}}f$とする．
+        \item $x\in\R^d$に対して，$x^\al=x_1^{\al_1}\cdots x_d^{\al_d}$とする．
+    \end{enumerate}
+\end{definition}
+
+\subsection{定義}
+
+\begin{notation}
+    \[D_j:=\frac{1}{i}\pp{}{x_j},\quad D^\al=D^{\al_1}_1\cdots D^{\al_d}_d=\frac{1}{i^{\abs{\al}}}\partial^\al\]
+\end{notation}
+
+\begin{definition}
+    $f\in C^\infty(\R^n)$が\textbf{急減少関数}であるとは，$\norm{f}_{\al,\beta}:=\sup_{x\in\R^n}\Abs{x^\al D^\beta f(x)}$をノルムとして，
+    \[S(\R^n):=\Brace{f\in C^\infty(\R^n)\mid\forall_{\al,\beta\in\N^n}\;\norm{f}_{\al,\beta}<\infty}\]
+    に属することをいう．
+\end{definition}
+\begin{remarks}
+    無限回微分可能な関数であるが，$\abs{x}\to\infty$を考えたときに，任意階の導関数が，$x$の任意の負冪よりも速くゼロに収束するものをいう．
+    これは確率分布との関連で捉えると見通しが良い．どうして収束の速さがFourier変換と関係があるのだろうか．
+\end{remarks}
+
+\begin{example}[Gauss関数]
+    $\forall_{i\in\N^n}\;\forall_{a>0}\;x^ie^{-a\abs{x}^2}\in S(\R^n)$．
+\end{example}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\forall_{p\in[1,\infty]}\;S(\R^n)\subset L^p(\R^n)$．
+        \item $S(\R^n)$は複素Frechet空間をなす．
+    \end{enumerate}
+\end{theorem}
+
 \begin{thebibliography}{9}
     \bibitem{Korevaar}
     J. Korevaar "Fourier Analysis and Related Topics"
-    \bibitem{新井仁之}
-    新井仁之『フーリエ解析と関数解析学』
+    \bibitem{高橋陽一郎}
+    高橋陽一郎『実関数とFourier解析』
     \bibitem{Rudin}
     Rudin "Real and Complex Analysis" 3rd
+    \bibitem{級数}
 \end{thebibliography}
 
 \end{document}

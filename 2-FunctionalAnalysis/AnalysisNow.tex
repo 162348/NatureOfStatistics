@@ -1173,7 +1173,7 @@ title=]
 According to Helmut H. Schaefer, "the study of a locally convex space in terms of its dual is the central part of the modern theory of topological vector spaces, for it provides the deepest and most beautiful results of the subject."
 \end{tcolorbox}
 
-\subsection{Hahn-Banachの拡張定理}
+\subsection{Hahn-Banachの有界線型汎関数拡張定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=双対空間の元の存在]
@@ -1236,6 +1236,30 @@ title=双対空間の元の存在]
     $\bF=\R$の場合，セミノルムはMinkowski汎関数で，$\abs{\varphi}\le m\Rightarrow\varphi\le m$だから，これは補題の特別な場合である．
     よって，$\bF=\C$の場合を考える．
 \end{proof}
+\begin{remarks}
+    もちろん，$X$がノルム空間で，$f:Y\to\C$がその上の有界な線型汎関数であるときにも適用可能で，この場合，$\norm{F}=\norm{f}$を満たす延長が可能．
+\end{remarks}
+
+\subsection{有界線型汎関数延長定理の系}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ノルム空間$X$の双対空間$X^*$の正規化された$B^*$の元について，
+    \begin{enumerate}
+        \item 任意に選んだ$x_0\in X\setminus\{0\}$に対して$\varphi(x_0)=\norm{x_0}$を満たすものが取れる．
+        \item 任意に選んだ閉部分空間$Y$と，その外の点$x\in X\setminus Y$に対して，$Y$上で消えていて，$\varphi(x)=\inf_{y\in\R}\norm{x-y}$を満たすように取れる．
+    \end{enumerate}
+    これにより，$X$が自明でないならば，$X^*$も自明でなく，さらに$X$の点を分離することが保証される．$X$と$X^*$とのinterplayが産む豊かな理論の始まりである．
+\end{tcolorbox}
+
+\begin{proposition}[複素線型空間は実線形空間]
+    $V$を複素線型空間とする．
+    \begin{enumerate}
+        \item $f\in V^*$の実部を$u\in V^*$とする．このとき，$\forall_{x\in V}\;f(x)=u(x)-iu(ix)$．
+        \item $u\in B(V,\R)$に対して，$f(x):=u(x)-iu(ix)$と定めると，$f\in V^*$である．
+        \item $V$はノルム空間であり，$f,u\in V^*$は$\forall_{x\in V}\;f(x)=u(x)-iu(ix)$を満たすとする．このとき，$\norm{f}=\norm{u}$．
+    \end{enumerate}
+\end{proposition}
 
 \begin{corollary}[汎関数の構成]\label{cor-Hahn-Banach}
     ノルム空間$X$において，
@@ -1258,7 +1282,22 @@ title=双対空間の元の存在]
 \end{corollary}
 \begin{remarks}
     \ref{prop-標準写像の随伴}に関連する．
+    この時点ですでに，分離定理にステートメントが似てきた．
+    この系は，部分空間$Y\subset X$について，次の２条件が同値である，というようにも定式化出来る．
+    \begin{enumerate}
+        \item $x_0\in \oo{Y}$．
+        \item $Y$上で零だが，$f(x_0)\ne0$を満たす有界線型汎関数$f\in X^*$は存在しない．
+    \end{enumerate}
 \end{remarks}
+
+\begin{corollary}
+    $x\in X$のノルムは，$X^*$を用いて次のようにも表せる：
+    \[\norm{x}=\sup\Brace{\abs{f(x)}\in\bF\mid f\in B^*}.\]
+    特に，$x\in X$に関する評価写像は$\ev_x\in X^*$で，$\norm{\ev_x}=\norm{x}$．
+\end{corollary}
+\begin{proof}
+    系\ref{cor-Hahn-Banach}による．
+\end{proof}
 
 \subsection{零化空間と再双対空間}
 
@@ -4568,7 +4607,7 @@ title=]
     \begin{enumerate}
         \item $\A$の\textbf{指標}とは，全射（即ち零でない）連続線型準同型$\A\epi\C$のことをいう．\footnote{一般の群と体について定義される．}
         Banach代数については，任意の準同型は連続であることに注意．
-        \item $\A$指標全体の空間$\hat{\A}:=\Brace{\gamma\in\Hom_{\Ban\Alg}(\A,\C)\mid\dim\Im\gamma=1}$に定義される位相を\textbf{スペクトル位相}といい，この位相はコンパクトハウスドルフである．
+        \item $\A$指標全体の空間$\hat{\A}:=\Brace{\gamma\in\Hom_{\Ban\Alg}(\A,\C)\mid\dim\Im\gamma=1}$を\textbf{指標空間}または\textbf{スペクトル}といい，この空間に定義される位相を\textbf{スペクトル位相}といい，この位相はコンパクトハウスドルフである．
         $\A$が単位的でないとき，これは局所コンパクトとなる．
     \end{enumerate}
 \end{definition}
@@ -4870,17 +4909,36 @@ title=]
 
 \begin{quotation}
     積分とは，コンパクト台を持つ連続関数の空間上の，正な線型汎関数である．
-    主役は表現定理である．積分とは表現である．
+    これをRudinではpositive linear functionalと呼び続ける．
 
     Functinal analyst's dream: ideal short course in measure theory.
     積分を先に定義することで，測度はその特別な場合になる．
     積分と測度の双対性も明らかになる．
 
-    この局所コンパクト空間上のRadon測度のPercy Daniell-style\footnote{Daniell, P. J. (1918), “A General Form of Integral”, Annals of Mathematics, Second Series (Annals of Mathematics) 19 (4): 279–294}の定義\ref{thm-extension-of-Radon-integral}はBourbakiのIntegration. Chapter IXでも探求されている．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/Radon+measure}}
-    積分の公理化の試みのうち，これをDaniell積分という\footnote{\url{https://ja.wikipedia.org/wiki/ダニエル積分}}．
+    理論の完成を知らせる定理は表現定理である．積分とは表現である．
+    まず，正な線型汎関数の集合は次のように表現できる．
     \begin{theorem}[Riesz representation theorem]
-        局所コンパクトハウスドルフ空間$X$に関して，$(C_c(X))^*_+$は，$X$上の正則Borel測度全体の集合と，集合として同型である．
+        $X$を局所コンパクトハウスドルフ空間とする．
+        正な線型汎関数$C_c(X)\to\C$全体の集合(=Radon積分全体の集合)は，
+        $X$上の完備で正則なBorel測度全体の集合(=完備Radon測度全体の集合)$\wt{M}(X)_+$と，次の写像が定める全単射の対応がある．
+        \[\xymatrix@R-2pc{
+            \Hom_\C(C_c(X),\C)_+\ar[r]&\wh{M}(X)_+\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            \Lambda\ar@{|->}[r]&\mu\;\st\;\forall_{f\in C_c(X)}\;\Lambda f=\int_Xfd\mu.
+        }\]
     \end{theorem}
+    次に$C_c(X)$上の有界線型汎関数の集合は次のように表現できる．なお，$C_c(X)$は$C_0(X)$上稠密であるから，$C_0(X)$上の有界線型汎関数と全単射の対応がつく．
+    \begin{theorem}[Riesz-Markov representation theorem]
+        $X$を局所コンパクトハウスドルフ空間とする．
+        有限な複素Radon電荷全体の集合$M(X)$は，全変動ノルム$\norm{\Phi}:=\abs{\Phi}(1)<\infty$についてBanach空間をなす．
+        このとき，次の対応は等長同型，すなわち，Banach空間の同型を与える．
+        \[\xymatrix@R-2pc{
+            C_0(X)^*\ar[r]&M(X)\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            \Phi\ar@{|->}[r]&\mu\;\st\;\forall_{f\in C_0(X)}\int_Xfd\mu=\Phi f
+        }\]
+    \end{theorem}
+    第２可算な$X$などについて，Radon電荷とは正則な符号付きBorel測度にほかならない．
 
     いままでのが局所凸位相線型空間論だとしたら，ここからはRiesz空間＝束線型空間を対称にした順序線型空間論とも見れる．
 \end{quotation}
@@ -4951,6 +5009,8 @@ title=]
 title=]
     まず，ネットの極限としての閉包上に対する
     $C_c(X)$上の正定値線型汎関数$\int$の延長を議論する．
+    この局所コンパクト空間上のRadon測度のPercy Daniell-style\footnote{Daniell, P. J. (1918), “A General Form of Integral”, Annals of Mathematics, Second Series (Annals of Mathematics) 19 (4): 279–294}の定義\ref{thm-extension-of-Radon-integral}はBourbakiのIntegration. Chapter IXでも探求されている．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/Radon+measure}}
+    積分の公理化の試みのうち，これをDaniell積分という\footnote{\url{https://ja.wikipedia.org/wiki/ダニエル積分}}．
 \end{tcolorbox}
 
 \begin{definition}[Radon integral, monotone limits]\mbox{}
@@ -5197,7 +5257,7 @@ title=単関数各点近似が出来るクラスが可測関数である]
 
 \subsection{可測集合}
 
-\begin{definition}
+\begin{definition}\label{def-measurable-sets}
     $X$を局所コンパクトハウスドルフ空間とする．
     \begin{enumerate}
         \item $\cC$で$X$のコンパクト部分集合系とする．
@@ -5286,8 +5346,11 @@ title=]
     このとき，$\mu_*$はRadon測度で，$\mu^*$は外正則：
     \[\mu(A)=\inf\Brace{\mu(B)\in[0,\infty]\mid A\subset B,B:\text{open}}\]
     で$\mu_*\le\mu^*$を満たす．
-    また，$A$が$\M^1$の可算合併として表せるとき，$\mu_*(A)=\mu^*(A)$．
+    また，$A$が測度確定な可測集合$\M^1(\subset\M)$\ref{def-measurable-sets}の可算合併として表せるとき，$\mu_*(A)=\mu^*(A)$．
 \end{proposition}
+\begin{remarks}
+    したがって，$X$が第２可算性などの条件を満たすならば，Radon測度とは正則Borel測度に他ならない．
+\end{remarks}
 
 \subsection{Rieszの表現定理}
 
@@ -5616,7 +5679,7 @@ title=]
 \end{tcolorbox}
 
 \begin{definition}[Radon charge]
-    Radon電荷とは，線型汎関数$\Phi:C_c(X)\to\R$であって，
+    \textbf{(複素)Radon電荷}とは，線型汎関数$\Phi:C_c(X)\to\C$であって，
     \[\forall_{f\in C_c(X)_+}\;\sup\Brace{\abs{\Phi(g)}\ge0\mid g\in C_c(X),\abs{g}\le f}<\infty\]
     を満たすものとする．
 \end{definition}
@@ -5842,6 +5905,36 @@ title=]
 \begin{proposition}
     等長同型$\Phi:L^1(X)\mono M(X)$は，$L^1(G)$をある$M(G)$の$*$-不変な閉イデアル上に移す対合代数の$*$-同型である．
 \end{proposition}
+
+\chapter{von Neumann環}
+
+\section{作用素位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    von Neumannの量子力学の基礎づけに限らず，種々の応用において一様作用素位相は強すぎる．
+    そこで，作用素弱位相が注目された．
+\end{tcolorbox}
+
+\begin{definition}[uniform operator topology, weak operator topology, strong operator topology]
+    $V,W\in\TVS$を位相線形空間，$L(V,W):=\Hom_\TVS(V,W)$をその間の連続線型作用素全体のなす空間とする．
+    \begin{enumerate}
+        \item $V,W$をノルム空間とする．これが定める作用素ノルム$p(A):=\sup_{v\ne0}\frac{p_W(Av)}{p_V(v)}$が定める位相を，\textbf{一様作用素位相}という．
+        \item $U(x,f):=\Brace{A\in L(V,W)\mid\abs{f(A(x))}<1}$として，$(U(x,f))_{x\in V,f\in W^*}$を$0$の開近傍系の基底として生成される位相を，\textbf{弱作用素位相}という．作用素列$(A_n)$が$A$に弱作用素位相で収束することは，任意の$x\in X$について$(A_n(x))$が$(A(x))$に$W$の弱位相に関して収束する\footnote{すなわち任意の有界線型汎関数$f\in W^*$について$f(A_n(x))\to f(A(x))$．}ことに同値．
+        \item $N(x,U):=\Brace{A\in L(V,W)\mid Av\in U}$として，$(N(x,U))_{x\in V,0\in U\osub W}$を$0$の開近傍系の基底として生成される位相を，\textbf{作用素強位相}という．作用素列$(A_n)$が$A$に強作用素位相で収束することは，任意の$x\in X$について$(A_n(x))$が$(A(x))$に$W$にてノルム収束することに同値．
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    局所コンパクト位相群$G$のユニタリ表現$G\to U(H)$を考えるに際して，$U(H)$には作用素強位相を入れ，ノルム位相を用いないのは，$U(H)$にノルム位相を入れると多くの表現が連続ではなくなってしまうためである．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/operator+topology}}
+\end{remark}
+
+\section{von Neumann環の定義}
+
+\begin{definition}
+    $C^*$-環$B(H)$の部分$*$-代数であって，単位元$1$を含み，作用素弱位相で閉じたものを\textbf{von Neumann環}という．
+    $C^*$-環であって，あるvon Neumann環と同型でもあるようなものを$W^*$-環という．
+\end{definition}
 
 \chapter{非線形関数解析}
 
