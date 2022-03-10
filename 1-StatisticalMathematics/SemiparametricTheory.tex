@@ -485,7 +485,7 @@ title=]
 \chapter{経験過程論}
 
 \begin{quotation}
-    大数の法則や中心極限定理などの，推定量の大標本漸近理論をBanach空間値の確率変数にまで拡張する試みを，経験過程論という．
+    大数の法則や中心極限定理などの，推定量の大標本漸近理論をBanach空間値の確率変数=確率過程にまで拡張する試みを，経験過程論という．
     ここで退化していた「一様」の概念が出現し，Banach空間のノルムと関連する．
 
     そもそも確率変数・分布の収束とは，本質的に2-射的な概念で，圏論的な意味での極限にすごく近いものがあるな．
@@ -555,7 +555,7 @@ title=経験過程論]
 \end{discussion}
 
 
-\section{弱収束の理論}
+\section{一般化された弱収束の理論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -615,7 +615,8 @@ title=]
 \end{remark}
 
 \begin{example}[Borel可測でない確率過程：$D$-値過程]\label{exp-non-measurable-process}
-    $B([0,1])$は一様ノルムに関してBanach空間であり，一様距離を定める．これの部分空間$D([0,1])\subset B([0,1])$としてSkorokhod空間を考えると，これはSkorokhod距離よりも（？）．とにかく違う．
+    $B([0,1])$は一様ノルムに関してBanach空間であり，一様距離を定める．これの部分空間$D([0,1])\subset B([0,1])$としてSkorokhod空間を考えると，
+    これはSkorokhod距離とは異なる．
     この位相が定めるBorel $\sigma$-加法族を$\D$とし，$\B$を$[0,1]$のBorel $\sigma$-加法族，$\lambda$を$[0,1]$のLebesgue測度とする．
     一様分布に独立に従う確率変数$\xi_i:([0,1],\B,\lambda)^n\to([0,1],\B,\lambda)\;(i\in[n])$を射影として定める．
     このとき，
@@ -625,11 +626,10 @@ title=]
     \end{itemize}
     は$D$空間への写像$[0,1]^n\to D([0,1])$を定めるが，いずれも$\D/\B^n$-可測ではない．
     特に，$\sigma$-加法族を$\D$が大きすぎるので，$\B^n$では要素数が足りない．
+    ユニタリ表現における$B(H)$に入れる位相で，ノルム位相では強すぎるという状況に似ている．
     $n=1$の場合で実際に見てみると，確率変数$\xi(\om)=\om\in[0,1]$に対して，
     経験分布関数はただの特性関数$\chi_{\om}$となるから，関数$z:[0,1]\to D([0,1])$を$z_x(t):=\chi_{[x,1]}(t)-t$と定めるとこれは$z_x\in D([0,1])$で，一様経験過程は$X_1(t)=z_{\xi(\om)}(t)=z_\om(t)$と表せる．
     $X_1^{-1}(A)\notin\B$を満たす$A\in D([0,1])$を構成する．$[0,1]$の非Borel集合$H\notin B$を一つとり，$A:=\cup_{x\in H}B_{1/2}(z_x)$と定めれば良い．これは$D([0,1])$の開集合であるから$A\in\D$であるが，$D([0,1])$の距離は一様距離としたから，$x_1\ne x_2$ならば，$d(z_{x_1},z_{x_2})=\sup_{t\in[0,1]}\abs{\chi_{x_1,1}(t)-\chi_{x_2,1}(t)}=1$となるので，$\forall_{x\in[0,1]}\;B_{1/2}(z_x)\cap A=\{z_x\}$であり，$X_1^{-1}(A)=\Brace{x\in[0,1]\mid z_x\in A}=H\notin B$である．
-
-    狂ってるな，関数空間の描像は難しすぎる．
 \end{example}
 
 \begin{definition}[RCLL / càdlàg, càglàd, Skorokhod space]
@@ -673,17 +673,12 @@ title=]
     これは見事だ．
 \end{remarks}
 
-\begin{tbox}{red}{8/8/2021}
-    Banach空間，弱収束，$D$空間
-\end{tbox}
-
-\subsection{外積分}
+\subsection{外積分論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     Kosorok\cite{Kosorok}の6.2そのまんまである．
-    伊藤清の確率積分と同様かもしれないが，この弱収束の理論の外積分による拡張は極めて自然で，まさに正道という感じがする．
-    というのも，外測度とほとんど同様の議論を関数空間上で再展開しただけである．
+    外測度とほとんど同様の議論を関数空間上で再展開しただけである．
     可測な写像$U:\Om\to\o{\R}$を用いて，その$E:\Meas(\Om,\oR)\to\oR$による像の下限と定めるのだが，使うときは列をとって議論する．
 \end{tcolorbox}
 
@@ -790,6 +785,20 @@ title=]
     いや，こういう対称性破れは，Borelクラスの位相的正則性のときから見慣れているものと同根かもしれない．
 \end{tcolorbox}
 
+\begin{lemma}
+    任意の写像$S,T\in\Map(\Om,\o{\R})$に対して，次の関係式が意味を持つならば，確率$1$で成り立つ．
+    \begin{enumerate}
+        \item $S_*+T^*\le(S+T)^*\le S^*+T^*$：等号成立は$S$が可測であるとき．
+        \item $S_*+T_*\le(S+T)_*\le S_*+T^*$：等号成立は$T$が可測であるとき．
+        \item $(S-T)^*\ge S^*-T^*$．
+        \item $\abs{S^*-T^*}\le\abs{S-T}^*$．
+        \item $\forall_{c\in\R}\;(1_{\Brace{T>c}})^*=1_{\Brace{T^*>c}}$．
+        \item $\forall_{c\in\R}\;(1_{\Brace{T\ge c}})^*=1_{\Brace{T_*\ge c}}$．
+        \item $(S\lor T)^*=S^*\lor T^*$．
+        \item $(S\land T)^*\le S^*\land T^*$：等号成立は$S$が可測であるとき．
+    \end{enumerate}
+\end{lemma}
+
 \begin{lemma}\label{lemma-character-of-minimal-measurable-set}
     任意の集合$A,B\subset\Om$に対して，
     \begin{enumerate}
@@ -815,6 +824,22 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\begin{lemma}
+    $T:\Om\to\R$を写像，$\phi:\R\to\R$は広義単調で$\o{\R}$への延長をもつとする．次の関係式が意味をもつならば，それは確率$1$で成り立つ．
+    \begin{enumerate}
+        \item $\phi$が広義単調増加ならば，
+        \begin{enumerate}[(a)]
+            \item $\phi(T^*)\ge(\phi(T))^*$：$\phi$が$[-\infty,\infty)$上左連続のとき等号成立．
+            \item $\phi(T_*)\le(\phi(T))_*$：$\phi$が$(-\infty,\infty]$上右連続のとき等号成立．
+        \end{enumerate}
+        \item $\phi$が広義単調減少ならば，
+        \begin{enumerate}[(a)]
+            \item $\phi(T^*)\le(\phi(T))_*$：$\phi$が$[-\infty,\infty)$上左連続のとき等号成立．
+            \item $\phi(T_*)\ge(\phi(T))^*$：$\phi$が$(-\infty,\infty]$上右連続のとき等号成立．
+        \end{enumerate}
+    \end{enumerate}
+\end{lemma}
+
 \subsubsection{Chebyshevの不等式}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -835,7 +860,7 @@ title=]
     \end{align*}
 \end{proof}
 
-\subsubsection{Fubiniの定理}
+\subsubsection{完全性とFubiniの定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -905,7 +930,7 @@ title=可分・緊密な確率変数]
 \begin{definition}[tight, separable, pretight]
     距離空間上のBorel確率空間$(D,\B(D),L)$上のBorel可測写像$X:\Om\to D$について，
     \begin{enumerate}
-        \item Borel可測写像$X:\Om\to D$が\textbf{緊密}であるとは，次が成り立つことをいう：$\forall_{\ep>0}\;\exists_{K\compsub D}\;L^X(K)\ge 1-\ep$．\footnote{ある種の$\sigma$-compect性や$\sigma$-有限性の拡張に思える．}
+        \item Borel可測写像$X:\Om\to D$が\textbf{緊密}であるとは，内部正則であることをいう：$\forall_{\ep>0}\;\exists_{K\compsub D}\;L^X(K)\ge 1-\ep$．\footnote{ある種の$\sigma$-compect性や$\sigma$-有限性の拡張に思える．}
         \item 可算な稠密部分集合が存在する位相空間$X$，すなわち$X$の任意の空でない開集合が交わりを持つような$X$の点列が存在するような空間を\textbf{可分}という．
         \item Borel可測写像$X:\Om\to D$が\textbf{可分}であるとは，可分な可測集合$A\in\B(D)$が存在して$L^X(A)=1$を満たすことをいう．
         \item 測度$L$が\textbf{プレタイト}であるとは，任意の$\ep>0$に対して，全有界な可測集合$B\in\B(D)$であって，$L^X(B)\ge 1-\ep$を満たすものが存在することをいう．
@@ -944,15 +969,11 @@ title=可分・緊密な確率変数]
     $D=\R^n$のとき，$\R^n$の全ての部分集合は$\sigma$-コンパクトだから，全てのBorel確率測度は緊密である．
 \end{example}
 
-\begin{tbox}{red}{}
-    可分性と距離化可能性などの位相空間論の花形は，関数空間で暴れるのか！
-\end{tbox}
-
 \subsection{弱収束の定義と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    任意の写像列の，Borel確率変数への弱収束を議論する
+    任意の（可測とは限らない）写像列の，Borel確率変数への弱収束を議論する
     （したがって弱収束とは純測度論的な概念ではない）．
     これには，$B(D)$を，そしてRiesz空間の関数を媒介に用いる．
 \end{tcolorbox}
@@ -960,18 +981,15 @@ title=]
 \begin{definition}[weak convergence of mappings]
     確率空間$(\Om_n,\A_n,P_n)$からの$D$-値写像の列を$(X_n)$とする．
     \begin{enumerate}
-        \item $(X_n)$が$(D,\D)$上のBorel確率測度$L:\D\to[0,1]$に\textbf{弱収束}するとは，次が成り立つことをいう：$\forall_{f\in B(D)}\;E^*[f(X_n)]\xrightarrow{n\to\infty}E[f]$．
-        \item $(X_n)$がBorel可測写像$X:\Om\to D$に\textbf{弱収束}するとは，次が成り立つことをいう：$\forall_{f\in B(D)}\;E^*[f(X_n)]\xrightarrow{n\to\infty}E[f(X)]$．
+        \item $(X_n)$が$(D,\D)$上のBorel確率測度$L:\D\to[0,1]$に\textbf{弱収束}するとは，次が成り立つことをいう：$\forall_{f\in C_b(D)}\;E^*[f(X_n)]\xrightarrow{n\to\infty}E[f]$．
+        \item $(X_n)$がBorel可測写像$X:\Om\to D$に\textbf{弱収束}するとは，次が成り立つことをいう：$\forall_{f\in C_b(D)}\;E^*[f(X_n)]\xrightarrow{n\to\infty}E[f(X)]$．
     \end{enumerate}
     ただし，各$E^*[f(X_n)]$は$P_n$の定める外積分で，$E[f(X)]$は$L$の定める期待値である．
 \end{definition}
-\begin{remark}
-    何か，Hom集合を$B(D)$としたときの図式の可換性に言及しているように思える．
-\end{remark}
 
 \begin{definition}[Riesz space / vector lattice]\mbox{}
     \begin{enumerate}
-        \item $\F\subset\wt{B}(D)$が実線型空間かつ$\land,\lor$について束をなすとき，\textbf{Riesz空間}または\textbf{線型束}という．
+        \item $\F\subset l^\infty(D)$が実線型空間かつ$\land,\lor$について束をなすとき，\textbf{Riesz空間}または\textbf{線型束}という．
         \item $\F$が$D$の各点を分離するとは，$\forall_{x,y\in D}\;x\ne y\Rightarrow[\exists_{f\in\F}\;f(x)\ne f(y)]$．
     \end{enumerate}
 \end{definition}
@@ -980,7 +998,7 @@ title=]
     \begin{enumerate}
         \item Lipschitzノルムを$\norm{f}_\lip:=\inf\Brace{L\in\o{R}\mid\forall_{x,y\in D}\;\abs{f(x)-f(y)}\le Ld(x,y)}=\sup_{x\ne y\in D}\frac{\abs{f(x)-f(y)}}{d(x,y)}$と定める．
         \item Lipschitzノルムが有限となる関数を\textbf{Lipschitz（連続）関数}という．
-        \item 上限が１以下またはshortな\footnote{非拡大な写像をshortという．縮小写像はshort mapである．}Lipschitz連続関数の空間の部分空間$\BL_1(D):=\Brace{f\in B(D)\mid \norm{f}_\infty\lor\norm{f}_\lip\le1}\subset\BL(D)$に名前をつける．
+        \item 上限が１以下またはshortな\footnote{非拡大な写像をshortという．縮小写像はshort mapである．}Lipschitz連続関数の空間の部分空間$\BL_1(D):=\Brace{f\in C_b(D)\mid \norm{f}_\infty\lor\norm{f}_\lip\le1}\subset\BL(D)$に名前をつける．
     \end{enumerate}
 \end{definition}
 
@@ -1002,14 +1020,14 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{lemma}[弱収束のwell-definedness]\label{lemma-well-definedness-of-weak-convergence}
+\begin{lemma}[弱収束の概念の安定性]\label{lemma-well-definedness-of-weak-convergence}
     距離空間$D$上のBorel確率測度$L_1,L_2$について，次の
     (1)と(2)は同値である．$L_1,L_2$が可分ならば(3)も同値で，緊密ならば(4)も同値である．
     \begin{enumerate}
         \item $L_1=L_2$．
-        \item $\forall_{f\in B(D)}\;\int_DfdL_1=\int_DfdL_2$．
+        \item $\forall_{f\in C_b(D)}\;\int_DfdL_1=\int_DfdL_2$．
         \item $\forall_{f\in\BL_1(D)}\;\int_DfdL_1=\int_DfdL_2$．
-        \item $\F\subset B(D)$が定数関数を含み，$D$の各点を分離するベクトル束ならば，$\forall_{f\in\F}\;\int_DfdL_1=\int_DfdL_2$．
+        \item $\F\subset C_b(D)$が定数関数を含み，$D$の各点を分離するベクトル束ならば，$\forall_{f\in\F}\;\int_DfdL_1=\int_DfdL_2$．
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
@@ -1223,7 +1241,7 @@ title=]
     この部分がなくとも，$D_g$がBorel集合である（したがって可測である）ことと，測度が$0$であることが導ける．
 \end{remark}
 
-\subsection{Prokhorovの定理}
+\subsection{相対コンパクト性の特徴付け：Prokhorovの定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1352,7 +1370,7 @@ title=]
     漸近的にタイトであることと，ある$B(D)$の部分代数について「漸近的可測」であれば良い．
 \end{tbox}
 
-\subsection{Slutskyの定理}
+\subsection{収束性の遺伝：Slutskyの定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=Prokhorovの定理で迂回できる]
@@ -1438,31 +1456,6 @@ title=Prokhorovの定理で迂回できる]
     実際は，almost surelyに成り立つ．
 \end{remarks}
 
-\subsection{$*$-弱位相}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    写像の空間上の弱収束は，これを定義する位相を，確率測度の空間$\M(D)$上に定める．
-    凸包と正則凸包がどこか通じ合っている気がする．
-\end{tcolorbox}
-
-\begin{definition}[weak topology of the space of measures]
-    $D$を距離空間とする．
-    \[U_{\phi,x,\delta}:=\Brace{\mu\in\M(D)\;\middle|\;\Abs{\int_D\phi d\mu-x}<\delta}\]
-    と定めると，
-    \[\Brace{U_{\phi,x,\delta}\subset\M(D)\;\middle|\;\phi\in B(D),x\in\R,\delta>0}\]
-    を開基として生成される位相を\textbf{弱位相}という．
-\end{definition}
-
-\begin{proposition}\mbox{}
-    \begin{enumerate}
-        \item $D$が可分である時，$\M(D)$は距離化可能かつ可分である．Lévy-Prokhorov距離など．
-        \item $D$がコンパクトである時，$\M(D)$もコンパクトである．
-        \item $D$がポーランドである時，$\M(D)$もポーランドである．
-        \item $D$が可分である時，Dirac測度としての標準的な埋め込み$D\mono\M(D)$の像の凸包は稠密である．
-    \end{enumerate}
-\end{proposition}
-
 \subsection{確率収束と概収束}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1523,7 +1516,7 @@ title=]
     $T=2$の場合が結合変数であるが，その場合でも失敗するのであるから，確率過程は扱いが難しい．
 \end{tcolorbox}
 
-\begin{tbox}{red}{目標}
+\begin{tbox}{red}{問題意識}
     タイトなGauss過程は，最低限の一様連続性を持つため，非常に大事なクラスとなる．
     このクラスに弱収束するための必要十分条件\ref{cor-characterization-of-weak-convergence-of-stochastic-process-2}を探ることを考える．
     条件(2)の漸近的タイト性が厄介な課題となり，経験過程論の発展の重要な動機の一つであってきた．
@@ -1536,6 +1529,7 @@ title=]
     見本過程とは評価写像$\ev_\om$による確率過程の像である．これに注目するという技法，
     評価写像が連続であることを用いる論法も，複素解析と少し似ている．
     証明においては，「有限個の点で評価すると必ず有界連続であるようなクラス$\F\subset B(\wt{B}(T))$」がRiesz空間になることに注目する．
+    すると，$l^\infty(T)$上の確率分布は，任意の有限周辺分布が一致するならば，分布全体も一致する．
 \end{tcolorbox}
 
 \begin{definition}[stochastic process, sample path]\mbox{}
@@ -1605,6 +1599,8 @@ title=]
     収束先の同値類は「バージョン」である，とわかった．
 \end{remarks}
 
+\subsection{弱収束の特徴付け：漸近的タイト性}
+
 \begin{theorem}[タイトな確率過程に弱収束する条件の特徴付け１]\label{thm-characterization-of-weak-convergence-of-stochastic-process-1}
     $(X_n:\Om_n\to\wt{B}(T))$を写像の列とする．
     \begin{enumerate}
@@ -1642,6 +1638,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=タイトな可測関数に収束するための十分条件を探るために]
+    前節で，弱収束を示すには，漸近的タイト性と有限周辺分布の収束を示せば良いと解った．
     周辺写像の収束の議論は，Euclid空間上の弱収束の証明のためのテクニックを用いて議論できるから，最終的に一般の確率過程の弱収束の特徴付け\ref{thm-characterization-of-weak-convergence-of-stochastic-process-1}はAscoli-Arzelàの定理と似たステートメント\ref{cor-characterization-of-weak-convergence-of-stochastic-process-2}に変形できる．
 \end{tcolorbox}
 

@@ -1529,7 +1529,7 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{definition}[seminorm topology]
+\begin{definition}[seminorm topology]\label{def-seminorm-topology}
     線型空間$X$とこれを分離するセミノルムの族$\F$を考える．すなわち，関数族$\F\times X\to\Map(X,\R);(m,y)\mapsto m(\cdot-y)$は$X$の点を分離する．
     これが$X$に定める始位相を，\textbf{$\F$が定めるセミノルム位相}とする．\footnote{一般に，擬距離の族によって定められた位相を持つ位相空間を，\textbf{ゲージ空間}という．}
     換言すれば，次のフィルター準基が各$\O(x)$に生成する位相である：
@@ -1561,7 +1561,7 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{proposition}[局所凸性の特徴付け]
+\begin{proposition}[局所凸性の特徴付け]\label{prop-characterization-of-locally-convex-spaces}
     位相線型空間$X$について，次の２条件は同値．
     \begin{enumerate}
         \item $X$は局所凸である．
@@ -1647,16 +1647,9 @@ title=]
     この議論を一般化すると，\textbf{凸集合が閉であるという条件は，同じ双対を持つどの局所凸位相についても同値である}．
 \end{remarks}
 
-\subsection{Hahn-Banachの分離定理}
+\subsection{絶対凸集合}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Topにおける「正規性」にあたるものは，TVSでは
-    「局所凸」である．
-    Among non-locally convex spaces, however, there are examples such that the only continuous linear functional is the constant map onto $0 \in k$.\footnote{\url{https://ncatlab.org/nlab/show/linear+functional}}
-\end{tcolorbox}
-
-\begin{definition}[balanced]
+\begin{definition}[balanced, absolutely convex]
     $\bF$-線型空間$X$の部分集合$C$について，
     \begin{enumerate}
         \item $\forall_{\al\in\bF}\;\abs{\al}\le 1\Rightarrow\al C\subset C$を満たすとき，$C$を\textbf{均衡集合}または\textbf{円板}という．
@@ -1665,13 +1658,22 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[絶対凸性の特徴付け]
     $\bF$-線型空間$X$の部分集合$C$について，次の２条件は同値．
     \begin{enumerate}
         \item $C$は絶対凸である．
         \item $\forall_{x,y\in C}\;\forall_{\lambda_1,\lambda_2\in\bF}\;\abs{\lambda_1}+\abs{\lambda_2}\le 1\Rightarrow \lambda_1x+\lambda_2y\in C$．
     \end{enumerate}
 \end{lemma}
+
+\subsection{Hahn-Banachの分離定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Topにおける「正規性」にあたるものは，TVSでは
+    「局所凸」である．
+    Among non-locally convex spaces, however, there are examples such that the only continuous linear functional is the constant map onto $0 \in k$.\footnote{\url{https://ncatlab.org/nlab/show/linear+functional}}
+\end{tcolorbox}
 
 \begin{lemma}
     $X$を位相線型空間，$C\osub X$を$0$における凸開近傍とする．
@@ -1773,7 +1775,7 @@ title=]
 \section{$w^*$-コンパクト}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=この位相が，無限をコンパクトに翻訳し，取扱可能にしてくれる．]
     Banach空間上の汎関数のなす空間＝双対空間（例えば測度の空間など）の解析にあたって，最も大事な位相である$w^*$-位相を考える．
     コンパクト集合がたくさんあることが良い．
     特にコンパクトな凸集合には強力な一般論があり，基本的な対象となる．
@@ -5908,6 +5910,13 @@ title=]
 
 \chapter{von Neumann環}
 
+\begin{quotation}
+    量子力学の「自然数，実数などの古典的な数学的対象を，すべて複素Hilbert空間上の作用素を用いて考えよ」という天啓から始まった
+    作用素環の理論は，当然のように，数学全体の基礎づけの役割も果たし得る．
+    作用素環の数理構造を解析しているうちに，病理的な対象でさえも場の量子論に自然に現れることが判明するという，逆の結果さえ生まれた．
+
+\end{quotation}
+
 \section{作用素位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -5946,35 +5955,152 @@ title=]
 
 \section{Fréchet空間}
 
+\subsection{定義１と特徴付け}
+
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    完備なノルム空間をBanach空間といい，完備なセミノルム空間をFréchet空間という．
-    Banach空間についての基本的な結果はFréchet空間に拡張できる．
+    Fréchet空間とは，斉次性を緩めたノルムを備えた空間($F$-ノルム空間という)で，そのノルム位相について完備であるものをいう．
+    なお，セミノルム空間はHausdorffでないから，「完備なセミノルム空間」という概念は筋が悪い．が，セミノルム可算族が定めるセミノルム位相はHausdorff足り得る\ref{def-seminorm-topology}．
+    そして，セミノルム可算族が定める位相について完備な空間はFréchet空間の特徴付けとなる．
+    さらに，Fréchet空間とは，距離化可能な完備なHausdorff局所凸位相線形空間なるクラスに一致することもわかる（距離がノルムから来ているかは不問）．なお，このとき距離関数は平行移動不変性を持つように選べる．
+    こうして，Banach空間の一般化として極めて安定な概念が見つかった．
+    Banach空間の性質の大部分はFréchet空間に一般化出来る．
 \end{tcolorbox}
 
-\begin{definition}[Fréchet space]\mbox{}
+\begin{definition}[$F$-norm, $F$-space, Frechet space]
+    $V$を$K$-線型空間とする．$\norm{-}:V\to K$を関数とする．
     \begin{enumerate}
-        \item 局所凸空間$E$の位相が距離$d$によって距離化可能で，この距離について完備であるとき，これを\textbf{Fréchet空間}という．
-        \item 射を連続線型写像とすると，Fréchet空間は圏TVSの充満部分圏をなす．
+        \item 次の3条件を満たすとき，$\norm{-}$を\textbf{$G$-[セミ]ノルム}という．\footnote{ノルム空間のunderlying spaceをアーベル群について一般化した時に適切となるノルム概念である．}
+        \begin{enumerate}[(a)]
+            \item 正：$\norm{0_V}=0$．$[\norm{x}=0\Rightarrow x=0_V]$
+            \item \textbf{$-1$の作用}：$\forall_{x\in V}\;\norm{-x}=\norm{x}$．
+            \item 三角不等式：$\forall_{x,y\in V}\;\norm{x+y}\le\norm{x}+\norm{y}$．
+        \end{enumerate}
+        \item $G$-[セミ]ノルムが$V$に定める擬距離が定める位相について，スカラー乗法$K\times V\to V;(a,x)\mapsto ax$が連続であるとき，これを\textbf{$F$-[セミ]ノルム}という．
+        \item そのノルム位相が完備な$F$-ノルム空間を\textbf{$F$-空間}という：すなわち，任意のCauchyネットが収束する$F$-ノルム空間を$F$-空間という．
+        \item $F$-空間のノルム位相が局所凸であるとき，これを\textbf{Fréchet空間}という．射を連続線型写像とすると，Fréchet空間は圏TVSの充満部分圏をなす．
     \end{enumerate}
 \end{definition}
 
-\begin{example}\mbox{}
+\begin{example}[Frechet空間]\mbox{}
     \begin{enumerate}
+        \item Lebesgue空間$l^p\;(0<p<1)$はFrechet空間ではないが，$F$-空間である．なお，この空間の$p$-ノルムは，三角不等式を成り立たせるために$p$乗根を省いて，$\norm{x}_p=\sum_{i}\abs{x_i}^p$とする．
         \item コンパクトな可微分多様体上の可微分写像の空間$C^\infty(X)$はFréchet空間である．
         \item コンパクトでない可微分多様体でも，$C^\infty(\R)$などはFréchet空間となる．
         \item Lebesgue空間$L^p(X)$は，$p<1$のときFréchet空間でない局所凸線型空間となる．
-        \item 射影極限$\R^\infty:=\varprojlim_n\R^n$（位相線型空間としての直積として得られる空間）はFréchet空間となる．
+        \item 射影極限$\R^\infty:=\varprojlim_n\R^n$（位相線型空間としての直積として得られる空間）はFréchet空間となる．つまり，射影$p^n:\R^\infty\to\R^n$と$\R^n$上のノルム$\R^n\to\R$との合成の族$(p^n\circ\norm{-}_n)_{n\in\N}$はセミノルムの族になるが，これが定める位相について完備である．
     \end{enumerate}
 \end{example}
 
-\begin{proposition}
+\begin{lemma}[ノルムの$F$-性は距離でいうと平行移動不変性]\mbox{}
+    \begin{enumerate}
+        \item $F$-ノルムの定める距離$d:V\times V\to \R,d(x,y):=\norm{x-y}$は，平行移動不変性を満たす：$\forall_{x,y,a\in V}\;d(x+a,y+a)=d(x,y)$．
+        \item 逆に，平行移動不変な距離$d:V\times V\to \R$について，$\norm{x-y}:=d(x-y,0)$と定めると，これは$F$-ノルムである．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 明らか：$d(x+a,y+a)=\norm{(x+a)-(y+a)}=d(x,y)$．
+        \item 正であることは明らか．$-1$による作用について，$\norm{-x}=d(-x,0)=d(0,x)=d(x,0)=\norm{x}$．
+        三角不等式は
+        \[\norm{x+y}=d(x,-y)\le d(x,0)+d(0,-y)=\norm{x}+\norm{y}.\]
+    \end{enumerate}
+\end{proof}
+\begin{remarks}[距離の言葉による特徴付け]
+    $F$-空間を距離の言葉で定義すると，平行移動不変距離$d:V\times V\to \R$について完備な位相線形空間を定めること（$d$が定める位相についてスカラー乗法と加法が連続であること）をいう．
+    さらにこれが局所凸であるとき，Frechet空間という．
+\end{remarks}
+
+\subsection{定義２とBanach空間との関係}
+
+\begin{definition}[ゲージ空間としての捉え方]
+    $V$の点を分離するセミノルムの列$\F=(\norm{-}_n)_{n\in\N}$が線型空間$V$に定めるセミノルム位相$\O$を考える．
+    \begin{enumerate}
+        \item $\O$はHausdorffになり\ref{def-seminorm-topology}，
+        \item さらに$(V,\O)$は局所凸である\ref{prop-characterization-of-locally-convex-spaces}．
+        \item $d(x,y):=\sup_{n\in\N}\norm{x-y}_n=0$とすると，これはこのセミノルム位相$\O$を定める距離であり，平行移動について不変である．すなわち，$(V,\O)$はFrechet空間である．
+    \end{enumerate}
+\end{definition}
+\begin{proof}
+    (3)を示す．
+    \begin{enumerate}[(a)]
+        \item $d$は非負関数であり，$d(x,y)=0$のとき$\forall_{n\in\N}\;\norm{x-y}=0$である．$\F$は$V$の点を分離することから，これは$x=y$を意味する．
+        \item 対称律は明らか．
+        \item \begin{align*}
+            d(x,y)=\sup_{n\in\N}\norm{x-y}_n&\le\sup_{n\in\N}\paren{\norm{x-z}_n+\norm{z-y}_n}\\
+            &\le d(x,z)+d(z,y).
+        \end{align*}
+        \item 平行移動不変性も明らか．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[Banach空間との関係]
     Fréchet空間$X$について，次の２条件は同値．
     \begin{enumerate}
         \item $X^*$はFréchet空間である．
         \item $X$はBanach空間である．
     \end{enumerate}
 \end{proposition}
+
+\subsection{定義３と総覧}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実は，Frechet空間の定義は次の形にまで簡潔になる．\footnote{\url{http://www2.math.uni-wuppertal.de/~vogt/vorlesungen/fs.pdf}}
+    以上の議論をさらに洗練させると，Frechet空間の同値な4つの定義は，次の補題の形にまとまる．
+\end{tcolorbox}
+
+\begin{definition}
+    完備な局所凸線型空間であって，距離化可能であるものを\textbf{Frechet空間}という．
+\end{definition}
+
+\begin{lemma}[Frechet空間の特徴付け]
+    局所凸空間$E$について，次の４条件は同値．
+    \begin{enumerate}
+        \item $E$は距離化可能である．
+        \item $E$には，$0$の開近傍の基底であって，可算なものが存在する．
+        \item $E$は可算なセミノルムの基本系が存在する．
+        \item $E$の位相は，ある平行移動不変な距離によって与えられる．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Banach空間論と並行な議論}
+
+\begin{proposition}
+    $E$をFrechet空間，$F\subset E$を閉部分空間とする．このとき，$F,E/F$はいずれもFrechet空間である．
+\end{proposition}
+
+\begin{theorem}[開写像定理]
+    $E,F$をFrechet空間，$A:E\to F$を全射な連続線型作用素とする．このとき，$A$は開写像である．
+\end{theorem}
+
+\begin{corollary}[逆写像定理]
+    $E,F$をFrechet空間，$A:E\to F$を全単射な連続線型作用素とする．このとき，線型写像$A^{-1}$も連続である．
+\end{corollary}
+
+\begin{theorem}[閉グラフ定理]
+    $E,F$をFrechet空間，$A:E\to F$を線型作用素とする．グラフ$G:=\Brace{(x,Ax)\in E\times F\mid x\in E}$が閉集合であるならば，$A$は連続である．
+\end{theorem}
+
+\subsection{樽集合}
+
+\begin{definition}[absorbant, barrelled]
+    $E$を線型空間とする．
+    \begin{enumerate}
+        \item $M\subset E$が\textbf{吸収元}であるとは，$\cup_{t>0}tM=E$を満たすことをいう．
+        \item 任意の閉じた絶対凸な吸収的集合（これを\textbf{樽}という）が，$0$の近傍であるとき，局所凸線型空間$E$を\textbf{樽的}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    任意のFrechet空間$E$はbarrelledである．
+\end{proposition}
+\begin{proof}
+    $M$を絶対凸な吸収的閉集合とする：$E=\cup_{t>0}tM$．このとき，均衡性より$E=\cup_{n\in\N}nM$も成り立つ．
+    すると，各$nM$も閉であるから，
+    Baireのカテゴリー定理より，ある$n_0$が存在して$n_0M$は内点を持つ．すると均衡性より$M$も内点を持つ．
+    $E=\cup_{t>0}tM$と併せると，$0$は$M$の内点である．
+\end{proof}
 
 \section{微分論}
 
