@@ -729,13 +729,19 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $\Var[\phi]$は，Cramer-Raoの下界の，ノンパラメトリックな対応物である．このときの$\phi$を，efficient influence functionという．
+    畳み込み定理の系として得られる$\Var[\phi]$は，Cramer-Raoの下界の，ノンパラメトリックな対応物である．このときの$\phi$を，efficient influence functionという．
     asymptotic minimaxの意味で，$\sqrt{n}(\wh{\psi}-\psi)\Rightarrow N(0,\Var[\phi])$に優る推定量はない．なおこの式は，推定量$\wh{\psi}$の影響関数の定義式\ref{def-IF-for-estimator}と同じ．
 \end{tcolorbox}
 
 \begin{problem}
-    ノンパラメトリックモデル$\P$の下界を，asymptotic minimaxの意味で与えたい．すなわち，すべての部分モデルの下界の中で最大のものを与えたい．
+    ノンパラメトリックモデル$\P$の下界を，asymptotic minimaxの意味で与えたい．
+    すなわち，すべての部分モデルの下界の中で最大のものを与えたい．
 \end{problem}
+\begin{remark}
+    なお，asymptotic minimax senseとは，統計的決定理論の用語である（駒木先生など）．
+    ある特定の点において驚くほど精度がよい推定量などが構成可能であるが，これを病的として見向きしないことが出来る枠組みが決定理論である．
+    これが，「最適」という一般的用語が，暗黙のうちには特定の意味(minimax sense)を持つ背景である．
+\end{remark}
 \begin{discussion}
     $\psi$が道ごとに微分可能ならば，Cauchy-Schwarzの不等式より，
     \[\sup_{\P_\ep}\frac{\psi'(P_\ep)^2}{E[s^2_\ep]}=\sup_{h}\frac{P[\phi h]^2}{P[h^2]}\le P(\phi^2)=\Var[\phi]\]
@@ -821,6 +827,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     標本分割法により，経験過程論の精緻な議論はある意味廃された．
+    なんというか，精密なリサンプリングアルゴリズムで洗練されていくのは，すごくきれいな計算機科学的な仕事に思える．
 \end{tcolorbox}
 
 \begin{problem}
@@ -853,7 +860,41 @@ title=]
     \[\bG_n\wh{f}=\bG_nf+o_\bP(1)\]
 \end{lemma}
 
+\begin{lemma}[sample splitting lemma (Kennedy et al.)]\footnote{"Sharp instruments for classifying compilers and generalizing causal effects"}
+    $\wh{f}$を標本$Z^N=(Z_{n+1},\cdots,Z_N)$から定めた推定量とし，$\bP_n$で$Z^N$と独立に観測した標本$(Z_1,\cdots,Z_n)$が定める経験過程とする．
+    このとき，$\sqrt{n}(\bP_n-\bP)(\wh{f}-f)=O_P(\norm{\wh{f}-f})$．
+\end{lemma}
+\begin{remarks}
+    これにより，$L_2$-一致性を持ち，標本分割数$K$が有限である限り，$R_1=o_P(1)$を得るし，
+    モデルの複雑性に制限がないから，機械学習法も使える．
+
+\end{remarks}
+
 \subsection{第二の剰余項}
+
+\begin{example}
+    $\psi=E[Z]$のとき，$R_2=0$．
+    これは，$f=\frac{A}{\pi}(Y-g)+g$などの，あらゆる$f(Z)$に対して成り立つ．
+    すなわち，IPW-スタイルの影響関数は，$\pi$が既知の場合の影響関数に他ならない．
+\end{example}
+
+\begin{example}
+    $\psi=\int p(z)^2dz$の影響関数は$\phi(zlp)=2(p(z)-\psi)$である．
+    一般のplug-in $\bP_n(\wh{p})$は$\sqrt{n}$-一致性を持たない．
+    が，$\wh{p}$を標本分割によって得て，IF-based bias-corrected推定量
+    \begin{align*}
+        \wh{\psi}&=\psi(\wh{\bP})+\bP_n[\phi(\wh{\bP})]\\
+        &=\int\wh{p}^2+\bP_n(2\wh{p}-\int\wh{p}^2)=2\bP_n(\wh{p})-\int\wh{p}^2
+    \end{align*}
+    を考えると，
+    \[\wh{\psi}-\psi=2(\bP_n-\bP)(\wh{p}-p)+2(\bP_n-\bP)p+R_2(\wh{p},p),\quad R_2(\wh{p},p)=-\int(\wh{p}-p)^2.\]
+    あとはdensity estimationの問題になるが，従来の半分のsmoothnessしか要求しない．
+\end{example}
+
+\begin{example}
+    $\psi=E[E[Y|X,A=1]]=:E[\mu(X)]$の影響関数は
+    \[\phi(Z;P)=\frac{A}{\pi(X)}\paren{Y-\mu(X)}+\mu(X)-\psi.\]
+\end{example}
 
 \section{open problems}
 

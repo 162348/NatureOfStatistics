@@ -1196,8 +1196,8 @@ title=双対空間の元の存在]
     \end{enumerate}
 \end{definition}
 \begin{remarks}
-    Minkowski汎関数は汎関数とは限らない．
-    これは，セミノルム（よりも一般的だが）を表現する装置である．
+    Minkowski汎関数は線型とは限らない．
+    これは，セミノルム（よりも一般的に距離的な概念）を表現する装置である．
     実際セミノルムはMinkowski汎関数である．
     だから値は実数となっている．
 \end{remarks}
@@ -1375,7 +1375,7 @@ title=]
     \end{enumerate}
 \end{corollary}
 
-\subsection{双対ペアと極集合}
+\subsection{双対ペア}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1404,6 +1404,13 @@ title=]
     埋め込み$i:X\mono X^{**}$の存在より，弱$*$位相は弱位相より弱い．
     が，いずれの場合も局所凸である．
 \end{example}
+
+\subsection{極集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般の位相線形空間でも通用する強力な手法である．
+\end{tcolorbox}
 
 \begin{definition}[real polar, bipolar]\label{def-polar}
     双対ペア$(X,Y)$と部分集合$A\subset X$に対して，
@@ -1649,6 +1656,13 @@ title=]
 
 \subsection{絶対凸集合}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    集合$C$が定める計測関数
+    \[m_C(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
+    が半ノルムになるために$C$に必要な条件が絶対凸性である．
+\end{tcolorbox}
+
 \begin{definition}[balanced, absolutely convex]
     $\bF$-線型空間$X$の部分集合$C$について，
     \begin{enumerate}
@@ -1666,20 +1680,62 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\subsection{Hahn-Banachの分離定理}
+\begin{lemma}[均衡性]
+    $C$を均衡集合とする．
+    \begin{enumerate}
+        \item $C=-C$．
+        \item $\forall_{r,\lambda\in\R\setminus\{0\}}\;\lambda x\in rC\Leftrightarrow x\in\frac{r}{\abs{\lambda}}C$．
+        \item $C$が定める計量関数$m_C$について，$\forall_{\lambda\in\R}\;m_C(\lambda x)=\abs{\lambda}m_C(x)$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $-C\subset C$．$a\ne0$のとき$ax\in C\Leftrightarrow x\in a^{-1}C$だから，$x\in C\Rightarrow -x\in C\Rightarrow x\in -C$より，$C\subset-C$も得る．
+        \item (1)より，$\lambda x\in rC\Leftrightarrow\abs{\lambda}x\in rC\Leftrightarrow\frac{r}{\abs{\lambda}}C$．
+    \end{enumerate}
+\end{proof}
+
+\subsection{計測関数とHahn-Banachの分離定理}\label{sub-Hahn-Banach-separation}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     Topにおける「正規性」にあたるものは，TVSでは
-    「局所凸」である．
-    Among non-locally convex spaces, however, there are examples such that the only continuous linear functional is the constant map onto $0 \in k$.\footnote{\url{https://ncatlab.org/nlab/show/linear+functional}}
+    「局所凸」である．\footnote{Among non-locally convex spaces, however, there are examples such that the only continuous linear functional is the constant map onto $0 \in k$.\url{https://ncatlab.org/nlab/show/linear+functional}}
+    そして正規性では「閉集合を分離する関数」を考えたが，局所凸線型空間では，$0$の凸開近傍を考える．樽\ref{def-barrel}などの概念を参照．
 \end{tcolorbox}
 
-\begin{lemma}
+\begin{lemma}[gauge]
     $X$を位相線型空間，$C\osub X$を$0$における凸開近傍とする．
     関数$m:X\to\R_+$を
     \[m(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
     と定めると，これはMinkowski汎関数で，$C=\Brace{x\in X\mid m(x)<1}$と表せる．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[well-definedness] $C$は$0$の開近傍としたから，ある$N\in\N$が存在して，$\forall_{x\in X}\;\forall_{n\ge N}\;n^{-1}x\in C$．よって，$\forall_{x\in X}\;m(x)<\infty$であり，たしかに関数が定まる．なお，このことから，任意の$0$の近傍は併呑集合であることがわかる．
+        \item[正斉次性] $\forall_{t\ge 0}\;m(tx)=\inf_{tx\in sC,s>0}s=\inf_{x\in t^{-1}sC,s<0}s=tm(x)$．
+        \item[劣加法性] 任意の$x,y\in X$を取る．すると，ある正実数$s,t>0$が存在して，$s^{-1}x\in C$かつ$t^{-1}y\in C$．
+        $C$の凸性より，
+        \[\frac{s}{s+t}s^{-1}x+\frac{t}{s+t}t^{-1}y=(s+t)^{-1}(x+y)\in C\]
+        であるから，$m$の定義より，$m(x+y)\le s+t$．$s,t$の取り方に依らないから，$m(x+y)\le m(x)+m(y)$が従う．
+        \item[$C$の表現] $C$は開集合であるから，$x\in C$ならば，ある$\ep>0$が存在して，$(1+\ep)x\in C$．よって，$m(x)\le(1+\ep)^{-1}<1$．
+        逆に，$x\in X$は$m(x)<1$を満たすならば，ある$s<1$について$s^{-1}x\in C$ということだから，$C$が$0$の近傍であることと凸性より，
+        \[x=(1-s)0+s(s^{-1}x)\in C.\]
+    \end{description}
+\end{proof}
+\begin{remarks}[absolutely convex]\label{remarks-seminorm-and-absolutely-convex-sets}
+    このように定義された関数を，しばしば$C$の計測関数(gauge)という．
+    $C$の凸性は$m$の劣加法性に対応している．
+    \footnote{実は，$\Brace{s>0\mid s^{-1}x\in C}$が空でないという仮定の下で，$C$が凸であるということは$C$が吸収的であるということと同値\ref{lemma-characterizing-absorbant}．なお，任意の位相線型空間において，$0$の近傍は併呑である．}
+    このときのMinkowski汎関数$m$が半ノルムにもなるため（正斉次性だけでなく，さらに強い同次性を満たすため）の$C$の条件を\textbf{絶対凸性}という．
+    $C$が単位球であるとき，$m_C$はノルムを定める．
+
+    実は，$X$上の半ノルムとこれを計測関数として定める絶対凸集合との間には全単射の対応が存在する！
+\end{remarks}
+
+\begin{lemma}
+    $C$を絶対凸とする．
+    $\Ker m_C=\bigcap_{t>0}tC$は，$C$に含まれる最大の線型部分空間である．
 \end{lemma}
 
 \begin{theorem}[Hahn-Banach separation theorem]\label{thm-Hahn-Banach-separation-theorem}
@@ -2023,7 +2079,7 @@ title=]
     これが，弱位相を調べる際には点列のみを考えては粒度が足りない好例である．
 \end{remarks}
 
-\subsection{Banach空間値積分}
+\subsection{Banach空間値積分}\label{subsection-Bochner-integral}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=Bochner積分]
@@ -5908,6 +5964,50 @@ title=]
     等長同型$\Phi:L^1(X)\mono M(X)$は，$L^1(G)$をある$M(G)$の$*$-不変な閉イデアル上に移す対合代数の$*$-同型である．
 \end{proposition}
 
+\section{分布}
+
+\subsection{アイデア}
+
+\begin{discussion}[distributional density]
+    密度（体積形式$\dvol$）を備えた可微分多様体$X$において，積分なる連続線型汎関数
+    \[\xymatrix@R-2pc{
+        C^\infty_c(X)\ar[r]&\R\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        b\ar@{|->}[r]&\int_{x\in X}b(x)\dvol(x)
+    }\]
+    が定まる．$C_c^\infty(X)$の元は隆起関数と呼ばれることに注意．
+    一方で，$C_c^\infty(X)$の元のすべてが積分の形で表現できるわけではない．
+    例えばデルタ分布$\delta_{x_0}:b\mapsto b(x_0)$である．
+    これは隆起関数の積分として表せないが，その列（台が$x_0$に収束するような）の積分の極限と捉えられる．
+    そこで，$C_c^\infty(X)^*$の元を\textbf{分布密度}という．
+\end{discussion}
+\begin{remarks}
+    こうして，Soborevが考え始めた「一般化関数」を，特定の関数クラス（今回だと$C_c^\infty(X)$）上の連続線型汎関数として定義することが，Schwartz超関数のアイデアであり，「分布」と名付けた．
+    この観点は確率分布に象徴され，
+    \[\brac{P,\varphi}=\int_\R\varphi dP\]
+    とすると，テスト関数$\varphi$に関して線型かつ連続である．
+    そう，確率分布なる概念には，関数を一般化する力がある！
+\end{remarks}
+
+\begin{definition}[compactly supported distribution, tempered distribution]\mbox{}
+    \begin{enumerate}
+        \item テスト関数を$C^\infty(X)$に広げると，\textbf{コンパクト台を持つ分布}という．この空間を$\E'(X)$で表す．
+        実際に，$C^\infty(X)^*$の元は，分布として，コンパクト台を持つ：$\E'(\R^n)=(\E(\R^n))^*$．
+        \item テスト関数を$\cS(X)$にすると，この空間を\textbf{緩増加超函数}という．この空間を$\cS'(\R)$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    包含$\E'(\R^n)\mono\S'(\R)$が存在する．
+\end{theorem}
+
+\begin{discussion}[双対ペアと微分]
+    Bochner積分論\ref{subsection-Bochner-integral}と同様に，双対ペアは微分の定義を一意に示唆する．
+    部分積分の公式
+    \[\int_\R f'\varphi dx=-\int_\R f\varphi'dx\]
+    は，$\brac{S',\varphi}=-\brac{S,\varphi'}$を意味している．これによると，任意のSchwartz超関数は無限階微分可能である．
+\end{discussion}
+
 \chapter{von Neumann環}
 
 \begin{quotation}
@@ -5985,10 +6085,11 @@ title=]
 \begin{example}[Frechet空間]\mbox{}
     \begin{enumerate}
         \item Lebesgue空間$l^p\;(0<p<1)$はFrechet空間ではないが，$F$-空間である．なお，この空間の$p$-ノルムは，三角不等式を成り立たせるために$p$乗根を省いて，$\norm{x}_p=\sum_{i}\abs{x_i}^p$とする．
-        \item コンパクトな可微分多様体上の可微分写像の空間$C^\infty(X)$はFréchet空間である．
-        \item コンパクトでない可微分多様体でも，$C^\infty(\R)$などはFréchet空間となる．
         \item Lebesgue空間$L^p(X)$は，$p<1$のときFréchet空間でない局所凸線型空間となる．
+        \item コンパクトな可微分多様体上の可微分写像の空間$C^\infty(X)$は，半ノルムの族$p^\al_K:C_c^\infty(\R^n)\to\R_+;\Phi\mapsto\sup_{x\in K}\abs{\partial^\al\Phi(x)}\;(K\compsub\R^n,\al\in\N^n)$についてFréchet空間である．Schwartzはこれを$\mathcal{E}(\R^n)$で表した．
+        \item コンパクトでない可微分多様体でも，$C^\infty(\R)$などはFréchet空間となる．
         \item 射影極限$\R^\infty:=\varprojlim_n\R^n$（位相線型空間としての直積として得られる空間）はFréchet空間となる．つまり，射影$p^n:\R^\infty\to\R^n$と$\R^n$上のノルム$\R^n\to\R$との合成の族$(p^n\circ\norm{-}_n)_{n\in\N}$はセミノルムの族になるが，これが定める位相について完備である．
+        \item 急減少関数の空間$\cS$はFréchet空間である．
     \end{enumerate}
 \end{example}
 
@@ -6048,6 +6149,7 @@ title=]
 title=]
     実は，Frechet空間の定義は次の形にまで簡潔になる．\footnote{\url{http://www2.math.uni-wuppertal.de/~vogt/vorlesungen/fs.pdf}}
     以上の議論をさらに洗練させると，Frechet空間の同値な4つの定義は，次の補題の形にまとまる．
+    この消息は，Hahn-Banachの分離定理\ref{sub-Hahn-Banach-separation}で見え隠れした，Minkowski汎関数の言葉を通じて，半ノルムと絶対凸集合との対応\ref{remarks-seminorm-and-absolutely-convex-sets}による．
 \end{tcolorbox}
 
 \begin{definition}
@@ -6082,15 +6184,45 @@ title=]
     $E,F$をFrechet空間，$A:E\to F$を線型作用素とする．グラフ$G:=\Brace{(x,Ax)\in E\times F\mid x\in E}$が閉集合であるならば，$A$は連続である．
 \end{theorem}
 
-\subsection{樽集合}
+\subsection{樽型空間と一様有界性の原理}
 
-\begin{definition}[absorbant, barrelled]
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相線形空間のうち，樽型空間と呼ばれるクラスについては，一様有界性の原理(Banach-Steinhaus)が成り立つ．
+    Frechet空間はこれに当てはまる．
+    Bourbaki 1950考案．
+\end{tcolorbox}
+
+\begin{definition}[absorbant, barrelled]\label{def-barrel}
     $E$を線型空間とする．
     \begin{enumerate}
-        \item $M\subset E$が\textbf{吸収元}であるとは，$\cup_{t>0}tM=E$を満たすことをいう．
-        \item 任意の閉じた絶対凸な吸収的集合（これを\textbf{樽}という）が，$0$の近傍であるとき，局所凸線型空間$E$を\textbf{樽的}であるという．
+        \item $M\subset E$が\textbf{吸収的集合}または\textbf{併呑集合}であるとは，$\cup_{t>0}tM=E$を満たすことをいう．
+        \item 任意の閉じた絶対凸な併呑集合（これを\textbf{樽型集合}という）が，$0$の近傍であるとき，局所凸線型空間$E$を\textbf{樽型空間}であるという．
     \end{enumerate}
 \end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意の位相線形空間において，$0$の近傍は併呑である．
+        \item 併呑集合の有限共通部分は併呑である．
+        \item 樽は任意の有界完備凸部分空間を併呑する．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[併呑性の特徴付け]\label{lemma-characterizing-absorbant}
+    $A\subset E$を絶対凸集合とする．このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $A$の定める計量関数$m_A$について$m_A(x)<\infty$．
+        \item $A$は$x$を併呑する：$x\in\Span\{A\}:=\cup_{t>0}tA$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{notation}
+    $A$を絶対凸集合とし，$A=m_A^{-1}([0,1])$と表せるとする．このとき，$m_A$は$X$上のノルムである．
+    $A$の定める完備線型空間を
+    \[E_A:=\o{\paren{\Span(A)/\Ker m_A,m_A}}\]
+    で表す．実際，$\forall_{y\in\Ker m_A}\;m_A(x+y)=m_A(x)$を満たすから，$m_A$は$\Span(A)/\Ker m_A$上にノルムを定める．
+\end{notation}
 
 \begin{proposition}
     任意のFrechet空間$E$はbarrelledである．
@@ -6102,16 +6234,123 @@ title=]
     $E=\cup_{t>0}tM$と併せると，$0$は$M$の内点である．
 \end{proof}
 
+\subsection{双対空間}
+
+\begin{theorem}
+    $E$を距離化可能な局所凸空間とする．このとき，双対空間$E^*$は完備である．
+\end{theorem}
+
+\begin{corollary}
+    $E$を距離化可能な局所凸空間とする．
+    \begin{enumerate}
+        \item $E^*$は距離化可能である，すなわち再びFrechet空間である．
+        \item $E$はノルム空間である，すなわちBanach空間である．
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}[Alaoglu-Bourbaki]
+    $E$を局所凸，$U\subset E$を$0$の開近傍とする．極集合$U^\circ$は$\sigma(E^*,E)$-コンパクトである．
+\end{theorem}
+
+\subsection{回帰性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    樽型同様，有界型空間というのも，Bourbakiによる．
+    ある種の位相線形空間は，開集合の系を考えるのが有効であるのと同様に，有界集合の系を考えることも有効になる．
+\end{tcolorbox}
+
+\begin{theorem}
+    $E$をFrechet空間とする．$M\subset E^*$について，次の4条件は同値．
+    \begin{enumerate}
+        \item $M$は$w^*$-有界である．
+        \item $M$は$w^*$-相対コンパクトである．
+        \item $M$は有界である．
+        \item $\exists_{k\in\N}\;\exists_{C>0}\;M\subset C^\circ_k$．
+    \end{enumerate}
+    $M=E^*$がこの同値な条件を満たす時，$E$は\textbf{distinguished}という．
+\end{theorem}
+
+\begin{definition}[bornological space]
+    $E$を局所凸位相線形空間とする．
+    \begin{enumerate}
+        \item 部分集合$M\subset E$が\textbf{有界型}であるとは，任意の有界集合$B\subset E$について$t>0$が存在して$B\subset tM$を満たすことをいう．
+        \item 任意の絶対凸な有界型集合が$0$の近傍であるとき，$E$を\textbf{有界型空間}または\textbf{界相空間}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Frechet空間$E$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $E$は回帰的である．
+        \item 任意の$E$の有界集合は，弱相対コンパクトである．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Schwartz空間}
+
+\begin{definition}[precompact]
+    $X$を線型空間，$V,U\subset X$を絶対凸とする．
+    \begin{enumerate}
+        \item $V\prec U:\Leftrightarrow\exists_{t>0}\;V\subset tU$とき，$U$は$V$を併呑するという．
+        \item $V\prec U$であるとする．このときさらに，$\forall_{\ep>0}\;\exists_{m\in\N}\;\exists_{x_1,\cdots,x_m\in X}\;V\subset\cup_{j\in[m]}(x_j+\ep U)$が成り立つ時，$V$は\textbf{$U$-プレコンパクト}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    the Schwartz space $\cS(\R^n)$はSchwartz空間である．
+\end{example}
+
+\begin{definition}
+    局所凸空間$E$が\textbf{Schwartz空間}であるとは，任意の絶対凸な$0$の開近傍$U$に対して，ある$U$-プレコンパクトな$0$の絶対凸開近傍$V\prec U$が存在することをいう．
+\end{definition}
+
+\begin{lemma}
+    完備なSchwartz空間$E$において，任意の有界集合は相対コンパクトである．
+\end{lemma}
+
+\begin{theorem}
+    任意のFrechet-Schwartz空間は回帰的である．
+\end{theorem}
+
+\begin{theorem}
+    $E$がFrechet-Schwartz空間ならば，$E^*$はSchwartz空間である．
+\end{theorem}
+
+\subsection{核型空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    この理論の多くはGrothendieck 55により，テンソル積の言葉で探求された．
+    Banach空間が核型ならば，有限次元である．
+    A nuclear vector space is a locally convex topological vector space that is as far from being a normed vector space as possible.
+\end{tcolorbox}
+
+\begin{definition}[nuclear]
+    局所凸空間$E$が\textbf{核型}であるとは，任意の絶対凸な$0$の開近傍$U$に対して，$0$の開近傍$V$と$w^*$-コンパクトな集合$V^\circ$上の有限なRadon測度$\mu$が存在して，$\forall_{x\in E}\;\norm{x}_U\le\int_{V^\circ}\abs{y(x)}d\mu(y)$を満たすことをいう．
+\end{definition}
+
 \section{微分論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     It is possible to generalize some aspects of analysis (differential calculus) to Fréchet spaces.\footnote{\url{https://ncatlab.org/nlab/show/Fr\%C3\%A9chet+space}}
     全微分に対応する概念をFréchet微分，方向微分に対応する概念をGâteaux微分という．
+    定義そのものは全く似ているが，存在性の議論に入ると無限が顔を出す．
     強微分については，連鎖律も基本定理も成り立つ．
+
+    実数値関数の微積分は，可分な場合に限ってよく理解されている．
+    主に数学的に研究されているクラスはLipschitz関数である．
 \end{tcolorbox}
 
 \subsection{Path smoothness}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    まず，Frechet空間上の連続な線型汎関数$\mu\in V^*$が滑らかであるとはどういうことかを初等的に定義する．
+    Frechet空間$V$をある種の多様体だと考えると，その上の任意の曲線$f\in C^\infty(\R,V)$について微分可能であることがまず考えられ，これは連続であることを含意する．
+    次に，Gateaux微分を高階にしたものを用いれば，通常のsmoothnessも定義でき，したがって可微分Frechet多様体が定義できる．
+\end{tcolorbox}
 
 \begin{definition}
     Fréchet空間$V$上の線型汎関数$\mu\in V^*$が\textbf{path smooth}であるとは，
@@ -6122,7 +6361,17 @@ title=]
     Fréchet空間$V$上のpath smoothな線型汎関数$\mu\in V^*$は連続である．
 \end{proposition}
 
-\subsection{微分}
+\begin{corollary}
+    Schwartz超関数は滑らかである．
+\end{corollary}
+
+\begin{definition}[曲線の微分]
+    Fréchet空間$V$上の連続道$\gamma:I:=[a,b]\to V;t\mapsto f(t)$について，導関数
+    \[f'(t):=\lim_{h\to0}\frac{1}{h}(f(t+h)-f(t))\]
+    が存在して連続であるとき，$C^1$級であるという．
+\end{definition}
+
+\subsection{偏微分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -6130,26 +6379,86 @@ title=]
     すると，滑らかな関数という概念もあり，Fréchet多様体も同様に考えられる．
 \end{tcolorbox}
 
-\begin{definition}
-    Fréchet空間$V$上の道$f:I\to V$について，導関数
-    \[f'(t):=\lim_{h\to0}\frac{1}{h}(f(t+h)-f(t))\]
-    が存在して連続であるとき，$C^1$級であるという．
-    この導関数を\textbf{強導関数}または\textbf{Fréchet導関数}という．
-\end{definition}
-
-\begin{definition}[directional derivative]
+\begin{definition}[directional / Gateaux derivative, Frechet derivative]
     $F,G$をFréchet空間，$P$を$U\osub F$上の連続な非線型写像$P:U\to G$とする．
-    写像
+    \begin{enumerate}
+        \item 
+    $f\in U$での$h\in F$方向微分を与える写像
     \[\xymatrix@R-2pc{
         DP:U\times F\ar[r]&G\\
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
         (f,h)\ar@{|->}[r]&DP(f)h:=\lim_{t\to0}\frac{1}{t}(P(f+th)-P(f))
     }\]
-    が存在して連続であるとき，$P$は$C^1$級であるという．
-    これを\textbf{弱導関数}または\textbf{Gâteaux導関数}という．
+    が存在して連続であるとき，$P$は$U$上$C^1$級であるという．
+    $DP(f)=D_P(f)$を，$f\in F$における\textbf{弱導関数}または\textbf{Gâteaux導関数}という．\footnote{Lagrangeに従えば，$P$の$f$における第一変分という．}
+    \item さらに，$DP(f)$が単位球$h\in B^\subset F$上一様に存在するとき，すなわち，
+    \[\forall_{h\in F}\quad P(f+h)=P(f)+DP(f)h+o(\norm{h}).\]
+    が成り立つとき，$P$は$f\in U$において\textbf{Frechet微分可能}といい，$DP(f)$を特に
+    \textbf{強導関数}または\textbf{Fréchet導関数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    連続作用素$P:F\to G$は$U\osub F$においてGateaux微分可能であるとする：$DP:U\times F\to G$は連続．
+    \begin{enumerate}
+        \item Gateaux導関数$DP(f):F\to G$は一意な連続線型作用素である：$DP(f)\in L(F,G)$．なお，連続写像$DP:U\times F\to G$の存在の仮定なくして，ある一点$f\in F$で弱微分可能なだけであるとき，Gateaux微分$DP(f):F\to G$が線型とは限らない．
+        \item 連続とは限らない$P$について，$f\in F$においてFrechet微分可能ならば，$f\in F$において連続．なお，Gateaux微分可能性のみでは連続とは限らない．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+        $\forall_{\ep>0}\;\exists_{\delta>0}\;\norm{h}<\delta\Rightarrow\norm{P(f+h)-P(f)-DP(f)h}\le\ep\norm{h}$がGateaux微分可能性の同値な条件である．これは明らかに$DP(f)$の連続性を含意する．
+        また，$L_1,L_2$を２つのGateaux微分とすると，$\norm{L_1h-L_2h}=o(h)$であるが，これは$L_1=L_2$を含意する．
+    \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+    写像$F:X\to Y$の弱導関数
+\end{theorem}
+
+\subsection{高階微分}
+
+\begin{definition}
+    $P$の$k$方向の2階微分を
+    \[D^2P(f)(h,k)=\lim_{t\to0}\frac{1}{t}(DP(f+tk)h-DP(f)h)\]
+    と定める．
 \end{definition}
 
 \section{積分論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率積分と違って，考慮に足りる積分が複数ある．
+    Bochner積分\ref{subsection-Bochner-integral}という．
+\end{tcolorbox}
+
+\subsection{Riemann積分の一般化}
+
+\begin{notation}
+    道
+    $f:I:=[a,b]\to F$に沿った積分$\int^b_af(t)dt\in F$を定めたいが，自然な定め方はただ一つに定まる．
+\end{notation}
+
+\begin{theorem}
+    次の4条件を満たす元$\int^b_af(t)dt\in F$は一意的である：
+    \begin{enumerate}
+        \item $\forall_{\phi\in F^*}\;\phi\paren{\int^b_af(t)dt}=\int^b_a\phi(f(t))dt$．
+        \item $\forall_{\norm{-}:F\to\R:\text{seminorm}}\;\Norm{\int^b_af(t)dt}\le\int^b_a\norm{f(t)}dt$．
+        \item 積分作用素$C(I,F)\ni f\mapsto \int^b_af(t)dt\in F$は線型である．
+        \item 加法的である：$\int^b_af(t)dt+\int^c_bf(t)dt=\int^c_af(t)dt$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[微積分学の基本定理]
+    $P:F\to G$は$C^1$球で，$\forall_{t\in[0,1]}\;f+th\in\Dom(P)$ならば，
+    \[P(f+h)-P(f)=\int^1_0DP(f+th)hdt.\]
+\end{theorem}
+
+\begin{theorem}[連鎖律]
+    $P:F\to G,Q:G\to H$は$C^1$級であるとする．このとき，合成$Q\circ P$も$C^1$級で，
+    \[D[Q\circ P](f)h=DQ(P(f))DP(f)h.\]
+\end{theorem}
 
 \chapter{学習理論}
 
@@ -6211,6 +6520,8 @@ title=]
     藤田宏，黒田成俊，伊藤清三『関数解析』
     \bibitem{Eidelman}
     Eidelman, Yuli, Vitali D. Milman, and Antonis Tsolomitis. 2004. Functional analysis: an introduction. Providence (R.I.): American mathematical Society.
+    \bibitem{Lindenstrauss}
+    Joram Lindenstrauss, and Yoav Benyamini "Geometric Nonlinear Functional Analysis" Volume 1
 \end{thebibliography}
 
 \end{document}

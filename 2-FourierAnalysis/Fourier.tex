@@ -651,7 +651,7 @@ $\mu_x$の一意性は一般には言えないが，次のような状況では�
     $f\in L^p(\R)\;(p\in[1,\infty])$に対して，$(f*h_\lambda)(x)$は上半平面上で定義された$x+i\lambda\in\bH$の調和関数である．
 \end{theorem}
 
-\chapter{実数上のFourier変換}
+\chapter{Fourier変換}
 
 \begin{quotation}
     
@@ -797,10 +797,17 @@ title=]
     可積分関数の$\F$による像は可積分とは限らない．
     そこで，$\F$が保存する性質を探したい．
     そのうち一つは急減少性である．
-    $\F$は複素Frechet空間$S(\R^n)\subset C^\infty(\R^n)$上に線型自己同型を定める．
+    $\F$は複素Frechet空間$S(\R^n)\subset C^\infty(\R^n)$上に線型自己同型を定め，標準的なFourier変換$\F:L^2(\R^n)\to L^2(\R^n)$の自然な延長となる．
+    この性質により，突然この空間が調和解析の中心へと躍り出る．
+    緩増加関数の空間$D'(X)$は，線型偏微分方程式を解く自然な場となる．
 \end{tcolorbox}
 
 \subsection{多重指数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    基底$x:=(x^1,\cdots,x^n)$に対して，これらの組み合わせの冪を簡潔に表記する記法を導入する．
+\end{tcolorbox}
 
 \begin{definition}
     集合$\N^d$に各点和と$l_1$-ノルム$\abs{\al}:=\al_1+\cdots+\al_d$，階乗$\al!=\al_1!\cdots\al_d!$を備えた区間
@@ -814,14 +821,21 @@ title=]
 
 \subsection{定義}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般に$\R^n$上の急減少関数とは，$\R$の座標写像の任意の冪との積写像が有界写像であることをいう．
+    が，主に議論の対象となる，無限階微分可能な急減少関数とは，任意階の(偏)導関数が急減少であることをいう．
+\end{tcolorbox}
+
 \begin{notation}
     \[D_j:=\frac{1}{i}\pp{}{x_j},\quad D^\al=D^{\al_1}_1\cdots D^{\al_d}_d=\frac{1}{i^{\abs{\al}}}\partial^\al\]
 \end{notation}
 
-\begin{definition}
-    $f\in C^\infty(\R^n)$が\textbf{急減少関数}であるとは，$\norm{f}_{\al,\beta}:=\sup_{x\in\R^n}\Abs{x^\al D^\beta f(x)}$をノルムとして，
+\begin{definition}[rapidly decreasing function, the Schwartz space]
+    $f\in C^\infty(\R^n)$が\textbf{急減少偏導関数を持つ滑らかな関数}であるとは，$\norm{f}_{\al,\beta}:=\sup_{x\in\R^n}\Abs{x^\al D^\beta f(x)}$をノルムとして，
     \[S(\R^n):=\Brace{f\in C^\infty(\R^n)\mid\forall_{\al,\beta\in\N^n}\;\norm{f}_{\al,\beta}<\infty}\]
     に属することをいう．
+    これに，半ノルムの族$p_{\al,\beta}(f):=\norm{x^\al\partial_\beta(f)(x)}_{\al,\beta\in\N}$が引き起こす位相を入れた空間$\cS(\R^n)$を\textbf{Schwartz空間}という．
 \end{definition}
 \begin{remarks}
     無限回微分可能な関数であるが，$\abs{x}\to\infty$を考えたときに，任意階の導関数が，$x$の任意の負冪よりも速くゼロに収束するものをいう．
@@ -832,12 +846,20 @@ title=]
     $\forall_{i\in\N^n}\;\forall_{a>0}\;x^ie^{-a\abs{x}^2}\in S(\R^n)$．
 \end{example}
 
+\begin{example}
+    隆起関数はSchwartz関数である：$C^\infty_c(\R^n)\mono\cS(\R^n)$．
+\end{example}
+
 \begin{theorem}\mbox{}
     \begin{enumerate}
-        \item $\forall_{p\in[1,\infty]}\;S(\R^n)\subset L^p(\R^n)$．
+        \item Schwartz関数は可積分である：$\forall_{p\in[1,\infty]}\;S(\R^n)\subset L^p(\R^n)$．
+        \item 実は，$\forall_{\al\in\N^n}\;\int_{x\in\R^n}x^\al f(x)\dvol(x)<\infty$も満たす．
         \item $S(\R^n)$は複素Frechet空間をなす．
+        \item Fourier変換$\wh{(-)}:\cS(\R^n)\to\cS(\R^n)$は線型同型を定める．
     \end{enumerate}
 \end{theorem}
+
+\section{急減少関数のFourier変換}
 
 \begin{thebibliography}{9}
     \bibitem{Korevaar}
