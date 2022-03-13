@@ -281,7 +281,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{proposition}[下半連続性の特徴付け]
+\begin{proposition}[下半連続性の特徴付け]\label{prop-characterization-of-lsc}
     関数$f:X\to\R$について，次の２条件は同値．
     \begin{enumerate}
         \item $f$は下半連続．
@@ -289,7 +289,7 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\begin{proposition}[下半連続関数の空間]\mbox{}
+\begin{proposition}[下半連続関数の空間は凸錐である]\mbox{}\label{prop-subalgebra-of-lsc-function}
     \begin{enumerate}
         \item $C^{1/2}(X)$の任意個の上限は再び$C^{1/2}(X)$の元．
         \item $C^{1/2}(X)$の有限個の下限は再び$C^{1/2}(X)$の元．
@@ -1360,7 +1360,9 @@ title=]
     \end{enumerate}
 \end{example}
 
-\begin{theorem}
+\subsection{回帰的Banach空間}
+
+\begin{theorem}\label{thm-characterization-of-reflexive-Banach-spaces}
     Banach空間$X$について，次の２条件は同値．
     \begin{enumerate}
         \item $X$は回帰的である．
@@ -2170,28 +2172,6 @@ title=Bochner積分]
         が，これは$\norm{f(-)}$という可積分な非負値の優関数が見つかるから，Lebesgueの優収束定理より従う．
     \end{description}
 \end{proof}
-
-\section{位相線型空間論}
-
-\subsection{基底論}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    有限次元線型空間論では，基底論がほぼ全てであった．
-    無限次元の場合，無限の切り取り方に任意性がある．
-\end{tcolorbox}
-
-\begin{definition}[Hamel, topological, Schauder basis]
-    位相線型空間$V$と部分集合$B\subset V$について，
-    \begin{enumerate}
-        \item $B$が\textbf{Hamel基底}であるとは，任意の元が$B$の有限線型和で一意的に表せることをいう．すなわち，$\Span(B)=V$かつ，任意の$B$の真の部分集合はこれを満たさないことをいう．
-        \item $B$が\textbf{位相基底}であるとは，任意の元が$B$の有限線型和の列の極限で表わせ，任意の$B$の元は他の$B$の元の有限線型和の列の極限で表せないことをいう．すなわち，$\o{\Span(B)}=V$（これをtotalという）かつ任意の$B$の真の部分集合はtotalでないことをいう．
-        \item $B$が\textbf{Schauder基底}であるとは，任意の元が$B$の（無限足り得る）線型和で一意的に表せることをいう．
-    \end{enumerate}
-\end{definition}
-\begin{remarks}
-    Hamel基底の存在は選択公理と同値．Schauder基底は位相基底であり，位相基底には双対基底が存在する．
-\end{remarks}
 
 \chapter{Hilbert Space}
 
@@ -5165,12 +5145,12 @@ title=]
     $f:X\to\R$に各点収束するとする．このとき，$f\in\L^1(X)$で，$\int f=\lim_{n\to\infty}\int f_n$である．
 \end{theorem}
 
-\subsection{古典的構成}
+\subsection{Stieltjes積分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $\R$上のRadon積分の古典的構成法を議論する．
-    Riemannの方法を一般化したStieltjes積分を，Lebesgue積分の方法で一般化させたLebesgue-Stieltjes積分のことを，歴史的には主な貢献者の名前をとってRadon積分と呼んだ．
+    $\R$上のRadon積分の古典的構成法を議論する．アイデアとしては，ある有界変動関数$\rho:[a,b]\to\R$を定めれば，これを累積分布関数として分布が定まり，それについての積分が定まる．そして，$C[a,b]$の双対空間の元は，このような積分で尽きる．
+    これをStieltjes積分という．\footnote{Riemannの方法を一般化したStieltjes積分を，Lebesgue積分の方法で一般化させたLebesgue-Stieltjes積分のことを，歴史的には主な貢献者の名前をとってRadon積分と呼んだ．}
 \end{tcolorbox}
 
 \begin{definition}[Stieltjes integral]
@@ -5204,6 +5184,18 @@ title=]
 \begin{theorem}
     $\R$上のRadon積分$\int:C_c(\R)\to\R$について，ある単調増加関数$m:\R\to\R$が存在して，これについてのStieltjes積分と一致する．
 \end{theorem}
+
+\begin{theorem}[有界閉区間上の連続関数の空間の双対空間]
+    $a<b\in\R$と$F:[a,b]\to\R$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $F\in C[a,b]^*$．
+        \item 有界変動関数$\rho:[a,b]\to\R$が存在して，$\forall_{u\in C[a,b]}\;F(u)=\int^b_au(x)d\rho(x)$が成り立つ．
+    \end{enumerate}
+    さらにこのとき，$\norm{F}=V(\rho)$となる．
+\end{theorem}
+\begin{proof}
+    Hahn-Banachの定理による．
+\end{proof}
 
 \section{可測性}
 
@@ -5966,6 +5958,12 @@ title=]
 
 \section{分布}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    分布が作用する関数のクラスを「試験関数」という．これをうまく選ぶことで，種々の超関数が構成できる，というのがSchwartzのアイデアである．
+    分布の空間には$w^*$-位相を考える．
+\end{tcolorbox}
+
 \subsection{アイデア}
 
 \begin{discussion}[distributional density]
@@ -5975,7 +5973,7 @@ title=]
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
         b\ar@{|->}[r]&\int_{x\in X}b(x)\dvol(x)
     }\]
-    が定まる．$C_c^\infty(X)$の元は隆起関数と呼ばれることに注意．
+    が定まる．$C_c^\infty(X)$の元は隆起関数と呼ばれることに注意．なお，$C_c^\infty(X)$は局所凸かつ完備で，LF-空間=Frechet空間の帰納極限である（それ自身がFrechet空間であるわけではない）．
     一方で，$C_c^\infty(X)$の元のすべてが積分の形で表現できるわけではない．
     例えばデルタ分布$\delta_{x_0}:b\mapsto b(x_0)$である．
     これは隆起関数の積分として表せないが，その列（台が$x_0$に収束するような）の積分の極限と捉えられる．
@@ -5997,6 +5995,16 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\begin{example}
+    $f\in L^p(\R^n)$に対して，$q$を共役指数として，$g\in L^q(\R^n)$に対する測度$f\dvol$に関する積分
+    \[\xymatrix@R-2pc{
+        L^q(\R^n)\ar[r]&\R\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        g\ar@{|->}[r]&\int_{x\in\R^n}g(x)f(x)\dvol(x)
+    }\]
+    は緩増加関数である．
+\end{example}
+
 \begin{theorem}
     包含$\E'(\R^n)\mono\S'(\R)$が存在する．
 \end{theorem}
@@ -6007,6 +6015,44 @@ title=]
     \[\int_\R f'\varphi dx=-\int_\R f\varphi'dx\]
     は，$\brac{S',\varphi}=-\brac{S,\varphi'}$を意味している．これによると，任意のSchwartz超関数は無限階微分可能である．
 \end{discussion}
+
+\begin{discussion}[その他の操作と演算]
+    他にも，分布の引き戻しや分布の積などの演算も，滑らかな関数の場合と整合的に，部分的に定義できるが，大域的には定義できない．
+\end{discussion}
+
+\subsection{定義}
+
+\begin{definition}[distribution on $X$]
+    \textbf{$X$上の分布}とは，連続線型汎関数$C_c^\infty(X)\to\R$をいう．
+    この空間を$\D'(X)$で表す．
+    評価写像が定める双線型写像
+    \[\xymatrix@R-2pc{
+        \D'(X)\times C^\infty_c(X)\ar[r]&\R\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (S,\phi)\ar@{|->}[r]&\brac{S,\phi}:=S(\phi)
+    }\]
+    は自然にペアリング$(\D'(X),C_c^\infty(X))$を与える．
+    $\D'(X)$には，この対による$w^*$-位相を入れて考える．すなわち，$\brac{-,\phi}:\D'(U)\to\R$を連続にする最弱の位相を考える．
+    なお，$C^\infty_c(X)$は回帰的であるから，これは弱位相でもある．
+\end{definition}
+
+\begin{example}
+    任意の局所可積分な関数$f:X\to\R$は，任意の$\phi\in C_c^\infty(X)$に対して
+    $\brac{f,\phi}=\int_Xf(x)\phi(x)dx$が定まるから，連続線型写像$C_c^\infty(X)\to\R$を誘導する．これが定める
+    包含$C_c^\infty(X)\mono\D'(X)$は稠密である．
+\end{example}
+
+\begin{example}[Riesz-Markovの表現定理の消息]
+    連続な線型汎関数$\mu:C_c(U)\to\R$とは，$U$上の符号付き測度とみなせるのであった(Riesz-Markov\ref{prop-Riesz-Markov-3})．
+    これを$C_c^\infty(U)$上に制限することで，分布を定める．
+\end{example}
+
+\begin{example}[累積分布関数の消息]
+    $U=\R$上の有界な単調増加関数$\al$を考える．このとき，Riemann-Stieltjes積分$\int_\R f(x)d\al(x)$が定まるが，これは暗黙のうちに測度，すなわち分布$\al$を定めている．
+    特に，$H(x)=1\;(x>0),H(x)=0\;(x\le0)$なるHeaviside関数が定めるRiemann-Stieltjes積分を通じて，
+    \[\brac{f,dH}=\int_\R f(x)dH(x)=f(0).\]
+    これを理工学分野では$dH(x)=\delta_0(x)dx$で表す．
+\end{example}
 
 \chapter{von Neumann環}
 
@@ -6343,6 +6389,28 @@ title=]
     主に数学的に研究されているクラスはLipschitz関数である．
 \end{tcolorbox}
 
+\subsection{Banach空間間のLipschitz関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    非線形関数解析の道具の多くはこの研究から流入している．
+    距離構造のみが目を向けるに足りるBanach空間の構造であるから，その一様構造に注目する．\cite{Lindenstrauss}
+\end{tcolorbox}
+
+\begin{theorem}[Mazur and Ulam]
+    Banach空間の間の等長同型であって，$0$を$0$に移すものは線型である．
+\end{theorem}
+\begin{remarks}
+    Banach空間の構造は，距離空間の構造だけで分類出来てしまい，線型同型はあとからついて来る．つまり，距離構造の方が豊かとわかる．
+\end{remarks}
+
+\begin{theorem}[Kadec]
+    任意の可分な無限次元Banach空間は互いに同相である．特に，$\R^{\aleph_0}$は可分なBanach空間である．
+\end{theorem}
+\begin{remarks}
+    Banach空間の位相構造は，線型構造について何も示唆しない．
+\end{remarks}
+
 \subsection{Path smoothness}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -6413,8 +6481,20 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\begin{theorem}[$C^1$級]
+    写像$f:E\to F$は$x_0$の近傍でGateaux微分可能かつ，Gateaux導関数$Df(x)$は$x_0$にて連続とする：$\lim_{x\to x_0}\norm{Df(x)-Df(x_0)}=0$．このとき，$f$は$x_0$にてFrechet微分可能である．
+    これが成り立つ時，写像$f$は$x_0$にて$C^1$級であるという．\footnote{Gateauxの意味か，Frechetの意味かは不問になる．}
+\end{theorem}
+
+\subsection{写像論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    逆写像定理と陰関数定理がそのまま成り立つ．
+\end{tcolorbox}
+
 \begin{theorem}
-    写像$F:X\to Y$の弱導関数
+    $E,F$をBanach空間，$f:E\supset U\to F$を開集合上の$C^1$級関数とする．$Df(x_0)$が可逆であるとき，$f$の$x_0$の近傍$U_0$への制限は$f|_{U_0}$は位相同型で，$f^{-1}$は$f(U_0)$上$C^1$級である．
 \end{theorem}
 
 \subsection{高階微分}
@@ -6460,12 +6540,427 @@ title=]
     \[D[Q\circ P](f)h=DQ(P(f))DP(f)h.\]
 \end{theorem}
 
-\chapter{学習理論}
+\section{幾何学}
+
+\subsection{連続度}
+
+\begin{definition}
+    $X,Y$を距離空間，$f:X\to Y$を関数とする．
+    \begin{enumerate}
+        \item $\om_f(t):=\sup_{d(f(x),f(y))\ge0\mid d(x,y)\le t}$によって定まる写像$\om_f:\R_+\to\R_+$を\textbf{連続度}という．
+        \item $\exists_{t_0>0}\;\forall_{t<t_0}\;\om_f(t)<\infty$かつ$\lim_{t\to0+}\om_f(t)=0$が成り立つ時，$f$は一様連続であるという．
+        \item $\exists_{c\in\R}\;\om_f(t)\le ct$が成り立つとき，$f$は\textbf{Lipschitz写像}であるといい，条件を満たす最小の$c=\sup_{x\ne y}\frac{d(f(x),f(y))}{d(x,y)}$をLipschitz定数という．
+        \item $\exists_{\al>0}\;\exists_{c\in\R}\;\om_f(t)\le ct^\al$が成り立つとき，$f$は\textbf{Holder$(\al)$-写像}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $X$が凸集合であるとき，$\om_f$は劣加法的である：$\om_f(t+s)\le\om_f(t)+\om_f(s)$．
+\end{lemma}
+
+\subsection{不動点定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Brouwerの不動点定理は，有限次元についての結果で，いくつかの同値な条件を持ったが，Banach空間ではそのいくつかは失敗する．
+\end{tcolorbox}
+
+\begin{theorem}[Schauder-Tychonoff (30)]
+    局所凸位相線形空間$E$のコンパクトな凸集合$K$上の全射な連続写像$K\to K$は不動点を持つ．
+\end{theorem}
+
+\begin{theorem}[Banach (22)]
+    $X$を完備距離空間，
+    $f:X\to X$を縮小写像，すなわち$1$より小さいLipschitz定数をもつLipschitz写像とする．
+    このとき，$f$はただ一つの不動点を持つ．
+\end{theorem}
+
+\chapter{最適化と変分法}
 
 \begin{quotation}
+    最適化とは極値問題のことであり，変分法とは汎関数の最適化である．
+    この問題を関数解析の枠組みから捉え直したい．
+
     ニューラルネットワークをはじめ，統計モデルとは，関数のクラスに他ならない．
     位相解析の知見が使えないはずがない．
 \end{quotation}
+
+\section{枠組み}
+
+\subsection{最適化問題}
+
+\begin{definition}[mathematical programming / optimization, objective function, feasible region, constraint]
+    数理計画問題または最適化問題は，次のように表す：
+    \[\min\;f(x),\quad\st\;x\in S.\]
+    $f$を目的関数，s.t.とはsubject to，$S$を実行可能領域または許容領域，条件$x\in S$を制約という．
+    $S$を定める関数
+    \[S:=\Brace{s\in\R^n\mid\forall_{i\in[m]}\;g_i(x)\le0,\forall_{j\in[l]}\;h_j(x)=0}\]
+    を考える．
+    \begin{enumerate}
+        \item $f,g_i,h_j$がすべて1次関数であるとき，これを線型計画問題ともいう．そうとは限らないとき，非線形計画問題という．線型計画問題は非線形計画問題である．
+        \item $f$が2次，$g_i,h_j$が1次であるとき，これを\textbf{2次計画問題}という．
+        \item $f,g_i$が凸で$h_j$が1次であるとき，これを\textbf{凸計画問題}という．
+        \item 制約条件の中に行列の半正定値条件を含むような問題を\textbf{半正定値計画問題}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{基底についてのメモ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有限次元線型空間論では，基底論がほぼ全てであった．
+    無限次元の場合，無限の切り取り方に任意性がある．
+\end{tcolorbox}
+
+\begin{definition}[Hamel, topological, Schauder basis]
+    位相線型空間$V$と部分集合$B\subset V$について，
+    \begin{enumerate}
+        \item $B$が\textbf{Hamel基底}であるとは，任意の元が$B$の有限線型和で一意的に表せることをいう．すなわち，$\Span(B)=V$かつ，任意の$B$の真の部分集合はこれを満たさないことをいう．
+        \item $B$が\textbf{位相基底}であるとは，任意の元が$B$の有限線型和の列の極限で表わせ，任意の$B$の元は他の$B$の元の有限線型和の列の極限で表せないことをいう．すなわち，$\o{\Span(B)}=V$（これをtotalという）かつ任意の$B$の真の部分集合はtotalでないことをいう．
+        \item $B$が\textbf{Schauder基底}であるとは，任意の元が$B$の（無限足り得る）線型和で一意的に表せることをいう．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    Hamel基底の存在は選択公理と同値．Schauder基底は位相基底であり，位相基底には双対基底が存在する．
+\end{remarks}
+
+\section{凸関数論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=凸解析の整備]
+    Hahn-Banachの分離定理は，位相線型空間上の互いに素な凸集合は，連続線型汎関数$\varphi$が定める超平面を用いて分離出来ることをいう．
+    Hahn-Banachの定理から始まり，Frechet空間論も，位相線形空間の議論は凸集合への注目と切り離せない．
+    特に，凸集合がノルム閉であることと弱閉であることが同値\ref{prop-closedness-of-convex-sets}であることが使える．
+    特に最適化理論では強力な道具になる．
+\end{tcolorbox}
+
+\subsection{凸集合論}
+
+
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意個数の(閉)凸集合族$(S_i)_{i\in I}$の共通部分$\cap_{i\in I}S_i$は閉凸集合である．凸性とは$\forall_{u,v\in S}\;[u,v]\subset S$であるので，空集合は凸であることに注意．
+        \item $\R^n$の$m$個の元の凸結合は，$m\ge n+2$ならば，$n+1$個の元を選んでその凸結合として表せる．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Caratheodory]
+    任意の集合$S\subset\R^n$の凸包$\Conv S$は，
+    \begin{enumerate}
+        \item $S$の高々$n+1$個の点の凸結合全体の集合として表せる．
+        \item $S$が連結ならば，高々$n$個の点の凸結合全体の集合として表せる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    有界閉集合$S\subset\R^n$の凸包$\Conv S$は閉集合である．
+    すなわち，任意の集合$S\subset\R^n$について$\Conv(\o{S})\subset\o{\Conv S}$であり，$S$が有界であるとき等号成立．
+\end{theorem}
+
+\begin{definition}
+    集合$S\subset V$について，
+    \begin{enumerate}
+        \item $S$を含む最小のaffine空間を$S$の\textbf{affine包}と呼び，$\Aff S$で表す．
+        \item $x\in S$が\textbf{相対的内点}であるとは，$\exists_{\ep>0}\;(B(x,\ep)\cap\Aff S)\subset S$を満たすことをいう．
+        \item 有限個の半平面の共通部分を\textbf{多面体}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    非空集合$C\subset V$について，
+    \begin{enumerate}
+        \item $\forall_{x\in C}\;\R_+x\subset C$が成り立つ時，\textbf{錐}であるという．集合$\R_+x$を\textbf{射線}という．
+        \item $\R_+$を係数とした線型和のことを，\textbf{錐結合}という．錐結合全体の集合は閉凸錐になり，これを生成される錐という．$\Cone S$で表す．
+    \end{enumerate}
+\end{definition}
+
+\subsection{凸集合の分離}
+
+\begin{definition}[closed hyperplane, separate]\mbox{}
+    \begin{enumerate}
+        \item 連続線型汎関数$f\in X^*$と実数$\al\in\R$を用いて
+        $H:=\Brace{u\in X\mid f(u)=\al}$と表せる集合を，\textbf{閉超平面}という．
+        \[H_\le:=\Brace{u\in X\mid f(u)\le\al}\quad H_>:=\Brace{u\in X\mid f(u)>\al}\]
+        と表す．
+        \item 集合$A,B\subset X$について，$A\subset H_\le\land B\subset H_>$を満たすとき，\textbf{真に分離する}といい，$A\subset H_\le\land B\subset H_\ge$を満たすとき分離するという．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[Mazur's lemma：弱閉凸集合はノルム閉である]
+    $V$をノルム空間とし，
+    $(u_n)_{n\in\N}$を$\o{u}$に弱収束する点列とする．
+    このとき，凸結合$v_n=\sum^N_{k=n}\lambda_ku_k,\sum^N_{k=n}\lambda_k=1,\lambda_k\ge0$の列が存在して，$\o{u}$にノルム収束する．
+\end{lemma}
+
+\subsection{凸関数}
+
+\begin{definition}[convex function, strictly convex function]
+    線型空間$V$の凸部分空間$W$上の関数$F:W\to\o{\R}$が\textbf{凸関数}であるとは，
+    \[\forall_{u,v\in W}\;\forall_{\lambda\in[0,1]}\;F(\lambda u+(1-\lambda)v)\le\lambda F(u)+(1-\lambda)F(v)\]
+    が（右辺が意味を持つ限り）成り立つことをいう．
+    $u=v$または$\lambda\in\partial[0,1]$である場合を除き，常に不等号が真に成り立つとき，$F$は\textbf{厳密に凸}であるという．
+\end{definition}
+\begin{remarks}[effective domain, proper]
+    定義域に$+\infty$を許すことで，任意の部分関数を，$V$全体に凸なまま延長して考えることができる．
+    $\dom F:=\Brace{u\in V\mid F(u)<\infty}$を\textbf{有効定義域}という．
+    また，集合の定義関数を$\{0,+\infty\}$に値を取ることにすれば，$A$が凸集合であることと，$\chi_A$が凸関数であることとが同値になる．
+    したがって，以降は凸関数のみを扱えばよい．
+    一方で，$F(u_0)=-\infty$なる点$u_0$が存在すると，任意の$u_0$を端点とする半直線上で，恒等的に$-\infty$であるか，ある一点で$+\infty$に切り替わる振る舞いをするかになる．
+    以降，真の凸関数といったとき，$F$は$-\infty$を取らず，恒等的に$+\infty$ではないとする．
+\end{remarks}
+
+\begin{definition}[epigraph]
+    \[\Epi F:=\Brace{(u,a)\in V\times\R\mid f(u)\le a}\]
+    を関数$F:V\to\o{\R}$のエピグラフという．$\pr_1(\Epi F)=\dom F$である．
+\end{definition}
+
+\begin{proposition}[凸関数の特徴付け]
+    関数$F:V\to\o{\R}$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $F$は凸である．
+        \item $\Epi F$は凸である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    関数$F,G:V\to\o{\R}$について，
+    \begin{enumerate}
+        \item $F$が凸ならば，$\lambda>0$について$\lambda F$も凸である．
+        \item $F,G$が凸ならば，$F+G$も凸である．ただし，$\infty-\infty=+\infty$とする．
+        \item 凸関数族$(F_i)_{i\in I}$について，各点で上限を取るもの$F:=\sup_{i\in I}F_i$は凸である．
+    \end{enumerate}
+    特に，凸関数は凸錐をなす．
+\end{proposition}
+
+\subsection{下半連続関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    凸関数の特徴付けにおいて，$\Epi F$が凸であるという部分を閉であるとすると，これは下半連続性の特徴付けとなる．
+\end{tcolorbox}
+
+\begin{definition}
+    関数$F:V\to\o{\R}$が下半連続であるとは，次の２つの同値な条件を満たすことをいう：
+    \begin{enumerate}
+        \item $\forall_{a\in\R}\;\Brace{u\in V\mid F(u)\le a}$ is clsoed.
+        \item $\forall_{\o{u}\in V}\;\liminf_{u\to\o{u}}F(u)\ge F(\o{u})$．
+    \end{enumerate}
+    $V=\R$のときの特徴付け\ref{prop-characterization-of-lsc}参照．
+\end{definition}
+
+\begin{proposition}[下半連続関数の特徴付け]
+    関数$F:V\to\o{\R}$について，
+    \begin{enumerate}
+        \item $F$は下半連続である．
+        \item $\Epi F$は閉である．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    特に，閉集合の定義関数は下半連続である．
+\end{remarks}
+
+\begin{definition}[regularization of mappings]
+    任意の下半連続関数族の下限は下半連続であった\ref{prop-subalgebra-of-lsc-function}．
+    そこで，任意の関数$F\in\Map(V,\o{\R})$に対して，
+    束$C^{1/2}(V)$の中で下限を取ることが考えられる．これを$F$の\textbf{下半連続正則化}といい，$\o{F}$で表す：
+    \[\o{F}:=\sup\Brace{f\in C^{1/2}(V)\mid f\le F}.\]
+\end{definition}
+
+\begin{corollary}
+    $F:V\to\o{\R}$を関数，$\o{F}$をその下半連続正則化とする．このとき，
+    \begin{enumerate}
+        \item $\Epi\o{F}=\o{\Epi F}$．
+        \item $\forall_{u\in V}\;\o{F}(u)=\liminf_{v\to u}F(v)$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}
+    下半連続な凸関数$F:V\to\o{\R}$は，弱位相$\sigma(V,V^*)$についても下半連続である．
+\end{corollary}
+\begin{remarks}
+    凸集合についてノルム閉であることと弱閉であることとが同値であるという消息は，ここまで換言できる．
+\end{remarks}
+
+\subsection{凸関数の連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    凸関数が連続であることと，局所Lipschitzであることと，ある開集合が存在してその上で有界であることとは同値である．
+\end{tcolorbox}
+
+\begin{lemma}
+    凸関数$F:V\to\oR$が$u\in V$の近傍において有界である$\exists_{U\in\O(u)}\;\exists_{M\in\R}\;\abs{F|_U}\le M\;\on U$とき，$F$は$u$において連続である．
+\end{lemma}
+
+\begin{proposition}
+    凸関数$F:V\to\oR$について，次の２条件は同値．
+    \begin{enumerate}
+        \item 非空な開集合$U$が存在して，$F|_U$は真の関数で\footnote{$-\infty$を取らない}，ある定数$M\in\R$より大きくならない．
+        \item $F$は真の関数で，$\Dom F$の内部で連続である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}[有限次元空間上の凸関数は連続]
+    有限次元空間上の真の凸関数は，$\Dom F$の内部で連続である．
+\end{corollary}
+
+\begin{corollary}
+    $F:V\to\oR$をノルム空間上の真の凸関数とする．
+    次の２条件は同値．
+    \begin{enumerate}
+        \item 非空な開集合$U$が存在して，$F$は$U$上有界である．
+        \item $\Dom F$の内部は非空で，$F$はその上で局所Lipschitzである．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}
+    樽型空間（特にBanach空間）上の下半連続な凸関数は，$\Dom F$の内部において連続である．
+\end{corollary}
+
+\subsection{連続affine関数の上限としての特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の下半連続関数は，ある連続関数の族の上限として表現できる\ref{prop-lower-semicontinuous-functions}．
+    凸な下半連続関数は特に，連続なaffine関数を選べ，これが特徴付けになることを示す．
+\end{tcolorbox}
+
+\begin{definition}
+    ある連続線型汎関数$l\in V^*$と実数$\al$を用いて$l+\al$と表せ，さらに有界性$\forall_{v\in V}\;v>l(v)+\al$
+    を満たす関数を\textbf{連続affine関数}という．
+    連続affine関数の像の各点上限として得られる関数全体を$\Gamma(V)$で表し，$\Gamma_0(V):=\Gamma(V)\setminus\{\pm\infty\}$とする．
+\end{definition}
+
+\begin{proposition}
+    $F:V\to\oR$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $F\in\Gamma(V)$．
+        \item $F$は凸な下半連続関数であり，$-\infty$を取るならば恒等関数である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{$\Gamma$-正則化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C^{1/2}(X)$内での下限を正則化というのであった．$\Gamma(X)$はそのうち凸でもある関数のなす部分空間である．
+    $\Gamma(X)$での下限は$C^{1/2}(X)$での下限より小さくなる．
+\end{tcolorbox}
+
+\begin{definition}[$\Gamma$-regularization]
+    $F,G:V\to\oR$について，次の同値な条件を満たすとき，$G$を$F$の\textbf{$\Gamma$-正則化}であるという．
+    \begin{enumerate}
+        \item $G$は，$F$より小さい連続affine関数全体の各点上限関数である．
+        \item $G$は$\Gamma(V)$における$F$の下限である．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[$\Gamma$-正則化のエピグラフ]
+    $F:V\to\oR$を関数，$G$をその$\Gamma$-正則化とする．このとき，$F$より小さい連続affine関数が存在するならば，$\Epi G=\o{\Conv\Epi F}$が成り立つ．
+\end{proposition}
+
+\begin{proposition}
+    $F:V\to\oR$を関数，$G$をその$\Gamma$-正則化とする．
+    \begin{enumerate}
+        \item $G\le\o{F}\le F$である．
+        \item $F$が凸で，連続affine関数によって下から抑えられるとき，$\o{F}=G$．
+    \end{enumerate}
+\end{proposition}
+
+\section{極関数と微分論}
+
+\section{凸関数と変分不等式の最小化}
+
+\section{凸最適化の双対理論}
+
+\begin{notation}
+    $X$を実ノルム空間とし，連続な双線型写像$\brac{-,-}:X\times X^*\to\R$を評価写像として定める．
+\end{notation}
+
+\subsection{双対理論一般}
+
+\begin{definition}[primal problem, dual problem]
+    $\inf\norm{u-u_0}=\al,u\in L$を主問題とする．これに対して
+    \[\sup\brac{u^*,u_0}=\beta,\quad u^*\in L^\perp,\norm{u^*}\le1\]
+    を双対問題という．
+\end{definition}
+
+\begin{theorem}
+    $L$を実ノルム空間$X$の部分空間とする．$u_0\in X$とする．次が成り立つ．
+    \begin{enumerate}
+        \item $\al=\beta$．
+        \item 双対問題は解$u^*$を持つ．
+        \item $u\in L$が主問題の解であることと，$\brac{u^*,u_0-u}=\norm{u-u_0}$が成り立つことは同値．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $L$が有限次元のとき，主問題は解を持つ．
+\end{corollary}
+
+\begin{remark}
+    $L$は無限次元だが，回帰的Banach空間$X$の閉部分空間であるならば，主問題は解を持つ．
+\end{remark}
+
+\subsection{修正理論一般}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    minimum norm problemを$X^*$上で考える道もある．
+\end{tcolorbox}
+
+\begin{definition}[modified primal problem]
+    $\inf\norm{u^*-u_0^*}=\al,\;u^*\in L^\perp$を\textbf{修正された主問題}という．
+    これに対する双対問題は
+    \[\sup\brac{u^*_0,u}=\beta,\quad u\in L,\norm{u}\le 1\]
+    となる．
+\end{definition}
+
+\begin{theorem}
+    $X$を実ノルム空間，$L$をその線型部分空間とする．$u_0^*\in X^*$とすると，次が成り立つ．
+    \begin{enumerate}
+        \item $\al=\beta$．
+        \item 主問題は解$u^*$を持つ．
+        \item $u\in L,\norm{u}\le 1$が双対問題の解であることは，$\brac{u_0^*-u^*,u}=\norm{u^*_0-u^*}$を満たすことに同値．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{応用：Cebysev近似}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最適化理論はこのような数学的応用を持つ．
+\end{tcolorbox}
+
+\begin{definition}
+    連続関数$u_0:[a,b]\to\R$と有限次元部分空間$L:=\Brace{P\in\R[x]\mid\deg P\le N}$
+    に対して，近似問題
+    \[\max_{a\le x\le b}\abs{u_0(x)-u(x)}=\min!,\quad u\in L\]
+    を考える．
+\end{definition}
+
+\begin{proposition}
+    上述の近似問題は解$u$を持ち，$\abs{u_0(x)-u(x)}$は$[a,b]$上で少なくとも$N+2$個の最大値を取る点を持つ．
+\end{proposition}
+
+\section{変分法}
+
+\subsection{変分原理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    無限次元空間では，ほとんどの集合がコンパクトにならないことが，変分問題の難しい点である．
+    そこで，回帰的Banach空間では（特にHilbert空間では），有界列は弱点列コンパクトである\ref{thm-characterization-of-reflexive-Banach-spaces}ことに注目する．
+\end{tcolorbox}
+
+\begin{theorem}[generalized Weierstrass theorem]
+    回帰的Banach空間$X$の単位閉球$B$上の
+    最小化問題$F(u)=\min!,u\in B$は，汎関数$F:B\to\R$が，弱位相について点列下半連続であるとき，解を持つ．
+
+    このことは，単位閉球$B$上だけでなく，任意の非空な有界閉凸集合$M\subset X$上で成り立つ．
+\end{theorem}
+
 
 \section{関数機械}
 
@@ -6522,6 +7017,8 @@ title=]
     Eidelman, Yuli, Vitali D. Milman, and Antonis Tsolomitis. 2004. Functional analysis: an introduction. Providence (R.I.): American mathematical Society.
     \bibitem{Lindenstrauss}
     Joram Lindenstrauss, and Yoav Benyamini "Geometric Nonlinear Functional Analysis" Volume 1
+    \bibitem{Ekeland and Temam}
+    Ekeland and Temam -  Convex Analysis and Variational Problems
 \end{thebibliography}
 
 \end{document}

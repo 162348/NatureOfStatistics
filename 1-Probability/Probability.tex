@@ -4413,9 +4413,27 @@ title=]
 
 \subsection{積率問題}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積率問題の解の存在は，Hahn-Banachの定理の応用である．
+    ここでは確率的な文脈であるが，物理的にも，電荷密度$\rho$に関する条件として読める．
+\end{tcolorbox}
+
 \begin{problem}[moment problem]
     実数列$\al:\N\to\R$に対して，これを積率の列に持つ分布が一意に定まるか？
 \end{problem}
+
+\begin{proposition}
+    有限個への制限$\al|_{[N]}$について，これを満たす積率問題の解は存在する．
+\end{proposition}
+
+\begin{theorem}[存在の必要十分条件]
+    区間$[a,b]$上の分布であって，積率$\al$を持つものを考える．
+    \begin{enumerate}
+        \item 積率問題は解を持つ．
+        \item $\exists_{c>0}\;\forall_{N\in\N}\;\forall_{a_k\in\R}\;\Abs{\sum^N_{k=0}a_k\al_k}\le c\max_{a\le x\le b}\Abs{\sum^N_{k=0}a_kx^k}$．
+    \end{enumerate}
+\end{theorem}
 
 \begin{theorem}[一意性の十分条件]
     $(\al_n)_{n\in\N}$が$\exists_{t_0>0}\;\sum^\infty_{n=1}\frac{\abs{\al_n}}{n!}t^n_0<\infty$を満たすならば，$\al$を積率とする分布はただ一つである．
