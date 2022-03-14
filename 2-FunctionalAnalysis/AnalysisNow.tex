@@ -1411,7 +1411,9 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    一般の位相線形空間でも通用する強力な手法である．
+    一般の位相線形空間でも，双対ペアがあれば，Hilbert空間のように扱うことで幾何学的な考察が可能になる．
+    これは普遍的な威力を持つ強力な手法である．
+    直交性の概念よりも，凸錐が重要な位置を占める．
 \end{tcolorbox}
 
 \begin{definition}[real polar, bipolar]\label{def-polar}
@@ -1884,7 +1886,7 @@ title=コンパクト凸集合の代数的特徴付けを与える]
 \end{definition}
 
 \begin{proposition}[極点の特徴付け]
-    線型空間$X$の凸集合$K$と点$p\in K$について，
+    線型空間$X$の凸集合$K$と点$p\in K$について，次の5条件は同値．
     \begin{enumerate}
         \item $p\in K$は極点である．
         \item $K\setminus\{p\}$は凸集合である．
@@ -6667,11 +6669,82 @@ title=凸解析の整備]
     \end{enumerate}
 \end{definition}
 
-\begin{definition}
+\subsection{錐論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    閉凸錐の構造がよく現れる．
+\end{tcolorbox}
+
+\begin{definition}[cone, poluhydron]
     非空集合$C\subset V$について，
     \begin{enumerate}
         \item $\forall_{x\in C}\;\R_+x\subset C$が成り立つ時，\textbf{錐}であるという．集合$\R_+x$を\textbf{射線}という．
-        \item $\R_+$を係数とした線型和のことを，\textbf{錐結合}という．錐結合全体の集合は閉凸錐になり，これを生成される錐という．$\Cone S$で表す．
+        \item $\R_+$を係数とした線型和のことを，\textbf{錐結合}という．錐結合全体の集合は閉凸錐になり，これを生成される錐という．\textbf{錐包}を$\Cone S$で表す．
+        \item 有限個の半平面の共通部分として定まる集合を\textbf{多面体}という：$\exists_{s_1,\cdots,s_m\in\R^n}\;\exists_{r_1,\cdots,r_m\in\R}\;P=\Brace{x\in\R^n\mid\forall_{i\in[m]} s_i^\top x\le r_i}$．
+        \item $\forall_{i\in[m]}\;r_i=0$のときの多面体を，\textbf{多面錐}という．すなわち，$0$を通る有限個の半平面の共通部分として定まる非有界集合である．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $C_p:=\Brace{(t,x)\in\R\times\R^n\mid t\ge\norm{x}_p}$は凸錐である．$C_2$を\textbf{二次錐}という．
+        \item 対称行列の空間$\R^{n(n+1)/2}$内で，半正定値行列が作る集合は凸錐である．一般に，自己共役作用素$B(H)_\sa$内で半正定値作用素は閉凸錐をなす．実軸の非負部分$\R_+$は凸錐であるが，この例は退化したものと捉えられる．
+    \end{enumerate}
+\end{example}
+
+
+\begin{lemma}[多面錐の特徴付け]
+    部分集合$P\subset\R^n$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $P$は多面錐である．
+        \item $\exists_{m\in\N}\;\exists_{x_1,\cdots,x_m}\;P=\Cone(\{x_1,\cdots,x_m\})$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[多面体の特徴付け]
+    部分集合$P\subset\R^n$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $P$は多面体である．
+        \item $\exists_{k,k'\in\N}\;\exists_{x_1,\cdots,x_k,y_1,\cdots,y_{k'}\in\R^n}\;P=\Cone(\{x_1,\cdots,x_k\})+\Conv(\{y_1,\cdots,y_{k'}\})$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[polar cone, dual cone, self-adjoint cone]
+    錐$C\subset\R^n$に対して，
+    \begin{enumerate}
+        \item $C^\circ:=\Brace{s\in\R^n\mid\forall_{x\in C}\;s^\top x\le0}$を\textbf{極錐}という．これは錐$C$の極集合である\ref{lemma-polar}．
+        \item $C^*:=-C^\circ=\Brace{s\in\R^n\mid\forall_{x\in C}\; s^\top x\ge0}$を\textbf{双対錐}という．
+        \item $C^*=C$を満たすとき，錐$C$を\textbf{自己共役錐}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[自己共役錐]
+    $C_2$，半正定値作用素のなす凸錐は，自己共役錐である．
+\end{example}
+
+\begin{corollary}[双極定理]
+    錐$C,C_1,C_2\subset\R^n$について，
+    \begin{enumerate}
+        \item $C^\circ$は閉凸錐．
+        \item $C_1\subset C_2\Rightarrow C_1^\circ\supset C_2^\circ$．
+        \item $C$が凸のとき，$C^{\circ\circ}=\Cl\;C$．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    双極定理\ref{thm-polar-theorem}の錐に関する特殊化である．錐は必ず$0$を含むことに注意．
+\end{proof}
+
+\begin{corollary}[Krein-Milman]
+    有界閉な凸集合$C\subset\R^n$に対して，$C$の極点全体がなす集合の凸包は$C$に等しい：$C=\Conv(\Ex(C))$．
+\end{corollary}
+
+\begin{definition}
+    集合$S\subset\R^n$とその点$x\in S$について，
+    \begin{enumerate}
+        \item $d\in\R^n$が$x$における$S$の\textbf{接ベクトル}であるとは，$x$に収束する$S$の列$\{x_k\}\subset S$と$0$に上から収束する数列$(t_k)$が存在して，$d=\lim_{k\to\infty}\frac{x_k-x}{t_k}$と表せることをいう．
+        \item 接ベクトル全体の集合$T_S(x)$は閉錐をなし，\textbf{接錐}という．$x\in\Int S\Rightarrow T_S(x)=\R^n$に注意．
+        \item 接錐の極錐$N_S(x):=T_S(x)^\circ$を\textbf{法線錐}という．
     \end{enumerate}
 \end{definition}
 
@@ -6699,15 +6772,15 @@ title=凸解析の整備]
     線型空間$V$の凸部分空間$W$上の関数$F:W\to\o{\R}$が\textbf{凸関数}であるとは，
     \[\forall_{u,v\in W}\;\forall_{\lambda\in[0,1]}\;F(\lambda u+(1-\lambda)v)\le\lambda F(u)+(1-\lambda)F(v)\]
     が（右辺が意味を持つ限り）成り立つことをいう．
-    $u=v$または$\lambda\in\partial[0,1]$である場合を除き，常に不等号が真に成り立つとき，$F$は\textbf{厳密に凸}であるという．
+    $u=v$または$\lambda\in\partial[0,1]$である場合を除き，常に不等号が真に成り立つとき，$F$は\textbf{狭義凸}または\textbf{厳密に凸}であるという．
 \end{definition}
 \begin{remarks}[effective domain, proper]
     定義域に$+\infty$を許すことで，任意の部分関数を，$V$全体に凸なまま延長して考えることができる．
-    $\dom F:=\Brace{u\in V\mid F(u)<\infty}$を\textbf{有効定義域}という．
+    $\dom F:=\Brace{u\in V\mid F(u)<\infty}$を\textbf{実効定義域}という．
     また，集合の定義関数を$\{0,+\infty\}$に値を取ることにすれば，$A$が凸集合であることと，$\chi_A$が凸関数であることとが同値になる．
     したがって，以降は凸関数のみを扱えばよい．
     一方で，$F(u_0)=-\infty$なる点$u_0$が存在すると，任意の$u_0$を端点とする半直線上で，恒等的に$-\infty$であるか，ある一点で$+\infty$に切り替わる振る舞いをするかになる．
-    以降，真の凸関数といったとき，$F$は$-\infty$を取らず，恒等的に$+\infty$ではないとする．
+    以降，\textbf{真凸関数}といったとき，$F$は$-\infty$を取らず，恒等的に$+\infty$ではないとする．
 \end{remarks}
 
 \begin{definition}[epigraph]
@@ -6723,7 +6796,7 @@ title=凸解析の整備]
     \end{enumerate}
 \end{proposition}
 
-\begin{proposition}
+\begin{proposition}[凸関数の凸錐]
     関数$F,G:V\to\o{\R}$について，
     \begin{enumerate}
         \item $F$が凸ならば，$\lambda>0$について$\lambda F$も凸である．
@@ -6731,6 +6804,54 @@ title=凸解析の整備]
         \item 凸関数族$(F_i)_{i\in I}$について，各点で上限を取るもの$F:=\sup_{i\in I}F_i$は凸である．
     \end{enumerate}
     特に，凸関数は凸錐をなす．
+\end{proposition}
+
+\subsection{凸関数の変種}
+
+\begin{definition}
+    \[\exists_{\al\in\R}\;\forall_{\lambda\in[0,1]}\;\lambda f(x)+(1-\lambda)f(y)\ge f(\lambda x+(1-\lambda)y)+\frac{1}{2}\al\lambda(1-\lambda)\norm{x-y}^2\]が成り立つ関数$f$を\textbf{強凸関数}という．
+\end{definition}
+
+\begin{definition}
+    $\Epi f$の各$a\in\R$に関する切断面
+    $S_\al:=\Brace{x\in\R^n\mid f(x)\le\al}$を
+    等位集合という．凸関数の等位集合は凸集合である．有効定義域も凸である．
+    等位集合がすべて凸集合となる関数を\textbf{準凸関数}という．これは凸関数とは限らない．
+\end{definition}
+
+\begin{definition}
+    微分可能な凸関数$f:\R^n\to\R$は$\brac{\nabla f(x),y-x}\ge0\Rightarrow f(y)\ge f(x)$を満たす．
+    すなわち，方向微分が非負である方向に関して，関数値は減少しない．
+    この条件を満たす微分可能な関数$f$を\textbf{擬凸関数}という．
+    擬凸関数は準凸関数である．
+\end{definition}
+
+\subsection{凸関数の例}
+
+\begin{example}[perspective]
+    凸関数$f:\R^n\to\R$の\textbf{錐拡張}とは，$g:\R^{n+1}\to\R\cup\{\infty\}$であって，
+    \[g(x,t):=\begin{cases}
+        tf(x/t),&t>0,\\
+        +\infty,t\le0,
+    \end{cases}\]
+    として定まるものをいう．
+    これはっ塔である．
+\end{example}
+
+\begin{corollary}
+    関数$f:\R^n\to\R$について，
+    \begin{enumerate}
+        \item $f$が微分可能であるとき，$f$が凸であることと$\forall_{x,y\in\R^n}\;f(y)\ge f(x)+\brac{\nabla f(x),y-x}$とは同値．
+        \item $f$が$C^2$級であるとき，$f$が凸であることと，任意の点$x\in\R^n$でHesse行列$\nabla^2f(x)$が半正定値であることとは同値．
+    \end{enumerate}
+\end{corollary}
+
+\begin{definition}
+    作用素$h:V\to V$が単調であるとは，$\forall_{x,y\in V}\;\brac{h(x)-h(y),x-y}\ge0$が成り立つことをいう．
+\end{definition}
+
+\begin{proposition}
+    $C^1$級関数$f:\R^n\to\R$について，$f$が凸であることと，勾配$\nabla f:\R^n\to\R^n;x\mapsto\nabla f(x)$が単調であることとは同値．
 \end{proposition}
 
 \subsection{下半連続関数}
@@ -6758,6 +6879,8 @@ title=]
 \end{proposition}
 \begin{remarks}
     特に，閉集合の定義関数は下半連続である．
+    すなわち，連続な関数のうち，いくつかの点が下に飛び出していてもエピグラフは閉のままであり，このようなクラスが下半連続関数である．
+    そう考えると，$f,-f$がいずれも下半連続であることが$f$の連続性を特徴付ける．
 \end{remarks}
 
 \begin{definition}[regularization of mappings]
@@ -6821,14 +6944,14 @@ title=]
 \subsection{連続affine関数の上限としての特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=閉凸関数への注目]
     任意の下半連続関数は，ある連続関数の族の上限として表現できる\ref{prop-lower-semicontinuous-functions}．
     凸な下半連続関数は特に，連続なaffine関数を選べ，これが特徴付けになることを示す．
+    以降，凸な下半連続関数を\textbf{閉凸関数}という．これは，定義関数が閉凸関数であることと，そのエピグラフが集合として閉凸であることとが同値であることから．
 \end{tcolorbox}
 
-\begin{definition}
-    ある連続線型汎関数$l\in V^*$と実数$\al$を用いて$l+\al$と表せ，さらに有界性$\forall_{v\in V}\;v>l(v)+\al$
-    を満たす関数を\textbf{連続affine関数}という．
+\begin{definition}[continuous affine function]
+    ある連続線型汎関数$l\in V^*$と実数$\al$を用いて$l+\al$と表せる関数を\textbf{連続affine関数}という．
     連続affine関数の像の各点上限として得られる関数全体を$\Gamma(V)$で表し，$\Gamma_0(V):=\Gamma(V)\setminus\{\pm\infty\}$とする．
 \end{definition}
 
@@ -6846,6 +6969,7 @@ title=]
 title=]
     $C^{1/2}(X)$内での下限を正則化というのであった．$\Gamma(X)$はそのうち凸でもある関数のなす部分空間である．
     $\Gamma(X)$での下限は$C^{1/2}(X)$での下限より小さくなる．
+    実はこれが双極定理に繋がる．
 \end{tcolorbox}
 
 \begin{definition}[$\Gamma$-regularization]
@@ -6856,7 +6980,7 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{proposition}[$\Gamma$-正則化のエピグラフ]
+\begin{proposition}[$\Gamma$-正則化のエピグラフ]\label{prop-epigraph-of-gamma-regularization}
     $F:V\to\oR$を関数，$G$をその$\Gamma$-正則化とする．このとき，$F$より小さい連続affine関数が存在するならば，$\Epi G=\o{\Conv\Epi F}$が成り立つ．
 \end{proposition}
 
@@ -6869,6 +6993,100 @@ title=]
 \end{proposition}
 
 \section{極関数と微分論}
+
+\begin{notation}
+    双線型写像$\brac{-,-}$が定めるペアリングを$(V,V^*)$で表す．それぞれに$\sigma(V,V^*),\sigma(V^*,V)$-位相を考えると，これらはそれぞれ局所凸位相線形空間である．
+\end{notation}
+
+\subsection{極関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    なんだか極めて外積分の議論に似ている．作用素の議論のパターンだろうか．
+\end{tcolorbox}
+
+\begin{definition}[polar function / conjugate function]
+    関数$F:V\to\oR$の\textbf{極関数}または\textbf{共役関数}とは，
+    \[F^*(u^*):=\sup_{u\in V}\Brace{\brac{u,u^*}-F(u)}\]
+    によって定まる関数$F^*:V^*\to\oR$をいう．
+\end{definition}
+\begin{remarks}
+    $u^*\in V^*,\al\in\R$に関して，$u\mapsto\brac{u,u^*}-\al$は，連続affine関数で，
+    至る所$F$より小さいことと，条件
+    \[\forall_{u\in V}\;\al\ge\brac{u,u^*}-F(u)\quad\Leftrightarrow\quad\al\ge F^*(u^*)\]
+    とは同値．よって，関数$F$の，連続affine関数による下限は$u\mapsto\brac{u,u^*}-F^*(u^*)$である．
+\end{remarks}
+
+\begin{lemma}
+    極関数は$F^*\in\Gamma(V^*)$を満たす．特に，$F^*$は凸な下半連続関数である．
+\end{lemma}
+\begin{proof}
+    $F^*$は連続affine関数族$(\brac{u,-}-F(u))_{u\in\Dom F}$の上限であるため．
+\end{proof}
+
+\begin{corollary}\mbox{}
+    \begin{enumerate}
+        \item $F^*(0)=-\inf_{u\in V}F(u)$．
+        \item $F\le G\Rightarrow F^*\ge G^*$．
+        \item $(\inf_{i\in I}F_i)^*=\sup_{i\in I}F^*_i$．
+        \item $(\sup_{i\in I}F_i)^*\le\inf_{i\in I}F^*_i$．
+        \item $\forall_{\{F_i\}_{i\in I}\subset\Map(V,\R)}\;\forall_{\lambda>0}\;(\lambda F)^*(u^*)=\lambda F^*(u^*/\lambda)$．
+        \item $\forall_{\{F_i\}_{i\in I}\subset\Map(V,\R)}\;\forall_{\al\in\R}\;(F+\al)^*=F^*-\al$．
+        \item $F_a(v):=F(v-a)\;(a\in V)$を平行移動とする．$(F_a)^*(u^*)=F^*(u^*)+\brac{a,u^*}$．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{双極}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極めてきれいな理論が出来上がった．
+\end{tcolorbox}
+
+\begin{proposition}[bipolar theorem]
+    $F:V\to\oR$を関数とする．このとき，$F^{**}$は$F$の$\Gamma$-正則化である．
+    特に，$\forall_{F\in\Gamma(V)}\;F^{**}=F$．
+\end{proposition}
+
+\begin{corollary}
+    $\forall_{F\in\Map(V,\oR)}\;F^*=F^{***}$．
+\end{corollary}
+
+\begin{definition}[duality]
+    極化の操作は２つの束$\Gamma(V)$と$\Gamma(V^*)$の全単射を引き起こす．
+    この全単射によって対応する元，$F\in\Gamma(V),G\in\Gamma(V^*)$であって$F=G^*,G=F^*$を満たすものを，互いに双対であるという．
+\end{definition}
+\begin{remark}
+    $\pm\infty$は$\pm\infty$に対応するから，この全単射の$\Gamma_0(V)$への制限はそのまま$\Gamma_0(V^*)$への全単射である．
+\end{remark}
+
+\subsection{極集合への応用}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極関数の結果が整備できたいま，特性関数について特殊化させれば，極化集合論である．
+    凸解析もマジできれいな理論で，関数解析に応用可能だな．
+\end{tcolorbox}
+
+\begin{example}[indicator function, support function]
+    $A\subset V$を部分集合とし，$\chi_A$をその標示関数とする．
+    その極関数は\textbf{$A$の支持関数}と呼ばれ，
+    \[\chi_A^*(u^*)=\sup_{u\in V}\Brace{\brac{u,u^*}-\chi_a(u)}=\sup_{u\in A}\brac{u,u^*}.\]
+    これは凸な下半連続関数で，また$V^*$上正斉次性を持つ．
+    また，$\Gamma$-正則化の表現より，$\chi_A^{**}=\chi_{\o{\Conv}A}$．
+    特に，$A$と$\o{\Conv}A$は同じ支持関数を持つ．
+\end{example}
+
+\begin{example}
+    ノルム空間$(V,\norm{-})$とその双対空間$(V^*,\norm{-}^*)$について，$\varphi\in\Gamma_0(\R)$を偶関数とし，$\varphi^*\in\Gamma_0(\R)$をその極関数とする．
+    このとき，
+    \[F(u):=\varphi(\norm{u}),\quad G(u^*):=\varphi^*(\norm{u^*}^*)\]
+    と定めると，これらは双対である．
+\end{example}
+
+\subsection{劣微分可能性}
+
+
 
 \section{凸関数と変分不等式の最小化}
 
