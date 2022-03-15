@@ -2083,10 +2083,38 @@ title=]
     これが，弱位相を調べる際には点列のみを考えては粒度が足りない好例である．
 \end{remarks}
 
-\subsection{Banach空間値積分}\label{subsection-Bochner-integral}
+\subsection{Banach空間値関数の可測性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=Bochner積分]
+title=]
+    有限次元空間では退化していた3つの可測性の概念が考え得る．
+    強可測性の特徴付けをPettis measurability theoremが与える．
+\end{tcolorbox}
+
+\begin{notation}
+    $(S,\A)$を可測空間，$X$をBanach空間とする．
+\end{notation}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{definition}
+
+\subsection{Bochner積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Banach空間に測度を導入して積分を考えたい．
+    Lebesgue積分に相当する概念がBochner積分である．
+    $X$-値関数のLebesgue関数$L^p(S;X)$をBochner空間という．
+    一方で，汎関数$\brac{f,x^*}$の通常の意味でのLebesgue積分と可換になるべき連続な線型汎関数はただ一つに定まる．これがPettis積分である．
+\end{tcolorbox}
+
+\subsection{Pettis積分}\label{subsection-Pettis-integral}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Pettis積分]
     局所コンパクトハウスドルフ空間$X$からBanach空間$\fX$への関数$f:X\to\fX$を考える．
     $X$上のRadon積分$\int:C_c(X)\to\R$について，積分$\int f\in\fX$にあたる元を考えたい．
     $\R^n$-値積分が成分毎であるのと同様に，全ての連続な線型形式（射影みたいなもの）について，可換性
@@ -2174,6 +2202,8 @@ title=Bochner積分]
         が，これは$\norm{f(-)}$という可積分な非負値の優関数が見つかるから，Lebesgueの優収束定理より従う．
     \end{description}
 \end{proof}
+
+
 
 \chapter{Hilbert Space}
 
@@ -6012,7 +6042,7 @@ title=]
 \end{theorem}
 
 \begin{discussion}[双対ペアと微分]
-    Bochner積分論\ref{subsection-Bochner-integral}と同様に，双対ペアは微分の定義を一意に示唆する．
+    Bochner積分論\ref{subsection-Pettis-integral}と同様に，双対ペアは微分の定義を一意に示唆する．
     部分積分の公式
     \[\int_\R f'\varphi dx=-\int_\R f\varphi'dx\]
     は，$\brac{S',\varphi}=-\brac{S,\varphi'}$を意味している．これによると，任意のSchwartz超関数は無限階微分可能である．
@@ -6512,7 +6542,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     確率積分と違って，考慮に足りる積分が複数ある．
-    Bochner積分\ref{subsection-Bochner-integral}という．
+    Bochner積分\ref{subsection-Pettis-integral}という．
 \end{tcolorbox}
 
 \subsection{Riemann積分の一般化}
@@ -6812,7 +6842,7 @@ title=]
     \[\exists_{\al\in\R}\;\forall_{\lambda\in[0,1]}\;\lambda f(x)+(1-\lambda)f(y)\ge f(\lambda x+(1-\lambda)y)+\frac{1}{2}\al\lambda(1-\lambda)\norm{x-y}^2\]が成り立つ関数$f$を\textbf{強凸関数}という．
 \end{definition}
 
-\begin{definition}
+\begin{definition}[level set]\label{def-level-set}
     $\Epi f$の各$a\in\R$に関する切断面
     $S_\al:=\Brace{x\in\R^n\mid f(x)\le\al}$を
     等位集合という．凸関数の等位集合は凸集合である．有効定義域も凸である．
@@ -6996,6 +7026,7 @@ title=]
 
 \begin{notation}
     双線型写像$\brac{-,-}$が定めるペアリングを$(V,V^*)$で表す．それぞれに$\sigma(V,V^*),\sigma(V^*,V)$-位相を考えると，これらはそれぞれ局所凸位相線形空間である．
+    ここで，$l:V\to\oR$が連続な線型汎関数であるといったとき，これはある$u^*\in V^*$を用いて$l=\brac{-,u^*}$なる表現を持つ．
 \end{notation}
 
 \subsection{極関数}
@@ -7010,11 +7041,11 @@ title=]
     \[F^*(u^*):=\sup_{u\in V}\Brace{\brac{u,u^*}-F(u)}\]
     によって定まる関数$F^*:V^*\to\oR$をいう．
 \end{definition}
-\begin{remarks}
+\begin{remarks}[極関数は$\Gamma$-正則化の定数項を与える]
     $u^*\in V^*,\al\in\R$に関して，$u\mapsto\brac{u,u^*}-\al$は，連続affine関数で，
     至る所$F$より小さいことと，条件
     \[\forall_{u\in V}\;\al\ge\brac{u,u^*}-F(u)\quad\Leftrightarrow\quad\al\ge F^*(u^*)\]
-    とは同値．よって，関数$F$の，連続affine関数による下限は$u\mapsto\brac{u,u^*}-F^*(u^*)$である．
+    とは同値．よって，$u^*\in V^*$が定める連続affine関数で$F$より小さいもののうち最大のものの定数項が$-F^*(u^*)$で，すなわち，関数$F$の連続affine関数による下限は$u\mapsto\brac{u,u^*}-F^*(u^*)$である．
 \end{remarks}
 
 \begin{lemma}
@@ -7086,20 +7117,242 @@ title=]
 
 \subsection{劣微分可能性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣微分の概念は，通常の微分の定義(これはGateaux微分が引き継ぐ)より直観的に「affine関数による近似」として定まる．
+    そして通常の微分概念とは違って常に存在するので，応用可能性が高い．
+    したがって，極値問題を劣微分の言葉で捉え直すのである：
+    \[F(u)=\min_{v\in V}F(v)\quad\Leftrightarrow\quad 0\in\partial F.\]
+\end{tcolorbox}
 
+\begin{definition}[exact]
+    写像$F:V\to\oR$と，至る所$F$以下な連続affine関数$l:V\to\R,\forall_{u\in V}\;l(u)\le F(u)$に関して，
+    \begin{enumerate}
+        \item $l$は点$u\in V$において\textbf{完全}であるとは，$l(u)=F(u)$を満たすことをいう．
+        \item $u$で完全なaffine関数$l:V\to\oR$は，ある$u^*\in V^*$を用いて，$l(v)=\brac{v-u,u^*}+F(u)=\brac{v,u^*}+F(u)-\brac{u,u^*}$なる表示を持つ必要がある．
+        \item この完全な$l$は$F$を超えないものの中で極大である．したがって，定数項は極大であるから極関数$F^*$を用いて：$F(u)-\brac{u,u^*}=-F^*(u^*)$．
+        \item $F$が$u\in V$において\textbf{劣微分可能}であるとは，$u$において完全な連続affine下限$l$が存在することをいう．
+        \item $l$の傾き$u^*\in V^*$を$F$の$u$における\textbf{劣勾配}といい，劣勾配全体の集合を\textbf{劣微分}といい，$\partial F(u)$で表す．$\partial F(u)=\emptyset$と劣微分不可能であることとは同値．
+    \end{enumerate}
+\end{definition}
 
-\section{凸関数と変分不等式の最小化}
+\begin{lemma}[劣勾配の特徴付け]\mbox{}
+    \begin{enumerate}
+        \item $u^*\in\partial F(u)$．
+        \item $F(u)<\infty$かつ$\forall_{v\in V}\;\brac{v-u,u^*}+F(u)\le F(v)$．
+        \item $F(u)+F^*(u^*)=\brac{u,u^*}$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}[劣微分は弱閉凸集合]
+    劣微分$\partial F(u)\subset V^*$は，$\sigma(V^*,V)$-閉な凸集合である．
+\end{corollary}
+
+\begin{corollary}
+    \[\forall_{F\in\Map(V,\R)}\;u^*\in\partial F(u)\Rightarrow u\in\partial F^*(u^*).\]
+    $F\in\Gamma(V)$のとき，$\Leftarrow$も成り立つ．
+\end{corollary}
+
+\begin{lemma}[劣微分可能性の必要条件]
+    $u\in V$について，
+    \begin{enumerate}
+        \item $\partial F(u)\ne\emptyset\Rightarrow F(u)=F^{**}(u)=l(u)$．
+        \item $F(u)=F^{**}(u)\Rightarrow\partial F(u)=\partial F^{**}(u)$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[凸関数の劣微分可能性の特徴付け]
+    $F:V\to\R$を有限な凸関数とする．ある点$u\in V$において連続ならば，$\forall_{v\in(\Dom F)^\circ}\;\partial F(v)\ne\emptyset$．
+\end{proposition}
+\begin{remark}
+    Banach空間上の下半連続な真凸関数は，$(\Dom F)^\circ$の稠密部分集合において劣微分可能である\ref{cor-subdifferentiable-points-of-Banach-operator}．
+\end{remark}
+
+\subsection{Gateaux微分可能性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    凸関数において，劣微分可能性は通常の微分可能性の自然な一般化にもなっていることを見る．
+    Gateaux微分のことばで，初等的に学ぶ極値問題が，無限次元にも通用する一般な形で，凸解析に応用が出来た．
+\end{tcolorbox}
+
+\begin{definition}
+    ここでは，$DP(f)h\in\o{\R}$が存在する時，方向微分可能といい，これが第二変数について線型になるとき$\exists_{u^*\in V^*}\;\forall_{v\in V}\;DP(u)v=\brac{v,u^*}$，Gateaux微分可能であると言い分けることとする．
+    そして，このときの$u^*=:F'(u)$をGateaux微分係数という．
+\end{definition}
+
+\begin{proposition}[Gateaux微分と劣微分の関係]
+    $F:V\to\oR$を凸関数とする．
+    \begin{enumerate}
+        \item $F$が$u\in V$にてGateaux微分可能ならば，それは劣微分可能で，$\partial F(u)=\Brace{F'(u)}$が成り立つ．
+        \item $F$が$u\in V$にて連続かつ有限で，一点集合の劣微分を持つとき，$F$はGateaux微分可能で，$\partial F(u)=\Brace{F'(u)}$である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Gateaux微分可能な関数が凸であることの特徴付け]
+    $F$を凸関数$A\subset V$上のGateaux微分可能な実関数とする．このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $F$は$A$上凸である．
+        \item $\forall_{u,v\in A}\;F(v)\ge F(u)+\brac{F'(u),v-u}$．
+        \item Gateaux導関数$F':V\to V^*$は単調である：$\forall_{u_1,u_2\in V}\;\brac{u_1-u_2,F'(u_1)-F'(u_2)}\ge0$．\footnote{「変曲点がない」ことを見事に捉えている．}
+    \end{enumerate}
+\end{proposition}
+
+\subsection{劣微分演算}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣微分とは，導関数を集合値関数として拡張する．
+    値が一点集合に退化しているときが，通常の微分概念だと理解するのである．
+\end{tcolorbox}
+
+\begin{lemma}
+    $F:V\to\oR,\lambda>0$について，
+    $\partial:\Map(V,\o{\R})\to\Map(V,P(V^*))$は次を満たす：
+    \begin{enumerate}
+        \item 線形性：$\forall_{u\in V}\;\partial(\lambda F)(u)=\lambda \partial F(u)$．
+        \item 優加法性：$\forall_{u\in V}\;\partial(F_1+F_2)(u)\supset\partial F_1(u)+\partial F_2(u)$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[等号成立十分条件]
+    $F_1,F_2\in\Gamma(V)$かつある点$\o{u}\in\Dom F_1\cap\Dom F_2$において$F_1$が連続であるとき，$\forall_{u\in V}\;\partial(F_1+F_2)(u)=\partial F_1(u)+\partial F_2(u)$．
+\end{proposition}
+
+\begin{proposition}
+    局所凸空間$V,Y$と連続線型作用素$\Lambda:V\to Y$と関数$F\in\Gamma(Y)$について，$F$はある点$\Lambda\o{u}$において連続かつ有限であるとする．
+    このとき，$\forall_{u\in V}\;\partial(F\circ\Lambda)(u)=\Lambda^*\partial F(\Lambda u)$．
+\end{proposition}
+
+\subsection{}
+
+\begin{notation}
+    $V$をBanach空間とする．
+    $C(m):=\Brace{(u,a)\in V\times\R\mid a+m\norm{u}\le 0}$と定めると，これは非空な内部を持つ閉凸錐である．
+    これが$V\times\R$上に定める関係$(u,a)\le(v,b):\Leftrightarrow(v-u,b-a)\in C(m)$は順序関係を定め，この順序について$C(m)$は正錐となる．
+\end{notation}
+
+\begin{proposition}
+    部分集合$S\subset V\times\R$が$\inf\Brace{a\in\R\mid(u,a)\in S}>-\infty$を満たすならば，$S$は上述の順序における極大元を持つ．
+\end{proposition}
+
+\subsection{非凸関数への応用}
+
+\begin{theorem}
+    $F:V\to\oR$を下半連続関数で，$\inf F\in\R$を満たし，$\exists_{u\in V,\ep\in\R}\;F(u)\le\inf F+\ep$を満たすとする．
+    このとき，任意の$\lambda>0$に対して，$u_\lambda\in V$が存在して，次の２条件を満たす
+    \begin{enumerate}
+        \item $\norm{u-u_\lambda}\le\lambda\land F(u_\lambda)\le F(u)$．
+        \item $\Epi F\cap\Brace{(u_\lambda,F(u_\lambda))+C(\ep/\lambda)}=(u_\lambda,F(u_\lambda))$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{凸関数への応用}
+
+\begin{definition}
+    \[\partial_\ep F(u):=\Brace{u^*\in V^*\mid 0\le F(u)+F^*(u^*)-\brac{u,u^*}\le\ep}\]
+    を$F$の$u\in V$における\textbf{$\ep$-劣微分}という．
+\end{definition}
+
+\begin{theorem}
+    
+\end{theorem}
+
+\begin{corollary}\label{cor-subdifferentiable-points-of-Banach-operator}
+    $V$をBanach空間，$F\in\Gamma_0(V)$とする．$F$が劣微分可能な点の集合は$\Dom F$上稠密である．
+\end{corollary}
+
+\section{凸関数の最小化と変分不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極値問題のうち，汎関数の最小化の問題を変分問題という．
+    古来から物理法則の多くは変分問題の形で定式化出来る．
+    一般に最適化問題は有限次元の場合，すなわちパラメトリックな場合を指す．
+\end{tcolorbox}
+
+\begin{problem}
+    回帰的Banach空間$V$の空でない閉凸集合$C\subset V$上の閉真凸関数（下半連続な真凸関数）$F:C\to\R$を考える．
+    $F(u)=\inf_{v\in C}F(v)$を満たす元$u\in C$を\textbf{解}と呼ぶ．
+    一般に，$V\setminus C$上では$+\infty$を取るとして延長した閉凸関数\footnote{エピグラフは変わらないので閉凸なままである．}$\wh{F}:V\to\oR$の$V$上での最小化を考えればよい．
+\end{problem}
+
+\subsection{最小値の存在}
+
+\begin{proposition}
+    開集合は$C$の閉凸集合である（空集合含む）．
+\end{proposition}
+\begin{proof}
+    開集合はある$\al\in\R$を用いて$\Brace{u\in V\mid\wh{F}(u)\le\al}$という等位集合の形で表せるので\ref{def-level-set}．
+\end{proof}
+
+\begin{proposition}
+    次の(1)または(2)を満たすとき，解は存在する．(3)も満たすとき，解は一意である．
+    \begin{enumerate}
+        \item $C$は有界である．
+        \item $F$は$C$上強圧的(coercive)である：$\forall_{u\in C}\;\norm{u}\to\infty\Rightarrow\lim F(u)=+\infty$．
+        \item $F$は$C$上狭義凸である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{解の特徴付け}
+
+\begin{proposition}
+    閉真凸関数$F:V\to\R$は連続なGateaux導関数$F'$を持つとする．$u\in C$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $u$は解である．
+        \item $\forall_{v\in C}\;\brac{F'(u),v-u}\ge0$．
+        \item $\forall_{v\in C}\;\brac{F'(v),v-u}$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    閉真凸関数$F_1,F_2:V\to\R$について，$F_1$はGateaux導関数$F'$を持つとし，$F:=F_1+F_2$も閉真凸とする．$u\in C$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $u$は解である．
+        \item $\forall_{v\in C}\;\brac{F'_1(u),v-u}+F_2(v)-F_2(u)\ge0$．
+        \item $\forall_{v\in C}\;\brac{F'_1(v),v-u}+F_2(v)-F_2(u)\ge0$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{変分不等式}
+
+\begin{problem}
+    今度は，回帰的Banach空間$V$において，作用素$A:V\to V^*$と真の閉凸汎関数$\varphi:V\to\oR$を考える．
+    任意の$f\in V^*$に対して，
+    \[\forall_{v\in V}\quad\brac{Au-f,v-u}+\varphi(v)-\varphi(u)\ge0\]
+    を満たす元$u\in V$を求めることを考える．
+\end{problem}
+
+\begin{theorem}
+    $A,\varphi$はさらに次を満たすとする．
+    \begin{enumerate}
+        \item $V$の任意の有限次元部分空間上において$A$は弱連続．
+        \item $A$は単調：$\forall_{u,v\in V}\;\brac{Au-Av,u-v}\ge0$．
+        \item $\exists_{v_0\in\Dom\varphi}\;\norm{v}\to\infty\Rightarrow\frac{\brac{Av,v-v_0}+\varphi(v)}{\norm{v}}\to\infty$．
+    \end{enumerate}
+    このとき，任意の$f\in V^*$に対して，変分不等式の解$u\in V$は存在する．
+\end{theorem}
 
 \section{凸最適化の双対理論}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    双対理論はRochafellerによる．
+    Fenchelに始まり，Rochafellerは共役関数の方法で双対理論を構築した．
+    一方で，数理経済学で主流なのはLagrangianによるものである．Hurwicz and 宇沢など．
+\end{tcolorbox}
+
 \begin{notation}
     $X$を実ノルム空間とし，連続な双線型写像$\brac{-,-}:X\times X^*\to\R$を評価写像として定める．
+    一般の双線型形式が定めるペアリングについて成り立つ．
 \end{notation}
 
 \subsection{双対理論一般}
 
 \begin{definition}[primal problem, dual problem]
-    $\inf\norm{u-u_0}=\al,u\in L$を主問題とする．これに対して
+    $F:V\to\oR$に対して，
+    $\inf_{u\in V}F(u)=\inf P\in\R$を主問題$P$とする．これに対して
     \[\sup\brac{u^*,u_0}=\beta,\quad u^*\in L^\perp,\norm{u^*}\le1\]
     を双対問題という．
 \end{definition}
@@ -7164,6 +7417,12 @@ title=]
 
 \section{変分法}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ノンパラメトリックな最適化法を議論しよう．
+    言うならば，現代の統計学者が向き合っているのは時代の最先端の変分法である．
+\end{tcolorbox}
+
 \subsection{変分原理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -7178,6 +7437,124 @@ title=]
 
     このことは，単位閉球$B$上だけでなく，任意の非空な有界閉凸集合$M\subset X$上で成り立つ．
 \end{theorem}
+
+\begin{remark}
+    変分問題で現れる汎関数は$C^1$の$1$-ノルム$\norm{y}_1=\max_{x\in[a,b]}\abs{y(x)}+\max_{x\in[a,b]}\abs{y'(x)}$では連続だが，$C$の一様ノルムでは連続ではないことが多い．
+\end{remark}
+
+\subsection{変分法の基本補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C([a,b])$においては，$\Brace{h\in C([a,b])\mid h(a)=h(b)=0}$が「基底」のようなもので，この関数との内積がすべて$0$であるならば，$\al=0$に限る．
+\end{tcolorbox}
+
+\begin{lemma}
+    $\al\in C([a,b])$について，
+    \[\forall_{h\in C([a,b])}\;h(a)=h(b)=0\Rightarrow\int^b_a\al(x)h(x)dx=0\Rightarrow\al=0.\]
+\end{lemma}
+
+\begin{lemma}
+    $\al\in C([a,b])$について，任意の$h(a)=h(b)=0$を満たす$C^1$級関数$h\in C^1([a,b])$に対して
+    $\int^b_a\al(x)h'(x)dx=0$を満たすならば，$\al$は定数関数である．
+\end{lemma}
+
+\begin{lemma}[部分積分の公式の逆]
+    $\al,\beta\in C([a,b])$が，任意の$h(a)=h(b)=0$を満たす$h\in C^1([a,b])$について
+    \[\int^b_a\paren{\al(x)h(x)+\beta(x)h'(x)}=0\]
+    を満たすならば，$\beta$は微分可能であり，$\al=\beta'$．
+\end{lemma}
+
+\subsection{$n$次変分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    変分とは方向微分に他ならない．
+\end{tcolorbox}
+
+\begin{definition}[$n$-th variation]
+    ノルム空間$X$上の点$u_0\in X$の開近傍$U$上で定義された汎関数$F:U\to\R$について，
+    \begin{enumerate}
+        \item $h\in X$について，$t=0\in\R$の近傍で定義された関数を$\phi_h(t):=F(u_0+th)$で表す．$\Delta F[h]$とも表す．
+        \item $n$次変分$\delta^nF(u_0;h)$を，$\delta^nF(u_0;h):=\phi^{(n)}(0)$で定義する．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[微分との関係]\mbox{}
+    \begin{enumerate}
+        \item $F$が$u_0\in X$においてGateaux微分可能であることと，任意の$h\in X$について変分$\delta F(u_0;h)$が存在して対応$\delta F(u_0;h)=F'(u_0)(h)$の$F'$が線型になることと同値．
+        \item さらに$F(u_0+h)-F(u_0)=F'(u_0)(h)+o(\norm{h})$も成り立つとき，$F$は$u_0$においてFrechet微分可能であるという．
+        \item 任意の$u\in U$においてFrechet微分が存在し，対応$F':U\to X^*$が連続になる時，$F$を$C^1$級という．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $F$が$u_0\in U$にて極小値を取るとは，ある開近傍$u_0\in V\subset U$が存在して，$\forall_{u\in V}\;F(u)\ge F(u_0)$を満たすことをいう．
+        \item $u_0$にて臨界値を取るとは，$\forall_{h\in X}\;\delta F(u_0;h)=0\lor\delta F(u_0;h)$ is undefinedをいう．この条件は，$F$にGateaux導関数が存在するとき，$F'(u_0)=0$に同値．
+    \end{enumerate}
+\end{definition}
+
+\subsection{極値の存在条件}
+
+\begin{theorem}[極値の特徴付け]\mbox{}
+    \begin{description}
+        \item[必要条件] $F$が$u_0$にて極値を取るならば，$u_0$は臨界点である：任意の$h\in X$について，1次変分$\delta F(u_0;h)$が存在するならば$0$である．$F$のGateaux導関数$F'(u_0)$が存在するとき，同値な条件$F'(u_0)=0$はEuler方程式と呼ばれる．
+        \item[十分条件] $F$が次の3条件を満たすとき，$u_0$にて極小値を取る．
+        \begin{enumerate}
+            \item (1次の最適性条件) $u_0$は$F$の臨界点である．
+            \item (Legendre:2次の最適性条件) ある$u_0$の開近傍$V\subset U$について，任意の$u\in V$で2次変分$\delta^2F(u;h)$が存在し，$\exists_{c>0}\;\forall_{h\in X}\;\delta^2 F(u_0;h)\ge c\norm{h}^2$を満たす．
+            \item (Jacobi) $\forall_{\ep>0}\;\exists_{\eta>0}\;\forall_{u,h\in X}\;\norm{u-u_0}<\eta\Rightarrow\abs{\delta^2F(u;h)-\delta^2F(u_0;h)}\le\ep\norm{h}^2$．
+        \end{enumerate}
+    \end{description}
+\end{theorem}
+
+\subsection{変分法の基本問題}
+
+\begin{problem}
+    $F\in C^2(\R^3)$に対して，空間
+    \[Y(a,b):=\Brace{y\in C^1([a,b])\mid y(a)=A,y(b)=B}\]
+    内で汎関数
+    \[J[y]=\int^b_aF(x,y(x),y'(x))dx\]
+    の$C^1$-極値点となるようなものを求めよ．
+    $C$-極値は$C^1$-極値であることに注意．
+\end{problem}
+
+\begin{proposition}[基本問題の変分とEuler方程式]\mbox{}
+    \begin{enumerate}
+        \item \[\delta J=\int^b_a\paren{F_y(x,y,y')h+F_{y'}(x,y,y')h'}dx.\]
+        \item $y$が$J[y]$の極値点であるための必要十分条件は，
+        \[F_y-\dd{}{x}F_{y'}=0.\]
+    \end{enumerate}
+    (2)の方程式の積分曲線を\textbf{停留曲線}(extremals)といい，(2)の左辺を$F$の\textbf{変分導関数}という．
+\end{proposition}
+
+\begin{remark}
+    $y\in C^1([a,b])$は2階導関数をもたないが，$C^1$-極値点になる，という状況がありえる．
+\end{remark}
+
+\subsection{双対理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Friedrichs変換．
+\end{tcolorbox}
+
+\subsection{Ritz法}
+
+\begin{definition}
+    (連続な)目的汎関数$J(u)$の値域の下限$d:=\inf\Im J$について，許容関数の列$(\wh{u}_i)$で$J$での値が$d$にしゅうそくするものが存在する．
+    このような関数列を，変分問題の極小列という．
+    Euler方程式を導く解析的な手法ではなく，極小列を構成することで近似的に解く解法を\textbf{直接法}という．
+\end{definition}
+
+\begin{example}
+    試験関数の空間$D$を決め，$D$の完全系$(\varphi_k)$を1つ取る．
+    極小列の$m$番目を$u_m=c_0+c_1\varphi_1+\cdots+c_m\varphi_m$であって，係数$c_1,\cdots,c_m$は$J(u_m)$を最小にするものとすれば良い．これは有限次元の最適化問題に帰着されている．
+\end{example}
+
+\subsection{有限要素法}
+
 
 
 \section{関数機械}
@@ -7237,6 +7614,12 @@ title=]
     Joram Lindenstrauss, and Yoav Benyamini "Geometric Nonlinear Functional Analysis" Volume 1
     \bibitem{Ekeland and Temam}
     Ekeland and Temam -  Convex Analysis and Variational Problems
+    \bibitem{Zeldler}
+    Eberhard Zeldler "Applied Functional Analysis"
+    \bibitem{Gelfand}
+    I. M. Gelfand and S. V. Fomin "Calculus of Variations"
+    \bibitem{Hytonen}
+    Tuomas Hytonen, Jan van Neerven, Mark Veraar, Lutz Weis "Analysis in Banach Spaces"
 \end{thebibliography}
 
 \end{document}

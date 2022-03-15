@@ -3132,14 +3132,36 @@ title=]
 
 \section{Kolmogorovの拡張定理}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hopfの拡張定理の一般化である．
+\end{tcolorbox}
+
+\begin{theorem}
+    確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
+    $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
+    なお，$\R^\N$には直積位相を考える．
+    \begin{quotation}
+        (consistency) $\forall_{n\in\N}\;\forall_{A\in\B(\R^n)}\;\mu_{n+1}(A\times\R)=\mu_n(A)$．
+    \end{quotation}
+    特に，この一貫性条件は$\R^\N$上の測度に延長できるための必要十分条件である．
+    これは$\R$を一般の完備可分空間としても成り立つ．
+\end{theorem}
+
 \section{離散時間のMarkov連鎖}
 
-\begin{notation}
-    $I$を可算集合とし，これを状態空間とする．
+\begin{notation}[state space]
+    $I$を可算集合とし，これを\textbf{状態空間}とする．
     見本過程は列$\N\to I$となり，経時的に$I$上を動き回りことになる．
 \end{notation}
 
 \subsection{確率行列}
+
+\begin{history}
+    MarkovがMarkov連鎖と確率行列を発明した．言語分析やカードシャッフルの問題に用いるつもりであったが，たちまち他の分野でも有用だと解った．
+    確率行列の概念はKolmogorovに引き継がれることとなる．
+    実際，量子状態を表す演算子も，行列表示を持つこととなる．
+\end{history}
 
 \begin{notation}\mbox{}
     \begin{enumerate}
@@ -3151,21 +3173,21 @@ title=]
 \begin{definition}[stochastic matrix]\mbox{}
     \begin{enumerate}
         \item $I$上の\textbf{確率ベクトル}$(\nu_i)_{i\in I}$とは，$I$上の確率質量関数$I\to[0,1]$をいう．
-        \item （可算個の成分を持ち得る）行列$\bP=(p_{ij})_{i,j\in I}$が\textbf{確率的}であるとは，各$i$行ベクトル$(p_{ij})_{j\in I}$がそれぞれ$I$上の確率ベクトルを定めることをいう．
+        \item （可算個の成分を持ち得る）行列$\bP=(p_{ij})_{i,j\in I}$が\textbf{(右)確率的}であるとは，各$i$行ベクトル$(p_{ij})_{j\in I}$がそれぞれ$I$上の確率ベクトルを定めることをいう．
         意味論として，成分$p_{ij}$は，現状態$i$から次の時刻$j$に遷移する確率を定める．
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[確率行列の特徴付け]
     行列$\bP$について，次の３条件は同値．
     \begin{enumerate}
         \item $\bP$は確率的である．
-        \item $f\ge0\Rightarrow\bP f\ge0$かつ$\bP\one=\one$．
+        \item 各行の和が$1$で非負な作用素(積分なので)：$f\ge0\Rightarrow\bP f\ge0$かつ$\bP\one=\one$．
         \item 横ベクトル$\nu$が確率ベクトルならば，$\nu\bP$も確率ベクトルである．
     \end{enumerate}
 \end{lemma}
 
-\begin{lemma}
+\begin{lemma}[確率行列は群をなす？]
     確率行列$\bP=(p_{ij}),\bP'=(p'_{ij})$の積は確率行列である．
 \end{lemma}
 
@@ -3180,7 +3202,7 @@ title=]
     適当な確率空間の上に，初期分布$\nu$と遷移行列$\bP$をもつMarkov連鎖が存在する．
 \end{proposition}
 
-\begin{example}
+\begin{example}[i.i.d.はMarkov過程]
     $\bP=(p_{ij})$の行ベクトルが$i$に依らずすべて同じであるとき，$(X_n)$は独立同試行に従う確率変数列となる．
 \end{example}
 
@@ -3501,12 +3523,13 @@ title=]
     Rademacher過程は，幅１のランダムウォークと考えられる．
 \end{tcolorbox}
 
-\begin{definition}[Rademacher distribution]\mbox{}
+\begin{definition}[Rademacher distribution, Rademacher / Steinhaus variable]\mbox{}
     \begin{enumerate}
         \item $\Z$上の確率質量関数
         \[f(k)=\frac{1}{2}(\delta(k-1)+\delta(k+1))\]
         によって定まる離散分布を，\textbf{Rademacher分布}という．
         \item Rademacher確率分布に従う独立同分布な確率変数列$\ep_1,\cdots,\ep_n$に対して，$X:=\sum^n_{i=1}\ep_i$と定めた$X:\R^n\to\R$を\textbf{Rademacher過程}という．
+        \item 複素数値Rademacher変数はSteinhaus変数とも呼ばれ，$P(a<\arg(\ep)<b)=\frac{1}{2\pi}(b-a)$で定まる．
     \end{enumerate}
 \end{definition}
 \begin{remark}
