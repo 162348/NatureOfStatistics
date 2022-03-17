@@ -832,9 +832,12 @@ title=]
         \item $\bF^n$には$p\in[1,\infty]$について，$\norm{x}_p:=\paren{\sum\abs{x_k}^p}^{1/p}\;(p<\infty)$，$\norm{x}_\infty=\max\abs{x_k}$などのノルムが入り，いずれも同値である．
         これは特殊な例で，普通Banach空間には自然なノルムが一意に定まる．距離空間に同値な距離が大量にあるのと対照的である．
         \item 体$\bF$の添字集合$J$に関する直積（$l^\infty$-直和）を$l^\infty(J)$で表す．
-        \item 体$\bF$の添字集合$J$に関する直和（$l^1$-直和）を$l^1(J)$や$c_0(J)$で表す．
+        \item 体$\bF$の添字集合$J$に関する直和（$l^1$-直和）を$l^1(J)$で表す．
+        \item $J=\N$のとき，これを省略して書く．$l^\infty$は有界列の空間，$l^1$は絶対収束列の空間である．$\sup_{k\in\N}\abs{a_k}<\infty$を満たす数列の空間$c_b$について，$c_b=l^\infty$である．$l^1\subsetneq(l^\infty)^*$である．
+        \item $0$に収束する数列全体の空間を$c_0$で表すと，収束列は有界列であるから，上限ノルムについて$l^\infty$の閉部分空間となる．したがって$c_0$もBanachであり，その双対空間を考えると，$\N$上の有限符号付き測度であるから，$(c_0)^*=l^1$となる\ref{exp-Riesz-Markov-theorem-to-sequence-spaces}．また，$c_0$はいかなるBanach空間のpredualにもならない\ref{cor-predual-of-c0}．
+        \item こうしてノルムが大事になってくる，$L^p(J)$の入り口である．$l^p$空間は$p\ge 1$についてBanach空間，$0<p<1$について$F$-空間である．
+        \item $a_k=0\;\fe$を満たす数列全体の空間を$c_c$または$c_{00}$で表す．これはコンパクト収束位相\footnote{任意の有限集合上で収束する}について局所凸空間である．
     \end{enumerate}
-    こうしてノルムが大事になってくる，$L^p(J)$の入り口である．$J=\N$のとき，これを省略して書くことが多い．
 \end{example}
 
 \begin{example}[位相空間上の体値関数]\label{exp-Banach-spaces}
@@ -902,6 +905,32 @@ title=]
         $L^1(G)$が単位的であることは，$G$が離散群であることに同値．
     \end{enumerate}
 \end{example}
+
+\subsection{可分Banach空間の消息}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    収束列の空間$l^1$には，可算なSchauder基底が存在する．$c_0\mono c_\infty\mono c_b=l^\infty$で，$l^\infty$は可分でない．
+    この包含関係は稠密からは程遠い．なお，$c_\infty$は収束列の空間とした．
+    また，$c_c\mono l^p\mono k^q\mono c_0\;(0<p<q<\infty)$が成り立つ，包含関係は後者の位相について稠密である．
+    なお，上述の包含関係はすべて真に成り立つ．
+\end{tcolorbox}
+
+\begin{example}[Tsirelson space (74)]
+    どの部分空間も$l^p\;(1\le p<\infty)$とも$c_0$とも同型でないようなBanach空間が存在する．
+\end{example}
+
+\begin{theorem}[Bessaga and Pelczynski]\label{thm-Bessaga-and-Pelczynski}
+    Banach空間$X$の列$(x_n)$について，これが生成する閉部分空間$\Span\Brace{x_n}$が$c_0$に同型な部分空間を含むための十分条件は，
+    \begin{enumerate}
+        \item $\inf_{n\in\N}\norm{x_n}>0$．
+        \item $\exists_{C\ge0}\;\forall_{k\ge1}\;\forall_{\ep_j\in\{\pm 1\}}\;\Norm{\sum^k_{j=1}\ep_jx_j}\le C$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    任意の可分Banach空間は，ある$l^1$の商空間と等長同型である．
+\end{theorem}
 
 \subsection{ノルム空間の構成}
 
@@ -1801,9 +1830,12 @@ title=]
     一致の定理はこの特別な場合？
 \end{remarks}
 
-\begin{corollary}\label{cor-separating-subspace-is-dense}
-    部分空間$Y\subset X^*$をBanach空間$X$の分離族とする．
-    $Y$は$X^*$上$w^*$-稠密である．
+\begin{corollary}[双対空間の稠密部分空間の特徴付け]\label{cor-separating-subspace-is-dense}
+    部分空間$Y\subset X^*$をについて，次の2条件は同値．
+    \begin{enumerate}
+        \item Banach空間$X$の分離族である．
+        \item $Y$は$X^*$上$w^*$-稠密である．
+    \end{enumerate}
 \end{corollary}
 \begin{proof}
     $X^*$上$w^*$-稠密でないと仮定すると，$Y$上で$0$だが，恒等的に$0$ではないような$w^*$-連続な線型汎関数が存在することになるが，
@@ -1923,8 +1955,8 @@ title=コンパクト凸集合の代数的特徴付けを与える]
     \end{enumerate}
 \end{example}
 
-\begin{corollary}
-    $X^*\simeq C_0$となるようなBanach空間$X$は存在しない．
+\begin{corollary}\label{cor-predual-of-c0}
+    $X^*\simeq c_0$となるようなBanach空間$X$は存在しない．
 \end{corollary}
 \begin{remark}
     他にも，$L^1([0,1])$もpredualを持たない．
@@ -2072,7 +2104,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{proposition}[Schur]
+\begin{proposition}[Schur's property 1921]
     $l^1$の列は，弱収束するならばノルム収束する．
 \end{proposition}
 \begin{remarks}
@@ -2088,18 +2120,165 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     有限次元空間では退化していた3つの可測性の概念が考え得る．
+    \begin{description}
+        \item[可測性] $X^*$が$X$に誘導する$\sigma$-代数はBorel $\sigma$-代数$\B(X)$より真に小さくなり得る．
+        \item[強可測性] Lebesgue積分の定義で肝要であるのは，可測関数のクラスは単関数の各点収束閉包である事実である．これを抽出する．
+    \end{description}
     強可測性の特徴付けをPettis measurability theoremが与える．
+    このとき，弱可測性との関係は，タイト性に似た，可分性のバージョン「可分値」が鍵を握る．
+    これより，弱可測$\Rightarrow$可測$\Rightarrow$強可測で，強可測ならば可測かつ可分値．
 \end{tcolorbox}
 
 \begin{notation}
     $(S,\A)$を可測空間，$X$をBanach空間とする．
+    部分集合$Y\subset X^*$が$X$に誘導する$\sigma$-代数を$\sigma(Y)$で表すと，
+    \[\sigma(Y)=\Brace{\cC(Y)\in P(Y)\mid\exists_{x_1^*,\cdots,x_n^*\in Y}\;\forall_{B\in\B(\K^n)}\;\cC(Y)=\Brace{x\in X\mid (\brac{x,x_1^*},\cdots,\brac{x,x_n^*})\in B}}.\]
+    また，$\K$-値関数の線型空間$F\subset\Map(S,\K)$について，
+    \[F\otimes X:=\Brace{\sum^N_{n=1}f_n\otimes x_n\in\Map(S,X)\mid\forall_{n\in[N]}\;f_n\in F,x_n\in X,N\in\N}\]
 \end{notation}
 
-\begin{definition}\mbox{}
+\subsubsection{可測性}
+
+\begin{definition}[measurable]
+    関数$f:(S,\A)\to (X,\B(X))$について，
     \begin{enumerate}
+        \item $f$が可測であるとは，$\forall_{B\in\B(X)}\;f^{-1}(B)\in\A$．
         \item 
     \end{enumerate}
 \end{definition}
+
+\begin{proposition}[可分ならば縮退する]
+    $X$を可分，$Y\subset X^*$は$w^*$-稠密な部分空間とする．このとき，$\sigma(Y)=\sigma(X^*)=\B(X)$．
+\end{proposition}
+
+\begin{corollary}[可測性の特徴付け]
+    $X$は可分であるとき，関数$f:S\to X$について次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は可測．
+        \item 任意の$x^*\in X^*$について，$\brac{f(-),x^*}:S\to\K$は可測．
+    \end{enumerate}
+\end{corollary}
+
+\subsubsection{強可測性}
+
+\begin{definition}[simple]
+    関数$f:S\to X$が\textbf{単純}であるとは，$\exists_{N\in\N}\;\forall_{n\in[N]}\;\exists_{A_n\in\A,x_n\in X}\;f=\sum_{n=1}^N1_{A_n}\otimes x_n$．
+\end{definition}
+
+\begin{definition}[strongly measurable]
+    関数$f:S\to X$が\textbf{強可測}または\textbf{Bochner可測}であるとは，単関数列$\{f_n\}\subset\Map(S,X)$が存在して，その各点極限である：$\lim_{n\to\infty}f_n=f$．
+\end{definition}
+
+\begin{lemma}
+    $X$が可分であるとき，関数$f:S\to X$について次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は強可測．
+        \item $f$は可測．
+    \end{enumerate}
+\end{lemma}
+
+\subsubsection{弱可測性と特徴付け}
+
+\begin{definition}[separably valued, weakly measurable]
+    関数$f:S\to X$について，
+    \begin{enumerate}
+        \item $f$が\textbf{可分値}であるとは，$\Im f$が可分であることをいう．
+        \item $f$が\textbf{弱可測}であるとは，任意の$x^*\in X^*$について，$S$上の$\K$-値関数$s\mapsto\brac{f,x^*}(s):=\brac{f(s),x^*}$は可測であることをいう．すなわち，$\forall_{g\in X^*}\;g\circ f:S\to\K$が可測であることをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Pettis measurability theorem]
+    $Y\subset X^*$を$w^*$-稠密な部分空間とする．関数$f:S\to X$について，次の３条件は同値．
+    \begin{enumerate}
+        \item $f$は強可測．
+        \item $f$は可分値で，弱可測．
+        \item $f$は可分値で，$\forall_{g\in Y^*}\;g\circ f:S\to\K$は可測．
+    \end{enumerate}
+    また，ある閉部分空間$X_0\subset X$について$\Im f\subset X_0$が成り立つとき，$f$は$X_0$-値単関数の列の各点収束極限である．
+\end{theorem}
+
+\begin{corollary}[単関数列は単調増加に取れる]
+    $f:S\to X$が強可測ならば，単関数列$(f_n)$が存在して，$\norm{f_n(x)}\le\norm{f(x)}$かつ$\forall_{x\in X}\;f_n(x)\to f(x)$．
+\end{corollary}
+
+\begin{corollary}
+    $f:S\to X$について，ある閉部分空間$X_0\subset X$について$\Im f\subset X_0$が成り立つとする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $f:S\to X$は強可測．
+        \item $f:S\to X_0$は強可測．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}
+    強可測関数の列の各点収束極限は強可測である．
+\end{corollary}
+
+\begin{corollary}
+    関数$f:S\to X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は強可測．
+        \item $f$は可分値で，可測．
+    \end{enumerate}
+\end{corollary}
+
+\subsubsection{可測性の保存}
+
+\begin{lemma}
+    $E$を可分距離空間，$F$を距離空間とする．
+    可測関数$f:E\to F$の像は可分である．
+\end{lemma}
+
+\begin{corollary}
+    関数$f:S\to X$は強可測で，$\phi:X\to Y$は可測とする．このとき，$\phi\circ f:S\to Y$も強可測．
+\end{corollary}
+
+\subsection{測度空間上の関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Banach空間値関数については，可測性の概念が3つに分かれるだけでなく，積分の定義に際しても新たな注意が必要になる．
+    それは，面積確定でない可測集合$A_n$上に値を持つ単関数を省く必要がある．
+    Lebesgue積分では高々$\infty,-\infty$しか出てこないため，非負単関数を別に考えれば良かったが，今回は$\infty x+\infty y\;(x,y\in X)$は全く定義不可能な演算になる．
+    こうして，$\sigma$-有限性がさらに肝要になる．
+
+    定義域に測度$\mu$が定まっているとき，これを用いて定義を強めることが出来る．
+    これが可積分性の概念に繋がる．ここでは，$\mu$-可測性なる概念として定義する．
+    この方がむしろ見通しが良い．
+\end{tcolorbox}
+
+\begin{notation}
+    測度空間$(S,\A,\mu)$を考える．
+\end{notation}
+
+\begin{definition}[strongly $\mu$-measurable]\mbox{}
+    \begin{enumerate}
+        \item $X$値の$\mu$-単関数とは，$x_n\in X$と$\mu(A_n)<\infty$を満たす$A_n\in\A$を用いて$f=\sum_{n=1}^N1_{A_n}\otimes x_n$と表せるものをいう．
+        \item $f:S\to X$が\textbf{$\mu$-強可測}であるとは，$f$に$\mu$-概収束する$\mu$-単関数列が存在することをいう．$\mu$-強可測関数全体の集合の同値類がなす線型空間を$L^0(S;X)$で表す．
+        \item $f:S\to X$が\textbf{$\mu$-本質的に可分値}であるとは，可分な閉部分空間$X_0\subset X$が存在して，$f(s)\in X_0\;\mu\dae$が成り立つことをいう．
+        \item $f:S\to X$が\textbf{$\mu$-弱可測}であるとは，任意の$g\in X^*$について，$g\circ f:S\to\R$が$\mu$-可測であることをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    定数関数$1$は常に強可測であるが，これが$\mu$-強可測でもあることは$\mu$が$\sigma$-有限であることに同値．
+\end{example}
+
+\begin{proposition}[強可測関数は$\sigma$-有限な空間に本質的な台を持つ]
+    $f:S\to X$は$\mu$-強可測であるとする．このとき，可測な分割$S=S_0\sqcup S_1\;(S_0,S_1\in\A)$が存在して，次の2条件を満たす：
+    \begin{enumerate}
+        \item $f=0\;\mu\dae\;\on S_0$．
+        \item $\mu$は$S_1$上$\sigma$-有限．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[$\mu$-強可測性と一般の強可測性]
+    関数$f:S\to X$について，
+    \begin{enumerate}
+        \item $f$が$\mu$-強可測ならば，$f$はある強可測関数に殆ど至る所等しい．
+        \item $\mu$が$\sigma$-有限で，$f$が殆ど至る所ある強可測関数に等しいならば，$f$は$\mu$-強可測である．
+    \end{enumerate}
+\end{proposition}
 
 \subsection{Bochner積分}
 
@@ -2109,12 +2288,174 @@ title=]
     Lebesgue積分に相当する概念がBochner積分である．
     $X$-値関数のLebesgue関数$L^p(S;X)$をBochner空間という．
     一方で，汎関数$\brac{f,x^*}$の通常の意味でのLebesgue積分と可換になるべき連続な線型汎関数はただ一つに定まる．これがPettis積分である．
+
+    Bochner積分は代数的場の量子論で頻繁に用いられる．
+    優収束定理は引き続き成り立つが，Radon-Nikodymnoの定理は成り立たなくなる．
 \end{tcolorbox}
+
+\subsubsection{定義と特徴付け}
+
+\begin{notation}
+    $(S,\A,\mu)$を可測空間とする．
+    $\mu$-単関数$f=\sum^N_{n=1}1_{A_n}\otimes x_n$について，
+    \[\int_Sfd\mu:=\sum^N_{n=1}\mu(A_n)x_n\]
+    とする．
+\end{notation}
+
+\begin{definition}[Bochner integral]
+    $\mu$-強可測関数$f:S\to X$が\textbf{$\mu$についてBochner積分可能}であるとは，$\mu$-単関数列$(f_n)$が存在して次を満たすことをいう：
+    \[\lim_{n\to\infty}\int_S\norm{f-f_n}d\mu=0.\]
+    実際，この条件が成り立つとき，$\paren{\int_Sf_nd\mu}$は$\K$上のCauchy列をなす．この極限を$\int_Sfd\mu$とする．
+\end{definition}
+
+\begin{lemma}
+    $f:S\to X$は$\mu$-強可測とする．
+    \begin{enumerate}
+        \item $f$がBochner可積分であることと，$\int_S\norm{f}d\mu<\infty$とは同値．
+        \item $f$がBochner可積分であるとき，$\Norm{\int_Sfd\mu}\le\int_S\norm{f}d\mu(<\infty)$．
+    \end{enumerate}
+\end{lemma}
+
+\subsubsection{作用素との可換性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Bochner積分により，線型汎関数$L^1(S,X)\to\K$が定まった．
+    これと，作用素$T:L^1(S,X)\to L^2(S,Y)$との相互関係を考える．
+\end{tcolorbox}
+
+\begin{discussion}
+    $f:S\to X$がBochner可積で，$T:X\to Y$が有界線型作用素であるとき，$Tf:S\to Y$もBochner可積で
+    \[T\int_Sfd\mu=\int_STfd\mu.\]
+    特に，$Y=\K$である場合について，
+    \[\forall_{x^*\in E^*}\quad\Brac{\int_Sfd\mu,x^*}=\int_S\brac{f,x^*}d\mu.\]
+    この結果を一般化する．
+\end{discussion}
+
+\begin{theorem}[Hille]
+    $f:S\to X$をBochner可積で，$T:D(T)\to Y$を部分空間上の閉線型作用素とする．また，$f$は殆ど至る所$D(T)$に値を取り，殆ど至る所で定義された関数$Tf:S\to Y$もBochner可積であるとする．このとき，
+    \begin{enumerate}
+        \item $f:S\to D(T)$はBochner可積である．
+        \item $\int_Sfd\mu\in D(T)$．
+        \item $T\int_Sfd\mu=\int_STfd\mu$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Bochner空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    こうして，Lebesgue空間とは，スカラー値関数についてのBochner空間として相対化された．
+    このとき，$\mu$-強可測性は，$\mu$-可測性に退化する．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $L^p(S;X)\;(1\le p<\infty)$を，$\int_S\norm{f}^pd\mu<\infty$を満たす$\mu$-強可測関数$f:S\to X$の同値類がなす線型空間とする．
+        \item $L^\infty(S;X)$を，$\exists_{r\ge0}\;\mu\Brace{\norm{f}>r}=0$を満たす$\mu$-強可測関数$f:S\to X$全体がなす線型空間とする．
+    \end{enumerate}
+    これらは$p$-ノルムについてBanach空間をなす．scaler-valued case $L^p(S):=L^p(S;\K)$をLebesgue空間という．
+    また，$\sigma$-部分代数$\F$について，可測空間$(S,\F,\mu|_\F)$上のBochner空間を$L^p(S,\F;X)$と表すと，これは$L^p(S;X)$の$\F$上$\mu$-強可測な関数のなす部分空間である．
+    $L^p(S,\F):=L^p(S,\F;\K)$と表す．
+\end{definition}
+
+\begin{definition}[convergence in measure]
+    関数列$(f_n)$が\textbf{測度収束}するとは，$\forall_{r>0}\;\forall_{A\in\A}\;\mu(A)<\infty\Rightarrow\lim_{n\to\infty}\mu(A\cap\Brace{\abs{f_n-f}>r})=0$．
+\end{definition}
+
+\begin{lemma}
+    $p\in[1,\infty]$とする．
+    \begin{enumerate}
+        \item $\mu$-単関数は$L^p(S;X)\;(1\le p<\infty)$上稠密である．特に，$L^p(S)\otimes X$は稠密である．
+        \item $\mu$-単関数は$L^\infty(S;X)$上，測度収束の位相について稠密である．すなわち，任意の$f\in L^\infty(S;X)$と測度確定な$A\in\A$について，任意の$\ep>0$に対して$\mu$-単関数$g:S\to X$と$\mu(A\setminus A')<\ep$を満たす可測集合$A'\subset A$が存在して，$\norm{g}_\infty\le\norm{f}_\infty$かつ$\sup_{s\in A'}\norm{f(s)-g(s)}<\ep$を満たす．
+    \end{enumerate}
+\end{lemma}
 
 \subsection{Pettis積分}\label{subsection-Pettis-integral}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=Pettis積分]
+title=]
+    Pettis積分は，双対ペアを介した弱位相のアイデアを，積分の定義に用いたものである．
+\end{tcolorbox}
+
+\subsubsection{弱積分の定義}
+
+\begin{notation}
+    $(S,\A,\mu)$を可測空間，$Y\subset X^*$を部分空間とする．
+    関数$f:S\to X$は任意の$x^*\in Y$に対して$\brac{f,x^*}$が可積分だとする．
+    この条件を，$Y=X^*$のとき\textbf{弱可積分}という．
+    このとき，$T_f:Y\to L^1(S)$を$T_fx^*:=\brac{f,x^*}\;(x^*\in Y)$と定めると，これは有界線型作用素である．
+    この随伴$T_f^*:L^\infty(S)\subset(L^1(S))^*\to Y^*$が鍵となる．なお，$\mu$が$\sigma$-有限のとき，$(L^1(S))^*=L^\infty(S)$．
+\end{notation}
+
+\begin{definition}[Pettis integrable]
+    任意の$A\in\A$に対して，
+    \[\tau(X,Y)\text{-}\int_Afd\mu:=T_f^*1_A\quad\in Y^*\]
+    とする．これを，$f$の$A$上の\textbf{$\tau(X,Y)$-積分}と呼ぶ．
+    $\tau(X,X^*)$-積分を弱積分という．さらにこの$Y=X^*$のとき，
+    この$T_f^*$の像が$X(\subset X^{**})$に含まれるとき，$\mu$-弱可積分関数は\textbf{Pettis可積分}であるという．
+\end{definition}
+
+\begin{lemma}[弱積分の特徴付け]
+    $\tau(X,Y)$-積分は，次の条件を満たすただ一つの$Y^*$の元である：
+    \[\forall_{x^*\in Y}\quad\Brac{x^*,\tau(X,Y)\text{-}\int_Afd\mu}=\int_A\brac{f,x^*}d\mu.\]
+\end{lemma}
+
+\begin{proposition}
+    弱積分可能な関数$f:S\to X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $f$は$\mu$についてPettis可積分．
+        \item $\forall_{A\in\A}\;\exists_{x_A\in X}\;\forall_{x^*\in X^*}\;\brac{x_A,x^*}=\int_A\brac{f,x^*}d\mu$．
+    \end{enumerate}
+    この同値な条件が成り立つとき，$x_A=T^*_f1_A=:(P)\text{-}\int_Afd\mu$と表し，$f$の$A$上の\textbf{Pettis積分}という．
+\end{proposition}
+\begin{remarks}
+    Bochner可積な関数はPettis可積で，各集合$A\in\A$上でその値は一致する．
+\end{remarks}
+
+\subsubsection{Pettis可積性の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\mu$-強可測かつ弱可積分ならば，ほぼPettis可積分であり，例外は$c_0$の非回帰性が引き起こすタイプのもののみである．
+\end{tcolorbox}
+
+\begin{theorem}[Pettis可積性の十分条件]
+    $1<p\le\infty,1\le q<\infty$を共役指数とする．
+    $\mu$-強可測関数$f:S\to X$が$\forall_{x^*\in X^*}\;\brac{f,x^*}\in L^p(S)$を満たすならば，任意の$\phi\in L^q(S)$に対して，関数$\phi\otimes f:S\to\K;s\mapsto \phi(s)f(s)$はPettis可積分である．
+\end{theorem}
+
+\begin{corollary}
+    $(S,\A,\mu)$を有限測度空間とし，$p>1$とする．$f:S\to X$が強可測で$\forall_{x^*\in X^*}\;\brac{f,x^*}\in L^p(S)$が成り立つならば，$f$はPettis可積である．
+\end{corollary}
+
+\begin{example}[弱可積であるがPettis可積分でない例]
+    $\{A_n\}\subset P((0,1))$を，互いに素な区間の列で，正の測度$\abs{A_n}>0$をもつものとする．
+    関数$f:(0,1)\to c_0$を，$c_0$の標準Schauder基底$(e_n)$について
+    \[f:=\sum_{n\in\N}\frac{1_{A_n}\otimes e_n}{\abs{A_n}}\]
+    で定める．このとき，$f$は明らかに強可測で，弱可積分でもある．実際，任意の絶対収束列$a=(a_n)\in l^1=(c_0)^*$について，
+    \[\int^1_0\brac{f(x),a}dx=\sum_{n\in\N}\abs{A_n}\frac{a_n}{\abs{A_n}}=\sum_{n\in\N}a_n<\infty\]
+    より，$\brac{f(-),a}\in L^1(S;\R)$．
+    ここで，$x_{**}:=T_f^*1_{(0,1)}$を$f$の$(0,1)$上の弱積分とする．
+    すると，
+    \[\forall_{n\in\N}\quad\brac{e_n^*,x^{**}}=\int^1_0\brac{f(x),e_n^*}dx=\int^1_0\sum_{m\in\N}\frac{\brac{1_{A_m}(x)e_m(x),e_n^*}}{\abs{A_n}}dx=1\]
+    より，Fourier係数の一意性から$x^{**}=1\in l^\infty$である．しかし，これは有界列であっても，$0$へ収束はしない：$x^{**}\notin c_0$．よってPettis可積分ではない．
+\end{example}
+\begin{remarks}
+    弱積分$\tau(X,Y)\td\int\in X^{**}$が$X$に入っていない例を作れ良いので，$c_0\subsetneq(c_\infty\subsetneq)(c_0)^{**}=l^\infty$を用いた．
+\end{remarks}
+
+\begin{proposition}
+    $(S,\A,\mu)$を測度空間，$X$は$c_0$と同型な閉部分空間を持たないとする．このとき，$f:S\to X$が$\mu$-強可測で弱可積ならば，$f$はPettis可測である．
+\end{proposition}
+\begin{proof}
+    \ref{thm-Bessaga-and-Pelczynski}による．
+\end{proof}
+
+\subsubsection{Analysis Now}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=Pettis積分]
     局所コンパクトハウスドルフ空間$X$からBanach空間$\fX$への関数$f:X\to\fX$を考える．
     $X$上のRadon積分$\int:C_c(X)\to\R$について，積分$\int f\in\fX$にあたる元を考えたい．
     $\R^n$-値積分が成分毎であるのと同様に，全ての連続な線型形式（射影みたいなもの）について，可換性
@@ -2123,23 +2464,11 @@ title=Pettis積分]
     実はこの性質だけで積分は特徴付けられる，ということを議論する．
     １つ目の命題は双対ペア$(X^*,X)$についてで，２つ目は$(X,X^*)$についてである．
     ただし，左辺がこれから定義しようとしている$\fX$上の積分，右辺が$X$上のRadon積分となる．
-
-    Lebesgue積分のBanach空間値関数への拡張をBochner積分といい，代数的場の量子論で頻繁に用いられる．
-    優収束定理は引き続き成り立つが，Radon-Nikodymnoの定理は成り立たなくなる．
 \end{tcolorbox}
 
 \begin{remark}[integrable norm]
     $\norm{f(-)}:X\to\R$は$X$上の可積分関数を定めるとする．このノルムを可積分ノルムと呼ぶ．
 \end{remark}
-
-\begin{definition}[weakly measurable, Bochner measurable]
-    Banach空間値関数$f:X\to\fX$について，
-    \begin{enumerate}
-        \item $f$が\textbf{弱可測}であるとは，$\forall_{g\in\fX^*}\;g\circ f:X\to\bF$が可測であることをいう．
-        \item $f$が\textbf{Bochner可測}または強可測であるとは，ある可算値関数の列$(f_n)\;\abs{\Im f_n}\le\aleph_0$が存在して，$f(t)=\lim_{n\to\infty}f_n(t)\;(t\text{-}\ae\!)$を満たすことをいう．
-        \item $\fX$が可分であるとき，２つの条件は同値になる．
-    \end{enumerate}
-\end{definition}
 
 \begin{lemma}
     関数$f:X\to\fX$に対して，$\fY_f:=\Brace{\varphi\in\fX^*\mid\brac{f(\cdot),\varphi}:X\to\fX\to\R は可測}$と定める．
@@ -5804,6 +6133,10 @@ title=]
     $X$上の有限Radon電荷の空間$M(X)$にノルム$\norm{\Phi}=\abs{\Phi}(1)$を考えたものは，Banach空間$(C_0(X))^*$に等長同型である．
 \end{proposition}
 
+\begin{example}\label{exp-Riesz-Markov-theorem-to-sequence-spaces}
+    $X=\N$のとき，$M(\N)=l^1$である．すなわち，$(c_0)^*\simeq l^1$．
+\end{example}
+
 \begin{proposition}[絶対連続測度の表現]\label{prop-Riesz-4}
     あるRadon積分$\int:C_c(X)\to\R$について，$\abs{\Phi}\ll f$を満たす有限なRadon電荷$\Phi$全体のなす空間は，次の写像によって$L^1(X)$に等長同型である：
     \[\xymatrix@R-2pc{
@@ -5812,6 +6145,8 @@ title=]
         f\ar@{|->}[r]&\Phi_f(g):=\int gf\;(f\in\L^1(X),g\in C_c(X))
     }\]
 \end{proposition}
+
+\subsection{Lebesgue空間の双対}
 
 \begin{theorem}[双対]\label{thm-duality-of-Lp}
     $X$を$\sigma$-コンパクトな局所コンパクトハウスドルフ空間，$\int:C_c(X)\to\R$をその上のRadon積分とする．
@@ -5822,6 +6157,10 @@ title=]
 \begin{remark}
     $p\in(1,\infty)$の場合は$X$が$\sigma$-コンパクトでない場合にも一般化出来る．
 \end{remark}
+
+\begin{example}
+    $(l^1)^*=l^\infty$である．なお，$l^1=L^1(\N,2^\N,\mu)$で，$\mu$は数え上げ測度である．
+\end{example}
 
 \section{積分の積}
 
@@ -6655,6 +6994,11 @@ title=]
 \begin{remarks}
     Hamel基底の存在は選択公理と同値．Schauder基底は位相基底であり，位相基底には双対基底が存在する．
 \end{remarks}
+
+\begin{example}
+    $c_0$と$l^p\;(1\le p<\infty)$には，標準的なSchauder基底$(e_i)_{i\in\N}$が存在する．
+    なお，$l^\infty$は可分でない．
+\end{example}
 
 \section{凸関数論}
 
