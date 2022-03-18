@@ -563,11 +563,21 @@ title=]
 \end{tcolorbox}
 
 \begin{theorem}[Chebyshevの不等式]\label{thm-Chebyshev-inequality}\mbox{}
+    $\psi:\R\to\R_{\ge0}$を非負なBorel可測な関数とする$\psi\ge0$．
+    \[\forall_{A\in\B(\R)}\quad P[X\in A]\le\frac{E[\psi(X)]}{\inf_{x\in A}\psi(x)}.\]
+\end{theorem}
+\begin{proof}
+    \[\forall_{x\in\R}\quad\paren{\inf_{x\in A}\psi(x)}1_{\Brace{x\in A}}\le\psi(x)\]
+    が成り立つ．両辺の期待値を取れば良い．
+\end{proof}
+
+\begin{corollary}\mbox{}
     \begin{enumerate}
+        \item 特に$\psi(x)=\abs{x}^p\;(p>0),A:=\Brace{\abs{x}\ge\ep}$とすると，$P[\abs{X}\ge\ep]\le\frac{1}{\ep^p}E[\abs{X}^p]$．
         \item $\forall_{a>0}\;P\{\abs{X(\om)-EX}>a\sigma(X)\}\le\frac{1}{a^2}$．
         \item $f:\R\to\R_{\ge 0}$を非負値単調増加関数とし，$X$を$E[\abs{X}]<\infty,E[\abs{f(X)}]<\infty$を満たす確率変数とする．$\forall_{a\in\R}\;f(a)>0\Rightarrow P(X\ge a)\le\frac{E[f(X)]}{f(a)}$．
     \end{enumerate}
-\end{theorem}
+\end{corollary}
 \begin{proof}\mbox{}
     \begin{enumerate}
         \item 
@@ -1438,6 +1448,12 @@ title=]
     これをKolmogorovの$\sigma$-加法族ともいう．
     この上の確率測度を，直積確率測度という．
 \end{definition}
+\begin{remark}\label{remark-cylinder-sets}
+    射影$q_n:=(\pr_1,\cdots,\pr_n)$による$\sigma$-加法族$\cS_1\times\cdots\times\cS_n$の引き戻し$q_i^*(A_i)\;(A_i\in\cS_i)$
+    \[C_A^{(n)}=\Brace{\om\in\Om\mid(\om_1,\cdots,\om_n)\in A}\quad A\in\cS_1\times\cdots\times\cS_n\]
+    を\textbf{柱状集合}という．
+    柱状集合の全体$\cC$は有限加法族で，これが生成する$\sigma$-加法族がKolmogorov $\sigma$-加法族である．
+\end{remark}
 
 \begin{lemma}\mbox{}
     \begin{enumerate}
@@ -2347,6 +2363,19 @@ title=]
     \end{enumerate}
     なお，確率収束するだけでなく，特に$2$次平均収束する．
 \end{theorem}
+\begin{proof}
+    任意の$\ep>0$を取る．
+    \begin{align*}
+        P[\abs{\wt{Y_n}}>\ep]&\le\frac{E[\wt{Y}^2_n]}{\inf_{\abs{x}>\ep}x^2}&\because\text{Chebyshevの不等式}\ref{thm-Chebyshev-inequality}\\
+        &=\frac{E[\wh{Y}^2_n]}{\ep^2}=\frac{1}{\ep^2}E[(Y_n-\o{m_n})^2]\\
+        &=\frac{1}{\ep^2}E\Square{\frac{1}{n^2}\paren{\sum^n_{k=1}X_k-\sum^n_{k=1}m_k}^2}\\
+        &=\frac{1}{\ep^2n^2}\sum^n_{j,k=1}E[(X_j-m_j)(X_k-m_k)]\\
+        &=\frac{1}{\ep^2n^2}\sum^n_{k=1}E[(X_k-m_k)^2]&\because 対独立\\
+        &=\frac{1}{\ep^2n^2}\sum^n_{k=1}\Var[X_k]\\
+        &\le\frac{1}{\ep^2n}\sup_{n\in\N}\Var[X_n]\xrightarrow{n\to\infty}0.
+    \end{align*}
+    結局証明では，$E[\abs{Y_n-\o{m_n}}^2]\xrightarrow{n\to\infty}0$を示しているので，2次平均収束する．
+\end{proof}
 
 \section{一般の大数の強法則}
 
@@ -2490,7 +2519,7 @@ title=]
     次の2条件を仮定する．
     \begin{enumerate}[({A}1)]
         \item $\xi_{n,j}\in\L^2(\R^d)$は2乗可積分で，期待値ベクトルは零とする：$E[\xi_{n,j}]=0$．
-        \item (Lindeberg) $\Sigma:=\sum^{k_n}_{j=1}\Var[\xi_{n,j}]\in M_d(\R)$，$\Sigma:=\lim_{n\to\infty}\Sigma_n$としたとき，次が成り立つ：
+        \item (Lindeberg) $\Sigma_n:=\sum^{k_n}_{j=1}\Var[\xi_{n,j}]\in M_d(\R)$，$\Sigma:=\lim_{n\to\infty}\Sigma_n$としたとき，次が成り立つ：
         \[\forall_{\ep>0}\;\lim_{n\to\infty}\sum^{k_n}_{j=1}E[\abs{\xi_{n,j}}^21_{\Brace{\abs{\xi_{n,j}}\ge\ep}}]=0.\]
     \end{enumerate}
     このとき，
@@ -2652,7 +2681,8 @@ title=]
     確率変数の族を確率過程という．個々の確率変数の値域となる位相空間を状態空間という．
     確率変数族には独立性の概念が拡張できたが，これは応用上自然ではない．
     遥かに緩いクラスとして，マルチンゲールを定義する．
-    1930年代に，独立確率変数の和の理論を整備する過程で豊かに育ったKolmogorovのアイデアを一般化して，Levyがマルチンゲールの概念を発明し，Doobが理論を立てた．
+    1930年代に，独立確率変数の和の理論を整備する過程で豊かに育ったKolmogorovのアイデアを一般化する試みの中で，Levyがマルチンゲールの概念を発明し，Doobが理論を立てた．
+    Brown運動も確率積分もマルチンゲールになる．
 
     連続確率過程のマルチンゲールは，離散化したあとに適当な連続極限を取ることで，離散の場合の議論に帰着させることが出来る．
 
@@ -2771,7 +2801,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{lemma}
+\begin{lemma}[連続の場合の特徴付け]
     $\tau:\Om\to[0,\infty]$について，次の２条件は同値．
     \begin{enumerate}
         \item $\tau$はMarkov時刻である．
@@ -2781,12 +2811,12 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{example}[離散の例]\mbox{}
+\begin{example}[離散の例]\label{exp-discrete-Markov-time}\mbox{}
     \begin{enumerate}
         \item 定値関数はMarkov時刻である．
         \item \textbf{到達時刻}(first hitting time)とは，$(\F_n)$-適合確率過程$(X_n)$対して，任意の事象$A\in\B(\R)$に対し，
         \[\tau_A(\om):=\min\Brace{n\in\o{\N}\mid X_n(\om)\in A}\]
-        で定まる時刻である．
+        で定まる時刻である．ただし，$\min\emptyset=\infty$とする．
         $\{\tau_A\le n\}=\bigcup_{i\in[n]}\Brace{X_i\in A}$より，Markov時刻である．
         \item ある一定額$\al$以上を賭けたら即座に賭けを中止すると決めているとき，この時刻はMarkov時刻である．
         \item \textbf{最終脱出時刻}(last exit time)とは，$(\F_n)$-適合確率過程$(X_n)$対して，任意の事象$A\in\B(\R)$に対し，
@@ -3128,6 +3158,9 @@ title=]
     状態空間が離散的な場合，Markov連鎖ともいう．
 
     $x_{n+1}$の$x_n$への依存の仕方は経時変化しないという，時間的一様性の仮定をおいて議論する．
+    すると，Markov過程は推移作用素を定めることで分布が決まる．
+    これは大数の法則を一般化する．
+    また，推移作用素になり得る作用素は放物型偏微分方程式によって特徴付けられる．
 \end{quote}
 
 \section{Kolmogorovの拡張定理}
@@ -3137,7 +3170,7 @@ title=]
     Hopfの拡張定理の一般化である．
 \end{tcolorbox}
 
-\begin{theorem}
+\begin{theorem}\label{thm-Kolmogorov-extension-theorem}
     確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
     $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
     なお，$\R^\N$には直積位相を考える．
@@ -3199,8 +3232,20 @@ title=]
 \end{definition}
 
 \begin{proposition}
-    適当な確率空間の上に，初期分布$\nu$と遷移行列$\bP$をもつMarkov連鎖が存在する．
+    適当な確率空間の上に，初期分布$\nu$と遷移行列$\bP$をもち，殆ど至る所$I$値なMarkov連鎖が存在する．
 \end{proposition}
+\begin{proof}
+    $I$は可算だから単射$I\mono\N$が存在する．以降，$I\mono\N\mono\R$として，$\R$の部分集合と同一視する．
+    \begin{description}
+        \item[構成] 各$n\in\N$に対して，$(\R^{n+1},\B(\R^{n+1}))$上の測度$P_{n+1}$を
+        \[P_{n+1}(A):=\sum_{(i_0,\cdots,i_n)\in I^{n+1}\cap A}\nu_{i_0}p_{i_0i_1}\cdots p_{i_{n-1}i_n}\quad(A\in\B(\R^{n+1}))\]
+        とすると，これはたしかに確率測度である．
+        \item[一貫性] 任意の$A\in\B(\R^{n+1})$について，
+        \[P_{n+2}(A\times\R)=\sum_{(i_0,\cdots,i_n)\in I^{n+1}\cap A}\nu_{i_0}p_{i_0i_1}\cdots p_{i_{n-1}i_n}\paren{\sum_{i_{n+1}\in I}p_{i_ni_{n+1}}}=P_{n+1}(A).\]
+        \item[検証] Kolmogorovの拡張定理\ref{thm-Kolmogorov-extension-theorem}より，$(\R^\N,\B(\R^\N))$上の確率測度$P$であって，$P(A\times\R^\N)=P_{n+1}(A)$を満たすものがただ一つ存在する．
+        この空間上の実数値確率変数列$(X_n)$を，$X_n(\om)=\om_n\;(\om=(\om_0,\cdots)\in\R^\N)$と定めれば，これは殆ど至る所$I$-値の，求めるMarkov過程である．
+    \end{description}
+\end{proof}
 
 \begin{example}[i.i.d.はMarkov過程]
     $\bP=(p_{ij})$の行ベクトルが$i$に依らずすべて同じであるとき，$(X_n)$は独立同試行に従う確率変数列となる．
@@ -3208,35 +3253,578 @@ title=]
 
 \subsection{Markov性}
 
+\begin{definition}[Markov property]
+    過去の軌跡を
+    $A_{i_0,\cdots,i_n}:=\Brace{\om\in\Om\mid X_0(\om)=i_0,\cdots,X_n(\om)=i_n}$とし，$P(A_{i_0,\cdots,i_n})>0$ならば，
+    $\forall_{i_{n+1}\in I}\;P[X_{n+1}=i_{n+1}|A_{i_0,\cdots,i_n}]=p_{i_ni_{n+1}}$が成り立つことは定義からすぐにわかる．
+    これを\textbf{Markov性}という．
+\end{definition}
+
+\begin{notation}
+    $\F_n:=\sigma[X_0,\cdots,X_n]$を，Markov連鎖の定める自然な増加情報系とする．
+\end{notation}
+
+\begin{theorem}
+    $(X_n)$は初期分布$\nu$，遷移行列$\bP$のMarkov連鎖とする．
+    $m\in\N,i\in I$は$P[X_m=i]>0$を満たすとする．このとき，条件付き確率測度$P[-|X_m=i]$の下で，次の2条件が成り立つ．
+    \begin{enumerate}
+        \item $(X_{m+n})_{n\in\N}$は初期分布$\delta_i$，遷移行列$\bP$のMarkov連鎖である．
+        \item $(X_{m+n})_{n\in\N}$は$\F_m$と独立である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{lemma}
+    確率行列の$n$乗の成分を$\bP^n=:(p_{ij}^{(n)})$と表すこととする．このとき，
+    \[\forall_{m\in\N}\;\forall_{i\in I}\;P(X_m=i)>0\Rightarrow P[X_{m+n}=j|X_m=i]=p^{(n)}_{ij}.\]
+    この成分を\textbf{$n$ステップ遷移確率}という．
+\end{lemma}
+
 \subsection{強Markov性}
 
-\section{到達確率と差分方程式}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    いかなる時点においても，現在の状況にしか依存しない性質をMarkov性と言うのであった．
+    さらに，時間をランダムに定めても，現状にしか依存しないはずである．これを強Markov性という．
+\end{tcolorbox}
+
+\begin{theorem}
+    $(X_n)$を初期分布$\nu$，遷移確率$\bP$のMarkov連鎖とし，$i\in I$は$P[\tau<\infty,X_\tau=i]>0$とする．
+    このとき，条件付き確率$P[-|\tau<\infty,X_\tau=i]$の下で，次の2条件が成り立つ．
+    \begin{enumerate}
+        \item $(X_{\tau+n})_{n\in\N}$は初期分布$\delta_i$，遷移行列$\bP$を持つMarkov過程である．
+        \item $(X_{\tau+n})_{n\in\N}$は$\F_\tau$と独立である．
+    \end{enumerate}
+\end{theorem}
+
+\section{到達確率と差分作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    差分は前進$\Delta f(x):=f(x+1)-f(x)$と後退$\nabla f(x):=f(x)-f(x-1)$の2つが考えられる．
+    これが連続になると確率微分方程式となるのだ．
+\end{tcolorbox}
+
+\subsection{到達確率と特徴付け}
+
+\begin{definition}[hitting / absorption probability]
+    $(X_n)$をMarkov過程とする．
+    \begin{enumerate}
+        \item 集合$A\subset I$に対して，$A$への到達時刻とは，$\tau_A:=\min\Brace{n\in\N\mid X_n\in A}$として定まる可測関数$\Om\to\o{\N}$であった\ref{exp-discrete-Markov-time}．
+        \item 初期分布$\delta_i$を持つMarkov過程に関する確率を$P_i$で表す．
+        $a_i:=P_i[\tau_A<\infty]$を\textbf{到達確率}または\textbf{吸収確率}という．
+        \item $I$上の確率測度$Q_i$を，$i\in I$からの遷移確率$(p_{ij})_{j\in I}$が定めるものとして，任意の$i\in I$に対して$Q_i$-可積分な関数$f:I\to\R$に対する作用素
+        $\L:\cap_{i\in I}L^1(I,Q_i)\to\Map(I,\R)$を，$\L f(i):=\sum_{j\in I}p_{ij}f(j)-f(i)$と定め，\textbf{差分作用素}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[到達確率の特徴付け]
+    到達確率$(a_i)_{i\in I}$は，方程式系
+    \[\forall_{i\in I\setminus A}\;\L a(i)=0,\quad\forall_{i\in A}\;a_i=0\]
+    の最小の非負解である．後者は前者の\textbf{境界条件}という．
+\end{theorem}
+\begin{remarks}
+    差分方程式を書き直すと，$i\in I\setminus A$に関して$a_i=\sum_{j\in I}p_{ij}a_j$となり，$i$からの遷移確率に関する，到達確率の平均になる．
+\end{remarks}
+
+\subsection{Markov過程の定めるmartingale}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般のMarkov過程について，これをmartingale理論の問題に還元することが可能である．
+    これは全く確率微分方程式特有の構造である．
+\end{tcolorbox}
+
+\begin{theorem}
+    $(X_n)$をMarkov過程，$f\in l^\infty(\R)$を有界関数とする．
+    \[Y_n:=f(X_n)-f(X_0)-\sum_{k=0}^{n-1}\L f(X_k)\]
+    によって定まる過程$(Y_n)$は$(\F_n)$-マルチンゲールである．
+\end{theorem}
 
 \section{有限状態空間上のMarkov連鎖}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\abs{I}<\infty$の場合について，理論の広がりを見る．
+\end{tcolorbox}
+
 \subsection{不変分布とエルゴード性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率行列$\bP$の，確率分布の空間$P(I)$への作用を考えると，不動点が存在する．
+\end{tcolorbox}
+
+\begin{definition}[ergodic, irreduciable, aperiodic]
+    Markov連鎖$((X_n),I,\bP)$について，
+    \begin{enumerate}
+        \item $\bP$が\textbf{エルゴード的}であるとは，$\exists_{n_0\in\N}\;\bP^{n_0}>0$が成り立つことをいう．
+        \item $\bP$が\textbf{既約}であるとは，$\forall_{i,j\in I}\;\exists_{n_1\in\N}\;p_{ij}^{(n_1)}>0$を満たすことをいう．
+        \item 状態$i\in I$が\textbf{非周期的}であるとは，$\exists_{n_2\in\N}\;\forall_{n\ge n_2}\;p_{ii}^{(n)}>0$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[エルゴード性の特徴付け]
+    Markov連鎖$((X_n),I,\bP)$が$\abs{I}<\infty$を満たすとき，次の3条件は同値．
+    \begin{enumerate}
+        \item $\bP$はエルゴード的である．
+        \item $\bP$は既約で，すべての状態$i\in I$は非周期的である．
+        \item $\bP$は既約で，ある状態$i\in I$は非周期的である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 円周の$N$等分点上のランダムウォークは，$N$が奇数ならばエルゴード的であるが，偶数ならば既約であっても非周期的にはならない．
+        \item $p_{ii}=1$を満たす$i\in I$をtrapという．これがあるMarkov過程はエルゴード的でない．
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}[有限状態Markov過程のエルゴード定理]
+    Markov連鎖$((X_n),I,\bP)$が$\abs{I}<\infty$を満たし，$\bP$はエルゴード的であるとする．
+    このとき，(1)を満たす$I$上の確率分布$\pi$が一意的に存在する．この$\pi$は(2),(3)も満たす．
+    \begin{enumerate}
+        \item 定常性：$\pi\bP=\pi$．
+        \item 極限分布：$\forall_{i,j\in I}\;\lim_{n\to\infty}p_{ij}^{(n)}=\pi_j$．
+        \item 混合性：(2)の収束は指数関数的である：$\exists_{C>0}\;\exists_{0<\lambda<1}\;\forall_{n\in\N}\;\forall_{i,j\in I}\;\abs{p_{ij}^{(n)}-\pi_j}\le C\lambda^n$．
+    \end{enumerate}
+    この分布$\pi$を\textbf{不変分布}または\textbf{定常分布}という．
+\end{theorem}
 
 \subsection{大数の法則}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Markov連鎖がエルゴード的ならば，独立性の代わりになり，大数の法則が成り立つ．
+\end{tcolorbox}
+
+\begin{theorem}[大数の弱法則]
+    Markov連鎖$((X_n),I,\bP)$が$\abs{I}<\infty$を満たし，$\bP$はエルゴード的であるとする．$\pi$を不変分布とすると，
+    関数$f:I\to\R$について，
+    \[\frac{1}{n}\sum_{k=1}^nf(X_k)\xrightarrow{p}E^\pi[f].\]
+\end{theorem}
+
+\begin{definition}[number of visit]
+    $i\in I$に関して，$f(j):=1_{\Brace{j=i}}$と定めると，$\sum^n_{k=1}f(X_k)$とは時刻$n$までの$i$への訪問回数$\tau^{(n)}_i$を表す．
+    滞在時間ともいう．
+\end{definition}
+
+\begin{corollary}
+    $\frac{\tau_i^{(n)}}{n}\xrightarrow{p}\pi_i$．
+\end{corollary}
+
+\begin{definition}[stationarity]\mbox{}
+    \begin{enumerate}
+        \item Markov連鎖$(X_n)_{n\in\N}$が\textbf{定常的}であるとは，$(X_n)_{n\in\N}$と$(X_{n+1})_{n\in\N}$との分布が等しいことをいう．
+        \item 初期分布を$\pi$とするエルゴード的なMarkov連鎖を\textbf{定常Markov連鎖}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[高次元化]
+    Markov連鎖$((X_n),I,\bP)$が$\abs{I}<\infty$を満たし，$\bP$はエルゴード的であるとする．$\pi$を不変分布とすると，
+    関数$f:I^l\to\R\;(l\ge1)$について，
+    \[\frac{1}{n}\sum_{k=1}^nf(X_k,\cdots,X_{k+l-1})\xrightarrow{p}E^\pi[f]\]
+    ただし，$E^\pi$は定常Markov連鎖$(\o{X}_n)_{n\in[l]}$に関する期待値である．
+\end{theorem}
+
 \section{正方格子上のランダムウォーク}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    次に非有限な状態空間を持つMarkov過程の例を見る．
+    代表的なものが，$\Z^d$上のランダムウォークである．
+\end{tcolorbox}
+
+\begin{definition}[random walk]
+    Markov過程$((X_n),\Z^d,\bP)$の遷移行列$\bP$が，時間一様性に加えて空間一様性$\forall_{x,y,z\in\Z^d}\;p_{xy}=p_{x+z,y+z}$を満たすとき，これを\textbf{酔歩}という．
+\end{definition}
+
+\begin{discussion}[加法過程としての構成]\label{discussion-random-walk}
+    Markov過程としての一貫性に訴えずとも，空間的一様性に注目すれば，
+    初期分布$\nu$を持つ$Z_0$と，分布$p$を持つ$Z_1,Z_2,\cdots$とが独立であるとき，$X_n:=\sum^n_{k=0}Z_k$とすればこれは酔歩である．
+\end{discussion}
 
 \subsection{再帰性と非再帰性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    平均的な一歩$E[Z_1]$が零ベクトルでない場合，酔歩は非再帰的である．
+    また，再帰的であることと無限回$0$を踏むことは同値である．
+\end{tcolorbox}
+
+\begin{notation}
+    $\nu=\delta_0$，あるいは，$Z_0=0$から始まる酔歩を考える．
+    \begin{align*}
+        A_n&:=\Brace{X_n=0,\forall_{1\le k\le n-1}\;X_k\ne0}\\
+        q&:=\sum^\infty_{n=1}P(A_n)=P[\Brace{\exists_{n\in\N}\;X_n=0}]
+    \end{align*}
+    とする．
+\end{notation}
+
+\begin{definition}[recurrent]
+    酔歩が$q=1$を満たすとき\textbf{再帰的}であるという．
+\end{definition}
+
+\begin{lemma}
+    酔歩について，次の2条件は同値．
+    \begin{enumerate}
+        \item 再帰的である．
+        \item $\sum^\infty_{n=1}P[X_n=0]=\infty$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[非再帰性の十分条件]
+    $R:=\max\Brace{\abs{z}\in\R\mid z\in\Z^d,p_{0z}>0}<\infty$と仮定し，
+    $m:=\sum_{z\in\Z^d}p_{0z}z=E[Z_1]\in\R^d$とおく．
+    $m\ne0$のとき，酔歩は非再帰的である．
+\end{theorem}
+
 \subsection{単純ランダムウォークの再帰性と非再帰性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    単純酔歩では，2d個の隣点にのみ，そして等確率に移動可能とする．
+    $E[Z_1]=0$なので，これだけで再帰性は判定できない．
+\end{tcolorbox}
+
+\begin{definition}[simple random walk]
+    遷移確率が
+    \[p_z:=\begin{cases}
+        \frac{1}{2d},&\abs{z}=1,\\
+        0,&\abs{z}\ne1
+    \end{cases}\]
+    となる酔歩を\textbf{単純酔歩}という．
+\end{definition}
+
+\begin{theorem}[Polya]
+    $d$次元の単純酔歩は，$d=1,2$のとき再帰的であり，$d\ge3$のとき再帰的でない．
+\end{theorem}
 
 \section{連続時間Markov過程}
 
-\subsection{Chapman-Kolmogorovの不等式}
+\subsection{Chapman-Kolmogorov方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Markov過程の発展は，確率行列の積で表された．この連続化は，ある発展条件を満たすことである．
+    この放物型偏微分方程式をChapman-Kolmogorov方程式という．
+    これを解いて推移確率とし，Kolmogorovの拡張定理に基づけば拡散過程が構成できる．
+    Kolmogorovは初期から物理学への応用を見据えて，多様体の言葉で論じていた．
+
+    この方法はHormanderが取ったように，偏微分方程式への迂回でもある．
+    直接的に確率微分方程式に基づいてBrown運動を「変形する」という確率論的手法を立てたのが伊藤清である．
+\end{tcolorbox}
+
+\begin{discussion}
+    離散集合$I$上の遷移行列$\bP$が満たす規則は次のようにかける．
+    \begin{enumerate}
+        \item $\forall_{i\in I}\;\sum_{j\in I}p_{ij}^{(n)}=1$．
+        \item $\forall_{i,j\in I}\;\forall_{n,m\in\N}\;\sum_{k\in I}p_{ik}^{(n)}p_{kj}^{(m)}=p_{ij}^{(n+m)}$．
+    \end{enumerate}
+    $I$を一般のポーランド空間，$\N$を$\R_+$へ，遷移行列を遷移作用素へ一般化したい．
+    \begin{enumerate}
+        \item $\forall_{s\in\R_+}\;\forall_{x\in S}\;p(s,x,-)\in P(S)$．時刻$0$に$x$から出発するMarkov過程の，時刻$s$での位置の分布．
+        \item $\forall_{s,t\in\R_+}\;\forall_{x,z\in S}\;\int_Sp(s,x,dy)p(t,y,dz)=p(s+t,x,dz)$．
+        または，$\forall_{A\in\B(S)}\;\int_Sp(s,x,dy)p(t,y,A)=p(s+t,x,A)$．
+    \end{enumerate}
+    こうして，行列積は積分に一般化される．(2)を時間一様なChapman-Kolmogorovの等式という．
+    これは，時刻$0$に$x$から初めて，$s+t$に$A$に至るまでの時刻$s$での経由地$y\in S$について積分しても等しくなる，という意味を持つ．
+\end{discussion}
 
 \subsection{加法過程}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    見本道が殆ど至る所cadlagである過程を$D$-過程という．
+    見本過程$\R_+\to\Meas(\Om,\R);s\mapsto X_s$が確率連続な加法過程で$D$-過程でもあるものを，Levy過程という．
+    任意の確率連続な加法過程はLevy過程に同等であり，Levy過程の構造は解明済みである．
+
+    大雑把にいえば，連続な加法過程はGauss型，すなわちブラウン運動に限り，非連続的な加法過程はPoisson型に限る．
+    任意のLevy過程は，ドリフト付きのBrown運動とLevyのジャンプ過程との和に分解できる．
+\end{tcolorbox}
+
+\begin{example}
+    $\Z^d$-酔歩は次の性質を満たす：任意の長さ$k\ge2$の部分列$(n_j)_{j\in[k]}$について，\textbf{増分}の過程$(X_{n_j}-X_{n_{j-1}})_{j\in[k]}$は独立．
+\end{example}
+
+\begin{definition}[increment, additive process]
+    次の性質を満たす，初期分布$\delta_0$な$\R^d$-値確率過程$(X_s)_{s\in\R_+}$，すなわち，空間的一様かつ時間一様なMarkov過程を\textbf{加法過程}という．
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item 任意の長さ$k\ge2$の狭義単調増加非負実数列$(s_j)_{j\in[k]},s_0=0$が定める増分列$(X_{s_j}-X_{s_{j-1}})_{j\in[k]}$は独立．
+    \end{enumerate}
+    このとき，$S$の原点を$0$とするとその転移確率は一様に$p(s,-):=p(s,0,-)$と表わせ，Chapman-Kolmogorovの等式も
+    \[\forall_{s,t\in\R_+}\;\forall_{x,z\in S}\;\int_Sp(s,dy-x)p(t,dz-y)=p(s+t,dz-x)\]
+    と表せる．
+\end{definition}
+
+\begin{theorem}[Gauss型とPoisson型Levy過程]
+    $X$をLevy過程とする．
+    \begin{enumerate}
+        \item $X$がさらに概連続過程であれば，増分$X_b-X_a\;(b>a)$はGauss分布に従う．
+        \item $X$がさらに殆ど至る所飛躍$1$で増加する階段関数を見本過程に持つならば，増分$X_b-X_a\;(b>a)$はPoisson分布に従う．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Levy過程の分解定理 (Levy-Ito decomposition)]
+    $X$をLevy過程とする．
+    $\Gamma=\R_+\times(\R\setminus\{0\})$上の固有なPoisson配置$N$と，これと独立なGauss型Levy過程$G$が存在して，
+    \[X(t,\om)=G(t,\om)+\lim_{n\to\infty}\Square{\int_{s\le t}\int_{\abs{u}>1/n}(uN(dsdu,\om)-\phi(u)n(dsdu))}\]
+    と表せる．
+\end{theorem}
+
+\begin{definition}[Levy-Khintchine triplet]
+    Levy過程$X$の連続部分$G$を用いて，$m(t):=E[G(t)],v(t):=\Var[G(t)]$は有限確定する．
+    また，$m$は連続関数，$v$は連続な単調増加関数，$m(0)=v(0)=0$を満たす．
+    また，$n$をPoisson配置$N=N_X$の平均測度，すなわち$\Gamma$上の測度で，次を満たす：
+    \[\forall_{t\in\R_+}\quad n(\{t\}\times(\R\setminus\{0\}))=0,\quad\int_{s\le t}\int_{\abs{u}>0}(u^2\land 1)n(dsdu)<\infty.\]
+    組$(n,m,v)$を，Levy過程$X$の\textbf{特性量}または\textbf{Levy-Khintchine組}という．
+\end{definition}
+
+\begin{theorem}
+    上記の条件を満たす$(n,m,v)$に対して，これを特性量として持つLevy過程が存在して，法則同等を除いて一意的である．
+\end{theorem}
+
 \section{Brown運動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続な加法過程は，必然的にGauss型である．これをBrown運動という．
+    ドリフトはないものをまずは見る．
+\end{tcolorbox}
 
 \subsection{定義}
 
-\subsection{性質}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    熱方程式$u_t(x,t)=u_{xx}(x,t),u(x,0)=0$の基本解
+    \[H(x,t)=\frac{1}{\sqrt{4\pi t}}\exp\paren{-\frac{x^2}{4t}}\]
+    は熱核または熱方程式の初期値問題のGreen関数と呼ばれ，初期条件$u(x,0)=f(x)$に関する解は
+    \[u(x,t)=H*f=\int_\R H(x-y,t)f(y)dy\]
+    と表される．
+    熱の拡散と確率の拡散，エントロピーの概念は深いどこかでつながっているのであろうか．
+\end{tcolorbox}
+
+\begin{definition}
+    確率空間$(\Om,\F,P)$上の実数値確率過程$(B_t)_{t\in\R_+}$が\textbf{Brown運動}であるとは，次の3条件をみたすことをいう：
+    \begin{enumerate}
+        \item $B_0=0\;\as$
+        \item 任意の見本道$B_t(\om):\R_+\to\R$は連続：$B_t\in W$．
+        \item 任意の長さ$n\in\N_{>0}$の$\R_+$の狭義増加列$(t_j)_{j\in[n]},t_j=0$が定める増分の組$(B_{t_j}-B_{t_{j-1}})_{j\in[n]}$は互いに独立にGauss分布$N(0,t_{j}-t_{j-1})$に従う．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    実は(3)のうち増分の正規性はなくても従うことは，Levy過程の理論による．
+\end{remarks}
+
+\begin{theorem}[Brown運動の存在]\label{thm-existence-of-Brownian-motion}
+    ある確率空間$(\Om,\F,P)$が存在して，その上にBrown運動が存在する．
+\end{theorem}
+
+\subsection{Wiener測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    古典的Wiener空間$W_0$は$0$から始まる連続な見本過程$R_+\to\R$全体の空間である．
+    ここには標準的な位相が1つ定まる．
+\end{tcolorbox}
+
+\begin{notation}[classical Wiener space]
+    次の言葉を使えば，Brown運動とはWiener空間に値を持つ確率変数$\Om\to W_0$であって，カリー化$\R_+\to\Meas(\Om,\R)$は任意の有限成分について独立なGauss分布を定めるものをいう．
+    \begin{enumerate}
+        \item $W=W^1:=C(\R_+)$を連続な見本道の空間とする．
+        \item $W_0:=\Brace{w\in W\mid w_0=0}$とする．これを\textbf{古典的Wiener空間}という．
+    \end{enumerate}
+    それぞれの空間には一様ノルムは入れられないので，広義一様収束位相を考え，Borel集合族によって可測空間とみなす．
+    $\R_+$なのでBanach空間ではない．
+\end{notation}
+
+\begin{definition}[Wiener measure (23)]
+    $(W_0,\B(W_0))$上の射影の族$(B_t)_{t\in\R_+},B_t(\om):=\pr_t(\om)=\om_t$がBrown運動になるような確率測度$P$を\textbf{Wiener測度}という．
+\end{definition}
+
+\begin{lemma}
+    Wiener測度は一意的に存在する．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[存在] Brown運動の存在\ref{thm-existence-of-Brownian-motion}による．
+        ある空間$(\Om,\F,P)$上のBrown運動$B:\Om\to W$を取る．これによる像測度$P^B$は$P^B(W_0)=1$を満たすから，$W_0$への制限を取れば，これがWiener測度である．
+        \item[一意性] $W_0$の柱状集合全体$\cC$\ref{remark-cylinder-sets}上では一意的である．$\cC$は$\pi$-系・情報族であり，$\B(W_0)=\sigma(\cC)$を満たすため，一意に延長される．
+    \end{description}
+\end{proof}
+
+\subsection{特性値}
+
+\begin{lemma}[積率]
+    $B_t$の奇数次の積率は消えてきて，偶数次の積率は
+    \[E[B_t^2]=t,\quad E[B_t^4]=3t^2,\quad E[B^6_t]=15t^3,\quad,E[B^{2n+1}_t]=(2n+1)(2n-1)\cdots 3\cdot 1t^{2n+1}.\]
+\end{lemma}
+
+\begin{lemma}[共分散]
+    $\forall_{t,s\in\R_+}\;E[B_tB_s]=t\land s$．
+\end{lemma}
+
+\subsection{独立増分性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    加法過程としての独立増分性は，martingale問題に繋がる．
+\end{tcolorbox}
+
+\begin{notation}
+    ブラウン運動$(B_t)_{t\in\R_+}$の自然な情報系を$\F^B_t:=\sigma[B_s;s\le t]$と表す．
+\end{notation}
+
+\begin{proposition}
+    $0\le s<t$に関して，$B_t-B_s$は$\F_s^B$と独立．
+\end{proposition}
+
+\begin{corollary}
+    Brown運動$(B_t)_{t\in\R_+}$は$(\F^B_t)$に関してmartingaleである．
+    その2次変分は$\brac{B}_t=t$で与えられる．
+\end{corollary}
+
+\subsection{可微分性}
+
+\begin{theorem}
+    $B_t(\om)$は$\om\dae$に対して，$t$について至る所微分不可能である．
+\end{theorem}
+
+\begin{theorem}[modulus of continuity]
+    $1/2$-Holder連続性よりやや悪い連続度を持つ．
+    \[\limsup_{t_2-t_1=\ep\searrow0,0\le t_1<t_2\le1}\frac{\abs{B_{t_2}-B_{t_1}}}{\sqrt{2\ep\log(1/\ep)}}=1\;\as\]
+\end{theorem}
+
+\begin{theorem}[重複対数の法則]
+    \[\limsup_{t\searrow0}\frac{B_t}{\sqrt{2t\log\log(1/t)}}=1\;\as\]
+\end{theorem}
 
 \section{Poisson過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $D$-過程であるが連続過程ではなく，見本過程が至る所ジャンプしているとき，これはPoisson型Levy過程である．
+    ここまでいかずとも，少しドリフト$0$分散$0$のBrown運動を混ぜて，ジャンプを持つ加法過程で特に基本的なPoisson過程を見る．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R_+$上に強さ$\lambda$のPoisson点過程を考える．その総数を整数で切ったものをPoisson過程と呼ぼう．
+\end{tcolorbox}
+
+\begin{definition}[Poisson process]
+    $(\Om,\F,P)$上の$\Z_+$-値確率過程$(N_t)_{t\in\R_+}$が\textbf{パラメータ$\lambda>0$を持つPoisson過程}であるとは，次の条件を満たすことをいう：
+    \begin{enumerate}
+        \item $N_0=0\;\as$
+        \item 任意の見本道$N_t(\om)$は右連続かつ単調増加である．
+        \item 任意の長さ$n\in\N_{>0}$の$\R_+$の狭義増加列$(t_j)_{j\in[n]},t_0=0$が定める増分の組$(N_{t_j}-N_{t_{j-1}})_{j\in[n]}$は独立で，それぞれパラメータ$\lambda(t_j-t_{j-1})$を持つPoisson分布に従う．
+    \end{enumerate}
+\end{definition}
+
+\begin{discussion}[Poisson過程の構成]
+    Kolmogorovの拡張定理により存在は保証されるが，次のように構成できる．
+    独立にパラメータ$\lambda$の指数分布に従う$\R_+$-値確率変数列$(S_j)$を取る：$P[S_j\ge t]=e^{-\lambda t}$．
+    なお，パラメータ$\lambda>0$の指数分布密度関数は
+    \[p(x)=\lambda e^{-\lambda x}1_{[0,\infty)}(x)\]
+    と表せる．
+    このとき
+    \[Z_0=0,\quad Z_k=\sum^k_{j=1}S_j\]
+    とするとこれは強さ$\lambda$のPoisson点過程であり，
+    $t\in\R_+$を超えた$Z_k$の数の過程
+    \[N_t:=\max\Brace{k\in\N\mid Z_k\le t}\in\o{\Z}_+\]
+    はPoisson過程となり，$P[N_t\in\Z_+]=1$．
+\end{discussion}
+
+\subsection{独立増分性}
+
+\begin{proposition}
+    $0\le s<t$について，$N_t-N_s$は$\F^N_s=\sigma[N_u;u\le s]$と独立である．
+\end{proposition}
+
+\begin{corollary}
+    $(N_t-\lambda t)_{t\ge0}$は$(\F_t^N)$に関してマルチンゲールである．
+\end{corollary}
+
+\section{1次元拡散過程}
+
+\begin{notation}
+    $W:=C(\R_+)$上に確率測度の族$(P_x)_{x\in\R}$を考える．
+    射影を$X_t:=\pr_t:W\to\R;\om\mapsto\om(t)\;(t\in\R_+)$と表すと，この見本過程$\R_+\to\Map(W,\R)$は任意の$x\in\R$について$(W,P_x)$上連続．
+    $\B_t:=\sigma[X_s;s\le t]$とする．
+\end{notation}
+
+\begin{definition}[diffusion process]
+    確率過程$(X_t)_{t\in\R_+}$が$P_x[X_0=x]=1$と次の条件を満たすとき，$\M:=(\M_x)_{x\in\R},\M_x:=\Brace{X_t(\om)\in\R\mid t\in\R_+,\om\in(C,P_x)}$を\textbf{一様な連続強Markov過程}または\textbf{拡散過程}という．
+    \begin{quote}
+        (強Markov性) $x\in\R$と有限な$(B_t)$-Markov時刻$\tau:W\to\R_+$，$E\in\B^1(\R^1)$について，
+        $P_x[X_{\tau+t}\in E\mid\B_\tau]=P_x[X_t\in E]|_{x=X_\tau}$．
+    \end{quote}
+\end{definition}
+
+\begin{definition}[regular point, regular diffusion process]
+    拡散過程$(\M_x)_{x\in\R}$について，
+    \begin{enumerate}
+        \item $x$は$\M$の\textbf{正則点}であるとは，$P_x[\exists_{t\in\R_+}\;X_t>x]>0,P_x[\exists_{t\in\R_+}\;X_t<x]>0$が成り立つことをいう．
+        \item 任意の$x\in\R$が正則点であるとき，$\M$は\textbf{正則}であるという．
+    \end{enumerate}
+\end{definition}
+
+\chapter{確率積分}
+
+\begin{quotation}
+    確率論ははじめから偏微分方程式論と密接に関係していたことを思うと，確率論自体が測度論で基礎付けられることは自然であった．
+    さらに，確率積分なる概念も自然に定義できるはずである．
+
+    Brown運動$B_t$は微分可能ではないし，有界変動にもならないので，Stieltjes積分としては定義できる道はない．
+    連鎖律は伊藤の公式と呼び，微分は出来ないから積分の言葉で定式化される．余分な右辺第3項が特徴である．
+\end{quotation}
+
+\chapter{確率微分方程式}
+
+\begin{quotation}
+    元々Markov過程論から純粋に数学的に生じた問題意識の解決のために確率微分方程式が
+    開発された．
+    しかし，確率論的な現象は自然界にありふれている．
+    常微分方程式の定める流れに沿って輸送された物理量は，移流方程式と呼ばれる1階の偏微分方程式を満たす．
+    Brown運動に沿って輸送された物理量（熱など）は，熱伝導方程式・拡散方程式と呼ばれる2階の偏微分方程式を満たす．
+    この対応関係は確率微分方程式を導入することでさらに一般化され，2階の放物型・楕円形の偏微分方程式の解を
+    確率的に表示することが出来るようになる．
+    こうして，確率微分方程式は，ポテンシャル論・偏微分方程式論や微分幾何学との架け橋になる．
+
+    Brown運動は，空間的に一様な確率場での積分曲線だと思えば，さらに一般に空間的な一様性の仮定を取った場合が確率微分方程式であり，
+    これはBrown運動の変形として得られるというのが伊藤清のアイデアである．
+\end{quotation}
+
+\section{概観}
+
+\subsection{最適輸送理論}
+
+\begin{definition}
+    
+\end{definition}
+
+\subsection{移流方程式}
+
+\begin{definition}[advection]\mbox{}
+    \begin{enumerate}
+        \item 物理量のスカラー場や物質がベクトル場によって輸送されること・経時変化することを，\textbf{移流}という．
+        \item 定ベクトル$b=(b^1,b^2)\in\R^2$が定める空間一様な移流に関する初期値問題$u=u(t,x)$は，
+        \begin{align*}
+            \pp{u}{t}+b\cdot\nabla u=0,\quad(t>0,x=(x^1,x^2)\in\R^2),\\
+            u(0,x)=f(x)\in C^1(\R^2)
+        \end{align*}
+        と表される．このとき，$X_t(x):=x-bt$は，時刻$t$に$x$に居る粒子が，時刻$0$にどこにいたかを表す．よって，初期状態として与えられた物理量$f:\R^2\to\R$を用いて，時刻$t$に位置$x\in\R^2$で観測される物理量は$f(X_t(x))$で表される．
+    \end{enumerate}
+\end{definition}
+
+\chapter{無限次元確率微分方程式}
+
+\begin{quotation}
+    確率微分方程式はランダムなゆらぎを持つ常微分方程式であるから，同様にランダムなゆらぎを持つ偏微分方程式に当たる概念も自然に現れるはずである．
+\end{quotation}
+
+
 
 
 
@@ -3646,6 +4234,12 @@ title=極限分布のお手本]
 \end{history}
 
 \subsubsection{ポアソン過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Poisson点過程／Poisson点場において，ある有界領域内の点の数はPoisson分布に従う確率変数となる．
+    このことから名付けられたのがPoisson点過程で，Poisson自体はこれについて研究していない．
+\end{tcolorbox}
 
 \begin{definition}[Poisson process]
     $\lambda>0$を定数として，次の３条件を満たす確率過程$(P_k(t))_{k\in\N}$を\textbf{Poisson過程}という：
@@ -4182,6 +4776,11 @@ title=積分変換]
 
 \subsection{特性関数と分布}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特性関数と分布の対応は，緩増加超関数の空間上のFourier逆変換$\F^{-1}:\cS'(\R)\iso\cS'(\R)$の$P(\R)$への制限が与える．
+\end{tcolorbox}
+
 \begin{definition}[characteristic function]
     $(\R,\B_1)$上の確率測度$\nu$に対して，
     \[\varphi(u):=\int e^{iux}\nu(dx)=\int\cos(ux)\nu(dx)+i\int\sin(ux)\nu(dx)\]
@@ -4190,8 +4789,8 @@ title=積分変換]
 \end{definition}
 
 \begin{lemma}[inversion formula]\label{lemma-反転公式}
-    確率測度$\nu$とその特性関数$\varphi$について，区間$(a,b)$で$\nu[\{a\}]=\nu[\{b\}]=0$ならば，
-    \[\nu[(a,b)]=\frac{1}{2\pi}\lim_{T\to\infty}\int^T_{-T}\frac{e^{-iua}-e^{-iub}}{iu}\varphi(u)du.\]
+    確率測度$\nu$とその特性関数$\varphi$について，区間$(a,b)$で$\nu[\{a\}]=\nu[\{b\}]=0$ならば，すなわち，$a,b$が$F$の連続点ならば，
+    \[\nu[(a,b)]=F(b)-F(a)=\frac{1}{2\pi}\lim_{T\to\infty}\int^T_{-T}\frac{e^{-iua}-e^{-iub}}{iu}\varphi(u)du.\]
 \end{lemma}
 
 \begin{theorem}[一意性定理]
@@ -4202,8 +4801,21 @@ title=積分変換]
     \end{enumerate}
 \end{theorem}
 \begin{proof}
-    反転公式\ref{lemma-反転公式}
-    により，任意の開区間の測度は$\varphi$が一意に定める．
+    $d=1$の場合について，2通りの方法で示す．
+    \begin{description}
+        \item[反転公式による証明] 
+        $\varphi_\mu=\varphi_{\wt{\mu}}$とする．
+        反転公式\ref{lemma-反転公式}
+        により，任意の(端点が$F_\mu,F_{\wt{\mu}}$の連続点である)開区間の測度は$\varphi$が一意に定める：$F_\mu(b)-F_\mu(a)=F_{\wt{\mu}}(b)-F_{\wt{\mu}}(a)$．
+        $b\in\R$が$F_\mu,F_{\wt{\mu}}$両方の連続点であるとき，$F_\mu(b)=F_{\wt{\mu}}(b)$．
+        分布関数は右連続で，不連続点は高々可算個だから，これは$F_\mu=F_{\wt{\mu}}$を含意する．分布関数の一意性より，$\mu=\wt{\mu}$．
+        \item[緩増加超関数の空間上のFourier変換による証明]
+        まず，$P(\R)\subset\cS'(\R)$を示す．
+        $\mu\in P(\R)$に対して，$\brac{\mu,-}:\cS(\R)\to\R$は有界線型汎関数であることを示す．
+        $\abs{\brac{\mu,f}}\le\Abs{\int_\R f(x)\mu(dx)}\le\norm{f}_\infty$．
+        このとき，$\mu\in\cS'(\R)$のFourier逆変換が$\varphi_\mu$である．
+        $\cS'(\R)$上のFourier変換は同型対応である．
+    \end{description}
 \end{proof}
 
 \begin{corollary}
