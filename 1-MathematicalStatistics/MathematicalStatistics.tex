@@ -436,7 +436,7 @@ title=one-way ANOVA]
 \chapter{統計的決定理論}
 
 \begin{quotation}
-    （意志）決定理論の立場から推定と検定を考察する．
+    （意志）決定理論の立場から推定と検定の小標本理論を考察する．
     統計的な推定を行うことは，特定の損失関数を採用して，これについて統計的決定問題を解くことに等しい．
 
     統計的決定問題が設定されたとき，決定問題の下で起こる確率現象を解明するのが数理統計学の課題であって，特定の決定関数を無条件に是とするものではない．
@@ -786,6 +786,9 @@ title=]
     非線形モデル・非ガウスモデルに対しては，統計量の分布が複雑なため，標準的な統計的決定理論を適用するのは困難であるが，
     これに替わって漸近的方法に基づく大標本理論が有力な解析手段となる．
     ここで，正規近似に基づく１次の漸近理論を扱う．
+
+    大標本理論の一番最初の応用先として，統計的検定問題を考える．
+    漸近論が準備できたことにより，尤度比検定はより理解できるようになった．
 \end{quotation}
 
 \section{最尤推定}
@@ -970,6 +973,10 @@ title=]
 
 \subsection{最尤推定量での例}
 
+\begin{theorem}[最尤推定量の漸近正規性の十分条件]\label{thm-ASN-of-MLE}
+    
+\end{theorem}
+
 \subsection{一般化モーメント法での例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1095,13 +1102,82 @@ title=]
     初等統計で扱われるカイ$2$乗検定の根拠は，この漸近理論によって明らかになる．
 \end{tcolorbox}
 
+\subsection{尤度比検定}
+
+\begin{notation}
+    $\Theta\subset\R^p,\theta_0\in\Theta^\circ$とする．$(\X,\A)$上の$\sigma$-有限な確率分布族$\{P_\theta\}_{\theta\in\Theta}\subset P(X)$に対する検定
+    \[H_0:\theta=\theta_0\quad\vs\quad H_2:\theta\ne\theta_0\]
+    を考える．$x=(x_1,\cdots,x_n)\in\X^n$を無作為標本とする．
+\end{notation}
+
+\begin{definition}
+    尤度関数$L_n(\theta):=\prod^n_{j=1}p(x_j,\theta)$の比
+    \[\Lambda_n:=\frac{L_n(\theta)}{\sup_{\theta\in\Theta}L_n(\theta)}\in[0,1]\]
+    の値を考え，$\Lambda_n:\X^n\to[0,1]$の値が小さい時に帰無仮説を棄却する検定を\textbf{尤度比検定}という．
+\end{definition}
+\begin{remark}
+    $\wh{\theta}_n$が$\theta$の最尤推定量であるとき，定義上これが尤度関数を最大にする点であるから，$\Lambda_n=\frac{L_n(\theta_0)}{L_n(\wh{\theta}_n)}$となる．
+\end{remark}
+
+\subsection{棄却域の定め方}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    では，棄却域はどう定めるのが「良い」か？
+    $\Lambda_n:\X^n\to[0,1]$の分布は極めて複雑であるため，近似を用いる．
+    ここで漸近論が登場し，漸近正規性が，ミニマックスの意味で「妥当」であることが言える．
+    正しくは，漸近決定理論の枠組みで捉えるのが良い．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $\theta$に関する，規準化されたスコア関数を$Z_n(\theta):=\frac{1}{\sqrt{n}}\sum^n_{j=1}\partial_\theta'\log p(x_j,\theta)$とする．
+        \item $Z_n:=Z_n(\theta_0)$とする．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $\wh{\theta}_n\xrightarrow{P_{\theta_0}}\theta_0$を満たす最尤推定量が存在し，
+    漸近正規性を持つための十分条件[F1]~[F4]を満たすとする\ref{thm-ASN-of-MLE}．
+    このとき，$P_{\theta_0}$の下で
+    \[-2\log\Lambda_n\xrightarrow{d}\chi^2(p)\quad(n\to\infty)\]
+\end{theorem}
+
+\subsection{複合仮説の検定}
+
+\subsection{Rao検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    複合仮説の検定に関しては，尤度比検定に変わって，ラオ検定（Lagrange未定乗数法検定）を用いることが出来る．
+    これは$H_0$の下で尤度比検定と同じ漸近分布$\chi^2(r)$を持つ．
+\end{tcolorbox}
+
+\subsection{Wald検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Wald検定も尤度比検定と漸近同等であって，特に$H_0$の下で漸近的に分布$\chi^2(r)$に従う．
+\end{tcolorbox}
+
 \section{多項分布の検定}
 
 \section{尤度比確率場の局所漸近構造}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    漸近決定理論の方法は，その普遍性ゆえに，確率過程の統計推測論などの新しい分野と合流し発展を続けている．
+    統計量の漸近有効性を議論するためには，統計的実験の列に対する漸近決定理論の立場で一般論を展開する方が好ましい．
+\end{tcolorbox}
+
 \section{情報量規準}
 
 \section{密度推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここからはノンパラメトリック解析の手法を概観する．
+\end{tcolorbox}
 
 \section{$U$-統計量}
 
