@@ -1,0 +1,166 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{確率解析}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{Brown運動}
+
+\begin{notation}
+    正整数$k,n\ge1$について，
+    \begin{enumerate}
+        \item $C_b^k(\R^n)$で，$C^k$-級で，任意の$k$階以下の偏導関数は有界である関数の空間とする．
+        \item $C_0^k(\R^n):=C_c(\R^n)\cap C_b^k(\R^n)$とする．
+        \item $C_p^\infty(\R^n)$は滑らかな関数で，任意の偏導関数は高々多項式の速度で増加する関数の空間とする．
+        \item $C_b^\infty(\R^n):=C_p^\infty(\R^n)\cap\bigcap_{k\in\N}C_b^k(\R^n)$とする．
+        \item $C_0^\infty(\R^n):=C^\infty(\R^n)\cap C_c(\R^n)$とする．
+    \end{enumerate}
+\end{notation}
+
+\chapter{確率積分}
+
+\begin{quotation}
+    確率論ははじめから偏微分方程式論と密接に関係していたことを思うと，確率論自体が測度論で基礎付けられることは自然であった．
+    さらに，確率積分なる概念も自然に定義できるはずである．
+
+    Brown運動$B_t$は微分可能ではないし，有界変動にもならないので，Stieltjes積分としては定義できる道はない．
+    連鎖律は伊藤の公式と呼び，微分は出来ないから積分の言葉で定式化される．余分な右辺第3項が特徴である．
+\end{quotation}
+
+\chapter{確率微分方程式}
+
+\begin{quotation}
+    元々Markov過程論から純粋に数学的に生じた問題意識の解決のために確率微分方程式が
+    開発された．
+    しかし，確率論的な現象は自然界にありふれている．
+    常微分方程式の定める流れに沿って輸送された物理量は，移流方程式と呼ばれる1階の偏微分方程式を満たす．
+    Brown運動に沿って輸送された物理量（熱など）は，熱伝導方程式・拡散方程式と呼ばれる2階の偏微分方程式を満たす．
+    この対応関係は確率微分方程式を導入することでさらに一般化され，2階の放物型・楕円形の偏微分方程式の解を
+    確率的に表示することが出来るようになる．
+    こうして，確率微分方程式は，ポテンシャル論・偏微分方程式論や微分幾何学との架け橋になる．
+
+    Brown運動は，空間的に一様な確率場での積分曲線だと思えば，さらに一般に空間的な一様性の仮定を取った場合が確率微分方程式であり，
+    これはBrown運動の変形として得られるというのが伊藤清のアイデアである．
+\end{quotation}
+
+\section{概観}
+
+\subsection{最適輸送理論}
+
+\begin{definition}
+    
+\end{definition}
+
+\subsection{移流方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Brown運動は，位置を忘れて粒子の視点から見た，確率ベクトル場から受ける「流れ」だと理解できる．
+    したがってその背景には確率ベクトル場がある．
+\end{tcolorbox}
+
+\begin{definition}[advection, 時間的に一様なベクトル場による輸送方程式]\mbox{}
+    \begin{enumerate}
+        \item 物理量のスカラー場や物質がベクトル場によって輸送されること・経時変化することを，\textbf{移流}という．
+        \item 定ベクトル$b=(b^1,b^2)\in\R^2$が定める空間一様な移流に関する初期値問題$u=u(t,x)$は，
+        \begin{align*}
+            \pp{u}{t}+b\cdot\nabla u=0,\quad(t>0,x=(x^1,x^2)\in\R^2),\\
+            u(0,x)=f(x)\in C^1(\R^2)
+        \end{align*}
+        と表される．このとき，$X_t(x):=x-bt$は，時刻$t$に$x$に居る粒子が，時刻$0$にどこにいたかを表す．よって，初期状態として与えられた物理量$f:\R^2\to\R$を用いて，時刻$t$に位置$x\in\R^2$で観測される物理量は$f(X_t(x))$で表される．
+        これは大数の法則に物理的な意味論を与える\ref{thm-law-of-large-number-of-Markov-chain}．
+    \end{enumerate}
+\end{definition}
+
+\begin{discussion}[変数係数の移流問題]
+    ベクトル場$b=b(t,x):\R\times\R^2\to\R^2$に対して，方程式
+    \[\pp{u}{t}+b(t,x)\cdot\nabla u=0\quad(t>0,x\in\R^2)\]
+    を考える．$y\in\R^2$から出発した粒子の位置を表す変数$Y_t\in\R^2$を固定して，そこでの時間変化を表す
+    常微分方程式に関する初期値問題$\dot{Y}_t=b(t,Y_t)\;(t\in\R_+);Y_0=y\in\R^2$を考える．
+    すると，解$u(t,x)$は次を満たす必要がある：
+    \begin{align*}
+        \pp{}{u}\paren{u(t,Y_t(y))}&=\pp{u}{t}(t,Y_t(y))+\dot{Y}_t(y)\cdot\nabla u(t,Y_t(y))\\
+        &=\paren{\pp{u}{t}+b\cdot\nabla u}(t,Y_t(y))=0.
+    \end{align*}
+    よって，$u(t,Y_t(y))=u(0,Y_0(y))=f(y)$なる第一積分が見つかったことになる．
+
+    こうして元の偏微分方程式は，$y\in\R^2$に居た粒子が受けることになる流れ$Y_t$に沿った輸送を記述する方程式であったと理解できる．
+    または，ベクトル場による移流方程式とは，ある移流$Y_t$の第一積分が満たすべき方程式とも見れる．
+    \footnote{これがKolmogorovが発見したものだった？}
+\end{discussion}
+\begin{remark}[2つの関連]
+    いま，$Y_t:\R^2\times\R_+\to\R^2$は，各$y\in\R^2$に対して，これが受けることになる力の時系列$Y_t(y)$を与えている．
+    これが可逆であるとする：$X_t:=Y_t^{-1}:\R^2\to\R^2$．すると，出発点$y$が$t$時刻にいる位置$x$について，$y=X_t(x)$と辿る確率過程になる．
+    これは解について$u(t,x)=f(X_t(x))$なる表示を与える．
+
+    ベクトル場が時間に依存しないとき，$Y_t$は可逆であり，逆$X_t$は常微分方程式$\dot{X}_t=-b(X_t),X_0=x$を満たす．
+    定数係数の場合は，これを解いたものと見れるから，たしかに一般化となっている．
+\end{remark}
+
+\subsection{Brown運動が定める確率ベクトル場}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    移流方程式は，時間変化するベクトル場$\R_+\to\Map(\R^2,\R^2)$による物理量の輸送を考えた．
+    もし，ベクトル場が確率的であったら？前節の例はひとつの見本道に過ぎないとしたら？
+    すなわち，前節ではスタート地点$y\in\R^2$を根源事象とみて，時間変化するベクトル場を確率過程と見たが，ここに新たにランダム性の発生源を加えるのである．
+\end{tcolorbox}
+
+\subsection{確率微分方程式}
+
+\begin{example}[空間的に一様な場合]
+    $b\in\R^2,\al=(\al^i_k)_{i,k\in[2]}$が定める確率過程$X_t(x):=x-\al B_t-bt\;(t\in\R_+,x\in\R^2)$を考える．
+    $X_t$は，定数係数ベクトル場による輸送と，Brown運動とを合成した運動に他ならない．
+    実際，仮に$B_t$が$t$について微分可能であるならば，$\dot{X}_t=-\al\dot{B}_t-b$となるから，時間発展するベクトル場$-\al\dot{B}_t-b$による移流であると考えられる．
+    $\al$がBrown運動の強さと歪みの情報を含んでいる．
+    ただし，Brown運動の時刻$t$における$y\in\R^2$に関する分布は
+    \[P[B_t\in dy]=p(t,y)dy:=\frac{1}{2\pi t}e^{-\abs{y}^2/2t}dy\]
+    と表せる．
+
+    すると，$X_t$による輸送の平均値を
+    \[u(t,x):=E[f(X_t(x))]\]
+    とおけば，これは
+    \[q(t,x,z):=\frac{1}{2\pi t\abs{\det\al}}\exp\paren{-\frac{\abs{\al^{-1}(z-x+bt)}^2}{2t}}\]
+    とおくことで
+    \begin{align*}
+        u(t,x)&=\int_{\R^2}f(x-al-bt)p(t,y)\\
+        &=\int_{\R^2}f(z)q(t,x,z)dz.
+    \end{align*}
+    と整理出来る．これは熱伝導方程式と呼ばれる放物型方程式の一般解であり，$q(t,x,z)$が一般解と呼ばれるものである：
+    \[\pp{u}{t}=\frac{1}{2}\sum^2_{i,j=1}a^{ij}\pp{^2u}{x^i\partial x^j}-b\cdot\nabla u,\quad(t>0,x\in\R^2).\]
+\end{example}
+
+\begin{example}[変数係数の場合]
+    $\al,b$が共に$x\in\R^2$に依存する場合，任意の$t>0$について，常微分方程式
+    \[\dot{X}_t=\al(X_t)\dot{B}_t+b(X_t)\quad(X_0=x\in\R^2)\]
+    を考えたい．しかし$B_t$は微分可能でないから，積分形で代わりに表現することを考える．
+    すなわち，$\dot{B}_sds=\dd{B_s}{s}ds=dB_s$とし，この右辺を定義することを考える．
+    \[X_t=x+\int_0t\al(X_s)dB_s+\int^t_0b(X_s)ds.\]
+    すると次の問題は，右辺第2項がStieltjesの意味での積分として定義することは出来ない．
+    $B_t$は有界変動でないので，線積分の発想はお門違いである．
+    これは確率論的な考察で乗り越えることが出来る．
+
+    この確率微分方程式の解$X_t$を求めれば，平均値$u(t,x)$は放物型偏微分方程式
+    \[\pp{u}{t}=\frac{1}{2}\sum^2_{i,j=1}a^{ij}(x)\pp{^2u}{x^i\partial x^j}+b(x)\cdot\nabla u\quad(t>0,x\in\R^2,a(x):=\al(x){}^t\!\al(x))\]
+    を満たすことになる．
+    これはいわば，確率過程$X_t$から得られる平均処置効果のような統計量の1つが，偏微分方程式で記述される物理法則を満たすということに過ぎない．
+    $X_t$は非常に豊かな情報を湛えていて，偏微分方程式はその1断面に過ぎないと言えるだろう．
+\end{example}
+
+
+\chapter{無限次元確率微分方程式}
+
+\begin{quotation}
+    確率微分方程式はランダムなゆらぎを持つ常微分方程式であるから，同様にランダムなゆらぎを持つ偏微分方程式に当たる概念も自然に現れるはずである．
+\end{quotation}
+
+\begin{thebibliography}{99}
+    
+\end{thebibliography}
+
+\end{document}
