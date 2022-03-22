@@ -3119,6 +3119,8 @@ title=]
 
 \subsection{Burkholderの不等式}
 
+\section{Gauss系}
+
 \section{統計推測への応用}
 
 回帰モデル$X_i=f(X_{i-1},\cdots,X_{i-p})+\ep_i$において，
@@ -3533,7 +3535,7 @@ title=]
     これは，時刻$0$に$x$から初めて，$s+t$に$A$に至るまでの時刻$s$での経由地$y\in S$について積分しても等しくなる，という意味を持つ．
 \end{discussion}
 
-\subsection{加法過程}
+\section{加法過程}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3544,6 +3546,8 @@ title=]
     大雑把にいえば，連続な加法過程はGauss型，すなわちブラウン運動に限り，非連続的な加法過程はPoisson型に限る．
     任意のLevy過程は，ドリフト付きのBrown運動とLevyのジャンプ過程との和に分解できる．
 \end{tcolorbox}
+
+\subsection{定義と例}
 
 \begin{example}
     $\Z^d$-酔歩は次の性質を満たす：任意の長さ$k\ge2$の部分列$(n_j)_{j\in[k]}$について，\textbf{増分}の過程$(X_{n_j}-X_{n_{j-1}})_{j\in[k]}$は独立．
@@ -3567,6 +3571,8 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\subsection{Levy-Ito分解}
+
 \begin{theorem}[Levy過程の分解定理 (Levy-Ito decomposition)]
     $X$をLevy過程とする．
     $\Gamma=\R_+\times(\R\setminus\{0\})$上の固有なPoisson配置$N$と，これと独立なGauss型Levy過程$G$が存在して，
@@ -3585,6 +3591,12 @@ title=]
 \begin{theorem}
     上記の条件を満たす$(n,m,v)$に対して，これを特性量として持つLevy過程が存在して，法則同等を除いて一意的である．
 \end{theorem}
+
+\begin{definition}
+    $X_t-X_s\;(t>s)$の確率法則が$t-s$の値のみに関係するようなLevy過程を，\textbf{時間的に一様なLevy過程}という．
+    このとき，特性値は次のように表せる．
+    \[m_X(t)=mt,\quad v_X(t)=vt,\quad n_X(dtdu)=dt\cdot n(du).\]
+\end{definition}
 
 \section{Brown運動}
 
@@ -3626,8 +3638,8 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    古典的Wiener空間$W_0$は$0$から始まる連続な見本過程$R_+\to\R$全体の空間である．
-    ここには標準的な位相が1つ定まる．
+    古典的Wiener空間$W_0$は$0$から始まる連続な見本過程$R_+\to\R$全体の空間で，Banach空間となる．
+    Brown運動はここに確率測度を押し出し(見本道のばらつき)，Brown運動は，関数解析的には$W_0$上の確率測度の1つと同一視出来る．
 \end{tcolorbox}
 
 \begin{notation}[classical Wiener space]
@@ -3688,7 +3700,7 @@ title=]
 
 \subsection{可微分性}
 
-\begin{theorem}
+\begin{theorem}[Paley-Wiener-Zygmond]
     $B_t(\om)$は$\om\dae$に対して，$t$について至る所微分不可能である．
 \end{theorem}
 
@@ -3727,7 +3739,7 @@ title=]
 
 \begin{discussion}[Poisson過程の構成]
     Kolmogorovの拡張定理により存在は保証されるが，次のように構成できる．
-    独立にパラメータ$\lambda$の指数分布に従う$\R_+$-値確率変数列$(S_j)$を取る：$P[S_j\ge t]=e^{-\lambda t}$．
+    独立にパラメータ$\lambda$の指数分布\ref{def-exponential-distribution}に従う$\R_+$-値確率変数列$(S_j)$を取る：$P[S_j\ge t]=e^{-\lambda t}$．
     なお，パラメータ$\lambda>0$の指数分布密度関数は
     \[p(x)=\lambda e^{-\lambda x}1_{[0,\infty)}(x)\]
     と表せる．
@@ -3748,6 +3760,74 @@ title=]
 \begin{corollary}
     $(N_t-\lambda t)_{t\ge0}$は$(\F_t^N)$に関してマルチンゲールである．
 \end{corollary}
+
+\section{無限分解可能分布}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率変数$X$が，任意の$n\in\N$に対して，ある分布$\mu_n$が存在してそれに従う独立同分布変数$n$個の和で表せるとき，
+    これを無限可解であるという．
+    これは半群$P(\R)$\ref{lemma-semigroup-of-distributions}の言葉を用いて定義できる．
+\end{tcolorbox}
+
+\begin{definition}
+    1次元の分布$\mu$が\textbf{無限可解}であるとは，分布族$\{\mu_t\}_{t\in\R_+}$が存在して，$\mu$を乗法単位元として$\R_+$と同型な連続半群となることをいう：
+    \begin{enumerate}
+        \item $\R_+\to P(\R);t\mapsto\mu_t$は弱位相に関して連続．
+        \item $\forall_{t,s\in\R_+}\;\mu_t*\mu_s=\mu_{t+s}$．
+        \item $\mu_0=\delta_0$．
+        \item $\mu_1=\mu$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    次の4条件は同値．
+    \begin{enumerate}
+        \item $\mu$は無限可解である．
+        \item $\forall_{n\in\N}\;\mu=\mu_n*\mu_n*\cdots *\mu_n$と表せる．
+        \item 任意の$\ep>0$に対し，分解$\mu=\mu_1*\cdots*\mu_n$であって，Levy距離に関して$d_L(\mu_i,\delta)<\ep$を満たすものが存在する．
+        \item $\mu_n=\mu_{n1}*\cdots*\mu_{nm(n)},\max_{k\in[m(n)]}d_L(\mu_{nk},\delta)\to0$を満たす列$(\mu_n)$が存在して，$\mu_n\to\mu$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}
+    畳み込みについて閉じている分布族\ref{exp-reproducing-families}はみな無限可解な分布の例である．
+\end{example}
+
+\begin{example}
+    時間的に一様なLevy過程$X$は，任意の$t\in\R_+$について$X_t$は無限可解である．
+    また逆に，連続半群$(\mu_t)$に対して，これが定める一様なLevy過程が存在する．
+\end{example}
+
+\subsection{Levy分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    無限可解分布，連続半群$\{\mu_t\}_{t\in\R_+}$，時間的に一様なLevy過程（の法則同値類）$X$の間に，次の全単射対応がある：
+    \[\mu\xrightarrow{\mu=\mu_1}\{\mu_t\}\xrightarrow{\mu_t=P^{X(t)}}X\]
+\end{tcolorbox}
+
+\begin{theorem}[無限可解分布のLevy分解定理]
+    任意の無限可解分布$\mu$は，特性関数$\F\mu(z)$が$\F\mu(z)=e^{\psi(z)}$なる形になる．ただし，
+    \[\psi(z)=imz-\frac{v}{2}z^2+\int_{\abs{u}>0}(e^{izu}-1-i\phi(u)z)n(du),\quad m\in\R,v\ge0,\int_{\abs{u}>0}(u^2\land 1)n(du)<\infty.\]
+\end{theorem}
+
+\begin{definition}
+    Poisson分布，Cauchy分布もLevy分解を定め，これらに対応する一様Levy過程をPoisson過程，Cauchy過程という．
+\end{definition}
+
+\subsection{複合Poisson過程}
+
+\begin{definition}
+        $m=0,v=0$のときの$\psi(z)=\int_{\abs{u>0}}(e^{izu}-1)n(du)$と表せる$\mu$のクラスを，\textbf{複合Poisson分布}という．これに対応する過程を\textbf{複合Poisson過程}という．
+\end{definition}
+
+\begin{lemma}
+    複合Poisson分布$\mu$は，$v^{*n}$をPoisson分布$p_\lambda$によって加重平均を取ったものである：
+    \[\mu=\sum^\infty_{n=1}e^{-\lambda}\frac{\lambda^n}{n!}\nu^{*n}.\]
+\end{lemma}
 
 \section{1次元拡散過程}
 
@@ -5063,7 +5143,7 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsection{Gamma分布}
+\subsection{Gamma分布・指数分布・ｶｲ2乗分布}
 
 \subsubsection{Gamma分布の性質}
 
@@ -5095,12 +5175,25 @@ title=]
 
 \subsubsection{指数分布}
 
-\begin{definition}[exponential distribution, chi-square distribution]\mbox{}
+\begin{definition}[exponential distribution, chi-square distribution]\mbox{}\label{def-exponential-distribution}
     \begin{enumerate}
         \item $\Exp(\gamma):=G(\gamma,1)$を母数$\gamma$の\textbf{指数分布}という．
         \item $\chi^2(k):=G\paren{\frac{1}{2},\frac{k}{2}}$を自由度$k$の\textbf{カイ２乗分布}という．\footnote{統計推測で重要なクラスである．}
     \end{enumerate}
 \end{definition}
+
+\begin{lemma}[確率密度関数]\mbox{}
+    \begin{enumerate}
+        \item 指数分布の確率密度関数は，
+        \[g(x;\gamma,1)=\frac{1}{\Gamma(1)}\gamma^1x^0e^{-\gamma x}1_{x>0}=\frac{\gamma}{e^{\gamma x}}1_{x>0}.\]
+        \item 
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    指数分布$X_\lambda$の特性関数は
+    \[E[e^{iuX_\lambda}]=\frac{\lambda}{\lambda-iu}.\]
+\end{lemma}
 
 \subsection{正規分布}
 
@@ -5560,7 +5653,7 @@ title=]
     (3)は$\nu_1,\nu_2$の独立性を特徴付けない点に注意．
 \end{lemma}
 
-\begin{lemma}
+\begin{lemma}\label{lemma-semigroup-of-distributions}
     $P(\R^d)$は$*$を積として，単位元$\delta_0$を持つ可換な半群をなす．
 \end{lemma}
 
@@ -5568,7 +5661,7 @@ title=]
     ある分布族について，畳み込みについて閉じていることを\textbf{分布族の再生性}という．
 \end{definition}
 
-\begin{example}\mbox{}
+\begin{example}\mbox{}\label{exp-reproducing-families}
     \begin{enumerate}
         \item $G(\al,\nu_1)*G(\al,\nu_2)=G(\al,\nu_1+\nu_2)$．
         \item $N(\mu_1,\Sigma_1)*N(\mu_2,\Sigma_2)=N(\mu_1+\mu_2,\Sigma_1+\Sigma_2)$．

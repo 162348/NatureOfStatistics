@@ -22,6 +22,32 @@
     \end{enumerate}
 \end{notation}
 
+\section{定義と構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    構成のアイデアは複数ある．
+    \begin{enumerate}
+        \item $[0,1]$上に構成してから，Kolmogorovの拡張定理で$\R$上に延長する．
+        \item $\R^n$上の正規分布を拡張する．
+        \item 酔歩をスケーリングする．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{definition}[skelton / Cameron-Martin subspace]
+    \[H:=\Brace{w(t)=\int^t_0h(x)dx\in C_{(0)}([0,1])\;\middle|\;h\in L^2([0,1],dx)}\]
+    と定めると，これは内積$(f_1,f_2):=\int^1_0h_1h_2dx$についてHilbert空間となる．
+    これを$W_0$の骨格，またはCameron-Martin部分空間という．
+\end{definition}
+
+\section{Laplace作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $P_t[f(x)]=E[f(x+B_t)]$をおくことにより，$\{P_t\}_{t\in\R_+}$は$C_0(\R)$上でHille-吉田の意味での強連続半群となり，
+    その生成作用素$\lim_{t\to0}\frac{P_t-I}{t}=\frac{\nabla}{2}$がLaplace作用素である．$I$は恒等作用素とした．
+\end{tcolorbox}
+
 \chapter{確率積分}
 
 \begin{quotation}
