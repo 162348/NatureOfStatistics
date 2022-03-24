@@ -5417,12 +5417,13 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     ドリフト付きのBrown運動の到達時間の分布として現れる．
+    キュムラント母関数$\log M$が，正規分布のキュムラント母関数の逆数になっていることから．
 \end{tcolorbox}
 
-\begin{definition}[inverse Gaussian distribution]
+\begin{definition}[inverse Gaussian distribution / Wald distribution]
     確率密度関数
     \[f(x;\delta,\gamma)=1_{(0,\infty)}(x)\frac{\delta e^{\gamma\delta}}{\sqrt{2\pi}}x^{-3/2}\exp\paren{-\frac{1}{2}\paren{\gamma^2x+\frac{\delta^2}{x}}}\]
-    で定まる確率分布$\IG(\delta,\gamma):\R_{>0}\times\R_{\ge0}\to P(\R)$を\textbf{逆正規分布}という．
+    で定まる確率分布$\IG(\delta,\gamma):\R_{>0}\times\R_{\ge0}\to P(\R)$を\textbf{逆正規分布}または\textbf{Wald分布}という．
 \end{definition}
 
 \begin{lemma}\mbox{}
