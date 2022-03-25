@@ -564,6 +564,54 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\subsection{正則な統計的実験}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{itemize}
+        \item 確率空間$(\X,\A,P_\theta)$のエントロピー＝平均情報量とは，対数尤度の平均$-E[\log L(\theta|x)|\theta]$であり，系の乱雑さを表す．一様分布で，どの事象も起こり得て予測が難しいとき，値が大きくなる．
+        \item 対数尤度の$\theta$に関する微分$V(x;\theta)$の平均は$E[V(x;\theta)|\theta]=0$を満たすが（$\theta$がいくら変わろうと確率分布である限り総重量は$1$なので），この分散に興味がある．
+        もし至る所で変わるなら，分散は極めて大きくなるはずである．
+        Fisher情報量とはこれであり，分布$P_\theta$自身が母数$\theta$に関してもつ情報の量を表す．
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{definition}[Fisher's finite information]
+    $L_2(\X,\nu)$について，
+    \[I(\theta):=4\int_\X\paren{\pp{}{\theta}p^{1/2}(x;\theta)}^2d\nu=4\Norm{\pp{}{\theta}p^{1/2}}_\nu^2\]
+    をFisher情報，
+    \[I(\theta)=4\int_\X\pp{}{\theta}p^{1/2}(x;\theta)\paren{\pp{}{\theta}p^{1/2}(x;\theta)}^\top d\nu\]
+    をFisher情報行列という．
+    ここで，関数$p^{1/2}(-;u)$が$u=\theta$で微分可能で導関数が$L_2(\nu)$級であることは必ずしも仮定しない．
+    \[\exists_{\psi\in L^2(\X,\Meas(\Theta,\R^K))}\;\int_\X\Abs{g(x;\theta+h)-g(x;\theta)-(\psi(x;\theta),h)}^2d\nu=o(\abs{h}^2)\quad(h\to0)\]
+    が満たされるとき，統計的実験$E$は$\theta\in\Theta$で\textbf{有限なFisher情報を持つ}という．
+    $\pp{p}{\theta}(x;\theta)$はこの$L^2$-微分の意味で表している．
+\end{definition}
+\begin{remarks}
+    対数尤度関数$\log L(\theta|x)$の$\theta$による微分をスコア関数という．
+    \[V(x;\theta)=\pp{}{\theta}\log L(\theta|x)=\frac{1}{L}\pp{L}{\theta}.\]
+    $\theta$を増やしたら尤度が上がる場合，スコア関数は正で，さらに尤度が低ければ低いほど$1/L$により拡大される．
+    これはたしかに情報量の考え方である．
+    実は$E[V(x;\theta)|\theta]=0$が成り立つ．
+    そこで，スコア関数の2次のモーメント$I(\theta):=E[V(x;\theta)^2|\theta]$をFisher情報量というと，これはスコア関数の分散である：$I(\theta)=\Var[V(x;\theta)]$．
+    なお，2つの定義の等価性
+    \begin{align*}
+        \paren{\pp{}{\theta}p^{1/2}(x;\theta)}^{2}&=\paren{\frac{1}{2}p^{-1/2}\pp{}{\theta}p(x;\theta)}^2\\
+        &=\frac{1}{4}p^{-1}(x;\theta)\paren{\pp{p(x;\theta)}{\theta}}^2
+    \end{align*}
+    による．
+\end{remarks}
+
+\begin{definition}[regular statistical experiment]
+    組$E:=(\X,\A,\{P_\theta\}_{\theta\in\Theta},\Theta\osub\R^K)$が，$P_\theta$が$\nu$-絶対連続であるとき，統計的実験という．
+    $E$が$\Theta$上で\textbf{正則}であるとは，次の3条件を満たすことをいう：
+    \begin{enumerate}
+        \item Radon-Nikodym微分の族$p(x,-):\Theta\to[0,1]$は$\nu\dae x$に関して連続である．
+        \item 任意の点$\theta\in\Theta$において有限なFisher情報が存在する．
+        \item 関数$\psi(-,\theta)\in L^2(\nu)$は連続．
+    \end{enumerate}
+\end{definition}
+
 \subsection{最適性・有効性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1276,6 +1324,12 @@ title=]
 
 \subsection{尤度比確率場の接触構造}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    接触しているとは，\textbf{漸近的絶対連続}であることをいう．
+    これは法則列$(Q_n)$の統計量列の極限を，法則列$(P_n)$の極限から得るために必要な性質となる．
+\end{tcolorbox}
+
 \begin{definition}[contiguous]
     可測空間の列$(\X^n,\A^n)$と，その上の確率測度の列が２つ$(P_n),(Q_n)$と与えられているとする．
     $(Q_n)$は$(P_n)$に\textbf{接触している}とは，任意の可測集合の列$(A_n),A_n\in\A^n$に対して，$P_n(A_n)\to0\Rightarrow Q_n(A_n)\to0$が成り立つことをいう．
@@ -1305,7 +1359,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     漸近正規性を定義する枠組みを整備する．
-    Frechet微分のような考え方をするが，$L^2$ノルムにより条件が弱められている．
+    Frechet微分のような考え方をするが，$L^2$ノルムにより条件が弱められている\cite{Ibragimov HasMinskii}．
 \end{tcolorbox}
 
 \begin{definition}
@@ -1313,7 +1367,7 @@ title=]
     大標本理論では，直積による列$(\X^n,\A^n,\{P_\theta^n\})_{n\in\N}$を考える．
 \end{definition}
 
-\begin{notation}
+\begin{notation}[正則性の仮定]
     $\Theta\osub\R^p$とし，$P_\theta$の真値$P_{\theta_0}$に対するLebesgue分解における，絶対連続部分のRadon-Nikodym微分を$dP_\theta/dP_{\theta_0}$，特異部分を$\sigma_{\theta/\theta_0}$で表すと，
     \[P_\theta[A]=\int_A\frac{dP_\theta}{dP_{\theta_0}}dP_{\theta_0}+\sigma_{\theta/\theta_0}(A)\quad(A\in\A)\]
     関数$D_u:\X\to\R\;(u\in\R^p)$を
@@ -1327,7 +1381,7 @@ title=]
     \item $\sigma_{\theta_0+u/\theta_0}(\X)=o(\abs{u}^2)\;(\abs{u}\to0)$．
 \end{enumerate}
 
-\begin{lemma}
+\begin{lemma}[$L^2$-微分の表示]
     G1,G2を仮定し，$P_\theta$は確率密度関数族$p(x,\theta)$を持ち，対応$\theta\mapsto p(x,\theta)$は$\theta_0$において微分可能とする．
     このとき，
     \[\varphi(x)=\frac{1}{2p(x,\theta_0)}\pp{p}{\theta}(x,\theta_0).\]
@@ -1349,18 +1403,54 @@ title=]
     Ibragimov HasMinskiiは，この関数の$C(\R^p)$上での弱収束を示した：$Z_n(-;\theta_0)\xrightarrow{d}Z(-;\theta_0)$．
 \end{tcolorbox}
 
-\begin{notation}
+\begin{notation}[normalized likelihood ratio]
+    正規化された尤度比を
     \[Z_n(u;\theta_0):=\prod^n_{j=1}\frac{dP_{\theta_0+n^{-1/2}u}}{dP_{\theta_0}}(x_j),\quad(u\in\R^p,x\in\X^n)\]
     とおくと，$Z_n$は十分大きな$n\in\N$に対して定義されている．
 \end{notation}
 
-\begin{theorem}
-    
+\begin{theorem}[LeCam]
+    正規な統計的実験の列$E_i$について，
+    $I(\theta_0)\;(\theta_0\in\Theta)$は非退化とする．
+    [G1],[G2]を仮定し$\varphi$を$D_u$の$L^2$-微分とする．
+    このとき，ある$p$次元と$1$次元確率変数$\Delta_n(\theta_0),\rho_n(u,\theta_0)$が存在して，
+    正規化された尤度比は次の表現を持つ：
+    \[Z_n(u;\theta_0):=\exp\paren{u^\top\Delta_n(\theta_0)-\frac{1}{2}u^\top I(\theta_0)u+\rho_n(u,\theta_0)}.\]
+    また，
+    \[L\Square{\Delta_n(\theta_0)|P^n_{\theta_0}}\to N_p(0,I(\theta_0)),\quad\rho_n(u,\theta_0)\xrightarrow{P^n_{\theta_0}}0.\]
 \end{theorem}
+\begin{proof}
+    \[\Delta_n(\theta_0):=\frac{2}{\sqrt{n}}\sum^n_{j=1}\varphi(x_j),\quad\rho_n(u,\theta):=\log Z_n(u;\theta_0)-u^\top\Delta_n(\theta_0)+\frac{1}{2}u^\top I(\theta_0)u.\]
+    とすれば良い．
+\end{proof}
+\begin{remarks}
+    この定理が保証する尤度比の性質は，推定量の性質を調べるに当たって強力な道具となる．
+    特に，尤度比の対数$\log Z_n$は$N\paren{-\frac{1}{2}u^\top I(\theta_0)u,u^\top I(\theta_0)u}$に分布収束する．
+\end{remarks}
 
-\begin{definition}[LAN: Locally Asymptotically Normal]
+\begin{definition}[LAN: Locally Asymptotically Normal (LeCam 1960)]
     定理の$Z_n(u;\theta_0)$の展開が成り立つとき，すなわち，G1,G2が成り立つとき，統計的実験$(\X^n,\A^n,\{P^n_\theta\}_{\theta\in\Theta})$は$\theta_0$において\textbf{局所漸近正規}であるという．
 \end{definition}
+\begin{remarks}
+    LANのとき，$P^n_{\theta_0+n^{-1/2}u}$は$P^n_{\theta_0}$に接触している．
+\end{remarks}
+
+\subsection{局所漸近正規な例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    統計モデルの列が正規モデルで近似可能であるという性質が，局所漸近正規性である．
+    正則なパラメトリックモデルの独立同分布モデルは局所漸近正規で，これについてのLeCamの定理は中心極限定理に他ならない．
+\end{tcolorbox}
+
+\begin{theorem}[Hajekの十分条件]
+    $\Theta\subset\R^1$で添字付けられた実験$E_i$の分布族$f(x,\theta)=\dd{P_\theta}{\nu}$が次の3条件を満たすならば，族$P^n_\theta$はLAN条件を$\theta=t$について満たす．
+    \begin{enumerate}
+        \item 任意の$x\in\X$について$f(x,-):\Theta\to[0,1]$は$\theta=t$の近傍$U\osub\Theta$で絶対連続である．
+        \item $\nu\dae x\in\X$について，微分係数$\pp{f(x,\theta)}{\theta}$が$\theta\in U$上存在する．
+        \item $I(\theta)\;(\theta=t)$は連続で半正定値である．
+    \end{enumerate}
+\end{theorem}
 
 \subsection{漸近有効性}
 
@@ -1369,7 +1459,7 @@ title=]
     supによって，パラメータの1点でのみ良いパフォーマンスを示す病的な推定量（超有効推定量）が競争から排除されている．これが漸近ミニマックスリスク関数である．
 \end{tcolorbox}
 
-\begin{theorem}
+\begin{theorem}[Hajekの不等式]
     統計的実験は$\theta_0$にて局所漸近正規であるとする．$\theta$の任意の推定量系列$T_n$について，
     \[\forall_{\gamma,\delta>0}\quad\liminf_{n\to\infty}\sup_{\theta:\abs{\theta-\theta_0}<\delta}E_\theta\Square{\abs{\sqrt{n}(T_n-\theta)}^\gamma}\ge E[\abs{I(\theta_0)^{-1}\Delta(\theta_0)}^\gamma].\]
 \end{theorem}
@@ -1509,7 +1599,224 @@ title=]
     ここからはノンパラメトリック解析の手法を概観する．
 \end{tcolorbox}
 
+\begin{notation}
+    $(X_j)$を密度関数$f$の定める独立同分布に従う実確率変数列とし，ここから$f$の推定を考える．
+\end{notation}
+
+\subsection{カーネル密度推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    枠組みとしては非常に自然であり，核$K$の選択はたしかに正規性の仮定が自然だろう．
+\end{tcolorbox}
+
+\begin{definition}
+    積分核の中でも統計分野で\textbf{カーネル}というと，次の2条件を満たすものをいう：
+    \begin{enumerate}
+        \item $\int_\R K(u)du=1$．
+        \item 偶関数：$K(-u)=K(u)\;\as$．
+    \end{enumerate}
+    なお，時系列解析では\textbf{窓関数}という．
+\end{definition}
+
+\begin{definition}[KDE: Kernel density estimator, Parzen-Rosenblatt window]
+    ある可測関数$K:\R\to\R$とバンド幅$h>0$について，$K_h(x):=\frac{1}{h}K(x/h)$として平滑化し，
+    \[\wh{f}(x):=\frac{1}{nh}\sum^n_{j=1}K\paren{\frac{x-X_j}{h}}=\frac{1}{n}\sum^n_{j=1}K_h(x-x_i)\]
+    として定まる推定量$\wh{f}$を\textbf{核型推定量}または\textbf{パルツェン窓}という．
+\end{definition}
+\begin{example}
+    標準正規分布の確率密度関数であるガウス関数
+    \[K(x)=\frac{1}{2\pi}e^{-x^2/2}\]
+    をカーネル関数として採用することが多い．
+\end{example}
+\begin{remarks}
+    バンド幅は平滑化のためのパラメータである．
+    いずれにしろ可測関数$K_h:\R\to\R$を用いて，$x-x_j$の重み$K_h(x)$付き標本平均を$f(x)$の推定値とするのである．
+
+    これは，$K_h(x)$なる波形を各観測点$x_j$において合成波を取ったものと見れる．実際，熱核を各$x_j$において熱の総量を求める操作に等しい．
+    なお，ヒストグラムもカーネル推定の例と見れる．
+    カーネル推定は合成波の手法で，基本波形を求めようとする逆問題と思える．
+\end{remarks}
+
+\subsection{誤差評価}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    誤差の評価法は様々だが，ここではMISEを規準とする．
+    これは$L_2$危険関数とも呼ばれる．
+\end{tcolorbox}
+
+\begin{definition}[mean integrated square error]
+    $\MISE(\wh{f}):=\int_\R E[(\wh{f}(x)-f(x))^2]dx$を\textbf{積分2乗誤差}という．
+\end{definition}
+
+\begin{definition}[super kernel]
+    関数$K:\R\to\R$が$s\in\N_{\ge2}$について次の2条件を満たすとき，\textbf{クラス$s$の核}であるという：
+    \begin{enumerate}
+        \item $x^sK(x)\in L^1(\R)$すなわち$\int_\R\abs{x}^s\abs{K(x)}dx<\infty$．
+        \item $\forall_{1\le i<s}\;\int_\R x^iK(x)dx=0$．
+    \end{enumerate}
+    $\forall_{s\in\N_{\ge2}}\;\int_\R x^sK(x)dx=0$を満たすとき，\textbf{超核}であるという．
+\end{definition}
+
+\begin{theorem}
+    $f\in C^s(\R)$かつ$f^{(s)}\in L^2(\R)$とする．
+    クラス$s$の核$K\in L^2(\R)$について，ある定数$C\in\R$が存在して，
+    \[\forall_{n\in\N}\;\forall_{h>0}\quad\MISE(\wh{f})\le C\paren{\frac{1}{nh}+h^{2s}}.\]
+\end{theorem}
+\begin{remarks}
+    誤差を最小にする$h$のレートは$n^{-1/(2s+1)}$で，そのときの積分2乗誤差のオーダーは$O(n^{-2s/(2s+1)})$となる．
+    これは必ずパラメトリックモデルの$n^{-1}$よりも遅くなる．
+\end{remarks}
+
 \section{$U$-統計量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $U$-統計量の理論はHoeffding 1948による．
+    $U$-統計量は最小分散不偏推定量の計算中に自然に現れる．d
+
+    基本的にはresampling法の一種で，標本から大きさ$r$の再抽出をして平均を取る．
+    これは標本分割に繋がるのではないか？
+\end{tcolorbox}
+
+\begin{notation}
+    $I_n=[n],(\X,\A)$を可測空間，$X_j\;(j\in I_n)$を独立同分布に従う$\X$-値確率変数，$h:\X^r\to\R$を対称な可測関数とする．
+    部分集合$A:=\{i_1,\cdots,i_r\}\subset I_n$に対して，$X_A=(X_{i_1},\cdots,X_{i_r})$と略記すると，対称性から$h(X_A):=h(X_{i_1},\cdots,X_{i_r})$と表して良い．
+\end{notation}
+
+\subsection{対称な関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対称な関数の取り扱いと表示は仰々しいが，要は対称関数$h:\X^r\to\R$は集合$[\X]^r$上の関数$f:[\X]^r\to\R$と一対一対応する．
+    そして$[\X]^r$なる対象は，$\X$の点から$r$個の抽出として自然に出現する．
+\end{tcolorbox}
+
+\begin{definition}
+    $E[\abs{h(X_A)}]<\infty$とする．部分集合$B\subset A$に対して，
+    \[h(X_A)_B:=\sum_{C:C\subset B}(-1)^{\abs{B}-\abs{C}}E[h(X_A)|X_C]\]
+    とする．$E[h(X_A)|X_{\emptyset}]:=E[h(X_A)]$とした．
+\end{definition}
+
+\begin{lemma}[反転公式]
+    $h(X_A)=\sum_{B:B\subset A}h(X_A)_B$．
+\end{lemma}
+
+\subsection{定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標本$n$個のうち$r$個を選んで，その$r$個の部分集合$A,\abs{A}=r$に対応する値$h(X_A)$の標本平均として得られる統計量のクラスを，$U$-統計量という．
+\end{tcolorbox}
+
+\begin{definition}[U-statistic]
+    対称関数$h:\X^r\to\R$を核とする$r$次の\textbf{$U$-統計量}とは，
+    \[U_{r,n}=U_n:=\begin{pmatrix}n\\r\end{pmatrix}^{-1}\sum_{A:A\subset I_n,\abs{A}=r}h(X_A)=\frac{1}{\begin{pmatrix}n\\r\end{pmatrix}}\sum_{\sigma:[r]\mono[n]}h(X_{\sigma(1)},\cdots,X_{\sigma(r)})\]
+    をいう．
+\end{definition}
+\begin{remarks}
+    ある対応$f:\X^r\to\R$に関して，標本$n$個からの$r$個のすべての選び方についての$f$の値の平均
+\end{remarks}
+
+\begin{definition}
+    $U$-統計量$U_{r,n}$が\textbf{退化次元$i-1$を持つ}とは，$2\le i\le r$に関して，
+    \[E[h(X_1,\cdots,X_r)\mid X_1,\cdots,X_{i-1}]=0,\quad\land\quad E[h(X_1,\cdots,X_r)|X_1,\cdots,X_i]\ne0\]
+    を満たすことをいう．また，$E[h(X_1,\cdots,X_r)|X_1]\ne0$であるとき，\textbf{非退化}であるという．
+\end{definition}
+
+\begin{example}[rank correlation coefficient]
+    明らかに標本平均，不偏分散は，それぞれ$f=\id_\X,f(x_1,x_2)=\frac{(x_1-x_2)^2}{2}$に関する$U$-統計量である．
+    歪度も$k_{3,n}(x)=\sum\frac{(x_i-\o{x}_n)^3n}{(n-1)(n-2)}$が定める$U$-統計量で，とくに3次の$k$-統計量である．
+
+    また，2次元の無作為標本$(X_j,Y_j)\;(j=1,\cdots,n)$に関して，順位の間の相関係数として
+    \[\tau:=\frac{4}{n(n-1)}\sum_{i<j}1_{\Brace{(X_i-X_j)(Y_i-Y_j)>0}}-1\]
+    を\textbf{Kendallの順位相関係数}という．
+    また，
+    \begin{align*}
+        K&:=\Abs{\Brace{\{i,j\}\in[[n]]^2\mid (x_i>x_j\land y_i>y_j)\lor(x_i<x_j\land y_i<y_j)}},\\L&:=\Abs{\Brace{\{i,j\}\in[[n]]^2\mid\lnot(x_i>x_j\land y_i>y_j)\land\lnot(x_i<x_j\land y_i<y_j)}}
+    \end{align*}
+    として$\tau=\begin{pmatrix}n\\2\end{pmatrix}^{-1}(K-L)$とも表せる．
+\end{example}
+
+\begin{example}[K-statistic]
+    キュムラントの最小分散不偏推定量をFisherの$K$-統計量と言い，John Tukeyはこれから一般化$K$-統計量(polykay)を導いたが，
+    これは斉次多項式が定める$U$-統計量に他ならない．
+\end{example}
+
+\begin{example}[V-statistic]
+    対称な関数$h$に関して，
+    \[V_n:=\frac{1}{n^r}\sum_{(i_1,\cdots,i_r)\in I_n^r}h(X_{i_1},\cdots,X_{i_r})\]
+    を$V$-統計量という．$U$-統計量は大きさ$r$の部分標本の抽出について平均を取ったが，$V$-統計量は大きさ$r$の部分標本の，抽出の順序も区別し，また重複も許す．$[I_n]^r$と$I_n^r$の違いである．
+    $V$-統計量はHoeffdingの一年前である1947年にRichard von Misesが導入した．\footnote{von Mises, R. (1947). "On the asymptotic distribution of differentiable statistical functions". Annals of Mathematical Statistics. 18 (2): 309–348. doi:10.1214/aoms/1177730385. JSTOR 2235734.}
+    $v_1>0$のとき，$U$-統計量と漸近同等である．
+
+    $h(x,y)=\frac{(x-y)^2}{2}$が定める2次の$V$-統計量は
+    \[V_{2,n}=\frac{1}{n}\sum^n_{i=1}(x_i-\o{x})^2\]
+    で，これは分散の最尤推定量である．しかし同じ核に対する$U$-統計量は
+    \[U_{2,n}=s=\frac{1}{n-1}\sum^n_{i=1}(x_i-\o{x})^2\]
+    となる．漸近同等ではあるが，不偏推定量となるのは後者である！
+\end{example}
+
+\subsection{Hoeffdingの分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    構成の仕方から明らかに，大数の法則から$U_n$は母数$\theta:=E[h(X_1,\cdots,X_r)]$の不偏推定量となっている．
+    （また，これが逆マルチンゲールになっていることからも従う）．
+    そこで，$\sqrt{n}(U_n-\theta)$の漸近分布を考える．
+
+    そのための道具がHoeffdingの分解で，$U$-統計量は，より退化度の高い$U$-統計量の和として表せる．
+    これは確率変数の分解に似ている．
+\end{tcolorbox}
+
+\begin{notation}
+    $E[\abs{h(X_1,\cdots,X_r)}]<\infty$とする．
+    \[h_k(x_1,\cdots,x_k):=E[h(x_1,\cdots,x_k,X_{k+1},\cdots,X_r)]\quad l\le r\]
+    とし，$h_0:=E[h(X_1,\cdots,X_r)]$とする．
+\end{notation}
+
+\begin{lemma}
+    $\forall_{C\subset A}\;E[h(X_A)|X_C]=h_{\abs{C}}(X_C)$．
+    ただし，$h_0(X_{\emptyset})=h_0$とする．
+\end{lemma}
+
+\begin{definition}
+    $\wh{h_k}:=h_k-\theta\;(k=0,1,\cdots,r)$に関して
+    \[g_k(x_{[k]}):=\sum_{C:C\subset[k]}(-1)^{k-\abs{C}}\wh{h}_{\abs{C}}(x_C)\]
+    と定める．このとき，$\wh{h}_r(X_A)_B=g_{\abs{B}}(X_B)$．
+\end{definition}
+
+\begin{lemma}[Hoeffdingの分解]
+    \[U_n-\theta=\sum^r_{k=1}\begin{pmatrix}n\\k\end{pmatrix}^{-1}\begin{pmatrix}r\\k\end{pmatrix}S_k(n)\]
+    ただし，$S_k(n):=\sum_{B:B\subset I_n,\abs{B}=k}g_k(X_B)$とした．
+\end{lemma}
+
+\begin{lemma}[漸近分布の平均]
+    $h\in L^1(\X^r)$とする．$B\subset I_n,\abs{B}=k>0,b\in B$について，
+    \[E[g_k(X_B)|X_{I_n\setminus\{b\}}]=0.\]
+\end{lemma}
+
+\begin{lemma}[漸近分布の分散]
+    $h\in L^2(\X^r)$とし，$v_k:=E[g_k(X_1,\cdots,X_k)^2]$とおく．
+    $B,C\subset I_n$について，
+    \[E[g_{\abs{B}}(X_B)g_{\abs{C}}(X_C)]=\delta_{B,C}v_{\abs{B}}.\]
+\end{lemma}
+
+\begin{theorem}[中心極限定理]
+    $h\in L^2(\X^r),v_1>0$とする．このとき，
+    \[\sqrt{n}(U_n-\theta)\xrightarrow{d}N(0,r^2v_1).\quad(n\to\infty)\]
+\end{theorem}
+
+\begin{tbox}{red}{}
+    こうして，統計量を汎関数$\P\to\R$と捉え，この漸近分布を考える（あわよくば中心極限定理を目指す）発想が出てくる．
+    これがHoeffdingがvon Misesから受け継いだものである．
+
+    そう，標本平均とは$U$-統計量の一例に過ぎないのであった．
+    そして独立確率変数列の和からマルチンゲールの概念が生まれたのならば，$U$-統計量がマルチンゲールになるのは当然である．
+
+    標本平均も，これに核$h$を重ねたものも，線型汎関数であることは変わらないから，漸近分布は正規である．
+\end{tbox}
 
 \chapter{漸近展開とその応用}
 
@@ -1612,6 +1919,8 @@ title=]
     Rabi Bhattacharya - Course in Mathematical Statistics and Large Sample Theory
     \bibitem{Ibragimov HasMinskii}
     Ibragimov and Has'minskii - Statistical Estimation
+    \bibitem{van der Vaart}
+    van der Vaart - Asymptotic Statistics
 \end{thebibliography}
 
 \end{document}

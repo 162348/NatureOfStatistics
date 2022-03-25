@@ -1,0 +1,49 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{ノンパラメトリック手法}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{標本分割}
+
+\section{$V$-統計量の論文}
+
+\subsection{Introduction}
+
+\begin{definition}
+    統計量とは，モデル$\P$上の汎関数$\P\to\R$に他ならない．
+    特に，論文\cite{von Mises}では，\textbf{統計的汎関数}を，経験分布関数$S_n$（repartitionとよんでいる）上の汎関数として定義している．
+    最も基本的なものは，$\psi(x)$を定め，これに対する$S_n$による積分として線型汎関数を定義することである．
+    また，線型なものはすべて積分によって表現できる（例えば$L^2$空間上では）．
+    すると，中心極限定理とは，線型汎関数に関する分布の理論だ，ということになる．
+\end{definition}
+
+\begin{discussion}[動機]
+    $V$をモデル$\P$上を動く累積分布関数として，
+    一般の汎関数$f(V(x))$を考え，上の例はある点での値$f(S_n(x))$に過ぎない，と考える．
+    すると，汎関数の考え方の源流であるVito Volterra (1887)に沿って，可微分統計汎関数$f(S_n(x))$の漸近分布は，延長された汎関数$f(V_n(x))$の点$\o{V}_n(x):=\frac{1}{n}\sum_{i=1}^nV_i(x)$におけるTaylor展開の第一項に等しい．
+    １次の項が消えないならば，漸近分布は正規である．この消息を正則条件の下で導くのが中心極限定理である．
+    １次の項が消えて高次の項が現れる場合，漸近分布は正規でなくなるのである．
+
+    特に，関数$f(V(x))$と分布列$V_1(x),V_2(x),\cdots$とが独立に定義されているとき，$f$の$\o{V}_n(x)$における微分係数が消えることはない．
+    標本平均を取っているからであろうか．$\bE$と$f$とが交換可能だからだろうか．
+\end{discussion}
+
+\begin{discussion}
+    型$m\;(m=1,2,\cdots)$の分布で表示
+    \[n^{m/2}(f(S_n(x))-f(\o{V}_n(x)))\]
+    を持つものは，有限の平均と分散を持つ関数となる．
+    $m$が奇数のとき，分布は$0$に関して対称になる．
+\end{discussion}
+
+\begin{thebibliography}{9}
+    \bibitem{von Mises}
+    von Mises - On the asymptotic distribution of differentiable statistical functions 47
+\end{thebibliography}
+
+\end{document}
