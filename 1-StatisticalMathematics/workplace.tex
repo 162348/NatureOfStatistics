@@ -345,18 +345,35 @@ title=]
 
 \section{Characterization of parameters with a mixed bias property}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{enumerate}
+        \item 混合バイアス性を持ったパラメータのクラスに対する，セミパラメトリック有効なワンステップ推定量のバイアスは，2つの局外関数の推定誤差の積の平均に等しい．
+        \item ノンパラメトリックモデルにおける混合バイアス性を持つパラメータに対しては，2つの局外関数の十分早いレートについて推定することに成功した場合に一致性と漸近正規性を持つような推定量(レート二重に頑健な推定量rate doubly robust estimator)が存在する．
+        \item 混合バイアス性を持ったパラメータのクラスは，因果推論で近年提出された2つのクラスを真に含む．
+        \item 混合バイアス性を持ったパラメータの表示と，影響関数の形を決定する．
+    \end{enumerate}
+\end{tcolorbox}
+
 \subsection{Introduction}
 
 \begin{notation}
-    $P$に独立に従う確率ベクトル$O:\Om\to\D$の列$O^n:\Om\to\D^n$を考える．
+    $P$に独立に従う確率ベクトル$O:\Om\to\D$の列$O^n:\Om^n\to\D^n$を考える．
     モデルを$\M:=(P_\eta)_{\eta\in\eta}$とし，汎関数$\chi(\eta)\in\R$の推定を試みる．
+    $\eta$はEuclid的でないとする．
+    $O$は有限部分$Z$を含み，その値域は$\Z\subset\R^d$に収まるとする．
 \end{notation}
 
+\begin{problem}
+    共変量$Z$の未知関数($E[-|Z]$など)を推定する必要があるパラメータ$\chi(\eta)$の推定を考える．
+    これは平均処置効果の例の一般化である．
+\end{problem}
+
 \begin{discussion}[debiased-GMMの動機：ワンステップ推定量]
-    前の論文のように，plug-in推定量$\chi(\wh{\eta})$は$\sqrt{n}$-一致性を持たない：$\chi(\wh{\eta})-\chi(\eta)\ne O_p(1/\sqrt{n})$．
+    前の論文のように，plug-in推定量$\chi(\wh{\eta})$は一般に$\sqrt{n}$-一致性を持たない：$\chi(\wh{\eta})-\chi(\eta)\ne O_p(1/\sqrt{n})$．
     よって，漸近有効性が足りないから，バイアスを減らす余地がある．
     一つの解決法は，ワンステップ推定量（のセミパラメトリック化）である．
-    $\chi_\eta^1$をうまく選ぶことで，$\wh{\chi}:=\chi(\wt{\eta})+\bP_n\chi^1_{\wh{\eta}}$をワンステップ推定量とする．
+    $\chi_\eta^1$をバイアスの1次項を打ち消すように選ぶことで，$\wh{\chi}:=\chi(\wt{\eta})+\bP_n\chi^1_{\wh{\eta}}$をワンステップ推定量とする．
     $\chi^1_\eta$の上手な選び方は，前の論文のように，影響関数とすることである．
 \end{discussion}
 
@@ -371,11 +388,18 @@ title=]
         これを繰り返し，全部の平均を最終的な推定量とする．
         \item 第1項が$o_p(1)$ならば，$\sqrt{n}(\wh{\chi}-\chi(\eta))$は正規分布に確率収束する．
     \end{enumerate}
-    すなわち，$\chi(\wh{\eta})-\chi(\eta)-E_\eta(\chi^1_{\wh{\eta}})=o_p(n^{-1/2})$が満たされれば良い．
+    すなわち，$\chi(\wh{\eta})-\chi(\eta)+E_\eta(\chi^1_{\wh{\eta}})=o_p(n^{-1/2})$が満たされれば良い．
     $E_\eta(\chi^1_{\wh{\eta}})$が，$\chi(\eta)$の方向$\wh{\eta}-\eta$への微分係数となっていれば良いわけである．
+    こうして微分概念が必要になる．
 \end{discussion}
 
-影響関数が存在するようなパラメータ付けを正則という．
+\begin{definition}[正則パラメータ]
+    影響関数が存在するようなパラメータ付けを正則という．
+\end{definition}
+\begin{lemma}
+    $\M$がノンパラメトリックであるとき，正則なパラメータ付け$\chi(\eta)$は一意な影響関数を持つ．
+    すなわち，任意の$P$におけるパラメトリックな部分モデルのスコアが生成する閉線型部分空間は$L_2(P)$に同型である．
+\end{lemma}
 
 \subsubsection{枠組み}
 
@@ -398,13 +422,14 @@ title=]
     が成り立つ．ただし，$a'(Z)=a(Z;\eta'),b'(Z)=b(Z;\eta')$と表した．
 \end{definition}
 \begin{remarks}
-    これは，$\chi(\eta)+\chi^1_\eta$は，$a,b$という２つの関数を通じてのみ$\eta$に依存しており，したがってワンステップ推定量$\wh{\chi(\eta)}$は推定量$\wh{a},\wh{b}$を通じてのみ$\wh{\eta}$に依存する．
+    特に，$\chi(\eta)+\chi^1_\eta$は，$a,b$という２つの関数を通じてのみ$\eta$に依存しており，したがってワンステップ推定量$\wh{\chi(\eta)}$は推定量$\wh{a},\wh{b}$を通じてのみ$\wh{\eta}$に依存する．
 
     このことにより，$\int(\wh{a}(z)-a(z))^2dP_\eta(z)=O_p(\gamma_{a,n})$かつ$\int(\wh{b}(z)-b(z))^2dP_\eta(z)=O_p(\gamma_{b,n})$を満たすとき，
     $\chi(\wh{\eta})-\chi(\eta)-E_\eta(\chi^1_{\wh{\eta}})=O_p(\gamma_{a,n}\gamma_{b,n})$が成り立つ．
     だから，cross-fittingが採用されたならば，$\wt{\chi}$は\textbf{rate double robustness property}を持つ．
     すなわち，$\gamma_{a,n}=o(1),\gamma_{b,n}=o(1),\gamma_{a,n}\gamma_{b,n}=o(n^{-1/2})$が成り立つならば，$\sqrt{n}(\wt{\chi}-\chi(\eta))$は平均$0$の正規分布に収束する．
 
+    $\gamma$の収束レートは関数$a,b$の複雑性に依るから，片方が単純ならば，もう片方がとても複雑であっても，$\sqrt{n}(\wh{\chi}-\chi(\eta))$の漸近正規性が成り立つ．
 \end{remarks}
 
 \subsection{mixed bias propertyを持った影響関数の特徴付け}
@@ -422,6 +447,164 @@ title=]
 \section{ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
 
 \section{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
+
+\chapter{副読本}
+
+\section{Introduction to Double Robust Methods for Imcomplete Data}
+
+\subsection{概観}
+
+欠損データの扱い
+\begin{enumerate}
+    \item 逆傾向スコア荷重(IPW strategy)：欠損データの従う確率分布を推定する．
+    \item 代入法(inputation strategy)：欠損データそのものをモデル(imputation model)する．特に主流な多重代入法(multiple inputation)は最尤法に最も近い．
+\end{enumerate}
+(2)の方が大抵の場合効率的であるが，model misspecificationを検出するすべがない．
+この２つを結合して，2段階構造にしたのが二重にロバストな手法である．
+AIPWとは，imputation modelを導入して，misspecificationがない場合にIPWよりも効率を上げた最適なものである．
+1999年にScharfsteinが，missingness modelが正しければ一致性を持つだけでなく，たとえmissingness modelがミスってもimputation modelが正しければやはり一致性をもつ性質を発見した．
+(1)より効率的で，(2)よりもmodel misspecificationに関して頑健である．
+
+\begin{remark}[代入法とは？]
+    欠測データに関する対処としてlist-wise削除がある．
+    使用するデータを取捨選択しているわけなので，残ったデータにはバイアスが残るが，
+    最も簡単なので利用されてしまう．
+    そこで，削除するのではなく，穴を埋めることを考える．
+    \begin{enumerate}
+        \item ホットデッキ代入法：無作為に抽出された類似の記録を打ち込む．ホットとは処理中のパンチカードの山のことで，ここから再利用することを指す．
+        LOCF(last observation carried forward)は，最後の観測値の繰り返しである．
+        \item コンピュータの性能が向上すると，過去の類似した調査から考えて埋め込む．これをコールドデッキ代入という．
+        \item 平均値置換．
+        \item 非負行列因子分解：天文学分野で画像データの欠損処理．
+        \item 回帰代入法：他の変数から欠損データを推測する回帰モデルを立てる．
+        \item 多重代入法：Rubinによる．
+        \begin{enumerate}[i.]
+            \item 無作為にデータから1つ選んで欠損データに代入する（単一代入法）．これを$m$回繰り返してコピーを作る．
+            \item $m$個をそれぞれ分析する．
+            \item pooling：関心のある変数の平均・分散・信頼区間を計算し，$m$個の結果を1つにまとめる．
+        \end{enumerate}
+        この手法はMNARでも使える．マルコフ連鎖モンテカルロ法が最もよく用いられる(MICE: multiple imputation by chained equations)．
+    \end{enumerate}
+\end{remark}
+
+\subsection{IPW, RI, AIPW}
+
+\begin{notation}
+    サイズ$n$のデータ$Y$は欠損があり，$\beta:=E[Y]$の推定を考える．
+    二次的変数$W$には欠損がないとする．
+    より一般の場合は次の節で考える．
+    $Y_i,W_i$で$i$-単位を表す．
+    $R:[n]\to2$を，$Y_i$が観測されたかの真理値を表す．
+    $R_i=1$である個人を完全な事例(complete case)という．
+    $(W_1,Y_1,R_1),\cdots,(W_n,Y_n,R_n)$はi.i.d.とするので，添字は省略可能．
+\end{notation}
+
+\begin{discussion}
+    当然，欠損がない場合は$n^{-1}\sum^n_{i=1}Y_i$が推定量である．
+    では単純に修正した
+    \[\frac{\sum^n_{i=1}R_iY_i}{\sum^n{i=1}R_i}\]
+    は，$R$が$Y$と独立でない限り(MCAR)一致性を持たない．
+    現実のデータは無作為割当ばかりではないので，この条件を弱めて，MAR，すなわち，$Y\indep R|W$を仮定した下で一致性を持つ推定量IPW, RI, DRを考える．
+\end{discussion}
+
+\subsubsection{IPW}
+
+$\pi(W):=P[R=1|W]$として，パラメトリックな部分を抽出することは自然である．$W$の値を
+持った個人を$\pi(W)^{-1}$によって荷重する．
+欠測する可能性の高い$W$を持った個人ほど，$\pi(W)^{-1}$人分として多く数える測度変換を行う．
+すると，この$Y$のうちだけcomplete caseを抽出して，$\pi(W)^{-1}$によって荷重して得られる$Y\pi(W)^{-1}$の分布は，$W$の値も，$Y$の値も，欠損前の母集団の分布と同じになる．
+よって，先ほどの推定量を
+\[n^{-1}\sum^n_{i=1}R_i\pi(W_i)^{-1}Y_i,\quad\frac{\sum^n_{i=1}R_i\pi(W_i)^{-1}Y_i}{\sum^n_{i=1}R_i\pi(W_i)^{-1}}\]
+で置き換える．前者をIPW，後者をIPW,Bなどといい，後者の値は標本の$Y$の値域に必ず入る(sample-bounded)．
+実験計画がなされた場合を除いて，$\pi(W)$は推定する必要がある．
+これはパラメトリックに$\pi(W;\al)$によっておこない，これを\textbf{欠損モデル(missingness model)}という．
+まずは$\al$をデータ$(W_1,Y_1,R_1),\cdots,(W_n,Y_n,R_n)$から推定することになる．
+機械学習によっても良い．
+
+\begin{theorem}
+    次が成り立つ場合，$\wh{\beta}_{IPW},\wh{\beta}_{OPW,B}$は$\beta$の一致推定量である．
+    \begin{enumerate}
+        \item モデル$\pi(W;\al)$は正しい(correctly specified)
+        \item $\wh{\al}$は$\al$の一致推定量である．
+        \item positivity：$\exists_{\delta>0}\;P[\pi(W)\ge\delta]=1$．すなわち，ある$W$であって，これに属する個人の$Y$がすべて欠測していることはないものとする．
+        \item $\al\mapsto\pi(W;\al)$は十分に滑らかである．
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    一部のデータを引き伸ばして使っているので，分散は大きくなる．
+    が，$R,W$という完全なデータのみを使っているので，適合度検定は簡単にでき，
+    モデルの誤設定はより簡単に診断できる．
+\end{remark}
+
+\subsubsection{RI: Regression Imputation}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これはセミパラメトリック手法特有のものか！？
+    なぜ議論が有限に落ちているのか．すごいな．
+\end{tcolorbox}
+
+$E[Y|W]$の分布をモデル$m(W;\gamma)$によって考える．
+これを結果モデル(outcome model)という．
+完全なケースから推定量$\wh{\gamma}$を割り出し，
+\[\wh{\beta}_{RI}(\wh{\gamma}):=n^{-1}\sum^n_{i=1}m(W_i;\wh{\gamma})\]
+とする．
+
+\begin{theorem}
+    次が，$\wh{\beta}_{RI}$が一致性を持つ十分条件である．
+    \begin{enumerate}
+        \item 結果モデル$m(W;\gamma)$が正しく設定されている．
+        \item $\wh{\gamma}$は一致性を持つ．
+    \end{enumerate}
+    また，$\wh{\gamma}$が最適であるならば，$\wh{\beta}_{RI}$も最適である．
+\end{theorem}
+
+\begin{remark}[本当に回帰代入法になっているのか？]
+    モデル$m(W;\gamma)$が切片(intercept)を持つ標準的な一般化線形モデルで，$\wh{\gamma}$が機械学習推定値であるとき，
+    \[\sum^n_{i=1}R_im(W_i;\wh{\gamma})=\sum^n_{i=1}R_iY_i\]
+    で，
+    \[\wh{\beta}_{RI}=n^{-1}\sum^n_{i=1}\Brace{R_iY_i+(1-R_i)m(W_i;\wh{\gamma})}\]
+    と表せる．これは，欠測値に$m(W;\wh{\gamma})$を代入して平均を取っているということになる．
+\end{remark}
+
+\begin{remark}
+    最適性は，(1)のモデル設定の難関を通過して初めて得られる．
+    特に，欠測している場合といない場合で共変量$W$の分布が大きく変わる場合は，
+    欠測していないデータを使っている回帰なので，これを用いて外挿することは極めてリスキーである．
+    特に，モデルの誤設定の診断さえ難しい．
+\end{remark}
+
+\subsubsection{AIPW}
+
+欠測データをより活用することで，IPWの分散を減らすことが出来る．
+
+\[\wh{\beta}_{DR}(\wh{\al},\wh{\gamma})=\frac{1}{n}\sum^n_{i=1}\frac{R_i}{\pi(W_i;\wh{\al})}Y_i+\frac{1}{n}\sum^n_{i=1}\paren{1-\frac{R}{\pi(W_i;\wh{\al})}}m(W_i;\wh{\gamma}).\]
+第一項はIPWに他ならず，第二項をaugmented termという．
+また，
+\[\wh{\beta}_{DR}(\wh{\al},\wh{\gamma})=\frac{1}{n}\sum^n_{i=1}m(W_i;\wh{\gamma})+\frac{1}{n}\sum^n_{i=1}\frac{R_i}{\pi(W_i;\wh{\al})}\paren{Y_i-m(W_i;\wh{\gamma})}\]
+と表示すると，第一項はRIに他ならず，第二項で補正していると見れる．
+
+\begin{theorem}[2重ロバスト性]
+    次の条件のいずれかが満たされたとき，$\wh{\beta}_{DR}$は一致性と漸近正規性を持つ．
+    \begin{enumerate}
+        \item 欠測モデル$\pi(W;\al)$が正しく設定され，$\wh{\al}$は一致推定量である．
+        \item 結果モデル$m(W;\gamma)$が正しく設定され，$\wh{\gamma}$は一致推定量である．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item augmented termが$0$に収束するため．
+        \item 補正項が$0$に収束するため．
+    \end{enumerate}
+\end{proof}
+
+\subsection{セミパラメトリック理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    「パラメトリック推定を2回行えば良い」という枠組みはセミパラメトリックになっている．
+\end{tcolorbox}
 
 \begin{thebibliography}{99}
     \bibitem{Locally Robust Semiparametric Estimation}

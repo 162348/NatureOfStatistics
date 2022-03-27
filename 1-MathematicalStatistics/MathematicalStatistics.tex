@@ -411,6 +411,11 @@ title=]
 
 \section{平均の検定}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    パラメトリックモデル$N(\mu,\sigma^2)$を仮定し，ここからの無作為標本$Y_j\;(j\in[n])$から平均$\mu$に関する仮説$\mu=\mu_0$の検定は両側$t$-検定となる．
+\end{tcolorbox}
+
 \section{重回帰分析}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -511,6 +516,12 @@ title=]
 
 \subsection{十分統計量}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\theta$の十分統計量$T$とは，$\theta$の推定に関する限り，データから得られる情報を漏らさず含んでいることを表している．
+    すなわち，$T$で条件付けると，その条件づき確率がもはや$\theta$に依らなくなるような統計量$T:\X\to\T$をいう．
+\end{tcolorbox}
+
 \begin{notation}
     可測関数$T:(\X,\A)\to(\cT,\B)$を考える．確率分布族$\{P_\theta\}_{\theta\in\Theta}\subset P(\X,\A)$についての条件付き確率$P_\theta[A|T=t]$が，母数$\theta\in\Theta$に依存しないとき，$T$を得てしまえば，これはデータの持つ情報のすべてを持っていると言える．
 \end{notation}
@@ -519,7 +530,7 @@ title=]
     $T:\X\to\cT$が$\{P_\theta\}$に関して\textbf{十分}であるとは，次が成り立つことをいう：
     \begin{quote}
         任意の$A\in\A$に対して，$\B$-可測関数$q(A|-):\B\to\R$が存在して，
-        \[\forall_{B\in\B}\;\forall_{\theta\in\Theta}\quad\int_Bq(A|t)P_\theta^\perp(dt)=P_\theta[A\cap T^{-1}(B)].\]
+        \[\forall_{B\in\B}\;\forall_{\theta\in\Theta}\quad\int_Bq(A|t)P_\theta^\top(dt)=P_\theta[A\cap T^{-1}(B)].\]
     \end{quote}
 \end{definition}
 
@@ -529,14 +540,28 @@ title=]
     を考えているとき，$x=(x_1,\cdots,x_n)$の各成分を小さい順に並べて出来る列$t(x)=(x_{(1)},\cdots,x_{(n)})$へ写す可測関数$T:\R^n\to\R^n;x\mapsto t(x)$を\textbf{順序統計量}という．
 \end{example}
 
-\subsection{因子分解定理}
+\subsection{Fisherの因子分解定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    十分統計量を構成する十分条件を探す．
+\end{tcolorbox}
 
 \subsection{Rao-Blackwellの定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    決定関数としては，十分統計量の関数のみを考えれば十分であることを定立する．
+    決定関数＝「推定量の候補」としては，十分統計量の関数のみを考えれば十分であることを定立する．
+    あるいは，適当な推定量$\delta$に対して，$\delta_0:=E[\delta|T]$とすれば，これは$\delta$よりも同程度に良い決定関数となる．
 \end{tcolorbox}
+
+\begin{theorem}[Rao-Blackwell]
+    $T$をモデル$\P=(P_\theta)_{\theta\in\Theta}$に対する十分統計量であるとする．
+    このとき，非確率的決定関数$\delta$は$\forall_{\theta\in\Theta}\;E_\theta[\abs{\delta}]<\infty$を満たすとする．
+    これに対して，$\delta_0:=E[\delta|T]$と定めると，これは同程度に良い決定関数である：
+    \[\forall_{\theta\in\Theta}\quad R(\theta,\delta)\le R(\theta,\delta_0)\]
+\end{theorem}
+
 
 \subsection{完備性}
 
@@ -806,6 +831,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     一様最強力検定は一般には存在しない．
+    が，Neyman-Pearsonの理論はある指数分布族モデルに対して一様最強力検定の構成を可能にする．
 \end{tcolorbox}
 
 \subsection{両側$t$-検定}
@@ -835,8 +861,10 @@ title=]
     これに替わって漸近的方法に基づく大標本理論が有力な解析手段となる．
     ここで，正規近似に基づく１次の漸近理論を扱う．
 
-    大標本理論の一番最初の応用先として，統計的検定問題を考える．
+    大標本理論の一番最初の応用先として汎関数の漸近分布を求めることがあるので，統計的検定問題を考える．
     漸近論が準備できたことにより，尤度比検定はより理解できるようになった．
+
+    これらの暗黙の枠組みは漸近決定理論であり，「統計的実験列の極限」というアイデアである．
 \end{quotation}
 
 \section{最尤推定}
@@ -1215,6 +1243,36 @@ title=]
 title=]
     初等統計で扱われるカイ$2$乗検定の根拠は，この漸近理論によって明らかになる．
 \end{tcolorbox}
+
+\subsection{検定から見た漸近論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    「密度推定は無理でも，汎関数の分布ならわかる」という技法である．
+\end{tcolorbox}
+
+棄却域を定めるに当たって，
+決定理論から観て妥当な設計をするためには，
+検定統計量の帰無仮説の下での分布を知る必要がある．
+これを解析的に行なえない場合やモデルのmisspecificationが疑われる場合は漸近分布によって近似をすることとなる．
+
+統計量が$t$-分布に従うと仮定するとき，$\chi^2$-分布に従うと仮定するときの検定法を$t$-検定，$\chi^2$-検定というのである．
+パラメトリックモデル$N(\mu,\sigma^2)$を仮定したとき，$S_n$を標本標準偏差として$\frac{\sqrt{n}(\o{X_n}-\mu)}{S_n}$は$\tau$-分布に従い，
+多変数の場合は二次形式$Z^\top\Sigma^{-1}Z$は$\chi^2$-分布に従うことが判明している．
+また，Pearsonの適合度検定や一部の尤度比検定は，検定統計量が漸近的に$\chi^2$-分布に従う．
+だがこれらはtoy exampleである．平均や二次形式を検定するために，よりよい検定統計量を構成できる．
+これらは大抵分布がわからないから，大標本理論＝漸近理論に頼ることとなる．
+
+Neyman-Pearsonの理論はある指数分布族モデルに対して一様最強力検定の構成を可能にする．
+Rao-Blackwellの理論は不偏推定量のクラスの中で分散が最小のものが存在することを明らかにする．
+一方でこのような理論が使えないときは，漸近最適理論が呼ばれる．
+次に競われるのは検定出力関数(power function)の近似や，漸近分散となる．
+例えば，滑らかなパラメトリックモデルに対しては最尤推定量が漸近最適である．
+\begin{enumerate}
+    \item 漸近的一致性を持つ．
+    \item 真値への収束レートが最速である：$n^{-1/2}$．
+    \item 極限分布の分散が最小である．実際，Cramer-Raoを漸近的に満たす．
+\end{enumerate}
 
 \subsection{尤度比検定}
 
@@ -1674,7 +1732,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $U$-統計量の理論はHoeffding 1948による．
-    $U$-統計量は最小分散不偏推定量の計算中に自然に現れる．d
+    $U$-統計量は最小分散不偏推定量の計算中に自然に現れる．
 
     基本的にはresampling法の一種で，標本から大きさ$r$の再抽出をして平均を取る．
     これは標本分割に繋がるのではないか？
