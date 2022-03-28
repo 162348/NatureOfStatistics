@@ -64,10 +64,54 @@
 さらに石黒による拡張情報量規準はブートストラップ法によって対数尤度のバイアスを推定する手法で，
 標本分割法のように，バイアスの明示的な表現をしない計算機科学的な解決だと理解できる．
 
+\section{Inference for Semiparametric Models}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    直近25年のノンパラ，セミパラの発展(契機は当然計算資源の増加)の概観をし，5つのopen questionを提示する2001論文．
+    そのあとのRobins and Rotnitzkyのコメントが頑健性について言及していてChernozhukovに引用されている．
+    その他も多くの研究者がコメントを寄せているが，Robins and Rotnitzkyは非常に大きなセミパラモデルにおいて，どのようにしてパラメータ$\theta$を推定するかの問題を第6として挙げていて，部分的な回答として2重頑健性を議論している．
+
+\end{tcolorbox}
+
+\subsection{Introduction}
+
+計算資源が増加してノンパラが使えるようになったが，その認知容易性の低さはセミパラが補うことになった．
+特に生存解析のCoxモデル，計量経済学のindex model．
+
+\subsection{Robins and Rotnitzky：Motivation}
+
+$Y$を結果，$R\in2$を割当，$V$を共変量とすると，疫学研究ではよく$500\le n\le 2000$，$V\subset\R^m\;(50\le m\le 100)$となり，$Y,V$は連続として良い．
+$V$が高次元な連続量であるので，nonparametric smoothingは次元の呪いで使えず，また従来の層別などの共変量処理も連続量なので好ましくない．
+
+典型的に歳用される統計モデルは，
+\[E[Y|R,V]=\beta_0+\beta^\top V+\theta R\]
+なる線型結果回帰(OR: outcome regression)で，最小二乗法を行う．
+$\theta$が平均処置効果であり，$\beta_0+\beta^\top V$が共変量による影響である．
+線型ではなくセミパラメトリックな回帰モデル
+\[E[Y|R,V]=\om(V)+\theta R\]
+は，$\om$に対するノンパラメトリックなsmoothingが出来ないので，採用不可能である．
+すると当然，
+\begin{enumerate}
+    \item $\om$が線型から遠く，非線形項の$R$との相関が大きく，
+    \item highly predictive of $Y$
+\end{enumerate}
+であるとき，
+misspecificationによるバイアスが大きくなってしまう．
+さらにこの検出が難しい．
+\begin{enumerate}
+    \item 推定された回帰関数$\wh{\beta}_{OLS,0}^\top+\wh{\beta}_{OLS}^\top V+\wh{\theta}_{OR}R$は$Y$をうまく予測し，
+    \item global lack of fit testの出力も小さい
+\end{enumerate}
+ことがありえる．
+また，従来の次数削減技法も採用できない．
+GAM(General Additive Model)モデルは$V$の要素の間の相関を無視する．
+
 \section{Locally Robust Semiparametric Estimation}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    2重に頑健な推定量が存在するための十分条件を議論する．
     1st stepに対して頑健なGMM推定量を定める局所頑健＝直交モーメント関数の標準的構成法．
     1st stepというのは，モデル選択や正則化が産むバイアスを含むので，特に機械学習に応用先がある．
 \end{tcolorbox}
@@ -431,6 +475,18 @@ title=]
 
     $\gamma$の収束レートは関数$a,b$の複雑性に依るから，片方が単純ならば，もう片方がとても複雑であっても，$\sqrt{n}(\wh{\chi}-\chi(\eta))$の漸近正規性が成り立つ．
 \end{remarks}
+
+\begin{example}[Rubin 2008]
+    統計量$S_a,S_b$を用いて，
+    \[\chi^1_\eta=S_{ab}a(Z)b(Z)+S_aa(Z)+S_bb(Z)+S_0-\chi(\eta)\]
+    という形の影響関数を持つパラメータ$\chi(\eta)$はmixed bias propertyを持つ．
+\end{example}
+
+\begin{example}[Chernozhukov 2018]
+    $a(Z)=E_\eta[Y|Z]$と，$L_2(P_{\eta,Z})\ni h\mapsto E_\eta[d(O,h)]\in\R$が連続でaffine線型であるような$d$について，
+    $\chi(\eta)=E_\eta[d(O,a)]$
+    と表せるパラメータ$\chi(\eta)$はmixed bias propertyを持つ．
+\end{example}
 
 \subsection{mixed bias propertyを持った影響関数の特徴付け}
 
