@@ -214,6 +214,118 @@ title=]
     これは完全に$L_2(\mu)$の部分多様体として$\P$を見ていて，$\Theta$をファイバー束として理解したいという発想に見える．
 \end{remarks}
 
+\section{正則なモデルの定義と十分条件}
+
+\begin{notation}
+    $(\X,\B)$上のモデル$\P\subset P(\X,\B)$を考える．
+\end{notation}
+
+\begin{definition}
+    $\P=(P_\theta)_{\theta\in\Theta}$が次を満たすとき，\textbf{パラメトリックモデル}であるという：
+    \begin{enumerate}
+        \item $\exists_{k\in\R}\;\Theta\subset\R^k$．
+        \item (識別可能性) $\Theta\to\P$は全単射．
+    \end{enumerate}
+    さらに次の条件を課す．
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item $\Theta\osub\R^k$．
+        \item 各$P_\theta$は$\sigma$-有限な参照測度$\nu$に対して絶対連続．
+    \end{enumerate}
+    このとき，
+    \[p_\theta:=\dd{P_\theta}{\nu},\quad l_\theta:=\log p_\theta,\quad s_\theta:=\sqrt{p_\theta}\]
+    とおく．
+    $P_\theta$を$p_\theta,s_\theta$と同一視することで，Banach空間$L_1(\X,\B,\nu)$またはHilbert空間$L_2(\X,\B,\nu)$の部分集合とパラメトリックモデル$\P$とを同一視出来る．
+    いずれの場合も$\P$に同値な位相を定める．
+    Hellingerの距離$d_H(P_{\theta_1},P_{\theta_2}):=\norm{s_{\theta_1}-s_{\theta_2}}_{\nu,2}$によって距離化出来る．
+    
+    この上さらに次の3条件を満たすとき，パラメトリックモデルは\textbf{正則}であるとする．
+    \begin{enumerate}\setcounter{enumi}{4}
+        \item パラメータ付け$\Theta\to\P\mono L_2(\nu);\theta\mapsto s_\theta$は$L_2(\nu)$-微分可能：$\exists_{\dot{s}_\theta\in L^2(\nu;\R^k)}\;\norm{s_{\theta+h}-s_\theta-h^\top\dot{s}_\theta}_{\nu,2}=o(\norm{h})\;(h\to\infty)$．
+        以降，微分を$\dot{s}_\theta$で表す．
+        \item Fisher行列は可逆：$\int\dot{s}_\theta\dot{s}_\theta^\top d\nu\in\GL_k(\R)$．
+        \item 合成$\Theta\to\P\to\R;\theta\mapsto s_\theta\mapsto \dot{s}_{\theta_i}\;(i\in[k])$は$L_2(\nu)$-連続：$\forall_{\theta\in\Theta}\;E_\nu[\norm{\dot{s}_{\theta+h}-\dot{s}_\theta}^2]\to0\;(h\to0)$．
+    \end{enumerate}
+    なおこのとき，$\P$は$k$-次元多様体をなしている．
+\end{definition}
+
+\begin{definition}
+    $I_\theta:=4E_\nu[\dot{s}_\theta\dot{s}_\theta^\top]\in\GL_k(\R)$をFisher情報行列という．
+\end{definition}
+
+\begin{lemma}[正則性の十分条件]
+    任意の$\theta\in\Theta\osub\R^k$が(4)までを満たす上に，次が成り立つとき，$(P_\theta)_{\theta\in\Theta}$は正則である：
+    \begin{enumerate}
+        \item $\nu\dae x$に対して$p_\theta$は微分可能で連続な勾配$\dot{p}_\theta$を持つ．
+        \item $\dot{l}_\theta(x):=2\frac{\dot{p}_\theta(x)}{p_\theta(x)}1_{p_\theta>0}(x)$について，$\norm{\dot{l}_\theta}\in L_2(P_\theta)$．
+        \item $I_\theta$は可逆で$\theta$に関して連続．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[lemma for Cramer-Rao]
+    次の2条件は同値であり，パラメトリックモデルが正則ならば成り立つ：
+    \begin{enumerate}
+        \item $P_\theta\dot{l}_\theta=0$．
+        \item $\forall_{i\in[k]}\;\brac{\dot{s}_{\theta_i},s_\theta}=0$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{正則推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則推定量は，Fisher情報行列の逆を分散とする正規分布に従う$X$と，ある分布$M_\theta$に従う$Y$という独立な2つの確率変数の和に漸近同等である．
+    この分解により，$M_\theta=0$のときに漸近分散が最小になることが従う．
+\end{tcolorbox}
+
+\begin{definition}[locally normal]
+    汎関数$\nu:\Theta\to\R^m$の推定量$(T_n)$が$\theta\in\Theta$において\textbf{(局所)正則}であるとは，$\sqrt{n}\norm{\theta_n-\theta}=O(1)$を満たす任意のパラメータ列$(\theta_n)$に対して，
+    弱収束$\sqrt{n}(T_n-\nu(\theta_n))\xrightarrow{P_{\theta_n}}L_\theta$が成り立つことをいう．
+\end{definition}
+\begin{remarks}
+    任意の方向ベクトル$h\in\R^k$に対して，
+    \[\sqrt{n}\paren{T_n-\psi\paren{\theta+\frac{h}{\sqrt{n}}}}\xrightarrow{\theta+\frac{h}{\sqrt{n}}}L_{\theta,h}\]
+    なる弱収束極限が存在するとする．
+    正則性とは，$L_{\theta,h}$が十分近傍では$\theta$にも依らないことをいう．
+    あるいは，$\dot{\psi}_\theta h$と漸近同等な推定量列のことをいう．
+    A more informative name for "regular" is asymptotically equivalent-in-law.\cite{Asymptotic Statistics}
+\end{remarks}
+\begin{example}[Stein shrinkage estimator]
+    Steinの縮小推定量は正則でない．
+\end{example}
+
+\begin{theorem}[Hajek-LeCamの畳み込み定理]
+    $\P$の正則点$\theta\in\Theta$において，$\nu(\theta)$の推定量列$(T_n)$は正則で，極限分布$L_\theta$を持つとする．
+    $\nu:\Theta\to\R^m$が$\theta\in\Theta$において微分可能ならば，ある確率分布$M_\theta$が存在して
+    \[L_\theta=N(0,\dot{\nu}(\theta)I_\theta^{-1}\dot{\nu}(\theta)^\top)*M_\theta\]
+    が成り立つ．
+\end{theorem}
+
+\begin{definition}[asymptotically efficient]
+    推定量列$(T_n)$が正則で，その漸近共分散行列$\Sigma_\theta$が$\dot{\nu}(\theta)I_\theta^{-1}\dot{\nu}(\theta)^\top$と表せるならば，$(T_n)$は\textbf{漸近有効}であるという．
+\end{definition}
+
+\subsection{漸近有効推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    漸近有効推定量は影響関数のことばによって特徴付けられる．
+    そして影響関数とは，微分というよりも，漸近的な線型関係をいう．
+\end{tcolorbox}
+
+\begin{notation}
+    $L^0_2(P):=\Brace{f\in L^2(P)\mid Pf=0}$．
+\end{notation}
+
+\begin{definition}[asymptotically linear, influence function]
+    一般のモデル$\P$と汎関数$\psi:\P\to\R^m$について，次が成り立つならば，\textbf{漸近線型}であるという：
+    \[\forall_{P\in\P}\;\exists_{\check{\psi}_P\in\L_2^0(\X,P;\R^m)}\;T_n=\psi(P)+\bP_n\check{\psi}_P+o_P(n^{-1/2}).\]
+    このときの漸近的な線型主要部$\check{\psi}_P$を$T_n$の\textbf{影響関数}という．
+\end{definition}
+\begin{remarks}
+    漸近線型であるときは，正規近似$\sqrt{n}(T_n-\psi(P))\to N(0,P[\check{\psi}_P\check{\psi}_P^\top])$が成功する．
+    また，推定誤差$T_n-\psi(P)$に対する観測$X_i-x$の影響は，1次近似として$n^{-1}\check{\psi}_P(x)$で与えられる．
+\end{remarks}
+
 \chapter{セミパラメトリックモデル}
 
 \begin{quotation}

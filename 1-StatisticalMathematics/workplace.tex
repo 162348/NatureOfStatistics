@@ -81,31 +81,128 @@ title=]
 
 \subsection{Robins and Rotnitzky：Motivation}
 
-$Y$を結果，$R\in2$を割当，$V$を共変量とすると，疫学研究ではよく$500\le n\le 2000$，$V\subset\R^m\;(50\le m\le 100)$となり，$Y,V$は連続として良い．
+\begin{notation}
+    $Y$を結果，$R\in2$を割当，$V$を共変量とすると，疫学研究ではよく$500\le n\le 2000$，$V\subset\R^m\;(50\le m\le 100)$となり，$Y,V$は連続として良い．
 $V$が高次元な連続量であるので，nonparametric smoothingは次元の呪いで使えず，また従来の層別などの共変量処理も連続量なので好ましくない．
+\end{notation}
 
-典型的に歳用される統計モデルは，
-\[E[Y|R,V]=\beta_0+\beta^\top V+\theta R\]
-なる線型結果回帰(OR: outcome regression)で，最小二乗法を行う．
-$\theta$が平均処置効果であり，$\beta_0+\beta^\top V$が共変量による影響である．
-線型ではなくセミパラメトリックな回帰モデル
-\[E[Y|R,V]=\om(V)+\theta R\]
-は，$\om$に対するノンパラメトリックなsmoothingが出来ないので，採用不可能である．
-すると当然，
-\begin{enumerate}
-    \item $\om$が線型から遠く，非線形項の$R$との相関が大きく，
-    \item highly predictive of $Y$
-\end{enumerate}
-であるとき，
-misspecificationによるバイアスが大きくなってしまう．
-さらにこの検出が難しい．
-\begin{enumerate}
-    \item 推定された回帰関数$\wh{\beta}_{OLS,0}^\top+\wh{\beta}_{OLS}^\top V+\wh{\theta}_{OR}R$は$Y$をうまく予測し，
-    \item global lack of fit testの出力も小さい
-\end{enumerate}
-ことがありえる．
-また，従来の次数削減技法も採用できない．
-GAM(General Additive Model)モデルは$V$の要素の間の相関を無視する．
+\begin{example}[outcome regression model]
+    典型的に歳用される統計モデルは，
+    \[E[Y|R,V]=\beta_0+\beta^\top V+\theta R\]
+    なる線型結果回帰(OR: outcome regression)で，最小二乗法を行う．
+    $\theta$が平均処置効果であり，$\beta_0+\beta^\top V$が共変量による影響である．
+    線型ではなくセミパラメトリックな回帰モデル
+    \[E[Y|R,V]=\om(V)+\theta R\]
+    は，$\om$に対するノンパラメトリックなsmoothingが出来ないので，採用不可能である．
+    すると当然，
+    \begin{enumerate}
+        \item $\om$が線型から遠く，非線形項の$R$との相関が大きく，
+        \item highly predictive of $Y$
+    \end{enumerate}
+    であるとき，
+    misspecificationによるバイアスが大きくなってしまう．
+    さらにこの検出が難しい．
+    \begin{enumerate}
+        \item 推定された回帰関数$\wh{\beta}_{OLS,0}^\top+\wh{\beta}_{OLS}^\top V+\wh{\theta}_{OR}R$は$Y$をうまく予測し，
+        \item global lack of fit testの出力も小さい
+    \end{enumerate}
+    ことがありえる．
+    また，従来の次数削減技法も採用できない．
+    GAM(General Additive Model)モデルは$V$の要素の間の相関を無視する．
+\end{example}
+
+\begin{example}[propensity score model]
+    1983に開発されたconfounder controlの手法は，$P:=P[R=1|V]$とおく．
+    $\logit (x)=\log\paren{\frac{x}{1-x}},\expit(x)=\frac{1}{1+e^{-x}}$とする．
+    ノンパラメトリックなロジスティック回帰
+    \[\logit P[R=1|V]=\gamma(V)\]
+    は実行できない．
+    そこで，線型ロジスティック回帰
+    \[\logit P[R=1|V]=\al_0+\al^\top V\]
+    を，最尤法により$\wh{P}:=\expit\paren{\wh{\al_0}+\wh{\al}^\top V}$により推定する．
+
+    これにより共変量調整をして得られる推定量$\wh{\theta}_P$は$\theta$の，モデル
+    \[E[Y|R,V]=\beta_0+\theta R+\zeta\wh{P}\]
+    による最小二乗法推定量に等価になる(Robins 2000)．
+\end{example}
+
+\begin{remarks}[doubly robust / doubly-protected methods]
+    前者は結果回帰のモデルがミスるとバイアスが生じ，後者は処置回帰のモデルがミスるとバイアスが生じる．
+このままでは単に，「どの部分をパラメトリックにするか」の違いでしかない．
+1つの打開策は，統計的実験列の極限に対して，片方のモデルが正しければバイアスが生じなくなるようなセミパラメトリックモデルの構成である．
+\end{remarks}
+
+\begin{example}
+    前述の線型結果回帰モデルに，項$\zeta\wh{P}$を加えて得るモデル
+    \[E[Y|R,V]=\beta_0+\beta^\top V+\theta R+\zeta\wh{P}\]
+    に対するOLS推定量$\wh{\theta}_{DR}$は二重に頑健である．
+\end{example}
+\begin{remarks}
+    これは，モデルの設定に成功した$\wh{\theta}_{OR}$より効率性は劣る．
+    どちらを取るかである．
+    さらに，$\wh{\theta}_P,\wh{\theta}_{OR},\wh{\theta}_{DR}$の3つを比較することで，ある程度goodness of fitについて何が起こっているかの指標を得られる．
+\end{remarks}
+
+\begin{problem}
+    二重に頑健な推定量が存在するのはいつか？
+    \begin{enumerate}
+        \item 線型回帰モデルに$\wh{P}$項を加えるとDR推定量が得られることは見た．
+        \item 線型ロジスティックモデル$\logit E[Y|R,V]=\beta_0+\beta^\top V+\theta R\;(Y\sim\Bernoulli)$にはDR推定量は存在しない．
+        \item 対数線型モデル$\log E[Y|R,V]=\beta_0+\beta^\top V+\theta R\;(Y:\text{count variable})$にはDR推定量は存在するが，$\wh{P}$項をモデルに加えることによって構成される訳ではない．
+    \end{enumerate}
+\end{problem}
+
+\subsection{The Formal Problem and Doubly Robust Estimating Functions}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    以降，Bickelらが打ち立てたセミパラ理論により，問題の定式化と部分的な回答を行う．
+\end{tcolorbox}
+
+\begin{notation}
+    モデル$M(\cR):=(P_\rho)_{\rho\in\cR}$上の関数$\theta:\cR\to\R^p$を，i.i.d.標本$X_1,\cdots,X_n$から推定することを考える．
+    $\cR$は次元の呪いのために$\theta$の直接の推定が難しいとする．というのも，次の3条件を仮定する．
+    \begin{enumerate}
+        \item $\theta$の$\sqrt{n}$-一致性を持つ推定量$\wh{\theta}$の分散は任意の$\rho\in\cR$について有界．だが，どの推定量も一様に一致性を持つことも，一様漸近正規性を持つこともない．
+        \item 次は成り立たない：ある推定量$\wh{\theta}$が存在して，$\exists_{\al>0}\;\forall_{\rho\in\cR}\;\abs{\wh{\theta}-\theta}=O(n^\al)\;(n\to\infty)$．
+        \item どの$\rho\in\cR$についても，$\theta$の正則な漸近線型推定量は存在しない．
+    \end{enumerate}
+\end{notation}
+
+\begin{discussion}[dimension reduction]
+    次の次元削減を行って，モデルをセミパラメトリックにすることとなる．
+    分解$\cR=\cK\times\Gamma$について($\kappa\in\cK,\gamma\in\Gamma$は独立)，サブモデル$\cK'\subset\cK,\Gamma'\subset\Gamma$を定め，
+    $M(\cK\times\Gamma')\cup M(\cK'\times\Gamma)$を代わりに考える．
+    このとき，このモデルの推定量は，パラメータ付け$\rho=(\kappa,\gamma)$について2重に頑健であるという．
+    2回チャンスがあり，$\cK\times\Gamma'$または$\cK'\times\Gamma$の中に真値があれば一致性が得られる．
+\end{discussion}
+
+\subsubsection{一点集合の場合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\cK',\Gamma'$が一点集合$\kappa,\gamma$であるとき．
+\end{tcolorbox}
+
+\begin{definition}[doubly robust estimating function]
+    $U(\theta,\kappa,\gamma):=u(X,\theta,\kappa,\gamma)$は$\theta(\kappa,\gamma)$のモデル$M(\cK\times\Gamma)$下でのパラメータ付け$(\kappa,\gamma)$に関する2重に頑健な推定量であるとは，
+    モデル$M(\kappa\times\Gamma)\cup M(\cK\times\gamma)$における不偏推定量であることをいう．すなわち，次の2条件が成り立つことをいう：
+    \begin{enumerate}
+        \item $\forall_{(\kappa,\gamma),(\kappa^*,\gamma^*)}\;E_{\kappa^*,\gamma^*}[U(\theta(\kappa^*,\gamma^*),\kappa^*,\gamma)]=E_{\kappa^*,\gamma^*}[U(\theta(\kappa^*,\gamma^*),\kappa,\gamma^*)]=0$．
+        \item $\left.\pp{E_{\kappa^*,\gamma^*}[U(\theta,\kappa,\gamma^*)]}{\theta}\right|_{\theta=\theta(\kappa^*,\gamma^*)},\left.\pp{E_{\kappa^*,\gamma^*}[U(\theta,\kappa^*,\gamma)]}{\theta}\right|_{\theta=\theta(\kappa^*,\gamma^*)}$は可逆．
+    \end{enumerate}
+\end{definition}
+
+\begin{notation}
+    $M(\Psi_1\times\Psi_2)$をセミパラメトリックモデル，$\theta:\Psi_1\times\Psi_2\to\R^p$を汎関数とする．
+\end{notation}
+
+\begin{definition}
+    $\L^0_2(\psi)$で，パラメータ$\psi$が定める確率分布の下で平均$0$であるような確率ベクトル全体のなすHilbert空間$\L^0_2(\psi):=\Brace{f\in L^2(\X,\F,P_\psi;\R^p)\mid E[f]=0}$を表す．内積は各確率ベクトルの分散共分散行列となっていることに注意．
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{definition}
 
 \section{Locally Robust Semiparametric Estimation}
 

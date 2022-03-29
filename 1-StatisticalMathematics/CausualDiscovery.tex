@@ -954,6 +954,23 @@ title=]
     $\exists_{\delta>0}\;\sum^{k_n}_{k=1}E^n[\norm{\xi^n_k}^{2+\delta}|\F^n_{k-1}]\xrightarrow{d}0$がなりたてば，(1),(2)が従う．
 \end{lemma}
 
+\section{multiarm banditについて}
+
+armにresorceを最適にallocateする問題をいう．
+最適制御／確率的スケジューリングの一形式でもあり，特に強化学習の一形式でもある（情報が増えていくので）．
+スロットマシンのことをone-armed banditという，洒落た表現だ．
+ここから，ギャンブラーの気持ちになればよい．
+眼の前のarmの"exploitation"を選ぶか，"exploration"に時間を使うかの選択（これをpolicyという）を迫られるのである．
+製薬会社の経営方針などをモデルするのにも使われる．
+Robinsが1952年にこの問題の重要性に注目した．
+\begin{enumerate}
+    \item 製薬会社の経営方針．
+    \item 人道的な治験．
+    \item インターネット広告配信，推薦システム．
+    \item ゲーム木探索．
+    \item 通信のルーティング．
+\end{enumerate}
+
 \section{傾向スコア}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
