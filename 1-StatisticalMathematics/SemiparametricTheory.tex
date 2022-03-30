@@ -313,7 +313,9 @@ title=]
 \end{tcolorbox}
 
 \begin{notation}
-    $L^0_2(P):=\Brace{f\in L^2(P)\mid Pf=0}$．
+    $\abs{f}^2=f^\top(X) f(X)$が可積分な空間$L_2(P)$の，平均$0$のものがなす部分空間
+    $L^0_2(P):=\Brace{f\in L^2(P)\mid Pf=0}$を考える．
+    絶対値の二乗が2次形式として特別な意味を持つのである．
 \end{notation}
 
 \begin{definition}[asymptotically linear, influence function]
@@ -325,6 +327,33 @@ title=]
     漸近線型であるときは，正規近似$\sqrt{n}(T_n-\psi(P))\to N(0,P[\check{\psi}_P\check{\psi}_P^\top])$が成功する．
     また，推定誤差$T_n-\psi(P)$に対する観測$X_i-x$の影響は，1次近似として$n^{-1}\check{\psi}_P(x)$で与えられる．
 \end{remarks}
+
+\begin{theorem}[パラメトリックモデルにおける漸近有効性の特徴付け]
+    パラメトリックモデル$\P=(P_\theta)_{\theta\in\Theta}$の正則点$\theta\in\Theta$において，$\nu(\theta)$は$\theta$で微分可能であるとする．
+    次の2条件は同値：
+    \begin{enumerate}
+        \item $\nu(\theta)$の推定量列$(T_n)$が
+        \[T_n=\nu(\theta)+\bP_n\wt{l}_{\theta|\nu,\P}+o_P(n^{-1/2}),\quad\wt{l}_{\theta|\nu,\P}(x):=\dot{\nu}(\theta)I_\theta^{-1}\dot{l}_\theta(x)\]
+        と展開される．
+        \item $(T_n)$は$\theta\in\Theta$において$\nu(\theta)$の漸近有効推定量列であり，その漸近分散は$I^{-1}_{\theta|\nu,\P}:=\dot{\nu}(\theta)I^{-1}_\theta\dot{\nu}(\theta)^\top$である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[efficient influence function, information bound, efficient information]\mbox{}
+    \begin{enumerate}
+        \item $\wt{l}_{\theta|\nu,\P}(x):=\dot{\nu}(\theta)I_\theta^{-1}\dot{l}_\theta(x)$を$\P$の$\nu$における\textbf{有効影響関数}という．
+        \item $I^{-1}_{\theta|\nu,\P}:=\dot{\nu}(\theta)I^{-1}_\theta\dot{\nu}(\theta)^\top$とその逆行列を，それぞれ\textbf{情報量限界}と\textbf{有効情報量}という．
+    \end{enumerate}
+\end{definition}
+
+\section{局外母数と情報量の幾何}
+
+\begin{notation}
+    正則なパラメトリックモデル$\P=(P_\theta)_{\theta\in\Theta= N\times H}$について，
+    \begin{enumerate}
+        \item $\dl:=\dl_{\theta_0}=\left.\dd{}{\theta}\log p_\theta(x)\right|_{\theta=\theta_0}=\frac{\dp_{\theta_0}(x)}{p_{\theta_0}(x)}1_{\Brace{p_\theta\ne0}}(x)$をスコア関数とする．
+    \end{enumerate}
+\end{notation}
 
 \chapter{セミパラメトリックモデル}
 
