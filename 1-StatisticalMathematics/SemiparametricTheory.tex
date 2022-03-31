@@ -155,65 +155,6 @@ title=]
 
 \chapter{パラメトリックモデル}
 
-\section{正則なパラメトリックモデル}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    パラメトリックモデルとはファイバー束の逆．
-    母数は確率分布を$\R^k$のファイバー束と捉える発想．
-    しかしパラメトリックモデルを統計多様体(Hilbert空間へ埋め込める)のファイバー束と見ると，正則性の概念が定義できる．
-    つまり，$\R^k$と$\P$のどっちが主軸とかあまり考えないのかもしれない．
-\end{tcolorbox}
-
-\begin{notation}
-    可測空間$(\X,\B)$について，
-    \begin{enumerate}
-        \item $\B$上の非負値な加法的集合関数全体の集合を$\M(\B,[0,1])=\sMap(\B,[0,1])$と表す．
-        また，ここでは$\M(\B,[0,1])$を$\M(\B)$と略記することとする．
-        \item 測度$P\in\M(\B)$は，これについての積分によって部分写像$\Meas(\X,\R^k)\nrightarrow\oR$を定める．これを測度の左作用として，$P[f]:=\int fdP=E_p[f(X)]$とも表すこととする．
-    \end{enumerate}
-\end{notation}
-
-\begin{definition}[parametrization, parametric model, nuisance parameter]
-    $(\X,\B)$を可測空間とし，$\P\subset\M(\B,[0,1])$を確率測度の族とする．
-    \begin{enumerate}
-        \item 変数の空間からの単射$\iota:\Theta\mono\P$を\textbf{パラメータ化}といい，特にEuclid空間の部分集合$\Theta\osub\R^k$からの単射$(P_\theta)_{\theta\in\Theta}$を\textbf{パラメトリックモデル}という．\footnote{パラメータ化の単射性を識別可能性(identifiable)ともいう．}
-        \item 母数の空間への全射$\kappa:\P\epi\Xi$はファイバー束のようなものである．この積への分解$\kappa=(\nu,\eta)$を考察するとき，$\eta$を\textbf{局外母数}という．これを用いてパラメータ化を構成する場合が多い．
-        \item Euclidの開部分空間からの単射$\R^k\osup\Theta\mono\P$とは近傍座標（の逆）であることに注意．こうして短完全列もどき$\Theta\mono^\iota\P\epi^\kappa\Xi$を得る．この合成が全単射$\wt{\kappa}:\Theta\iso\Xi$を定めるならば，$\Xi$もパラメータの空間として使えることとなる．
-    \end{enumerate}
-\end{definition}
-\begin{remarks}
-    これはEuclid空間からの射を使って確率分布の族$\P$を解析しているから，確かに多様体と見るのは自然である．
-\end{remarks}
-
-\begin{definition}[パラメトリックモデルの関数空間への埋め込み：likelihood]
-    パラメトリックモデル$\R^k\osup\Theta\mono\P$において，$\sigma$-有限な測度$\mu$が存在して，任意の元$P_\theta\in\P$はこれについて絶対連続であるとする．\footnote{測度空間$(X,\B,\mu)$が$\sigma$-有限であるとは，$X$の$\B$-可算族への分割であって，その上への$\mu$の制限が有限であるようなものが存在することをいう．}
-    \begin{enumerate}
-        \item $p_\theta:=\dd{P_\theta}{\mu},l_\theta:=\log(p_\theta)$をそれぞれ，$P_\theta\in\P$の\textbf{尤度}と対数尤度という．$s_\theta:=p_\theta^{1/2}$とおく．
-        \item これらが定めるBanach空間$L_1(\mu)$とHilbert空間$L_2(\mu)$への埋め込みが存在し，いずれも$\P$に同値な位相を定める．
-        \[\xymatrix@1{
-            \P \;\ar@{^{(}->}[r]^-{\dd{}{\mu}}&L_1(\mu)\ar[r]_-{\sim}^-{(-)^{1/2}}&L_2(\mu)\footnote{位相同型という意味で書いたが，他の圏でも同型か？}
-        }\]
-        \item Hilbert空間$L_2(\mu)$での距離$d_H(P_{\theta_1},P_{\theta_2}):=\norm{s_{\theta_1}-s_{\theta_2}}_{\mu,2}$を\textbf{Hellinger距離}という．
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}[regular]\mbox{}
-    \begin{enumerate}
-        \item パラメータ化$\iota:\R^k\osup\Theta\mono\P$が正則であるとは，次の３条件を満たすことをいう．
-        \begin{enumerate}[(i)]
-            \item 写像$\Theta\mono\P\xrightarrow{d/d\mu}L_1(\mu)\xrightarrow{(-)^{1/2}}L_2(\mu)$はFréchet微分可能である．
-            \item $k$次正方行列$\int\dot{s}_\theta\dot{s}_{\theta}^Td\mu$は正則．
-            \item 各$i\in[k]$に対して，写像$\theta\mapsto\dot{s}_{\theta_i}$は$L_2(\mu)$において連続．
-        \end{enumerate}
-        \item 条件(i),(ii)を満たす点$\theta\in\Theta$を\textbf{正則点}という．
-        \item 正則なパラメータ化$\iota:\R^k\osup\Theta\mono\P$をもつ確率測度の族$\P$を\textbf{正則なパラメトリックモデル}という．
-    \end{enumerate}
-\end{definition}
-\begin{remarks}
-    これは完全に$L_2(\mu)$の部分多様体として$\P$を見ていて，$\Theta$をファイバー束として理解したいという発想に見える．
-\end{remarks}
-
 \section{正則なモデルの定義と十分条件}
 
 \begin{notation}
@@ -268,6 +209,8 @@ title=]
         \item $\forall_{i\in[k]}\;\brac{\dot{s}_{\theta_i},s_\theta}=0$．
     \end{enumerate}
 \end{lemma}
+
+\section{正則推定量}
 
 \subsection{正則推定量}
 
@@ -346,12 +289,255 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\section{分離度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則なパラメトリックモデルは多様体をなす．
+    そこでまず，多様体上の分離度の一般論を調べる．
+    分離度とは，2点の分離性を検出する関数であって，Taylor展開の2次項がRiemann距離を定めるものである．
+\end{tcolorbox}
+
+\begin{definition}[divergence]
+    $(M^p,(\xi_x))$を可微分多様体とする．関数$D:M\times M\to\R_+$が\textbf{分離度}であるとは，
+    \begin{enumerate}
+        \item 非退化性：$D[P,Q]=0\Leftrightarrow P=Q$．
+        \item 点$\xi$と同じ座標系で表せる近傍の点$\xi+d\xi$について，$D[\xi,\xi+d\xi]=\frac{1}{2}g_x(dx,dx)+O(\abs{dx}^3)=\frac{1}{2}\sum_{i,j\in[p]}g_{ij}(\xi)d\xi_i\otimes d\xi_j+O(\abs{d\xi}^3)\;(\abs{d\xi}\to0)$が定める行列$G(\xi)=(g_{ij}(\xi))$は正定値対称である．\footnote{$dx\in T^*(\P)$と見るのである！}
+        \item 点$P\in M$の$r$-近傍$N(P,r):=\Brace{Q\in M\mid D[P,Q]<r}$は$r$について単調に増大する．
+    \end{enumerate}
+    $D^*(p,q):=D(q,p)$を双対分離度という．
+\end{definition}
+\begin{remarks}
+    対称性も三角不等式も成り立たず，距離の概念とは違い，むしろ距離の二乗のような，分散のような概念である（次元解析の考え方）．
+    (1)より$D$が半正定値であることがわかるが，これは，$D$は定数部分と線型部分を持たないことを意味する．定数部分は$D[P,P]=0$に矛盾し，線型部分は非負性に矛盾する．
+    これは，$D$の二次部分が半正定値な二次形式であることを意味する．
+    こうして，特に(2)で正定値性が成り立てば，自然にRiemann計量を定める．
+    このとき非対称性は受け継がれ，これが双対性という方向を持った新たな構造を授ける．
+\end{remarks}
+\begin{remark}
+    情報理論では，非対称性を強調して$D(p||q)$などと表す．
+    また条件付き確率$P(A|B)$の記法に似ているが，これと同様に分離度
+    も相対測度として見做す態度がある．
+    この見方をするときKL分離度を相対エントロピーと呼ぶ．
+\end{remark}
+
+\begin{definition}[Kullback-Leibler information / divergence / relative entropy]
+    $P,Q\in\P$について，
+    \[I[Q,P]:=\int_\X q(x)\log\frac{q(x)}{p(x)}\nu(dx)\]
+    によって定まる関数$I:\P\times\P\to\R_+$を\textbf{Kullback-Leibler情報量}という．
+\end{definition}
+
+\begin{example}[正規分布族のKL分離度]
+    $M_n(\R)$の中の半正定値行列のなす部分多様体$\GL_n(\R)_+$は$n(n+1)/2$次元である．
+    この多様体に
+    \[D[P,Q]=\Tr(PQ^{-1})-\log\abs{PQ^{-1}}-n\]
+    なるダイバージェンスが定まる．これは，$P,Q$を分散共分散行列とする平均$0$の正規分布の間のKLダイバージェンスになっている．
+\end{example}
+
+\section{Riemann計量}
+
+\subsection{計量の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    $T(a,b):=T(M)^{\otimes a}\otimes T^*(M)^{\otimes b}$の元を$(a,b)$-テンソルバンドルという（順に共変・反変）．ベクトル場は$(1,0)$-テンソル束の切断である．
+\end{tcolorbox}
+
+\begin{definition}[metric]\label{def-metric}
+    滑らかなベクトル束$\pi:E\to M$を考える．
+    \begin{enumerate}
+        \item 全てのファイバー$E_x$に内積$(-,-)_x$が与えられており，内積空間である．
+        \item 任意の滑らかな切断面$\sigma_1,\sigma_2\in\Gamma(E)$に対して，合成写像$(\sigma_1(-),\sigma_2(-))_{(-)}:M\to K$は滑らかである．
+    \end{enumerate}
+    $E$が$\R$上のベクトル束ならばRiemann計量，$\C$上のベクトル束ならばHermite計量という．
+\end{definition}
+\begin{remarks}
+    $(\sigma_1(-),\sigma_2(-))_x\in\Gamma(E)\otimes_{C(X)}\Gamma(E)$は確かに共変2-テンソルである．
+    任意の２つのベクトル場$\sigma_1,\sigma_2\in\Gamma(E)$に対して，$x\in M$をまずベクトル束$E_x$上の２つのベクトル$\sigma_1(x),\sigma_2(x)$に対応させ，そこで内積を取る対応．
+\end{remarks}
+
+\begin{theorem}
+    任意のベクトル束には計量が存在する．
+\end{theorem}
+
+\subsection{双対バンドル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    滑らかなベクトル束には計量が入り，各ファイバー$V_x$には内積が存在する．
+    $V_x$の基底$\{e_1,\cdots,e_p\}$に対して$g_{\mu\nu}:=(e_\mu|e_\nu)$とおくと，対称性と基底であることより$(g_{\mu\nu})$は対称で正$\det(g_{\mu\nu})>0$な行列となる．
+    この行列の単位行列からの乖離は正規直交系からの乖離を意味する．当然この表示を用いると
+    \[(a|x)=\sum_{\mu,\nu=1}^pg_{\mu\nu}a^\mu x^\nu\]
+    が成り立ち，内積が定める同型$V_x\sim V_x^*$は
+    \[a=\sum^p_{\mu=1}a^\mu e_\mu\mapsto\sum^p_{\nu=1}\paren{\sum^p_{\mu=1}g_{\mu\nu}a^\mu}e^\nu=\varphi_a=(a|-)\]
+    と表せる．
+    双対基底を用いると，無理やりFourier係数を抽出出来る．
+    
+    ここで大域に目を戻すと，計量はバンドル全体に同型対応$E\simeq E^*$を導く．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 内積空間$V$について，同型$V\to V^*:a\mapsto(a,-)$が定まる．これを\textbf{内積が定める標準的な同型対応}という．
+        \item 各ファイバー$E_x\simeq E_x^*$にも標準同型が存在し，ここからベクトルバンドルとしての同型対応$E\simeq E^*$が引き起こされる．これを\textbf{計量が定める標準的な同型対応}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{discussion}
+    バンドルとしての対応$E\simeq E^*$を局所的に調べる．
+
+    $U\osub M$を座標近傍とし，$E$のこの上での自明性$E|_U\simeq U\times\R^p$を局所基底$(e_1,\cdots,e_p):U\to E$が与えるとする．
+    このとき，$E_x\;(x\in U)$の基底$\{e_1(x),\cdots,e_p(x)\}$の双対基底$\{e^1(x),\cdots,e^p(x)\}$は，$E^*$の$U$上での自明性$E^*|_U\simeq U\times\R^p$を与える．
+
+    ここから，$E,E^*$が同型であることを，対応を具体的構成することで示す．
+    $E$の計量$(-|-)_-$に対して，$g_{\mu\nu}(x):=(e_\mu(x),e_\nu(x))_x\in\K$と定める．
+    $(g_{\mu\nu}(x))\in\GL_p(\K)$だから，逆行列を持つが，これを$(g^{\mu\nu}(x))$で表すこととする．
+    次の2つの写像は互いに逆になっている：
+    \[\xymatrix@R-2pc{
+        \Gamma(E|_U)\ar[r]&\Gamma(E^*|_U)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \al(x)=\sum^p_{\mu=1}\al^\mu(x)e_\mu(x)\ar@{|->}[r]&\sum^p_{\mu=1}\paren{\sum^p_{\nu=1}g_{\mu\nu}(x)\al^\nu(x)}e^\mu(x)=\beta(x)
+    }\]
+    \[\xymatrix@R-2pc{
+        \Gamma(E^*|_U)\ar[r]&\Gamma(E|_U)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \beta(x)=\sum^p_{\mu=1}\beta_\mu(x)e^\mu(x)\ar@{|->}[r]&\sum^p_{\mu=1}\paren{\sum^p_{\nu=1}g^{\mu\nu}(x)\beta_\nu(x)}e_{\mu(x)}
+    }\]
+    さらに，$E^*$に計量が押し出され，それは局所的には$g^{\mu\nu}(x)=(e^\mu(x),e^\nu(x))_x$と表せる．
+\end{discussion}
+\begin{remarks}
+    よって，Fisher情報行列とその逆とは双対的な関係にある．
+\end{remarks}
+
+\subsection{Riemann計量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Riemann計量とは，接束という特別具体的なベクトル束に与えられた計量をいう．
+    こう見ると，これは$(0,2)$-テンソル場$g\in\Gamma(T^*(M)\otimes T^*(M))$である．
+    局所的には正定値な対称行列であり，$(0,2)$-テンソル場としての変換則を満たす大域的な存在がRiemann計量である．
+\end{tcolorbox}
+
+\begin{remarks}
+    接バンドル$T(M)$に計量が与えられたとき，$M$にRiemann計量が与えられたという．
+    計量の定義\ref{def-metric}を局所的な「各点ごとに見ると内積」とは違って大域的に定義すると，滑らかな$(0,2)$-テンソル場$g\in\Gamma(T^*(M)\otimes T^*(M))$であって，(Hermite)対称かつ正定値なものをいう．
+    すなわち，$g_x:T_x(M)\times T_x(M)\to\R$を満たす双線型写像で，$g_x(X,Y)=g_x(Y,X)$かつ$g_x(X,X)>0\;(X\ne 0)$として扱える．
+    $g:M\to T^*(M)\otimes T^*(M)$は，各$(U,(x^1,\cdots,x^n))$上での$C^\infty$関数$g_{ij}:=\paren{\pp{}{x^i},\pp{}{x^j}}$の貼り合わせである．
+    これに対して内積は$\brac{X,Y}_x:=g_x(X,Y)$で復元できる．
+\end{remarks}
+
+以上のことを逆から議論すると次のようになる．
+
+\begin{notation}
+    各接空間$T_x$の内積について，
+    \[g_{\mu\nu}^\al(x):=\paren{\pp{}{x_\al^\mu},\pp{}{x^\nu_\al}}_x\]
+    とおくと，$g_{\mu\nu}^\al:U_\al\to\R$は滑らかな関数であり，各点で$\det(g^\al_{\mu\nu})>0$を満たす．
+    （ベクトル場の成分の２次元版）．
+    さらに，内積は，$\xi,\eta$を数ベクトル$(\xi^\mu),(\eta^\nu)$とEuclid空間での内積$\brac{-,-}$を用いて
+    \[(\xi,\eta)=\brac{(\xi^\mu),G(\eta^\nu)}\]
+    と表せる．
+
+    $x\in U_\al\cap U_\beta$のとき，$(g_{\mu\nu}^\al(x))$と$(g_{\mu\nu}^\beta(x))$との間の変換則は，
+    \[g_{\mu\nu}^\beta(x)=\sum^n_{i,j=1}\pp{x_\al^i}{x_\beta^\mu}\pp{x_\al^j}{x^\nu_\beta}g_{ij}^\al(x)\]
+    すなわち$(g^\beta_{\mu\nu})=\paren{\pp{x^i_\al}{x^\mu_\beta}}^\top(g_{ij}^\al)\paren{\pp{x^j_\al}{x_\beta^\nu}}$
+    で与えられる．
+    ベクトル場の変換則は$(\xi_\beta^\mu)=\paren{\pp{x_\beta}{x_\al}}(\xi_\al^\nu)$で与えられることに注意．たしかに2階の反変テンソルである．
+
+    逆に，各局所座標$U_\al$上で定義された正値行列$(g_{\mu\nu}^\al(x))$で，$U_\al\cap U_\beta$上で上述の$(2,0)$-テンソルの貼り合わせの条件を満たすものを与えることで，計量が定まる．
+    これを
+    \[ds^2=\sum g_{\mu\nu}^\al(x)dx^\mu_\al dx_\al^\nu\]
+    と表す．
+\end{notation}
+\begin{remarks}
+    こうして，貼り合わせの考え方からみると，Riemann計量とは局所的には各$U_\al$上の正定値対称行列$(g_{\mu\nu}^\al(x))$で，
+    $(2,0)$-テンソルとしての貼り合わせの変換則を満たすもの，と捉えられる（そのようなものを定めるとRiemann計量が一意に定まる）．
+    テンソルと言ってもビビらなくて良い，大域的に存在するための整合性を満たすというだけの消息である．
+\end{remarks}
+
+\section{接続}
+
+\subsection{微分作用素の定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    微分作用素とは，ベクトル束の切断の間の線型写像であって，
+    $\sigma\in\Gamma(E)$がある開集合$U$上で恒等的に$0$ならば，微分しても$0$であるという性質を抽出して，「台を縮小させる切断間の線型作用素」と定義する．
+\end{tcolorbox}
+
+\begin{definition}[differential operator]
+    $E,F$を$M$上のベクトル束とする．
+    線型写像$\Phi:\Gamma(E)\to\Gamma(F)$が，任意の$\sigma\in\Gamma(E)$に対して$\supp\Phi(\sigma)\subset\supp\sigma$を満たすとき，これを\textbf{微分作用素}という．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 微分作用素の全体は線型空間をなす．これを$D(E,F)\subset\Hom_\R(E,F)$で表す．
+        \item $C(M)$-加群の構造も持つ．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 多重指数$\al\in\N^n$について，$D^\al$は微分作用素である．これらの線型結合も微分作用素である．
+        \item 局所有限な開被覆$(V_i)_{i\in\N}$について，これに属する1の分解$(\varphi_i)$を用いて，$D^\al$の線型結合で表される微分作用素の局所有限和
+        $\Phi:=\sum^\infty_{i=1}\varphi_i\Phi_i$も微分作用素である．この形の微分作用素は一般に階数を持つとは限らない．
+        Peetreの定理より，$D(\ep^1,\ep^1)$の元はすべてこの形で表される．
+    \end{enumerate}
+\end{example}
+
+\subsection{Peetreの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\Phi$の局所座標への制限$\Phi|_U:C_c(U,\R^p)\to C_c(U,\R^p)$を行列表示したこととなる．
+\end{tcolorbox}
+
+\begin{theorem}[微分作用素の局所表示]
+    $\Phi\in D(E,F)$を微分作用素とする．
+    $M$の座標近傍$\{U,(x^1,\cdots,x^n)\}$について，$\o{U}$はコンパクト，$E|_U,F|_U$は自明束となっているとする．
+    $\sigma\in\Gamma(E)$は$\supp\sigma\subset U$を満たし，$\sigma(x)=(\sigma^1(x),\cdots,\sigma^p(x))\;(x\in U)$と表せるとし，$\Phi(\sigma)(x)=(\tau^1(x),\cdots,\tau^q(x))\;(x\in U)$と表す．
+    このとき，次の関係が成り立つ：
+    \[\begin{pmatrix}\tau^1(x)\\\vdots\\\tau^q(x)\end{pmatrix}=(\Phi^i_j(x))\begin{pmatrix}\sigma^1(x)\\\vdots\\\sigma^p(x)\end{pmatrix}.\]
+    ただし，
+    \[\Phi^i_j(x)=\sum_{\abs{\al}\le k}{a^i_j}_\al(x)D^\al\quad(\al\in\N^n,{a^i_j}_\al\in C^\infty(U)).\]
+\end{theorem}
+
+\begin{definition}
+    $\sigma\in C(U,\R^p)$に対して，$\al$が点$x_0\in U$で$D^\al\sigma(x_0)=0\;(\abs{\al}\le k)$を満たすとき，$\sigma$は\textbf{$x_0$で$k$-平旦}であるという．
+\end{definition}
+
+\subsection{微分作用素の階数}
+
+\begin{definition}
+    微分作用素$\Phi$が局所的に常に
+    \[\Phi^i_j(x)=\sum_{\abs{\al}\le k}{a^i_j}_\al(x)D^\al\quad(\al\in\N^n,{a^i_j}_\al\in C^\infty(U))\]
+    と表せるとき，これを\textbf{$k$-階}という．
+    $k$-階微分作用素のなす部分空間を$D_k(E,F)$で表す．
+\end{definition}
+
+\begin{corollary}
+    $\Phi\in D(E,F)$について，
+    \begin{enumerate}
+        \item $k$-階である．
+        \item $\forall_{x\in M}\;j^k(\sigma)(x)=0\Rightarrow\Phi(\sigma)(x)=0$．すなわち，局所座標を用いて表せば，$D^\al\sigma(x)=0\;(\abs{\al}\le k)$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $D_0(E,F)\subset D_1(E,F)\subset\cdots$が成り立つ．
+        \item $\cup_{k\in\N}D_k(E,F)=D(E,F)$が成り立つことと，$M$がコンパクトであることとは同値．
+    \end{enumerate}
+\end{theorem}
+
 \section{局外母数と情報量の幾何}
 
 \begin{notation}
     正則なパラメトリックモデル$\P=(P_\theta)_{\theta\in\Theta= N\times H}$について，
     \begin{enumerate}
-        \item $\dl:=\dl_{\theta_0}=\left.\dd{}{\theta}\log p_\theta(x)\right|_{\theta=\theta_0}=\frac{\dp_{\theta_0}(x)}{p_{\theta_0}(x)}1_{\Brace{p_\theta\ne0}}(x)$をスコア関数とする．
+        \item $\dl:=\dl_{\theta_0}=\left.\dd{}{\theta}\log p_\theta(x)\right|_{\theta=\theta_0}=\frac{\dotp_{\theta_0}(x)}{p_{\theta_0}(x)}1_{\Brace{p_\theta\ne0}}(x)$をスコア関数とする．
+        \item $I:=I_{\theta_0}=P_{\theta_0}[\dl\dl^\top]=E_{\theta_0}[\abs{\dl}^2]$はスコアの2次のモーメントであるが，これをFisher情報行列という．
+        \item $\wl:=\wl_{\theta_0}=I_{\theta_0}^{-1}\dl_{\theta_0}$を有効影響関数とする．
     \end{enumerate}
 \end{notation}
 

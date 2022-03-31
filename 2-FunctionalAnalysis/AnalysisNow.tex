@@ -5310,38 +5310,54 @@ title=]
 \begin{quotation}
     積分とは，コンパクト台を持つ連続関数の空間上の，正な線型汎関数である．
     これをRudinではpositive linear functionalと呼び続ける．
+    この見方をすれば，積分を完全に関数解析の言葉で定義でき，測度とは積分の特別な場合である．
+    また積分と測度の双対性も明らかになる．
 
-    Functinal analyst's dream: ideal short course in measure theory.
-    積分を先に定義することで，測度はその特別な場合になる．
-    積分と測度の双対性も明らかになる．
+    理論の完成を知らせる定理は\textbf{表現定理}である．
+    積分とは表現であり，2つのBanach空間をつなぐものである．
 
-    理論の完成を知らせる定理は表現定理である．積分とは表現である．
-    まず，正な線型汎関数の集合は次のように表現できる．
-    \begin{theorem}[Riesz representation theorem]
-        $X$を局所コンパクトハウスドルフ空間とする．
-        正な線型汎関数$C_c(X)\to\C$全体の集合(=Radon積分全体の集合)は，
-        $X$上の完備で正則なBorel測度全体の集合(=完備Radon測度全体の集合)$\wt{M}(X)_+$と，次の写像が定める全単射の対応がある．
-        \[\xymatrix@R-2pc{
-            \Hom_\C(C_c(X),\C)_+\ar[r]&\wh{M}(X)_+\\
-            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
-            \Lambda\ar@{|->}[r]&\mu\;\st\;\forall_{f\in C_c(X)}\;\Lambda f=\int_Xfd\mu.
-        }\]
-    \end{theorem}
-    次に$C_c(X)$上の有界線型汎関数の集合は次のように表現できる．なお，$C_c(X)$は$C_0(X)$上稠密であるから，$C_0(X)$上の有界線型汎関数と全単射の対応がつく．
-    \begin{theorem}[Riesz-Markov representation theorem]
-        $X$を局所コンパクトハウスドルフ空間とする．
-        有限な複素Radon電荷全体の集合$M(X)$は，全変動ノルム$\norm{\Phi}:=\abs{\Phi}(1)<\infty$についてBanach空間をなす．
-        このとき，次の対応は等長同型，すなわち，Banach空間の同型を与える．
-        \[\xymatrix@R-2pc{
-            C_0(X)^*\ar[r]&M(X)\\
-            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
-            \Phi\ar@{|->}[r]&\mu\;\st\;\forall_{f\in C_0(X)}\int_Xfd\mu=\Phi f
-        }\]
-    \end{theorem}
-    第２可算な$X$などについて，Radon電荷とは正則な符号付きBorel測度にほかならない．
-
-    いままでのが局所凸位相線型空間論だとしたら，ここからはRiesz空間＝束線型空間を対称にした順序線型空間論とも見れる．
+    \begin{tcolorbox}[colframe=blue, colback=blue!3!,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+        \begin{theorem*}[Riesz, Markov]
+            $X$を局所コンパクトハウスドルフ空間とする．
+            \begin{enumerate}
+                \item 積分は正錐と拡張正錐の間に
+                位相同型$(C_c(X,\C)^*)_+\simeq_\Top\o{\RM(X)}_+$を定める\ref{thm-Riesz-representation}．
+                \item 積分は等長同型$C_0(X,\R)^*\simeq_\Ban\RM(X)$を定める\ref{prop-Riesz-Markov-3}．
+            \end{enumerate}
+        \end{theorem*}
+    \end{tcolorbox}
+    いままでのが局所凸位相線型空間論だとしたら，ここからは錐の構造をよく見るために，
+    Riesz空間＝束線型空間を対象にした順序線型空間論のような理論展開をする．
 \end{quotation}
+
+\begin{definition*}[positive cone, extended positive cone]
+    $C^*$-環の内部で，正作用素のなす閉凸錐の描像を思い出す．
+    \begin{enumerate}
+        \item 点付き順序集合$(V,0)$の正錐とは，$V_+:=\Brace{x\in V\mid x\ge0}$をいう．
+        \item $W^*$-代数$V$のpredualを$V_*$とする：$V=\Hom(V_*,\R)$．$V$の拡張正錐$\o{V}_+$とは，正錐$(V_*)_+$から$\o{\R}_+=[0,\infty]$への下半連続な線型写像全体の空間をいう．
+    \end{enumerate}
+    $\R$の拡張正錐は$\oR_+$で，その一般化と考えられる．
+\end{definition*}
+
+\begin{definition*}[positive linear functional, finie Radon measure]
+    複素数値関数／測度の空間に言及する言葉を整理する．
+    \begin{enumerate}
+        \item 正な連続線型汎関数の全体$C_c(X,\C)^*_+$は正錐をなす．
+        \item 有限なRadon測度の全体$\RM(X,\C)$は全変動についてBanach空間をなす．
+        その正錐は実数値の意味での有限Radon測度$\mu:\M\to\R_+$である．一般のRadon測度にも言及したいから，
+        その拡張正錐$\o{\RM(X)}_+$を，正なRadon測度$\M\to\oR_+$全体の集合とする．
+    \end{enumerate}
+\end{definition*}
+
+\begin{theorem*}[Riesz, Markov]
+    $X$を局所コンパクトハウスドルフ空間とする．
+    \begin{enumerate}
+        \item 積分は正錐と拡張正錐の間に
+        位相同型$(C_c(X,\C)^*)_+\simeq_\Top\o{\RM(X)}_+$を定める\ref{thm-Riesz-representation}．
+        \item 積分は等長同型$C_0(X,\R)^*\simeq_\Ban\RM(X)$を定める\ref{prop-Riesz-Markov-3}．
+    \end{enumerate}
+\end{theorem*}
 
 \section{Radon積分}
 
@@ -5350,35 +5366,42 @@ title=]
     積分自体を作用素として定義し，その定義域を十分広げることで，特殊な場合として測度を定義することを目指す．
 \end{tcolorbox}
 
-\subsection{導入}
+\subsection{関数束とRadon測度}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $C_c(\R^n)\subsetneq\L^1(\R^n)$は全てLebesgue積分可能である．
-    しかし$\R^n$全域ではLebesgue積分は有界でないから（Lebesgue積分の作用素ノルムは定義域の体積となるから，有界集合に限れば良い），定義域を局所コンパクトハウスドルフ空間$X$に限り，
-    まずは$C_c(X)$から，どれ程までに積分の定義域を延長できるかを考える．
-    $X$上では，積分は線形性と正性の２つで特徴付けられる．この公理的な積分を\textbf{Radon積分}とする．
-    実は，$C_c(X)$が可積分関数$\L^1(\R^n)$の構造を支配する．
+    まず，議論の対象となる「性質の良い関数と測度のクラス」を定義する．
+    積分を定義する関数クラスは，束の構造を持つもの$C_c(X),C_c(X)^m,C_c(X)_m$に注目する．
+    $X$上の測度はRadon測度（緊密かつ局所有限なもの）のみを考える．
+    Radon測度は，$C_c(X)$上に正な線型汎関数を定める．
+    これをRadon積分と呼び，逆にRadon測度を復元すること\ref{prop-recovery-of-Radon-measure}を考える．
+    実は，$C_c(X)$が可積分関数$\L^1(\R^n)$の構造を支配する（稠密である\ref{prop-dense-subset-of-Lp}）．
 \end{tcolorbox}
 
 \begin{notation}\mbox{}
     \begin{enumerate}
         \item $X$を局所コンパクトハウスドルフ空間とし，その上のコンパクト台を持つ実数値連続関数のなすノルム代数$C_c(X)$を考える．
-        この完備化がLebesgue空間であることに注意．
-        \item $C_c(X)^m:=\Brace{f:X\to\R\cup\{\infty\}\mid C_c(X)\text{上の単調増加ネット}(f_\lambda)_{\lambda\in\Lambda}\text{が存在して}\forall_{x\in X}\;f(x)=\sup f_\lambda(x)\text{を満たす}}$とする．
-        また，$C_c(X)_m:=\Brace{f:X\to\R\cup\{-\infty\}\mid\exists_{\{f_\lambda\}\subset C_c(X)}\;f_\lambda\searrow f}$とする．$C_c(X)_m=-C_c(X)^m$である．
-        \item $M(X)_+$とは，非負関数のなす部分空間$M(X)\cap\Map(X,\R_{\ge 0})$を表す．
+        \item $X$のコンパクト部分集合の全体を$\cC\subset P(X)$で表す．
+        \item $X$の可測集合全体を$\M$で表し，体積確定集合の全体を$\M^1$で表す\ref{def-measurable-sets}．
+        \item $X$上のBorel関数のクラスを$\B(X)$，可測関数の全体を$\L(X)$で表す．$\B\subset\M$より$\B(X)\subset\L(X)$である\ref{def-measurable-function}．$X$上の局所可積分関数の空間を$\L^1_\loc(X)$で表す\ref{def-locally-integrable-function}．
+        \item $X$上の有限なRadon電荷$\Phi$全体に全変動ノルム$\norm{\Phi}:=\abs{\Phi}(1)$を考えたBanach空間を$M(X)$で表す．
+        \item $X$上の零関数を$\cN(X)$，零集合を$\cN$で表す\ref{def-null-set}．
+        \item $C_c(X)$の単調ネットによって近似可能な関数全体の空間を
+        \[C_c(X)^m:=\Brace{f:X\to\R\cup\{\infty\}\mid C_c(X)\text{上の単調増加ネット}(f_\lambda)_{\lambda\in\Lambda}\text{が存在して}\forall_{x\in X}\;f(x)=\sup f_\lambda(x)\text{を満たす}}\]
+        とする．
+        また，$C_c(X)_m:=\Brace{f:X\to\R\cup\{-\infty\}\mid\exists_{\{f_\lambda\}\subset C_c(X)}\;f_\lambda\searrow f}$とすると，$C_c(X)_m=-C_c(X)^m$であり，$C_c(X)^m\cap C_c(X)_m=C_c(X)$である．
+        \item 関数クラス$M(X)\subset\Map(X,\R)$に対して$M(X)_+$とは，非負関数のなす部分空間$M(X)\cap\Map(X,\R_{\ge 0})$を表す．
+        \item 特性関数を$[A]=\chi_A$で表す．
     \end{enumerate}
 \end{notation}
 
-\begin{lemma}[Riesz空間]\mbox{}
+\begin{lemma}[Riesz空間 / 束線型空間，関数束]\mbox{}
     \begin{enumerate}
         \item $C_c(X)$は束線型空間である：$C_c(X)$は束の演算$\lor,\land$について閉じており，$C_c(X)$は任意の部分集合の上限を取る操作について閉じている．
-        \item $C_c(X)^m$はadditive cone（和と$\R_{\ge 0}$倍について閉じている）で，任意の２つの正な元の積について閉じている：$C_c(X)^m_+\cdot C_c(X)^m_+\subset C_c(X)^m_+$．
-        \item $C_c(X)^m$の元は全て下半連続で，非負な下半連続関数について$C^{1/2}(X)_+\subset C_c(X)^m$．
+        \item $C_c(X)^m$は束である上に任意族の上限・下限に閉じており，additive cone（和と$\R_{\ge 0}$倍について閉じている）でもあり，任意の２つの正な元の積について閉じている：$C_c(X)^m_+\cdot C_c(X)^m_+\subset C_c(X)^m_+$．
+        \item $C_c(X)^m$の元は全て下半連続で，非負な下半連続関数の全体を含む：$C^{1/2}(X)_+\subset C_c(X)^m$．
         \item $X$がコンパクトであることと，$-1\in C_c(X)^m$は同値．
         \item $X$が$\sigma$-コンパクトであることと，$1\in C_c(X)^m$は同値．
-        \item $C_c(X)^m\cap C_c(X)_m=C_c(X)$．
         \item 任意の$f\in C_c(X)^m$について，$\o{\Brace{f<0}}$はコンパクト．任意の$f\in C_c(X)_m$について，$\o{\Brace{f>0}}$はコンパクト．
         \item $X$が局所コンパクトな距離空間であるとき，任意のコンパクト集合$K\subset X$について，$\chi_K\in C_c(X)_m$．
     \end{enumerate}
@@ -5391,31 +5414,155 @@ title=]
     \end{enumerate}
 \end{proof}
 
-
-\begin{definition}[Borel meaesure, inner regular, Radon measure]\mbox{}
+\begin{definition}[Borel meaesure, inner regular, Radon measure, outer regular, essential measure]\mbox{}
     \begin{enumerate}
-        \item Borel測度とは，Borel $\sigma$-代数を含む$\sigma$-代数上に定まる測度をいう．
-        \item Borel測度が$\mu(A)=\sup\Brace{\mu(K)\in[0,\infty]\;\middle|\; K\overset{\mathrm{cpt}}{\subset}A}$を満たすとき，\textbf{内部正則}であるという．
-        \item 内部正則なBorel測度で，$\forall_{K\overset{\mathrm{cpt}}{\subset}X}\;\mu(K)<\infty$を満たすものを，\textbf{Radon測度}という．
+        \item Borel測度とは，Borel $\sigma$-代数$\B$を含む$\sigma$-代数上に定まる測度をいう．
+        \item Borel測度が$\mu(A)=\sup\Brace{\mu(K)\in[0,\infty]\;\middle|\; K\overset{\mathrm{cpt}}{\subset}A}$を満たすとき，\textbf{内部正則}または\textbf{緊密}であるという．
+        \item 内部正則なBorel測度で，\textbf{局所有限}性$\forall_{K\overset{\mathrm{cpt}}{\subset}X}\;\mu(K)<\infty$を満たすものを，\textbf{Radon測度}という\ref{def-Radon-measure}．
+        \item Borel測度が\textbf{外部正則}であるとは，$\forall_{A\in\B}\;\mu(A)=\inf\Brace{\mu(B)\in[0,\infty]\mid A\subset B\osub X}$を満たすことをいう．
+        \item Borel測度$m$が$M$に付随する\textbf{本質的測度}であるとは，
+        \[m(A)=\sup\Brace{m^*(C)\in\R\mid C\subset A,m^*(C)<\infty},\quad\text{ただし}m^*(C)=\inf\Brace{m(B)\in[0,\infty]\mid C\subset B,B\in\B}\]
     \end{enumerate}
+    結局，内部正則かつ局所有限なBorel測度をRadon測度といい，いま考えている局所コンパクトハウスドルフ空間$X$上で考えられる素性の良い測度のクラスである．
 \end{definition}
 \begin{example}
     $\R^n$上のLebesgue測度は，Radon測度である．
 \end{example}
 
+今後の目標の一つは次の定理を示すことである．
+
+\begin{theorem}[Borel測度の特徴付け]
+    Borel測度$\mu:\B\to\bF$について，
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $\mu$はRadon測度である．
+        \item $\mu$は，$X$の任意の開集合上において，内部正則かつ局所有限である上に，外部正則でもある．
+        \item $\mu$は，次を満たす2つのBorel測度$m,M$が$\M^1$の元上に取る同一の値を取る：
+        $m$は$M$に付随する本質的測度であり，$M$は局所有限かつ$\B$上外部正則かつ内部正則で，$B$が開集合または体積確定$B\in\M^1$ならば$m(B)=M(B)$である．
+    \end{enumerate}
+    (3)はRadon積分の方を重視する見方であり，今後の議論で同値性を見る\ref{prop-recovery-of-Radon-measure}．
+    さらに，台空間$X$が局所コンパクトハウスドルフ空間であるとき，次も同値．
+    \begin{enumerate}\setcounter{enumi}{3}
+        \item $\mu$は$C_c(X,\R)$上の正な線型汎関数である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{tbox}{red}{}
+    唯一すべての用語が定義済みであるのは(4)のみである．そこで，
+    以降の議論は(4)の立場から開始する．
+    そうして，$M:=\mu^*,m:=\mu^{\o{*}}$として通常の意味でのRadon測度を復元していく．
+\end{tbox}
+
+\subsection{Daniell積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Radon積分の延長を調べる前に，Daniell積分の消息を述べる．
+    局所コンパクト空間上のRadon測度のPercy Daniell-style\footnote{Daniell, P. J. (1918), “A General Form of Integral”, Annals of Mathematics, Second Series (Annals of Mathematics) 19 (4): 279–294}の定義\ref{thm-extension-of-Radon-integral}はBourbakiのIntegration. Chapter IXでも探求されている．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/Radon+measure}}
+    積分の公理化の試みのうち，これをDaniell積分という\footnote{\url{https://ja.wikipedia.org/wiki/ダニエル積分}}．
+\end{tcolorbox}
+
+\begin{definition}[monotone / positive functional]
+    $L\subset\Map(X,\R)$を関数束とする．汎関数$T:L\to\R$が次の3条件を満たすとき，\textbf{単調}である，または\textbf{正}であるという．
+    \begin{enumerate}
+        \item 正錐の射：$T(f+g)=T(f)+T(g),\forall_{c\in\R_+}\;T(cf)=cT(f)$．
+        \item 単調性：$\forall_{f,g\in L}\;f\ge g\Rightarrow T(f)\ge T(g)$．
+        \item 単調収束性：任意の広義単調増加列$\{f_i\}\subset L$について，$\lim_{i\to\infty}f_i=:f\in L\Rightarrow T(f)=\lim_{i\to\infty}T(f_i)$．
+    \end{enumerate}
+    これらは積分の公理として非常に自然である．
+\end{definition}
+
+\begin{theorem}
+    $L\subset\Map(X,\R)$を関数束，$T:L\to\R$を正な汎関数とする．
+    このとき，$X$上の外測度$\mu$が存在して，
+    \begin{enumerate}
+        \item 任意の$f\in L$について$f$は$\mu$-可測で，$T(f)=\int_Xfd\mu$．
+        \item 集合$A\subset X$は$\exists_{f\in L}\;\chi_A\le f$を満たすならば，$\mu(A)=\int_X\chi_Ad\mu=T(\chi_A)$の値は$T$によって一意に定まる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[Daniell integral]
+    $L\subset\Map(X,\R)$を関数束とする．汎関数$T:L\to\R$が次の3条件を満たすとき，\textbf{Daniell積分}であるという．
+    \begin{enumerate}
+        \item 正錐の射：$T(f+g)=T(f)+T(g),\forall_{c\in\R_+}\;T(cf)=cT(f)$．
+        \item $\forall_{f\in L_+}\;\sup_{0\le k\le f}T(k)<\infty$．
+        \item $\{f_i\}\subset L$が広義単調増加ならば，$T(\lim_{i\to\infty}f)=\lim_{i\to\infty}T(f_i)$．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    Jordan分解の精神に従い，正な汎関数の差として表せる汎関数のクラスを考える．
+    これにより，正汎関数の$\R_+$-線形性の非対称性が解消され，するとこれは積分になる．
+\end{remarks}
+
+\begin{theorem}
+    $L\subset\Map(X,\R)$を関数束，汎関数$T:L\to\R$をDaniell積分とする．
+    このとき，
+    \begin{enumerate}
+        \item $L_+$上に正な汎関数$T^+,T_-$が存在して，$\forall_{f\in L_+}\;T(f)=T^+(f)-T^-(f)$を満たす．
+        \item $X$上に外測度$\mu^+,\mu^-$が存在して，$f\in L$が$\mu^+$-可測かつ$\mu^-$-可測ならば，$T(f)=\int fd\mu^+-\int fd\mu^-$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Rieszの表現定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    さきに，測度の定める積分と，$C_c(X)$上の正な線型汎関数の空間との間の同型対応に関する結果をまとめておく．
+    次の章からは，積分の公理化ではなく，Radon測度から議論を始める．
+\end{tcolorbox}
+
+\begin{definition}[Baire sets]
+    集合族$\{f>t\}_{f\in C_c(X),t\in\R}$が生成する$\sigma$-加法族$\A$を\textbf{Baire集合族}という．
+    $\{f>t\}$は必ず開集合であるから，$\A\subset\B$である．なお，部分集合であるだけでなく，$\delta$-環をなす．
+    また$\A$はコンパクトな$G_\delta$集合によっても生成される\ref{remark-Baire-function}．
+    以降，$\A$がすべて$\mu$-可測であるとき，外測度$\mu$をBaire外測度と呼ぶ．
+\end{definition}
+
+\begin{lemma}
+    $X$を局所コンパクトハウスドルフ空間とする．
+    \begin{enumerate}
+        \item (Urysohn) $K\subset U\osub X$をコンパクト集合とする．$\exists_{f\in C_c(X)}\;\chi_K\le f\le\chi_U$．
+        \item $K$をコンパクト集合とし，これは開集合$V_1,\cdots,V_n$によって被覆されるとする：$K\subset V_1\cup\cdots\cup V_n$．このとき，各$V_i$内に台を持つ関数$0\le g_i\le1$が存在して，$\forall_{x\in K}\;g_1(x)+\cdots+g_n(x)=1$．
+    \end{enumerate}
+\end{lemma}
+
+
+\begin{theorem}[Riesz]\label{thm-Riesz}
+    局所コンパクトハウスドルフ空間上の関数束$C_c(X)$と，その上の汎関数$T:C_c(X)\to\R$であって$\forall_{f\in C_c(X)_+}\sup\Brace{T(g)\in\R\mid0\le g\le f}<\infty$を満たすものについて，
+    2つのBaire外測度$\mu^+,\mu^-$が存在して，
+    \[\forall_{f\in C_c(X)}\quad T(f)=\int_Xfd\mu^+-\int_Xfd\mu^-.\]
+\end{theorem}
+\begin{remark}
+    符号付きBaire外測度$\mu:=\mu^+-\mu^-$と定めれば，
+    $T(f)=\int_Xfd\mu$と表示出来るが，これは$\infty-\infty$の場合をのがしているのでステートメントには採用できない．
+\end{remark}
+
+\begin{corollary}
+    特に$X$がコンパクトならば，ステートメントは次のようになる．
+    有界線型汎関数$T:C(X)\to\R$に対して，符号付きBaire外測度$\mu$が一意に存在して，
+    \[T(f)=\int_Xfd\mu.\]
+    また，この対応は等長線型同型を引き起こす．
+\end{corollary}
+
+\begin{theorem}
+    Rieszの表現定理\ref{thm-Riesz}の下で，ある符号付きBorel外測度$\o{\mu}$が存在して，
+    \[\forall_{f\in C_c(X)}\quad\int fd\o{\mu}=T(f)=\int fd\mu\]
+    が成り立つ．
+    またとくに$\o{\mu}$はRadon外測度でもあり，Radon測度であることも示せる．
+\end{theorem}
+
 \subsection{単調極限上へのRadon積分の延長}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    積分の公理化から，Radon積分に話を戻そう．
     まず，ネットの極限としての閉包上に対する
-    $C_c(X)$上の正定値線型汎関数$\int$の延長を議論する．
-    この局所コンパクト空間上のRadon測度のPercy Daniell-style\footnote{Daniell, P. J. (1918), “A General Form of Integral”, Annals of Mathematics, Second Series (Annals of Mathematics) 19 (4): 279–294}の定義\ref{thm-extension-of-Radon-integral}はBourbakiのIntegration. Chapter IXでも探求されている．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/Radon+measure}}
-    積分の公理化の試みのうち，これをDaniell積分という\footnote{\url{https://ja.wikipedia.org/wiki/ダニエル積分}}．
+    $C_c(X)$上の正な線型汎関数$\int$の延長を議論する．
 \end{tcolorbox}
 
 \begin{definition}[Radon integral, monotone limits]\mbox{}
     \begin{enumerate}
-        \item Radon積分とは，線型汎函数$\int:C_c(X)\to\R$であって，正であるものをいう：$f\ge 0\Rightarrow\int f\ge 0$．
+        \item \textbf{Radon測度}または\textbf{Radon積分}とは，線型汎函数$\int:C_c(X)\to\R$であって，\textbf{正}であるものをいう：$f\ge 0\Rightarrow\int f\ge 0$．
         \item 上積分$\int^*:C_c(X)^m\to\R\cup\{\infty\}$を，$\int^*f:=\sup\Brace{\int g\in\R\cup\{\infty\}\;\middle|\;g\in C_c(X),g\le f}$と定めると，これは線型汎函数である．
         \item 下積分$\int_*:C_c(X)_m\to\R\cup\{-\infty\}$を，$\int_*f:=\inf\Brace{\int g\in\R\cup\{-\infty\}\;\middle|\;g\in C_c(X),g\ge f}$と定めると，これは線型汎函数である．
     \end{enumerate}
@@ -5646,8 +5793,9 @@ title=単関数各点近似が出来るクラスが可測関数である]
     \end{enumerate}
 \end{proposition}
 
-\begin{remark}[Baire function]
+\begin{remark}[Baire function]\label{remark-Baire-function}
     第二可算とは限らない局所コンパクトハウスドルフ空間$X$については，一般に，単調点列完備化について$\B(C_c(X))\subset\B(X)$が成り立つ．
+    ただし，$C_c(X)$の単調点列完備化を$\B(C_c(X))$で表した．
     この真に小さいかもしれないクラスを\textbf{Baire関数}という．
     またこのクラスは$\land,\lor$について閉じている（補題\ref{lemma-sequential-completion}）．
     $1$がBaire関数であることは，$X$が$\sigma$-コンパクトであることに同値．
@@ -5685,7 +5833,7 @@ title=単関数各点近似が出来るクラスが可測関数である]
 
 \subsection{可測関数}
 
-\begin{definition}
+\begin{definition}\label{def-measurable-function}
     Radon積分$\int:C_c(X)\to\R$について，
     \begin{enumerate}
         \item 関数$f:X\to\R$が\textbf{可測}であるとは，$\forall_{t\in\R}\;\{f>t\}\in\M$を満たすことを言う．これは$\forall_{B\in\B_\R}\;f^{-1}(B)\in\M$と$\forall_{g\in\B(\R)}\;f\circ g\in\L(X)$を含意する．
@@ -5734,7 +5882,7 @@ title=]
     測度は積分の特別な場合である．
 \end{tcolorbox}
 
-\begin{definition}\mbox{}
+\begin{definition}[measure, Radon measure]\mbox{}\label{def-Radon-measure}
     \begin{enumerate}
         \item $\sigma$-環$S\subset P(X)$上の\textbf{測度}とは，関数$\mu:S\to[0,\infty]$であって，$\sigma$-加法的であるものをいう：$\mu\paren{\cup A_n}=\sum\mu(A_n)$．
         \item $X$が局所コンパクトハウスドルフ空間，$\B_X\subset S$を満たす$(X,S)$について，次の２条件を満たす測度を\textbf{Radon測度}という：
@@ -5749,14 +5897,14 @@ title=]
     幾何学的に興味のあるほとんどの測度はRadonである．
 \end{remark}
 
-\begin{proposition}
+\begin{proposition}[Radon積分からRadon測度の復元]\label{prop-recovery-of-Radon-measure}
     局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$に，次のRadon積分が定める可測集合$\M$上の２つの測度$\mu^*,\mu_*:\M\to[0,\infty]$が対応する：
     \begin{enumerate}
         \item $\mu^*(A):=\int^*[A]$．
         \item $\mu_*(A):=\int_*[A]$．
     \end{enumerate}
     このとき，$\mu_*$はRadon測度で，$\mu^*$は外正則：
-    \[\mu(A)=\inf\Brace{\mu(B)\in[0,\infty]\mid A\subset B,B:\text{open}}\]
+    \[\mu^*(A)=\inf\Brace{\mu^*(B)\in[0,\infty]\mid A\subset B,B:\text{open}}\]
     で$\mu_*\le\mu^*$を満たす．
     また，$A$が測度確定な可測集合$\M^1(\subset\M)$\ref{def-measurable-sets}の可算合併として表せるとき，$\mu_*(A)=\mu^*(A)$．
 \end{proposition}
@@ -5780,7 +5928,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[Riesz' representation theorem 09]
+\begin{theorem}[Riesz' representation theorem 09]\label{thm-Riesz-representation}
     局所コンパクトハウスドルフ空間$X$上のRadon積分と，$X$のBorel集合$\B_X$上のRadon測度との間に，
     \[\mu(A)=\int_*[A]\]
     によって定まる全単射が存在する．
@@ -5838,7 +5986,7 @@ title=]
 
 \subsection{零集合}
 
-\begin{definition}\mbox{}
+\begin{definition}\mbox{}\label{def-null-set}
     \begin{enumerate}
         \item $\cN(X):=\Brace{f\in\L(X)\;\middle|\;\int\abs{f}=0}$の元を\textbf{零関数}という．
         \item $\cN:=\Brace{N\in\M\mid[N]\in\cN(X)}$の元を\textbf{零集合}という．
@@ -5940,7 +6088,7 @@ title=]
 
 \subsection{稠密部分集合}
 
-\begin{proposition}
+\begin{proposition}\label{prop-dense-subset-of-Lp}
     任意の$p<\infty$について，$C_c(X)$（の商写像についての像）は$L^p(X)$上稠密である．
 \end{proposition}
 \begin{remarks}
@@ -6061,7 +6209,7 @@ title=]
 
 \subsection{Radon-Nikodymの定理}
 
-\begin{definition}[locally integrable]
+\begin{definition}[locally integrable]\label{def-locally-integrable-function}
     関数$f$が$\forall_{C\in\cC}\;[C]f\in\L^1(X)$を満たすとき，\textbf{局所可積分}であるという．このとき$f$は可測である．
 \end{definition}
 \begin{remarks}
@@ -6462,6 +6610,11 @@ title=]
     $C^*$-環$B(H)$の部分$*$-代数であって，単位元$1$を含み，作用素弱位相で閉じたものを\textbf{von Neumann環}という．
     $C^*$-環であって，あるvon Neumann環と同型でもあるようなものを$W^*$-環という．
 \end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $L^\infty(X)$は$W^*$-代数である．
+    \end{enumerate}
+\end{example}
 
 \chapter{非線形関数解析}
 

@@ -2,7 +2,8 @@
 \title{多様体}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1001,7 +1002,7 @@ title=]
     滑らかなベクトル束$\pi:E\to M$を考える．
     \begin{enumerate}
         \item 全てのファイバー$E_x$に内積$(-,-)_x$が与えられており，内積空間である．
-        \item 任意の滑らかな切断面$\sigma_1,\sigma_2\in\Gamma(E)$に対して，合成写像$(\sigma_1(-),\sigma_2(-))_x:M\to K$は滑らかである．
+        \item 任意の滑らかな切断面$\sigma_1,\sigma_2\in\Gamma(E)$に対して，合成写像$(\sigma_1(-),\sigma_2(-))_{(-)}:M\to K$は滑らかである．
     \end{enumerate}
     $E$が$\R$上のベクトル束ならばRiemann計量，$\C$上のベクトル束ならばHermite計量という．
 \end{definition}
@@ -1010,9 +1011,27 @@ title=]
     任意の２つのベクトル場$\sigma_1,\sigma_2\in\Gamma(E)$に対して，$x\in M$をまずベクトル束$E_x$上の２つのベクトル$\sigma_1(x),\sigma_2(x)$に対応させ，そこで内積を取る対応．
 \end{remarks}
 
+\begin{theorem}
+    任意のベクトル束には計量が存在する．
+\end{theorem}
+
 \subsection{ベクトル束の分解}
 
 \subsection{標準的な同型}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    滑らかなベクトル束には計量が入り，各ファイバー$V_x$には内積が存在する．
+    $V_x$の基底$\{e_1,\cdots,e_p\}$に対して$g_{\mu\nu}:=(e_\mu|e_\nu)$とおくと，対称性と基底であることより$(g_{\mu\nu})$は対称で正$\det(g_{\mu\nu})>0$な行列となる．
+    この行列の単位行列からの乖離は正規直交系からの乖離を意味する．当然この表示を用いると
+    \[(a|x)=\sum_{\mu,\nu=1}^pg_{\mu\nu}a^\mu x^\nu\]
+    が成り立ち，内積が定める同型$V_x\sim V_x^*$は
+    \[a=\sum^p_{\mu=1}a^\mu e_\mu\mapsto\sum^p_{\nu=1}\paren{\sum^p_{\mu=1}g_{\mu\nu}a^\mu}e^\nu=\varphi_a=(a|-)\]
+    と表せる．
+    双対基底を用いると，無理やりFourier係数を抽出出来る．
+    
+    ここで大域に目を戻すと，計量はバンドル全体に同型対応$E\simeq E^*$を導く．
+\end{tcolorbox}
 
 \begin{definition}\mbox{}
     \begin{enumerate}
@@ -1020,14 +1039,32 @@ title=]
         \item 各ファイバー$E_x\simeq E_x^*$にも標準同型が存在し，ここからベクトルバンドルとしての同型対応$E\simeq E^*$が引き起こされる．これを\textbf{計量が定める標準的な同型対応}という．
     \end{enumerate}
 \end{definition}
-\begin{notation}
-    $V$の基底$(e_1,\cdots,e_p)$と$V^*$の双対基底$(e^1,\cdots,e^p)$について，$g_{\mu\nu}:=(e_\mu,e_\nu)$とおく．基底だから，$\det(e_{\mu\nu})>0$な対称行列．
-    すると，$a\in V$について，
-    \[(a,x)=\sum_{\mu=1}^pa^\mu(e_\mu,x)=\sum_{\mu,\nu=1}^pa^\mu x^\nu(e_\mu,e_\nu)=\sum_{\mu,\nu=1}^pg_{\mu\nu}a^\mu x^\nu\]
-    と表せるから，標準的な同型対応は
-    \[a=\sum^p_{\mu=1}a^\mu e_\mu\mapsto\sum^p_{\nu=1}\paren{\sum^p_{\mu=1}g_{\mu\nu}a^\mu}e^\nu\]
-    で与えられる．
-\end{notation}
+
+\begin{discussion}
+    バンドルとしての対応$E\simeq E^*$を局所的に調べる．
+
+    $U\osub M$を座標近傍とし，$E$のこの上での自明性$E|_U\simeq U\times\R^p$を局所基底$(e_1,\cdots,e_p):U\to E$が与えるとする．
+    このとき，$E_x\;(x\in U)$の基底$\{e_1(x),\cdots,e_p(x)\}$の双対基底$\{e^1(x),\cdots,e^p(x)\}$は，$E^*$の$U$上での自明性$E^*|_U\simeq U\times\R^p$を与える．
+
+    ここから，$E,E^*$が同型であることを，対応を具体的構成することで示す．
+    $E$の計量$(-|-)_-$に対して，$g_{\mu\nu}(x):=(e_\mu(x),e_\nu(x))_x\in\K$と定める．
+    $(g_{\mu\nu}(x))\in\GL_p(\K)$だから，逆行列を持つが，これを$(g^{\mu\nu}(x))$で表すこととする．
+    次の2つの写像は互いに逆になっている：
+    \[\xymatrix@R-2pc{
+        \Gamma(E|_U)\ar[r]&\Gamma(E^*|_U)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \al(x)=\sum^p_{\mu=1}\al^\mu(x)e_\mu(x)\ar@{|->}[r]&\sum^p_{\mu=1}\paren{\sum^p_{\nu=1}g_{\mu\nu}(x)\al^\nu(x)}e^\mu(x)=\beta(x)
+    }\]
+    \[\xymatrix@R-2pc{
+        \Gamma(E^*|_U)\ar[r]&\Gamma(E|_U)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \beta(x)=\sum^p_{\mu=1}\beta_\mu(x)e^\mu(x)\ar@{|->}[r]&\sum^p_{\mu=1}\paren{\sum^p_{\nu=1}g^{\mu\nu}(x)\beta_\nu(x)}e_{\mu(x)}
+    }\]
+    さらに，$E^*$に計量が押し出され，それは局所的には$g^{\mu\nu}(x)=(e^\mu(x),e^\nu(x))_x$と表せる．
+\end{discussion}
+\begin{remarks}
+    よって，Fisher情報行列とその逆とは双対的な関係にある．
+\end{remarks}
 
 \section{貼り合わせと主束}
 
@@ -1194,28 +1231,48 @@ title=]
 
 \subsection{Riemann計量}
 
-接バンドル$T(M)$に計量が与えられたとき，$M$にRiemann計量が与えられたという．
-計量の定義\ref{def-metric}を局所的な「各点ごとに見ると内積」とは違って大域的に定義すると，滑らかな$(0,2)$-テンソル場$g\in\Gamma(T^*(M)\otimes T^*(M))$であって，(Hermite)対称かつ正定値なものをいう．
-すなわち，$g_x:T_x(M)\times T_x(M)\to\R$を満たす双線型写像で，$g_x(X,Y)=g_x(Y,X)$かつ$g_x(X,X)>0\;(X\ne 0)$として扱える．
-$g:M\to T^*(M)\otimes T^*(M)$は，各$(U,(x^1,\cdots,x^n))$上での$C^\infty$関数$g_{ij}:=\paren{\pp{}{x^i},\pp{}{x^j}}$の貼り合わせである．
-これに対して内積は$\brac{X,Y}:=g(X,Y)$で復元できる．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Riemann計量とは，接束という特別具体的なベクトル束に与えられた計量をいう．
+    こう見ると，これは$(0,2)$-テンソル場$g\in\Gamma(T^*(M)\otimes T^*(M))$である．
+    局所的には正定値な対称行列であり，$(0,2)$-テンソル場としての変換則を満たす大域的な存在がRiemann計量である．
+\end{tcolorbox}
 
-\[g_{\mu\nu}^\al(x):=\paren{\pp{}{x_\al^\mu},\pp{}{x^\nu_\al}}_x\]
-とおくと，$g_{\mu\nu}^\al:U_\al\to\R$は滑らかな関数であり，各点で$\det(g^\al_{\mu\nu})>0$を満たす．
-（ベクトル場の成分の２次元版）．
+\begin{remarks}
+    接バンドル$T(M)$に計量が与えられたとき，$M$にRiemann計量が与えられたという．
+    計量の定義\ref{def-metric}を局所的な「各点ごとに見ると内積」とは違って大域的に定義すると，滑らかな$(0,2)$-テンソル場$g\in\Gamma(T^*(M)\otimes T^*(M))$であって，(Hermite)対称かつ正定値なものをいう．
+    すなわち，$g_x:T_x(M)\times T_x(M)\to\R$を満たす双線型写像で，$g_x(X,Y)=g_x(Y,X)$かつ$g_x(X,X)>0\;(X\ne 0)$として扱える．
+    $g:M\to T^*(M)\otimes T^*(M)$は，各$(U,(x^1,\cdots,x^n))$上での$C^\infty$関数$g_{ij}:=\paren{\pp{}{x^i},\pp{}{x^j}}$の貼り合わせである．
+    これに対して内積は$\brac{X,Y}_x:=g_x(X,Y)$で復元できる．
+\end{remarks}
 
-$x\in U_\al\cap U_\beta$のとき，$(g_{\mu\nu}^\al(x))$と$(g_{\mu\nu}^\beta(x))$との間の変換則は，
-\[g_\mu\nu^\beta(x)=\sum^n_{i,j=1}\pp{x_\al^i}{x_\beta^\mu}\pp{x_\al^j}{x^\nu_\beta}g_{ij}^\al(x)\]
-で与えられる．
+以上のことを逆から議論すると次のようになる．
 
-この変換則は確かに$(2,0)$-テンソルである（基底と同じ変換則を２重に満たす）．
+\begin{notation}
+    各接空間$T_x$の内積について，
+    \[g_{\mu\nu}^\al(x):=\paren{\pp{}{x_\al^\mu},\pp{}{x^\nu_\al}}_x\]
+    とおくと，$g_{\mu\nu}^\al:U_\al\to\R$は滑らかな関数であり，各点で$\det(g^\al_{\mu\nu})>0$を満たす．
+    （ベクトル場の成分の２次元版）．
+    さらに，内積は，$\xi,\eta$を数ベクトル$(\xi^\mu),(\eta^\nu)$とEuclid空間での内積$\brac{-,-}$を用いて
+    \[(\xi,\eta)=\brac{(\xi^\mu),G(\eta^\nu)}\]
+    と表せる．
 
-逆に，各局所座標$U_\al$上で定義された正値行列$(g_{\mu\nu}^\al(x))$で，$U_\al\cap U_\beta$上で上述の$(2,0)$-テンソルの貼り合わせの条件を満たすものを与えることで，計量が定まる．
-これを
-\[ds^2=\sum g_{\mu\nu}^\al(x)dx^\mu_\al dx_\al^\nu\]
-と表す．
+    $x\in U_\al\cap U_\beta$のとき，$(g_{\mu\nu}^\al(x))$と$(g_{\mu\nu}^\beta(x))$との間の変換則は，
+    \[g_{\mu\nu}^\beta(x)=\sum^n_{i,j=1}\pp{x_\al^i}{x_\beta^\mu}\pp{x_\al^j}{x^\nu_\beta}g_{ij}^\al(x)\]
+    すなわち$(g^\beta_{\mu\nu})=\paren{\pp{x^i_\al}{x^\mu_\beta}}^\top(g_{ij}^\al)\paren{\pp{x^j_\al}{x_\beta^\nu}}$
+    で与えられる．
+    ベクトル場の変換則は$(\xi_\beta^\mu)=\paren{\pp{x_\beta}{x_\al}}(\xi_\al^\nu)$で与えられることに注意．たしかに2階の反変テンソルである．
 
-テンソルやベクトルとは，貼り合わせの法則によって定まるベクトル束なのである．
+    逆に，各局所座標$U_\al$上で定義された正値行列$(g_{\mu\nu}^\al(x))$で，$U_\al\cap U_\beta$上で上述の$(2,0)$-テンソルの貼り合わせの条件を満たすものを与えることで，計量が定まる．
+    これを
+    \[ds^2=\sum g_{\mu\nu}^\al(x)dx^\mu_\al dx_\al^\nu\]
+    と表す．
+\end{notation}
+\begin{remarks}
+    こうして，貼り合わせの考え方からみると，Riemann計量とは局所的には各$U_\al$上の正定値対称行列$(g_{\mu\nu}^\al(x))$で，
+    $(2,0)$-テンソルとしての貼り合わせの変換則を満たすもの，と捉えられる（そのようなものを定めるとRiemann計量が一意に定まる）．
+    テンソルと言ってもビビらなくて良い，大域的に存在するための整合性を満たすというだけの消息である．
+\end{remarks}
 
 \subsection{ベクトル場}
 
@@ -1722,26 +1779,79 @@ title=]
 
 \section{微分作用素}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    微分作用素は，$\sigma\in\Gamma(E)$がある開集合$U$上で恒等的に$0$ならば，微分しても$0$であるという性質によって定義する．
-\end{tcolorbox}
-
 \subsection{定義と例}
 
-\begin{definition}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    微分作用素とは，ベクトル束の切断の間の線型写像であって，
+    $\sigma\in\Gamma(E)$がある開集合$U$上で恒等的に$0$ならば，微分しても$0$であるという性質を抽出して，「台を縮小させる切断間の線型作用素」と定義する．
+\end{tcolorbox}
+
+\begin{definition}[differential operator]
     $E,F$を$M$上のベクトル束とする．
     線型写像$\Phi:\Gamma(E)\to\Gamma(F)$が，任意の$\sigma\in\Gamma(E)$に対して$\supp\Phi(\sigma)\subset\supp\sigma$を満たすとき，これを\textbf{微分作用素}という．
-    微分作用素全体のなす線型空間を$D(E,F)\subset\Hom_\R(E,F)$で表すと，$C(M)$-加群の構造も持つ．
 \end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 微分作用素の全体は線型空間をなす．これを$D(E,F)\subset\Hom_\R(E,F)$で表す．
+        \item $C(M)$-加群の構造も持つ．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 多重指数$\al\in\N^n$について，$D^\al$は微分作用素である．これらの線型結合も微分作用素である．
+        \item 局所有限な開被覆$(V_i)_{i\in\N}$について，これに属する1の分解$(\varphi_i)$を用いて，$D^\al$の線型結合で表される微分作用素の局所有限和
+        $\Phi:=\sum^\infty_{i=1}\varphi_i\Phi_i$も微分作用素である．この形の微分作用素は一般に階数を持つとは限らない．
+        Peetreの定理より，$D(\ep^1,\ep^1)$の元はすべてこの形で表される．
+    \end{enumerate}
+\end{example}
 
 \subsection{Peetreの定理}
 
-\subsection{平旦性}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\Phi$の局所座標への制限$\Phi|_U:C_c(U,\R^p)\to C_c(U,\R^p)$を行列表示したこととなる．
+\end{tcolorbox}
+
+\begin{theorem}[微分作用素の局所表示]
+    $\Phi\in D(E,F)$を微分作用素とする．
+    $M$の座標近傍$\{U,(x^1,\cdots,x^n)\}$について，$\o{U}$はコンパクト，$E|_U,F|_U$は自明束となっているとする．
+    $\sigma\in\Gamma(E)$は$\supp\sigma\subset U$を満たし，$\sigma(x)=(\sigma^1(x),\cdots,\sigma^p(x))\;(x\in U)$と表せるとし，$\Phi(\sigma)(x)=(\tau^1(x),\cdots,\tau^q(x))\;(x\in U)$と表す．
+    このとき，次の関係が成り立つ：
+    \[\begin{pmatrix}\tau^1(x)\\\vdots\\\tau^q(x)\end{pmatrix}=(\Phi^i_j(x))\begin{pmatrix}\sigma^1(x)\\\vdots\\\sigma^p(x)\end{pmatrix}.\]
+    ただし，
+    \[\Phi^i_j(x)=\sum_{\abs{\al}\le k}{a^i_j}_\al(x)D^\al\quad(\al\in\N^n,{a^i_j}_\al\in C^\infty(U)).\]
+\end{theorem}
 
 \begin{definition}
     $\sigma\in C(U,\R^p)$に対して，$\al$が点$x_0\in U$で$D^\al\sigma(x_0)=0\;(\abs{\al}\le k)$を満たすとき，$\sigma$は\textbf{$x_0$で$k$-平旦}であるという．
 \end{definition}
+
+\subsection{微分作用素の階数}
+
+\begin{definition}
+    微分作用素$\Phi$が局所的に常に
+    \[\Phi^i_j(x)=\sum_{\abs{\al}\le k}{a^i_j}_\al(x)D^\al\quad(\al\in\N^n,{a^i_j}_\al\in C^\infty(U))\]
+    と表せるとき，これを\textbf{$k$-階}という．
+    $k$-階微分作用素のなす部分空間を$D_k(E,F)$で表す．
+\end{definition}
+
+\begin{corollary}
+    $\Phi\in D(E,F)$について，
+    \begin{enumerate}
+        \item $k$-階である．
+        \item $\forall_{x\in M}\;j^k(\sigma)(x)=0\Rightarrow\Phi(\sigma)(x)=0$．すなわち，局所座標を用いて表せば，$D^\al\sigma(x)=0\;(\abs{\al}\le k)$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $D_0(E,F)\subset D_1(E,F)\subset\cdots$が成り立つ．
+        \item $\cup_{k\in\N}D_k(E,F)=D(E,F)$が成り立つことと，$M$がコンパクトであることとは同値．
+    \end{enumerate}
+\end{theorem}
 
 \chapter{練習}
 
@@ -2369,10 +2479,26 @@ title=接続とそれが定める共変微分]
     $X$方向の微分$X(f)$は$T(M)$上の内積$X(f)=\brac{X,df}$で与えられるので，この方向で一般化する．
 \end{tcolorbox}
 
-\subsection{接続の存在}
+\subsection{接続の定義と存在}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    接続とは，$C(M)$-加群$\Gamma(E)$から$\Gamma(E\otimes T^*(M))$への線型作用素であって，Leibniz則を満たすもののことをいう．
+    これは1階の微分作用素になる．
+\end{tcolorbox}
+
+\begin{discussion}
+    次を思い出す．
+    \begin{enumerate}
+        \item 関数の微分とは，線型写像$d:C(M)\to\Gamma(T^*(M));f\mapsto df$であって，Leibniz則$d(fg)=f\cdot dg+g\cdot df$を満たすものであった．
+        \item ベクトル場の定める微分とは，$X:C(M)\to C(M);f\mapsto\brac{X,df}$をいう．
+    \end{enumerate}
+    これはそれぞれ$d:\Gamma(\ep^1)\to\Gamma(\ep^1\otimes T^*(M))$と$X:\Gamma(\ep^1)\to\Gamma(\ep^1)$ともみなせる．
+    前者が接続に一般化され，後者は共変微分に一般化される．
+\end{discussion}
 
 \begin{definition}[connection]
-    $M$上のベクトル束$E$について，線型写像$\nabla:\Gamma(E)\to\Gamma(E\otimes T^*(M))$であって，$\forall_{f\in C(M),\sigma\in\Gamma(E)}$に対して$\nabla(f\sigma)=f\cdot\nabla\sigma+\sigma\otimes df$を満たすものを，$E$上の\textbf{接続}という．
+    $M$上のベクトル束$E$について，線型写像$\nabla:\Gamma(E)\to\Gamma(E\otimes T^*(M))$であって，Leibniz則$\forall_{f\in C(M),\sigma\in\Gamma(E)}\;\nabla(f\sigma)=f\cdot\nabla\sigma+\sigma\otimes df$を満たすものを，$E$上の\textbf{接続}という．
 \end{definition}
 
 \begin{lemma}\mbox{}
@@ -2383,7 +2509,7 @@ title=接続とそれが定める共変微分]
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{enumerate}
-        \item $\sigma\in\Gamma(E)$について，$f\in C(M)$を$x_0\in M\setminus\supp\sigma$の近傍で$1$，$\supp\sigma$上で$0$となるものを取ると，$\nabla(f\sigma)(x_0)=\nabla(\sigma)(x_0)=\nabla\sigma(x_0)+0\otimes 0(x_0)$より，$\nabla\sigma(x_0)=0$を得る．すなわち，$\supp\nabla\sigma\subset\supp\sigma$．
+        \item $\sigma\in\Gamma(E)$を任意に取る．これに対して$f\in C(M)$を$x_0\in M\setminus\supp\sigma$の近傍で$1$，$\supp\sigma$上で$0$となるものを取ると，$\nabla(f\sigma)(x_0)=\nabla(\sigma)(x_0)=\nabla\sigma(x_0)+0\otimes 0(x_0)$より，$\nabla\sigma(x_0)=0$を得る．すなわち，$\supp\nabla\sigma\subset\supp\sigma$．
     \end{enumerate}
 \end{proof}
 
@@ -2391,12 +2517,26 @@ title=接続とそれが定める共変微分]
     任意のベクトルバンドル$E$上に接続が存在する．
 \end{theorem}
 
+\begin{example}[関数の微分は接続である]
+    接続$\nabla:\Gamma(\ep^1)\to\Gamma(T^*(M))$を考える．
+    $\Gamma(\ep^1)$の元は$\ep^1$の基底$e$を用いて$fe\;(f\in C(M))$と表せる．
+    $\nabla(e)\in\Gamma(T^*(M))$を指定することで接続が
+    \[\nabla(fe)=f\nabla(e)+e\otimes df\]
+    として定まる．
+    関数の微分$d$は$\nabla(e)=0$の場合である．
+\end{example}
 
 \subsection{共変微分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    任意のベクトル束の切断について，「ベクトル場に沿った方向微分」なる概念を定義できる，これが共変微分であり，特に接束を考えるとき，この接続をaffine接続という．
+    ベクトル場$X\in\Gamma(T(M))$の関数$f\in\Gamma(\ep^1)$への作用
+    に限らず，任意のベクトル束の切断$\Gamma(E)$に対して，「ベクトル場$X$に沿った方向微分」なる概念を一般化出来る．
+    これが共変微分であり，
+    ベクトル場の関数への作用が関数の微分を前提に定義されているのと同様に，
+    共変微分も接続について定義される．
+    特にベクトル場への作用を考え，さらに共変微分というよりも
+    接続$\nabla$に関する追加条件と見たとき，これをaffine接続という．
 \end{tcolorbox}
 
 \begin{discussion}
@@ -2438,7 +2578,7 @@ title=]
 \subsection{affine接続の局所座標への制限}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=affine接続＝共変微分とは「ベクトル場のベクトル場に沿った方向微分」]
+title=affine接続とは「ベクトル場のベクトル場に沿った方向微分」]
     本書では一般論で展開されていたが，幾何学XDを参考にしてaffine接続の例で議論する．
     名前はÉlie Cartanによるもので，Euclid空間のaffine接続は，平行移動による同一視で，その一般化に発想を得ていることによる．
     affine接続を指定することで，「接空間が互いにaffine空間としてEuclid空間のようになる」という追加の局所Euclid性を添加できる．
