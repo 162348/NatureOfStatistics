@@ -896,6 +896,20 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\begin{example}[導関数ノルムを備えたBanach空間]\label{exp-Banach-space-with-derivative-norm}
+    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階以下の導関数がすべて$\Om$上有界である関数の全体を$B^m(\Om)$または$C_b^m(\Om)$で表す．
+    これはある種の1-ノルム$\norm{u}=\sum_{\abs{\al}\le m}\sup_{x\in\Om}\abs{D^\al u(x)}$について，Banach空間となる．
+    $C_b^0(\Om)$は$C_b(\Om)$に一致する．
+    $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
+\end{example}
+
+\begin{example}[Lipschitz連続な関数のBanach空間]
+    \[\Lip[a,b]:=\Brace{u\in C([a,b])\mid\exists_{L\in\R}\;\forall_{x,x'}\;\abs{u(x')-u(x)}\le L\abs{x'-x}}\]
+    は，ノルム
+    \[\norm{u}:=\sup_{x\in[a,b]}\abs{u(x)}+\sup_{x\ne x'\in[a,b]}\frac{\abs{u(x')-u(x)}}{x'-x}\]
+    についてBanach空間となる．
+\end{example}
+
 \begin{example}[群上のBanach algebra]
     特別なクラスである．
     \begin{enumerate}
@@ -5323,7 +5337,7 @@ title=]
             \begin{enumerate}
                 \item 積分は正錐と拡張正錐の間に
                 位相同型$(C_c(X,\C)^*)_+\simeq_\Top\o{\RM(X)}_+$を定める\ref{thm-Riesz-representation}．
-                \item 積分は等長同型$C_0(X,\R)^*\simeq_\Ban\RM(X)$を定める\ref{prop-Riesz-Markov-3}．
+                \item 積分は等長同型$C_0(X,\C)^*\simeq_\Ban\RM(X)$を定める\ref{prop-Riesz-Markov-3}．\footnote{\url{https://ncatlab.org/nlab/show/Riesz+representation+theorem}}
             \end{enumerate}
         \end{theorem*}
     \end{tcolorbox}
@@ -5349,15 +5363,6 @@ title=]
         その拡張正錐$\o{\RM(X)}_+$を，正なRadon測度$\M\to\oR_+$全体の集合とする．
     \end{enumerate}
 \end{definition*}
-
-\begin{theorem*}[Riesz, Markov]
-    $X$を局所コンパクトハウスドルフ空間とする．
-    \begin{enumerate}
-        \item 積分は正錐と拡張正錐の間に
-        位相同型$(C_c(X,\C)^*)_+\simeq_\Top\o{\RM(X)}_+$を定める\ref{thm-Riesz-representation}．
-        \item 積分は等長同型$C_0(X,\R)^*\simeq_\Ban\RM(X)$を定める\ref{prop-Riesz-Markov-3}．
-    \end{enumerate}
-\end{theorem*}
 
 \section{Radon積分}
 
@@ -5887,7 +5892,7 @@ title=]
         \item $\sigma$-環$S\subset P(X)$上の\textbf{測度}とは，関数$\mu:S\to[0,\infty]$であって，$\sigma$-加法的であるものをいう：$\mu\paren{\cup A_n}=\sum\mu(A_n)$．
         \item $X$が局所コンパクトハウスドルフ空間，$\B_X\subset S$を満たす$(X,S)$について，次の２条件を満たす測度を\textbf{Radon測度}という：
         \begin{enumerate}[(i)]
-            \item (locally finite) $\forall_{C\in\cC}\;\mu(C)<\infty$．
+            \item (locally finite / locally integrable) $\forall_{C\in\cC}\;\mu(C)<\infty$．
             \item (inner regularity) $\forall_{A\in S}\;\mu(A)=\sup\Brace{\mu(C)\in\R_{\ge0}\mid C\subset A,C\in\cC}$．
         \end{enumerate}
     \end{enumerate}
@@ -6476,15 +6481,232 @@ title=]
     等長同型$\Phi:L^1(X)\mono M(X)$は，$L^1(G)$をある$M(G)$の$*$-不変な閉イデアル上に移す対合代数の$*$-同型である．
 \end{proposition}
 
+\chapter{Sobolev空間}
+
+\begin{quotation}
+    ノルムには関数の滑らかさに関する情報を取り入れることが出来る\ref{exp-Banach-space-with-derivative-norm}．
+    すると，$C_c(X)$よりさらに小さいクラスを作り出す一つの方法となる．
+    超関数とSobolev空間は，可微分関数のクラスを一般化して，古典的な解空間を拡張した．
+\end{quotation}
+
 \section{分布}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    分布が作用する関数のクラスを「試験関数」という．これをうまく選ぶことで，種々の超関数が構成できる，というのがSchwartzのアイデアである．
-    分布の空間には$w^*$-位相を考える．
+    Rieszの表現の考え方では，$C_c(X;\C)$の双対が有限Radon測度$\RM(X)$なのであった．
+    そこで，$C_c(X;\C)$よりもさらに小さい関数のクラスを「試験関数」として定め，
+    この双対を取ることで，種々の超関数が構成できる，というのがSchwartzのアイデアである．
+    試験関数ありきの定義であるので，分布の空間には$w^*$-位相を考える．
 \end{tcolorbox}
 
 \subsection{アイデア}
+
+簡単のため，開区間$I=(a,b)\osub\R\;(a,b\in\oR)$で考える．
+
+\begin{discussion}[Rieszの表現流の発想の転換]
+    $f\in\L^1_\loc(I)$を，$I\to\R$と捉えるのではなく，試験関数上の線型汎関数
+    $C_c^\infty(I)\to\R;\varphi\mapsto\int f\varphi$とみる．
+    するとクラス$C_c^\infty(I)$は十分に大きいので，この対応は単射となる：\ref{thm-uniqueness-of-weak-derivative}．
+\end{discussion}
+
+\begin{discussion}[微分の導入]
+    するとこの枠組みを用いて，部分積分の公式から微分を一般化出来る．
+    $\varphi\in C_c^\infty(I)$について，
+    \[\forall_{f\in C^1(I)}\;\int f'\varphi=\Square{f\varphi}^b_a-\int_If\varphi'=-\int f\varphi'.\]
+    $\supp(\varphi)\subsetneq I$より，
+    $f\varphi(a)=f\varphi(b)=0$に注意．
+    一般に，$f\in C^\infty(I)$ならば，部分積分の公式を繰り返し適用することより，
+    \[\forall_{\varphi\in C_c^\infty(I)}\;\forall_{k\in\N}\;\int f^{(k)}\varphi=(-1)^k\int f\varphi.\]
+    この右辺を通じて，一般の局所可積分関数に微分を導入することが出来る．
+    これを\textbf{超関数の微分}または\textbf{弱微分}という．
+\end{discussion}
+
+弱微分は微分に持ってほしい性質の殆どを備えており，またFourier解析と相性が良い．
+
+\subsection{基礎となるFrechet空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここに，位相線形空間論をまとめる\cite{Rudin}．
+\end{tcolorbox}
+
+\begin{definition}[Heine-Borel property]
+    位相線形空間$X$がHeine-Borel性を持つとは，任意の有界閉集合がコンパクトであることをいう．
+\end{definition}
+
+\begin{example}
+    Hardy空間$H(\Om)$と非空な内部を持つコンパクト集合$K$内に台を持つ滑らかな関数の空間$C^\infty_K=C^\infty_c(K)$とは無限次元Frechet空間でHeine-Borel性を持つ．
+    したがってこれらは局所有界でなく，したがってノルム付け可能でない．
+\end{example}
+
+\begin{theorem}\label{thm-character-of-TVS}
+    $X$を位相線形空間とする．
+    \begin{enumerate}
+        \item $X$が局所有界ならば$X$は第２可算である．
+        \item $X$が距離化可能であることと，第２可算であることとは同値．
+        \item $X$がノルム付け可能であることと，局所凸で局所有界であることと，$0$に有界凸近傍が存在することは同値．
+        \item $X$が有限次元であることと，$X$が局所コンパクトであることとは同値．
+        \item 局所有界な位相線形空間$X$について，Heine-Borel性を持つことと有限次元であることとは同値．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    位相線形空間$X$上の零でない線型汎関数$\Lambda:X\to\K$について，次の4条件は同値：
+    \begin{enumerate}
+        \item $\Lambda$は連続．
+        \item $N(\Lambda):=\Lambda^{-1}(0)$は閉である．
+        \item $N(\Lambda)$は$X$上稠密でない．
+        \item $\Lambda$は$0$のある近傍$V$上で有界である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $X,Y$を位相線形空間，$\Lambda:X\to Y$を線型写像とする．
+    (1)$\Rightarrow$(2)$\Rightarrow$(3)が成り立つ．
+    $X$が距離化可能であるとき，(3)$\Rightarrow$(4)$\Rightarrow$(1)も成り立ち，4条件が同値になる．
+    \begin{enumerate}
+        \item $\Lambda$は連続である．
+        \item $\Lambda$は有界である．
+        \item $x_n\to 0$ならば$\{\Lambda x_n\}_{x\in\N}$は有界である．
+        \item $x_n\to0$ならば$\Lambda x_n\to0$．
+    \end{enumerate}
+    特にFrechet空間は距離化可能な完備局所凸線型空間であるから，上の4条件は同値になる．
+\end{theorem}
+
+\begin{example}[滑らかな関数のFrechet空間とその部分Frechet空間]
+    $K\subset\R^n$をコンパクトとする．
+    \[D_K:=C_c^\infty(K)=\Brace{f\in C^\infty(\R^n)\mid \supp f\subset K}\]
+    とすると，これは半ノルム列$(p_N)_{N\in\N}$に関するFrechet空間$C^\infty(\Om)\;(K\subset\Om)$の閉部分空間かつFrechet空間である．
+    ただし，$\R^n$の$\sigma$-コンパクト性から$\Om$に届くコンパクト集合の増大列$(K_i)$について，
+    \[p_N(f):=\max\Brace{\abs{D^\al f(x)}\in\R_+\mid x\in K_N,\abs{\al}\le N}\]
+    と定める．
+\end{example}
+
+\subsection{試験関数の空間}
+
+\begin{definition}
+    $\Om\osub\R^n$とする．
+    $D(\Om):=\bigcup_{K\compsub\Om}D_K$で定まるノルム空間を試験関数の空間という．
+    $D_K=C^\infty_c(K)$であったから，これは$D(\Om)=C^\infty_c(\Om)$に等しい．
+    \[\norm{\varphi}_N=\max\Brace{\abs{D^\al\varphi(x)}\in\R_+\mid x\in\Om,\abs{\al}\le N}\]
+    はノルムを定め，各$D_K$への制限は半ノルムを定め，$p_N$と同値な位相を$D_K$に定める．
+    $\norm{-}_N$は距離化可能であるが，完備ではない．
+\end{definition}
+
+\begin{lemma}
+    次の位相$\tau$は$D(\Om)$を完備にするが，距離化可能でない．
+    \begin{enumerate}
+        \item $\tau_K\subset P(D_K)$をFrechet空間$D_K$の位相とする．
+        \item $\beta:=\Brace{W\subset D(\Om)\mid W\text{は絶対凸集合で}\forall_{K\compsub\Om}\;D_K\cap W\in\tau_K}$．
+        \item $W\in\beta$の$\varphi\in D(\Om)$-平行移動$\varphi+W$で表せる集合の合併で表せる集合の全体を$\tau$とする．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\tau$は$D(\Om)$に位相を定め，$\beta$は局所基底となる．
+        \item $(D(\Om),\tau)$は局所凸空間である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item 絶対凸集合$V\subset D(\Om)$について，開であることと$V\in\beta$であることとは同値．
+        \item $\tau_K$は$\tau$の相対位相に等しい．
+        \item $D(\Om)$の有界集合$E$について，あるコンパクト集合$K\subset\Om$が存在して$E\subset D_K$を満たし，また，正整数列$(M_N)_{N\in\N}$が存在して$\forall_{\varphi\in E}\;\forall_{N\in\N}\;\norm{\varphi}_N\le M_N$が成り立つ．
+        \item $D(\Om)$はHeine-Borel性を持つ．
+        \item $\{\varphi_i\}\subset D(\Om)$がCauchy列ならば，あるコンパクト集合$K\subset\Om$が存在して$\{\varphi_i\}\subset D_K$でもあり，$\forall_{N\in\N}\;\lim_{i,j\to\infty}\norm{\varphi_i-\varphi_j}_N=0$．
+        \item $\varphi_i\to0$ならば，あるコンパクト集合$K\subset\Om$が存在して$\cup_{i\in\N}\supp\varphi_i\subset K$を満たし，$\forall_{\al\in\N^n}\;D^\al\varphi_i\to0$は一様収束する．
+        \item $D(\Om)$は完備である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $Y$を局所凸空間，$\Lambda:D(\Om)\to Y$を線型作用素とする．次の4条件は同値：
+    \begin{enumerate}
+        \item $\Lambda$は連続．
+        \item $\Lambda$は有界．
+        \item $\varphi_i\to0$ならば，$\Lambda\varphi_i\to0$．
+        \item 任意の$K\compsub\Om$について，制限$\Lambda|_{D_K}$は連続．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[distribution]
+    $D(\Om)$上の連続な線型汎関数を\textbf{$\Om$上の分布}という．
+    分布の全体を$\D'(\Om)$で表す．
+\end{definition}
+
+\begin{theorem}
+    $\Lambda:D(\Om)\to\C$を線型汎関数とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\Lambda\in\D'(\Om)$．
+        \item 任意のコンパクト集合$K\subset\Om$に対して自然数$N\in\N$と定数$C\in\R$が存在して，$\forall_{\varphi\in D_K}\;\abs{\Lambda\varphi}\le C\norm{\varphi}_N$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{分布による解析学}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    関数は分布を定める．
+    分布の微分を部分積分を通じて定める．
+    その後，関数の弱微分を，その関数が定める分布の微分として定める．
+\end{tcolorbox}
+
+\begin{example}[関数は分布]
+    $f\in L^1_\loc(\Om;\C)$は
+    \[\Lambda_f(\varphi):=\int_\Om\varphi(x)f(x)dx\]
+    によって分布$\Lambda_f\in\D'(\Om)$を定める．
+\end{example}
+
+\begin{example}[測度は分布]
+    $\mu$を$\Om$上の複素Borel測度，または，局所有界な正測度$\Im\mu\subset[0,\infty]$とする．
+    \[\Lambda_\mu(\varphi)=\int_\Om\varphi d\mu\]
+    によって分布$\Lambda_\mu\in\D'(\Om)$を定める．
+\end{example}
+
+\begin{definition}[differentiation of distribution]
+    $\al\in\N^n,\Lambda\in\D'(\Om),\Om\osub\R^n$とする．
+    部分積分の公式$(D^\al\Lambda)(\varphi):=(-1)^{\abs{\al}}\Lambda(D^\al\varphi)$によって$D^\al\Lambda:\D(\Om)\to\K$を定めると，これは有界である$D^\al\Lambda\in\D'(\Om)$．
+\end{definition}
+\begin{remark}
+    $D^\al,D^\beta$が$C^\infty(\Om)$上で可換であるから，分布に対しても$D^\al D^\beta\Lambda=D^{\al+\beta}\Lambda=D^\beta D^\al\Lambda$が成り立つ．
+\end{remark}
+
+\begin{definition}[distribution derivative of functions]
+    $f\in L^1_\loc(\Om)$の\textbf{$\al$-次分布微分}または\textbf{$\al$-弱微分}とは，分布$D^\al\Lambda_f$をいう．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $f\in C^{\abs{\al}}$ならば，$D^\al\Lambda_f=\Lambda_{D^\al f}$である．
+        \item この可換性は一般には成り立たない．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}
+    $\Om\subset\R$を線分とする．
+    $f:\Om\to\R$を左連続で有界変動な関数とすると，$Df\in L^1$が成り立つ．
+    このとき，$\mu([a,b)):=f(b)-f(a)$によって測度を定めると，$D\Lambda_f=\Lambda_\mu$が成り立つ：
+    \begin{align*}
+        D\Lambda_f(\varphi)&=-\Lambda_f(D\varphi)\\
+        &=-\int_\Om f(x)\cdot D\varphi(x)dx\\
+        &=\int_\Om Df(x)\cdot\varphi(x)dx=\Lambda_\mu(\varphi).
+    \end{align*}
+    したがって，$D\Lambda_f=\Lambda_{Df}$が成り立つことは，$\Lambda_{Df}=\Lambda_\mu$に同値．これは$d\mu=Df(x)dx$と同値だから，$f$が絶対連続であることに同値\ref{thm-absolutely-continuous}．
+\end{example}
+
+\begin{theorem}[絶対連続性の復習]\label{thm-absolutely-continuous}
+    $f:[a,b]\to\R$について，次の条件は同値．
+    \begin{enumerate}
+        \item $\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{n\in\N}\;\forall_{\sqcup_{i\in[n]}\{(a_i,b_i)\}\subset[a,b]}\;\sum^n_{i=1}(b_i-a_i)<\delta\Rightarrow\sum^n_{i=1}\abs{f(b_i)-f(a_i)}<\ep$．
+        \item $g\in L^1([a,b])$が存在して，$\forall_{x\in[a,b]}\;f(x)=f(a)+\int_{y=a}^xg(y)dy$．特に，$f$は$L^1$-有界な導関数を殆ど至る所で持つ．
+        \item $f$は$[a,b]$上一様連続かつ有界変動かつ$[a,b]$の零集合の$f$に関する順像は零である．
+        \item $f$に関するStieltjes測度$df$はLebesgue測度$dx$に関して絶対連続である：$df=gdx$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{用語のまとめ}
 
 \begin{discussion}[distributional density]
     密度（体積形式$\dvol$）を備えた可微分多様体$X$において，積分なる連続線型汎関数
@@ -6493,14 +6715,14 @@ title=]
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
         b\ar@{|->}[r]&\int_{x\in X}b(x)\dvol(x)
     }\]
-    が定まる．$C_c^\infty(X)$の元は隆起関数と呼ばれることに注意．なお，$C_c^\infty(X)$は局所凸かつ完備で，LF-空間=Frechet空間の帰納極限である（それ自身がFrechet空間であるわけではない）．
+    が定まる．$C_c^\infty(X)$の元は\textbf{隆起関数}または\textbf{試験関数}と呼ばれることに注意．なお，$C_c^\infty(X)$は局所凸かつ完備で，LF-空間=Frechet空間の帰納極限である（それ自身がFrechet空間であるわけではない）．
     一方で，$C_c^\infty(X)$の元のすべてが積分の形で表現できるわけではない．
     例えばデルタ分布$\delta_{x_0}:b\mapsto b(x_0)$である．
     これは隆起関数の積分として表せないが，その列（台が$x_0$に収束するような）の積分の極限と捉えられる．
     そこで，$C_c^\infty(X)^*$の元を\textbf{分布密度}という．
 \end{discussion}
 \begin{remarks}
-    こうして，Soborevが考え始めた「一般化関数」を，特定の関数クラス（今回だと$C_c^\infty(X)$）上の連続線型汎関数として定義することが，Schwartz超関数のアイデアであり，「分布」と名付けた．
+    こうして，Sobolevが考え始めた「一般化関数」を，特定の関数クラス（今回だと$C_c^\infty(X)$）上の連続線型汎関数として定義することが，Schwartz超関数のアイデアであり，「分布」と名付けた．
     この観点は確率分布に象徴され，
     \[\brac{P,\varphi}=\int_\R\varphi dP\]
     とすると，テスト関数$\varphi$に関して線型かつ連続である．
@@ -6540,7 +6762,7 @@ title=]
     他にも，分布の引き戻しや分布の積などの演算も，滑らかな関数の場合と整合的に，部分的に定義できるが，大域的には定義できない．
 \end{discussion}
 
-\subsection{定義}
+\subsection{定義1}
 
 \begin{definition}[distribution on $X$]
     \textbf{$X$上の分布}とは，連続線型汎関数$C_c^\infty(X)\to\R$をいう．
@@ -6573,6 +6795,412 @@ title=]
     \[\brac{f,dH}=\int_\R f(x)dH(x)=f(0).\]
     これを理工学分野では$dH(x)=\delta_0(x)dx$で表す．
 \end{example}
+
+\subsection{軟化子のさらなる補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $J_\ep:L^1_\loc(\R^n)\to C^\infty(\R^n)$の$\ep\to0$極限では，殆ど至る所恒等写像になる．
+\end{tcolorbox}
+
+\begin{definition}[Lebesgue point]\mbox{}
+    \begin{enumerate}
+        \item $f\in L^1_\loc(\R^n)$について，$x\in\R^n$が$f$の\textbf{Lebesgue点}であるとは，次を満たすことをいう：
+        \[\lim_{r\to0^+}\frac{1}{\abs{B(x,r)}}\int_{B(x,r)}\abs{f(y)-f(x)}dy=0.\]
+        \item $f\in L^1(\R^n)$の$x$における微分を$\lim_{B\to x}\frac{1}{\abs{B}}\int_Bfdm$と定めると，Lebesgue点では，$f$の$x$でのLebesgue積分の微分が$f$に等しい．これは三角不等式による．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    この量は$f$の$x$の近傍における振動の平均を測っている．
+\end{remarks}
+
+\begin{theorem}[Lebesgue differentiation theorem 1910]
+    任意の$f\in L^1_\loc(\R^n)$について，
+    $\R^n$の殆ど至る所Lebesgue点である．
+\end{theorem}
+
+\begin{theorem}
+    $f\in L^1_\loc(\R^n)$について，
+    \begin{enumerate}
+        \item $x$を$f$のLebesgue点とすると，$\lim_{\ep\to0}J_\ep f(x)=f(x)$．
+        \item $f$が連続ならば，$J_\ep f\in C^\infty(\R^n)$は$f$に広義一様収束する．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{定義2}
+
+\begin{definition}[distribution, order]
+    線型汎関数$T:C^\infty_c(X)\to\R$が\textbf{分布}であるとは，任意のコンパクト集合$K\in\cC$について，定数$C\in\R,N\in\N$が存在して，$\forall_{\varphi\in C^\infty(K)}\;\abs{T(\varphi)}\le C\sup_{x\in K}\sum_{\abs{\al}\le N}\abs{D^\al\varphi(x)}=C\norm{\varphi}_{K,N}$を満たすものをいう．
+    $N$が$K\in\cC$に依らず一様に取れるとき，その最小な$N$を用いて，分布は\textbf{$N$次}であるという．
+\end{definition}
+
+\begin{theorem}
+    $T$を分布とすると，次の2条件は同値．
+    \begin{enumerate}
+        \item $T$は$0$次の分布である．
+        \item $T$はRadon測度である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    Radon測度は，$\delta_x$を含め，$0$次の分布である．
+    実は$0$次の
+\end{example}
+
+\section{微分をFourier変換で緩める}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C^{m,p}(\Om)$が完備であるためには，微分できる関数の範囲を広げる必要がある．
+    そこで，Fourier変換を用いて微分を緩めることを考える．
+    こうして$L^2$-微分の概念に到達するが，この考え方はFourier変換と関係がない．
+    
+    そこで，次の節で$u\mapsto u_\al$の対応をFourier変換の言葉を使わずに一意に定まることを示し，
+    $m$階$L^p$-微分可能な関数の空間$W^{m,p}(\Om)$の理論を立てる．
+\end{tcolorbox}
+
+\begin{notation}
+    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階までの全ての偏導関数が，連続であるだけでなく$L^p$-可積分でもあるような関数の全体を$C^{m,p}(\Om)$で表す．
+    \[\norm{u}_{C^{m,p}(\Om)}:=\paren{\sum_{\abs{\al}\le m}\norm{D^\al u}^p_{L^p(\Om)}}^{1/p}\]
+    と定めると，これはノルムである．$C_b^m(\Om)$と異なり，完備にはならない．
+\end{notation}
+
+\begin{discussion}
+    Fourier変換$\F:L^2(\R^n)\to L^2(\R^n)$は，複素Frechet空間$\S(\R^n)\subset C^\infty(\R^n),\S(\R^n)\subset L^p(\R^n)\;(p\in[1,\infty])$上に線型同型を定めるのであった．
+    $u\in C^m_c(\R^n)\subset C^{m,2}(\R^n)$について，合成関数の微分法則より，
+    \[\forall_{\abs{\al}\le m}\;(FD^\al u)(\xi)=(i\xi)^\al(Fu)(\xi)\]
+    が成り立つ．故にParsevalの等式より
+    \[\norm{u}_{C^{m,2}(\R^n)}=\paren{\sum_{\abs{\al}\le m}\norm{\xi^\al Fu}^2_{L^2(\R^n)}}^{1/2}=\paren{\int_{\R^n}\abs{(Fu)(\xi)}^2\paren{\sum_{\abs{\al}\le m}\abs{\xi^\al}^2}d\xi}^{1/2}\]
+    が成り立つ．
+    こうして，Fourier変換のことばで，$C^{m,p}(\Om)$のノルムに別の表示を得た．
+    実は，右辺が有限になる関数$u$の全体は，同じノルムについてBanachになる．
+\end{discussion}
+
+\begin{proposition}
+    $H^m(\R^n)\subset L^2(\R^n)$を
+    \[H^m(\R^n):=\Brace{u\in L^2(\R^n)\mid\forall_{\abs{\al}\le m}\;\xi^\al(Fu)(\xi)\in L^2(\R^n)}\]
+    と定める．
+    \begin{enumerate}
+        \item $\nnorm{u}_m:=\paren{\int_{\R^n}\abs{(Fu)(\xi)}^2\paren{\sum_{\abs{\al}\le m}\abs{\xi^\al}^2}d\xi}^{1/2}$はノルムを定め，これについて完備になる．
+        \item $H^m(\R^n)$は内積$(u,v)_m:=\int_{\R^n}\paren{\sum_{\abs{\al}\le m}\abs{\xi^m}^2}(Fu)(\xi)\o{(Fv)(\xi)}d\xi$についてHilbert空間をなす．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}[Sobolev空間の微分不可能な元]
+    $u(x):=(1-\abs{x})\land0$とすると，$Fu(\xi)=\paren{\frac{2}{\pi}}^{1/2}\frac{1-\cos\xi}{\xi^2}$であるから，$u\in H^1(\R^1)$．
+\end{example}
+
+\begin{definition}
+    $u\in L^2(\R^n)$が$L^2$の意味で$m$階微分可能であるとは，次を満たすことをいう：
+    \[\forall_{\varphi\in C_c^\infty(\R^n)}\quad\int_{\R^n}u(x)D^\al\varphi(x)dx=(-1)^{\abs{\al}}\int_{\R^n}u_\al(x)\varphi(x)dx.\]
+\end{definition}
+\begin{lemma}
+    $u\in H^m(\R^n)$に対し，$u_\al:=F^{-1}((i\xi)^\al Fu)$は$\abs{\al}$階の$L^2$-導関数である．
+    実はこの逆も成り立ち，$H^m(\R^n)$は$L^2$の意味で$m$階微分可能な関数全体の空間である：$W^{m,2}(\R^n)=H^m(\R^n)$\ref{thm-Hilbert-Sobolev-space}．
+\end{lemma}
+
+\section{軟化作用素}
+
+\subsection{変分法の基本補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^p$の元を$C^\infty$の列で近似するときはいつでも畳み込みを用いる．
+\end{tcolorbox}
+
+\begin{lemma}
+    次を満たす関数$j\in C^\infty_c(\R^m)$が存在する：
+    \begin{enumerate}
+        \item $j\ge0$．
+        \item $\abs{x}\ge1\Rightarrow j(x)=0$．すなわち，$\supp j\subset B(0,1)$．
+        \item $\int_{\R^n}j(x)dx=1$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[mollifier]
+    補題を満たす関数$j\in C^\infty_c(\R^m)$を一つ取る．
+    \begin{enumerate}
+        \item $\ep>0$に対して，$j_\ep(x):=\frac{1}{\ep^n}j\paren{\frac{x}{\ep}}$とおくと，再び$j_\ep\in C_c^\infty(\R^n)$と(1),(3)を満たすが，(2)については$\abs{x}\ge\ep\Rightarrow j_\ep(x)=0$という形で満たす．
+        \item 畳み込みを取る作用素を$J_\ep:L^1_\loc(\R^n)\to C^\infty(\R^n);u\mapsto J_\ep u=j_\ep*u$で定める．これを\textbf{Friedrichsの軟化子}という．
+    \end{enumerate}
+\end{definition}
+\begin{lemma}
+    $J_\ep:L^1_\loc(\R^n)\to C^\infty(\R^n)$について，$u\in L^1_\loc(\R^n)$が$K\subset\R^n$の外で$0$ならば，$J_\ep u$は
+    \[K_\ep:=\Brace{x=x_1+x_2\in\R^n\mid x_1\in K,\abs{x_2}\le\ep}\]
+    の外において$0$である．
+\end{lemma}
+
+\begin{lemma}
+    $u\in L^p(\R^n)$ならば$J_\ep\in L^p(\R^n)$であり，
+    \begin{enumerate}
+        \item $\forall_{p\in[1,\infty]}\;\norm{J_\ep u}_{L^p(\R^n)}\le\norm{u}_{L^p(\R^n)}$．
+        \item $\forall_{p\in[1,\infty)}\;\lim_{\ep\searrow0}\norm{J_\ep u-u}_{L^p(\R^n)}=0$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[du Bois-Reymond lemma / 変分法の基本補題]
+    任意の$1\le p<\infty$において，$C_c^\infty(\Om)\subset C_c(\Om)$も$L^p(\Om)$上稠密である．
+\end{theorem}
+
+\subsection{$L^p$-微分の一意性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    微分可能性を積分を使って緩める手法を考えているが，$\varphi\in C_c^\infty(\Om)$はそのための関数クラスとして十分大きい．
+    収束の概念を弱めるときと似ている．
+\end{tcolorbox}
+
+\begin{theorem}\label{thm-uniqueness-of-weak-derivative}
+    $u\in L^1_\loc(\Om)$が
+    $\forall_{\varphi\in C_c^\infty(\Om)}\;\int_\Om u(x)\varphi(x)dx=0$
+    を満たすならば，$u=0\;\ae$である．
+\end{theorem}
+
+\section{弱微分}
+
+\subsection{一般化された導関数}
+
+\begin{definition}[weak derivative]
+    $u\in L^1_\loc(\Om)$と$\al\in\N^m$について，$u$の\textbf{$\al$-弱微分}とは，
+    \[\forall_{\varphi\in C_c^\infty(\Om)}\;\int_\Om u(x)D^\al\varphi(x)dx=(-1)^{\abs{\al}}\int_\Om u_\al(x)\varphi(x)dx\]
+    を満たす$u_\al\in L^1_\loc(\Om)$をいう．
+\end{definition}
+\begin{remark}
+    $u\in C^{\abs{\al}}(\Om)$ならば，$u_\al=D^\al u$である．
+    以降，弱微分も$D^\al u$で表す．
+    普通の導関数と区別するときは，これを$\partial^\al u$で表す．
+\end{remark}
+
+\begin{notation}
+    $D_ju:=u_{e_j}$を
+    \[\forall_{\varphi\in C_c^\infty(\Om)}\;\int_\Om u(x)\pp{\varphi(x)}{x_j}\varphi(x)dx=-\int_\Om (D_ju(x))\varphi(x)dx\]
+    によって定めると，$D^{\al}u=D^{\al_1}_1\cdots D^{\al_n}_nu$と表せる．
+\end{notation}
+
+\begin{proposition}[コンパクト台を持つ$C^m$-級関数は滑らかな関数で一様近似可能，]\mbox{}
+    \begin{enumerate}
+        \item 任意の$\varphi\in C_c^m(\Om)$について，$C_c^\infty(\Om)$の列$(\varphi_n)$であって，任意の$\abs{\al}\le m$について$D^\al\varphi_n$が$D^\al\varphi$に一様収束するものが存在する．
+        \item $u\in L^1_\loc(\Om)$に弱微分$D^\al u=u_\al$が存在するとする．このとき，任意の$\varphi\in C^{\abs{\al}}_c(\Om)$についても，関係
+        \[\forall_{\varphi\in C_c^{\abs{\al}}(\Om)}\;\int_\Om u(x)D^\al\varphi(x)dx=(-1)^{\abs{\al}}\int_\Om u_\al(x)\varphi(x)dx\]
+        を満たす．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Sobolev空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続微分可能な関数の空間$C^m(\Om)$を一般化して，$L^p$-微分可能な関数の空間を考える．
+\end{tcolorbox}
+
+\begin{definition}[weak differentiable, Sobolev space]
+    $p\in[1,\infty),m\in\N$とする．
+    \begin{enumerate}
+        \item $p$乗可積分関数$u\in L^p(\Om)$が$m$階$L^p$-微分可能であるとは，任意の$\abs{\al}\le m$について，一般化された導関数$u_\al$が存在し，これも$p$-乗可積分である$u_\al\in L^p(\Om)$ことをいう．
+        \item $m$階$L^p$-微分可能な関数全体のなす$L^p(\Om)$の部分空間を$W^{m,p}(\Om)$で表し\textbf{Sobolev空間}という．このとき$C^{m,p}(\Om)\subset W^{m,p}(\Om)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Sobolev空間$W^{m,p}(\Om)$について，
+    \begin{enumerate}
+        \item $\norm{u}_{W^{m,p}(\Om)}=\paren{\sum_{\abs{\al}\le m}\norm{D^\al u}^p_{L^p(\Om)}}^{1/p}$をノルムとしてBanach空間をなす．
+        \item $p=2$のとき，同じノルムについてHilbert空間をなし，対応する内積は$(u,v)_{W^{m,2}(\Om)}=\sum_{\abs{\al}\le m}(D^\al u,D^\al v)_{L^2(\Om)}$である．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Sobolev空間の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    滑らかさの尺度$p$の大きさを調節することで，多様な滑らかさを表現できる．
+    強い順に，連続微分可能，Lipschitz連続，$\al$-Holder連続($0<\al\le 1$)，絶対連続，一様連続，連続関数となる．
+\end{tcolorbox}
+
+\begin{example}[一次元の場合]
+    $I\osub\R$とする．
+    滑らかさの尺度$p$の大きさを調節することで，多様な滑らかさを表現できる．
+    強い順に，連続微分可能，Lipschitz連続，$\al$-Holder連続($0<\al\le 1$)，絶対連続，一様連続，連続関数となる．
+    \begin{enumerate}
+        \item $W^{1,1}(I)\subset C(I)$は絶対連続な関数のなす空間\ref{thm-absolutely-continuous}．
+        \item $W^{1,2}(I)=H^1(I)$は$1/2$次Holder連続な関数のなす空間である．
+        \item $W^{1,\infty}(I)=\Lip(I)$はLipschitz連続関数全体のなす空間となる．
+    \end{enumerate}
+    Cantor関数は絶対連続でないが，連続かつ殆ど至る所微分可能で，Lebesgue可積分な導関数を持つ．
+\end{example}
+
+\begin{proposition}
+    高次の場合は，もはや連続でない関数を含む．
+    しかし，次のような形一般化出来る．
+    $\Om\osub\R^n$とする．
+    \begin{enumerate}
+        \item $f\in W^{1,p}(\Om)\;(1\le p\le\infty)$は$\R^n$の座標方向に平行な殆どすべての直線への制限が絶対連続であるような関数と，殆ど至る所等しい．
+        \item $f\in W^{1,p}(\Om)\;(n\le p\le\infty)$は$\gamma:=1-\frac{n}{p}$次Holder連続な関数と殆ど至る所等しい．特に$p=\infty$のときは局所Lipschitzな関数と殆ど至る所等しい．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $W^{k,p}(\Om)\;(1\le p<\infty)$は可分である．
+        \item $W^{k,\infty}$はノルム代数となる．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{弱微分の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $D^\al$は線型作用素である．
+\end{tcolorbox}
+
+\begin{proposition}[線型作用素]
+    $u,v\in L^1_\loc(\Om)$に対して$D^\al u,D^\al v$が存在するならば，$au+bv\;(a,b\in\C)$も弱微分可能で，$D^\al(au+bv)=aD^\al u+bD^\al v$．
+\end{proposition}
+
+\begin{theorem}[Leibniz則]
+    $u\in L^1_\loc(\Om)$は1階の弱偏導関数$D_ju$を持つとする．
+    $\psi\in C^1(\Om)$に対して，$D_j(\psi u)$が存在し，$D_j(\psi u)=D_j\psi\cdot u+\psi\cdot D_ju$．
+\end{theorem}
+
+\begin{proposition}[畳み込みとの可換性]
+    $u\in L^1_\loc(\R^n)$に対して$D^\al u$が存在するならば，
+    \[\forall_{\varphi\in C_c^{\abs{\al}}(\R^n)}\;D^\al(\varphi *u)=(D^\al\varphi)*u=\varphi *D^\al u.\]
+\end{proposition}
+
+\begin{proposition}
+    領域$\Om\osub\R^n$上の$u\in L^1_\loc(\Om)$が，1階導関数$D_j(u)\;(j\in[n])$をすべて持ち，すべて$0$に等しいならば，$u$は殆ど至る所定数である：$\exists_{\al\in\C}\;u(x)=\al\;\ae$．
+\end{proposition}
+
+\subsection{Sobolev部分空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^p(\Om)$において$C_c(\Om),C_c(\Om)^\infty$が稠密であるように，$W^{m,p}(\Om)$では$C^{m,p}(\Om)$が稠密である．
+\end{tcolorbox}
+
+\begin{theorem}
+    $C^{m,p}(\Om)$は$W^{m,p}(\Om)$上稠密である．
+\end{theorem}
+\begin{remark}
+    $u\in\o{C^{m,p}(\Om)}$に$L^p$-収束する$C^{m,p}(\Om)$の列$(u_n)$が存在する：$\norm{D^\al u_n-D^\al u}_{L^p(\Om)}\to0$．
+    これを用いて，$D^\al u=\lim_{n\to\infty,L^p}\partial^\al u_n$が成り立つ．
+    すなわち，通常の意味での連続な導関数の$L^p$極限として得られる導関数を\textbf{$\al$-強微分}と呼ぶとすると，
+    $u\in\o{C^{m,p}(\Om)}$については，強微分と弱微分は一致する．
+    上の定理は，強微分と弱微分が完全に一致することも含意している．
+\end{remark}
+
+\begin{definition}
+    $W^{m,p}_0(\Om):=\o{C^\infty_c(\Om)}$と定めると，$C^m_c(\Om)$関数も$C^\infty_c(\Om)$によって一様近似可能だから，$W^{m,p}_0(\Om)=\o{C^m_c(\Om)}$でもある．
+\end{definition}
+
+\begin{theorem}
+    $\forall_{p\in[1,\infty)}\;W_0^{m,p}(\Om)=W^{m,p}(\Om)$．
+\end{theorem}
+
+\subsection{Sobolev空間の描像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $W^{1,p}(a,b)$は，偏微分方程式の解空間みたいになっている．
+    この範囲で探す解を，$C^{1,p}(a,b)$-古典解とは別に，弱解と呼ぶ．
+    $W^{1,p}_0(a,b)$はそのうち，境界上で消えるもののなす部分空間となっている．
+\end{tcolorbox}
+
+\begin{theorem}
+    $u\in L^p((a,b))\;(a<b\in\oR)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $u\in W^{1,p}(a,b)$．
+        \item ある$v\in L^p(a,b),\al\in\C,c\in(a,b)$が存在して，$u(x)=\int^x_cv(y)dy+\al\;\ae$と表せる．
+    \end{enumerate}
+    このとき，$u$は至る所連続で，$u(c)=\al$かつ$v=Du$であることに注意．
+\end{theorem}
+
+\begin{definition}
+    $a,b\in\R$で，区間が有界である場合を考える．
+    このとき，$u(x)=\int^x_cDu(y)dy+\al$は$[a,b]$上に連続延長出来る．
+\end{definition}
+
+\begin{theorem}
+    $(a,b)$が有界であるとき，$u\in W^{1,p}(a,b)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $u\in W^{1,p}_0(a,b)$．
+        \item $u(a)=u(b)=0$．
+    \end{enumerate}
+\end{theorem}
+
+\section{$p=2$の場合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Sobolev空間がHilbert空間にもなる$p=2$のとき，$H^m(\R^n):=W^{m,2}(\R^n)$で表す．
+    この場合をFourier変換を使って調べる．
+\end{tcolorbox}
+
+\begin{theorem}\label{thm-Hilbert-Sobolev-space}
+    $W^{m,2}(\R^n)\simeq_\Hilb H^m(\R^n)$．
+\end{theorem}
+
+\subsection{同値なノルムによる拡張}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    同値なノルムを用いると，$H^m(\R^n)\;(m\in\N)$だけでなく，一般の$s\in\R_+$についても拡張出来る．
+    なお，$H^0(\R^n)=L^2(\R^n)$で，$s$が大きくなる毎にどんどん狭くなっていく．
+\end{tcolorbox}
+
+\begin{proposition}[同値なノルム]
+    $\R^n$にEuclidノルム$\abs{\xi}$を考える．
+    \[\norm{u}_m=\paren{\int_{\R^n}\abs{(Fu)(\xi)}^2(1+\abs{\xi}^2)^md\xi}^{1/2}\]
+    は$u\in H^m(\R^n)$上の$\nnorm{u}_m=\norm{u}_{W^{m,2}}$と同値なノルムを定める．
+\end{proposition}
+
+\begin{proposition}
+    $s\in\R_+$に対して
+    \[H^s(\R^n):=\Brace{u\in L^2(\R^n)\mid(Fu)(\xi)(1+\abs{\xi}^2)^{s/2}\in L^2(\R^n)}\]
+    とおくと，これは同じノルムと内積についてHilbert空間をなす．
+\end{proposition}
+
+\begin{lemma}
+    $\forall_{s\le s'\in\R_+}\;\forall_{u\in H^{s'}(\R^n)}\;\norm{u}_s\le\norm{u}_{s'}$．
+\end{lemma}
+
+\begin{theorem}
+    $C_c^\infty(\R^n)$は$H^s(\R^n)$上稠密である．
+\end{theorem}
+
+\subsection{Sobolevの埋蔵定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    前節の消息
+    \[C_c^\infty(\R^n)\subset H^s(\R^n)\subset H^{t}(\R^n)\subset H^0(\R^n)=L^2(\R^n)\;(s\ge t)\]
+    は，より$s$の大きい$H^s$に属することは，$l^2$の意味でより滑らかであることを映し出している．
+\end{tcolorbox}
+
+\begin{theorem}
+    $s>n/2$ならば，任意の$u\in H^s(\R^n)$は$\R^n$上殆ど至る所一様連続であり，定数$c=c_{n,s}$が存在して次が成り立つ：$\exists_{u\in H^s(\R^n)}\;\sup_{x\in\R^n}\abs{u(x)}\le c\norm{u}_s$．
+\end{theorem}
+\begin{remarks}
+    $C^m,C_b^m$は古典的な導関数の深さと$\sup$ノルムで関数の滑らかさを測ったが，$H^s$一般に$W^{m,p}$は一般化された導関数と$L^2$-ノルムの組み合わせで滑らかさを測っている．
+    そしてこれらの間に，$H^s$の滑らかさは，$n/2$だけずらせば$C_b^m$の中に埋め込めることをいう．
+    すなわち，$s=m+n/2$という対応関係である．
+    これは$s$が半整数であるが，整数の$s$は$s-n/2$次のHolder連続性を表す．
+\end{remarks}
+
+\begin{definition}[Holder continuous]
+    $\al\ge0$について，
+    $f:\R^n\supset\Om\to\C$が$\al$-Holder連続であるとは，
+    \[\exists_{C\in\R}\;\forall_{x,y\in\Om}\;\abs{f(x)-f(y)}\le C\norm{x-y}^\al\]
+    を満たすことをいう．
+    $0$-Holder連続性は有界性と同値で，$1$-Holder連続性はLipschitz連続性に同値．
+\end{definition}
+
+\begin{theorem}
+    $\frac{n}{2}<s<\frac{n}{2}+1$とする．このとき，定数$c=c_{n,s}$が存在して，$u$は$\R^n$上$(s-n/2)$-次Holder連続である：
+    \[\forall_{u\in H^s(\R^n)}\;\forall_{x,x'\in\R^n}\;\abs{u(x')-u(x)}\le c_{n,s}\norm{u}_s\abs{x'-x}^{s-n/2}.\]
+\end{theorem}
+
+\chapter{Fourier変換}
 
 \chapter{von Neumann環}
 
@@ -6629,7 +7257,7 @@ title=]
 \subsection{定義１と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=局所凸な$F$-空間]
     Fréchet空間とは，斉次性を緩めたノルムを備えた空間($F$-ノルム空間という)で，そのノルム位相について完備であるものをいう．
     なお，セミノルム空間はHausdorffでないから，「完備なセミノルム空間」という概念は筋が悪い．が，セミノルム可算族が定めるセミノルム位相はHausdorff足り得る\ref{def-seminorm-topology}．
     そして，セミノルム可算族が定める位相について完備な空間はFréchet空間の特徴付けとなる．
@@ -6653,17 +7281,6 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{example}[Frechet空間]\mbox{}
-    \begin{enumerate}
-        \item Lebesgue空間$l^p\;(0<p<1)$はFrechet空間ではないが，$F$-空間である．なお，この空間の$p$-ノルムは，三角不等式を成り立たせるために$p$乗根を省いて，$\norm{x}_p=\sum_{i}\abs{x_i}^p$とする．
-        \item Lebesgue空間$L^p(X)$は，$p<1$のときFréchet空間でない局所凸線型空間となる．
-        \item コンパクトな可微分多様体上の可微分写像の空間$C^\infty(X)$は，半ノルムの族$p^\al_K:C_c^\infty(\R^n)\to\R_+;\Phi\mapsto\sup_{x\in K}\abs{\partial^\al\Phi(x)}\;(K\compsub\R^n,\al\in\N^n)$についてFréchet空間である．Schwartzはこれを$\mathcal{E}(\R^n)$で表した．
-        \item コンパクトでない可微分多様体でも，$C^\infty(\R)$などはFréchet空間となる．
-        \item 射影極限$\R^\infty:=\varprojlim_n\R^n$（位相線型空間としての直積として得られる空間）はFréchet空間となる．つまり，射影$p^n:\R^\infty\to\R^n$と$\R^n$上のノルム$\R^n\to\R$との合成の族$(p^n\circ\norm{-}_n)_{n\in\N}$はセミノルムの族になるが，これが定める位相について完備である．
-        \item 急減少関数の空間$\cS$はFréchet空間である．
-    \end{enumerate}
-\end{example}
-
 \begin{lemma}[ノルムの$F$-性は距離でいうと平行移動不変性]\mbox{}
     \begin{enumerate}
         \item $F$-ノルムの定める距離$d:V\times V\to \R,d(x,y):=\norm{x-y}$は，平行移動不変性を満たす：$\forall_{x,y,a\in V}\;d(x+a,y+a)=d(x,y)$．
@@ -6682,6 +7299,40 @@ title=]
     $F$-空間を距離の言葉で定義すると，平行移動不変距離$d:V\times V\to \R$について完備な位相線形空間を定めること（$d$が定める位相についてスカラー乗法と加法が連続であること）をいう．
     さらにこれが局所凸であるとき，Frechet空間という．
 \end{remarks}
+
+\subsection{例}
+
+\begin{example}[連続関数の空間]
+    $\Om\osub\R^n$上の連続関数の空間$C(\Om)$はFrechet空間となる．
+    $C(\Om)$は局所有界でないので，ノルム付け可能ではない\ref{thm-character-of-TVS}．
+\end{example}
+
+\begin{example}[$p<1$の場合のLebesgue空間]\mbox{}
+    \begin{enumerate}
+        \item Lebesgue空間$l^p\;(0<p<1)$はFrechet空間ではないが，$F$-空間である．なお，この空間の$p$-ノルムは，三角不等式を成り立たせるために$p$乗根を省いて，$\norm{x}_p=\sum_{i}\abs{x_i}^p$とする．
+        \item Lebesgue空間$L^p(X)$も，$p<1$のときFréchet空間でない局所凸線型空間となる．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[滑らかな関数の空間]\mbox{}
+    \begin{enumerate}
+        \item コンパクトな可微分多様体$X$上の可微分写像の空間$C^\infty(X)$は，半ノルムの族$p^\al_K:C_c^\infty(\R^n)\to\R_+;\Phi\mapsto\sup_{x\in K}\abs{\partial^\al\Phi(x)}\;(K\compsub\R^n,\al\in\N^n)$についてFréchet空間である．Schwartzはこれを$\mathcal{E}(\R^n)$で表した．
+        \item コンパクトでない可微分多様体でも，$C^\infty(\R)$などはFréchet空間となる．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[Hardy space]
+    $\Om\osub\C$上の正則関数の空間$H(\Om)\subset C(\Om)$はFrechet空間の閉部分空間をなすから，再びFrechet空間である．
+    $H(\Om)$はHeine-Borel性を持つ．局所有界でないので，ノルム付け可能ではない\ref{thm-character-of-TVS}．
+\end{example}
+
+\begin{example}[Euclid空間の延長線上としてのFrechet空間]
+    射影極限$\R^\infty:=\varprojlim_n\R^n$（位相線型空間としての直積として得られる空間）はFréchet空間となる．つまり，射影$p^n:\R^\infty\to\R^n$と$\R^n$上のノルム$\R^n\to\R$との合成の族$(p^n\circ\norm{-}_n)_{n\in\N}$はセミノルムの族になるが，これが定める位相について完備である．
+\end{example}
+
+\begin{example}[the Schwartz space]
+    急減少関数の空間$\cS$はFréchet空間である．
+\end{example}
 
 \subsection{定義２とBanach空間との関係}
 
@@ -8118,6 +8769,8 @@ title=]
     I. M. Gelfand and S. V. Fomin "Calculus of Variations"
     \bibitem{Hytonen}
     Tuomas Hytonen, Jan van Neerven, Mark Veraar, Lutz Weis "Analysis in Banach Spaces"
+    \bibitem{Rudin}
+    Rudin "Functional Analysis"
 \end{thebibliography}
 
 \end{document}
