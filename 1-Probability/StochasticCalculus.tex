@@ -11,22 +11,153 @@
 
 \chapter{Brown運動}
 
+\section{記法}
+
 \begin{notation}
     正整数$k,n\ge1$について，
     \begin{enumerate}
         \item $C_b^k(\R^n)$で，$C^k$-級で，任意の$k$階以下の偏導関数は有界である関数の空間とする．
-        \item $C_0^k(\R^n):=C_c(\R^n)\cap C_b^k(\R^n)$とする．
-        \item $C_p^\infty(\R^n)$は滑らかな関数で，その関数自身とその任意の偏導関数は高々多項式の速度で増加する関数の空間とする．\footnote{緩増加関数．\url{https://ncatlab.org/nlab/show/tempered+distribution}}
-        \item $C_b^\infty(\R^n):=C_p^\infty(\R^n)\cap\bigcap_{k\in\N}C_b^k(\R^n)$とする．
-        \item $C_0^\infty(\R^n):=C^\infty(\R^n)\cap C_c(\R^n)$とする．
+        \item $C_0^k(\R^n):=C_c(\R^n)\cap C_b^k(\R^n)$を，コンパクト台を持つもののなす部分空間とする．
+        \item $C_p^\infty(\R^n)$は滑らかな関数であって，その関数自身とその任意の偏導関数は高々多項式の速度で増加する関数の空間とする．\footnote{緩増加関数．\url{https://ncatlab.org/nlab/show/tempered+distribution}}
+        \item $C_b^\infty(\R^n):=C_p^\infty(\R^n)\cap\bigcap_{k\in\N}C_b^k(\R^n)$を任意の偏導関数が有界なもののなす部分空間とする．
+        \item $C_0^\infty(\R^n):=C^\infty(\R^n)\cap C_c(\R^n)$をコンパクト台を持つ滑らかな関数の空間とする．
     \end{enumerate}
     また，$(\Om,\F,P)$を確率空間とし，$L^p(\Om)$によってその上の$L^p$空間を表す．
 \end{notation}
 
-\section{定義と構成}
+\section{Gauss過程}
+
+\subsection{Gauss空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    $X$が$d$次元Gauss変数であるとは，任意の線型汎関数$\al:\R^d\to\R$について$\al(X)$がGauss確率変数であることと同値．
+    この他にも，Gauss変数の独立性はGauss空間で幾何学的に捉えられる．
+\end{tcolorbox}
+
+\begin{notation}
+    $X\sim N(0,0)$として，定数関数はGauss確率変数とする．
+\end{notation}
+
+\begin{proposition}[Gauss確率変数全体の空間は閉部分空間をなす]
+    $(X_n)$を$X\in\Meas(\Om,\R)$に確率収束するGauss確率変数の列とする．このとき，$X$もGaussで，族$\{\abs{X_n}^p\}$は一様可積分で，$X_n\to X$は任意の$p\ge1$について$L^p$-収束もする．
+\end{proposition}
+
+\begin{definition}[Gaussian subspace]
+    Hilbert空間$L^2(\Om,\F,P)$の閉部分空間であって，中心化されたGauss確率変数のみからなるものを\textbf{Gauss空間}という．
+\end{definition}
+
+\begin{proposition}[独立性の特徴付け]
+    $(G_i)_{i\in I}$をあるGauss空間の閉部分空間の族とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\sigma$-代数$\sigma(G_i)$の族は独立である．
+        \item 各$G_i$は組ごとに直交する：$\forall_{i,j\in I}\;G_i\perp G_j$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Gauss測度}
+
+\begin{proposition}[一般化された独立同分布列の存在定理]
+    $H$を可分実Hilbert空間とする．
+    ある確率空間$(\Om,\F,P)$とその上の確率変数の族$X=(X_h)_{h\in H}$が存在して，次の2条件を満たす：
+    \begin{enumerate}
+        \item 写像$X:H\to\Meas(\Om,\R);h\mapsto X_h$は線型である．
+        \item 任意の$h\in H$について，確率変数$X_h$は中心化されたGauss変数で，線型写像$X:H\to L^2(\Om)$は等長である：$E[X_h^2]=\norm{h}^2_H$．
+        \item $\Im X\simeq_\Hilb H$は$L^2(\Om)$のGauss部分空間である．
+    \end{enumerate}
+\end{proposition}
+\begin{remark}
+    この同一視により，独立性$X_h\indep X_{h'}$は添字空間$H$における直交性として理解できる．
+\end{remark}
+
+\begin{definition}
+    $(A,\A,\mu)$を可分な$\sigma$-有限測度空間とする．$H:=L^2(A,\A,\mu)$として，Gauss変数族$X=(X_h)_{h\in H}$を取る．
+    この写像$X$を$(A,\A)$上の\textbf{強度$\mu$のGauss測度}という．
+    測度確定な可測集合$F\in\A,\mu(F)<\infty$のGauss測度$X(F)$は$X(1_F)$とも表す．
+\end{definition}
+
+\begin{definition}[equivalence / version, finite dimensional distributions]\mbox{}
+    \begin{enumerate}
+        \item 同じ状態空間$(E,\E)$を持つ$(\Om,\F,P),(\Om',\F',P')$上の2つの過程$X,X'$が\textbf{同値である}または一方が他方の\textbf{バージョン}であるとは，
+        任意の有限部分集合$\{t_1,\cdots,t_n\}\subset\R_+$と任意の可測集合$A_1,\cdots,A_n\in\E$について，
+        \[P[X_{t_1}\in A_1,\cdots,X_{t_n}\in A_n]=P'[X'_{t_1}\in A_1,\cdots,X'_{t_n}\in A_n]\]
+        \item 測度$P$の$(X_{t_1},\cdots,X_{t_n}):\Om\to E^n$による押し出しを$P_{t_1,\cdots,t_n}:=P^{(X_{t_1},\cdots,X_{t_n})}$で表す．
+        任意の有限集合$\{t_1,\cdots,t_n\}\subset\R_+$に関する押し出し全体の集合$\M_X$を\textbf{有限次元分布}(f.d.d)と呼ぶ．
+    \end{enumerate}
+\end{definition}
+\begin{lemma}
+    $X,Y$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $X,Y$は同値である．
+        \item $\M_X=\M_Y$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[modification, indistinguishable]
+    定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
+    \begin{enumerate}
+        \item 2つは修正であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．
+        \item 2つは識別不可能であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $X,Y$が互いの修正であるならば，同値である．
+        \item $X,Y$が互いの修正であり，いずれも連続ならば，識別不可能である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Gauss過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\begin{definition}[Gaussian process, centered]
+    $(\Om,\F,P)$上の実確率過程$X=(X_t)_{t\in\R_+}$について，
+    \begin{enumerate}
+        \item \textbf{Gauss過程}であるとは，任意の有限部分集合$\{t_1,\cdots,t_n\}\subset \R_+$について，確率ベクトル$(X_{t_1},\cdots,X_{t_n}):\Om\to\R^n$は$n$次元正規分布に従うことをいう．
+        \item Gauss過程$B$の\textbf{共分散}とは，関数$\Gamma:\R_+\times\R_+\to\R;(s,t)\mapsto\Cov[X_s,X_t]=E[(X_s-E[X_s])(X_t-E[X_t])]$をいう．
+        \item \textbf{中心化されている}とは，$\forall_{t\in\R_+}\;E[X_t]=0$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[semi-definite positive function]
+    関数$\Gamma:T\times T\to\R$が\textbf{半正定値}であるとは，$T$の任意の有限組$(t_1,\cdots,t_d)\in T^d\;(d\in\N)$に対して，行列$(\Gamma(t_i,t_j))_{i,j\in[d]}$は半正定値であることをいう．
+\end{definition}
+
+\section{定義と性質}
+
+\begin{definition}[Brownian motion]
+    $(\Om,\F,P)$上の実確率過程$(B_t)_{t\in\R_+}$が\textbf{Brown運動}であるとは，次の4条件を満たすことをいう：
+    \begin{enumerate}[({B}1)]
+        \item $B_0=0\;\as$
+        \item $\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$は独立．
+        \item 増分について，$B_t-B_s\sim N(0,t-s)\;(0\le s<t)$．
+        \item 写像$\R_+\to\Meas(\Om,\R);t\mapsto B_t$は殆ど確実に連続． 
+    \end{enumerate}
+    $d$個の独立なBrown運動$B^1,\cdots,B^d$の積$B=(B^1_t,\cdots,B^d_t)_{t\in\R_+}$を\textbf{$d$次元Brown運動}という．
+\end{definition}
+
+\begin{proposition}
+    実確率過程$B=(B_t)_{t\in\R_+}$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $B$は(B1),(B2),(B3)を満たす．
+        \item $B$は平均$0$共分散$\Gamma(s,t):=\min(s,t)$のGauss過程である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)]  
+    \end{description}
+\end{proof}
+
+\section{構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
     構成のアイデアは複数ある．
     \begin{enumerate}
         \item $[0,1]$上に構成してから，Kolmogorovの拡張定理で$\R$上に延長する．
@@ -35,13 +166,28 @@ title=]
     \end{enumerate}
 \end{tcolorbox}
 
-\begin{definition}[skelton / Cameron-Martin subspace]
-    \[H:=\Brace{w(t)=\int^t_0h(x)dx\in C_{(0)}([0,1])\;\middle|\;h\in L^2([0,1],dx)}\]
-    と定めると，これは内積$(f_1,f_2):=\int^1_0h_1h_2dx$についてHilbert空間となる．
-    これを$W_0$の骨格，またはCameron-Martin部分空間という．
-\end{definition}
+\subsection{}
 
-\section{Laplace作用素}
+\begin{theorem}[Kolmogorov's continuity criterion]
+    実過程$X$が$\exists_{\al,\beta,C>0}\;\forall_{t,h\in\R_+}\;E[\abs{X_{t+h}-X_t}^\al]\le Ch^{1+\beta}$を満たすならば，ある修正が存在して殆ど確実に連続である．
+\end{theorem}
+\begin{remarks}
+
+\end{remarks}
+
+\section{Wiener積分}
+
+\section{Wiener空間}
+
+\section{Brownian Filtration}
+
+\section{Markov性}
+
+\section{Brown運動に付随するmartingale}
+
+\section{強Markov性}
+
+\section*{Laplace作用素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -49,7 +195,7 @@ title=]
     その生成作用素$\lim_{t\to0}\frac{P_t-I}{t}=\frac{\nabla}{2}$がLaplace作用素である．$I$は恒等作用素とした．
 \end{tcolorbox}
 
-\chapter{確率積分}
+\chapter{確率解析}
 
 \begin{quotation}
     確率論ははじめから偏微分方程式論と密接に関係していたことを思うと，確率論自体が測度論で基礎付けられることは自然であった．
@@ -58,6 +204,38 @@ title=]
     Brown運動$B_t$は微分可能ではないし，有界変動にもならないので，Stieltjes積分としては定義できる道はない．
     連鎖律は伊藤の公式と呼び，微分は出来ないから積分の言葉で定式化される．余分な右辺第3項が特徴である．
 \end{quotation}
+
+\section{確率積分}
+
+\section{不定確率積分}
+
+\section{一般の過程の積分}
+
+\section{伊藤の公式}
+
+\section{田中の公式}
+
+\section{伊藤の公式の多次元化}
+
+\section{Stratonovich積分}
+
+\section{後退確率積分}
+
+\section{積分表現定理}
+
+\section{Girsanovの定理}
+
+\chapter{微分作用素と発散作用素}
+
+\section{有限次元での議論}
+
+\section{Malliavin微分}
+
+\section{Sobolev空間}
+
+\section{確率積分としての発散}
+
+\section{IsonormalなGauss過程}
 
 \chapter{確率微分方程式}
 
@@ -189,6 +367,8 @@ title=]
 \begin{thebibliography}{99}
     \bibitem{Nualart}
     David Nualart and Eulalia Nualart "Introduction to Malliavin Calculus"
+    \bibitem{Revus and Yor}
+    Daniel Revuz, and Marc Yor "Continuous Martingales and Brownian Motion"
     \bibitem{舟木}
     舟木直久『確率微分方程式』
 \end{thebibliography}

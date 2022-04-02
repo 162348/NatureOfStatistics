@@ -507,7 +507,7 @@ title=]
     連続と線型が出会うと有界と変化すること，内部homを持つことなど，とにかく美しい描像がある．
 \end{tcolorbox}
 
-\subsection{ノルム空間と射}
+\subsection{定義と射}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -654,7 +654,7 @@ title=]
     $X$をBanach空間，$Y$をその閉部分空間とする．自己写像$f:Y\to Y$が縮小写像ならば（$1$より小さいLipschitz定数を持つならば），$Y$内に不動点が一意的に存在する．
 \end{theorem}
 
-\subsection{Banach空間の圏とテンソル積}
+\subsection{圏Banとテンソル積}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -738,7 +738,7 @@ title=]
     Metはbalancedではない，$\Q\mono\R$が反例である．\footnote{\url{https://ja.wikipedia.org/wiki/距離空間の圏}}
 \end{tcolorbox}
 
-\subsection{ノルム空間の商}
+\subsection{商}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -798,7 +798,7 @@ title=]
     ノルム空間$X$とその部分空間$Y$について，$Y$と$X/Y$がBanach空間ならば，$X$もBanach空間である．
 \end{proposition}
 
-\subsection{Banach空間の内部構造}
+\subsection{包含}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=連続線形延長の算譜]
@@ -806,10 +806,24 @@ title=連続線形延長の算譜]
     この消息を正しく捉えるには「稠密」がキーワードになる．
 \end{tcolorbox}
 
+\begin{proposition}[部分空間]
+    Banach空間$X$の部分空間$M$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $M$は$X$のノルムについてBanach空間である．
+        \item $M$は閉である．
+    \end{enumerate}
+\end{proposition}
+\begin{remark}
+    同様のことはHilbert空間とFrechet空間にも成り立つ．
+\end{remark}
+
 \begin{proposition}[自明なBanach部分空間]\label{prop-finite-subspaces}
     ノルム空間$X$の任意の有限次元部分空間$Y$はBanach空間であり，特に閉である．
     また，$\dim Y=n$ならば，任意の線型同型$k^n\iso Y$は位相同型でもある．
 \end{proposition}
+\begin{remark}
+    有限次元ノルム空間は必ず完備で，その上のノルムはすべて同値である．
+\end{remark}
 
 \begin{proposition}[Bounded Linear Transformation theorem]\label{prop-extension-of-operator-on-dense-subset}
     $X,Y$をBanach空間，$X_0$を$X$の稠密な部分空間とする．このとき，任意の作用素$T_0\in B(X_0,Y)$は一意的な延長$T\in B(X,Y)$をもち，$\norm{T}=\norm{T_0}$を満たす．
