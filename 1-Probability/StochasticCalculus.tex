@@ -110,11 +110,6 @@ title=]
 
 \subsection{Gauss過程}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    
-\end{tcolorbox}
-
 \begin{definition}[Gaussian process, centered]
     $(\Om,\F,P)$上の実確率過程$X=(X_t)_{t\in\R_+}$について，
     \begin{enumerate}
@@ -141,6 +136,37 @@ title=]
     $d$個の独立なBrown運動$B^1,\cdots,B^d$の積$B=(B^1_t,\cdots,B^d_t)_{t\in\R_+}$を\textbf{$d$次元Brown運動}という．
 \end{definition}
 
+\begin{lemma}[高次元正規分布の特徴付け]
+    正規分布に従う独立な実確率変数$B_{t_1},\cdots,B_{t_n}$について，
+    \begin{enumerate}
+        \item $B_{t_1},\cdots,B_{t_n}$の線型結合は正規分布に従う確率変数を定める．
+        \item 積写像$(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$は$n$次元正規分布に従う．
+        \item 一般に，$n$次元確率ベクトル$X(X_1,\cdots,X_n):\Om\to\R^n$が$n$次元正規分布に従うことと，任意の線型汎関数$f\in(\R^n)^*$に関して$f(X):\Om\to\R$が正規確率変数であることとは同値．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $B_{t_1}\sim N(\mu_1,\sigma_1),B_{t_2}\sim N(\mu_2,\sigma_2)$として，$B_{t_1}+B_{t_2}$が正規分布に従うことを示せば十分である．
+        一般に，独立な2つの確率変数の和の特性関数は，元の確率変数の特性関数の積となる：\[\varphi_{X+Y}(u)=E[e^{iuX+Y}]=E[e^{iuX}e^{iuY}]=E[e^{iuX}]E[e^{iuY}]=\varphi_X(u)\varphi_Y(u).\]
+        よって，
+        \begin{align*}
+            \varphi_{B_{t_1}+B_{t_2}}(u)&=\exp\paren{i\mu_1u-\frac{1}{2}\sigma_1^2u^2}\exp\paren{i\mu_2u-\frac{1}{2}\sigma^2_2u^2}\\
+            &=\exp\paren{i(\mu_1+\mu_2)u-\frac{1}{2}(\sigma^2_1+\sigma^2_2)u^2}
+        \end{align*}
+        であるが，これは$B_{t_1}+B_{t_2}\sim N(\mu_1+\mu_2,\sigma^2_1+\sigma^2_2)$を意味する．
+        \item $(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$の特性関数は，それぞれの特性関数の積となるが，正規分布の特性関数の積は正規分布の特性関数となることは(1)で見た：$\varphi_{(B_{t_1},\cdots,B_{t_n})}(u)=\exp\paren{i(\mu_1u_1+\cdots+\mu_nu_n)-\frac{1}{2}(\sigma_1^2u_1^2+\cdots\sigma_n^2u_n^2)}$．
+        \item $\Rightarrow$は(1)による．$\Leftarrow$について，
+        まず射影$\pr_i\in(\R^n)^*\;(i\in[n])$について考えることより，$\pr_i(X)=X_i$は正規分布に従うことが分かる．
+        $X_i\sim N(\mu_i,\sigma_i)$とおく．このとき，$\Sigma:=(\Cov[X_i,X_j])_{i,j\in[n]},\mu:=(E[X_i])_{i\in[n]}$とおくと，$X\sim N_d(\mu,\Sigma)$となることを示せば良い．
+        任意の$f\in(\R^n)^*$を取ると，ある$a\in\R^n$を用いて$f(x)=a^\top x$と表せるが，$f(X)$の特性関数は$X$の特性関数の，1次元部分空間$\R a$への制限になる$\varphi_{f(X)}=\varphi_X|_{\R a}$ことに注意すれば，
+        (1)で計算したとおり
+        $f(X)\sim N(f(\mu),a^\top\Sigma a)$より
+        \[\varphi_{f(X)}(u)=\exp\paren{if(\mu)u-\frac{1}{2}(a^\top\Sigma a)^2u^2}=\exp\paren{i\mu\cdot au-\frac{1}{2}\paren{(ua)^{\top}\Sigma (ua)}^2}\]
+        が成り立つことは，任意の$a\in\R^n$について，$\varphi_{f(X)}$は，$N_d(\mu,\Sigma)$の$\R a$への制限に等しいことを表していると分かる．
+        したがってたしかに$X\sim N_d(\mu,\Sigma)$である．
+    \end{enumerate}
+\end{proof}
+
 \begin{proposition}
     実確率過程$B=(B_t)_{t\in\R_+}$について，次の2条件は同値．
     \begin{enumerate}
@@ -150,7 +176,11 @@ title=]
 \end{proposition}
 \begin{proof}\mbox{}
     \begin{description}
-        \item[(1)$\Rightarrow$(2)]  
+        \item[(1)$\Rightarrow$(2)] 任意の$0<t_1<\cdots<t_n\in\R_+$を取り，$(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$が$n$次元の正規分布に従うことを示せば良い．
+        これには，補題より，(a)$B_{t_1},\cdots,B_{t_n}$が独立であり，(b)$B_{t_1},\cdots,B_{t_n}$が正規分布に従うことを見れば良い．
+        \begin{enumerate}
+            \item 仮定(B2)より，$B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}$は独立である．$B_{t_1},\cdots,B_{t_n}$はこれらの線型和で表わせ，特に線型和を取る写像は可測であるから，
+        \end{enumerate}
     \end{description}
 \end{proof}
 
@@ -369,6 +399,10 @@ title=]
     David Nualart and Eulalia Nualart "Introduction to Malliavin Calculus"
     \bibitem{Revus and Yor}
     Daniel Revuz, and Marc Yor "Continuous Martingales and Brownian Motion"
+    \bibitem{Prato}
+    Giuseppe Prato - Introduction to Stochastic Analysis and Malliavin Calculus
+    \bibitem{Vershynin}
+    Vershynin -  High-Dimensional Probability
     \bibitem{舟木}
     舟木直久『確率微分方程式』
 \end{thebibliography}
