@@ -76,7 +76,7 @@ title=]
     測度確定な可測集合$F\in\A,\mu(F)<\infty$のGauss測度$X(F)$は$X(1_F)$とも表す．
 \end{definition}
 
-\begin{definition}[equivalence / version, finite dimensional distributions]\mbox{}
+\begin{definition}[equivalence / version, finite dimensional marginal distributions]\mbox{}
     \begin{enumerate}
         \item 同じ状態空間$(E,\E)$を持つ$(\Om,\F,P),(\Om',\F',P')$上の2つの過程$X,X'$が\textbf{同値である}または一方が他方の\textbf{バージョン}であるとは，
         任意の有限部分集合$\{t_1,\cdots,t_n\}\subset\R_+$と任意の可測集合$A_1,\cdots,A_n\in\E$について，
@@ -85,8 +85,8 @@ title=]
         任意の有限集合$\{t_1,\cdots,t_n\}\subset\R_+$に関する押し出し全体の集合$\M_X$を\textbf{有限次元分布}(f.d.d)と呼ぶ．
     \end{enumerate}
 \end{definition}
-\begin{lemma}
-    $X,Y$について，次の2条件は同値．
+\begin{lemma}[過程の同値性の特徴付け]
+    $X,Y$について，次の3条件は同値．
     \begin{enumerate}
         \item $X,Y$は同値である．
         \item $\M_X=\M_Y$．
@@ -96,15 +96,15 @@ title=]
 \begin{definition}[modification, indistinguishable]
     定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
     \begin{enumerate}
-        \item 2つは修正であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．
-        \item 2つは識別不可能であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
+        \item 2つは\textbf{修正}または\textbf{変形}であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．\footnote{\cite{Nualart}ではこの概念をequivalenceまたはvarsionと呼んでいる．}
+        \item 2つは\textbf{識別不可能}であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
     \end{enumerate}
 \end{definition}
 
 \begin{lemma}\mbox{}
     \begin{enumerate}
         \item $X,Y$が互いの修正であるならば，同値である．
-        \item $X,Y$が互いの修正であり，いずれも連続ならば，識別不可能である．
+        \item $X,Y$が互いの修正であり，見本道が殆ど確実に右連続ならば，識別不可能である．
     \end{enumerate}
 \end{lemma}
 
@@ -120,18 +120,80 @@ title=]
 \end{definition}
 
 \begin{definition}[semi-definite positive function]
-    関数$\Gamma:T\times T\to\R$が\textbf{半正定値}であるとは，$T$の任意の有限組$(t_1,\cdots,t_d)\in T^d\;(d\in\N)$に対して，行列$(\Gamma(t_i,t_j))_{i,j\in[d]}$は半正定値であることをいう．
+    関数$\Gamma:T\times T\to\R$が\textbf{半正定値}であるとは，
+    $T$の任意の有限部分集合$\{t_1,\cdots,t_d\}\subset T\;(d\in\N)$に対して，行列$(\Gamma(t_i,t_j))_{i,j\in[d]}$は半正定値であることをいう．
 \end{definition}
+
+\begin{proposition}[Gauss過程の共分散の特徴付け]\label{prop-existence-of-Gaussian-process}
+    $T$を任意の集合とする．関数$\Gamma:T\times T\to\R$と任意の関数$m:T\to\R$について，次の2条件は同値．
+    \begin{enumerate}
+        \item ある平均$m$のGauss過程が存在して，その共分散である．
+        \item 対称な半正定値関数である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Kolmogorovの拡張定理\ref{thm-Kolmogorov-extension-theorem}による．
+    ここでは$a=0$として証明する．
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] $T$の対称性は積の可換性より明らか．
+        任意の有限部分集合$\{t_i\}_{i\in[n]}\subset T$と任意のベクトル$a=(a_i)_{i\in[n]}\in\C^n$を取る．
+        これについて，2次形式$a^*(\Sigma(i,j))a$が非負であることを示せば良い．
+        \begin{align*}
+            \sum_{i,j\in[n]}&=\Gamma(t_i,t_j)a_i\o{a_j}\\
+            &=E\Square{\sum_{i\in[n]}a_i(X_{t_i}-E[X_{t_i}])\sum_{j\in[n]}\o{a_j}(X_{t_j}-E[X_{t_j}])}\\
+            &=E\Square{\Abs{\sum_{i\in[n]}a_i(X_{t_i}-E[X_{t_i}])}^2}\ge0.
+        \end{align*}
+        \item[(2)$\Rightarrow$(1)] 
+        確率分布族$(P_{t_1,\cdots,t_n})_{n\in\N_{\ge1},\{t_i\}\subset T}$を，$\R^n$上の平均$0$，分散共分散行列を$\Sigma_{t_1,\cdots,t_n}:=(\Gamma(t_i,t_j))_{i,j\in[n]}$とする正規分布とする．
+        $\Gamma$は対称は半正定値関数としたので，$\Sigma_{t_1,\cdots,t_n}$も対称な半正定値行列であり，これに対応する正規分布はたしかに存在する．
+        また定義より，一貫性条件を満たす．
+        よって，$(P_{t_1,\cdots,t_n})_{n\in\N_{\ge1},\{t_i\}\subset T}$を有限次元周辺分布とする
+        確率過程$X=(X_t)_{t\in\R_+}$が存在するが，これは平均$0$で分散$\Gamma$のGauss過程である．
+    \end{description}
+\end{proof}
+
+\begin{lemma}
+    $X,Y$をGauss確率変数とする．
+    $X_t:=tX+Y\;(t\in\R_+)$によって定まる確率過程$X=(X_t)_{t\in\R_+}$はGauss過程であって，
+    平均$m_X(t)=tE[X]+E[Y]$と分散
+    \[\Gamma_X(s,t)=st\Var[X]+(s+t)\Cov[X,Y]+\Var[Y]\]
+    を持つ．
+\end{lemma}
+\begin{proof}
+    平均は期待値の線形性より明らか．
+    分散については，次のように計算が進む．
+    ただし，見やすくするため$\mu_X:=E[X],\mu_Y:=E[Y]\in\R$とする．
+    \begin{align*}
+        \Gamma(s,t)&=E[(X_s-E[X_s])(X_t-E[X_t])]\\
+        &=E[X_sX_t]-(s\mu_X+\mu_Y)E[X_t]-(t\mu_X+\mu_Y)E[X_s]+(s\mu_X+\mu_Y)(t\mu_X+\mu_Y)\\
+        &=stE[X^2]+(s+t)E[XY]+E[Y^2]+(s\mu_X+\mu_Y)(t\mu_X+\mu_Y)=st\Var[X]+(s+t)\Cov[X,Y]+\Var[Y].
+    \end{align*}
+\end{proof}
+
+\subsection{Kolmogorovの拡張定理}
+
+\begin{theorem}\label{thm-Kolmogorov-extension-theorem}
+    確率分布族$\{P_{t_1,\cdots,t_n}\}_{n\in\N_{\ge1},t_i\in\R_+}$が次の条件を満たすとき，ある確率空間$(\Om,\F,P)$が存在して，これらを有限次元周辺分布とする確率過程$(X_t)_{t\in\R_+}$が存在する．
+    \begin{enumerate}[({C}1)]
+        \item $P_{t_1,\cdots,t_n}\in P(\R^n)$である．
+        \item 任意の部分集合$\{t_{k_1}<\cdots<t_{k_m}\}\subset\{t_1<\cdots<t_n\}$について，$P_{t_{k_1}},\cdots,P_{t_{k_m}}$は$P_{t_1,\cdots,t_n}$の対応する周辺分布である．
+    \end{enumerate}
+\end{theorem}
 
 \section{定義と性質}
 
-\begin{definition}[Brownian motion]
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Brown運動は，平均$0$で分散が$\Gamma=\min$であるようなGauss過程であって，殆ど確実に連続であるような過程である．
+\end{tcolorbox}
+
+\begin{definition}[(standard) Brownian motion / Wiener process]
     $(\Om,\F,P)$上の実確率過程$(B_t)_{t\in\R_+}$が\textbf{Brown運動}であるとは，次の4条件を満たすことをいう：
     \begin{enumerate}[({B}1)]
         \item $B_0=0\;\as$
         \item $\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$は独立．
         \item 増分について，$B_t-B_s\sim N(0,t-s)\;(0\le s<t)$．
-        \item 写像$\R_+\to\Meas(\Om,\R);t\mapsto B_t$は殆ど確実に連続． 
+        \item $\Om\to\Meas(\R_+,\R);\om\mapsto(t\mapsto B_t(\om))$について，殆ど確実に$t\mapsto B_t(\om)$は連続．
     \end{enumerate}
     $d$個の独立なBrown運動$B^1,\cdots,B^d$の積$B=(B^1_t,\cdots,B^d_t)_{t\in\R_+}$を\textbf{$d$次元Brown運動}という．
 \end{definition}
@@ -166,6 +228,18 @@ title=]
         したがってたしかに$X\sim N_d(\mu,\Sigma)$である．
     \end{enumerate}
 \end{proof}
+\begin{remarks}[Cramer-Wold]
+    (3)の結果は$\R^n$上の一般の確率分布について成り立ち，Cramer-Woldの定理と呼ばれる．
+\end{remarks}
+
+\begin{lemma}[多次元正規確率変数の成分間の独立性の特徴付け]
+    $Y_1:=(X_1,\cdots,X_{k_1})^\top,\cdots,Y_l=(X_{k_{l-1}},\cdots,X_d)^\top\;(l\ge 2)$のように，$X$を$l$個の確率変数$Y_1,\cdots,Y_l$に分ける．
+    この分割に対して，$\Sigma$のブロック$\Sigma_{a,b}:=\Cov[Y_a,Y_b]\;(a,b\in[l])$を考える．
+    \begin{enumerate}
+        \item $Y_1,\cdots,Y_l$は独立．
+        \item $\forall_{a,b\in[l]}\;a\ne b\Rightarrow\Sigma_{a,b}=O$．
+    \end{enumerate}
+\end{lemma}
 
 \begin{proposition}
     実確率過程$B=(B_t)_{t\in\R_+}$について，次の2条件は同値．
@@ -176,10 +250,30 @@ title=]
 \end{proposition}
 \begin{proof}\mbox{}
     \begin{description}
-        \item[(1)$\Rightarrow$(2)] 任意の$0<t_1<\cdots<t_n\in\R_+$を取り，$(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$が$n$次元の正規分布に従うことを示せば良い．
-        これには，補題より，(a)$B_{t_1},\cdots,B_{t_n}$が独立であり，(b)$B_{t_1},\cdots,B_{t_n}$が正規分布に従うことを見れば良い．
-        \begin{enumerate}
-            \item 仮定(B2)より，$B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}$は独立である．$B_{t_1},\cdots,B_{t_n}$はこれらの線型和で表わせ，特に線型和を取る写像は可測であるから，
+        \item[(1)$\Rightarrow$(2)] Gauss過程であることを示すには，任意の$0<t_1<\cdots<t_n\in\R_+$を取り，$B:=(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$が$n$次元の正規分布に従うことを示せば良い．
+        まず，仮定(B1),(B2)より，$B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}$は独立であり，それぞれが正規分布に従う．
+        したがって，積写像$A:=(B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}):\Om\to\R^n$は$n$次元正規分布に従う（補題(2)）．
+        行列
+        \[J:=\begin{bmatrix}1&0&\cdots&\cdots&0\\1&1&0&\cdots&0\\\vdots&\ddots&\ddots&\ddots&\vdots\\1&\cdots&\cdots&1&0\\1&\cdots&\cdots&1&1\end{bmatrix}\]
+        が定める線形変換を$f:\R^n\to\R^n$とおくと，これは明らかに可逆で，$B=f(A)$が成り立つ．
+        ここで，任意の線型汎関数$q\in(\R^n)^*$に関して，$q(B)=q(f(A))$は，$q\circ A:\R^n\to\R$が線型であることから，正規分布に従う．
+        よって，$B$も正規分布に従う．
+
+        また，仮定(B3)より平均は$m(t)=E[B_t]=0$で，共分散は，$s\ge t$のとき，増分の独立性(B2)に注意して
+        \[\Gamma(s,t)=\Cov[B_s,B_t]=E[B_sB_t]=E[B_s(B_t-B_s+B_s)]=E[B_s(B_t-B_s)]+E[B_s^2]=s.\]
+        $\Gamma$の対称性より，これは$\Gamma(s,t)=\min(s,t)$を意味する．
+        \item[(2)$\Rightarrow$(1)]
+        \begin{enumerate}[({B}1)]
+            \item 平均が$0$であることより，特に$m(0)=E[B_0]=0$．よって，$B_0=0\;\as$
+            \item Gauss過程であることより，組$A:=(B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1})$は$n$次元正規分布に従う．これらが独立であることを示すには，補題より$A$の分散共分散行列$\Sigma_A$の非対角成分がすべて$0$であることを示せば良い．
+            平均が$0$で$\Gamma(s,t)=\min(s,t)$であることより，
+            任意の$1<i< j\in[n]$について，
+            \begin{align*}
+                \Cov[B_{t_i}-B_{t_{i-1}},B_{t_j}-B_{t_{j-1}}]&=E[(B_{t_i}-B_{t_{i-1}})(B_{t_j}-B_{t_{j-1}})]\\
+                &=E[B_{t_i}B_{t_j}]-E[B_{t_{i-1}}B_j]-E[B_{t_i}B_{t_{j-1}}]+E[B_{t_{i-1}}B_{t_{j-1}}]=i-(i-1)-i+(i-1)=0.
+            \end{align*}
+            \item 平均が$0$で$\Gamma(s,t)=\min(s,t)$であることより，
+            \[E[(B_t-B_s)^2]=E[B_t^2]+E[B_s^2]-2E[B_tB_s]=t+s-2s=t-s.\]
         \end{enumerate}
     \end{description}
 \end{proof}
@@ -190,22 +284,141 @@ title=]
     title=]
     構成のアイデアは複数ある．
     \begin{enumerate}
-        \item $[0,1]$上に構成してから，Kolmogorovの拡張定理で$\R$上に延長する．
-        \item $\R^n$上の正規分布を拡張する．
-        \item 酔歩をスケーリングする．
+        \item Gauss過程としての構成．
+        \item Fourier級数としての構成．
+        \item 対称な酔歩の分布極限としての構成．
     \end{enumerate}
 \end{tcolorbox}
 
-\subsection{}
+\begin{shishin}
+    $T>0$として，区間$[0,T]$上の過程$B=(B_t)_{t\in[0,T]}$を条件(B1)から(B4)を満たすように構成すれば，$T=1$とした場合について，
+    過程の列$(Y^{(i)})_{i\in\N}$を「つなげた」過程を
+    \[W_t:=\paren{\sum^{\floor{t}-1}_{i=0}Y_1^{(i)}}+Y^{[t]}_{t-[t]}\]
+    と定めると，これが目標のBrown運動となる．
+    よって以降の構成の議論では，有界区間$[0,T]$に注目して議論する．
+\end{shishin}
 
-\begin{theorem}[Kolmogorov's continuity criterion]
-    実過程$X$が$\exists_{\al,\beta,C>0}\;\forall_{t,h\in\R_+}\;E[\abs{X_{t+h}-X_t}^\al]\le Ch^{1+\beta}$を満たすならば，ある修正が存在して殆ど確実に連続である．
+\subsection{Gauss過程としての構成}
+
+\begin{theorem}[Kolmogorov's continuity criterion / 正規化定理]\label{thm-Kolmogorov-continuity-criterion}
+    実過程$X=(X_t)_{t\in[0,T]}$が$\exists_{\al,\beta,K>0}\;\forall_{s,t\in[0,T]}\;E[\abs{X_{t}-X_s}^\beta]\le K\abs{t-s}^{1+\al}$を満たすならば，$X$のある修正$\wt{X}$が存在して，
+    任意の$\gamma<\frac{\al}{\beta}$について次の2条件を満たす．
+    \begin{enumerate}
+        \item $\exists_{G_\gamma\in\Meas(\Om',\R)}\;\forall_{s,t\in[0,T]}\;\abs{\wt{X}_t-\wt{X}_s}\le G_\gamma\abs{t-s}^\gamma$．
+        \item $\wt{X}$の見本道は$\gamma$-次Holder連続である．
+    \end{enumerate}
 \end{theorem}
 \begin{remarks}
-
+    Kolmogorovの拡張定理により存在が証明される，平均$0$共分散$\Gamma(s,t)=\min(s,t)$のGauss過程は，この十分条件を満たす．
 \end{remarks}
 
+\begin{construction}
+    $\Gamma(s,t)=\min(s,t)$は明らかに対称である．
+    さらに半正定値であることを示せば，これを共分散とする平均$0$のGauss過程が存在する\ref{prop-existence-of-Gaussian-process}．
+    まず，$\min(s,t)=\int_{\R_+}1_{[0,s]}(r)1_{[s,t]}(r)dr$であることに注意すると，
+    任意の$n\in\N_{\ge1}$と$a_1,\cdots,a_n\in\R$について，
+    \begin{align*}
+        \sum_{i,j\in[n]}a_ia_j\min(t_i,t_j)&=\sum_{i,j\in[n]}\int^\infty_01_{[0,t_i]}(r)1_{[0,t_j]}(r)dr\\
+        &=\int^\infty_0\paren{\sum_{i=1}^na_i1_{[0,t_i]}(r)}^2dr\ge0.
+    \end{align*}
+    最後に，この過程が条件(B4)を満たすことを見れば良い．
+    これはKolmogorovの正規化定理\ref{thm-Kolmogorov-continuity-criterion}による．
+    任意の$0\le s\le  t$について，$B_t-B_s\sim N(0,t-s)$であり，正規分布の奇数次の中心積率は$0$で偶数次の中心積率は
+    \[\forall_{k\in\N}\quad E[\abs{B_t-B_s}^{2k}]=\frac{(2k)!}{2^kk!}(t-s)^k\]
+    と表せるから，ある$B$の修正が存在して，任意の閉区間$[0,T]$上で$\gamma<\frac{k-1}{2k}$について$\gamma$-次Holder連続である．
+    特に，任意の$\gamma<\frac{1}{2}$について，$B$の見本道$t\mapsto B_t(\om)$は殆ど至る所$\gamma$-Holder連続である．
+\end{construction}
+
+\subsection{ランダムな係数を持ったFourier級数としての構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $t\in[0,\pi]$を固定した関数$f(s)=s\land t\in\cS^*([0,\pi])$のFourier級数を計算することで，
+    \[s\land t=\frac{st}{\pi}+\frac{2}{\pi}\sum^\infty_{k=1}\frac{\sin ks\sin kt}{k^2}\]
+    を得る．すると，$Z_n\sim N(0,1)$について，
+    \[W_t:=\frac{t}{\sqrt{\pi}}Z_0+\sqrt{\frac{2}{\pi}}\sum^\infty_{k=1}Z_k\frac{\sin kt}{k}\]
+    と定めれば，$(W_t)_{t\in[0,\pi]}$は平均$0$で共分散$E[W_sW_t]=s\land t$のGauss過程であることが期待できる．
+    あとは，上記のFourier級数の収束の問題が残るのみである．
+    これは以下の議論で$e_n(r)=\frac{1}{\sqrt{\pi}}\cos nt$と取った場合であり，このときのBrown運動$W_t$の表示を\textbf{Paley-Wiener表現}という．
+    また，LevyとCiesielskiは基底としてウェーブレットの一例であるHaar関数系を取った．
+\end{tcolorbox}
+
+\begin{notation}
+    $T>0$とし，$L^2([0,T])$の正規直交系$(e_n)_{n\ge0}$を取る．
+    $\{Z_n\}_{n\ge0}\subset L^2(\Om)$を$N(0,1)$に従う独立同分布確率変数列とする．
+\end{notation}
+
+\begin{theorem}
+    上述の設定において，
+    \begin{enumerate}
+        \item $\sum^\infty_{n=0}Z_n\int^t_0e_n(r)dr$は$L^2(\Om)$内で収束する．
+        \item この収束は殆ど至る所一様収束である：$\sup_{t\in[0,T]}\Abs{\sum^N_{n=0}Z_n\int^t_0e_n(r)dr-B_t}\xrightarrow{\as}0$．
+        \item 極限$B\in L^2(\Om)$は中心化された共分散$\Gamma=\min$を持つGauss過程である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[skelton / Cameron-Martin subspace]
+    \[H:=\Brace{w(t)=\int^t_0h(x)dx\in C_{(0)}([0,1])\;\middle|\;h\in L^2([0,1],dx)}\]
+    と定めると，これは内積$(f_1,f_2):=\int^1_0h_1h_2dx$についてHilbert空間となる．
+    これを$W_0$の骨格，またはCameron-Martin部分空間という．
+\end{definition}
+
+\subsection{酔歩としての構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    酔歩のスケールとして得られるこの方法は，Brown運動が基本的な対象であることの直感的な説明となる．
+    酔歩と同様にBrown運動は1,2次元においては再帰的であるが，3次元以上では過渡的である．
+    もはや酔歩とは異なる点に，スケール不変性が挙げられる．
+
+    さらにここでDonskerの定理が登場する．
+    中心極限定理を連続化したものがDonskerの定理(functional central limit theorem)であるが，i.i.d.の誤差の分布は，$-\infty,\infty$では$y=0$になるBrown運動を固定端で走らせれば良い．
+\end{tcolorbox}
+
+\begin{discussion}
+    任意の$T>0$に対して，これを$n\in\N$等分する考え方で，独立同分布に従う$n$個の確率変数$\xi_1,\cdots,\xi_n\sim(0,T/n)$を考える．
+    この和$R_k:=\sum_{i=1}^k\xi_i\;(k\in[n])$を考えると，過程$(R_k)_{k\in[n]}$は$n$ステップの酔歩で，分散が$T/n$である．
+    この過程について，$n\to\infty$の極限を取ることを考える．すると，ステップ数は増え，ステップの幅は小さくなる．
+    このとき，中心極限定理より，列$(R_k)_{k\in\N}$は正規分布$N(0,T)$に分布収束する．
+    実際，$X_i:=\sqrt{n}\xi_i\sim(0,T)$とすると$R_k=\frac{1}{\sqrt{n}}\sum^k_{i=1}X_i$となる．
+
+    続いて，$\forall_{k=0,\cdots,n}\;S_n\paren{\frac{kT}{n}}=R_k$を満たす$S_n:[0,T]\to\R$を，線型補間による連続延長とする．
+
+    $\R^d$上の下側区間の定義関数全体からなる集合$\F$は任意の分布$P$に関してDonskerクラスになるというのがDonskerによる古典的な結果である．
+
+\end{discussion}
+
+\subsection{Brown橋の構成}
+
+\begin{definition}[Brownian bridge]
+    共分散を$\Gamma(s,t)=\min(s,t)-\frac{st}{T}$とする中心化されたGauss過程$(B_t)_{t\in[0,T]}\;(T>0)$を\textbf{Brown橋}という．
+    共分散の形から，両端$\partial[0,T]$で固定され，真ん中$T/2$で最も不確実性が大きくなる過程であると分かる．
+    これはBrown運動を条件づけた過程$B_t:=[W_t|W_T=0]\;(t\in[0,T])$と理解できる．
+\end{definition}
+
+\begin{construction}
+    1次元Brown運動$(W_t)$に対して
+    $\paren{W_t-\frac{t}{T}W_T}_{t\le T}$とすれば，これはBrown橋である．
+\end{construction}
+
+\begin{example}[geometric Brownian motion]
+    他の確率過程として，
+    \[\exp\paren{\beta t-\paren{\frac{\al^2t}{2}}+\al W_t}\]
+    を幾何ブラウン運動という．
+\end{example}
+
+\begin{example}[Brownian motion with drift and diffusion coefficient]
+    標準Brown運動$(B_t)$に対して，$X_t:=x+\mu t+\sigma B_t$によって定まる過程を，$x\in\R$から開始し，$\mu\in\R$のドリフトを持ち，拡散係数$\sigma^2\in\R$のBrown運動という．
+\end{example}
+
 \section{Wiener積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Wiener測度は，Wiener過程によって誘導されるGauss測度の例である．
+\end{tcolorbox}
+
+
 
 \section{Wiener空間}
 
@@ -403,6 +616,8 @@ title=]
     Giuseppe Prato - Introduction to Stochastic Analysis and Malliavin Calculus
     \bibitem{Vershynin}
     Vershynin -  High-Dimensional Probability
+    \bibitem{Bass}
+    Richard Bass - Stochastic Processes
     \bibitem{舟木}
     舟木直久『確率微分方程式』
 \end{thebibliography}
