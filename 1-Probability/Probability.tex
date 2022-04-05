@@ -272,7 +272,7 @@ title=]
     これは収束空間の知識が必要か？２つの「完備」の概念は，フィルターの意味で一緒なのではないか？
 \end{tbox}
 
-\subsection{初等的極限定理}
+\subsection{Borel-Cantelli}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=有界測度論の初等的な結論に，確率論的な解釈を与えることが出来る．]
@@ -335,7 +335,20 @@ title=有界測度論の初等的な結論に，確率論的な解釈を与え�
     \end{enumerate}
 \end{corollary}
 
-\subsection{確率不等式}
+\subsection{Hewitt-Savage}
+
+\begin{definition}
+    $X_1,X_2,\cdots\in\Meas(\Om,\R)$を確率変数列とする．
+    事象$\{\om\in\Om\mid\forall_{i\in\N}\;X_i(\om)\in A\}\in\F$が\textbf{交換可能}であるとは，有限個の入れ替えについて
+    \[\forall_{n\in\N}\;\forall_{\sigma\in S_n}\;\Brace{X_1,X_2,\cdots\in A}\subset\Brace{X_{\sigma_1},X_{\sigma_2}\cdots\in A}\]
+    が成り立つことをいう．
+\end{definition}
+
+\begin{lemma}
+    $E\in\F$がi.i.d.列$(X_n)$に関する交換可能な事象であるとき，$P[E]\in\{0,1\}$である．
+\end{lemma}
+
+\subsection{Bonferroni}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=有界測度論としては初等的でも，確率論的には非自明で名前がほしい結果は多い]
@@ -3509,7 +3522,7 @@ title=]
 \subsection{Chapman-Kolmogorov方程式}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=熱核の半群性]
     Markov過程の発展は，確率行列の積で表された．この連続化は，ある発展条件を満たすことである．
     この放物型偏微分方程式をChapman-Kolmogorov方程式という．
     これを解いて推移確率とし，Kolmogorovの拡張定理に基づけば拡散過程が構成できる．

@@ -180,7 +180,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\section{定義と性質}
+\section{定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -340,6 +340,7 @@ title=]
     と定めれば，$(W_t)_{t\in[0,\pi]}$は平均$0$で共分散$E[W_sW_t]=s\land t$のGauss過程であることが期待できる．
     あとは，上記のFourier級数の収束の問題が残るのみである．
     これは以下の議論で$e_n(r)=\frac{1}{\sqrt{\pi}}\cos nt$と取った場合であり，このときのBrown運動$W_t$の表示を\textbf{Paley-Wiener表現}という．
+    Wienerが1923年に初めてBrown運動を構成したのはこの方法による．
     また，LevyとCiesielskiは基底としてウェーブレットの一例であるHaar関数系を取った．
 \end{tcolorbox}
 
@@ -363,11 +364,18 @@ title=]
     これを$W_0$の骨格，またはCameron-Martin部分空間という．
 \end{definition}
 
+\begin{remark}
+    明示的にHaar基底を使わずとも構成できる．
+    $D_n:=\Brace{\frac{k}{2^n}\in[0,1]\;\middle|\;0\le k\le 2^n}$上に点をうち，その線型補間を行い，$C([0,1])$上での極限を取る．
+    この場合も，見本道の連続性は自然に従い，また$\R_+\times\Om\to\R$の積空間上での可測性もわかりやすい．
+\end{remark}
+
 \subsection{酔歩としての構成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    酔歩のスケールとして得られるこの方法は，Brown運動が基本的な対象であることの直感的な説明となる．
+    酔歩のスケールとして得られるこの方法は，Brown運動が基本的な対象であることの直感的な説明となる（これを「不変性」という表現で捉えている）．
+    また，$C(\R_+)$における極限であるから，連続性は自然に従う．
     酔歩と同様にBrown運動は1,2次元においては再帰的であるが，3次元以上では過渡的である．
     もはや酔歩とは異なる点に，スケール不変性が挙げられる．
 
@@ -375,18 +383,48 @@ title=]
     中心極限定理を連続化したものがDonskerの定理(functional central limit theorem)であるが，i.i.d.の誤差の分布は，$-\infty,\infty$では$y=0$になるBrown運動を固定端で走らせれば良い．
 \end{tcolorbox}
 
-\begin{discussion}
-    任意の$T>0$に対して，これを$n\in\N$等分する考え方で，独立同分布に従う$n$個の確率変数$\xi_1,\cdots,\xi_n\sim(0,T/n)$を考える．
-    この和$R_k:=\sum_{i=1}^k\xi_i\;(k\in[n])$を考えると，過程$(R_k)_{k\in[n]}$は$n$ステップの酔歩で，分散が$T/n$である．
+\begin{notation}[酔歩]
+    任意の$T>0$に対して，これを$n\in\N$等分する考え方で，独立同分布に従う$n$個の確率変数$\xi_1,\cdots,\xi_n\sim(0,T/n)$，または$X_i:=\sqrt{n}\xi_i\sim(0,T)$を考える．
+    この和$R_k:=\sum_{i=1}^k\xi_i=\frac{1}{\sqrt{n}}\sum^k_{i=1}X_i\;(k\in[n])$を考えると，過程$(R_k)_{k\in[n]}$は$n$ステップの酔歩で，分散が$T/n$である．
+    $n$をscale parameterという．
     この過程について，$n\to\infty$の極限を取ることを考える．すると，ステップ数は増え，ステップの幅は小さくなる．
     このとき，中心極限定理より，列$(R_k)_{k\in\N}$は正規分布$N(0,T)$に分布収束する．
-    実際，$X_i:=\sqrt{n}\xi_i\sim(0,T)$とすると$R_k=\frac{1}{\sqrt{n}}\sum^k_{i=1}X_i$となる．
+\end{notation}
 
-    続いて，$\forall_{k=0,\cdots,n}\;S_n\paren{\frac{kT}{n}}=R_k$を満たす$S_n:[0,T]\to\R$を，線型補間による連続延長とする．
-
-    $\R^d$上の下側区間の定義関数全体からなる集合$\F$は任意の分布$P$に関してDonskerクラスになるというのがDonskerによる古典的な結果である．
-
+\begin{discussion}[酔歩の線形補間]
+    $R_n(t):=\frac{1}{\sqrt{n}}\sum_{i=1}^{\floor{tn/T}}X_i$はcadlagではあるが連続ではないため，より簡単な対象にしたい．そこで，
+    $\forall_{k=0,\cdots,n}\;S_n\paren{\frac{kT}{n}}=R_k$を満たす$S_n:[0,T]\to\R$を，線型補間による連続延長とする．
+    すると過程$(S_n)_{n\in\N}:\N\times\Om'\to C([0,T])$が定まる．
+    2つの過程$(R_n),(S_n)$について，差は$\ep_n(T):=\max(\xi_1,\cdots,\xi_{\floor{nT}+1})$
+    なる過程を超えない．
+    %$\R^d$上の下側区間の定義関数全体からなる集合$\F$は任意の分布$P$に関してDonskerクラスになるというのがDonskerによる古典的な結果である．
 \end{discussion}
+
+\begin{proposition}
+    $E[X_1^2]<\infty$ならば，任意の$T>0$に対して次が成り立つ：$\forall_{\delta>0}\;P\Square{\sup_{t\in[0,T]}\abs{R_n(t)-S_n(t)}>\delta}=P(\ep_n(T)>\delta)\to0\;(n\to\infty)$．
+\end{proposition}
+
+\begin{theorem}[Donsker's invariance principle/ functional central limit theorem]
+    $(X_m)$を平均$0$分散$T$の独立同分布とする．
+    これが定める線形補間$(S_n)_{n\in\N}:\N\times\Om'\to C([0,T])$は，Brown運動$(B_t:=\sqrt{T}W_t)_{t\in\R_+}:\Om\to C([0,T])$に分布収束する．
+\end{theorem}
+\begin{remark}[Donsker's theorem]
+    Donskerの元々の論文に載っている定理は，この形であった．
+    その後，セミパラの研究者が，外積分に基づいて，独自の理論を作った．
+    なお，「不変性」とは，増分過程$(\xi_i)$または$(X_i)$の分布に依らないことを指す．
+\end{remark}
+\begin{remarks}
+    この証明は，一般の酔歩(部分和過程)を，停止時の列におけるBrown運動の値として表現できるというSkorokhodの結果を用いて，Skorokhod埋め込み表現から証明する．
+\end{remarks}
+
+\subsection{連続時間Markov過程としての構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    熱核を用いて実際に確率測度を$\R^D$上に構成する．$D\subset[0,1]$は二進有理数の全体とし，Kolmogorovの拡張定理を用いる極めて具体的な構成である\cite{舟木}．
+\end{tcolorbox}
+
+
 
 \subsection{Brown橋の構成}
 
@@ -403,13 +441,208 @@ title=]
 
 \begin{example}[geometric Brownian motion]
     他の確率過程として，
-    \[\exp\paren{\beta t-\paren{\frac{\al^2t}{2}}+\al W_t}\]
+    \[\exp\paren{\mu t+\sigma B_t-\paren{\frac{\al^2t}{2}}}\]
     を幾何ブラウン運動という．
 \end{example}
 
 \begin{example}[Brownian motion with drift and diffusion coefficient]
     標準Brown運動$(B_t)$に対して，$X_t:=x+\mu t+\sigma B_t$によって定まる過程を，$x\in\R$から開始し，$\mu\in\R$のドリフトを持ち，拡散係数$\sigma^2\in\R$のBrown運動という．
 \end{example}
+
+\begin{proposition}
+    任意の$x\in\R$に対して，$B(0)=x$を満たす\textbf{両側Brown運動}$(B_t)_{t\in\R}$が存在する．
+\end{proposition}
+
+\section{性質}
+
+\subsection{フラクタルとしての見本道の性質}
+
+\begin{definition}[modulus of continuity]
+    Brown運動のコンパクト集合への制限$B:[0,1]\times\Om\to\R$の\textbf{連続度}とは，
+    \[\limsup_{h\searrow 0}\sup_{t\in[0,1-h]}\frac{\abs{B(t+h)-B(t)}}{\varphi(h)}\le 1\]
+    かつ$\lim_{h\searrow0}\varphi(h)=0$を満たす関数$\varphi:[0,1]\times\Om\to\R$をいう．
+\end{definition}
+\begin{remark}
+    一方で，supを外して，計測関数$\varphi:\R_+\to\R_+$であって，$\limsup_{t\in\R_+}\frac{B(t)}{\varphi(t)}\in\R_+$を満たすものを探すことは，連続度と対になる．
+\end{remark}
+
+\begin{definition}[locally Holder continuous]
+    関数$f:\R_+\to\R$が\textbf{$x$において局所$\al$-Holder連続}であるとは，次を満たすことをいう：
+    \[\exists_{\ep>0}\;\exists_{c>0}\;\forall_{y\in\R_+}\;\abs{y-x}<\ep\Rightarrow\abs{f(x)-f(y)}\le c\abs{x-y}^\al.\]
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 自己相似性・スケール不変性：$\forall_{a>0}\;(X_t:=a^{-1/2}B_{at})_{t\ge0}$はBrown運動である．
+        \item (原点)対称性：$(-B)_{t\in\R_+}$はBrown運動である．
+        \item 時間一様性：$\forall_{h>0}\;(B_{t+h}-B_h)_{t\in\R_+}$はBrown運動である．
+        \item 時間の巻き戻し：$(X_t:=B_1-B_{1-t})_{t\in[0,1]}$と$(B_t)_{t\in[0,1]}$とは分布が等しい．
+        \item 時間反転不変性：次もBrown運動である：
+        \[X_t=\begin{cases}
+            tB_{1/t}&t>0,\\0&t=0
+        \end{cases}\]
+        \item 大数の法則：$\lim_{t\to\infty}\frac{B_t}{t}=0\;\as$\footnote{時間反転により，$\infty$での性質を$0$に引き戻して考えることが出来る，という議論の順番がきれいだと考えて入れ替えた．}        
+        \item $1/2$-大数の法則\footnote{大数の法則と併せてみると，長い目で見て，Brown運動は線型関数よりは遅く増加するが，$\sqrt{t}$よりはlimsupが速く増加する．}：
+        \[\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=+\infty\;\as,\qquad\liminf_{n\to\infty}\frac{B(n)}{\sqrt{n}}=-\infty\;\as\]
+        \item $1/2$-Holder連続ではない：$P\Square{\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}=+\infty}=1$．\footnote{実は，$1/2$-Holder連続な点も存在するが，高々零集合である．また，$\al>1/2$については，ほとんど確実に，任意の点で$\al$-Holder連続でない．これは微分可能性についてのPaleyの結果よりも強い主張である．}
+        \item 連続度\footnote{Levy 1937}：$\varphi(h):=C\sqrt{h\log(1/h)}$はBrown運動の非確率的な連続度であり，$C=\sqrt{2}$のとき最適になる：\footnote{$\limsup$を$\lim$に置き換えても成り立つ．}
+        \[\limsup_{\delta\searrow 0}\sup_{s,t\in[0,1],\abs{t-s}<\delta}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\abs{t-s}}}=1\;\as\]
+        \item 最小包絡関数：$\limsup_{t\to\infty}\frac{B_t}{\sqrt{2t\log\log(t)}}=1\;\as$\footnote{$1/2$-Holder連続性が$1/2$-大数の法則の系であったように，繰り返し対数の法則はこの系になる．}
+        \item 一点における連続性の結果・繰り返し対数の法則\footnote{Khinchin 1933}：\[\forall_{s\in\R_+}\;\limsup_{t\searrow s}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\log\abs{t-s}}}=1\;\as\]
+        \item 殆ど確実に，任意の$0<a<b<\infty$に対して，Brown運動の見本道は$[a,b]$上単調でない．
+    \end{enumerate}
+    関数$f$の右・左微分係数を$D^*f(t):=\limsup_{h\searrow0}\frac{f(t+h)-f(t)}{h},D_*f(t)$で表すとする
+    \begin{enumerate}\setcounter{enumi}{10}
+        \item 任意の$t\in\R_+$について，殆ど確実に$B_t$は$t$において微分可能でない上に，殆ど確実に$D^*B(t)=+\infty\land D_*B(t)=-\infty$．
+        \item $B$の見本道は殆ど確実に至る所微分不可能性である．\footnote{Paley et al. 1933, Dvoretzky et al. 1961.}
+        さらに，ほとんど確実に$\forall_{t\in\R_+}\;D^*B(t)=+\infty\lor D_*B(t)=-\infty$．\footnote{なお，ほとんど確実に$\forall_{t\in[0,1)}\;D^*B(t)\in\{\pm\infty\}$という主張は正しくない．}
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{enumerate}[({B}1)]
+            \item $X_0=a^{-1/2}B_0=0\;\as$
+            \item $a^{-1/2}(B_{at_n}-B_{at_{n-1}}),\cdots,a^{-1/2}(B_{2}-B_{1})$は，独立な確率変数の可測関数$\R\to\R;x\mapsto a^{-1/2}x$との合成であるから，再び独立である．
+            \item $B_{at}-B_{as}\sim N(0,a(t-s))$だから，$X_t-X_s=a^{-1/2}(B_{at}-B_{as})\sim N(0,a(t-s))$．
+            \item $t\mapsto B_t(\om)$が連続になる$\om\in\Om$について，$t\mapsto a^{-1/2}B_{at}$は連続関数との合成からなるため連続．
+        \end{enumerate}
+        \item (1)と同様の議論による．
+        \item (1)と同様の議論による．
+        \item (1)と同様の議論とWiener測度の一意性による？
+        \item $(X_t)$が平均$0$共分散$\min$のGauss過程であることを示してから，(B4)を示す．
+        \begin{description}
+            \item[Gauss過程であることの証明] 
+            有限次元周辺分布$(X_{t_1},\cdots,X_{t_n})$は，正規確率ベクトル$(B_{1/t_1},\cdots,B_{1/t_n})$の，行列$\diag(t_1,\cdots,t_n)$が定める変換による値であるから，再び多変量正規分布に従う．
+            よって，$(X_t)$はGauss過程である．
+            平均は$E[X_t]=E[tB_{1/t}]=0$．共分散は
+            \[\Cov[X_s,X_t]=E[X_sX_t]=stE[B_{1/s}B_{1/t}]=st\min\paren{\frac{1}{s},\frac{1}{t}}=\min(s,t).\]
+            \item[見本道の連続性の証明]
+            $t\mapsto X(t)$は$t>0$については殆ど確実に連続であるから，$t=0$での連続性を示せば良い．
+            \begin{enumerate}[(a)]
+                \item まず，$(X_t)_{t\in\R_+\cap\Q}$の分布は，標準Brown運動の制限$(B_t)_{t\in\R_+\cap\Q}$が$\R^\infty$上に誘導するものと等しい(Kolmogorovの拡張定理の一意性より)．よって，$\lim_{t\searrow0,t\in\Q}X_t=\lim_{t\searrow0,t\in\Q}B_t=0\;\as$
+                \item $(X_t)$は$\R_{>0}$上で殆ど確実に連続であることと，$\R_{>0}\cap\Q$のその上での稠密性より，極限は一致する：$\lim_{t\searrow0}X_t=\lim_{t\searrow,t\in\Q}X_t=0\;\as$
+                
+                実際，あるfull set $F\in\F$が存在して$\forall_{\om\in F}\;X_t(\om)$は$t\in\R_{>0}$上連続であるが，
+                このとき\[\Abs{\lim_{t\searrow0}X_t(\om)-\lim_{t\searrow 0,t\in\Q}X_t(\om)}=2\ep>0\]とすると，
+                \[\exists_{\delta_1>0}\;0<s<\delta_1\Rightarrow\Abs{X_s(\om)-\lim_{t\searrow0}X_t(\om)}<\ep\]
+                \[\exists_{\delta_2>0}\;0<s<\delta_2\Rightarrow\Abs{X_s(\om)-\lim_{t\searrow 0,t\in\Q}X_t(\om)}<\ep\]
+                が成り立つが，このとき$(0,\min(\delta_1,\delta))\cap\Q\ne\emptyset$上での$X_t$の値について矛盾が生じている．
+            \end{enumerate}
+        \end{description}
+        \item (5)より，
+        \[\lim_{t\to\infty}\frac{B(t)}{t}=\lim_{t\to\infty}X(1/t)=X(0)=0\;\as\]
+        \item 任意の$c\in\Z_+$について，Brown運動のスケール不変性(1)より，$\{B_n>c\sqrt{n}\}\Leftrightarrow\{n^{-1/2}B_n>c\}\Leftrightarrow\{B_1>c\}$である．
+        まず，集合に関するFatouの補題から，$P[\Brace{B_n>c\sqrt{n}\;\io}]\ge\limsup_{n\to\infty}P[\Brace{B_n>c\sqrt{n}}]=P[\Brace{B_1>c}]>0$．
+        次に，$X_n:=B_n-B_{n-1}$とすると，$\Brace{B_n>c\sqrt{n}\;\io}=\Brace{\sum^n_{j=1}X_j>c\sqrt{n}\;\io}$は$(X_n)$について可換な事象であるから（手前の有限個の$X_1,\cdots,X_m$に対する置換に対して不変）であるから，Hewitt-Savageの定理より，$P[\Brace{B_n>c\sqrt{n}\;\io}]=1$．
+        最後に，任意の$c\in\Z_+$について合併事象を取ると，$P\Square{\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=\infty}=1$を得る．
+        \item 時間反転により(7)に帰着する．
+        $\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}>\sup_{t\in(0,1]}\frac{\abs{B_t-B_0}}{\sqrt{\abs{t-0}}}$であるから，
+        \[P\Square{\sup_{t\in(0,1]}\frac{\abs{B_t}}{\sqrt{t}}=\infty}=1\]
+        を示せば良いが，実は
+        \[P\Square{\limsup_{t\searrow0}\frac{\abs{B_t}}{\sqrt{t}}=\infty}=1\]
+        が成り立つ．実際，$X_t$を(5)の時間反転とすると，
+        \[\limsup_{t\searrow0}\frac{\abs{B_t}}{\sqrt{t}}=\limsup_{t\searrow0}\sqrt{t}\abs{X_{1/t}}=\limsup_{s\to\infty}\frac{\abs{X_s}}{\sqrt{s}}=\infty\;\as\]
+        \item 保留．
+        \item a
+        \item (7)と(8)の関係同様，時間反転による．
+        \item e
+        \item $X$を，$B$の時間反転とし(5)，この$t=0$における微分可能性を考える．
+        このとき，(7)より，
+        \begin{align*}
+            D^*X(0)&=\limsup_{h\searrow0}\frac{X_h-X_0}{h}\\
+            &\ge\limsup_{n\to\infty}\frac{X_{1/n}-X_0}{1/n}\\
+            &\ge\limsup_{n\to\infty}\sqrt{n}X_{1/n}=\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=\infty.
+        \end{align*}
+        すなわち，$D^*X(0)=\infty$で，$D_*X(0)=-\infty$も同様にして得る．特に，$X_t$は$t=0$にて微分可能でない．
+        
+        ここで，任意の$t>0$に対して，$Y_s:=B_{t+s}-B_t$とすると，$Y_s$も標準Brown運動で(3)，$Y_0$にて微分可能でない．
+        よって，$B$も$B_t$において微分可能でない．
+        \item 保留．
+    \end{enumerate}
+\end{proof}
+
+\begin{example}[Ornstein-Uhlenbeck diffusion]
+    \[X_t:=e^{-t}B(e^{2t})\]
+    によって定まる過程$(X_t)_{t\in\R}$を\textbf{オルンシュタイン＝ウーレンベック拡散}
+    または\textbf{平均回帰過程}という．
+    これはMarkov過程であり，$\forall_{t\in\R}\;X_t\sim N(0,1)$が成り立つ．
+    これは，原点に向かって，原点からの距離に比例したドリフト場の中での拡散のモデルになっている．
+    Ornstein-Uhlenbeck過程は時間反転可能で，$(X_t)_{t\in\R_+},(X_{-t})_{t\in\R_+}$は同じ分布を持つ．
+\end{example}
+
+\begin{proposition}[ユニタリ変換不変性 / conformal invariance property]
+    多次元正規分布の性質が一般化される．
+    $B$を$d$次元Brown運動，$U\in\GL_d(\R)$を直交行列とする．このとき，$(X_t:=UB_t)_{t\in\R_+}$はBrown運動である．
+\end{proposition}
+
+\subsection{確率過程としての性質}
+
+\begin{definition}
+    右連続関数$f:[0,t]\to\R$が\textbf{有界変動}であるとは，
+    \[V_f^{(1)}(t):=\sup\sum^k_{j=1}\abs{f(t_j)-f(t_{j-1})}<\infty\]
+    を満たすことをいう．
+\end{definition}
+
+\begin{proposition}[2次変動の$L^2$-収束]
+    $[0,t]$の部分分割$\pi:=(0=t_0<t_1<\cdots<t_n=t)$の系列$(\pi_n),\pi_n\subset\pi_{n+1}$について，$\abs{\pi}:=\max_{j\in n}(t_{j+1}-t_j)$とする．
+    このとき，次の$L^2(\Om)$-収束が成り立つ：
+    \[\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2=t\quad\in L^2(\Om).\]
+\end{proposition}
+\begin{proof}
+    確率変数列を$\xi_j:=(B_{t_{j+1}}-B_{t_j})^2-(t_{j+1}-t_j)\;(j\in n)$とおくと，これらは中心化された独立な確率変数列になる．
+    実際，
+    \[E[\xi_j]=E[(B_{t_{j+1}}-B_{t_j})^2]-E[t_{j+1}-t_j]=t_{j+1}-t_j-(t_{j+1}-t_j)=0.\]
+    また，各$\xi_j$は独立な確率変数列$(B_{t_{j+1}}-B_{t_j})$の可測関数による像であるから，やはり独立である．
+    
+    正規分布の偶数次の中心積率は$\mu_{2r}=\frac{(2r)!}{2^rr!}\sigma^{2r}$と表せるため，$E[(B_{t_{j+1}}-B_{t_j})^4]=3(t_{j+1}-t_j)^2$であることに注意すると，
+    \begin{align*}
+        E\Square{\paren{\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2-t}^2}&=E\Square{\paren{\sum^{n-1}_{j=0}\xi_j}^2}=\sum^{n-1}_{j=0}E[\xi^2_j]\\
+        &=\sum^{n-1}_{j=0}\paren{3(t_{j+1}-t_j)^2-2(t_{j+1}-t_j)^2+(t_{j+1}-t_j)^2}\\
+        &=2\sum^{n-1}_{j=0}(t_{j+1}-t_j)^2\le 2t\abs{\pi}\xrightarrow{\abs{\pi}\to0}0.
+    \end{align*}
+\end{proof}
+\begin{remark}
+    より強く，概収束も示せる．なお，$(\pi_i)$が部分分割の系列でない場合，反例が殆ど確実に存在する．
+    というのも，殆ど確実に分割の列で$\abs{\pi_n}\to 0$を満たすものが存在して，
+    \[\limsup_{n\to\infty}\sum^{k(n)}_{j=1}(B(t_j^{(n)})-B(t^{(n)}_{j-1}))^2=\infty\]
+    が成り立つ．
+    他にこういうものを排除する十分条件として，$\sum_{n\in\N}\abs{\pi_n}<\infty$がある．
+\end{remark}
+
+\begin{proposition}[2次変動の概収束]
+    $[0,t]$の分割の列$(\pi^n)_{n\ge 1},\pi^n:=\Brace{0=t^n_0<\cdots<t^n_{k_n}=t}$は$\sum_{n\in\N}\abs{\pi^n}<\infty$を満たすとする．
+    このとき，
+    \[\sum^{k_n-1}_{j=0}\paren{B_{t^n_{j+1}}-B_{t^n_j}}^2\xrightarrow{\as}t.\]
+\end{proposition}
+
+\begin{corollary}[全変動]
+    区間$[0,t]$における全変動
+    \[V:=\sup_{\pi}\sum^{n-1}_{j=0}\abs{B_{t_{j+1}}-B_{t_j}}\]
+    は殆ど確実に$\infty$である．
+\end{corollary}
+\begin{proof}
+    Brown運動の見本道は殆ど確実に連続であるから，$\sup_{j\in n}\abs{B_{t_{j+1}}-B_{t_j}}\xrightarrow{\abs{\pi}\to0}0$である．
+    よって，もし$V<\infty$ならば，2乗和
+    \begin{align*}
+        V_2:=\sum^{n-1}_{j=1}(B_{t_{j+1}}-B_{t_j})^2&\le\sup_{j\in n}\abs{B_{t_{j+1}}-B_{t_j}}\paren{\sum^{n-1}_{j=0}\abs{B_{t_{j+1}}-B_{t_j}}}\\
+        &\le V\sup_{j\in n}\abs{B_{t_{j+1}}-B_{t_j}}\xrightarrow{\abs{\pi}\to0}0.
+    \end{align*}
+    よって，2次変動の$L^2$-極限は，
+    \[\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2=P[V=\infty]\paren{\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2}=t\]
+    と表せる．
+    $P[V<\infty]=0$でない限り，2次変動が$t$に$L^2$-収束することに矛盾する．
+\end{proof}
+
+\begin{proposition}
+    $X_t:=\int^t_0B_sds$はGauss確率変数である．
+\end{proposition}
+
+\section{Cameron-Matrin定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフト付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
+\end{tcolorbox}
 
 \section{Wiener積分}
 
@@ -418,7 +651,39 @@ title=]
     Wiener測度は，Wiener過程によって誘導されるGauss測度の例である．
 \end{tcolorbox}
 
+\subsection{定義}
 
+\begin{notation}
+    \[\E_0:=\Brace{\varphi_t=\sum^{n-1}_{j=0}a_j1_{(t_j,t_{j+1}]}(t)\in L^2(\R_+)\;\middle|\;n\ge 1,a_0,\cdots,a_{j-1}\in\R,0=t_0<\cdots<t_n}\]
+    は$L^2(\R_+)$の稠密部分空間である．
+\end{notation}
+
+\begin{definition}[Wiener integral]
+    $\varphi\in\E_0$上の有界線型作用素$\E_0\to L^2(\Om)$
+    \[\int_{\R_+}\varphi_tdB_t:=\sum^n_{j=0}a_j(B_{t_{j+1}}-B_{t_j})\]
+    は等長写像であるが，この$L^2(\R_+)$への連続延長$B:L^2(\R_+)\mono L^2(\Om)$を\textbf{Wiener積分}という．
+    像は$B(\varphi)=\int^\infty_0\varphi_tdB_t\sim N(0,\norm{\varphi}^2_{L^2(\R_+)})$を満たし，$\Im B<L^2(\Om)$は$L^2(\R_+)$と等長同型な，Brown運動が生成するGauss部分空間となる．
+\end{definition}
+
+\subsection{ホワイトノイズとBrown運動}
+
+\begin{definition}[white noise]
+    $D\subset\R^m$をBorel集合とする．$D$上の\textbf{ホワイトノイズ}とは，$D$内の測度確定な可測集合
+    $\D:=\Brace{A\in\B(\R^m)\cap P(D)\mid l(A)<\infty}$によって添字付けられた
+    中心化されたGauss確率変数の族$W:=\{W(A)\}_{A\in\D}$であって，
+    Lebesgue測度$l$に関して$E[W(A)W(B)]=l(A\cap B)$を満たすものをいう．
+
+    この族$W:\D\ni A\mapsto W(A)$は，線型な等長写像$L^2(D)\ni\varphi\mapsto\int_D\varphi(x)W(dx)\in\o{W}$に延長出来る．
+    ただし，$\o{W}$は$W=\{W(A)\}_{A\in\D}$が生成するGauss部分空間とした．
+\end{definition}
+
+\begin{proposition}[$\sigma$-代数の特徴付け]
+    $(\Om,\F,P)$をWiener空間とする．
+    $\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：
+    \[\cC=\Brace{C=\Brace{\om\in\Om\mid\forall_{i\in[k]}\;\om(t_i)\in A_i}\in P(\Om)\;\middle|\;k\in\N_{\ge1},A_1,\cdots,A_k\in\B(\R),0\le t_1<\cdots<t_k}\]
+\end{proposition}
+
+\subsection{Brown sheet}
 
 \section{Wiener空間}
 
@@ -620,6 +885,8 @@ title=]
     Richard Bass - Stochastic Processes
     \bibitem{舟木}
     舟木直久『確率微分方程式』
+    \bibitem{Morters and Peres}
+    Morters and Peres - Brownian Motion
 \end{thebibliography}
 
 \end{document}
