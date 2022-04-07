@@ -3242,7 +3242,7 @@ title=]
     \end{enumerate}
 \end{example}
 
-\begin{corollary}[自己共役作用素の特徴付け]
+\begin{corollary}[自己共役作用素の特徴付け]\label{cor-characterization-of-self-adjointness}
     $\bF=\C$のとき，次の２条件は同値．
     \begin{enumerate}
         \item $T=T^*$．
@@ -3274,7 +3274,7 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsection{位相線形空間としての同型}
+\subsection{TVSの同型}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3464,12 +3464,19 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\begin{lemma}[半正定値作用素の自己共役性]
+    半正定値作用素は，$\bF=\C$のとき自己共役であるが，$\bF=\R$のときそうとは限らない．
+\end{lemma}
+\begin{proof}
+    $\bF=\C$の場合は特徴付け\ref{cor-characterization-of-self-adjointness}より明らか．
+    $\bF=\R$の場合は$A:\R^2\to\R^2$を$\varphi\in(-\pi/2,\pi/2)$回転とすると，$A^*=A^{-1}\ne A$となる．
+\end{proof}
 
 \subsection{自己共役作用素の順序}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    幾何学的には，自己共役作用素のなす閉・実・順序部分空間$B(H)_\sa$の内部で閉凸錐をなす．
+    幾何学的には，正作用素は，自己共役作用素のなす閉・実・順序部分空間$B(H)_\sa$の内部で閉凸錐をなす．
     しかしこの順序は束にさえならず，より深い考察には二乗根補題を必要とする．
 \end{tcolorbox}
 
@@ -5706,12 +5713,200 @@ title=]
 \end{remarks}
 
 \begin{lemma}
-    Stieltjes積分$\int:C_c(\R)\to\R$はRadon積分である．
+    Stieltjes積分$\int:C_c(\R)\to\R$はRadon積分，すなわち，正な線型汎関数である．
 \end{lemma}
 
 \begin{theorem}
-    $\R$上のRadon積分$\int:C_c(\R)\to\R$について，ある単調増加関数$m:\R\to\R$が存在して，これについてのStieltjes積分と一致する．
+    $\R_+$上のRadon積分$\int:C_c(\R_+)\to\R$について，ある有界変動な右連続な単調増加関数$A:\R_+\to\R$が存在して，これについてのStieltjes積分と一致する：$A_t=\mu([0,t])$．
 \end{theorem}
+\begin{remarks}
+    これは，累積分布関数と確率分布の一対一対応の根拠でもあり，
+\end{remarks}
+
+\subsection{複素測度論の復習}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \cite{Rudin-RC}による，複素測度論．
+    特に，正測度は$[0,\infty]$，符号付き測度は$\R$に値を取る測度をいう．
+\end{tcolorbox}
+
+\begin{definition}[partition, total variation, bounded variation, positive/negative variation]
+    $\M$を$X$上の$\sigma$-代数とする．
+    \begin{enumerate}
+        \item $\M$の可算集合$\{E_i\}_{i\in I}$であって，$\forall_{i,j\in I}i\ne j\Rightarrow E_i\cap E_j=\emptyset$を満たすものを$E:=\cup_{i\in I}E_i$の\textbf{分割}という．$E$の分割の全体を$\Delta(E)$で表す．すると，任意の分割上に対して可算加法性を持つ関数$\M\to\C$を測度というのであった．
+        \item 複素測度$\mu:\M\to\C$について，$\abs{\mu}:\M\to\R_+;E\mapsto\abs{\mu}(E):=\sup_{\Delta(E)}\sum^\infty_{i=1}\abs{\mu(E_i)}$と定めると，これは有限な（正）測度を定める．これを\textbf{全変動}という．\footnote{正測度$\mu$の全変動は$\mu$そのものである．}
+        \item 符号付き測度$\mu:\M\to\R$について，$\mu^+:=\frac{1}{2}(\abs{\mu}+\mu),\mu^-:=\frac{1}{2}(\abs{\mu}-\mu)$はそれぞれ（正）測度$\M\to[0,\infty]$を定め，それぞれ\textbf{正変動}と\textbf{負変動}という．このとき，$\mu=\mu^+-\mu^-,\abs{\mu}=\mu^++\mu^-$が成り立つ(Jordan分解)．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[absolutely continuous, concentrated, mutually singular]
+    $\mu:\M\to[0,\infty]$を(正)測度，$\lambda,\lambda_i$を任意の測度$\lambda:\M\to\C\cup\{\infty\}$とする．
+    \begin{enumerate}
+        \item $\lambda\ll\mu:\Leftrightarrow\forall_{E\in\M}\;\lambda(E)\Rightarrow\mu(E)=0$．これは，$\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{E\in\M}\;\mu(E)<\delta\Rightarrow\abs{\lambda(E)}<\ep$と同値．これは$\mu$がLebesgue測度のとき，明らかに連続性よりも条件が強い一般化となっている．
+        \item $\lambda$が$A\in\M$において\textbf{密集している}とは，$\forall_{E\in\M}\;\lambda(E)=\lambda(A\cap E)$を満たすことをいう．
+        \item 2つの測度$\lambda_1,\lambda_2$がある互いに素な集合$A,B$について，それぞれ$A,B$に密集しているとき，\textbf{互いに特異}であるといい，$\lambda_1\perp\lambda_2$と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[$\sigma$-有限測度は本質的には有限]
+    $\mu:\M\to[0,\infty]$を$(X,\M)$上の$\sigma$-有限な測度とする．
+    このとき，ある可積分関数$w\in L^1(\mu)$が存在して，$0<w<1$を満たす．
+\end{lemma}
+\begin{remarks}
+    これの本質は，$\mu$が$\sigma$-有限ならば，ある有限な測度$\wt{\mu}:=wd\mu:\M\to\R_+$が存在して，$\wt{\mu},\mu$が$0$となる集合は完全に一致する：$\wt{\mu}\ll\mu\land\wt{\mu}\gg\mu$．
+\end{remarks}
+\begin{theorem}[Radon-Nikodym]
+    $\mu:\M\to[0,\infty]$を$\sigma$-有限測度，$\lambda:\M\to\C$を複素測度とする．
+    \begin{enumerate}
+        \item 複素測度の組$(\lambda_a,\lambda_s)$がただ一つ存在して，$\lambda=\lambda_a+\lambda_s$かつ$\lambda_a\ll\mu,\lambda_s\perp\mu$．
+        \item ただ一つの可積分関数$h\in L^1(\mu)$が存在して，$\forall_{E\in\M}\;\lambda_a(E)=\int_Ehd\mu$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[複素測度の極分解]
+    $\mu:\M\to\C$を複素測度とする．このとき，ある可測関数$h$であって$\forall_{x\in X}\;\abs{h(x)}=1$を満たすものが存在して，$d\mu=hd\abs{\mu}$と表せる．
+\end{corollary}
+
+\subsection{有界変動関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lebesgue積分において，微積分の基本定理はより一般的な形で成り立つ．
+
+    $C[a,b]$の双対空間とは，有界変動関数の定めるStieltjes積分全体の空間である．
+\end{tcolorbox}
+
+\subsubsection{測度の微分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対称微分は微分の一般化となっている．この概念が，$\R^k$上のRadon-Nikodym微分に一致する．
+    これを調べるのに，Hardy-Littlewood作用素という有界な非(劣)線形作用素を用いる．
+\end{tcolorbox}
+
+\begin{theorem}[測度の分布関数の微分可能性]
+    $\mu$を$\R$上の複素Borel測度とし，関数$f:\R\to\C$を$f(x):=\mu((-\infty,x))$と定める．
+    このとき，$x\in\R,A\in\C$とLebesgue測度$m$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $f$は$x$にて微分可能で，微分係数は$A$である：$f'(x)=A$．
+        \item $\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{x\in(a,b)=:I}\;b-a<\delta\Rightarrow\Abs{\frac{\mu(I)}{m(I)}-A}<\ep$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[symmetric derivative, maximal function]
+    $\mu$を$\R^k\;(k\in\N)$上の複素Borel測度とする．$B(x,r)$を開球として，\textbf{対称差分商}を
+    $Q_r\mu(x):=\frac{\mu(B(x,r))}{m(B(x,r))}$と表す．
+    \begin{enumerate}
+        \item $(D\mu)(x):=\lim_{r\to0}(Q_r\mu)(x)$によって定まる関数$D\mu:\R^k\to\C$を\textbf{対称微分}という．
+        \item 有限な正測度$\mu\ge0$について，$M\mu(x):=\sup_{0<r<\infty}(Q_r\mu)(x)$によって定まる関数$M\mu:\R^k\to[0,\infty]$を\textbf{極大関数}という．各点$x\in\R^k$に対して，その周りでの平均値の取り得る上限を表す．
+        \item 極大関数は下半連続であり，特に可測である．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    微分可能ならば対称微分可能であるが，その逆は成り立たない．左右の微分係数が存在するなら対称微分可能で，対称微分係数はそれらの相加平均となる．
+\end{remark}
+
+\begin{theorem}[maximal theorem]\mbox{}
+    \begin{enumerate}
+        \item 任意の複素Borel測度$\mu:\B^k(\R^k)\to\C$について，
+        \[\forall_{\lambda>0}\quad m\Brace{M\mu>\lambda}\le \frac{3^k}{\lambda}\norm{\mu}.\]ただし，$\norm{\mu}:=\abs{\mu}(\R^k)$を全変動ノルムとした．
+        \item Hardy-Littlewood作用素$M:L^1(\R^k)\to L^{1,m}(\R^k)$は，劣線型作用素として有界である：
+        \[\forall_{f\in L^1(\R^k)}\;\forall_{\lambda>0}\quad m\Brace{Mf>\lambda}\le\frac{3^k}{\lambda}\norm{f}_1.\]
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{測度の定める分布関数の連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lebesgue点は連続点の一般化になる．
+    Riemann可積分関数は殆ど至る所連続であるように，
+    Lebesgue可積分関数は殆ど至る所Lebesgue点である．
+\end{tcolorbox}
+
+\begin{definition}[weak $L^1$, maximal function, Hardy-Littlewood operator]\mbox{}
+    \begin{enumerate}
+        \item 可測関数$f$が定める\textbf{分布関数}とは，$\lambda_f:\R_+\to\R_+;t\mapsto m\Brace{\abs{f}>t}$をいう．
+        \item 可測関数$f$が\textbf{弱$L^1$}であるとは，その分布関数が次の意味で有界であることをいう：$\lambda\mapsto\lambda\cdot m\Brace{\abs{f}>\lambda}:(0,\infty)\to\R_+$が有界，すなわち$\exists_{C\in\R}\;\lambda_f(t)\le\frac{C}{t}$であることをいう．$L^1$関数は弱$L^1$である：$L^1\subset L^{1,m}$．
+        \item 関数$f\in L^1(\R^k)$の\textbf{極大関数}とは，$(Mf)(x):=\sup_{0<r<\infty}\frac{1}{m(B_r)}\int_{B(x,r)}\abs{f}dm$によって定まる関数$Mf:\R^k\to[0,\infty]$をいう．
+        \item 作用素$M:L_\loc^1(\R^d;\C)\to L^1_\loc(\R^d;\R)$をHardy-Littlewood作用素という，非線形作用素になる．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Lebesgue point]
+    可積分関数$f\in L^1(\R^k)$に対して，$x\in\R^k$が\textbf{Lebesgue点}であるとは，
+    \[\lim_{r\to0}\frac{1}{m(B(x,r))}\int_{B(x,r)}\abs{f(y)-f(x)}dm(y)=0\]
+    を満たすことをいう．$f$の連続点はLebesgue点である．
+\end{definition}
+
+\begin{theorem}[Lebesgue性は連続性のように扱える]
+    可積分関数$f\in L^1(\R^k)$について，殆ど至る所の$x\in\R^k$は$f$-Lebesgue点である．
+\end{theorem}
+
+\subsubsection{絶対連続測度の微分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    絶対連続測度の対称微分は，そのRadon-Nikodym微分に一致する．
+\end{tcolorbox}
+
+\begin{theorem}[Radon-Nikodym微分と対称微分の同値性]
+    $\mu:\B(\R^k)\to\C\ll m$をLebesgue測度に対して絶対連続な複素Borel測度とする．
+    このとき，
+    \begin{enumerate}
+        \item $D\mu =\dd{\mu}{m}=:f\;\;m\dae$．
+        \item $\forall_{E\in\B(\R^k)}\;\mu(E)=\int_E(D\mu)dm$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    $f:I=[a,b]\to\C$が\textbf{絶対連続}であるとは，$\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{\sqcup_{i\in[n]}(\al_i,\beta_i)\subset I}\;\sum^n_{i=1}\abs{f(\beta_i)-f(\al_i)}<\ep$が成り立つことをいう．
+    $n=1$の場合が，$f$の連続性に同値になる．
+\end{definition}
+
+\begin{theorem}[絶対連続性の特徴付け]
+    $f:I\to\R$を連続かつ広義単調増加とする．次の3条件は同値．
+    \begin{enumerate}
+        \item $f$は絶対連続．
+        \item $f$は零集合を零集合に写す．
+        \item $f$は$I$の殆ど至る所微分可能で，導関数は可積分$f'\in L^1$で，$\forall_{x\in[a,b]}\;f(x)-f(a)=\int^x_af'(t)dt$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[絶対連続関数の全変動]
+    $f:I\to\R$を絶対連続とする．
+    全変動$F$に対して
+    $F,F+f,F-f$は再び絶対連続で，広義単調増加である．
+\end{theorem}
+
+\begin{theorem}[微積分の基本定理]\mbox{}
+    \begin{enumerate}
+        \item $f:I\to\C$を絶対連続とする．このとき，$f$は$I$の殆ど至る所(Lebesgue点において)微分可能で，導関数は可積分になり$f'\in L^1(m)$，
+        \[\forall_{x\in I}\quad f(x)-f(a)=\int^x_af'(t)dt\]
+        \item $f:I\to\C$を殆ど至る所微分可能で，$f'\in L^1$とする．このとき，$\forall_{x\in I}\;f(x)-f(a)=\int^x_af'(t)dt$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{有界変動関数}
+
+\begin{definition}[total variation, bounded variation]
+    $f:I\to\C$を任意の関数とする．
+    \begin{enumerate}
+        \item $F(x):=\sup_{N\in\N,(t_i)\in\Delta([a,x])}\sum^N_{i=1}\abs{f(t_i)-f(t_{i-1})}$を\textbf{全変動}という．各区間$[a,x]$上での変動をいう．
+        \item 関数$f$が\textbf{有界変動}であるとは，$f$の全変動$F$が有限であることをいう：$F(b)<\infty$．その全体を$\BV[a,b]$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[有界変動関数の性質]\mbox{}
+    \begin{enumerate}
+        \item $[a,b]$上の単調関数や$C^1$-級関数は有界変動である．
+        \item $f\in\BV([a,b];\R)$は2つの有界な単調関数$f_1,f_2$を用いて$f=f_1-f_2$と表せる．
+        \item $f\in\BV([a,b];\R)$が左連続ならば，$f_1,f_2$も左連続に選べる．
+        \item $f\in\BV([a,b];\R)$が左連続ならば，あるBorel測度$\mu:\B([a,b])\to\R_+$が存在して，$f(x)-f(a)=\mu([a,x))$と表せる．このとき，$\mu\ll m\Leftrightarrow f$は絶対連続．
+        \item $f\in\BV([a,b])$は$m\dae$微分可能で，$f'\in L^1(m)$．定理より$f(x)=g(x)+\int_a^xf'(t)dt$と表わせ，$g=0$であることと$f$が絶対連続であることとは同値．
+    \end{enumerate}
+\end{proposition}
 
 \begin{theorem}[有界閉区間上の連続関数の空間の双対空間]
     $a<b\in\R$と$F:[a,b]\to\R$について，次の２条件は同値．
@@ -8785,6 +8980,8 @@ title=]
     Tuomas Hytonen, Jan van Neerven, Mark Veraar, Lutz Weis "Analysis in Banach Spaces"
     \bibitem{Rudin}
     Rudin "Functional Analysis"
+    \bibitem{Rudin-RC}
+    Rudin "Real and Complex Analysis"
 \end{thebibliography}
 
 \end{document}

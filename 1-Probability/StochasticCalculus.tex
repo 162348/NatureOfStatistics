@@ -25,6 +25,122 @@
     また，$(\Om,\F,P)$を確率空間とし，$L^p(\Om)$によってその上の$L^p$空間を表す．
 \end{notation}
 
+\section{Gauss分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \cite{Prato}による．関数解析全開で読みやすい．
+\end{tcolorbox}
+
+\begin{notation}
+    $H$を可分Hilbert空間，$(H,\B(H))$をBorel可測空間，$P(H)$をその上のBorel確率測度全体の集合とする．
+\end{notation}
+
+\subsection{平均と分散}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可分Hilbert空間という一番一般的な方法で，分布の扱い方を定める．
+    共分散とは半正定値対称行列としたが，無限次元から見れば，
+    有限の跡を持つというのが本質であるようだ．
+\end{tcolorbox}
+
+\begin{definition}[mean, covariance operator]
+    $\mu\in P(H)$について，
+    \begin{enumerate}
+        \item $E[\abs{x}]<\infty$のとき，線型形式$F:H\to\R;x\mapsto\int_H\brac{x,y}\mu(dy)$は有界である．このRiesz表現$\exists!_{m\in H}\;F(x)=\brac{m,x}$を定める元$m\in H$を$\mu$の\textbf{平均}という．
+        \item $E[\abs{x}]\le E[\abs{x}^2]<\infty$のとき，双線型形式$G:H\times H\to\R;(x,y)\mapsto\int_H\brac{x,z-m}\brac{y,z-m}\mu(dz)$は有界である．よって，Riesz表現を定める自己有界作用素$\exists!_{Q\in B(H)}\;\brac{Qx,y}=G(x,y)$を\textbf{共分散}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[共分散作用素の性質]
+    $E[\abs{x}]<\infty$とする．
+    \begin{enumerate}
+        \item $Q$は正作用素であり，かつ自己共役である．
+        \item $H$の任意の正規直交基底$(e_k)$について，$\Tr Q:=\sum_{k\in\N}\brac{Qe_k,e_k}=\int_H\abs{x-m}^2\mu(dx)<\infty$．
+        \item $Q$はコンパクト作用素である．
+        \item $E[\abs{x}^2]=\Tr Q+\abs{m}^2$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{notation}
+    正作用素の空間を$B^+(H)$とし，有限な跡を持つ作用素の空間を$B^+_1(H)\subset B^+(H)$で表す．
+\end{notation}
+
+\subsection{Gauss測度}
+
+\begin{definition}[Gaussian measure]
+    $\mu\in P(H)$が\textbf{Gauss測度}であるとは，ある$m\in H,Q\in L^+_1(H)$を用いて，
+    \[\wh{\mu}(h)=e^{i(m|h)}e^{-\frac{1}{2}(Qh,h)}\]
+    と表せるものをいう．$Q$がであるとき，$\mu$は非退化であるという．
+    なお，自己共役作用素$Q=Q^*$が単射であることは，$\Im Q$がノルム閉ならば$Q=Q^*$が可逆であることに同値であるが，実は$\Im Q$がノルム閉であることは必ずしも成り立たない．
+    $\mu=N_{m,Q}$と表す．
+\end{definition}
+
+\subsection{Gauss変数の独立性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    あるGauss確率変数の成分(一般化して，有界線型汎関数との合成)の間の独立性は，直交性で捉えられる．
+\end{tcolorbox}
+
+\begin{proposition}[Gauss変数のaffine変換]
+    $H,K$を可分Hilbert空間，$T(x)=Ax+b\;(A\in H(H,K),b\in K)$をaffine作用素とする．
+    このとき，$T\sim N(Aa+b,AQA^*)$．
+\end{proposition}
+
+\begin{notation}
+    $H$上の確率変数のうち，特に有界線型汎関数によって定まるもの：$F_v(x)=(x,v)\;(v\in H)$を考える．これはGauss確率変数である：$F_v\sim N_{\brac{Qv,v}}$．
+\end{notation}
+
+\begin{proposition}[独立性の特徴付け]
+    $v_1,\cdots,v_n\in H$とする．
+    \begin{enumerate}
+        \item 線型確率変数$F_{v_1},\cdots,F_{v_n}$が独立である．
+        \item $(Q_{v_1,\cdots,v_n})$は対角行列である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{ホワイトノイズ関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $Q$がコンパクト作用素であること，正作用素であること，すべてが交錯している．
+    white noiseとは中心化された有限な分散を持つ独立確率変数の組として得られる確率ベクトルをいう．
+\end{tcolorbox}
+
+\begin{notation}
+    $\mu=N_Q$を中心化された非退化なGauss分布とする．二乗根作用素$Q^{1/2}$の像$\Im Q^{1/2}$をCameron-Martin部分空間という．
+    これは$H$の真の部分空間であるが，実は$H$上稠密である．
+    この部分空間上に定まる線型作用素$W:\Im Q^{1/2}\to H^*$を
+    \[W_f(x):=\Brac{Q^{-1/2}f,x}\quad(f\in Q^{1/2}(H),x\in H)\]
+    とおく．
+    ひとまず単射な$Q^{1/2}$は$\Im Q^{1/2}$上は可逆だからその上で定義したが，一意な延長$\o{W}:H\mono L^2(H,\mu)$が存在する．この$L^2(H,\mu)$の部分空間はGauss空間である．
+    すると，独立性の特徴付けより，$W_{f_1},\cdots,W_{f_n}$が独立であることと，$f_1,\cdots,f_n$が直交であることは同値．
+\end{notation}
+
+\begin{definition}[white noise]\label{def-white-noise-1}
+    有界線型作用素$W:H\mono L^2(H,\mu);f\mapsto \brac{Q^{-1/2}x,f}=\sum_{h=1}^\infty\lambda_h^{-1/2}\brac{x,e_h}\brac{f,e_h}$
+    を\textbf{ホワイトノイズ}という．
+\end{definition}
+
+\begin{proposition}[white noiseはGauss過程である]\mbox{}
+    \begin{enumerate}
+        \item $z\in H$に対して，値$W_z$は$N(0,\abs{z}^2)$に従う実Gauss変数である．
+        \item $z_1,\cdots,z_n\in H\;(n\in\N)$に対して，$(W_{z_1},\cdots,W_{z_n})$は$N_n(0,(\brac{z_h,z_k})_{h,k\in[n]})$に従うGauss変数である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Cameron-Martin部分空間は零集合]
+    $\mu(Q^{1/2}(H))=0$．
+\end{proposition}
+
+\begin{tbox}{red}{}
+    この記法を使うと，$D$を勾配として，$M\varphi:=Q^{1/2}D\varphi$がMalliavin微分となる．
+    $M$は可閉作用素になり，その閉包はMalliavin-Sobolev空間$D^{1,2}(H,\mu)$上の作用素となる．
+    随伴$M^*$はSkorohod積分またはGauss発散作用素という．
+\end{tbox}
+
 \section{Gauss過程}
 
 \subsection{Gauss空間}
@@ -180,7 +296,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\section{定義}
+\section{定義と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -650,43 +766,77 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
     Wiener測度は，Wiener過程によって誘導されるGauss測度の例である．
+    これが定める積分をうまく定義すると，Stieltjes積分の状況がうまく模倣出来る．
+    ホワイトノイズが積分にあたり，Brown運動が有界変動関数に当たる．
 \end{tcolorbox}
 
 \subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有界変動な部分は零集合であるから，Stirltjes積分を取ることは出来ない．
+    そこで，単関数についてRiemann和を取る作用素の一意な延長として得られる有界線型作用素$L^2(\R_+)\to L^2(\Om)$をWiener積分とする．
+\end{tcolorbox}
 
 \begin{notation}
     \[\E_0:=\Brace{\varphi_t=\sum^{n-1}_{j=0}a_j1_{(t_j,t_{j+1}]}(t)\in L^2(\R_+)\;\middle|\;n\ge 1,a_0,\cdots,a_{j-1}\in\R,0=t_0<\cdots<t_n}\]
     は$L^2(\R_+)$の稠密部分空間である．
 \end{notation}
 
-\begin{definition}[Wiener integral]
-    $\varphi\in\E_0$上の有界線型作用素$\E_0\to L^2(\Om)$
+\begin{definition}[Wiener integral]\label{def-Wiener-integral}
+    単関数$\varphi\in\E_0$上の有界線型作用素$\E_0\to L^2(\Om)$
     \[\int_{\R_+}\varphi_tdB_t:=\sum^n_{j=0}a_j(B_{t_{j+1}}-B_{t_j})\]
     は等長写像であるが，この$L^2(\R_+)$への連続延長$B:L^2(\R_+)\mono L^2(\Om)$を\textbf{Wiener積分}という．
     像は$B(\varphi)=\int^\infty_0\varphi_tdB_t\sim N(0,\norm{\varphi}^2_{L^2(\R_+)})$を満たし，$\Im B<L^2(\Om)$は$L^2(\R_+)$と等長同型な，Brown運動が生成するGauss部分空間となる．
 \end{definition}
 
-\subsection{ホワイトノイズとBrown運動}
+\subsection{ホワイトノイズ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ホワイトノイズ\ref{def-white-noise-1}とWiener積分\ref{def-Wiener-integral}は同一視出来る．
+    ここではそれを利用して，Wiener積分の言葉を用いてホワイトノイズを定義する．
+\end{tcolorbox}
 
 \begin{definition}[white noise]
     $D\subset\R^m$をBorel集合とする．$D$上の\textbf{ホワイトノイズ}とは，$D$内の測度確定な可測集合
     $\D:=\Brace{A\in\B(\R^m)\cap P(D)\mid l(A)<\infty}$によって添字付けられた
     中心化されたGauss確率変数の族$W:=\{W(A)\}_{A\in\D}$であって，
     Lebesgue測度$l$に関して$E[W(A)W(B)]=l(A\cap B)$を満たすものをいう．
-
-    この族$W:\D\ni A\mapsto W(A)$は，線型な等長写像$L^2(D)\ni\varphi\mapsto\int_D\varphi(x)W(dx)\in\o{W}$に延長出来る．
-    ただし，$\o{W}$は$W=\{W(A)\}_{A\in\D}$が生成するGauss部分空間とした．
 \end{definition}
+\begin{remarks}
+    この族$W:\D\ni A\mapsto W(A)$は，線型な等長写像$L^2(D)\ni\varphi\mapsto\int_D\varphi(x)W(dx)\in\o{W}\subset L^2(\Om)$に延長出来る．
+    定義\ref{def-white-noise-1}ではこちらを，Wiener積分の言葉を使わずに描写することでホワイトノイズの定義とした．
+    ただし，$\o{W}$は$W=\{W(A)\}_{A\in\D}\subset L^2(\Om)$が生成するGauss部分空間である．
+\end{remarks}
+
+\subsection{Brown運動の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Brown運動はWiener積分を通じてホワイトノイズを定義する．
+    一方でホワイトノイズの累積分布関数としてBrown運動が得られる．
+    これはStieljes積分を通じて，ある有界変動関数$d\rho$が有界線型汎関数$\int-d\rho\in (C([a,b]))^*$を定める関係と
+    と相似形であるが，用いている測度は今回は$C(\R_+)$上のWiener測度である．
+\end{tcolorbox}
+
+\begin{proposition}
+    $f\in L^2(\R_+)$のWiener積分はホワイトノイズである：$W_f=\int^\infty_0f(s)dB(s)$．
+\end{proposition}
+
+\begin{proposition}
+    $W$を$\R_+$上のホワイトノイズとすると，$W_t:=W([0,t])=W_{1_{[0,t]}}$と定めるとこれはBrown運動である．
+\end{proposition}
+
+\subsection{Brown sheet}
+
+\section{Wiener空間}
 
 \begin{proposition}[$\sigma$-代数の特徴付け]
     $(\Om,\F,P)$をWiener空間とする．
     $\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：
     \[\cC=\Brace{C=\Brace{\om\in\Om\mid\forall_{i\in[k]}\;\om(t_i)\in A_i}\in P(\Om)\;\middle|\;k\in\N_{\ge1},A_1,\cdots,A_k\in\B(\R),0\le t_1<\cdots<t_k}\]
 \end{proposition}
-
-\subsection{Brown sheet}
-
-\section{Wiener空間}
 
 \section{Brownian Filtration}
 
