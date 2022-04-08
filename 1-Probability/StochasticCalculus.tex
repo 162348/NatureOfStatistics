@@ -319,13 +319,14 @@ title=]
     \begin{enumerate}
         \item $B_{t_1},\cdots,B_{t_n}$の線型結合は正規分布に従う確率変数を定める．
         \item 積写像$(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$は$n$次元正規分布に従う．
-        \item 一般に，$n$次元確率ベクトル$X(X_1,\cdots,X_n):\Om\to\R^n$が$n$次元正規分布に従うことと，任意の線型汎関数$f\in(\R^n)^*$に関して$f(X):\Om\to\R$が正規確率変数であることとは同値．
     \end{enumerate}
+    実は，独立性の仮定は必要ない．
+    一般に，$n$次元確率ベクトル$X=(X_1,\cdots,X_n):\Om\to\R^n$が$n$次元正規分布に従うことと，任意の線型汎関数$f\in(\R^n)^*$に関して$f(X):\Om\to\R$が正規確率変数であることとは同値．
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{enumerate}
         \item $B_{t_1}\sim N(\mu_1,\sigma_1),B_{t_2}\sim N(\mu_2,\sigma_2)$として，$B_{t_1}+B_{t_2}$が正規分布に従うことを示せば十分である．
-        一般に，独立な2つの確率変数の和の特性関数は，元の確率変数の特性関数の積となる：\[\varphi_{X+Y}(u)=E[e^{iuX+Y}]=E[e^{iuX}e^{iuY}]=E[e^{iuX}]E[e^{iuY}]=\varphi_X(u)\varphi_Y(u).\]
+        一般に，独立な2つの確率変数の和の特性関数は，期待値が積に対して分解することより，元の確率変数の特性関数の積となる：\[\varphi_{X+Y}(u)=E[e^{iuX+Y}]=E[e^{iuX}e^{iuY}]=E[e^{iuX}]E[e^{iuY}]=\varphi_X(u)\varphi_Y(u).\]
         よって，
         \begin{align*}
             \varphi_{B_{t_1}+B_{t_2}}(u)&=\exp\paren{i\mu_1u-\frac{1}{2}\sigma_1^2u^2}\exp\paren{i\mu_2u-\frac{1}{2}\sigma^2_2u^2}\\
@@ -333,19 +334,19 @@ title=]
         \end{align*}
         であるが，これは$B_{t_1}+B_{t_2}\sim N(\mu_1+\mu_2,\sigma^2_1+\sigma^2_2)$を意味する．
         \item $(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$の特性関数は，それぞれの特性関数の積となるが，正規分布の特性関数の積は正規分布の特性関数となることは(1)で見た：$\varphi_{(B_{t_1},\cdots,B_{t_n})}(u)=\exp\paren{i(\mu_1u_1+\cdots+\mu_nu_n)-\frac{1}{2}(\sigma_1^2u_1^2+\cdots\sigma_n^2u_n^2)}$．
-        \item $\Rightarrow$は(1)による．$\Leftarrow$について，
-        まず射影$\pr_i\in(\R^n)^*\;(i\in[n])$について考えることより，$\pr_i(X)=X_i$は正規分布に従うことが分かる．
-        $X_i\sim N(\mu_i,\sigma_i)$とおく．このとき，$\Sigma:=(\Cov[X_i,X_j])_{i,j\in[n]},\mu:=(E[X_i])_{i\in[n]}$とおくと，$X\sim N_d(\mu,\Sigma)$となることを示せば良い．
-        任意の$f\in(\R^n)^*$を取ると，ある$a\in\R^n$を用いて$f(x)=a^\top x$と表せるが，$f(X)$の特性関数は$X$の特性関数の，1次元部分空間$\R a$への制限になる$\varphi_{f(X)}=\varphi_X|_{\R a}$ことに注意すれば，
-        (1)で計算したとおり
-        $f(X)\sim N(f(\mu),a^\top\Sigma a)$より
-        \[\varphi_{f(X)}(u)=\exp\paren{if(\mu)u-\frac{1}{2}(a^\top\Sigma a)^2u^2}=\exp\paren{i\mu\cdot au-\frac{1}{2}\paren{(ua)^{\top}\Sigma (ua)}^2}\]
-        が成り立つことは，任意の$a\in\R^n$について，$\varphi_{f(X)}$は，$N_d(\mu,\Sigma)$の$\R a$への制限に等しいことを表していると分かる．
-        したがってたしかに$X\sim N_d(\mu,\Sigma)$である．
+        \item 任意の確率変数$X=(X_1,\cdots,X_n)$と線型汎関数$f(x)=a^\top x\;(a\in\R^n)$について，
+        \[\varphi_{f(X)}(v)=E[e^{ivf(X)}]=E[e^{iva^\top X}]=\varphi_X(va)\]
+        が成り立つことに注意する．
+        \begin{description}
+            \item[$\Rightarrow$] $X=(X_1,\cdots,X_n)\sim N_d(\mu,\Sigma)$のとき，右辺によって左辺$\varphi_{f(X)}$が正規分布の特性関数であることが分かる．
+            \item[$\Leftarrow$] 任意の$f(X)$が正規であるとき，$v=1$と取ることによって，任意の$a\in\R^n$に対して$\varphi_X(a)$の値が左辺によって分かる．
+            このとき，$\varphi_X$の関数形は，多変量正規分布の特性関数に他ならないと分かる．
+        \end{description}
     \end{enumerate}
 \end{proof}
 \begin{remarks}[Cramer-Wold]
     (3)の結果は$\R^n$上の一般の確率分布について成り立ち，Cramer-Woldの定理と呼ばれる．
+    原理は単純明快で，一般の$X\in\R^n$について，$\forall_{a\in\R^n}\;\varphi_{a^\top X}(v)=\varphi_X(va)$が成り立つため，$f\in(\R^n)^*$を通じた挙動が特性関数を一意に定める．
 \end{remarks}
 
 \begin{lemma}[多次元正規確率変数の成分間の独立性の特徴付け]
@@ -380,10 +381,10 @@ title=]
         $\Gamma$の対称性より，これは$\Gamma(s,t)=\min(s,t)$を意味する．
         \item[(2)$\Rightarrow$(1)]
         \begin{enumerate}[({B}1)]
-            \item 平均が$0$であることより，特に$m(0)=E[B_0]=0$．よって，$B_0=0\;\as$
+            \item 平均と分散を考えると，$m(0)=E[B_0]=0$かつ$\Gamma(0,0)=E[B_0^2]=0$．よって，$E[\abs{B_0}]=0$より，$B_0=0\;\as$
             \item Gauss過程であることより，組$A:=(B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1})$は$n$次元正規分布に従う．これらが独立であることを示すには，補題より$A$の分散共分散行列$\Sigma_A$の非対角成分がすべて$0$であることを示せば良い．
             平均が$0$で$\Gamma(s,t)=\min(s,t)$であることより，
-            任意の$1<i< j\in[n]$について，
+            任意の$1<i< j\in[n]$について，共分散の双線型性に注意して，
             \begin{align*}
                 \Cov[B_{t_i}-B_{t_{i-1}},B_{t_j}-B_{t_{j-1}}]&=E[(B_{t_i}-B_{t_{i-1}})(B_{t_j}-B_{t_{j-1}})]\\
                 &=E[B_{t_i}B_{t_j}]-E[B_{t_{i-1}}B_j]-E[B_{t_i}B_{t_{j-1}}]+E[B_{t_{i-1}}B_{t_{j-1}}]=i-(i-1)-i+(i-1)=0.
