@@ -509,22 +509,15 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\section{可測関数の空間上の線型汎関数としての測度}
+\section{線型汎関数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=統計的問題では線型汎関数の推定が主眼となる所以である]
-    標本空間$\X^n$上の関数$\X^n\to\R$を統計量という．
-    これは像測度$P^X$に依らずに算出される．
-    
-    確率測度は，線型汎関数の空間$P(\Om)\subset C(\Om)^*$を，積分によって定める．
-    したがって，この値や，他の積分核を採用した線型汎関数を用いて，分布を関数解析の方法で特徴づけることを考える．\footnote{まるでErgode理論のような理論展開である．}
-    これが分布の特徴量の考え方であり，統計量はその有限な／経験的な場合である．
-    前者に母をつけて区別することもある．
-
-    したがって，平均を推定する問題は，線型汎関数を推定する問題と同値である．
+    モデル上の汎関数$\P\to\R$を母数という．
+    標本空間$\X^n$上の関数$\X^n\to\R$をその推定量という．
 \end{tcolorbox}
 
-\subsection{確率変数に対する線型作用素}
+\subsection{1次元の場合}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -533,16 +526,104 @@ title=]
 \end{tcolorbox}
 
 \begin{definition}[(population) mean / expectation, (population) variance]
-    線型作用素$\Meas(X,\R)\to\R$を定める．一般に$\Meas(X,V)\to V$で定まる．
+    線型作用素$\Meas(X,\R)\to\R$を定める．
     \begin{enumerate}
         \item $E[X]:=\int_\Om X(\om)P(d\om)$が実数であるとき，特に離散の場合は$\sum_{\om\in\Om}X(\om)P\{\om\}$を\textbf{$X$の（母）平均}という．\footnote{標本平均と区別していう．平均は位置(location)母数の例で，分散は尺度(scale)母数の例である．}
-        \item $E(X,A):=E(X1_A)$と定める．
-        \item $\Var[X]=V[X]:=E[(X-EX)^2]$が実数であるとき，これを\textbf{分散}という．
+            $E(X,A):=E(X1_A)$と表す．
+        \item $\Var[X]=V[X]:=E[(X-EX)^2]$が有限であるとき，これを\textbf{分散}という．
         \item $\Cov(X,Y)=V(X,Y):=E[(X-EX)(Y-EY)]=E[XY]-E[X]E[Y]$を\textbf{共分散}$\Meas(X,\R)\times\Meas(X,\R)\to\R$という．
         \item $\sigma(X)=\sqrt{V(X)}$を\textbf{標準偏差}という．
         \item $R(X,Y):=\frac{V(X,Y)}{\sigma(X)\sigma(Y)}$を\textbf{相関係数}という．
     \end{enumerate}
 \end{definition}
+
+$E:L^1(\Om)\to\R$は
+\begin{enumerate}
+    \item 正な線型汎関数で，
+    \item 独立確率変数の積に関して分解する$E[X_1\cdots X_n]=E[X_1]\cdots E[X_n]$．
+\end{enumerate}
+
+$\Var:L^2(\Om)\to\R_+$は
+\begin{enumerate}
+    \item 位置変数について不変$\forall_{a\in\R}\;\Var[X+a]=\Var[X]$で，
+    \item 2次の斉次性$\forall_{a\in\R}\;\Var[aX]=a^2\Var[X]$を持ち，
+    \item 独立確率変数の和に対して分解する$\Var[X_1+\cdots+X_n]=\Var[X_1]+\cdots+\Var[X_n]$．
+\end{enumerate}
+
+$\Cov:L^2(\Om)\times L^2(\Om)\to\R$は後述するが，退化した性質は次の通り\ref{prop-1d-covariance}
+\begin{enumerate}
+    \item 対称性：$\Cov[X,Y]=\Cov[Y,Z]$．
+    \item 双線型性：$\Cov[aX+bY,Z]=a\Cov[X,Z]+b\Cov[Y,Z]$．
+    \item 定数で消える：$\Cov[X,1]=0$．特に，$\Cov[aX+b,Y]=a\Cov[X,Y]$．
+    \item 共分散公式：$\Cov[X,Y]=E[XY]-E[X]E[Y]$．
+\end{enumerate}
+
+\subsection{平均の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    平均とはその確率測度に関する積分である．確率変数が可分な実Hilbert空間値になったとき，これはPettis積分に対応する．
+    $\R^n$の分布は任意の線型汎関数による$\R$への一次元投影によって特徴付けられる(Cramer-Wold)ことは，
+    弱可測性とPettis積分の結果と一致する．
+\end{tcolorbox}
+
+\begin{proposition}[Pettis integral]
+    $H$を可分Hilbert空間，$X:\Om\to H$を弱可測関数とする．このとき，$\norm{X}:\Om\to\R$が可積分ならば，ただ一つの元$E[X]\in H$が存在して，
+    \[\forall_{x\in H}\;(E[X]|x)=\int_H (X(\om)|x)\mu(d\om).\]
+\end{proposition}
+
+
+\begin{definition}[平均]
+    $H$を可分Hilbert空間とし，$\mu\in P(H)$をその上のBorel確率測度とする．
+    $\mu$の平均$m\in H$とは，恒等関数$X=\id_H$のPettis積分とする：
+    \[\forall_{x\in H}\quad\brac{m,x}=\int_H\brac{x,y}\mu(dy).\]
+\end{definition}
+\begin{remarks}
+    すなわち，平均の各$x$-成分は，$x$-成分の平均に等しい．
+    平均の定める線型汎関数$F(x)=\int_H(x|y)\mu(dy)=(x|m)$は，ランダムな$y\in H$と内積を取ったときの期待値は$m$と内積を取ることと等しい，という可換性を表していると思える．
+\end{remarks}
+
+\subsection{分散の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R^n$の分散は$n\times n$行列になるが，要は$B(H)$の元である．
+    分散公式は$\Tr Q=E[\abs{x}^2]-\abs{m}^2$という形になる．
+    共分散は内積とのアナロジーで考えると極めてわかりやすい．
+\end{tcolorbox}
+
+$\Cov:L^2(\Om;\R^r)\times L^2(\Om;\R^c)\to M_{r,c}(\R)$は$\Cov[X,Y]:=E[(X-E[X])(Y-E[Y])^\top]$で定まり，まるで「中心化された，内積の逆」のようなものである\ref{prop-multidimensional-covariacne}．
+\begin{enumerate}
+    \item エルミート対称性：$\Cov[X,Y]=\Cov[Y,X]^\top$．
+    \item 双線型性：$\Cov[aX+bY,Z]=a\Cov[X,Z]+b\Cov[Y,Z]$．
+    \item 2つ合わせる：$\Cov[AX,Y]=A\Cov[X,Y]$．よって$\Cov[X,BY]=\Cov[X,Y]B^\top$．
+    \item 定数で消える：$\Cov[X,I]=0$．
+    \item 共分散公式：$\Cov[X,Y]=E[XY^\top]-E[X]E[Y]^\top$．
+    \item 共分散公式を一般化すると，一般の確率ベクトルの2次形式の平均についての表示を得る：
+    \[E[X^\top AY]=\Tr(\Cov[X,Y]^\top A)+E[X]^\top AE[Y].\]
+\end{enumerate}
+
+$\Var[X]:=\Cov[X,X]:L^2(\Om;\R^r)\to M_r(\R)$を分散共分散行列という．
+半正定値で（非負の固有値をもち），直交系となる固有ベクトル系を持つ．
+固有値は固有ベクトルのRayleigh商として表せる：$\lambda_i=\frac{\norm{Av_i}^2}{\norm{v_i}^2}\ge0$．
+
+\begin{definition}
+    双線型写像$G:H\times H\to\R$を表現する有界作用素$Q\in B(H)$を分散という：
+    \[G(x,y)=\int_H(x|z-m)(y|z-m)\mu(dz)=(Qx|y).\]
+\end{definition}
+\begin{proposition}
+    $E[\abs{x}^2]<\infty$とする．
+    \begin{enumerate}
+        \item 共分散$Q$は正作用素（半正定値）であり，かつ，対称である：$(Qx|y)=(x|Qy)$．
+        \item 跡が2次の中心化モーメントに等しく，$\Tr Q<\infty$である（普段見る分散とはこれである）．
+        \item また2次のモーメントは$E[\abs{x}^2]=\Tr Q+\abs{m}^2$と表わせ，これを共分散公式という．
+        \item $Q$はコンパクト作用素である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{tbox}{red}{}
+    平均はPettis積分に直感的な理解を与え，分散は跡に直感的な理解を与える．
+\end{tbox}
 
 \subsection{他の測度に関する線型作用素}
 
@@ -4742,7 +4823,7 @@ title=測度論による確率の特徴量の理解]
     $X,Y\in L^2$は十分条件である．
 \end{remarks}
 
-\begin{proposition}
+\begin{proposition}\label{prop-1d-covariance}
     $X,Y,Z\in L^2$について，
     \begin{enumerate}
         \item $\Cov[X,Y]=\Cov[Y,X]$．
@@ -5797,7 +5878,7 @@ title=]
     期待値作用素$E$を行列値確率変数$M=[M_{ij}]\in M_{ij}(\R)$上に対しても$E:M_{ij}(\R)\to M_{ij}(\R);E[M]=[E[M_{ij}]]$と拡張すると，平均ベクトルは$E[M]$，共分散行列は$\Cov(X,Y)=E[(X-E[X])(Y-E[Y])^T]$と表せる．
 \end{notation}
 
-\begin{proposition}\mbox{}
+\begin{proposition}\mbox{}\label{prop-multidimensional-covariacne}
     \begin{enumerate}
         \item 可積分$d$次元確率変数$X$，$m\times d$行列$A$，$a\in\R^m$に対して，$E[AX+a]=AE[X]+a$．
         \item ２乗可積分$d$次元確率変数$X$，２乗可積分$s$次元確率変数$Y$に対して，$\Cov[X,Y]=\Cov[Y,X]^T$．また，$\Cov[X,Y]=E[XY^T]-E[X]E[Y]^T$．

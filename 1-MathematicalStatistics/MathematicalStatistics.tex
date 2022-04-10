@@ -877,6 +877,11 @@ title=]
 
 \subsection{最尤推定}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    統計推測においては，Bayes法と最尤法とが双璧をなす．
+\end{tcolorbox}
+
 \begin{problem}
     可測空間$(\X,\A)$上の分布族$(P_\theta)_{\theta\in\Theta}$について，独立な観測値$x_1,\cdots,x_n$から$\theta$を推定する問題を考える．
 \end{problem}
@@ -930,12 +935,24 @@ title=]
     「尤度」なる意味論と「相対エントロピー」という意味論とが繋がることが一番の驚き．
 \end{tbox}
 
-\begin{lemma}\mbox{}
+\begin{lemma}[確率収束の消息を統計の言葉で表現]\mbox{}
     \begin{enumerate}
         \item $U_n$が$\theta$にある$r>0$について$r$-次平均収束するならば，弱一致推定量である．
-        \item $U_n$が$\theta$の不偏推定量かつ$\Var[U_n]\to0$が成り立つならば，$\theta$の弱一致推定量である．
+        \item 特に，$U_n$が$\theta$の不偏推定量かつ$\Var[U_n]\to0$が成り立つならば，$\theta$の弱一致推定量である．
     \end{enumerate}
 \end{lemma}
+
+\begin{example}[一致推定量]\mbox{}
+    \begin{enumerate}
+        \item $U_n(X):=\o{X}=\frac{X_1+\cdots+X_n}{n}$は母集団平均の強一致推定量である（大数の強法則による）．
+        \item 全く同様のことは，一般の標本モーメント$\wh{m}_r:=\frac{1}{n}\sum^n_{j=1}X_j^r$が強一致推定量であるということが言える．
+        \item 一般の標本中心化モーメントも強一致推定量であるが，そのままでは不偏推定量にはならない．
+        \item セミパラメトリックな線型回帰モデル$Y_j=\al+\beta X_j+\ep_j\;(j\in[n])$のOLS(ordinary least squares estimator)はいくらかの条件の下一致推定量である．
+        \item 自己回帰モデル(AR:Autoregressive Model)$Y_j=\al+\beta Y_{j-1}+\ep_j$の最小二乗推定量
+        \[\wh{\al}=\o{Y}_{1,n}-\wh{\beta}\o{Y}_{0,n-1},\quad\wh{\beta}=\beta+\frac{\sum_{r\in[n]}\ep_r(Y_{r-1}-\o{Y}_{0,n-1})}{\sum_{r\in[n]}(Y_{r-1}-\o{Y}_{0,n-1})^2}\]
+        は一致推定量である．ただし，$\o{Y}_{i,j}$を$Y_i$から$Y_j$までのデータを使った標本平均とした．
+    \end{enumerate}
+\end{example}
 
 \section{一様対数の法則}
 
@@ -1394,6 +1411,13 @@ title=]
     接触しているとは，\textbf{漸近的絶対連続}であることをいう．
     これは法則列$(Q_n)$の統計量列の極限を，法則列$(P_n)$の極限から得るために必要な性質となる．
 \end{tcolorbox}
+
+\begin{motivation}[尤度比とは，数学的には絶対連続な確率測度組のRadon-Nikodym微分のことに他ならない]
+    任意の確率測度$P,Q$について，絶対連続部分と直交／特異部分とへのLebesgue分解$Q=Q^a+Q^\perp$が存在して，$Q^a\ll P$かつ$Q^\perp\perp P$かつ
+    \[Q^a(A)=\int_A\frac{q}{p}dP\]
+    が成り立つ．こうして任意の2つの確率測度を考えるとき，自然に尤度比が現れる：$\frac{dQ}{dP}=\frac{q}{p}\;P\dae$．
+    こうして，確率変数$\frac{dQ}{dP}:\Om\to\R_+$を確率$P$の下で考えるというテーマが定まる．
+\end{motivation}
 
 \begin{definition}[contiguous]
     可測空間の列$(\X^n,\A^n)$と，その上の確率測度の列が２つ$(P_n),(Q_n)$と与えられているとする．
