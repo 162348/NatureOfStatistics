@@ -784,6 +784,9 @@ Entropy is a measure of disorder, given by the amount of information necessary t
     測度の弱収束の理論は，A. D. AlexandorffとProhorovによる．As pointed out by A.D. Alexandroﬀ himself, a source of his abstract work
     in general measure theory was his research on the geometry of convex bodies.
 
+    Cramer-Woldのように，線型汎関数が定める1次元周辺分布が確率測度を決定する消息がある．
+    そこで，測度の弱収束は，その上の有界線型汎関数を通じて定義することは自然である．
+
     凸解析と関数解析が肝要となる．
     経験過程は極点の凸結合であると捉えられる．極点の凸結合の極限で真の分布を探そうとする営みが経験過程論であるか！？
 \end{tcolorbox}
@@ -4964,7 +4967,7 @@ title=]
 \end{proposition}
 
 \begin{theorem}[Bochner]\label{thm-Bochner}
-    関数$\varphi:\R\to\C$が次の３条件を満たすならば，特性関数である．特に，命題の３条件を満たすならば，特性関数である．
+    関数$\varphi:\R\to\C$が次の３条件を満たすならば，ある一次元分布$\mu\in\P(\R)$の特性関数である．特に，命題の３条件を満たすならば，特性関数である．
     \begin{enumerate}
         \item $\xi=0$で連続．
         \item $\varphi(0)=1$．
@@ -5021,6 +5024,11 @@ title=]
 
 \subsection{特性関数のTaylor展開}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特性関数をTaylor展開することで，高次の積率$\al_n$も求めることが出来る．
+\end{tcolorbox}
+
 \begin{proposition}
     $\abs{\beta_r}<\infty$のとき，特性関数$\varphi$は$C^r$級で，
     \[\dd{^r}{u^r}\varphi(u)=i^r\int e^{iux}x^r\nu(dx).\]
@@ -5039,18 +5047,19 @@ title=]
     このとき，$\abs{\beta_{2r}}<\infty$．
 \end{proposition}
 
-\begin{proposition}
+\begin{proposition}[特性関数のTaylor展開係数からの積率の計算]
     $\beta_r<\infty$とする．このとき，$\varphi$は$u=0$の周りで展開
-    \[\varphi(u)=\sum^r_{j=0}\al_j\frac{(iu)^j}{j!}+o(u^r)\quad(u\to0)\]
-    を持つ．
+    \[\varphi(u)=\sum^r_{n=0}\al_n\frac{(iu)^n}{n!}+o(u^r)\quad(u\to0)\]
+    を持つ．すなわち，中心積率は特性関数を用いて次のように表せる：
+    \[\al_n=\left.\frac{1}{i^n}\dd{^n\varphi(u)}{u^n}\right|_{u=0}\]
 \end{proposition}
 
 \subsection{第2キュムラント母関数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    その性質を研究したThorvald N. Thieleに因み、ティエレの半不変数(semi-invariant)とも呼ぶ。\footnote{統計学の分野で尤度に関する初期の考察を行い、保険数学の分野でHafnia保険会社を設立し、数学部長を務め、デンマーク保険統計協会を設立した。}
-    積率との繋がりが深い．
+    キュムラントはキュムラント母関数＝積率母関数の対数の展開係数として得られるが，特性関数の対数からも，虚数単位$i$に関する修正を施して得られる．
+    その関係は，特性関数と積率の関係と並行である．この関数を，第2キュムラント母関数という．
 \end{tcolorbox}
 
 \begin{proposition}
@@ -5146,7 +5155,7 @@ title=]
     で表す．
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[マクローリン展開係数は積率である]
     $\fM_\nu$が原点の近傍で存在するならば，そこで滑らかであり，$\forall_{n\in\Z^d_+}\;\partial^n\fM_\nu(0)=\al_n$．
     特に，
     \begin{enumerate}
@@ -5155,7 +5164,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[一意性定理]\mbox{}
+\begin{theorem}[特性関数との関係と一意性定理]\mbox{}
     \begin{enumerate}
         \item $\nu\in\P^d$とする．$D_\nu$が$0\in\R^d$の近傍ならば，ある整数$\ep$が存在して，積率母関数$\fM_\nu$は$\cR_\ep:=((-\ep,\ep)\times i\R)^d$上の解析関数$\fM^\dagger_\nu$に解析接続され，$\varphi_\nu(-)=\fM^\dagger_\nu(i-)$が成り立つ．
         \item 正則関数$\fM^\dagger_\nu$は，$z\in\D_\ep:=\Brace{\zeta\in\C\mid\abs{\zeta}<\ep}^d$上において，絶対収束級数
@@ -5165,12 +5174,30 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\begin{remark}
+    なお，積率母関数は，確率母関数$G(z):=E[z^X]$に対して$G[e^t]=\fM_X(t)$なる関係もある．
+\end{remark}
+
 \subsection{キュムラント母関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積率母関数の対数の展開係数をキュムラントといい，この特徴量の列も分布を特徴付ける．
+    キュムラントのことは，その性質を研究したThorvald N. Thieleに因み、ティエレの半不変数(semi-invariant)とも呼ぶ。\footnote{統計学の分野で尤度に関する初期の考察を行い、保険数学の分野でHafnia保険会社を設立し、数学部長を務め、デンマーク保険統計協会を設立した。}
+    積率との繋がりが深い．
+\end{tcolorbox}
 
 \begin{definition}
     $\nu\in\P^d$に対して，
     $\fC_\nu(t):=\log\fM_F(t)$で定まる$D_\nu$上の関数を，$F$の\textbf{キュムラント母関数}という．
 \end{definition}
+\begin{remark}[affine変換に対する半不変性]
+    半不変数というのは，積率は
+    $Y=\al X+\beta$なるaffine変換に対して
+    $E[Y^2]=\al^2 E[\al^2]+2\al\beta E[X]+\beta^2$なるように変換されるのに対して，
+    \[\kappa_1^Y=\al\kappa_1^X+\beta,\quad\kappa_n^Y=\al^n\kappa_n^X\;(n=2,3,\cdots)\]
+    というように殆ど形を変えないことにちなむ．
+\end{remark}
 
 \begin{example}[キュムラント母関数は極めて少ししか変わらなくても，密度関数は見かけ上全く異なる例]
     
@@ -5310,13 +5337,14 @@ title=]
     が定める分布をいう．
 \end{definition}
 
-\begin{proposition}\mbox{}
+\begin{proposition}[分布の特性値]\mbox{}
     \begin{enumerate}
-        \item $\int_\R\phi(x;\mu,\sigma^2)dx=1$．
-        \item $\varphi(u)=\exp\paren{i\mu u-\frac{1}{2}\sigma^2u^2}$．
-        \item $\al_1=\mu,\mu_2=\sigma^2$．
-        \item $\gamma_1=0,\gamma_2=3$．
-        \item 中心積率は$\mu_{2r+1}=0,\mu_{2r}=(2r)!(2^rr!)^{-1}\sigma^{2r}$．
+        \item well-definedness：$\int_\R\phi(x;\mu,\sigma^2)dx=1$．
+        \item 特性関数：$\varphi(u)=\exp\paren{i\mu u-\frac{1}{2}\sigma^2u^2}$．
+        \item 平均と分散：$\al_1=\mu,\mu_2=\sigma^2$．
+        \item 歪度と尖度：$\gamma_1=0,\gamma_2=3$．
+        \item 中心積率：$\mu_{2r+1}=0,\quad\mu_{2r}=\frac{(2r)!}{2^rr!}\sigma^{2r}=(2r-1)!!(\sigma^2)^r$．ただし，$(2r-1)!!=(2r-1)(2r-3)\cdots 3\cdot 1$である．
+        \item 積率母関数：$\fM(t)=\exp\paren{\mu t+\frac{\sigma^2t^2}{2}}$．
         \item キュムラントは$\kappa_1=\mu,\kappa_2=\sigma^2,\kappa_r=0\;(r\ge 3)$．\footnote{この３次以上のキュムラントが消えることが正規分布の特徴で，積率による中心極限定理の証明に利用される．}
     \end{enumerate}
 \end{proposition}
@@ -5336,7 +5364,7 @@ title=]
     $N(0,1)$を\textbf{標準正規分布}という．
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[scaling]
     \[X\sim N(\mu,\sigma^2)\Lrarrow \frac{X-\mu}{\sigma}\sim N(0,1)\]
 \end{lemma}
 \begin{proof}
@@ -6047,7 +6075,8 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     任意の半正定値行列は分散共分散行列とみなすことが出来る．だから，それに対応した正規分布が存在するはずである．
-    これは，次のように定義する．
+    しかし，確率密度行列の言葉では，$\det\Sigma=0$になる関係上，定義できない．実際，確率密度行列は連続にはならない．
+    そこで，特性関数を用いて定義する．
 \end{tcolorbox}
 
 \begin{definition}

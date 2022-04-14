@@ -1404,6 +1404,25 @@ title=]
     これは，小標本理論における十分性・不偏性・不変性などの精緻な理論を，非線形な場合にも拡張する企てである．
 \end{tcolorbox}
 
+\begin{history}
+    漸近論への数学的アプローチで，初めて理論と言えるものはWald 1943とLeCam1960, 1972, 1979である．
+    そこで，統計的実験とは，多様体$\{P_\theta\}_{\theta\in\Theta}\subset P(\R^n)$とされた．
+    いまでは無限次元の場合（セミ／ノンパラメトリック）も考えられている．
+    実験を繰り返すにつれて，実験は局所的に簡単なモデルで近似可能になっていく，この現象をGaussian shiftという．
+    よって，問題は元の実験の研究から，Gaussian shiftの近似へと移り変わる（極限定理）．
+    これは本質的には実験の滑らかさに起因する．
+\end{history}
+
+\begin{definition}[experiment, deficiency]
+    $\Theta\ne\emptyset$に関する実験とは，3つ組$E=(\Om,\A,\P)$をいう．
+    パラメータ空間$\Theta$に関する実験全体の集合を$\E(\Theta)$で表す．
+    $\delta(E,F):=\inf\Brace{\ep>0\mid E\overset{\ep}{\subset} F}\;(E,F\in\E(T))$に対して，$\Delta(E,F):=\max\Brace{\delta(E,F),\delta(F,E)}$を\textbf{欠損}という．
+    これは$\E(T)$上に擬距離を定める．
+    \begin{align*}
+        \Delta(E,F)&=\sup\Brace{}
+    \end{align*}
+\end{definition}
+
 \subsection{尤度比確率場の接触構造}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1413,10 +1432,14 @@ title=]
 \end{tcolorbox}
 
 \begin{motivation}[尤度比とは，数学的には絶対連続な確率測度組のRadon-Nikodym微分のことに他ならない]
-    任意の確率測度$P,Q$について，絶対連続部分と直交／特異部分とへのLebesgue分解$Q=Q^a+Q^\perp$が存在して，$Q^a\ll P$かつ$Q^\perp\perp P$かつ
-    \[Q^a(A)=\int_A\frac{q}{p}dP\]
+    （参照測度$\nu$の下の）任意の確率測度$P,Q$について，絶対連続部分と直交／特異部分とへのLebesgue分解$Q=Q^a+Q^\perp$が存在して，$Q^a\ll P$かつ$Q^\perp\perp P$かつ
+    \[\forall_{A\in\F}\quad Q^a(A)=\int_A\frac{q}{p}dP\]
     が成り立つ．こうして任意の2つの確率測度を考えるとき，自然に尤度比が現れる：$\frac{dQ}{dP}=\frac{q}{p}\;P\dae$．
     こうして，確率変数$\frac{dQ}{dP}:\Om\to\R_+$を確率$P$の下で考えるというテーマが定まる．
+    なお，$Q\ll P\Leftrightarrow Q[p=0]=0\Leftrightarrow \int(q/p)dP=1$．
+    これが成り立たなくても，次は成り立つ：
+    \[\int fdQ\ge\int f\frac{dQ}{dP}dP.\]
+    もちろん，一般に等号が成立するのは$Q\ll P$のとき．
 \end{motivation}
 
 \begin{definition}[contiguous]
@@ -2010,6 +2033,8 @@ title=]
     Ibragimov and Has'minskii - Statistical Estimation
     \bibitem{van der Vaart}
     van der Vaart - Asymptotic Statistics
+    \bibitem{Helmut Strasser}
+    Helmut Strasser "Mathematical Theory of Statistics"
 \end{thebibliography}
 
 \end{document}

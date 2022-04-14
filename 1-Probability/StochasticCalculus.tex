@@ -268,7 +268,7 @@ title=]
     \end{description}
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}[共分散公式]
     $X,Y$をGauss確率変数とする．
     $X_t:=tX+Y\;(t\in\R_+)$によって定まる確率過程$X=(X_t)_{t\in\R_+}$はGauss過程であって，
     平均$m_X(t)=tE[X]+E[Y]$と分散
@@ -286,9 +286,43 @@ title=]
     \end{align*}
 \end{proof}
 
-\subsection{Kolmogorovの拡張定理}
+\section{Kolmogorovの拡張定理}
 
-\begin{theorem}\label{thm-Kolmogorov-extension-theorem}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Kolmogorovの拡張定理は，Hopfの拡張定理の一般化である．
+    そこから確率過程論についても，種々の対象が構成できる．
+\end{tcolorbox}
+
+\begin{theorem}
+    確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
+    $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
+    なお，$\R^\N$には直積位相を考える．
+    \begin{quotation}
+        (consistency) $\forall_{n\in\N}\;\forall_{A\in\B(\R^n)}\;\mu_{n+1}(A\times\R)=\mu_n(A)$．
+    \end{quotation}
+    特に，この一貫性条件は$\R^\N$上の測度に延長できるための必要十分条件である．
+    これは$\R$を一般の完備可分空間としても成り立つ．
+\end{theorem}
+
+\begin{corollary}
+    $\R$上の確率測度$\mu$に対して，ある確率空間が存在して，これを法則とする独立な確率変数の列$(X_n)_{n\in\N}$が存在する．
+\end{corollary}
+
+\begin{corollary}[Hilbert空間により添字付けられた確率過程]
+    $H$を可分実Hilbert空間とする．
+    ある確率空間$(\Om,\F,P)$とその上の確率変数の族$X=(X_h)_{h\in H}$が存在して，次の2条件を満たす：
+    \begin{enumerate}
+        \item 写像$X:H\to\Meas(\Om,\R);h\mapsto X_h$は線型である．
+        \item 任意の$h\in H$について，確率変数$X_h$は中心化されたGauss変数で，線型写像$X:H\to L^2(\Om)$は等長である：$E[X_h^2]=\norm{h}^2_H$．
+        \item $\Im X\simeq_\Hilb H$は$L^2(\Om)$のGauss部分空間である．
+    \end{enumerate}
+\end{corollary}
+\begin{remark}
+    この同一視により，独立性$X_h\indep X_{h'}$は添字空間$H$における直交性として理解できる．
+\end{remark}
+
+\begin{theorem}[確率過程版]\label{thm-Kolmogorov-extension-theorem}
     確率分布族$\{P_{t_1,\cdots,t_n}\}_{n\in\N_{\ge1},t_i\in\R_+}$が次の条件を満たすとき，ある確率空間$(\Om,\F,P)$が存在して，これらを有限次元周辺分布とする確率過程$(X_t)_{t\in\R_+}$が存在する．
     \begin{enumerate}[({C}1)]
         \item $P_{t_1,\cdots,t_n}\in P(\R^n)$である．
@@ -408,28 +442,33 @@ title=]
 \end{tcolorbox}
 
 \begin{shishin}
-    $T>0$として，区間$[0,T]$上の過程$B=(B_t)_{t\in[0,T]}$を条件(B1)から(B4)を満たすように構成すれば，$T=1$とした場合について，
+    $T>0$として，区間$[0,T]$上の過程$B=(B_t)_{t\in[0,T]}$を条件(B1)から(B4)を満たすように構成すれば，
     過程の列$(Y^{(i)})_{i\in\N}$を「つなげた」過程を
-    \[W_t:=\paren{\sum^{\floor{t}-1}_{i=0}Y_1^{(i)}}+Y^{[t]}_{t-[t]}\]
-    と定めると，これが目標のBrown運動となる．
-    よって以降の構成の議論では，有界区間$[0,T]$に注目して議論する．
+    \[W_t:=\paren{\sum^{\floor{t/T}}_{i=1}Y_T^{(i)}}+Y^{[t/T]+1}_{t-[t/T]T}\]
+    と定めると，これが目標の$\R_+$上のBrown運動となる．
+    よって以降の構成の議論では，有界区間$[0,T]$上に構成することを目指す．
 \end{shishin}
 
 \subsection{Gauss過程としての構成}
 
 \begin{theorem}[Kolmogorov's continuity criterion / 正規化定理]\label{thm-Kolmogorov-continuity-criterion}
-    実過程$X=(X_t)_{t\in[0,T]}$が$\exists_{\al,\beta,K>0}\;\forall_{s,t\in[0,T]}\;E[\abs{X_{t}-X_s}^\beta]\le K\abs{t-s}^{1+\al}$を満たすならば，$X$のある修正$\wt{X}$が存在して，
-    任意の$\gamma<\frac{\al}{\beta}$について次の2条件を満たす．
+    実過程$X=(X_t)_{t\in[0,T]}$が
+    \[\exists_{\al,\beta,K>0}\;\forall_{s,t\in[0,T]}\;E[\abs{X_{t}-X_s}^\beta]\le K\abs{t-s}^{1+\al}\]
+    を満たすならば，$X$のある修正$\wt{X}$が存在して，
+    任意の$0\le\gamma<\frac{\al}{\beta}$について次の2条件を満たす．
     \begin{enumerate}
         \item $\exists_{G_\gamma\in\Meas(\Om',\R)}\;\forall_{s,t\in[0,T]}\;\abs{\wt{X}_t-\wt{X}_s}\le G_\gamma\abs{t-s}^\gamma$．
-        \item $\wt{X}$の見本道は$\gamma$-次Holder連続である．
+        \item 特に，$\wt{X}$の見本道は$\gamma$-次Holder連続である．
     \end{enumerate}
 \end{theorem}
+\begin{proof}
+    \cite{Revus and Yor}I.2 Thm(2.1)は，一般の添字集合$t\in[0,1)^d$上のBanach空間値過程$(X_t)$について示している．
+\end{proof}
 \begin{remarks}
-    Kolmogorovの拡張定理により存在が証明される，平均$0$共分散$\Gamma(s,t)=\min(s,t)$のGauss過程は，この十分条件を満たす．
+    Gauss過程は積率の計算により，この十分条件を満たす．
 \end{remarks}
 
-\begin{construction}
+\begin{construction}\label{construction-Kolmogorov}
     $\Gamma(s,t)=\min(s,t)$は明らかに対称である．
     さらに半正定値であることを示せば，これを共分散とする平均$0$のGauss過程が存在する\ref{prop-existence-of-Gaussian-process}．
     まず，$\min(s,t)=\int_{\R_+}1_{[0,s]}(r)1_{[s,t]}(r)dr$であることに注意すると，
@@ -458,8 +497,9 @@ title=]
     あとは，上記のFourier級数の収束の問題が残るのみである．
     これは以下の議論で$e_n(r)=\frac{1}{\sqrt{\pi}}\cos nt$と取った場合であり，このときのBrown運動$W_t$の表示を\textbf{Paley-Wiener表現}という．
     Wienerが1923年に初めてBrown運動を構成したのはこの方法による．
-    また，LevyとCiesielskiは基底としてウェーブレットの一例であるHaar関数系を取った．
 \end{tcolorbox}
+
+\subsubsection{一般理論}
 
 \begin{notation}
     $T>0$とし，$L^2([0,T])$の正規直交系$(e_n)_{n\ge0}$を取る．
@@ -481,11 +521,48 @@ title=]
     これを$W_0$の骨格，またはCameron-Martin部分空間という．
 \end{definition}
 
-\begin{remark}
-    明示的にHaar基底を使わずとも構成できる．
+\subsubsection{Wienerの構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Wienerが1923年に初めてBrown運動を構成したのは，基底として三角級数を取った場合である\cite{Bass}(Thm 6.1)．
+\end{tcolorbox}
+
+\subsubsection{Levyの構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    LevyとCiesielskiは基底としてウェーブレットの一例であるHaar関数系を取った．
+    まずは，明示的にHaar基底を使わずに構成し，線形補間としての意味を重視する．
+    極めて具体的で，「こうすればBrown運動を構成できる」というのがよく分かる．
     $D_n:=\Brace{\frac{k}{2^n}\in[0,1]\;\middle|\;0\le k\le 2^n}$上に点をうち，その線型補間を行い，$C([0,1])$上での極限を取る．
     この場合も，見本道の連続性は自然に従い，また$\R_+\times\Om\to\R$の積空間上での可測性もわかりやすい．
-\end{remark}
+\end{tcolorbox}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $X_1,X_2\sim N(0,\sigma^2)$を独立同分布確率変数とする．
+        このとき，$X_1+X_2$と$X_1-X_2$も独立で，いずれも$N(0,2\sigma^2)$に従う．
+        \item $X\sim N(0,1)$とする．このとき，
+        \[\forall_{x>0}\quad\frac{x}{x^2+1}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\le P[X>x]\le\frac{1}{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}.\]
+        \item $(X_n)$を正規確率ベクトルの列で，$\lim_{n\to\infty}X_n=X\;\as$を満たすとする．$b:=\lim_{n\to\infty}E[X_n],C:=\lim_{n\to\infty}\Cov[X_n]$が存在するならば，$X$は$b,C$が定める正規確率変数である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{construction}
+    
+\end{construction}
+
+\begin{proposition}[jointly measurable]
+    このように構成された$(B_t)_{t\in\R_+}$は，$\Om\times\R_+$上可測である．
+\end{proposition}
+
+\subsection{Cameron-Matrin定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフト付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
+\end{tcolorbox}
 
 \subsection{酔歩としての構成}
 
@@ -541,7 +618,17 @@ title=]
     熱核を用いて実際に確率測度を$\R^D$上に構成する．$D\subset[0,1]$は二進有理数の全体とし，Kolmogorovの拡張定理を用いる極めて具体的な構成である\cite{舟木}．
 \end{tcolorbox}
 
+\subsection{martingale法による構成}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gauss過程を得たあと，残るは条件(B4)の連続性であるが，これを示すのにKolmogorovの正規化定理に依らず，martingale性を利用する方法がある\cite{Bass}(Thm 6.2)．
+\end{tcolorbox}
+
+
+\begin{theorem}[martingaleによる正則化]
+    平均$0$，共分散$\min$のGauss過程$(W_t)_{t\in[0,1]}$にはあるバージョンが存在し，Brown運動である（見本道は殆ど確実に連続である）．
+\end{theorem}
 
 \subsection{Brown橋の構成}
 
@@ -572,7 +659,12 @@ title=]
 
 \section{性質}
 
-\subsection{フラクタルとしての見本道の性質}
+\subsection{フラクタル曲線としての見本道の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の$0\le\gamma<\frac{1}{2}$について，$\gamma$-Holder連続であることは，構成１\ref{construction-Kolmogorov}から従う．
+\end{tcolorbox}
 
 \begin{definition}[modulus of continuity]
     Brown運動のコンパクト集合への制限$B:[0,1]\times\Om\to\R$の\textbf{連続度}とは，
@@ -610,7 +702,7 @@ title=]
         \item ほとんど確実に，局所的な増加点$t\in(0,\infty)\;\st\;\exists_{t\in(a,b)\osub\R_+}\;[\forall_{s\in(a,t)}\;f(s)\le f(t)]\land[\forall_{s\in(t,b)}\;f(t)\le f(s)]$を持たない．
     \end{enumerate}
     関数$f$の右・左微分係数を$D^*f(t):=\limsup_{h\searrow0}\frac{f(t+h)-f(t)}{h},D_*f(t)$で表すとする
-    \begin{enumerate}\setcounter{enumi}{10}
+    \begin{enumerate}\setcounter{enumi}{13}
         \item 任意の$t\in\R_+$について，殆ど確実に$B_t$は$t$において微分可能でない上に，殆ど確実に$D^*B(t)=+\infty\land D_*B(t)=-\infty$．
         \item $B$の見本道は殆ど確実に至る所微分不可能性である．\footnote{Paley et al. 1933, Dvoretzky et al. 1961.}
         さらに，ほとんど確実に$\forall_{t\in\R_+}\;D^*B(t)=+\infty\lor D_*B(t)=-\infty$．\footnote{なお，ほとんど確実に$\forall_{t\in[0,1)}\;D^*B(t)\in\{\pm\infty\}$という主張は正しくない．}
@@ -755,12 +847,7 @@ title=]
     $X_t:=\int^t_0B_sds$はGauss確率変数である．
 \end{proposition}
 
-\section{Cameron-Matrin定理}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ドリフト付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
-\end{tcolorbox}
 
 \section{Wiener積分}
 
