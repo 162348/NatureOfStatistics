@@ -2,8 +2,8 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -4449,8 +4449,8 @@ title=]
     Banach代数はBanのモノイド対象であるが，定義に単位性は入らない（半群対象）．
     しかし，標準的な単位化が存在するから，ここでは単位性を暗黙に仮定する．
     ということで，単位的なBanach代数とは，ノルムが$1$な単位元が存在するノルム代数を言う．
-    ノルム代数とは劣乗法的なノルムを備えた代数をいう．
-    代数とは体による作用を備えた環，または環の構造も持つ線型空間を言う．
+    一般に，ノルム代数とは劣乗法的なノルムを備えた代数をいう．
+    さらに一般に代数とは，体による作用を備えた環，または環の構造も持つ線型空間を言う．
 \end{tcolorbox}
 
 \begin{definition}[algebra, normed -, Banach -, unital, essential ideal]\mbox{}
@@ -4526,6 +4526,12 @@ title=]
 
 \subsection{代数の射}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    代数の射は，環の射であり，線型写像でもある．
+    一方で，環の射として単位的であることは要請しないことが多い．
+\end{tcolorbox}
+
 \begin{definition}
     代数$A,B$について，
     \begin{enumerate}
@@ -4553,7 +4559,16 @@ title=]
     これは，恒等写像と包含写像$z:\o{D}\mono\C$とが生成する閉部分代数は$A(D)$自身であることによる．
 \end{example}
 
+\begin{example}
+    単位的代数$A$に対して，多項式$p\in\C[z]$に$a\in A$での値を対応させる写像$\C[z]\to A;p\mapsto p(a)$は単位的準同型である．
+\end{example}
+
 \subsection{部分代数と生成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ２つの代数の射$\varphi,\psi:A\to B$が，$A$の生成系$S$で一致するならば写像として一致するのは，ファイバー$\Brace{a\in A\mid\varphi{a}=\psi(a)}$は部分代数をなすためである．
+\end{tcolorbox}
 
 \begin{lemma}\mbox{}
     \begin{enumerate}
@@ -4580,6 +4595,11 @@ title=]
 \end{example}
 
 \subsection{Banach代数の単位化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Banach代数は単位的にできる．これは位相的には一点コンパクト化に対応する．
+\end{tcolorbox}
 
 \begin{proposition}[Banach代数の単位化]
     $\A$を単位元のない零でないBanach代数とする．
@@ -4631,7 +4651,14 @@ title=]
     局所コンパクトハウスドルフ空間上の代数$C_0(X)$はBanach代数で，単位的であることは$X$がコンパクトであることに同値．
 \end{example}
 
-\subsection{$*$-代数の定義}
+\subsection{$*$-代数の定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Banach代数と$C^*$-代数の橋渡しとなる概念をここで提示しておく．ここでは$\bF=\C$とする．
+\end{tcolorbox}
+
+\subsubsection{定義}
 
 \begin{definition}[involution, anti-involution, star algebra, Banach star algebra]\mbox{}
     \begin{enumerate}
@@ -4652,13 +4679,6 @@ title=]
         \item 
     \end{enumerate}
 \end{example}
-
-\subsection{例}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ここでは$\bF=\C$とする．
-\end{tcolorbox}
 
 \subsubsection{可換な例}
 
@@ -4735,15 +4755,24 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    非単位的環を扱う際に重要な橋渡しをする概念として，モジュラーイデアルがある．
+    非単位的環を扱う際に重要な橋渡しをする概念として，モジュラー性がある．
+    イデアル$I$が非単位的環$\A$の\textbf{単模}であるとは，「（存在しない）単位元をあたかも含んでいるイデアル」あるいは「単位元を模したもの」として働くことをいう．
+    どのように「存在しない単位元を含んでいるか否か」を捉えるかというと，$A/I$の元$p(I)$が単位元になるかで測る．
 \end{tcolorbox}
+
+\subsubsection{単模イデアル}
 
 \begin{definition}[modular / regular]
     イデアル$I$が\textbf{単模}であるとは，$\exists_{u\in A}\;\forall_{a\in A}\;a-au\in I\land a-ua\in I$を満たすことをいう．
 \end{definition}
-\begin{remarks}
+\begin{remarks}[退化した消息]
     実は正しくは「単模イデアルを含む極大イデアルは存在する」であり，一般の単位的環$A$の任意のイデアルは単模であるから一般に極大イデアルを持つが，単位的とは限らない環については，必ずしも極大イデアルを持つとは限らない．
+    「単模イデアル」と指定することで，単位元を含んだイデアルの世界だけを選び出して議論することができる．
 \end{remarks}
+
+\begin{lemma}[modular性の特徴付け]
+    イデアル$I$がモジュラーであることと，$A/I$が単位的であることとは同値．
+\end{lemma}
 
 \begin{example}
     局所コンパクトハウスドルフ空間$\Om$上の任意の元$\om\in\Om$に対して，
@@ -4753,7 +4782,9 @@ title=]
     これは$M\oplus \C u=C_0(\Om)$を満たすから余次元$1$で，極大イデアルでもある．
 \end{example}
 
-\begin{lemma}[quotient]
+\subsubsection{代数のイデアル}
+
+\begin{lemma}[quotient]\label{lemma-quotient-of-Banach-algebra}
     $\A$をBanach代数，$\I\subset \A$をイデアルとする．
     \begin{enumerate}
         \item $\I$が閉集合であるとき，商$\A/\I$は再びBanach代数である．
@@ -4776,9 +4807,49 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\begin{corollary}[Banach代数の極大イデアルは閉]\label{cor-maximal-ideal-is-closed}
+    $\A$を単位的なBanach代数とする．
+    \begin{enumerate}
+        \item イデアルのノルム閉包はイデアルである．
+        \item 真のイデアルの閉包は再び真のイデアルである．
+        \item 極大イデアルは閉である．
+        \item $\A$を可換とする．任意の非可逆元$A\in\A\setminus\GL(\A)$に対して，ある極大イデアル$\I$が存在して，$A\in\I$が成り立つ．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    $\GL(\A)$が開集合であること\ref{prop-GA-is-open-in-Banach-algebra}の系として従う．
+    \begin{enumerate}
+        \item 任意の$x,y\in\oo{I}$に対して，$I$のノルム収束列$(x_n),(y_n)$が取れる．Banach代数の積と和が連続であることから，$x+y=\lim_{n\to\infty}(x_n+y_n)\in\oo{I},ax=\lim_{n\to\infty}ax_n\in\oo{I}$．
+        \item 真のイデアル$\I\subset\A$を取ると，$\I\cap\GL(\A)=\emptyset$である．
+        すなわち，$\I\subset\A\setminus\GL(\A)$であるが，$\A\setminus\GL(\A)$は閉であるから$\o{\I}\subset\A\setminus\GL(\A)$．
+        よって，$\o{\I}$も真のイデアルである．
+        \item 任意の極大イデアル$I\subsetneq\A$を取る．
+        $I\cap\GL(\A)=\emptyset$であるが，これは$\forall_{A\in I}\;\norm{I-A}\ge 1$を意味する（$\norm{I-A}<1$ならば，$A\in\GL(\A)$で，Neumann級数による逆元の表示が可能\ref{lemma-Neumann-series}になってしまう）．
+        よって，$\oo{I}\ne\A$であるが，$\oo{I}$もイデアルであるから，$\oo{I}=I$でないと極大性に矛盾する．
+        \item 任意に$A\in\A\setminus\GL(\A)$を取ると，$I\notin\A\cdot A$．よって，$A$はある真のイデアルの元である（例えば$\A A$）．
+        $A$を元に持つ真のイデアルの全体は空でない帰納的順序集合をなすから，Zornの補題より極大元が取れるが，これは極大イデアルになる．
+    \end{enumerate}
+\end{proof}
+
+\subsubsection{単模性の消息}
+
+Banach代数$A$の可換性条件をおとし，より一般的に述べようとすると，単模イデアルの言葉を使って次のように表せる．
+
+\begin{theorem}
+    $I$をBanach代数$A$の単模イデアルとする．
+    \begin{enumerate}
+        \item $I$が真のイデアルならば，ノルム閉包$\oo{I}$も真のイデアルである．
+        \item $I$が極大ならば，$I$は閉である．
+    \end{enumerate}
+\end{theorem}
+
 \begin{lemma}
-    イデアル$I$がモジュラーであることと，$A/I$が単位的であることとは同値．
+    $A$は単位的で可換なBanach代数，
+    $I$が単模で極大なイデアルとする．このとき，$A/I$は体である．
 \end{lemma}
+\begin{proof}
+    極大スペクトルと指標との対応\ref{prop-correspondence-between-maximal-spectrum-and-characters}において示している．
+\end{proof}
 
 \subsection{正則表現}
 
@@ -4841,14 +4912,19 @@ title=]
     $P_r:\partial\Delta\to[0,\infty);z\mapsto\sum^\infty_{n=-\infty}r^{\abs{n}}z^n\;\;(r\in(0,1))$をPoisson核とすると，ネット$(P_r)_{r\in(0,1)}$は$L^1(\partial\Delta)$を畳み込みについてBanach代数とみたときの近似的単位元である．
 \end{example}
 
-\subsection{可逆性}
+\subsection{可逆元と乗法部分群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\norm{I-A}<1$を満たすことは，$A\in\A$が可逆であり，かつ，逆元がvon Neumannの表示を持つための十分条件である．
+\end{tcolorbox}
 
 \begin{definition}[invertible]
     単位的なBanach代数$\A$において，元$A\in\A$が\textbf{可逆}であるとは，ある$B,C\in\A$が存在して$BA=AC=I$を満たすことを言う．
     このとき$B=C$が従うが，これを$A^{-1}$と表す．可逆元全体の集合を$\GL(\A)=\A^\times$で表す．
 \end{definition}
 
-\begin{lemma}[Neumann series]\label{lemma-Neumann-series}
+\begin{lemma}[Neumann seriesによる可逆元の表示が可能な十分条件]\label{lemma-Neumann-series}
     単位的Banach代数$\A$の元$A$が$\norm{A}<1$を満たすとき，
     \begin{enumerate}
         \item $I-A\in\GL(\A)$で，
@@ -4861,8 +4937,13 @@ title=]
     よって，$I-A$は可逆で，$(I-A)^{-1}=B$．
 \end{proof}
 
-\begin{proposition}
-    単位的Banach代数$\A$において，乗法群$\GL(\A)$は開集合で，写像$A\mapsto A^{-1}$は$\GL(\A)$の位相同型を定める（よって$\GL(\A)$は位相群をなす）．
+\begin{proposition}\label{prop-GA-is-open-in-Banach-algebra}
+    単位的Banach代数$\A$において，乗法群$\GL(\A)$について次が成り立つ．
+    \begin{enumerate}
+        \item $\GL(\A)$は開集合である．
+        \item 写像$A\mapsto A^{-1}$は$\GL(\A)$の位相同型を定める（よって$\GL(\A)$は位相群をなす）．
+        \item また，この写像は可微分でもある．
+    \end{enumerate}
 \end{proposition}
 \begin{proof}\mbox{}
     \begin{enumerate}
@@ -4874,22 +4955,7 @@ title=]
         \[B^{-1}=(A(I-A^{-1}(A-B)))^{-1}=\paren{\sum^\infty_{n=0}(A^{-1}(A-B))^n}A^{-1}\]
         が成り立つ．よって，$B\to A$のとき，$B^{-1}\to A^{-1}$．
         よって，${}^{-1}:\GL(\A)\to\GL(\A)$は連続写像．これが対合であることより，同相写像でもある．
-    \end{enumerate}
-\end{proof}
-
-\begin{corollary}\label{cor-maximal-ideal-is-closed}
-    $\A$を単位的なBanach代数とする．
-    \begin{enumerate}
-        \item 真のイデアルの閉包は再び真のイデアルである．
-        \item 極大イデアルは閉である．
-    \end{enumerate}
-\end{corollary}
-\begin{proof}\mbox{}
-    \begin{enumerate}
-        \item 真のイデアル$\I\subset\A$を取ると，$\I\cap\GL(\A)=\emptyset$である．
-        すなわち，$\I\subset\A\setminus\GL(\A)$であるが，$\GL(\A)$は閉であるから$\o{\I}\subset\A\setminus\GL(\A)$．
-        よって，$\o{\I}$も真のイデアルである．
-        \item 極大イデアル$\M$については極大性より$\M=\o{\M}$が成り立つため．
+        \item \cite{Murphy}
     \end{enumerate}
 \end{proof}
 
@@ -4906,6 +4972,8 @@ title=]
     というよりむしろ，複素解析学が，$\C$の領域上のBanach空間値関数に一般化される．
 \end{tcolorbox}
 
+\subsubsection{スペクトルの定義と例}
+
 \begin{definition}[spectrum, spectral radius, resolvent set, resolvent]
     $\A$を単位的Banach代数とする．
     \begin{enumerate}
@@ -4916,10 +4984,25 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}[spectral mapping theorem]
-    元$A\in\A$と$\norm{A}\le r$を満たす半径$r$を持つ閉円板$B(0,r)$を含む領域上で定義された正則関数$f(z)=\sum_{n=0}^\infty\al_nz^n$について，
-    $f(A)=\sum_{n=0}^\infty\al_nA^n$によって定まる写像$\A\to\A$は，
-    $\lambda\in B(0,r)$を満たす$\lambda\in\Sp(A)$に関して，$f(\lambda)\in\Sp(f(A))$を満たす：$f(\Sp(A)\cap \Delta(0,r))\subset\Sp(f(A))$．
+\begin{example}[スペクトルとは，関数の値域と，行列の固有値との2つの概念の一般化である]\mbox{}
+    \begin{enumerate}
+        \item コンパクトハウスドルフ空間$\Om$上の複素連続関数のBanach代数$C(\Om)$について，スペクトルとは像$\sigma(f)=f(\Om)=\Im f\;(f\in C(\Om))$となる．
+        \item 非空集合$S$上の有界関数全体のなすBanach代数$l^\infty(S)$について，スペクトルとは像の閉包$\sigma(f)=\o{f(\Om)}=\o{\Im f}\;(f\in l^\infty(S))$となる．上の例は退化していたのだ．
+        \item $A\subset M_n(\C)$を上三角行列のなすBanach代数とすると，スペクトルは対角成分の集合$\sigma(a)=\Brace{\lambda_{11},\lambda_{22},\cdots,\lambda_{nn}}\;(a\in A)$となる．
+        \item 正方行列のなすBanach代数$M_n(\C)$について，スペクトルは固有値全体の集合となる．
+    \end{enumerate}
+\end{example}
+\begin{remark}[スペクトルは非可換性を区別しない]
+    単位的代数$A$について，$1-ab$が可逆であることと$1-ba$が可逆であることとは同値．実際，$1-ab$の逆元を$c$とすると，$1+bca$は$1-ba$の逆元になる．
+    その結果，$\sigma(ab)\setminus\{0\}=\sigma(ba)\setminus\{0\}$が成り立つ．
+    ここからGelfand変換の香りがする．
+\end{remark}
+
+\subsubsection{スペクトル写像}
+
+\begin{lemma}[spectral mapping theorem：単位的Banach代数のスペクトルと正則関数の可換性]
+    $\bigcup_{A\in\A}B(0,\norm{A})$を含む領域上で定義された正則関数$f:\C\supset U\to\C;z\mapsto\sum_{n=0}^\infty\al_nz^n$が定める
+    単位的Banach代数の自己写像$f:\A\to\A$について，$\lambda\in B(0,\norm{A})\cap\Sp(A)\Rightarrow f(\lambda)\in\Sp(f(A))$：$f(\Sp(A)\cap \Delta(0,r))\subset\Sp(f(A))$．
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{enumerate}
@@ -4933,9 +5016,21 @@ title=]
         よって，$f(\lambda)I-f(A)\in\GL(\A)$で逆元$C$を持つならば，$BC$は$\lambda I-A$の逆元となる．
     \end{enumerate}
 \end{proof}
+\begin{remarks}
+    この形は，実は単位的$C^*$-代数の正則元$a$と連続写像$f\in C(\sigma(a))$に関する性質$\sigma(f(a))=f(\sigma(a))$の前身であるとみれる．
+\end{remarks}
 
-\begin{lemma}
-    任意の$A\in\A$に関して，$r(A)\le\inf_{n\in\N}\norm{A^n}^{1/n}$．
+\begin{theorem}[一般の代数に関するスペクトル写像定理]
+    $A$を単位的代数とし，$p\in\C[z]$を多項式とすると，$\sigma(p(a))=p(\sigma(a))\ne\emptyset$．\cite{Murphy}
+\end{theorem}
+\begin{remarks}
+    $\sigma:\A\to P(\C)$と正則関数$f:\A\to\A$とは可換である．
+\end{remarks}
+
+\subsubsection{スペクトル半径の特徴付け}
+
+\begin{lemma}[Beurling]
+    任意の単位的Banach代数の元$A\in\A$に関して，$r(A)\le\inf_{n\in\N}\norm{A^n}^{1/n}$．
     特に，$\Sp(A)$は有界である．
 \end{lemma}
 \begin{proof}\mbox{}
@@ -4948,6 +5043,11 @@ title=]
         実際，$\abs{\lambda^n}>\norm{A^n}$ならば，$\lambda^nI-A^n\notin\GL(\A)$に矛盾．
     \end{enumerate}
 \end{proof}
+\begin{example}
+    $A$を$C^1([0,1])$にノルム$\norm{f}:=\norm{f}_\infty+\norm{f'}_\infty$を定めて得るBanach代数とする．
+    包含$x:[0,1]\mono\C$は$A$の元であり，明らかに$r(x)=1$である．
+    ここで，$\norm{x^n}=1+n$であるから，$r(x)=\lim_{n\to\infty}(1+n)^{1/n}=1<2=\norm{x}$とも合致する．
+\end{example}
 
 \begin{theorem}\label{thm-Spectrum-is-compact}
     単位的Banach代数の任意の元$A\in\A$に関して，
@@ -5013,6 +5113,8 @@ title=]
 \end{proof}
 \begin{remarks}
     乗法群$\GL(\A)$が開集合となるような単位的位相代数$\A$を$Q$-代数といい，一般に$Q$-代数の任意の元のスペクトルは非空でコンパクトになる．
+    なお，非空なコンパクト集合$K\subset\C$について，補集合$\C\setminus K$の非有界な連結成分はただ一つである．
+    $\C\setminus K$の有界な連結成分を\textbf{穴(hole)}という．
 \end{remarks}
 
 \begin{corollary}[Gelfand-Mazur theorem (41)]\label{cor-Gelfand-Mazur-thm}
@@ -5022,75 +5124,148 @@ title=]
     定理より，任意の$A\in\A$について，$\lambda\in\Sp(A)\ne\emptyset$．
     すなわち，$\lambda I-A\notin\GL(\A)$であるが，$\A$が可除環であるとき，これは$A=\lambda I$を意味する．
 \end{proof}
+\begin{remarks}
+    $\C$以外の複素Banach代数については，開集合$\GL(\A)$は$\A$より真に小さい．
+\end{remarks}
+
+\subsubsection{閉部分代数のスペクトル}
+
+\begin{theorem}[閉部分代数のスペクトル]
+    $A$を単位的Banach代数，$B$をその単位元を含む閉部分代数とする．
+    \begin{enumerate}
+        \item $\GL(B)$は$B\cap\GL(A)$の開かつ閉集合である．
+        \item $\forall_{b\in B}\;\sigma_A(b)\subset\sigma_B(b)$かつ$\partial\sigma_B(b)\subset\partial\sigma_A(b)$．
+        \item $b\in B$について$\sigma_A(b)$が穴をもたないとき，$\sigma_A(b)=\sigma_B(b)$．
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{指数関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    行列の指数関数の発想を一般化する．
+\end{tcolorbox}
+
+\begin{notation}
+    単位的Banach代数$A$の元$a\in A$について，
+    \[\sum^\infty_{n=0}\Norm{\frac{a^n}{n!}}\le\sum^\infty_{n=0}\frac{\norm{a}^n}{n!}<\infty\]
+    より，級数$\sum^\infty_{n=0}\frac{a^n}{n!}$は収束する．こうして，$e:\A\to\A;a\mapsto e^a$を定める．
+\end{notation}
+
+\begin{theorem}
+    単位的Banach代数$A$について，
+    \begin{enumerate}
+        \item 写像$f:\R\to A$は可微分でえ，微分方程式$f(0)=1,f'(t)=af(t)\;(a\in A)$を満たすとする．このとき，$f(t)=e^{ta}$である．
+        \item $e^a\;(a\in A)$は可逆で，$e^{-a}$は逆元である．
+        \item $a,b$が可換ならば，$e^{a+b}=e^ae^b$．
+    \end{enumerate}
+\end{theorem}
+\begin{remark}
+    $e^a$の形で表せることは，可逆性の十分条件だが，必要条件ではない．
+\end{remark}
 
 \section{Gelfand変換}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    ここでは，Banach代数は複素係数で単位的で可換であるとする．
+    ここでは，Banach代数$\A$は複素係数で単位的で可換であるとする．
+    $\A$に対して，$i:C(X;\C)\mono\A$と表現できるような位相空間$X$を探す問題を考える．
+    このとき，$\Im i$は可換になるから，可換な$C^*$-代数に限って理論を構築することは自然である．
+    Gelfand変換$\Gamma:\A\to C(\wh{\A})$はある条件下で可逆になり，一つの解決を与える．
 \end{tcolorbox}
+
+\subsection{指標の空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gelfand双対性とは，
+    可換な$C^*$代数の構造は，その1次元表現$\A\epi\C$によって特徴付けられる，という理論である．
+    1次元表現$\A\epi\C$のことを指標といい，一般の群についても定義される．
+\end{tcolorbox}
+
+\begin{definition}[character, Gelfand spectrum]\label{def-character}
+    $\A$を単位的$C^*$-代数とする．
+    \begin{enumerate}
+        \item (一般には群)$\A$の\textbf{指標}とは，全射（即ち零でない）連続線型準同型$\A\epi\C$のことをいう．\footnote{一般の群と体について定義される．}
+        Banach代数については，任意の準同型は連続であることに注意．また，Fourier変換は指標による積を平行移動に写すのであった．
+        \item $\A$の指標全体の空間$\hat{\A}:=\Brace{\gamma\in\Hom_{\Ban\Alg}(\A,\C)\mid\dim\Im\gamma=1}$を\textbf{指標空間}または\textbf{スペクトル}という．
+        この空間には標準的な位相・\textbf{スペクトル位相}はコンパクトハウスドルフであり，$\A$が単位的でないときこれは高々局所コンパクトとなる．
+        この対応は単位的な$C^*$-代数からHausdorff位相空間の圏への関手$\Spec:C^*\Alg^\op\to\Top$を定め，Gelfandスペクトルと呼ばれ，可換なもの$C^*\Alg^\op_\com$に制限すると圏の同値となる．
+    \end{enumerate}
+\end{definition}
+\begin{remark}[他の数学的対象との関係]
+    冪集合$P(X)$を$2$上の線型空間だと思えば，集合論の特性関数の用語と一致する．
+    また，指標の核は余次元1の部分空間で，また極大イデアルである．
+    こうして，Gelfandスペクトルは，環の極大スペクトルの位相的な類似物だと思える．
+    そこで，Banach代数$\A$の極大イデアル全体のなす空間を$M(\A)$で表す．
+\end{remark}
+
+\begin{proposition}[極大スペクトルとの対応]\label{prop-correspondence-between-maximal-spectrum-and-characters}
+    $\A$を可換で単位的なBanach代数とする．
+    \begin{enumerate}
+        \item 次の対応は集合の同型を定める：
+        \[\xymatrix@R-2pc{
+            \wh{\A}\ar[r]&M(\A)\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            \gamma\ar@{|->}[r]&\Ker\gamma
+        }\]
+        \item $\A$の任意の指標$\gamma:\A\mono\C$は連続であり，任意の極大イデアル$I\in M(\A)$は閉である．
+        \item 任意の$A\in\A$について，$\Sp(A)=\Brace{\lambda\in\C\mid\lambda I-A\notin\GL(\A)}=\Brace{\brac{A,\gamma}=\gamma(A)\in\C\mid\gamma\in\wh{\A}}$．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意に$\I\in M(\A)$を取り，商Banach代数$\A/\I$を考えると，これは体になる．単位的Banach代数が可除ならば$\C$である(Gelfand-Mazur\ref{cor-Gelfand-Mazur-thm})から，$\A/\I=\C$．
+        よって，この商写像$\gamma:\A\to\A/\I$を対応させれば，これは指標である．また，商写像は連続であることに注意．
+        
+        逆に，任意の$\gamma\in\wh{\A}$を取ると，$\Ker\gamma$は$\A$の余次元1のイデアルとなるから，従って極大イデアルである．
+        こうして，全単射が定まった．
+        \item 任意の極大イデアル$\Ker\gamma$は閉\ref{cor-maximal-ideal-is-closed}より，任意の指標$\gamma:\A\to\A/\Ker\gamma$は連続である．
+        \item 任意の$\lambda\in\Sp(A)$を取ると，$\lambda I-A\notin\GL(\A)$．このとき，ある極大イデアル$\I$が存在して，$\lambda I-A\in I$が成り立つ\ref{cor-maximal-ideal-is-closed}(4)．
+        (1)の対応より，ある指標$\gamma$が存在して，$\lambda I-A\in\Ker\gamma$すなわち$\brac{\lambda I-A,\gamma}=0$．
+        このとき$\gamma(\lambda I)-\gamma(A)=0\Leftrightarrow\lambda=\gamma(A)$より，$\lambda=\brac{A,\gamma}$．
+
+        逆に，任意の$\gamma\in\wh{\A}$について，$\lambda:=\brac{A,\gamma}$とすると，$\gamma(\lambda I-A)=\lambda-\gamma(A)=0$より，$\lambda I-A\in\Ker\gamma$．すなわち，$\lambda I-A\notin\GL(\A)$．
+    \end{enumerate}
+\end{proof}
 
 \subsection{Gelfand変換}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    どうして$C(X)$と書いたときは体への写像であるかといえば，これは指標という概念で群にまで遡る．
+    一般の可換で単位的なBanach代数$\A$に対しては，Gelfand変換$\Gamma:\A\to C(\wh{\A})$が単射であるかどうかも定かでないようだ．
 \end{tcolorbox}
 
-\begin{definition}[character, spectral topology]\label{def-character}
-    $\A$を単位的$C^*$-代数とする．
-    \begin{enumerate}
-        \item $\A$の\textbf{指標}とは，全射（即ち零でない）連続線型準同型$\A\epi\C$のことをいう．\footnote{一般の群と体について定義される．}
-        Banach代数については，任意の準同型は連続であることに注意．
-        \item $\A$指標全体の空間$\hat{\A}:=\Brace{\gamma\in\Hom_{\Ban\Alg}(\A,\C)\mid\dim\Im\gamma=1}$を\textbf{指標空間}または\textbf{スペクトル}といい，この空間に定義される位相を\textbf{スペクトル位相}といい，この位相はコンパクトハウスドルフである．
-        $\A$が単位的でないとき，これは局所コンパクトとなる．
-    \end{enumerate}
-\end{definition}
-\begin{remark}
-    冪集合$P(X)$を$2$上の線型空間だと思えば，集合論の特性関数の用語と一致する．
-\end{remark}
-
-\begin{notation}
-    Banach代数$\A$の極大イデアル全体のなす空間を$M(\A)$で表す．
-\end{notation}
-
-\begin{proposition}
-    $\A$を可換で単位的なBanach代数とする．
-    \begin{enumerate}
-        \item 次の対応は集合の同型を定める：
-        \[\xymatrix@R-2pc{
-            \hat{\A}\ar[r]&M(\A)\\
-            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
-            \gamma\ar@{|->}[r]&\Ker\gamma
-        }\]
-        \item 任意の$A\in\A$について，$\Sp(A)=\Brace{\brac{A,\gamma}\in\C\mid\gamma\in\hat{\A}}$．
-    \end{enumerate}
-\end{proposition}
-
-\begin{theorem}
+\begin{theorem}[Gelfand変換 (Gelfand 1941)]\label{thm-Gelfand}
     $\A$を可換な単位的Banach代数とする．
     \begin{enumerate}
         \item 指標のなす集合$\hat{\A}$はコンパクトハウスドルフ位相を備える．
         \item 写像
         \[\xymatrix@R-2pc{
-            \Gamma:\A\ar[r]&C(\A)\\
+            \Gamma:\A\ar[r]&C(\wh{\A})\\
             \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
-            A\ar@{|->}[r]&\hat{A}
+            A\ar@{|->}[r]&\Gamma(A)=\hat{A}:=\brac{A,\gamma}
         }\]
-        を$\hat{A}(\gamma):=\brac{A,\gamma}$で定めると，これはノルム減少的な代数の準同型である．
-        \item 像$\Im\Gamma<C(\hat{\A})$は$\hat{\A}$の点を分離する．
-        \item 任意の$A\in\A$について，$\hat{A}(\hat{\A})=\Sp(A)$かつ$\norm{\hat{A}}_\infty,r(A)$．
+        はノルム減少的な代数の準同型である．
+        \item 像$\Im\Gamma<C(\hat{\A})$は部分代数であるが，$\hat{\A}$の点を分離する．
+        \item 任意の$A\in\A$について，$\hat{A}(\hat{\A})=\Sp(A)$かつ$\norm{\hat{A}}_\infty=r(A)$．
     \end{enumerate}
 \end{theorem}
+\begin{remarks}
+    一般にスペクトルを，指標上の複素連続関数の値域として特徴づけることができた．
+    これがどうやって固有値に繋がるのか？
+\end{remarks}
 
-\begin{proposition}
-    Gelfand変換の核は，$\A$の根基である：
+\begin{proposition}[Gelfand変換の核]
+    Gelfand変換$\Gamma$の核は，$\A$の根基である：
     $\Ker\Gamma=R(\A)=\bigcap_{\I\in M(\A)}\I=\Brace{A\in\A\mid r(A)=0}$．
 \end{proposition}
 \begin{remark}
-    ほとんどの古典的なBanach代数は半単純である（$R(\A)=\{0\}$）．
-    さらには，$\Im\Gamma<C(\hat{\A})$を決定する問題は極めて難しい場合が多い．
-    使える知識といえば，(3)の$\hat{\A}$の点を分離するということくらいである．
+    ほとんどの古典的なBanach代数は半単純である（$R(\A)=\{0\}$）から，
+    $R(\A)=\A$や$R(\A)$が$\A$の極大イデアルになる場合には当てはまらない．
+    しかしながら，像$\Im\Gamma<C(\hat{\A})$を決定する問題は極めて難しい場合が多い．
+    使える知識といえば，(3)の$\hat{\A}$の点を分離するということくらい（従って小さすぎない）である場合も多いので，
+    そんなにうまくいくことばかりではない．
 \end{remark}
 
 \subsection{例}
@@ -5100,6 +5275,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $C^*$-代数は，Banach代数のうち特に振る舞いのよいもので，Hilbert空間上の作用素の理論を流入させることが出来る．
+    そこでは，Stone-Weierstrassの定理を用いて，Gelfand変換の像$\Gamma(\A)$が関数代数$C(\wh{\A})$の中で稠密であることが示せる．
 \end{tcolorbox}
 
 \subsection{Stone-Weierstrassの定理}
@@ -5194,6 +5370,11 @@ title=]
 \end{lemma}
 
 \subsection{Gelfandの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=可換な$C^*$代数の構造は1次元表現によって特徴付けられる]
+    ここで初めて，Gelfand変換$\Gamma:\A\to C(\wh{\A})$が単射になるための十分条件を得た．
+\end{tcolorbox}
 
 \begin{theorem}
     任意の可換な単位的$C^*$-代数$\A$は，$\hat{\A}$を指標のなすコンパクトハウスドルフ空間として，$C(\hat{\A})$と等長$*$-同型である．
@@ -8960,6 +9141,8 @@ title=]
     John B. Conway "A Course in Functional Analysis"
     \bibitem{Brezis}
     Haïm Brezis 『関数解析』
+    \bibitem{Murphy}
+    Gerard J. Murphy "$C^*$-ALGEBRA AND OPERATOR THEORY"
     \bibitem{増田久弥}
     増田久弥『非線型数学』
     \bibitem{Kolmogorov}
