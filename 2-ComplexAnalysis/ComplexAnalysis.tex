@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \newcommand{\frakP}{\mathfrak{P}}
 \renewcommand{\G}{\mathbf{G}}
@@ -6091,6 +6091,18 @@ title=上半平面から単体ポリゴンの内部上への共形変換]
 \end{example}
 
 \chapter{調和関数}
+
+\begin{quotation}
+    $D\subset\R^n$を滑らかな境界を持つ有界領域とし，その上の
+    Laplace作用素の固有値問題を考える．
+    固有値$\{\lambda_n\}_{n\in\N}$から$D$の幾何学的な情報がどのくらいわかるか？という視点がKacの固有値問題の見方であり，
+    "Can one hear the shape of a drum?"と表現した．
+    WeylはLorentzの1910年講演"Old and new problems of physics"で「完全に反射する容器の中の電磁波の周波数分布は，十分高周波な領域では容器の体積のみに依存する」
+    という予想を聞いて，
+    \[\frac{N(\lambda)}{\lambda}\xrightarrow{\lambda\to\infty}\frac{\abs{D}}{2\pi}\quad N(\lambda):=\#\Brace{n\ge1\mid\lambda_n\le\lambda}\]
+    を示した．また，Minakshisundaram-Pleijeel (1948)は，Riemann多様体$M^d$上において，固有値$\{\lambda_n\}_{n\in\N}$から
+    $D$の面積だけでなく，$\partial D$の長さ，$D$の穴の数を復元可能であることを示した．
+\end{quotation}
 
 \section{共役調和関数}
 

@@ -1183,7 +1183,7 @@ title=]
     結局，有界線型作用素列が一様有界であることを示すには，任意の$x\in X$について$\ev_x$の像が収束列を定めることを示せば良い．
 \end{tcolorbox}
 
-\begin{theorem}[作用素族は各点有界ならば一様有界 (Banach-Steinhaus)]
+\begin{theorem}[作用素族は各点有界ならば一様有界 (Banach-Steinhaus / 共鳴定理)]
     $B(X,Y)$の族$(T_\lambda)$について，
     各点有界（全ての$x\in X$について列$(T_\lambda x)$が$Y$で有界）ならば，
     作用素ノルム$\{\norm{T_\lambda}\in\R\mid\lambda\in\Lambda\}$も有界である．
@@ -3437,7 +3437,7 @@ title=]
 title=]
     半正定値作用素は，density matrix formalismを通じて，量子状態を表す．
     自己共役作用素のうち，特別なクラスである．
-    大雑把には，複素平面内で，自己共役作用素は実数，正作用素は非負実数と見れる．
+    大雑把には，複素平面内で，自己共役作用素$B(H)_\sa$は実数，正作用素$B(H)_+$は非負実数と見れる．
 \end{tcolorbox}
 
 \begin{definition}[positive (semi-definite)]\label{def-positive-operator}
@@ -3476,7 +3476,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    幾何学的には，正作用素は，自己共役作用素のなす閉・実・順序部分空間$B(H)_\sa$の内部で閉凸錐をなす．
+    幾何学的には，正作用素の全体$B(H)_+$は，自己共役作用素のなす閉・実・順序部分空間$B(H)_\sa$の内部で閉凸錐をなす．
     しかしこの順序は束にさえならず，より深い考察には二乗根補題を必要とする．
 \end{tcolorbox}
 
@@ -3671,21 +3671,29 @@ title=対角化とは，直交射影への標準分解をいう．]
 \begin{definition}[orthogonal projection / orthoprojection]
         一般に，冪等律を満たす線型作用素$P:H\to H,P^2=P$を射影という．射影が自己共役であるとき，\textbf{直交射影}であるという．\footnote{前者を冪等作用素，後者を射影と呼び分けることもある．この場合直交射影とは，直交分解が定める射影のことを指す．}
 \end{definition}
-\begin{example}[直交射影の直交分解による特徴付け]\mbox{}
+\begin{example}[直交射影の直交分解による特徴付け]
+    自己共役性がなぜ「直交」なのかというと，自己共役な射影は全て直交分解が定めるからである．
     \begin{enumerate}
         \item 閉部分空間$X\le H$について，直交分解$H=X+X^\perp$が導く作用素$P:H\to H;y\mapsto x$は$\norm{P}\le 1$かつ$P^2=P$を満たす半正定値作用素である．よってこれは\textbf{直交射影}である．
         \item 逆に，任意の自己共役な冪等作用素$P:H\to H$に対して，$X:=\Im P$とおくとこれは閉部分空間で，任意の$x^\perp\in X^\perp$に対して$\norm{Px^\perp}^2=(x^\perp|P^2x\perp)=0$より，$P$は直交射影である．$I-P$は$\Im(I-P)=X^\perp$を満たす直交射影である．
     \end{enumerate}
     以上の観察より，直交射影$P$について，$\Im P\perp\Ker P$すなわち$\Im P\perp\Im(I-P)$が成り立つ．
 \end{example}
-\begin{remarks}[diagonalizable]\mbox{}
+\begin{remarks}[diagonalizable, eigenfunction expansion]\label{remarks-diagonalizability}
+    行列の対角化とJordan標準形の理論を，作用素論の言葉を用いて捉え直す．
     \begin{enumerate}
         \item 射影は実解析における特性関数にあたる．
         \item 単関数は$T=\sum_{i\in[n]}\lambda_iP_i$にあたる．
-        \item ある正規直交基底$(e_j)_{j\in J}$と有界集合$\{\lambda_j\}_{j\in J}\subset\bF$が存在して，$\forall_{x\in H}\;Tx=\sum_{j\in J}\lambda_j(x|e_j)e_j=\sum_{j\in J}\lambda_jP_j\;(P_j:H\epi\bF e_j)$と表せるとき，$T$は\textbf{対角化可能}という．このとき，$(e_j)$を固有ベクトル，$(\lambda_j)$を固有値という．$(x|e_j)$は$x$の$j$-座標である．
+        \item 一般に，作用素$T$が\textbf{対角化可能}であるとは，ある正規直交基底$(e_j)_{j\in J}$と有界集合$\{\lambda_j\}_{j\in J}\subset\bF$が存在して，$\forall_{x\in H}\;Tx=\sum_{j\in J}\lambda_j(x|e_j)e_j=\sum_{j\in J}\lambda_jP_j\;(P_j:H\epi\bF e_j)$と表せることをいう．このとき，$(e_j)$を固有ベクトル，$(\lambda_j)$を固有値という．$(x|e_j)$は$x$の$j$-座標である．
         
         なお，無限和$T=\sum_{j\in J}\lambda_jP_j$は作用素の強位相については収束する（各点収束）が，そのほかは保証されない．
+        \item $A\in M_n(\C)$を自己共役(Hermite)行列とする．すると，固有値$\lambda_1,\cdots,\lambda_m\in\C$の属する固有空間$W_1,\cdots,W_m$は互いに直交するのであった(ユニタリ行列によって対角化可能なので)．
+        そこで，各$W_i$への直交射影を$P_i:\C^n\epi W_i$で表すと，$A=\sum^m_{i=1}\lambda_iP_i$が成り立つ．これを作用素論的な「対角化可能性」の定義とすれば良い．
+        \item 一般の行列$A\in M_n(\C)$について，固有多項式$p(\lambda)=\det(\lambda I-A)$の根を$\{\lambda_1,\cdots,\lambda_m\}$とし，最小多項式$q(\lambda)$におけるそれぞれの重複度を$k_i\in\N$とする．
+        広義固有空間を$\wt{W}_i:=\Brace{u\in\C^n\mid(A-\lambda_i I)^{k_i}u=0}$と定めても，これらは$\C^n$の直和分解ではあるが互いに直交するとは限らない．
+        このとき，$\wt{W}_i$への直交とは限らない射影を$\wt{P}_i$とすると，$\wt{W}_i$上の冪零作用素$N_i$を用いて，$A=\sum_{i=1}^m(\lambda_i\wt{P}_i+N_i\wt{P}_i)$と表せる．いわば，冪零・冪等分解である．
     \end{enumerate}
+    (4)の式を，$A$の\textbf{固有関数展開}または\textbf{スペクトル展開}といい，(5)の式を\textbf{Jordan分解}という．
 \end{remarks}
 
 \begin{lemma}[一般の射影の性質]\label{lemma-property-of-projection}
@@ -4034,7 +4042,7 @@ title=]
     工学では，この定理を利用して，$T$の固有値を$W(T)$の形から推定する．\footnote{\url{https://en.wikipedia.org/wiki/Numerical_range}}
 \end{remark}
 
-\subsection{例}
+\subsection{作用素の例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -4056,7 +4064,7 @@ title=]
     $\varphi$を\textbf{乗算作用素}$M_\varphi$の\textbf{記号}という．
 \end{theorem}
 
-\begin{theorem}[integral operator / transform and its kernel]\label{operator-integral-transformation}
+\begin{theorem}[Fredholm integral operator / transform, kernel]\label{operator-integral-transformation}
     $(X,\Om,\mu)$を測度空間，$k:X\times X\to\bF$を次を満たす$\Om\times\Om$-可測関数とする：
     \begin{align*}
         \int_X\abs{k(x,y)}d\mu(y)\le c_1,&\ae[\mu],&\int_X\abs{k(x,y)}d\mu(x)\le c_2,&\ae[\mu].
@@ -4065,16 +4073,34 @@ title=]
     \[\xymatrix@R-2pc{
         K:L^2(\mu)\ar[r]&L^2(\mu)\\
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
-        f\ar@{|->}[r]&Kf(x):=\int k(x,y)f(y)d\mu(y)
+        f\ar@{|->}[r]&Kf(x):=\int_Xk(x,y)f(y)d\mu(y)
     }\]
     は有界線型作用素で，ノルムは$\norm{K}\le(c_1c_2)^{1/2}$を満たす．
 \end{theorem}
 
-\begin{example}[Volterra operator]\label{operator-Volterra}
-    $k:[0,1]\times[0,1]\to2\mono\R$を集合$\{(x,y)\in[0,1]\times[0,1]\mid y<x\}$の特性関数とする．
-    これを核とする積分作用素$V:L^2(0,1)\to L^2(0,1);f\mapsto Vf(x)=\int^1_0k(x,y)f(y)dy=\int^x_0f(y)dy$をVolterra作用素という．
-    これは不定積分を定める積分作用素である．\footnote{ヴォルテラ積分方程式は、人口学や、粘弾性物質の研究、保険数学に現れる再生方程式などへと応用されている。}
+\begin{example}[Volterra integral operator, Volterra operator]\label{operator-Volterra}
+    Voltera積分作用素は不定積分に関する積分変換全般を指すが，Volterra作用素と言った場合は，冪零作用素の一般化概念をいう．
+    前者は後者の例となっている．
+    \begin{enumerate}
+        \item Fredholm積分作用素$K$が定積分を定める積分作用素ならば，Volterra積分作用素は不定積分を定める積分作用素である．\footnote{ヴォルテラ積分方程式は、人口学や、粘弾性物質の研究、保険数学に現れる再生方程式などへと応用されている。}
+        \item $k:[0,1]\times[0,1]\to2\mono\R$を集合$\{(x,y)\in[0,1]\times[0,1]\mid y<x\}$の特性関数とする．
+        これを核とする積分作用素$V:L^2(0,1)\to L^2(0,1);f\mapsto Vf(x)=\int^1_0k(x,y)f(y)dy=\int^x_0f(y)dy$を\textbf{Volterra作用素}という．
+        別の抽象的な定義としては，スペクトル半径が$0$なコンパクト作用素をVoltarra作用素と定める．
+    \end{enumerate}    
 \end{example}
+
+\begin{example}[Hilbert-Schmidt]\label{exp-Hilbert-Schmidt}
+    積分核が2乗可積分である$k\in L^2(\Om\times\Om;\C)$とき，この積分作用素を\textbf{Hilbert-Schmidt作用素}といい，コンパクト作用素になる\ref{def-trace-class-Hilbert-Schmidt}．
+    $k$が自己共役ならば$K$も自己共役で，従ってスペクトル定理が適用できる．
+\end{example}
+
+\begin{remark}
+    \begin{align*}
+        \int^b_aK(x,y)f(y)dy-\lambda f(x)&=g(x)\\
+        \int^x_aK(x,y)f(y)dy-\lambda f(x)&=g(x)
+    \end{align*}
+    をそれぞれ，Fredholm型，Volterra型積分方程式という．
+\end{remark}
 
 \begin{example}[matrix multiplication]
     行列乗算は，離散空間上での積分変換と捉えられる．
@@ -4104,15 +4130,25 @@ title=]
     These classes describe local phenomena on $H$ and on $X$.\cite{AnalysisNow}
     そこで，$C_c(X)$の完備化として得た$C_0(X)$に対応するクラス"$B_0(H)$"を，作用素論でも構成することを考える．
     このクラスはある種の有限的な性質を持ち，$B(H)$の閉イデアルをなす．
+
+    このクラスには，行列はもちろん，積分作用素が含まれる．
+    そこで，この順に，対角化の一般理論と，積分方程式の一般理論を調べていく．
 \end{tcolorbox}
 
 \subsection{定義}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分作用素も例に含むが，より行列の類似的性質が見やすい狭いクラスの作用素を定義する．
+    作用素に「有界集合は相対コンパクト集合に写す」という有限性条件を課す．
+    Hilbertは「完全連続作用素」と呼んだ．
+\end{tcolorbox}
+
 \begin{definition}[finite rank]
     Hilbert空間$H$上の作用素$T:H\to H$について，
     \begin{enumerate}
-        \item $T$が\textbf{有限ランク}であるとは，$\Im T$が$H$の有限次元部分空間であることをいう（したがって特に閉\ref{prop-finite-subspaces}）．
-        \item 有限ランクな有界作用素全体$B_f(H)$は，$B(H)$内の部分代数であり，かつイデアルである．
+        \item $T$が\textbf{有限階数}であるとは，$\Im T$が$H$の有限次元部分空間であることをいう（したがって特に閉\ref{prop-finite-subspaces}）．
+        \item 有限階数な有界作用素全体$B_f(H)$は，$B(H)$内の部分代数であり，かつイデアルである．
         \item $B_f(H)$はイデアルとして自己共役である：$(B_f(H))^*=B_f(H)$．
     \end{enumerate}
 \end{definition}
@@ -4138,10 +4174,11 @@ title=]
     $T\in B(H)$について，次の５条件は同値．
     \begin{enumerate}
         \item $T\in\dbloverline{B_f(H)}$．
-        \item $T|_B:B\to H$は弱-ノルム連続な関数である．
+        \item $T|_B:B\to H$は弱-ノルム連続な関数である．\footnote{すなわち，列$(f_n)$が$f$に弱収束するならば，像$(Kf_n)$は$Kf$にノルム収束する．}
         \item $T(B)$は$H$でコンパクトである．
         \item $\dbloverline{T(B)}$は$H$でコンパクトである．
-        \item $B$上の任意のネットは，$T$での像が$H$上で収束するような部分ネットを持つ．
+        \item $B$上の任意のネットは，$T$での像が$H$上で強収束するような部分ネットを持つ．\footnote{$H$は距離空間だから，すなわち，$H$の任意の有界列$(f_n)$に対して，$(Kf_n)$は収束する部分列を持つ．}
+        \item (Hilbert) 双線型形式$\Phi(f,g):=(Tf,g)$は弱連続である．\footnote{すなわち，弱収束列を保存する．}
     \end{enumerate}
 \end{theorem}
 \begin{proof}\mbox{}
@@ -4193,6 +4230,7 @@ title=]
         \item ノルム閉で自己共役なイデアルである．
         \item (1)の条件を満たすもので最小のものである．特に$H$が可分である場合は唯一の非自明な閉イデアルである．
         \item $H$が無限次元であるとき，非単位的な部分代数である：$I\notin B_0(H)$．が，その場合でも，有限ランクの射影からなる近似的単位元を持つ．
+        \item $H$が可分であるとき，$B_f(H)$は$B_0(H)$の中で稠密である．\footnote{これは$C_c(X)$と$C_0(X)$のアナロジーが完成する．}
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
@@ -4202,11 +4240,21 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsection{正規なコンパクト作用素}
+\begin{example}[Hilbert-Schmidt作用素は非自明な例]
+    可分な$H$の正規直交基底$(e_n),(f_n)$を用いて，
+    \[\norm{K}_{H.S.}^2:=\sum_{n,m\ge1}\abs{(Ke_n|f_m)}^2=\sum_{n,m\ge1}\abs{(K^*f_m,e_n)}^2\]
+    と定めると，Parsevalの等式より，$\norm{K}^2_{H.S.}=\sum^\infty_{n=1}\norm{Ke_n}^2=\sum^\infty_{n=1}\norm{K^*f_m}^2$．
+    このノルムが有限な作用素をHilbert-Schmidt作用素といい，これはコンパクト作用素である．
+    実際，$K_nf:=\sum^n_{m=1}(Kf,e_m)e_m$とすると明らかに
+    $B_0(H)$の列であるが，$K$はこのノルム極限として得る．
+\end{example}
+
+\subsection{正規なコンパクト作用素に関するスペクトル定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $B_0(H)$には射影からなる近似的単位元が存在することを確認したが，
+    作用素の対角化とは，直交射影による表示としたのであった\ref{remarks-diagonalizability}．
+    ちょうど$B_0(H)$には\underline{直交}射影からなる近似的単位元が存在することを確認したが，
     正規コンパクト作用素は，固有値の言葉で特徴付けることが出来る．
 \end{tcolorbox}
 
@@ -4234,7 +4282,7 @@ title=]
     $H$を複素Hilbert空間，$T\in B(H)$とする．次の２条件は同値．
     \begin{enumerate}
         \item $T$は正規なコンパクト作用素である．
-        \item $T$は対角化可能で，その固有値は無限遠で消える．
+        \item $T$は対角化可能で，その固有値は無限遠で消える．\footnote{従って，$H$には$T$の固有ベクトルからなる正規直交基底を取れることとも同値．}
     \end{enumerate}
 \end{theorem}
 
@@ -4261,10 +4309,14 @@ title=]
 \subsection{Fredholm作用素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Calkin代数$B(H)\epi B(H)/B_0(H)$上に同じ像を定める作用素は，同値類を定める．
+title=Hilbert空間の同値]
+    コンパクト作用素の違い(=コンパクトな摂動)を無視して，作用素を見た世界を
+    Calkin代数$B(H)\epi B(H)/B_0(H)$といい，この上に同じ像を定める作用素は，同値類を定める．
     これは応用上重要である．
     この同値類についての不変量が重要な意味を持つこととなる．
+
+    そこで，「コンパクト代数の分だけ緩めて可逆」という準可逆な作用素をFredholm作用素とし，これを調べる．
+    これは，核と余核が高々有限次元で，像が閉であることに同値．
 \end{tcolorbox}
 
 \begin{definition}[Calkin algebra]
@@ -4294,7 +4346,7 @@ title=]
     $F(H)$は積で閉じており，自己共役である($*$作用素について閉じている)．
 \end{remarks}
 
-\begin{definition}
+\begin{definition}[index]
     $T\in F(H)$をFredholm作用素とする．
     $\Index T:=\dim\Ker T-\dim\Ker T^*$を\textbf{指数}という．
     このとき，射影$P,Q$を$ST=I-P,TS=I-Q$と定めると，$\Index T=\rank P-\rank Q$でもある．
@@ -4302,6 +4354,9 @@ title=]
     \[F_n(H):=\Brace{T\in F(H)\mid\Index T=n}\quad n\in\Z\]
     で定めると，$\forall_{n\in\Z}\;F_n(H)\ne\emptyset$．シフト作用素\ref{operator-unilateral-shift}$S$について，$\forall_{n\in\N}\;S^n\in F_{-n}(H),S^{*n}\in F_n(H)$が成り立つため．
 \end{definition}
+\begin{example}
+    任意の正方行列は，指数$0$のFredholm作用素である：$\dim\Ker A=\dim\Ker A^*$．
+\end{example}
 
 \begin{lemma}
     $T\in F(H)$とする．
@@ -4314,28 +4369,48 @@ title=]
 
 \subsection{Fredholmの交代定理}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=コンパクト作用素のスペクトルとは固有値の集合である]
+    無限線型系に対して最初に正確な議論をしたのがFredholmであった．
+    Dirichlet問題は積分方程式に帰着され，これは無限の連立1次方程式とみれる．
+    積分方程式が解を持つための条件を，Fredholm行列式$\delta:\C\to\C$が零でないこととして特徴付けた定理がFredholmの交代定理／択一定理である．
+    これは現代の言葉では，コンパクト作用素のスペクトル$\Sp(T)$の固有値の集合としての特徴付けである．
+\end{tcolorbox}
+
 \begin{lemma}
     $A\in B_f(H)$ならば，$I+A\in F_0(H)$．
 \end{lemma}
 
-\begin{lemma}\mbox{}
+\begin{lemma}
+    任意の$T\in F_0(H)$について，
     \begin{enumerate}
-        \item 任意の$T\in F_0(H)$について，部分等長作用素$V\in B_f(H)$が存在して，$T+V$は可逆である．
+        \item 部分等長作用素$V\in B_f(H)$が存在して，$T+V$は可逆である．
         \item $A\in B_0(H)$ならば，$T+A\in F_0(H)$．
     \end{enumerate}
 \end{lemma}
 
 \begin{corollary}[Fredholm alternative]
     $A\in B_0(H)$，$\lambda\in\C\setminus\{0\}$とする．
-    このとき，$\lambda I-A\in B(H)$は可逆であるか，または，$\lambda$は$A$の有限な重複度を持った固有値である．
-    後者の場合，$\o{\lambda}$は$A^*$の固有値で，同じ重複度を持つ．
+    このとき，次のいずれか一方のみが成り立つ．
+    \begin{enumerate}
+        \item $\lambda I-A\in B(H)$は可逆である．すなわち，$\lambda$はレゾルベント集合に属する．
+        \item $\lambda$は$A$の有限な重複度を持った固有値である．
+    \end{enumerate}
+    後者の場合，複素共役$\o{\lambda}$は$A^*$の固有値で，同じ重複度を持つ．
 \end{corollary}
-\begin{remarks}
-    コンパクト作用素のスペクトルは，$\{0\}$と，$T$の固有値のみからなる．
-    特に，$\C$の可算部分集合で，$0$のみを集積点とする．
+\begin{remarks}[Riesz-Schauder]
+    コンパクト作用素$T$のスペクトルは，$\{0\}$と，$T$の固有値のみからなる．
+    特に，$\C$の可算部分集合で，(集積点があるとするならば)$0$のみを集積点とする．
+    また，$\sigma(T)=\o{\sigma(T^*)}$（閉包ではなく実軸反転）で，
+    $\dim\Ker(T-\lambda I)=\dim\Ker(T^*-\o{\lambda}I)<\infty$．
 \end{remarks}
 
-\subsection{Fredholm作用素の連結部分}
+\begin{tbox}{red}{}
+    $T:=I-\lambda^{-1} A$が指数$0$のFredholm作用素である，ということが古典的なFredholm交代定理の肝である．
+    こうして，正方行列の基本的な事実(特に連立一次方程式系の可解性に関連して)は，この恒等作用素とコンパクト作用素の差で表される作用素クラス$T\in F_0(H)$に一般化される．
+\end{tbox}
+
+\subsection{Fredholm作用素の指数}
 
 \begin{theorem}
     任意のFredholm作用素$T\in F(H)$とコンパクト作用素$A\in B_0(H)$について，$\Index(T+A)=\Index T$．
@@ -4367,13 +4442,144 @@ title=]
 \end{quotation}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=跡は関数空間上の測度とみなせる]
     前節では$B_f(H)$を$C_c(X)$に，$B_0(H)$を$C_0(X)$に，$B(H)$を$C_b(X)$に見立てたが，$B(H)$は同時に$L^\infty(X)$に似た振る舞いもする．
+    では$X$上のLebesgue測度にあたる$H$上の構造はというと，跡である！
+    跡は関数空間上の測度と思えるのか！
 
     有限次元線型空間論では，跡だけがまるで異邦人のような特異な存在であった．
 \end{tcolorbox}
 
+\subsection{定義と性質}
 
+\begin{definition}[trace]
+    $H$をHilbert空間，$(e_j)_{j\in J}$をその正規直交基底とする．
+    正作用素$T\in B(H)$の\textbf{跡}とは，
+    \[\Tr(T):=\sum_{j\in J}(Te_j|e_j)\]
+    をいう．$\Tr:B(H)_+\to[0,\infty]$である．
+\end{definition}
+
+\begin{proposition}
+    $\forall_{T\in B(H)}\;\Tr(TT^*)=\Tr(T^*T)$．
+\end{proposition}
+
+\begin{corollary}[well-definedness]
+    $T\in B(H)$を正作用素とする．
+    任意のユニタリ作用素$U$について，$\Tr(UTU^*)=\Tr(T)$．
+    
+    特に，跡の定義は正規直交基底の取り方に依らず，$\norm{T}\le\Tr(T)$を満たす．
+\end{corollary}
+
+\subsection{跡の延長}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    跡が測度の類似物ならば，なんらかの意味で測度確定であることはコンパクト性を含意しそうである．
+    測度確定なコンパクト作用素をHilbert-Schmidt作用素という．
+    さらに中線定理や極化恒等式も成り立ち，$B(H)$は幾何学味を帯びてくる．
+\end{tcolorbox}
+
+\begin{lemma}
+    正作用素$T\in B(H)$が$\exists_{p>0}\;\Tr(\abs{T}^p)<\infty$を満たすならば，コンパクト作用素である．
+\end{lemma}
+
+\begin{definition}[trace class operator, Hilbert-Schmidt operator]\mbox{}\label{def-trace-class-Hilbert-Schmidt}
+    \begin{enumerate}
+        \item $B^1(H):=\Span\Brace{T\in B_0(H)\mid T\ge0,\Tr(T)<\infty}$の元を\textbf{跡類作用素}という．
+        \item $B^2(H):=\Brace{T\in B_0(H)\mid\Tr(T)<\infty}$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[跡の延長]
+    $T\in B^1(H)$について，
+    \begin{enumerate}
+        \item ある正作用素$T_0,\cdots,T_3\ge0$が存在して，$T=\sum_{k=0}^3i^kT_k$．
+        \item これを用いて$\Tr(T):=\sum_{k=0}^3i^k\Tr(T_k)$と定めると，これは線型汎函数である．
+    \end{enumerate}
+    以降，$\Tr$の定義域は$B(H)_++B^1(H)$とする．
+\end{lemma}
+
+\begin{lemma}[作用素の中線定理と極化恒等式]
+    任意の$S,T\in B(H)$について，
+    \begin{enumerate}
+        \item (parallelogram law) $(S+T)^*(S+T)+(S-T)^*(S-T)=2(S^*S+T^*T)$．
+        \item $(S+T)^*(S+T)\le 2(S^*S+T^*T)$．
+        \item (polarization identity) $4T^*S=\sum^3_{k=0}i^k(S+i^kT)^*(S+i^kT)$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Hilbert-Schmidt作用素のHilbert空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    単に幾何学的なだけではなく，$B^2(H)$は実際にHilbert空間をなす．
+\end{tcolorbox}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $B^1(H),B^2(H)$は$B(H)$内の自己共役なイデアルである．
+        \item $B_f(H)\subset B^1(H)\subset B^2(H)\subset B_0(H)$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    Hilbert-Schmidt作用素のイデアル$B^2(H)$は内積$(S|T)_{\tr}:=\Tr(T^*S)$についてHilbert空間をなす．
+\end{theorem}
+
+\subsection{跡類作用素のBanach代数}
+
+\begin{lemma}
+    $T\in B^1(H),S\in B(H)$について，$\abs{\Tr(ST)}\le\norm{S}\Tr(\abs{T})$．
+\end{lemma}
+
+\begin{lemma}
+    $S,T\in B^2(H)$について，$\Tr(ST)=\Tr(TS)$．
+\end{lemma}
+
+\begin{theorem}
+    跡類作用素のイデアル$B^1(H)$はノルム$\norm{T}:=\Tr(\abs{T})$についてBanach代数をなす．
+\end{theorem}
+
+\begin{theorem}
+    双線型形式$\brac{S,T}:=\Tr(ST)$は，Banach空間$B_0(H),B^1(H)$の間のペアリングであり，また$B^1(H),B(H)$の間のペアリングでもある．
+    特に，$(B_0(H))^*=B^1(H)$かつ$(B^1(H))^*=B(H)$．
+\end{theorem}
+
+\subsection{Hilbert-Schmidt作用素の表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これを通じて，例\ref{exp-Hilbert-Schmidt}との同値性がわかる．
+\end{tcolorbox}
+
+\begin{proposition}
+    Hilbert空間$H$の任意の正規直交基底$(e_j)_{j\in J}$について，$1$階の作用素の集合$\Brace{e_i\odot e_j\in H\mid i,j\in J}$は$B^2(H)$の正規直交基底である．
+\end{proposition}
+\begin{remarks}
+    特に，Hilbert空間$H$が$X$上のRadon積分に関する2乗可積分関数の空間$L^2(X)$であったとき，$\int\otimes\int$とは$X^2$上の積積分(product integral)のことだから，
+    これはHilbert-Schmidt作用素を$L^2(X^2)$上に実現していることとなる．
+    そして，$L^2(X)$の基底$(e_j)_{j\in J}$に対して，$e_i\otimes\o{e_j}(x,y)=e_i(x)e_j(y)$が$L^2(X^2)$上の正規直交基底である．
+    こうして，$U:L^2(X^2)\iso B^2(L^2(X));e_i\otimes\o{e_j}\mapsto e_i\odot e_j$は等長同型である．
+    この等長同型を具体的に表現すると次の通り．
+\end{remarks}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $k\in L^2(X^2)$を核とする積分作用素
+        \[\xymatrix@R-2pc{
+            T_k:L^2(X)\ar[r]&L^2(X)\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            f\ar@{|->}[r]&T_kf(x):=\int_{y\in X}k(x,y)f(y)
+        }\]
+        はHilbert-Schmidt作用素である：$T_k\in B^2(L^2(X))$．
+        \item 対応$T:L^2(X^2)\to B^2(L^2(X));k\mapsto T_k$は，$B^2(L^2(X))$上の2-ノルムについて等長同型になる．
+        \item $k^*(x,y)=\o{k(x,y)}$とすると，$T_{k^*}=T^*_k$．すなわち，$T_k$が自己共役であることと，$k$が共役対称であることとは同値．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Fredholm積分方程式}
+
+\subsection{Strum-Liouville作用素への応用}
 
 \chapter{Spectral Theory}
 
@@ -4679,6 +4885,12 @@ title=]
         \item 
     \end{enumerate}
 \end{example}
+
+\subsubsection{$*$-準同型}
+
+\begin{lemma}
+    任意の$*$-準同型は正である．
+\end{lemma}
 
 \subsubsection{可換な例}
 
@@ -4998,6 +5210,18 @@ title=]
     ここからGelfand変換の香りがする．
 \end{remark}
 
+\begin{example}[レゾルベント]
+    一般の行列$A$の場合\ref{remarks-diagonalizability}で考えると，
+    $(A-\lambda I)^{-1}$は$\C\setminus\{\lambda_1,\cdots,\lambda_m\}$上の正則関数で，核$\lambda_i$は$k_i$次の極であり，次のようにLaurent(?)展開できる：
+    \[(A-\lambda I)^{-1}=-\sum^m_{i=1}\paren{\frac{1}{\lambda-\lambda_i}\wt{P}_i+\frac{1}{(\lambda-\lambda_i)^2}N_i\wt{P}_i+\cdots+\frac{1}{(\lambda-\lambda_i)^{k_i}}N_i^{k_i-1}\wt{P}_i}\]
+    従って，今後もスペクトルに注目するが，これは双対的にはレゾルベントなる正則関数の特異点を探す問題でもある．
+    $\Sp(A)$は閉なので，$\rho(A)$は開集合であることに注意．
+\end{example}
+
+\begin{example}[スペクトル半径]
+    冪零作用素のスペクトル半径は$0$であるが，他にも例がある．
+\end{example}
+
 \subsubsection{スペクトル写像}
 
 \begin{lemma}[spectral mapping theorem：単位的Banach代数のスペクトルと正則関数の可換性]
@@ -5181,6 +5405,7 @@ title=]
     Gelfand双対性とは，
     可換な$C^*$代数の構造は，その1次元表現$\A\epi\C$によって特徴付けられる，という理論である．
     1次元表現$\A\epi\C$のことを指標といい，一般の群についても定義される．
+    なお，1次元表現$\epi\bF$といえば，確率測度についてもCramer-Woldが成り立ったりする．
 \end{tcolorbox}
 
 \begin{definition}[character, Gelfand spectrum]\label{def-character}
@@ -5374,6 +5599,9 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=可換な$C^*$代数の構造は1次元表現によって特徴付けられる]
     ここで初めて，Gelfand変換$\Gamma:\A\to C(\wh{\A})$が単射になるための十分条件を得た．
+
+    一般の$C^*$-代数の構造は，任意の$n$次元表現も考えねばならない．そこで，$B(H)$に埋め込むことが考えられる．これをGelfand-Naimark表現という．
+    これは$C^*$-代数上の正な線型汎函数と極めて深い関係を持ち，正な線型汎函数の$B(H)$への表現をGelfand-Naimark-Segal表現という．
 \end{tcolorbox}
 
 \begin{theorem}
