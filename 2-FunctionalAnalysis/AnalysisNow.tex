@@ -2,8 +2,8 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -3249,7 +3249,7 @@ title=]
         \item $\forall_{x\in H}\;(Tx|x)\in\R$．
     \end{enumerate}
 \end{corollary}
-\begin{remark}
+\begin{remark}[自己共役作用素の固有値は実数]
     極化恒等式による証明\ref{lemma-characterization-of-self-adjointness}参照．
     $H$が実Hilbert空間という仮定のみでは，その上の任意の作用素$A\in B(H)$に対して$\brac{Ah,g}\in\R$が常に成り立つので，特徴付けにならないことに注意．
 \end{remark}
@@ -4089,9 +4089,11 @@ title=]
     \end{enumerate}    
 \end{example}
 
-\begin{example}[Hilbert-Schmidt]\label{exp-Hilbert-Schmidt}
-    積分核が2乗可積分である$k\in L^2(\Om\times\Om;\C)$とき，この積分作用素を\textbf{Hilbert-Schmidt作用素}といい，コンパクト作用素になる\ref{def-trace-class-Hilbert-Schmidt}．
+\begin{example}[Hilbert-Schmidt integral operator, Hilbert-Schmidt operator]\label{exp-Hilbert-Schmidt}
+    積分核が2乗可積分である$k\in L^2(\Om\times\Om;\C)$とき，この積分作用素を\textbf{Hilbert-Schmidt積分作用素}といい，コンパクト作用素になる\ref{def-trace-class-Hilbert-Schmidt}．
+    2乗可積分な積分核を\textbf{Hilbert-Schmidt核}という．
     $k$が自己共役ならば$K$も自己共役で，従ってスペクトル定理が適用できる．
+    なお，これはHilbert-Schmidt作用素\ref{def-trace-class-Hilbert-Schmidt}の例である．
 \end{example}
 
 \begin{remark}
@@ -4278,7 +4280,7 @@ title=]
     複素Hilbert空間$H$上の正規なコンパクト作用素$T$は，$\abs{\lambda}=\norm{T}$を満たす固有値$\lambda\in\C$を持つ．
 \end{lemma}
 
-\begin{theorem}[正規コンパクト作用素の特徴付け]
+\begin{theorem}[正規コンパクト作用素の特徴付け]\label{thm-Spectral-Theorem-for-normal-compact-operator}
     $H$を複素Hilbert空間，$T\in B(H)$とする．次の２条件は同値．
     \begin{enumerate}
         \item $T$は正規なコンパクト作用素である．
@@ -4286,10 +4288,10 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{notation}
-    $x,y\in H$に対して，$x\odot y\in B(H)$を$(x\odot y)z=(z|y)x$で定まる$\Im x\odot y=\bF x$を満たす階数$1$の作用素とする．
-    この構成は半双線型写像$H\times H\to B_f(H)$を定める．
-    すると，$\norm{e}=1$について，$e\odot e$は$\C e$への射影である．
+\begin{notation}[ベクトルの定める直交射影]
+    $x,y\in H$に対して，$x\odot y\in B(H)$を$(x\odot y)z=(z|y)x\;(z\in H)$で定まる$\Im x\odot y=\bF x$を満たす階数$1$の作用素とする．
+    この構成は半双線型写像$H\times H\to B_f(H);(e_i,e_j)\mapsto e_i\odot e_j$を定める．
+    すると，$\norm{e}=1$について，$e\odot e$は$\C e$への直交射影である．
 \end{notation}
 
 \begin{remarks}[正規なコンパクト作用素についてのスペクトル写像定理の消息]
@@ -4312,7 +4314,7 @@ title=]
 title=Hilbert空間の同値]
     コンパクト作用素の違い(=コンパクトな摂動)を無視して，作用素を見た世界を
     Calkin代数$B(H)\epi B(H)/B_0(H)$といい，この上に同じ像を定める作用素は，同値類を定める．
-    これは応用上重要である．
+    これは応用上重要で，
     この同値類についての不変量が重要な意味を持つこととなる．
 
     そこで，「コンパクト代数の分だけ緩めて可逆」という準可逆な作用素をFredholm作用素とし，これを調べる．
@@ -4380,6 +4382,9 @@ title=コンパクト作用素のスペクトルとは固有値の集合であ�
 \begin{lemma}
     $A\in B_f(H)$ならば，$I+A\in F_0(H)$．
 \end{lemma}
+\begin{remark}
+    任意の$\lambda\ne0$に対して，コンパクト作用素との和$\lambda+K$は指数$0$のFredholm作用素である．
+\end{remark}
 
 \begin{lemma}
     任意の$T\in F_0(H)$について，
@@ -4563,7 +4568,7 @@ title=]
     この等長同型を具体的に表現すると次の通り．
 \end{remarks}
 
-\begin{proposition}\mbox{}
+\begin{proposition}[上述の命題の$L^2$における場合での描像]\mbox{}
     \begin{enumerate}
         \item $k\in L^2(X^2)$を核とする積分作用素
         \[\xymatrix@R-2pc{
@@ -4572,14 +4577,80 @@ title=]
             f\ar@{|->}[r]&T_kf(x):=\int_{y\in X}k(x,y)f(y)
         }\]
         はHilbert-Schmidt作用素である：$T_k\in B^2(L^2(X))$．
-        \item 対応$T:L^2(X^2)\to B^2(L^2(X));k\mapsto T_k$は，$B^2(L^2(X))$上の2-ノルムについて等長同型になる．
+        \item 対応$T:L^2(X^2)\to B^2(L^2(X));k\mapsto T_k$は，$L^2(X^2)$上の2-ノルムについて等長同型になる．
         \item $k^*(x,y)=\o{k(x,y)}$とすると，$T_{k^*}=T^*_k$．すなわち，$T_k$が自己共役であることと，$k$が共役対称であることとは同値．
     \end{enumerate}
 \end{proposition}
 
 \subsection{Fredholm積分方程式}
 
-\subsection{Strum-Liouville作用素への応用}
+\begin{proposition}
+    Fredholm型の積分方程式
+    \[\int_{y\in X}k(x,y)f(y)-\lambda f(x)=g(x)\]
+    について，
+    \begin{enumerate}
+        \item $g\in L^2(X)$かつ$k\in L^2(X^2)$が共役対称ならば，解は存在する．
+        \item さらに$\forall_{j\in J}\;\lambda\ne\lambda_j$ならば，解は一意であり，次のように表示される：
+        \[f=\sum_{j\in J}\frac{(g|e_j)}{\lambda_j-\lambda}e_j\]
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $T_k$は自己共役なコンパクト作用素(Hilbert-Schmidt作用素)になるから，
+        ある直交基底$(e_i)_{i\in J}$に対して，
+        スペクトル分解が存在する：
+        \[T_k=\sum\lambda_je_j\odot e_j\;\in B^2(L^2(X))\qquad\lambda_j\in\R,\sum\abs{\lambda_j}^2=\norm{T_k}^2=\norm{k}^2_2\]
+        なお，$\lambda_i=(T_ke_i|e_i)\in\R$\ref{cor-characterization-of-self-adjointness}より，自己共役作用素の固有値は実数である．
+        また，$\norm{T_k}=\norm{k}_2$は，$T:L^2(X^2)\to B^2(L^2(X))$が等長同型であることによる．
+        よって，積分方程式は，次の式に同値：
+        \[\sum_{j\in J}(\lambda_j-\lambda)(f|e_j)e_j=g.\]
+        \item 明らか．
+    \end{enumerate}
+\end{proof}
+
+\subsection{Strum-Liouville問題への応用}
+
+\begin{problem}[Strum-Liouville問題]
+    $I:=[a,b]$上の2階線型微分方程式を，3種類考える：
+    \begin{enumerate}
+        \item $(pf')'+qf=0$．
+        \item $(pf')'+qf=\lambda f$．
+        \item $(pf')'+qf=\lambda f+h$．
+    \end{enumerate}
+    ただし，$p,q,h\in C(I;\R),p>0,\lambda\in\R$とした．
+\end{problem}
+
+\begin{proposition}[斉次の場合]
+    次の2条件を満たす$u,v$が存在するとき，(1)は$u,v$によって生成される2次元の完備な解空間を持つ．
+    \begin{enumerate}
+        \item 境界条件：$\al,\beta,\gamma,\delta\in\R$について，$\al u(a)+\beta p(a)u'(a)=0$かつ$\gamma v(b)+\delta p(b)v'(b)=0$．
+        \item 特殊解の線型独立性：Wronskianはある$c\ne0$について$p(uv'-u'v)=c$を満たす．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[非斉次の場合]
+    上の命題の状況下で，Green関数を
+    \[g(x,y):=\begin{cases}
+        c^{-1}u(x)v(y),&a\le x\le y\le b\\
+        c^{-1}u(y)v(x),&a\le y\le x\le b
+    \end{cases}\]
+    と定めると，$h\in L^2(I)$ならば($h\in C(I)$はこれを満たす)，Hilbert-Schmidt作用素の像$f:=T_gh$が(3)の$\lambda=0$の場合の，次の境界条件を満たすただ一つの解である．
+    \begin{quote}
+        (B)：$\al f(a)+\beta p(a)f'(a)=\gamma f(b)+\delta p(b)f'(b)=0$．
+    \end{quote}
+\end{proposition}
+
+\begin{proposition}[Hilbert-Schmidt作用素の問題への還元]
+    \begin{enumerate}
+        \item (2)の境界条件(B)を満たす解が存在するための必要十分条件は，$\exists_{n\in\N}\;\lambda=\lambda_n^{-1}$．このとき，解は$e_n$である．
+        \item (2)の境界条件(B)を満たす解が存在するための必要十分条件は，$\exists_{n\in\N}\;\lambda=\lambda_n^{-1}\;\land h\perp e_n$または$\forall_{n\in\N}\;\lambda\ne\lambda_n^{-1}$である．このとき，解は
+        \[f=\sum\frac{\lambda_n(h|e_n)}{1-\lambda\lambda_n}e_n\]
+    \end{enumerate}
+\end{proposition}
+\begin{discussion}
+    いま，Green関数は共役対称だから，$L^2(I)$の基底$(e_n)_{n\in\N}$が存在して，スペクトル分解
+    \[T_g=\sum\lambda_ne_n\odot e_n,\quad\{\lambda_n\}\subset\R\setminus\{0\},\sum\abs{\lambda_n}^2=\norm{g}^2_2.\]
+\end{discussion}
 
 \chapter{Spectral Theory}
 
