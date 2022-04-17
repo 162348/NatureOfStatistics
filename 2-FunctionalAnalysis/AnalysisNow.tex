@@ -3669,7 +3669,8 @@ title=対角化とは，直交射影への標準分解をいう．]
 \end{tcolorbox}
 
 \begin{definition}[orthogonal projection / orthoprojection]
-        一般に，冪等律を満たす線型作用素$P:H\to H,P^2=P$を射影という．射影が自己共役であるとき，\textbf{直交射影}であるという．\footnote{前者を冪等作用素，後者を射影と呼び分けることもある．この場合直交射影とは，直交分解が定める射影のことを指す．}
+    一般に，冪等律を満たす線型作用素$P:H\to H,P^2=P$を射影という．射影が自己共役であるとき，\textbf{直交射影}であるという．\footnote{前者を冪等作用素，後者を射影と呼び分けることもある．この場合直交射影とは，直交分解が定める射影のことを指す．}
+    射影全体の空間を$B(H)_p$で表す．射影を定める部分空間の束構造から，$B(H)_p$にも束の構造が入る．
 \end{definition}
 \begin{example}[直交射影の直交分解による特徴付け]
     自己共役性がなぜ「直交」なのかというと，自己共役な射影は全て直交分解が定めるからである．
@@ -3778,7 +3779,7 @@ title=ユニタリ作用素]
     \end{enumerate}
 \end{proof}
 
-\begin{definition}[unitary equivalent]
+\begin{definition}[unitary equivalent]\label{def-unitary-equivalent}
     ２つの作用素$S,T\in B(H)$について$\exists_{U\in U(H)}\;S=UTU^*$を満たすとき，これらは\textbf{ユニタリー同値}であるという．
 \end{definition}
 
@@ -3842,7 +3843,7 @@ title=]
     一方で，$SS^*=P_{\Brace{e_1}^\perp}$であり，$S^*$は$\{e_1\}^\perp$上では$H$に値を取る部分等長写像である．
 \end{example}
 
-\begin{theorem}[polar decomposition (von Neumann)]\mbox{}
+\begin{theorem}[polar decomposition (von Neumann)]\mbox{}\label{thm-polar-decomposition}
     \begin{enumerate}
         \item 任意の作用素$T\in B(H)$に対して，ただ一つの半正定値作用素$\abs{T}:=(T^*T)^{1/2}\in B(H)$が存在して，$\forall_{x\in H}\;\norm{Tx}=\norm{\abs{T}x}$を満たす．特に，$\Ker T=\Ker\abs{T}$．
         \item ただ一つの部分等長写像$U$が存在して，$\Ker U=\Ker T,U\abs{T}=T$を満たす．
@@ -4294,7 +4295,7 @@ title=]
     すると，$\norm{e}=1$について，$e\odot e$は$\C e$への直交射影である．
 \end{notation}
 
-\begin{remarks}[正規なコンパクト作用素についてのスペクトル写像定理の消息]
+\begin{remarks}[正規なコンパクト作用素についてのスペクトル定理としての消息]
     正規なコンパクト作用素は，ある正規直交基底$(e_j)_{j\in J}$が存在して，ノルム収束する級数$T=\sum_{j\in J}\lambda_je_j\odot e_j$と表せるクラスである．
     これは，$J_0:=\Brace{j\in J\mid\lambda_j\ne0}$が有限集合であるか，係数列$(\lambda_j)_{j\in J_0}$は$0$に収束するかのいずれかであるからである．
     このとき，$T$のスペクトルは集積点$0$を併せて，$\Sp(T)=\{\lambda_j\}_{j\in J}\cup\{0\}$と表せる．
@@ -4694,7 +4695,7 @@ title=]
     \end{enumerate}
 \end{notation}
 
-\begin{theorem}[unital Gelfand duality theorem]
+\begin{theorem}[unital Gelfand duality theorem]\label{thm-Gelfand-duality-theorem}
     $\Spec:C^*\Alg^\op_\com\to\Top_\cpt$は圏の同値であり，$C$が準逆である．
 \end{theorem}
 \begin{corollary}
@@ -5257,6 +5258,13 @@ title=]
 
 \subsubsection{スペクトルの定義と例}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    スペクトルとは，即時的には関数の値域と，行列の固有値との2つの概念の一般化である．
+    が，局所コンパクトなアーベル群上の可積分関数のなす畳み込みBanach代数$L^1(\T)$や$L^1(\R)$の元にとっては，Fourier級数全体の集合であるから，その一般化とも見れる（こちらが名前の由来である）
+    \ref{remark-spectrum-as-Fourier-coefficient}．
+\end{tcolorbox}
+
 \begin{definition}[spectrum, spectral radius, resolvent set, resolvent]
     $\A$を単位的Banach代数とする．
     \begin{enumerate}
@@ -5566,6 +5574,70 @@ title=]
 
 \subsection{例}
 
+\begin{example}[$C(X)$のGelfand変換は恒等写像である]
+    $X$をコンパクトハウスドルフ空間，$\A:=C(X)$をその上の連続な複素関数を，各点和と積によって代数とみて，一様ノルムでBanach空間とみたBanach代数とする．
+    単射$\iota:X\mono\wh{\A}$が，各点$x\in X$での評価を返す写像として$\brac{f,\iota(x)}=f(x)\;(x\in X,f\in C(X))$として定まる．
+    これは$w^*$-位相を定める埋め込みに他ならない．つまり，
+    空間$\wh{\A}\subset \A^*$には$w^*$-位相を入れると，写像$\iota:X\mono\wh{\A}$は連続で，さらに位相の埋め込みでもある．
+    
+    実は$\wh{\A}=\iota(X)$であることを示す．
+    いま，任意の$\gamma\in\wh{\A}\setminus\iota(X)$について，$\forall_{x\in X}\;\exists_{f\in\A}\;\brac{f,\gamma}=0\land f(x)\ne0$が成り立つ．
+    このとき，$X$のコンパクト性より，有限集合$\{f_1,\cdots,f_n\}\subset\Ker\gamma\subset\A$が存在して，余零集合$U_k:=\Brace{x\in X\mid f_k(x)\ne0}$が$X$を被覆する．
+    略．
+
+    以上より，$\wh{\A}=\iota(X)$であるから，Gelfand変換は$\A=C(X)\to C(\wh{\A})=C(\iota(X))$．
+\end{example}
+
+\begin{example}[絶対収束数列と連続な周期関数の間のGelfand変換]
+    $\A:=l^1(\Z)$を畳み込み積$(AB)_n:=\sum^\infty_{-\infty}A_kB_{n-k}$によりBanach代数と見ると，単位的で可換である．
+    また，ある$E\in\A$が$E_1=1,\forall_{n\ne1}\;E_n=0$を満たすなら，これは$\A$の生成元である：$\forall_{A\in\A}\;A=\sum^\infty_{-\infty}A_nE^n$．
+    $E^2_2=1,E^2_n=0\;(n\ne2)$であることに注意．
+    したがって，指標$\gamma:\A\to\C$は$E$の行き先を決めるごとに定まる．
+
+    よってGelfand変換は
+    \[\xymatrix@R-2pc{
+        \Gamma:l^1(\Z)\ar[r]&C(\T)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        A\ar@{|->}[r]&\wh{A}(\lambda)=\sum^\infty_{-\infty}A_n\lambda^n
+    }\]
+    となり，その像$\Gamma(\A)\subset C(\T)$は，Fourier級数が絶対収束する$[0,2\pi]$上の連続周期関数の集合となる．
+
+    応用として，Wienerは，$[0,2\pi]$上の絶対収束するFourier級数を持つ連続な周期関数$f$が$\forall_{x\in[0,2\pi]}\;f(x)\ne0$を満たすとき，$f^{-1}$も絶対収束するFourier級数を持つことを示した．
+    ある$A\in l^1(\Z)$が存在して$f=\wh{A}$で，仮定より$0\notin\Sp(A)$なので，$A^{-1}\in l^1(\Z)$かつ$\wh{(A^{-1})}=\wh{A}^{-1}=f^{-1}$が従う．
+\end{example}
+
+\begin{example}[絶対収束数列の部分代数と絶対収束するTaylor級数を持つ正則関数の間のGelfand変換]
+    先程の$l^1(\Z)$の部分代数$l^1$を考える．生成元$E\in l^1$はこの部分代数では可逆元ではない．
+    任意の$\lambda\in[\Delta]$について，指標を
+    \[\brac{A,\gamma}:=\sum^\infty_{n=0}A_n\lambda^n\]
+    と定めると，$\wh{\A}=\Delta$となる．
+
+    よって，Gelfand変換は
+    \[\xymatrix@R-2pc{
+        \Gamma:l^1\ar[r]&C([\Delta])\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        A\ar@{|->}[r]&\wh{A}(\lambda)=\sum^\infty_{n=0}A_n\lambda^n
+    }\]
+    となり，その像$\Gamma(l^1)$は$\Delta$上の正則関数で，Taylor級数が絶対総和可能である関数の空間となる．
+\end{example}
+
+\begin{example}[可積分関数のBanach代数に関するGelfand変換はFourier変換に他ならない]
+    Banach空間$L^1(\R)$を，合成積
+    \[(f\times g)(x):=\int f(y)g(x-y)dy\]
+    によってBanach代数とみる．Dirac測度$\delta_0$は合成積に関する中立元として，付加した単位的Banach代数$\A:=L^1(\R)+\C\delta$を考える．
+
+
+\end{example}
+\begin{remark}[Fourier係数全体の集合としてのスペクトル]\label{remark-spectrum-as-Fourier-coefficient}
+    $\A=L^1(\T)$とすると$\wh{\A}=\Z$で，
+    \[\forall_{A\in L^1(\T),n\in\Z}\;\wh{A}(n)=\int A(x)\exp(-inx)dx\]
+    となるから，$\Sp(A)=\wh{A}(\Z)$とは$A$のFourier係数全体の集合に他ならない．
+
+    $\A=L^1(\R)$とすると$\wh{\A}=\R$で，
+    \[\Sp(A)=\wh{A}(\R)=\Brace{\int A(x)\exp(-ixy)dx\;\middle|\;y\in\R}\]
+    は，$A$のスペクトル分析をするのに欠かせない情報である．
+\end{remark}
+
 \section{関数代数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -5584,19 +5656,17 @@ title=]
 
 \begin{definition}[self-adjoint]
     複素関数の集合$\A\subset\Map(X,\C)$が\textbf{自己共役}であるとは，$\forall_{f\in\A}\;\o{f}\in\A$を満たすことをいう．
+    $f=\frac{1}{2}(f+\o{f})+i\frac{f-\o{f}}{2i}$より，$\A_\sa:=\Brace{f\in\A\mid\Im f\subset\R}$を$\A$の実数値関数がなす部分集合とすると，$\A=\A_\sa+i\A_\sa$と表せることに同値．
 \end{definition}
-\begin{remarks}
-    $f=\frac{1}{2}(f+\o{f})+i\frac{f-\o{f}}{2i}$より，$\A_\sa:=\Brace{f\in\A\mid\Im f\subset\R}$を$\A$の実数値関数がなす部分集合とすると，$\A=\A_\sa+i\A_\sa$と表せる．
-\end{remarks}
 
 \begin{lemma}
-    $\A\subset C(X,\R)$を，コンパクトハウスドルフ空間$X$上の実数値連続関数のなす線型空間とする．
-    $\forall_{f,g\in\A}\;f\lor g\in\A\land f\land g\in\A$を満たすとき，
+    $\A\subset C(X;\R)$を，コンパクトハウスドルフ空間$X$上の実数値連続関数のなす線型空間とする．
+    $\forall_{f,g\in\A}\;(f\lor g\in\A)\land (f\land g\in\A)$を満たすとき，
     任意の$X$上の連続関数で$X$の任意の２点において$\A$によって近似できるものは，$\A$によって一様に近似できる．
 \end{lemma}
 
 \begin{lemma}
-    $\A\subset C_b(X,\R)$を，位相空間$X$上の実数値有界連続関数のなす一様に閉じた代数とする．
+    $\A\subset C_b(X,\R)$を，位相空間$X$上の実数値有界連続関数のなす一様に閉じた代数\ref{def-uniform-algebra}とする．
     $\A$は$C(X)$の束演算$f\lor g,f\land g$について閉じている．
 \end{lemma}
 
@@ -5604,14 +5674,12 @@ title=]
     $X$をコンパクトハウスドルフ空間，$\A$を自己共役な$C(X)$の部分代数で定数を含み，$X$の点を分離するとする．
     このとき，$\A$は$C(X)$の中で一様に稠密である．
 \end{theorem}
-\begin{remark}
-    Weierstrassの1895年の仕事「有界閉区間上の実数値連続関数は，多項式によって一様に近似できる」は系として導出される．
-\end{remark}
-\begin{example}
-    $[0,2\pi]$上の任意の連続な周期関数は，三角多項式によって一様に近似できる（Fourier級数は必ずしも一様収束しないにも拘らず）．
-\end{example}
-\begin{example}[Rungeの近似定理]
-    単位閉円板$[\Delta]$上の開円板$\Delta$上で正則な関数全体のなす集合$H(\Delta)$は，$C(\Delta)$の真の閉部分代数であって，点を分離し，定数を含む．
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item Weierstrass (1895)：有界閉区間上の実数値連続関数は，多項式によって一様に近似できる．
+        \item $[0,2\pi]$上の任意の連続な周期関数は，三角多項式によって一様に近似できる（Fourier級数は必ずしも一様収束しないにも拘らず）．
+        \item Rungeの近似定理：単位閉円板$[\Delta]$上の開円板$\Delta$上で正則な関数全体のなす集合$H(\Delta)$は，$C(\Delta)$の真の閉部分代数であって，点を分離し，定数を含む．が，自己共役性の要件は満たさず，Cauchy-Riemann方程式なるさらなる条件が必要である．
+    \end{enumerate}
 \end{example}
 
 \begin{corollary}
@@ -5619,7 +5687,7 @@ title=]
     このとき，$\A$は$C_0(X)$上で一様に稠密である．
 \end{corollary}
 
-\subsection{$C^*$-代数}
+\subsection{$C^*$-代数の定義と例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -5636,29 +5704,37 @@ title=]
         \item 対合$*$が$\forall_{A\in\A}\;\Sp(A^*A)\subset\R_+$を満たすとき，これを\textbf{正}であるという．
     \end{enumerate}
 \end{definition}
-\begin{remarks}
-    $\norm{A^*A}=\norm{A}^2$は，劣乗法性より$\norm{A}^2\le\norm{A^*}\norm{A}$から$\norm{A}\le\norm{A^*}$．対合であることより$\norm{A}=\norm{A^*}$を結局は含意する．
+\begin{remarks}[$C^*$-性は強い条件]
+    $\norm{A^*A}=\norm{A}^2$は，劣乗法性より$\norm{A}^2\le\norm{A^*}\norm{A}$から$\norm{A}\le\norm{A^*}$．対合であることより等長性$\norm{A}=\norm{A^*}$を結局は含意する．
+    また$C^*$-性は(3)と(4)も含意する．
 \end{remarks}
 \begin{example}[involution]
     $C(X)$上の複素関数の共役や，$B(\H)$上の共役作用素．
 \end{example}
-\begin{example}\mbox{}
+\begin{example}[$C^*$-代数]\mbox{}\label{exp-C*-algebra}
     \begin{enumerate}
         \item 任意の局所コンパクトハウスドルフ空間について，$C_0(X)$は複素共役について$C^*$-代数となる．
         \item $B(H)$は随伴について$C^*$-代数となる．
-        \item (Gelfand and Naimark 43) $B(H)$の任意の閉な自己共役な部分代数は$C^*$-代数で，任意の$C^*$-代数は，なんらかのこの部分代数に$*$-等長同型になる．
+        \item (Gelfand and Naimark 43) $B(H)$の任意の自己共役な閉部分代数は$C^*$-代数で，任意の$C^*$-代数は，なんらかのこの部分代数に$*$-等長同型になる．
+        \item 局所コンパクトなアーベル群$G$上の畳み込みBanach代数$L^1(G)$は，$f^*(x)=\o{f}(-x)$によって等長な対合による$*$-代数の構造を持つが，$C^*$-性は持たない．
+        また対称である．
     \end{enumerate}
 \end{example}
 
-\begin{lemma}
+\subsection{非可換な$C^*$-代数の扱い}
+
+\begin{lemma}[$C^*$-代数の単位化]
     任意の単位的でない$C^*$-代数$\A$に対して，単位的$C^*$-代数$\wt{\A}=\A+\C I$が存在して，$\A\mono\wt{\A}$は余次元$1$の極大イデアルとなる．
 \end{lemma}
+\begin{remark}
+    これにより，非可換な$C^*$-代数の元にも，$\wt{\A}$を通じてスペクトルを定義できるが，このとき$\A$はイデアルなので必ず$0\in\Sp(A)$を満たしてしまう．
+\end{remark}
 
-\begin{lemma}
+\begin{lemma}[正規な元のスペクトル半径はノルムに等しい]
     $A\in\A$が$C^*$-代数の正規な元であるならば，$r(A)=\norm{A}$．
 \end{lemma}
 
-\begin{lemma}\mbox{}
+\begin{lemma}[自己共役な元のスペクトルは実数／ユニタリな元のスペクトルは単位円周上にある]\mbox{}
     \begin{enumerate}
         \item $A\in\A$が$C^*$-代数の自己共役な元であるならば，$\Sp(A)\subset\R$（すなわち，対合は対称的である）．
         \item $\A$が単位的で$U$がユニタリであるならば，$\Sp(U)\subset\T$．
@@ -5675,40 +5751,703 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
     これは$C^*$-代数上の正な線型汎函数と極めて深い関係を持ち，正な線型汎函数の$B(H)$への表現をGelfand-Naimark-Segal表現という．
 \end{tcolorbox}
 
-\begin{theorem}
-    任意の可換な単位的$C^*$-代数$\A$は，$\hat{\A}$を指標のなすコンパクトハウスドルフ空間として，$C(\hat{\A})$と等長$*$-同型である．
+\begin{theorem}[Gelfand's theorem (commutative)]
+    任意の可換な単位的$C^*$-代数$\A$は，$\wh{\A}$を指標のなすコンパクトハウスドルフ空間として，$C(\wh{\A})$と等長$*$-同型である：$\A\simeq_* C(\wh{\A})$．
 \end{theorem}
 
-\begin{corollary}
-    
+\begin{corollary}[Gelfand's theorem (non-commutative)]
+    任意の可換で非単位的な$C^*$-代数$\A$は，$\wh{\A}$を指標のなす局所コンパクトハウスドルフ空間として，$C_0(\wh{\A})$と等長$*$-同型である：$\A\simeq_*C_0(\wh{\A})$．
 \end{corollary}
 
 \subsection{Gelfandスペクトルの対応}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これはスペクトル定理の原型である．
+\end{tcolorbox}
+
+\begin{notation}
+    単位的$C^*$-代数$\A$の
+    元$T\in\A$について，$T$と$I$とを含む最小の$C^*$-部分代数を$C^*(T)$で表す．
+\end{notation}
+
+\begin{proposition}\label{prop-seminal-spectral-theorem}
+    $T\in\A$を単位的$C^*$-代数$\A$の正規な元とする．
+    等長$*$-同型$\Phi:C(\Sp(T))\iso C^*(T)$であって，$\Phi(1)=I,\Phi(\id)=T$を満たすものが存在する．
+\end{proposition}
+
+\begin{corollary}
+    $T\in\A$を単位的$C^*$-代数$\A$の正規な元，$\B$を$T,I$を含む$\A$の$C^*$-部分代数とする．
+    このとき，$T\in\B$のスペクトルと$T\in\A$のスペクトルとは等しい．
+\end{corollary}
+
 \subsection{Stone-Cechコンパクト化}
 
-\subsection{Tychonoff空間}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\Spec:C^*\Alg^\op_\com\to\Top_\cpt$，あるいは$C:\Top_\cpt\to C^*\Alg^\op_\com$は圏の同値である\ref{thm-Gelfand-duality-theorem}から，
+    すべての位相的な現象は，代数的な翻訳を持つはずである．その代表例がStone-Cechコンパクト化である．
+
+    忘却関手$U:\Top_{\cpt}\mono\Top$は，左随伴関手$\beta:\Top\to\Top_\cpt$を持つ．
+    そしてこの随伴の単位$X\mapsto\beta X$は，$X$がTychonoff空間のときに埋め込みになる．
+\end{tcolorbox}
+
+\begin{definition}[Tychonoff space / completely regular space]
+    Hausdorff空間$X$が，$\forall_{x\in X}\;\forall_{A\in\O(x)}\;\exists_{f\in C(X;[0,1])}\;f(x)=1\land f|_{X\setminus A}=0$を満たすとき，\textbf{Tychonoff空間}であるという．
+\end{definition}
+
+\begin{proposition}[Tychonoff空間の特徴付け]
+    $X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $X$はTychonoff空間である．
+        \item ある基数$\al$が存在して，$X\subset[0,1]^\al$．
+    \end{enumerate}
+    すなわち，Tychonoff空間とはコンパクトハウスドルフ空間の部分空間である．
+\end{proposition}
+
+\begin{proposition}[Tychonoff空間の十分条件]
+    局所コンパクトハウスドルフ空間は，正規ならばTychonoff空間である．
+\end{proposition}
+
+\begin{proposition}
+    任意のTychonoff空間$X$に対して，Hausdorffなコンパクト化$\beta(X)$が存在して，任意のコンパクトハウスドルフ空間$Y$への連続写像$\Phi:X\to Y$は延長$\beta\Phi:\beta(X)\to Y$を持つ．
+\end{proposition}
+
+\begin{corollary}
+    任意のTychonoff空間$X$の任意のHausdorffコンパクト化$Y$について，ある全射連続写像$\Phi:\beta X\epi Y$が存在して，$\Phi|_X$は恒等写像である．
+\end{corollary}
 
 \section{スペクトル理論I}
 
+\subsection{スペクトル定理}
+
+\begin{notation}
+    $T\in B(H)$に対して，$C^*(T)$で，$T,I$を含む最小のノルム閉かつ$*$-不変な部分代数(すなわち$C^*$-部分代数\ref{exp-C*-algebra})とする．
+\end{notation}
+
+\begin{theorem}[spectral theorem (von Neumann)]
+    $H$を複素Hilbert空間，$T\in B(H)$を正規作用素とする．
+    \begin{enumerate}
+        \item 等長$*$-同型$C(\Sp(T))\iso C^*(T);f\mapsto f(T)$であって，$\id(T)=T$かつ$1(T)=I$を満たすものが存在する．
+        \item $\forall_{f\in C(\Sp(T))}\;\Sp(f)=f(\Sp(T))$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \ref{prop-seminal-spectral-theorem}に同値．
+\end{proof}
+
+\begin{history}
+    スペクトル定理は，「無限個の変数を持った有界な二次形式」という形で表現された「自己共役作用素」について，Hilbertによって1906年に初めて証明された．
+    今回の証明は，可換な$C^*$-代数のGelfand表現を通じて行った．最短ではないが本質的である．
+\end{history}
+
+\subsection{スペクトルと固有値}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正規作用素がコンパクトでもあるとき，スペクトル定理\ref{thm-Spectral-Theorem-for-normal-compact-operator}は固有値の言葉で表現された．
+    では作用素がコンパクトではないと，スペクトルはもはや固有値とは関係ないのか？
+
+    実は，孤立点を持たないコンパクト集合については，全く固有値と関係ないスペクトルでありえるが，孤立点は必ず固有値である．
+\end{tcolorbox}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意のコンパクト集合$X\subset\C$に対して，ある対角作用素$M\in B(l^2)$が存在して，$\Sp(M)=X$．
+        \item コンパクト集合$X\subset\C$が$(X^\circ)^-=X$を満たすならば，ある作用素$M_\id\in B(L^2(X))$が存在して，$\Sp(M_\id)=X$かつ$M_\id$は固有値を持たない（直交射影成分がない）．
+        \item 実は任意の孤立点を持たないコンパクト集合$X\subset\C$に対して，連続なdiffuse測度\ref{def-diffuse-atomic}が存在して，$\Sp(M_\id)=X$を満たす作用素$M_\id$で固有値を持たないものが存在する．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    $T\in B(H),\lambda\in\Sp(T)$に対して，単位ベクトルの列$\{x_n\}\subset H$が存在して，$\norm{Tx_n-\lambda x_n}\to0$または$\norm{T^*x_n-\o{\lambda}x_n}\to0$が成り立つ．
+\end{lemma}
+
+\begin{proposition}
+    正規作用素$T\in B(H)$と$\lambda\in\Sp(T)$に対して，
+    \begin{enumerate}
+        \item 任意の$\ep>0$に対して単位ベクトル$x\in H$が存在して，$\norm{Tx-\lambda x}<\ep$を満たす．
+        \item $\lambda\in\Sp(T)$が孤立点ならば，固有値である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{スペクトルによる作用素の性質の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    スペクトル理論による対応$C(\Sp(T))\simeq C^*(T)$を用いることで，
+    Hilbert空間の設定を忘れて，$\lambda\in\Sp(T)$が孤立点であるかどうかを判定するだけで，射影$P\in\A$が存在して$PT=TP=\lambda P$を満たすか判定出来る．
+    そこで，任意の$C^*$-代数について，$T$の性質は，$\Sp(T)$を見るだけで判定できる．
+    なお，任意の$C^*$-代数に対して，あるHilbert空間$H$が存在して，$B(H)$のある$C^*$-部分代数に同型であることに注意．
+\end{tcolorbox}
+
+\begin{proposition}
+    正規作用素$T\in B(H)$について，次の2条件はそれぞれ同値．
+    \begin{enumerate}
+        \item $T$は自己共役である．
+        \item $\Sp(T)\subset\R$．
+    \end{enumerate}
+    \begin{enumerate}
+        \item $T$は正である．
+        \item $\Sp(T)\subset\R_+$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    任意の正作用素$T\in B(H)$に対して，正作用素$T^{1/2}$がただ一つ存在して，$(T^{1/2})^2=T$を満たす．
+    また，この$T^{1/2}$は，$T$と可換な任意の元と可換である．
+\end{proposition}
+
+\begin{proposition}
+    任意の自己共役作用素$T\in B(H)$に対して，正作用素の組$T_+,T_-$がただ一つ存在して，$T_+T_-=0$かつ$T=T_+-T_-$が成り立つ．
+    また，$T_+,T_-$は，$T$と可換な任意の元と可換である．
+\end{proposition}
+
+\begin{remark}
+    極分解\ref{thm-polar-decomposition}では，$\abs{T}:=(T^*T)^{1/2}$としたのであった．
+    $T$が正規ならば，証明抽出より，$\abs{T}\in C^*(T)$が解り，これは$\Sp(T)$上の関数$\abs{\id}:\lambda\to\abs{\lambda}$に対応する．
+    特に，$T$が自己共役であるとき，$\abs{T}=T_++T_-$の表示も持つことが分かる．
+\end{remark}
+
+\subsection{作用素の可換性}
+
+\begin{discussion}
+    正規行列$T\in M_n(\C)$と$S\in M_n(\C)$とが可換であるとは，$S$が任意の$T$の固有空間を不変にすることと同値．
+    $T,T^*$は同じ固有空間を持つから，$S$と$T$との可換性と$S$と$T^*$との可換性とは同値．
+
+    これを一般のHilbert空間の作用素に一般化するのは至難の業である(Fuglede's theorem)のは，スペクトルはもはや固有値のみからなるわけではないからである．
+\end{discussion}
+
+\begin{proposition}[Fuglede's theorem]\label{prop-Fuglede}
+    作用素$S,T\in B(H)$のうち，$T$は正規であるとする．このとき，$ST=TS\Rightarrow ST^*=T^*S$．
+\end{proposition}
+
+\begin{proposition}
+    2つの作用素$T_1,T_2\in B(H)$が正規同値であるならばユニタリー同値\ref{def-unitary-equivalent}である．
+\end{proposition}
+
 \section{スペクトル理論II}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    前節では$C(\Sp(T))\simeq C^*(T)$によって$T$を調べた．
+    連続関数の空間$C(\Sp(T))$をBorel関数の空間に一般化して考察する．
+    これはもはや同型にはならず準同型$\B_b(\Sp(T))\to W^*(T)$を定め，これは延長となっている．
+    この像はvon Neumann環の言葉で捉える必要が出てくる．
+\end{tcolorbox}
+
+\subsection{自己共役作用素の空間の順序完備性}
+
+\begin{proposition}
+    $(T_\lambda)_{\lambda\in\Lambda}$を$B(H)_\sa$の有界な広義単調増大ネットとする．
+    このとき，
+    \begin{enumerate}
+        \item $\forall_{\lambda\in\Lambda}\;T_\lambda\le T$を満たす最小の$T\in B(H)$が存在する．これを$\lub T_\lambda$と表す．
+        \item $\forall_{x\in H}\;\norm{T_\lambda x-Tx}\to0$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{一般化されたスペクトル定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C(\Sp(T))\simeq C^*(T)$を，単調収束定理が成り立つように延長する．
+    なお，一般に，ノルム減少的な$*$-準同型$C(X)\to B(H)$に対して，単調収束定理が成り立つような延長$\B_b(X)\to B(H)$が一意に存在する．
+\end{tcolorbox}
+
+\begin{notation}[有界Borel関数の空間]
+    局所コンパクトハウスドルフ空間$X$上の有界な複素Borel関数全体の集合を$\B_b(X)$で表す．
+    これは$C^*$-代数で，$X$が第２可算ならば実部$\B_b(X)_\sa$は$C_0(X)_\sa$を含みかつ有界な単調列の極限について閉じている有界実関数の最小の空間である．
+\end{notation}
+
+\begin{notation}[可換な元の代数]
+    正規作用素$T\in B(H)$に対して，$W^*(T)\subset B(H)$で$T$と可換なすべての元と可換な元からなる集合とする．
+    Fugledeの定理\ref{prop-Fuglede}より，$W^*(T)=C^*(T)$．
+    $W^*(T)$は$T,I$を含む最小のvon Neumann代数である\ref{lemma-W*(T)}．
+\end{notation}
+
+\begin{theorem}
+    任意の正規作用素$T\in B(H)$に対して，
+    \begin{enumerate}
+        \item あるノルム減少的な$*$-準同型$\B_b(\Sp(T))\to W^*(T);f\mapsto f(T)$が存在して，$C(\Sp(T))\iso C^*(T)$の延長である．
+        \item $\{f_n\}\subset\B_b(\Sp(T))_\sa$を有界な増大列とし，$f:=\lub f_n$とすると，$f(T)=\lub f_n(T)$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{スペクトル測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積分は測度と見るのが筋がよく，今回のスペクトル写像$\B_b(\Sp(T))\to W^*(T)$も，作用素値の積分と見る．
+\end{tcolorbox}
+
+\begin{notation}
+    $B(H)_p$で，$B(H)$の射影全体の空間を表す．
+    射影族$E(Y_n)$の$B(H)_p$での上限を$\bigvee E(Y_n)$で表し，$\sum E(Y_n)(H)$が生成する閉部分空間が定める射影となる．
+\end{notation}
+
+\begin{definition}[spectral measure]
+    可測空間$(X,\F)$上の\textbf{スペクトル測度}とは，写像$E:\F\to B(H)_p$であって，次の4条件を満たすものをいう：
+    \begin{enumerate}
+        \item $E(\emptyset)=0,E(X)=I$．
+        \item $E(Y\cap Z)=E(Y)E(Z)$．
+        \item $E(Y\sqcup Z)=E(Y)+E(Z)$．これは(4)より従う．
+        \item $E(\cup Y_n)=\bigvee E(Y_n)$．
+    \end{enumerate}
+\end{definition}
+
+\begin{notation}
+    任意の$x\in H$に対して，
+    $\mu_x(Y):=(E(Y)x|x)\;(Y\in\F)$によって，通常の意味での測度が定まる．
+\end{notation}
+
+\begin{proposition}
+    $(X,\F)$上のスペクトル測度$E$について，
+    \begin{enumerate}
+        \item ノルム減少的な$*$-準同型$\B_b(X)\to B(H)_\normal;f\mapsto T_f$が
+        \[T_f:=\int_Xf(\lambda)dE(\lambda)\quad\lor\quad (T_fx|y):=\int_Xf(\lambda )d\mu_{xy}\]
+        によって定まる．
+        \item $\{f_n\}\subset\B_b(X)_\sa$が有界な単調増大列ならば，$f=\lub f_n,T_f=\lub T_{f_n}$を満たす．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{スペクトル測度によるスペクトル定理の表現}
+
+\begin{proposition}
+    任意の正規作用素$T\in B(H)$に対して，$(\Sp(T),\B(\Sp(T)))$上のあるスペクトル測度$E:\B(\Sp(T))\to W^*(T)$が存在して，
+    \[T=\int_{\Sp(T)}\lambda dE(\lambda).\]
+\end{proposition}
+
+\subsection{スペクトル測度と固有値}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    スペクトル定理の表現はいささか煩雑になったように見えるが，固有値の位置は明快に表現できる．
+\end{tcolorbox}
+
+\begin{proposition}
+    $T\in B(H)$を正規作用素，$E$を対応するスペクトル測度とする．
+    任意の有界Borel関数$f\in\B_b(\Sp(T))$に対して，次の2条件は同値．
+    \begin{enumerate}
+        \item $\lambda\in\Sp(f(T))$．
+        \item $\forall_{\ep>0}\;E(f^{-1}(B(\lambda,\ep)))\ne0$．
+    \end{enumerate}
+    また，次の2条件も同値．
+    \begin{enumerate}
+        \item $\lambda$は$f(T)$の固有値である．
+        \item $E(f^{-1}(\lambda))\ne0$．
+    \end{enumerate}
+    このとき，$E(f^{-1}(\lambda))$は$\lambda$に対応する$f(T)$の固有空間が定める射影である．
+\end{proposition}
+
+\begin{corollary}
+    $f\in \B_b(\Sp(T))\Rightarrow\Sp(f(T))\subset\o{f(\Sp(T))}$．
+\end{corollary}
+\begin{corollary}
+    $\forall_{\lambda\in\Sp(T)}\;\lambda$は$T$の固有値でないならば$E(\{\lambda\})=0$．
+\end{corollary}
+\begin{corollary}
+    $T\in B(H)$は対角化可能のとき，対応するスペクトル測度$E$は完全に原子的で，$\Sp(T)$の固有値の集合$\Sp(T)_a$上に集中している．
+    また，$\forall_{x\in H}\;\Sp(T)=\o{\Sp(T)_a}$で，
+    \[Tx=\sum_{\lambda\in\Sp(T)_a}\lambda E(\{\lambda\})x.\]
+\end{corollary}
 
 \section{作用素代数}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $B(H)$には種々の位相が入る．
+
+    量子力学の「自然数，実数などの古典的な数学的対象を，すべて複素Hilbert空間上の作用素を用いて考えよ」という天啓から始まった
+    作用素環の理論は，当然のように，数学全体の基礎づけの役割も果たし得る．
+    作用素環の数理構造を解析しているうちに，病理的な対象でさえも場の量子論に自然に現れることが判明するという，逆の結果さえ生まれた．
+\end{tcolorbox}
+
+\subsection{2つの作用素位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    強い順に，ノルム位相，強位相，弱位相である．
+    なお，作用素ノルム位相は一様作用素位相ともいう．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $B(H)$上の\textbf{強位相}とは，半ノルムの族$(T\mapsto\norm{Tx})_{x\in H}$が誘導する局所凸位相をいう．
+        \item $B(H)$上の\textbf{弱位相}とは，半ノルムの族$(T\mapsto\abs{(Tx|y)})_{x,y\in H}$が誘導する局所凸位相をいう．
+    \end{enumerate}
+    一般のBanach空間$X$上のBanach代数$B(X)$上に，$X$または$X\times X^*$に添字付けられた半ノルムの族を用いて同様の位相を定義できることは明らかである．
+\end{definition}
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 共役作用$*:B(H)\to B(H)$は弱連続であるが，強連続ではない．
+        \item 共役作用は$B(H)_\normal$に制限すると強連続であるが，この正規作用素の集合は部分空間にはならない．
+        \item 乗法$B(H)\times B(H)\to B(H)$は片方の変数を止めると強連続であるが，$B(H)\times B(H)$上は弱連続でさえない．
+        \item 片方の引数の有界集合への制限$B(0,n)\times B(H)\to B(H)$は強連続である．
+        \item 単位球$B\subset B(H)$は弱コンパクトである．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 強位相と弱位相は$H$が無限次元のとき，距離化可能でないどころか第１可算でさえない．
+        \item $H$が可分ならば，単位球$B$は強位相と弱位相の両方で距離化可能である．
+        \item $H$が可分ならば，単位球$B$は弱位相についてさらにコンパクトハウスドルフであり，よって第２可算である．よって，$B$は弱可分．
+        \item よって，$B(H)=\R_+B$自身の弱可分である．
+        \item 任意の$H$の正規直交基底について，$B_f(H)$の元は有限な行列の有理係数和によって，ノルムによって近似出来る．したがって，$B_f(H)$はノルム位相について可分である．
+        \item $B_f(H)$は強位相について稠密である．
+        \item $B(H)$は強位相についても可分である．
+    \end{enumerate}
+\end{lemma}
+
+なお，次のような定義もある．
+
+\begin{definition}[uniform operator topology, weak operator topology, strong operator topology]
+    $V,W\in\TVS$を位相線形空間，$L(V,W):=\Hom_\TVS(V,W)$をその間の連続線型作用素全体のなす空間とする．
+    \begin{enumerate}
+        \item $V,W$をノルム空間とする．これが定める作用素ノルム$p(A):=\sup_{v\ne0}\frac{p_W(Av)}{p_V(v)}$が定める位相を，\textbf{一様作用素位相}という．
+        \item $U(x,f):=\Brace{A\in L(V,W)\mid\abs{f(A(x))}<1}$として，$(U(x,f))_{x\in V,f\in W^*}$を$0$の開近傍系の基底として生成される位相を，\textbf{弱作用素位相}という．作用素列$(A_n)$が$A$に弱作用素位相で収束することは，任意の$x\in X$について$(A_n(x))$が$(A(x))$に$W$の弱位相に関して収束する\footnote{すなわち任意の有界線型汎関数$f\in W^*$について$f(A_n(x))\to f(A(x))$．}ことに同値．
+        \item $N(x,U):=\Brace{A\in L(V,W)\mid Av\in U}$として，$(N(x,U))_{x\in V,0\in U\osub W}$を$0$の開近傍系の基底として生成される位相を，\textbf{作用素強位相}という．作用素列$(A_n)$が$A$に強作用素位相で収束することは，任意の$x\in X$について$(A_n(x))$が$(A(x))$に$W$にてノルム収束することに同値．
+    \end{enumerate}
+\end{definition}
+
+\subsection{$B(H)$の弱閉集合}
+
+\begin{notation}
+    $B(H^n)\simeq M_n(B(H))$の同一視を行う．
+    $\Phi:B(H)\to B(H^n)$を$\Phi(T)_{kk}=T,\Phi(T)_{kl}=0\;(k\ne l)$とすると，これは$*$-同型である．
+    このスカラーをスカラー行列と同一視する技法はamplificationと呼ばれる．
+\end{notation}
+
+\begin{proposition}
+    任意の汎関数$\varphi:B(H)\to\bF$について，次の3条件は同値．
+    \begin{enumerate}
+        \item 元$x_1,\cdots,x_n,y_1,\cdots,y_n\in H$が存在して，$\forall_{T\in B(H)}\;\varphi(T)=\sum(Tx_k|y_k)$．
+        \item $\varphi$は弱連続である．
+        \item $\varphi$は強連続である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $B(H)$の任意の強閉な凸集合は弱閉である．
+    特に，任意の強閉部分空間は弱閉である．
+\end{corollary}
+
+\subsection{二重可換子代数}
+
+\begin{definition}[commutant]\label{def-commutant}
+    任意の部分集合$\A\subset B(H)$に対して，$\A$の\textbf{可換子}とは，弱閉な部分代数
+    \[\A':=\Brace{T\in B(H)\mid\forall_{S\in\A}\;TS=ST}\]
+    をいう．
+\end{definition}
+
+\begin{theorem}[double commutant theorem (von Neumann 1929)]
+    $\A\subset B(H)$を自己共役な単位的部分代数とする．
+    このとき，次の3条件は同値．
+    \begin{enumerate}
+        \item $\A=\A''$．
+        \item $\A$は弱閉．
+        \item $\A$は強閉．
+    \end{enumerate}
+    この条件を満たす自己共役な単位的部分代数$\A$を\textbf{von Neumann代数}または\textbf{$W^*$-代数}という．
+\end{theorem}
+
+\begin{corollary}
+    $B(H)$の自己共役な単位的部分代数$\A$の強閉包と弱閉包は一致し，$\A''$となる．
+\end{corollary}
+
+\begin{example}[von Neumann algebra]\mbox{}
+    \begin{enumerate}
+        \item 自己共役な集合$D\subset B(H)$に対して，$D'$はvon Neumann環である．
+        \item $L^\infty(X)$は$W^*$-代数である．
+    \end{enumerate}
+\end{example}
+
+\subsection{因子}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $B(H)$以外の因子が存在するということさえはじめは驚きの事実であった．
+    可分なHilbert空間上の同型でない因子は非可算個存在し，その分類は，群論（特に半単純Lie群の分類）や量子力学の基礎づけにおいて基本的な問題となる．
+\end{tcolorbox}
+
+\begin{definition}[factor]
+    von Neumann環$\A$が\textbf{因子}であるとは，$\A\cap\A'=\C I$を満たすことをいう．
+    これは考えうる限り最も可換性の破れた場合をいう．
+\end{definition}
+
+\subsection{$\sigma$-弱位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $H$が無限次元のとき，$\sigma$-弱位相は弱位相よりも真に強いが，有界集合上では一致する．
+\end{tcolorbox}
+
+\begin{definition}[$\sigma$-weak topology]
+    双線型形式$B(H)\times B^1(H)\to\bF;\brac{S,T}=\Tr(ST)$が引き起こすペアリングによる$w^*$-位相，すなわち，$\sigma(B(H),B^1(H))$-位相，すなわち跡類作用素の双対空間$(B^1(H))^*$としての位相を\textbf{$\sigma$-弱位相}という．
+\end{definition}
+
+\begin{proposition}
+    汎関数$\varphi:B(H)\to\bF$について，次の4条件は同値：
+    \begin{enumerate}
+        \item ノルム2乗和が収束する列$\{x_n\},\{y_n\}\subset H,\sum\norm{x_n}^2<\infty,\sum\norm{y_n}^2<\infty$が存在して，$\varphi(S)=\sum(Sx_n|y_n)$と表せる．
+        \item (1)を満たし，さらに$(x_n),(y_n)$は組ごとに直交に取れる．
+        \item $T\in B^1(H)$が存在して，$\forall_{S\in B(H)}\;\varphi(S)=\Tr(ST)$．
+        \item $\varphi$は$\sigma$-弱連続である．
+    \end{enumerate}
+\end{proposition}
+\begin{remark}
+    証明から，$B(H)$の弱位相についての双対空間は$B_f(H)$となる．
+    よって，$H$が無限次元のとき，弱位相は$\sigma$-弱位相より真に弱い．
+\end{remark}
+
+\begin{corollary}
+    正な$\sigma$-弱連続汎関数$\varphi:B(H)\to\bF$に対して，直交列$\{x_n\}\subset H$が存在して，$\sum\norm{x_n}^2=\norm{\varphi}$かつ$\forall_{S\in B(H)}\;\varphi(S)=\sum(Sx_n|x_n)$を満たす．
+\end{corollary}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $B(H)$の有界集合上において，弱位相と$\sigma$-弱位相とは一致する．
+        \item 汎関数$\varphi:B(H)\to\bF$が$\sigma$-弱連続であることは，制限$\varphi|_B$が弱連続であることと同値．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{$\sigma$-弱位相によるvon Neumann代数の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    von Neumann代数は，$B(H)$の単位的$C^*$-部分代数であって$\sigma$-弱閉であるものとしても特徴付けられる．
+
+    強い順に，ノルム位相，$\sigma$-強位相・強位相，$\sigma$-弱位相・弱位相となる．・でつないだ部分は，有界集合上では一致する．
+\end{tcolorbox}
+
+\begin{proposition}
+    自己共役な単位的部分代数$\A\subset B(H)$と$S\in\A''$について，任意の$\sum\norm{x_n}^2<\infty$を満たす列$\{x_n\}\subset H$と$\ep>0$について，$T\in\A$が存在して$\sum\norm{(S-T)x_n}^2<\ep^2$を満たす．
+    特に，$\A''$は$\A$の$\sigma$-弱閉包である．
+\end{proposition}
+
+\begin{definition}[$\sigma$-strong topology]
+    $B(H)$上の\textbf{$\sigma$-強位相}とは，半ノルムの族
+    \[T\mapsto\paren{\sum^\infty_{n=1}\norm{Tx_n}^2}^{1/2},\quad\{x_n\}\subset H,\sum^\infty_{n=1}\norm{x_n}^2<\infty\]
+    が引き起こす局所凸位相をいう．
+\end{definition}
+
+\begin{corollary}[命題の再翻訳]
+    単位的$*$-部分代数$\A$の$\sigma$-強位相に関する閉包は$\A''$である．
+\end{corollary}
+
+\begin{lemma}[$\sigma$-強位相の性質]\mbox{}
+    \begin{enumerate}
+        \item 有界集合上では，$\sigma$-強位相と強位相とは一致する．
+        \item $\sigma$-強位相と$\sigma$-弱位相とは有界集合上でも異なるが，連続な汎関数は同じになる．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{前双対としての表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\A$の前双対$\A_*$は一意的に存在する(S. Sakai)．
+    また，von Neumann代数は，$C^*$-代数であって，前双対空間を持つものとしても特徴付けられる(3つ目)．
+\end{tcolorbox}
+
+\begin{theorem}
+    任意のvon Neumann代数$\A\subset B(H)$について，Banach空間$\A_*$が存在して，等長同型$\A\simeq(\A_*)^*$が成り立つ．
+    $\A$上の$w^*$-位相は$\sigma$-弱位相である．
+\end{theorem}
+
 \section{極大可換代数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    von Neumann代数の理論のうち，極大可換性に注目して，そのスペクトル定理に対する示唆を議論する．
+\end{tcolorbox}
+
+\subsection{極大可換性の定義と特徴付け}
+
+\begin{definition}[maximal commutative / MASA (maximal abelian self-adjoint algebras)]
+    可換な自己共役代数$\A\subset B(H)$が\textbf{極大可換}であるとは，任意の可換な真の$*$-部分代数に包含されていないことをいう．
+\end{definition}
+\begin{lemma}
+    $B(H)$の$*$-部分代数$\A$について，次の2条件はそれぞれ同値．
+    \begin{enumerate}
+        \item 可換である．
+        \item $\A\subset\A'$．
+    \end{enumerate}
+    \begin{enumerate}
+        \item 極大可換である．
+        \item $\A=\A'$．
+    \end{enumerate}
+    特に，任意の極大可換部分代数は，弱閉で$I$を含み，したがってvon Neumann代数である．
+\end{lemma}
+
+\subsection{サイクリックな元}
+
+\begin{definition}[cyclic, separating]
+    $\A\subset B(H)$を自己共役な代数とする．
+    \begin{enumerate}
+        \item $x\in H$が$\A$について\textbf{サイクリック}であるとは，部分空間$\A x$が$H$上稠密であることをいう．
+        \item 射影$P\in B(H)$が$A$に関して\textbf{サイクリック}であるとは，$\exists_{x\in H}\;\A x$が$P(H)$上稠密であることをいう．サイクリックな射影は必ず$\A'$の元である．
+        \item $\A$がサイクリックな元$x\in H$を持つことは，$I$がサイクリックな射影であることと同値．
+        \item $x\in H$が$\A$に関して\textbf{分離的}であるとは，$\forall_{T\in\A}\;Tx=0\Rightarrow T=0$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $x\in H$と自己共役な部分代数$\A\subset B(H)$について，
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $x$は$\A$に関してサイクリックである．
+        \item $x$は$\A'$に関して分離的である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    任意の自己共役な部分代数$\A\subset B(H)$について，組ごとに直交な射影の族$\{P_j\}_{j\in J}\subset\A'$が存在して，$\A$に関してサイクリックで，$\sum P_j=I$をみたす．
+    $H$が可分ならば，$J$は可算に取れる．
+\end{lemma}
+
+\begin{lemma}
+    可分なHilbert空間$H$上の任意の可換な自己共役部分代数$\A\subset B(H)$には，分離的な元$x\in H$が存在する．
+\end{lemma}
+
+\subsection{極大可環代数の乗算作用素による特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これが実はスペクトル定理を「対角化」の見方で見つめ直すための大事な枠組みとなる．
+\end{tcolorbox}
+
+\begin{proposition}
+    $\int:C_c(X)\to\R$を$\sigma$-コンパクトな局所コンパクトハウスドルフ空間$X$上のRadon積分とし，$M:\L^\infty(X)\to B(L^2(X));f\mapsto M_fg=fg\;(g\in\L^2(X))$を乗算作用素を対応付ける対応とする．
+    このとき，
+    \begin{enumerate}
+        \item 写像$f\mapsto M_f$はある極大可換部分代数への等長$*$-同型$L^\infty(X)\mono B(L^2(X))$を定める．
+        \item 像である極大可換部分代数は$\Brace{M_f\in B(L^2(X))\mid f\in C_c(X)}$を強稠密な部分代数として含む．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    Hilbert空間$H$上の自己共役な部分代数$\A\subset B(H)$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $\A$は極大可換である．
+        \item $\A$はサイクリックな元を持つ可換なvon Neumann環である．
+        \item 第２可算なコンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\bF$と，等長写像$U:L^2(X)\to H$が存在して，対応$L^\infty(X)\iso\A;f\mapsto UM_fU^*$は等長$*$-同型となる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    可分なHilbert空間$H$上の
+    2つの極大可換von Neumann代数$\A_1,\A_2\subset B(H)$は$*$-同型であるとする．
+    このとき，あるユニタリー$U\in B(H)$が存在して，$U\A_1U^*=\A_2$．
+\end{proposition}
+
+\subsection{空間的スペクトル定理}
+
+\begin{definition}[multiplicity-free]
+    正規作用素$T\in B(H)$が\textbf{重複度なし}であるとは，$C^*(T)$に関するサイクリックな元$x\in H$が存在すること，すなわち，部分空間$\Brace{f(T)x\in H\mid f\in C(\Sp(T))}$が$H$上稠密であることをいう．
+\end{definition}
+\begin{lemma}\mbox{}\label{lemma-W*(T)}
+    \begin{enumerate}
+        \item $W^*(T)$は$T,I$を含む最小のvon Neumann代数である．
+        \item $W^*(T)$は$C^*(T)$の強位相に関する閉包である．
+        \item $T$が重複度なしであることと，$W^*(T)\subset B(H)$が極大可換であることとは同値．
+    \end{enumerate}
+\end{lemma}
+\begin{remark}
+    任意の$T$の固有値$\lambda$は重複度$1$を持つ．
+\end{remark}
+
+\begin{corollary}[spatial version of the spectral theorem]
+    $T\in B(H)$を重複度のない正規作用素とする．
+    このとき，$\Sp(T)$上のRadon積分と，等長写像$U:L^2(\Sp(T))\to H$が存在して，次は$C(\Sp(T))\to C^*(T)$を延長する等長$*$-同型になる：
+    \[\xymatrix@R-2pc{
+        L^\infty(\Sp(T))\ar[r]&W^*(T)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&f(T):=UM_fU^*
+    }\]
+\end{corollary}
+
+\subsection{スペクトル対応の帰結}
+
+\begin{proposition}
+    可分なHilbert空間$H$上の正規で重複度のない作用素
+    $S,T\in B(H)$について，次の3条件は同値：
+    \begin{enumerate}
+        \item $S,T$はユニタリ同値．
+        \item $\Sp(S)=\Sp(T)$かつ$C^*(S),C^*(T)$に関してサイクリックな元$x,y$がそれぞれ存在して，2つの$\Sp(S)$上のRadon積分$f\mapsto(f(S)x|x)$と$f\mapsto(f(T)y|y)$とは同値である．
+        \item 等長$*$-同型$\Phi:W^*(S)\to W^*(T)$が存在して$\Phi(S)=T$を満たす．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{スペクトル定理と対角化再論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $B(H)$の極大可換代数は，$H$の基底の一般化と見れる．
+    この見方によれば，スペクトル定理の「作用素を対角化する基底に関する存在定理」という側面が再び見えてくる．
+\end{tcolorbox}
+
+\begin{definition}
+    極大可換代数$\A\subset B(H)$が\textbf{原子的}であるとは，ある原子的積分\ref{def-diffuse-atomic}が存在して，これに関する本質的に有界な関数の空間$L^\infty(X)$と同型であることをいう．
+    $H$が可算のとき，これは$\A\simeq l^\infty$をいう．
+\end{definition}
+
+\begin{proposition}[一斉対角化]
+    $\{T_j\}_{j\in J}\subset B(H)$を可分Hilbert空間$H$上の正規作用素の可換な族とする．
+    このとき，第２可算なコンパクトハウスドルフ空間$X$上のRadon積分$\int:C(X)\to\R$と等長写像$U:L^2(X)\to H$と本質的に有界な関数の族$\{f_j\}_{j\in J}\subset\L^\infty(X)$が存在して，
+    $\forall_{j\in J}\; UM_{f_j}U^*=T_j$を満たす．
+\end{proposition}
+
+\subsection{一般化?}
+
+\begin{remarks}
+    $J$が可算のとき，$\{f_j\}\subset C(X)$に取れる．
+    $X=[0,1]$と取れる．
+\end{remarks}
+
+\begin{theorem}[spatial spectral theorem 2]
+    $H$を可分なHilbert空間，$T\in B(H)$を正規作用素とする．
+    $T$と可換で$\sum P_n=I$を満たす組毎に直交な射影の列$\{P_n\}$
+    と，$\Sp(T)$上の正規化されたRadon積分の列$(\int_n)$と，等長写像$U_n:L^2_n(\Sp(T))\to P_n(H)$とが存在する．
+    また，$L^\infty(\Sp(T))$を，Radon積分$\in:=\sum 2^{-n}\int_n$に関する本質的に有界な関数の空間として，
+    次は$C(\Sp(T))\to C^*(T)$を延長する等長$*$-同型である．
+    \[\xymatrix@R-2pc{
+        L^\infty(\Sp(T))\ar[r]&W^*(T)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&f(T):=\sum U_nM_fu_n^*
+    }\]
+\end{theorem}
+
+\begin{proposition}
+    定理のスペクトル写像$L^\infty(\Sp(T))\to W^*(T)$は，$L^\infty(\Sp(T))=(L^1(\Sp(T)))^*$に$w^*$-位相を，$B(H)$に$\sigma$-弱位相を入れたとき，位相同型になる．
+    特に，スペクトル写像は$L^\infty(\Sp(T))$の有界集合上において，$w^*$-位相と弱位相について位相同型になる．
+\end{proposition}
 
 \chapter{Unbounded Operators}
 
+\begin{quotation}
+    非有界作用素については，稠密部分集合上で一致しても，大域的に一致するとは限らない．
+    さらに定義域が全くかぶらないために演算が定義出来ない場合も多い．
+\end{quotation}
+
 \section{始域・延長・グラフ}
 
-\subsection{定義域}
+\subsection{定義域と値域と演算}
 
-\begin{definition}[operator in a Hilbert space, domain, densely defined, extension]
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般の作用素$S,T$について，$T=S$とは，グラフが一致することであることを明確に意識する必要がある．
+    拡張性$S\subset T$は，グラフの包含関係$\Graph(S)\subset\Graph(T)$の略記と見ると筋が良い．
+\end{tcolorbox}
+
+\begin{definition}[operator \textbf{in} a Hilbert space, domain, densely defined, extension]
     Hilbert空間$H$\textbf{内}の作用素$T$とは，$H$の部分空間$D(T)$上の作用素$T:D(T)\to H$をいう．
     $D(T)$を\textbf{定義域}という．
     \begin{enumerate}
-        \item $\oo{D(T)}=H$が成り立つとき，$T$は\textbf{稠密に定義されている}という．
-        \item $D(S)\subset D(T),S=T\on D(S)$が成り立つとき，$T$は$S$の\textbf{延長}であるといい，$T\subset S$で表す．たしかに$T=S\Leftrightarrow T\subset S\land T\supset S$が成り立つ．
+        \item $\oo{D(T)}=H$が成り立つとき，$T$は\textbf{稠密に定義されている}という．以降，これを暗黙に仮定することも多い．
+        \item $D(S)\subset D(T),S=T\on D(S)$が成り立つとき，$T$は$S$の\textbf{延長}であるといい，$S\subset T$で表す．
+        $T=S\Leftrightarrow T\subset S\land T\supset S$が成り立つ．
         \item 値域を$R(T):=T(D(T))$で表す．
     \end{enumerate}
 \end{definition}
@@ -5721,7 +6460,6 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
         \item $D(T^{-1})=R(T),R(T^{-1})=D(T)$．
     \end{enumerate}
     とすると，和と積は結合的であるが，分配的ではない．
-    また，$T$が単射でない限り，逆$T^{-1}$は集合論的な逆写像と相違する．？
 \end{definition}
 
 \begin{lemma}
@@ -5730,11 +6468,12 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
 
 \subsection{随伴}
 
-\begin{definition}
+\begin{definition}[adjoint operator]
     $H$内の稠密に定義された作用素$T:D(T)\to H$に対して，
-    \[D(T^*):=\Brace{x\in H\mid y\mapsto(Ty|x)\in B(D(T),H)}\]
+    \[D(T^*):=\Brace{x\in H\mid D(T)\to H;y\mapsto(Ty|x)\in B(D(T),H)}\]
     とする．このとき，Rieszの表現定理より，$\forall_{y\in D(T)}\;\forall_{x\in D(T^*)}\;\exists!_{T^*x\in H}\;(y|T^*x)=(Ty|x)$．
     よって，$T^*:D(T^*)\to H$が定まる．これを$T$の\textbf{随伴}という．
+    $T^*$は稠密に定義されているとは限らない．
 \end{definition}
 
 \begin{lemma}
@@ -5747,11 +6486,16 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
 \end{lemma}
 
 \begin{lemma}
-    $T$が稠密に定義されているとき，$\Ker T^*=(R(T))^\perp$．
-    特に，$\Brace{x\in D(T^*)\mid T^*x=\o{\lambda}x}=R(T-\lambda I)^\perp$．
+    $T$が稠密に定義されているとき，$\Ker T^*=(\Im T)^\perp$．
+    特に，$\Brace{x\in D(T^*)\mid T^*x=\o{\lambda}x}=\Im(T-\lambda I)^\perp$．
 \end{lemma}
 
 \subsection{対称作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $T\subset T^*$なるとき$T$を対称作用素といい，$T=T^*$となるとき自己共役作用素という．
+\end{tcolorbox}
 
 \begin{definition}[symmetric]
     稠密に定義された作用素$S$が\textbf{対称}であるとは，$\forall_{x,y\in D(S)}\;(Sx|y)=(x|Sy)$を満たすことをいう．
@@ -5781,10 +6525,12 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
 \end{definition}
 
 \begin{lemma}
-    任意の自己共役作用素は極大対称的である．
+    任意の自己共役作用素は極大対称的であるが，逆は十分ではない．
 \end{lemma}
 
-\subsection{閉作用素}
+\subsection{閉作用素の定義と例}
+
+
 
 \begin{definition}[closed operator]
     $H$内の作用素$T$のグラフ$G(T)=\Brace{(x,Tx)\in H\oplus H\mid x\in D(T)}$が$H\oplus H$内で閉集合であるとき，これを\textbf{閉作用素}という．
@@ -5794,21 +6540,26 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
     $T$を閉作用素とする．
     $D(T)$内の$x$に収束する列$(x_n)$について，$(Tx_n)$が$y$に収束するならば，$x\in D(T)$かつ$Tx=y$が成り立つ．
 \end{lemma}
-\begin{example}
-    全域で定義されている閉作用素は有界である．
-    $D(T)=D(T^*)=H$を満たす作用素は有界である．
-    特に，全域で定義されている対称作用素は，自己共役で有界である．
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 全域で定義されている閉作用素は有界である（閉グラフ定理）．
+        \item $D(T)=D(T^*)=H$を満たす作用素は有界である．
+        \item 特に，全域で定義されている対称作用素は，自己共役で有界である．
+        \item $D(T)=H$または$\Im(T)=H$のいずれか一方が成り立てば，自己共役である．
+    \end{enumerate}
 \end{example}
+
+\subsection{可閉作用素}
 
 \begin{definition}[closable / preclosed, closure, core]\mbox{}
     \begin{enumerate}
         \item $H$内の作用素$T$が\textbf{可閉}または\textbf{前閉}であるとは，グラフ$G(T)$のノルム閉包が，ある作用素$\o{T}$のグラフになっていることをいう．
         このとき，$\o{T}$は$T$を含む最小の閉作用素であり，$T$の\textbf{閉包}という．
-        \item 閉作用素$T$と$D(T)$の部分空間$D_0$について，$T_0:=T|_{D_0}$の閉包が$T$であるとき，$D_0$を$T$の\textbf{核}という．
+        \item 閉作用素$T$と$D(T)$の部分空間$D_0$について，$T_0:=T|_{D_0}$の閉包が$T$であるとき，$D_0$を$T$の\textbf{核}という．$\Graph(T)$の稠密部分集合の$\pr_1$による像は核である．
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[可閉性の特徴付け]
     $H$内の作用素$T$について，次の２条件は同値．
     \begin{enumerate}
         \item $T$は可閉である．
@@ -5816,9 +6567,96 @@ title=可換な$C^*$代数の構造は1次元表現によって特徴付けら�
     \end{enumerate}
 \end{lemma}
 
+\begin{theorem}[可閉性の自己共役作用素による特徴付け]
+    $T$を$H$内の稠密に定義された作用素とする．
+    \begin{enumerate}
+        \item $T^*$は閉作用素である．
+        \item 直交分解$H\oplus H=\oo{\Graph(T)}\oplus U(\Graph(T^*))$が存在する．ただし，$U\in\Iso(H\oplus H)$は$U(z,y)=(-y,z)$によって定まるユニタリ作用素とした．
+        \item $T$が可閉であることと，$T^*$が稠密に定義されていることとは同値．このとき，$\o{T}=T^{**}$すなわち$\oo{\Graph(T)}=\Graph(T^{**})$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[essentially self-adjoint]
+    対称作用素$S$は$S\subset S^*$を満たすから，$S^*$も稠密に定義されていて，したがって$S$は可閉である．
+    $\o{S}=S^*$が成り立つとき，対称作用素$S$は\textbf{本質的に自己共役}であるという．
+    一般に$S\subset\o{S}\subset S^*$が成り立つためである．
+\end{definition}
+
+\subsection{逆作用素と自己共役}
+
+\begin{proposition}
+    $T$を稠密に定義された$H$内の閉作用素で，稠密な像を持った単射とする．
+    このとき，$T^*,T^{-1}$も全く同じ性質を持ち，$(T^*)^{-1}=(T^{-1})^*$が成り立つ．
+\end{proposition}
+
+\begin{corollary}
+    自己共役作用素$T$が単射(稠密な像を持つことと同値)ならば，$T^{-1}$は自己共役作用素である．
+\end{corollary}
+
+\subsection{閉作用素の性質}
+
+\begin{theorem}
+    稠密に定義された閉作用素$T$について，
+    \begin{enumerate}
+        \item $T^*T$は自己共役で，$D(T^*T)$は$T$の核である．
+        \item $T^*T+I:D(T^*T)\to H$は全単射で，$(T^*T+I)^{-1}\in B(H)$かつ$0\le(T^*T+I)^{-1}\le I$を満たす．
+        \item $(TT^*+I)^{-1}T$の閉包は$T(T^*T+I)^{-1}$であり，これは有界作用素で$\norm{T(T^*T+I)^{-1}}\le1$．
+        \item ネット$((\ep^2T^*T+I)^{-1})_{\ep>0}$は$I$に強収束する．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{正規作用素}
+
+\begin{proposition}[正規作用素]
+    稠密に定義された閉作用素$T$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $D(T)=D(T^*)$かつ$\forall_{x\in D(T)}\;\norm{Tx}=\norm{T^*x}$．
+        \item $T^*T=TT^*$．
+        \item 自己共役な作用素$A,B$が存在して，$T=A+iB,T^*=A-iB$かつ$\forall_{x\in D(T)}\;\norm{Tx}^2=\norm{Ax}^2+\norm{Bx}^2$を満たす．
+        このとき，$A,B$はそれぞれ$\frac{1}{2}(T+T^*),\frac{1}{2}i(T^*-T)$の閉包である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}[可換性の取扱に関するNelsonの例]
+    
+    
+\end{example}
+
+\subsection{半有界作用素}
+
+\begin{definition}[semibounded / bounded from below, positive]
+    稠密に定義された対称作用素$S$が，$\exists_{\al\in\R}\;\forall_{x\in D(S)}\;(Sx|x)\ge\al\norm{x}^2$を満たすとき，\textbf{半有界}または\textbf{下に有界}であるという．
+    この条件を$S\ge\al I$で表す．特に，$\al=0$について$S\ge0$が成り立つとき，正であるという．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意の稠密に定義された閉作用素$T$について，$T^*T\ge0$．
+        \item 任意の稠密に定義された対称作用素$S$について，有界であること$\o{S}\in B(H)$と$S,-S$のいずれも半有界であることとは同値．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Friedrichs extension]
+    任意の半有界作用素$S$は，同じ下界を持った自己共役な拡張を持つ．
+\end{theorem}
+
+\subsection{非有界作用素の例}
+
 \section{Cayley変換}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対称作用素を自己共役作用素に延長することを試みる．
+\end{tcolorbox}
+
 \section{無制限スペクトル理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有界作用素の理論を通じて，自己共役作用素$S$から，スペクトル写像$f\mapsto f(S)$を$\B_b(\Sp(S))$上に構成することを考える．
+    このとき，Cayley変換を用いる．スペクトルの代数化$\{f(S)\}$を，可換von Neumann代数$W^*(S)$と結びついた正規作用素の代数として調べる．
+    この理論の応用としては，Stoneの定理や，非有界作用素の極分解を導く．
+\end{tcolorbox}
 
 \chapter{Integration Theory}
 
@@ -6710,7 +7548,7 @@ title=]
 
 \subsection{Radon積分のLebesgue分解}
 
-\begin{definition}[continuous / diffuse, atomic]\mbox{}
+\begin{definition}[continuous / diffuse, atomic]\mbox{}\label{def-diffuse-atomic}
     \begin{enumerate}
         \item Radon積分$\int$が\textbf{連続}であるとは，$\forall_{x\in X}\;\int[\{x\}]=0$を満たすことをいう．
         \item Radon積分が\textbf{原子的}であるとは，ある集合$S\subset X$が存在して，$X\setminus S\in\cN$かつ$\forall_{C\in\cC}\;S\cap C$が可算であることをいう．
@@ -7891,47 +8729,6 @@ title=]
 
 \chapter{Fourier変換}
 
-\chapter{von Neumann環}
-
-\begin{quotation}
-    量子力学の「自然数，実数などの古典的な数学的対象を，すべて複素Hilbert空間上の作用素を用いて考えよ」という天啓から始まった
-    作用素環の理論は，当然のように，数学全体の基礎づけの役割も果たし得る．
-    作用素環の数理構造を解析しているうちに，病理的な対象でさえも場の量子論に自然に現れることが判明するという，逆の結果さえ生まれた．
-
-\end{quotation}
-
-\section{作用素位相}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    von Neumannの量子力学の基礎づけに限らず，種々の応用において一様作用素位相は強すぎる．
-    そこで，作用素弱位相が注目された．
-\end{tcolorbox}
-
-\begin{definition}[uniform operator topology, weak operator topology, strong operator topology]
-    $V,W\in\TVS$を位相線形空間，$L(V,W):=\Hom_\TVS(V,W)$をその間の連続線型作用素全体のなす空間とする．
-    \begin{enumerate}
-        \item $V,W$をノルム空間とする．これが定める作用素ノルム$p(A):=\sup_{v\ne0}\frac{p_W(Av)}{p_V(v)}$が定める位相を，\textbf{一様作用素位相}という．
-        \item $U(x,f):=\Brace{A\in L(V,W)\mid\abs{f(A(x))}<1}$として，$(U(x,f))_{x\in V,f\in W^*}$を$0$の開近傍系の基底として生成される位相を，\textbf{弱作用素位相}という．作用素列$(A_n)$が$A$に弱作用素位相で収束することは，任意の$x\in X$について$(A_n(x))$が$(A(x))$に$W$の弱位相に関して収束する\footnote{すなわち任意の有界線型汎関数$f\in W^*$について$f(A_n(x))\to f(A(x))$．}ことに同値．
-        \item $N(x,U):=\Brace{A\in L(V,W)\mid Av\in U}$として，$(N(x,U))_{x\in V,0\in U\osub W}$を$0$の開近傍系の基底として生成される位相を，\textbf{作用素強位相}という．作用素列$(A_n)$が$A$に強作用素位相で収束することは，任意の$x\in X$について$(A_n(x))$が$(A(x))$に$W$にてノルム収束することに同値．
-    \end{enumerate}
-\end{definition}
-
-\begin{remark}
-    局所コンパクト位相群$G$のユニタリ表現$G\to U(H)$を考えるに際して，$U(H)$には作用素強位相を入れ，ノルム位相を用いないのは，$U(H)$にノルム位相を入れると多くの表現が連続ではなくなってしまうためである．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/operator+topology}}
-\end{remark}
-
-\section{von Neumann環の定義}
-
-\begin{definition}
-    $C^*$-環$B(H)$の部分$*$-代数であって，単位元$1$を含み，作用素弱位相で閉じたものを\textbf{von Neumann環}という．
-    $C^*$-環であって，あるvon Neumann環と同型でもあるようなものを$W^*$-環という．
-\end{definition}
-\begin{example}\mbox{}
-    \begin{enumerate}
-        \item $L^\infty(X)$は$W^*$-代数である．
-    \end{enumerate}
-\end{example}
 
 \chapter{非線形関数解析}
 
