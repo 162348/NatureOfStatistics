@@ -1834,6 +1834,11 @@ title=]
 \section{有界関数の空間値確率要素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $l^\infty(T)$-値確率変数がタイトなGauss過程に弱収束するための，f.f.d.が弱収束することに加えて必要な条件を割り出す．
+\end{tcolorbox}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=動機付け]
     $D=\wt{B}(T)\;(T\in\Set)$とした各論（確率過程論）を展開する．
     確率過程$X:T\to\Meas(\Om,\R)$は，見本過程を実現値とする「確率変数」$X:\Om\to\Map(T,\R)$とも見れる．
@@ -1928,6 +1933,12 @@ title=]
 
 \subsection{弱収束の特徴付け：漸近的タイト性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    関数空間$l^\infty(T)$上での弱収束の必要十分条件として，f.d.d.の収束に加えて必要な条件は「漸近的タイト性」だと判明した．
+    そこでこの概念に集中するが，これはまだまだ複雑である．
+\end{tcolorbox}
+
 \begin{theorem}[タイトな確率過程に弱収束する条件の特徴付け１]\label{thm-characterization-of-weak-convergence-of-stochastic-process-1}
     $(X_n:\Om_n\to\wt{B}(T))$を写像の列とする．
     \begin{enumerate}
@@ -1964,9 +1975,11 @@ title=]
 \subsection{漸近的タイト性の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=タイトな可測関数に収束するための十分条件を探るために]
+title=漸近的タイト性は「連続度が0に確率収束する」ことに同値]
     前節で，弱収束を示すには，漸近的タイト性と有限周辺分布の収束を示せば良いと解った．
     周辺写像の収束の議論は，Euclid空間上の弱収束の証明のためのテクニックを用いて議論できるから，最終的に一般の確率過程の弱収束の特徴付け\ref{thm-characterization-of-weak-convergence-of-stochastic-process-1}はAscoli-Arzelàの定理と似たステートメント\ref{cor-characterization-of-weak-convergence-of-stochastic-process-2}に変形できる．
+
+    $T$上の確率場$X_n$が漸近的タイトであることを特徴付けると，各成分$X_n(t)$が漸近的タイトであることと，場$(T,\rho)$が全有界になることと，$X_n$の「連続度の$0$への確率収束」が必要になる．
 \end{tcolorbox}
 
 \begin{definition}[asymptotically uniformly $\rho$-equicontinuous in probability]
@@ -2183,6 +2196,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     極限として最も頻繁に出現する確率過程がGauss過程と呼ばれるクラスで，この場合２次モーメント準距離$\rho_2$が最も取り扱いやすい．
+    そこで，極限過程がGaussであると仮定して，簡単化を試みる．
 \end{tcolorbox}
 
 \begin{definition}[Gaussian process]\label{def-Gaussian-process}
@@ -2270,6 +2284,9 @@ title=]
         \item 符号付測度$\G_n:=\frac{1}{\sqrt{n}}\sum_{i=1}^n(\delta_{X_i}-P)$も経験過程と同一視する．
     \end{enumerate}
 \end{definition}
+\begin{remarks}
+    もやは経験過程と呼びたくないほどには一般的な対象となっている．
+\end{remarks}
 
 \begin{proposition}\label{prop-large-number-theorem-to-empirical-process}
     $P\abs{f}<\infty$または$Pf^2<\infty$とする．
@@ -2279,7 +2296,7 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\begin{notation}
+\begin{notation}[符号付き測度の一様ノルム]
     符号付測度のノルムを
     $\norm{Q}_\F:=\sup\Brace{\abs{Qf}\in\R\mid f\in\F}$と定める．
 \end{notation}
@@ -2391,24 +2408,21 @@ title=]
 
 条件$\norm{P}_\F<\infty$がある場合は，$\rho_P$半ノルムの代わりに$L_2(P)$-ノルムを用いることができる．
 
-\begin{corollary}[Donskerクラスであることの特徴付け２：2ノルムで]\label{cor-characterization-of-Donsker-classes-2}
-    $\norm{P}_\F<\infty$ならば，$\F\subset L_2(P)$がDonskerであることは，次の２条件に同値：
-    \begin{enumerate}
-        \item $\F$は$\norm{\cdot}_{P,2}$が定める距離に関して全有界である．
-        \item $\forall_{\delta_n\searrow 0}\;\norm{\G_n}_{\F_{\delta_n}}\xrightarrow{P^*}0$．ただし，$\F_\delta:=\Brace{f-g\in\G\mid f,g\in\F,\norm{f-g}_{P,2}<\delta}$とした．
-    \end{enumerate}
-\end{corollary}
+\begin{tbox}{red}{最終型：}
+    \begin{corollary}[Donskerクラスであることの特徴付け２：2ノルムで]\label{cor-characterization-of-Donsker-classes-2}
+        $\norm{P}_\F<\infty$ならば，$\F\subset L_2(\X,\B,P)$がDonskerであることは，次の２条件に同値：
+        \begin{enumerate}
+            \item $\F$は$\norm{\cdot}_{P,2}$が定める距離に関して全有界である．
+            \item $\forall_{\delta_n\searrow 0}\;\norm{\G_n}_{\F_{\delta_n}}\xrightarrow{P^*}0$．ただし，$\F_\delta:=\Brace{f-g\in\G\mid f,g\in\F,\norm{f-g}_{P,2}<\delta}$とした．
+        \end{enumerate}
+    \end{corollary}
+\end{tbox}
 \begin{proof}\mbox{}
     \begin{enumerate}
         \item $\rho_P$と$\rho_2$が同値だから？
         \item 注意参照．
     \end{enumerate}
 \end{proof}
-
-\begin{tbox}{red}{}
-    種々の経験過程があるタイトなBorel可測関数に弱収束すること，すなわち添字集合がDonskerであることを示す問題は，
-    経験過程が漸近的同程度連続性を示すことに帰着された．
-\end{tbox}
 
 \subsection{漸近的同程度連続性続論}
 
@@ -2448,15 +2462,18 @@ title=]
     こうしてDonskerクラスにアプローチしていく．
 \end{remarks}
 
-\section{最大不等式と被覆数}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    大数の法則と中心極限定理を一般化するにあたって，いずれの場合も上限を評価する必要がある．
-    この共通する手法を，Orliczノルムを用いて整備する．
-\end{tcolorbox}
+\section{連続度を抑えるための準備}
+
+
 
 \subsection{最大不等式と被覆数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=道具１：]
+        大数の法則と中心極限定理を一般化するにあたって，いずれの場合も上限を評価する必要がある．
+        この共通する手法を，Orliczノルムを用いて整備する．
+    \end{tcolorbox}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2682,7 +2699,7 @@ title=]
     実際の補題\ref{lemma-尾部確率の評価}が使える具体例として，有界な範囲に値を取る，独立で平均$0$な確率変数列の部分和が，部分分散の正規分布に従うことなどから現れる．
 \end{remarks}
 
-\subsubsection{確率過程論}
+\subsubsection{被覆数と梱包数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=一般最大不等式の導出]
@@ -2720,6 +2737,13 @@ title=一般最大不等式の導出]
 \begin{remark}
     $N,D$が距離関数として同値，つまり同じ位相を定める，すなわち$\ep\searrow0$における振る舞いが本質的に同等であることがわかる．
 \end{remark}
+
+\subsection{一般化最大不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    supよりは積分の方がマジかなあ．
+\end{tcolorbox}
 
 \begin{theorem}[generalized maximal inequality]\label{thm-generalized-max-inequality}
     $\psi:[0,\infty)\to[0,\infty)$は$\psi(0)=0,\psi\ne 0$を満たす単調増加な凸関数であって，\[\exists_{c>0}\;\limsup_{x,y\to 0}\frac{\psi(x)\psi(y)}{\psi(cxy)}<\infty\]を満たすとする．
@@ -2769,6 +2793,8 @@ title=一般最大不等式の導出]
     \end{enumerate}
 \end{proof}
 \begin{remarks}[可分確率過程]
+    可分な確率過程とは，値域が有限個の点で近似可能であることをいう．
+
     可分性の仮定が現れるが，cadlag確率過程$X:\Om\to D([a,b])$は可分である．
     可分な確率過程は確率１で可分な部分空間に乗るから，全ての$\delta>0$に対して，確率１で
     \[\sup_{s,t\in T;d(s,t)<\delta}\abs{X(s)-X(t)}=\sup_{s,t\in T^*;d(s,t)<\delta}\abs{X(s)-X(t)}\]
@@ -2781,7 +2807,7 @@ title=一般最大不等式の導出]
 \end{remarks}
 
 
-\subsection{劣Gauss過程}
+\subsection{劣Gauss過程に関する最大不等式}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2854,15 +2880,15 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\section{対称化不等式と可測性}
+\subsection{対称化不等式と可測性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=対称化という技法]
+title=道具２：対称化という技法]
     一般の経験過程は対称化された経験過程で抑え，対称化された経験過程はRademacher過程であるから，系\ref{cor-GMI-for-subGauss}の形の最大不等式で抑えられる．
     一般の経験過程の上限は可測ではないから，対称化された経験過程で抑える際に，外積分が必要となる．
 \end{tcolorbox}
 
-\subsection{対称化不等式}
+\subsubsection{対称化不等式}
 
 \begin{definition}
     経験測度$\bP_n$に対して，
@@ -2911,7 +2937,7 @@ title=対称化という技法]
     \end{description}
 \end{proof}
 
-\subsection{可測性の問題}
+\subsubsection{可測性の問題}
 
 \begin{definition}[measurable class]\label{def-measurable-class}
     $\F\subset\Meas(\X,\R)$が，次を満たすとき，\textbf{$P$-可測クラス}であるという：
@@ -2952,7 +2978,7 @@ title=対称化という技法]
     ほとんどの構成（特に可測関数の構成と同じようなmaxや基本的な演算など）は連続である．
 \end{remarks}
 
-\subsection{Donskerの定理へ}
+\subsubsection{Donskerの定理へ}
 
 \begin{notation}
     クラス$\F$に対して，
@@ -2975,7 +3001,7 @@ title=対称化という技法]
     クラス$\F\subset\Meas(\X,\R)$について，$\F$が各点可測で，そのある包絡関数$F$が$P^*F^2<\infty$を満たすならば，全ての$0<\delta\le\infty$に対して$\F_\delta$と$F^2_\infty$は各点可測である．
 \end{proposition}
 
-\subsection{セミパラメトリック回帰モデル}
+\subsubsection{セミパラメトリック回帰モデル}
 
 \begin{definition}
     任意の$X=(Y,Z)\in\X:=\R\times\R^k$の分布$P\in\M(\X)$に関して，
@@ -2989,17 +3015,17 @@ title=対称化という技法]
     クラス$\F,\F_\delta,\F^2_\infty$はいずれも各点可測である．
 \end{proposition}
 
-\section{ブラケットエントロピー}
+\subsection{ブラケットエントロピー}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=道具３：]
     クラス$\F$がGlivenko-Cantelliクラスであるか，またはDonskerクラスであるかは，基本的にはその大きさに依存する．
     そこで，関数空間の部分集合の「大きさ」を定量化する方法を考える．
     有限集合は濃度で測れるが，無限集合はどうするか．これに対してKolmogorovらロシアの学派が始めた取り扱いである．
     ノルムによるもの（球）とブラケットによるものの２つの定義があるが，この２つをつなぐのがRieszの性質$\abs{f}\le\abs{g}\Rightarrow\norm{f}\le\norm{g}$である．
 \end{tcolorbox}
 
-\subsection{定義と性質}
+\subsubsection{定義と性質}
 
 \begin{notation}
     $(\F,\norm{-})$を，$\Map(X,\R)$内のノルム空間のある部分集合とする．例えば確率測度$Q\in\M(\X)$に関する$L_r(Q)$-ノルム空間など．
@@ -3042,13 +3068,13 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsection{Sobolevクラス}
+\subsubsection{Sobolevクラス}
 
 \begin{lemma}\label{lemma-bracket-number-for-uniform-norm}
     
 \end{lemma}
 
-\subsection{Lipschitz連続なクラスのブラケット}
+\subsubsection{Lipschitz連続なクラスのブラケット}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3072,7 +3098,7 @@ title=]
     $\norm{-}$が$\norm{-}_\infty$で優越されるとは，$T=\F,d=\norm{-}_\infty,F=\id_\F$の場合に当たる．
 \end{remark}
 
-\subsection{和と積に対する保存性}
+\subsubsection{和と積に対する保存性}
 
 \begin{lemma}
     クラス$\F,\cG\subset\Meas(\X,\R)$と確率測度$Q\in\M(\X)$に対して，

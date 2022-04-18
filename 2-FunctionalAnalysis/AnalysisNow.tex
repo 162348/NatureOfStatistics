@@ -3669,7 +3669,8 @@ title=対角化とは，直交射影への標準分解をいう．]
 \end{tcolorbox}
 
 \begin{definition}[orthogonal projection / orthoprojection]
-    一般に，冪等律を満たす線型作用素$P:H\to H,P^2=P$を射影という．射影が自己共役であるとき，\textbf{直交射影}であるという．\footnote{前者を冪等作用素，後者を射影と呼び分けることもある．この場合直交射影とは，直交分解が定める射影のことを指す．}
+    一般に，冪等律を満たす線型作用素$P:H\to H,P^2=P$を射影という．
+    射影が自己共役であるとき，\textbf{正射影}または\textbf{直交射影}であるという．\footnote{前者を冪等作用素，後者を射影と呼び分けることもある．この場合直交射影とは，直交分解が定める射影のことを指す．}
     射影全体の空間を$B(H)_p$で表す．射影を定める部分空間の束構造から，$B(H)_p$にも束の構造が入る．
 \end{definition}
 \begin{example}[直交射影の直交分解による特徴付け]
@@ -4063,6 +4064,8 @@ title=]
     }\]
     は，有界で$M_\varphi\in B(L^2(\mu))$，等長である：$\norm{M_\varphi}=\norm{\varphi}_\infty$．
     $\varphi$を\textbf{乗算作用素}$M_\varphi$の\textbf{記号}という．
+
+    乗算作用素は対角行列の一般化であり，スペクトル定理によると，Hilbert空間上の自己共役作用素は，$L^2$-空間上の乗算作用素とユニタリ同値になる．
 \end{theorem}
 
 \begin{theorem}[Fredholm integral operator / transform, kernel]\label{operator-integral-transformation}
@@ -4087,7 +4090,8 @@ title=]
         \item $k:[0,1]\times[0,1]\to2\mono\R$を集合$\{(x,y)\in[0,1]\times[0,1]\mid y<x\}$の特性関数とする．
         これを核とする積分作用素$V:L^2(0,1)\to L^2(0,1);f\mapsto Vf(x)=\int^1_0k(x,y)f(y)dy=\int^x_0f(y)dy$を\textbf{Volterra作用素}という．
         別の抽象的な定義としては，スペクトル半径が$0$なコンパクト作用素をVoltarra作用素と定める．
-    \end{enumerate}    
+    \end{enumerate}
+    Volterra積分作用素はコンパクトであるが，固有値を持たず，擬冪零$\Sp(V)=\{0\}$である．
 \end{example}
 
 \begin{example}[Hilbert-Schmidt integral operator, Hilbert-Schmidt operator]\label{exp-Hilbert-Schmidt}
@@ -4138,7 +4142,7 @@ title=]
     そこで，この順に，対角化の一般理論と，積分方程式の一般理論を調べていく．
 \end{tcolorbox}
 
-\subsection{定義}
+\subsection{定義と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -4150,7 +4154,7 @@ title=]
 \begin{definition}[finite rank]
     Hilbert空間$H$上の作用素$T:H\to H$について，
     \begin{enumerate}
-        \item $T$が\textbf{有限階数}であるとは，$\Im T$が$H$の有限次元部分空間であることをいう（したがって特に閉\ref{prop-finite-subspaces}）．
+        \item $T$が\textbf{有限階数}または\textbf{退化}であるとは，$\Im T$が$H$の有限次元部分空間であることをいう（したがって特に閉\ref{prop-finite-subspaces}）．
         \item 有限階数な有界作用素全体$B_f(H)$は，$B(H)$内の部分代数であり，かつイデアルである．
         \item $B_f(H)$はイデアルとして自己共役である：$(B_f(H))^*=B_f(H)$．
     \end{enumerate}
@@ -4227,6 +4231,17 @@ title=]
     無限遠で消えるため，コンパクト作用素の空間は$B_0(H)$と表すが，$K(H),C(H)$も一般的である．
 \end{definition}
 
+\begin{example}[Hilbert-Schmidt作用素は非自明な例]
+    可分な$H$の正規直交基底$(e_n),(f_n)$を用いて，
+    \[\norm{K}_{H.S.}^2:=\sum_{n,m\ge1}\abs{(Ke_n|f_m)}^2=\sum_{n,m\ge1}\abs{(K^*f_m,e_n)}^2\]
+    と定めると，Parsevalの等式より，$\norm{K}^2_{H.S.}=\sum^\infty_{n=1}\norm{Ke_n}^2=\sum^\infty_{n=1}\norm{K^*f_m}^2$．
+    このノルムが有限な作用素をHilbert-Schmidt作用素といい，これはコンパクト作用素である．
+    実際，$K_nf:=\sum^n_{m=1}(Kf,e_m)e_m$とすると明らかに
+    $B_0(H)$の列であるが，$K$はこのノルム極限として得る．
+\end{example}
+
+\subsection{コンパクト作用素の空間}
+
 \begin{lemma}[コンパクト作用素の空間の描像]
     コンパクト作用素の空間$B_0(H)=\oo{B_f(H)}\subset B(H)$は
     \begin{enumerate}
@@ -4243,14 +4258,14 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{example}[Hilbert-Schmidt作用素は非自明な例]
-    可分な$H$の正規直交基底$(e_n),(f_n)$を用いて，
-    \[\norm{K}_{H.S.}^2:=\sum_{n,m\ge1}\abs{(Ke_n|f_m)}^2=\sum_{n,m\ge1}\abs{(K^*f_m,e_n)}^2\]
-    と定めると，Parsevalの等式より，$\norm{K}^2_{H.S.}=\sum^\infty_{n=1}\norm{Ke_n}^2=\sum^\infty_{n=1}\norm{K^*f_m}^2$．
-    このノルムが有限な作用素をHilbert-Schmidt作用素といい，これはコンパクト作用素である．
-    実際，$K_nf:=\sum^n_{m=1}(Kf,e_m)e_m$とすると明らかに
-    $B_0(H)$の列であるが，$K$はこのノルム極限として得る．
-\end{example}
+\begin{proposition}
+    任意のBanach空間$X,Y$について，
+    \begin{enumerate}
+        \item $B_0(X)=B(X)$であることと，$X$が有限次元であることとは同値．
+        \item $B_0(X,Y)$は$B(X,Y)$の閉部分空間である．
+        \item $u\in B_0(X,Y)\Rightarrow u^*\in B_0(Y^*,X^*)$．
+    \end{enumerate}
+\end{proposition}
 
 \subsection{正規なコンパクト作用素に関するスペクトル定理}
 
@@ -4349,13 +4364,15 @@ title=Hilbert空間の同値]
     $F(H)$は積で閉じており，自己共役である($*$作用素について閉じている)．
 \end{remarks}
 
-\begin{definition}[index]
+\begin{definition}[index, nullity, defect]
     $T\in F(H)$をFredholm作用素とする．
-    $\Index T:=\dim\Ker T-\dim\Ker T^*$を\textbf{指数}という．
-    このとき，射影$P,Q$を$ST=I-P,TS=I-Q$と定めると，$\Index T=\rank P-\rank Q$でもある．
-    $F(H)$の部分集合を
-    \[F_n(H):=\Brace{T\in F(H)\mid\Index T=n}\quad n\in\Z\]
-    で定めると，$\forall_{n\in\Z}\;F_n(H)\ne\emptyset$．シフト作用素\ref{operator-unilateral-shift}$S$について，$\forall_{n\in\N}\;S^n\in F_{-n}(H),S^{*n}\in F_n(H)$が成り立つため．
+    \begin{enumerate}
+        \item $\Index T:=\dim\Ker T-\dim\Ker T^*$を\textbf{指数}という．$\dim\Ker T$をnullity，$\dim\Ker T^*$をdefectという．
+        \item このとき，射影$P,Q$を$ST=I-P,TS=I-Q$と定めると，$\Index T=\rank P-\rank Q$でもある．
+        \item $F(H)$の部分集合を
+        \[F_n(H):=\Brace{T\in F(H)\mid\Index T=n}\quad n\in\Z\]
+        で定めると，$\forall_{n\in\Z}\;F_n(H)\ne\emptyset$．シフト作用素\ref{operator-unilateral-shift}$S$について，$\forall_{n\in\N}\;S^n\in F_{-n}(H),S^{*n}\in F_n(H)$が成り立つため．
+    \end{enumerate}
 \end{definition}
 \begin{example}
     任意の正方行列は，指数$0$のFredholm作用素である：$\dim\Ker A=\dim\Ker A^*$．
@@ -4436,6 +4453,27 @@ title=コンパクト作用素のスペクトルとは固有値の集合であ�
     今回，$G/G_0\simeq\Z$である．
     そして，Fredholm作用素$T$の指数とは，作用素$F(H)\epi G\epi G/G_0=\Z$による$T$の像である．
 \end{remarks}
+
+\subsection{Banach空間上での再論}
+
+\begin{definition}[ascent, descent]
+    $X$を線型空間，$u:X\to X$を線型写像とすると，$(\Ker(u^n))_{n\in\N}$は部分空間の増大列で，$(u^n(X))_{n\in\N}$は部分空間の減少列である．
+    \begin{enumerate}
+        \item $\forall_{n\in\N}\;\Ker(u^n)\ne\Ker(u^{n+1})$のとき，$\Ascent(u)=\infty$とし，それ以外のとき，$\Ascent(u):=\min\Brace{p\in\N\mid\Ker(u^p)=\Ker(u^{p+1})}$と定める．
+        \item $\Descent(u):=\Brace{p\in\N\mid u^p(X)=u^{p+1}(X)}$とする．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $X$をBanach空間，$u\in B_0(X)$をコンパクト作用素，$\lambda\in\C\setminus\{0\}$とする．
+    \begin{enumerate}
+        \item $u-\lambda$は有限なascentとdescentを持つ．
+        \item $u-\lambda$はFredholm指数$0$を持つ．
+        \item $p:=\Ascent(u)$とすると，$X=\Ker(u-\lambda)^p\oplus\Im(u-\lambda)^p$．
+        \item (Fredholm alternative) $u-\lambda$が単射であることと全射であることとは同値．
+        \item $\Sp(u)$は可算集合で，$\Sp(u)\setminus\{0\}$は$u$の固有値の集合であり，孤立点のみからなる．
+    \end{enumerate}
+\end{theorem}
 
 \section{跡}
 
@@ -4610,6 +4648,11 @@ title=]
 \end{proof}
 
 \subsection{Strum-Liouville問題への応用}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    微分方程式の境界値問題の解はGreen関数を積分核とする積分作用素の像として与えられる．
+\end{tcolorbox}
 
 \begin{problem}[Strum-Liouville問題]
     $I:=[a,b]$上の2階線型微分方程式を，3種類考える：
@@ -5297,8 +5340,9 @@ title=]
     $\Sp(A)$は閉なので，$\rho(A)$は開集合であることに注意．
 \end{example}
 
-\begin{example}[スペクトル半径]
+\begin{example}[quasinilpotent]
     冪零作用素のスペクトル半径は$0$であるが，他にも例がある．
+    そこで，$\Sp(N)=\{0\}$となる作用素$N$を\textbf{準冪零}であるという．
 \end{example}
 
 \subsubsection{スペクトル写像}
@@ -5355,7 +5399,7 @@ title=]
 \begin{theorem}\label{thm-Spectrum-is-compact}
     単位的Banach代数の任意の元$A\in\A$に関して，
     \begin{enumerate}
-        \item スペクトル$\Sp(A)\subset\C$は非空なコンパクト集合である．
+        \item スペクトル$\Sp(A)\subset\C$は非空なコンパクト集合である．\footnote{なお，Banach代数が単位的でない場合は，局所コンパクト性のみが成り立つ．}
         \item $A$のスペクトル半径は$r(A)=\lim_{n\to\infty}\norm{A^n}^{1/n}$と表せる．
     \end{enumerate}
 \end{theorem}
@@ -5449,7 +5493,7 @@ title=]
     行列の指数関数の発想を一般化する．
 \end{tcolorbox}
 
-\begin{notation}
+\begin{notation}\label{not-extended-exp}
     単位的Banach代数$A$の元$a\in A$について，
     \[\sum^\infty_{n=0}\Norm{\frac{a^n}{n!}}\le\sum^\infty_{n=0}\frac{\norm{a}^n}{n!}<\infty\]
     より，級数$\sum^\infty_{n=0}\frac{a^n}{n!}$は収束する．こうして，$e:\A\to\A;a\mapsto e^a$を定める．
@@ -5552,7 +5596,7 @@ title=]
         }\]
         はノルム減少的な代数の準同型である．
         \item 像$\Im\Gamma<C(\hat{\A})$は部分代数であるが，$\hat{\A}$の点を分離する．
-        \item 任意の$A\in\A$について，$\hat{A}(\hat{\A})=\Sp(A)$かつ$\norm{\hat{A}}_\infty=r(A)$．
+        \item 任意の$A\in\A$について，$\hat{A}(\hat{\A})=\Sp(A)$かつ$\norm{\hat{A}}_\infty=r(A)$．\footnote{$\A$が非単位的な場合は，$\Sp(A)=\wh{A}(\wh{\A})\cup\{0\}$となる．}
     \end{enumerate}
 \end{theorem}
 \begin{remarks}
@@ -5564,7 +5608,7 @@ title=]
     Gelfand変換$\Gamma$の核は，$\A$の根基である：
     $\Ker\Gamma=R(\A)=\bigcap_{\I\in M(\A)}\I=\Brace{A\in\A\mid r(A)=0}$．
 \end{proposition}
-\begin{remark}
+\begin{remark}[semisimple]
     ほとんどの古典的なBanach代数は半単純である（$R(\A)=\{0\}$）から，
     $R(\A)=\A$や$R(\A)$が$\A$の極大イデアルになる場合には当てはまらない．
     しかしながら，像$\Im\Gamma<C(\hat{\A})$を決定する問題は極めて難しい場合が多い．
@@ -5960,7 +6004,7 @@ title=]
     これは$C^*$-代数で，$X$が第２可算ならば実部$\B_b(X)_\sa$は$C_0(X)_\sa$を含みかつ有界な単調列の極限について閉じている有界実関数の最小の空間である．
 \end{notation}
 
-\begin{notation}[可換な元の代数]
+\begin{notation}[可換な元の代数]\label{notation-W*(T)}
     正規作用素$T\in B(H)$に対して，$W^*(T)\subset B(H)$で$T$と可換なすべての元と可換な元からなる集合とする．
     Fugledeの定理\ref{prop-Fuglede}より，$W^*(T)=C^*(T)$．
     $W^*(T)$は$T,I$を含む最小のvon Neumann代数である\ref{lemma-W*(T)}．
@@ -6141,7 +6185,7 @@ title=]
     をいう．
 \end{definition}
 
-\begin{theorem}[double commutant theorem (von Neumann 1929)]
+\begin{theorem}[double commutant theorem (von Neumann 1929)]\label{thm-double-commutant-theorem}
     $\A\subset B(H)$を自己共役な単位的部分代数とする．
     このとき，次の3条件は同値．
     \begin{enumerate}
@@ -6431,7 +6475,7 @@ title=]
     さらに定義域が全くかぶらないために演算が定義出来ない場合も多い．
 \end{quotation}
 
-\section{始域・延長・グラフ}
+\section{始域・延長・グラフ}  
 
 \subsection{定義域と値域と演算}
 
@@ -6446,34 +6490,52 @@ title=]
     $D(T)$を\textbf{定義域}という．
     \begin{enumerate}
         \item $\oo{D(T)}=H$が成り立つとき，$T$は\textbf{稠密に定義されている}という．以降，これを暗黙に仮定することも多い．
-        \item $D(S)\subset D(T),S=T\on D(S)$が成り立つとき，$T$は$S$の\textbf{延長}であるといい，$S\subset T$で表す．
+        \item $D(S)\subset D(T),S=T\on D(S)$が成り立つとき，$T$は$S$の\textbf{延長}であるといい，$S\subset T$で表す．これは$\cG(S)\subset\cG(T)$とも同値．
         $T=S\Leftrightarrow T\subset S\land T\supset S$が成り立つ．
         \item 値域を$R(T):=T(D(T))$で表す．
     \end{enumerate}
 \end{definition}
 
-\begin{definition}[定義域の演算]
+\begin{definition}[和, 積, 逆]
     作用素$S,T$に対して，$S+T,ST,T^{-1}$の定義域を次のように定める．
     \begin{enumerate}
         \item $D(S+T)=D(S)\cap D(T)$．
         \item $D(ST)=D(T)\cap T^{-1}(D(S))$．
         \item $D(T^{-1})=R(T),R(T^{-1})=D(T)$．
     \end{enumerate}
+    続いて，和と積をこの定義域上で定め，逆は$\Graph(T)$の第一成分と第二成分を取り替えて得るグラフが定める作用素とする．
     とすると，和と積は結合的であるが，分配的ではない．
 \end{definition}
+\begin{remark}
+    定義域を暗黙化している関係上，作用素$T$が単射ならば逆$T^{-1}$が定まる．
+\end{remark}
 
 \begin{lemma}
     $S,T$が単射であるとき，$(ST)^{-1}=T^{-1}S^{-1}$が成り立つ．
 \end{lemma}
 
-\subsection{随伴}
+\begin{lemma}[グラフの特徴付け]\label{lemma-characterization-of-graph}
+    部分空間$\cG\subset X\otimes Y$について，
+    \begin{enumerate}
+        \item $\cG$はある線型作用素のグラフである．
+        \item $\forall_{(0,v)\in\cG}\;v=0$．
+    \end{enumerate}
+    特に，$\cG$がグラフならば，任意の$\cG$の部分空間はグラフである．
+\end{lemma}
+
+\subsection{共役作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $(Tx|y)=(x|T^*y)$を満たす作用素$T^*$のうち最大のものを共役作用素と定義する．
+\end{tcolorbox}
 
 \begin{definition}[adjoint operator]
     $H$内の稠密に定義された作用素$T:D(T)\to H$に対して，
     \[D(T^*):=\Brace{x\in H\mid D(T)\to H;y\mapsto(Ty|x)\in B(D(T),H)}\]
-    とする．このとき，Rieszの表現定理より，$\forall_{y\in D(T)}\;\forall_{x\in D(T^*)}\;\exists!_{T^*x\in H}\;(y|T^*x)=(Ty|x)$．
-    よって，$T^*:D(T^*)\to H$が定まる．これを$T$の\textbf{随伴}という．
-    $T^*$は稠密に定義されているとは限らない．
+    とする．これは，Rieszの表現定理より，$\forall_{y\in D(T)}\;\forall_{x\in D(T^*)}\;\exists!_{T^*x\in H}\;(y|T^*x)=(Ty|x)$と同値．
+    すなわち，$D(T^*)$上には$T^*:D(T^*)\to H$が定まる．これを$T$の\textbf{随伴}という．
+    $T^*$は稠密に定義されているとは限らない\ref{thm-closable-and-ajoint-operator}．
 \end{definition}
 
 \begin{lemma}
@@ -6489,6 +6551,13 @@ title=]
     $T$が稠密に定義されているとき，$\Ker T^*=(\Im T)^\perp$．
     特に，$\Brace{x\in D(T^*)\mid T^*x=\o{\lambda}x}=\Im(T-\lambda I)^\perp$．
 \end{lemma}
+
+\begin{lemma}
+    任意の作用素の共役作用素は閉作用素である．
+\end{lemma}
+\begin{proof}
+    \ref{thm-closable-and-ajoint-operator}(1)．
+\end{proof}
 
 \subsection{対称作用素}
 
@@ -6530,30 +6599,49 @@ title=]
 
 \subsection{閉作用素の定義と例}
 
-
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    作用素の有界性を考えたいが，定義域が全域でないときは，全域であるときの同値概念「閉性」を主役に据える．
+    全域で定義された閉作用素は有界である．
+\end{tcolorbox}
 
 \begin{definition}[closed operator]
-    $H$内の作用素$T$のグラフ$G(T)=\Brace{(x,Tx)\in H\oplus H\mid x\in D(T)}$が$H\oplus H$内で閉集合であるとき，これを\textbf{閉作用素}という．
+    $H$内の作用素$T$のグラフ$G(T)=\Brace{(x,Tx)\in H\oplus H\mid x\in D(T)}$が$H\oplus H$内で閉部分空間であるとき，これを\textbf{閉作用素}という．
+    直和$H\oplus H$は$l^1$-ノルムを入れてあるが，これを\textbf{グラフノルム}ともいう．
 \end{definition}
 
-\begin{lemma}
-    $T$を閉作用素とする．
-    $D(T)$内の$x$に収束する列$(x_n)$について，$(Tx_n)$が$y$に収束するならば，$x\in D(T)$かつ$Tx=y$が成り立つ．
+\begin{lemma}[閉作用素の特徴付け]
+    $X,Y$をBanach空間，$T:X\to Y$を線型作用素とする．
+    \begin{enumerate}
+        \item $T$は閉作用素である．
+        \item $T$の定義域$\Dom(T)$は$X$の内でグラフノルムについて完備である．
+        \item $\Dom(T)$内の$x$に収束する列$(x_n)$について，$(Tx_n)$が$y$に収束するならば，$x\in D(T)$かつ$Tx=y$が成り立つ．
+    \end{enumerate}
 \end{lemma}
 \begin{example}\mbox{}
     \begin{enumerate}
-        \item 全域で定義されている閉作用素は有界である（閉グラフ定理）．
+        \item 全域で定義されている有界作用素は閉作用素である．逆に，全域で定義されている閉作用素は有界である（閉グラフ定理）．
         \item $D(T)=D(T^*)=H$を満たす作用素は有界である．
         \item 特に，全域で定義されている対称作用素は，自己共役で有界である．
         \item $D(T)=H$または$\Im(T)=H$のいずれか一方が成り立てば，自己共役である．
+        \item 任意の作用素の共役作用素は閉作用素である．
     \end{enumerate}
 \end{example}
 
 \subsection{可閉作用素}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    閉作用素に包含される作用素を可閉作用素という．
+    閉作用素のグラフの任意の部分空間は閉作用素のグラフになる\ref{lemma-characterization-of-graph}．
+
+    2回共役を取れること（共役も稠密に定義されていること）は可閉性と同値\ref{thm-closable-and-ajoint-operator}．
+    $T\subset T^{**}$が成り立ち，$T^{**}$は閉作用素だが，$T$が閉のとき等号が成り立つ．つまり，$\o{T}=T^{**}$となる．
+\end{tcolorbox}
+
 \begin{definition}[closable / preclosed, closure, core]\mbox{}
     \begin{enumerate}
-        \item $H$内の作用素$T$が\textbf{可閉}または\textbf{前閉}であるとは，グラフ$G(T)$のノルム閉包が，ある作用素$\o{T}$のグラフになっていることをいう．
+        \item $H$内の作用素$T$が\textbf{可閉}または\textbf{前閉}であるとは，グラフ$\cG(T)$のノルム閉包が，ある作用素$\o{T}$のグラフになっていることをいう．
         このとき，$\o{T}$は$T$を含む最小の閉作用素であり，$T$の\textbf{閉包}という．
         \item 閉作用素$T$と$D(T)$の部分空間$D_0$について，$T_0:=T|_{D_0}$の閉包が$T$であるとき，$D_0$を$T$の\textbf{核}という．$\Graph(T)$の稠密部分集合の$\pr_1$による像は核である．
     \end{enumerate}
@@ -6563,18 +6651,35 @@ title=]
     $H$内の作用素$T$について，次の２条件は同値．
     \begin{enumerate}
         \item $T$は可閉である．
-        \item $D(T)$内の$0$に収束する列$(x_n)$について，$(Tx_n)$のただ一つの集積点は$0$である．
+        \item $\D(T)$内の$0$に収束する列$(x_n)$について，$(Tx_n)$のただ一つの集積点は$0$である．
+        \item ある閉作用素$S$が存在して，$T\subset S$を満たす．
     \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[可閉性の自己共役作用素による特徴付け]
+\subsection{自己共役作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $U(z,y)=(-y,z)$によって定まるユニタリ作用素$U:H\otimes H\iso H\otimes H$について，$U(\cG(T^*))=\cG(A)^\perp$の関係が成り立つ．$T$のグラフの直交補空間に，回転$U^{-1}$を施すと$T^*$のグラフを得るのである．
+
+    2回自己共役を取ることは，作用素の閉包を取ることに同値．この操作が出来ることは，可閉であることに同値．
+\end{tcolorbox}
+
+\begin{theorem}[可閉性の自己共役作用素による特徴付け]\label{thm-closable-and-ajoint-operator}
     $T$を$H$内の稠密に定義された作用素とする．
     \begin{enumerate}
         \item $T^*$は閉作用素である．
-        \item 直交分解$H\oplus H=\oo{\Graph(T)}\oplus U(\Graph(T^*))$が存在する．ただし，$U\in\Iso(H\oplus H)$は$U(z,y)=(-y,z)$によって定まるユニタリ作用素とした．
-        \item $T$が可閉であることと，$T^*$が稠密に定義されていることとは同値．このとき，$\o{T}=T^{**}$すなわち$\oo{\Graph(T)}=\Graph(T^{**})$が成り立つ．
+        \item 直交分解$H\oplus H=\oo{\cG(T)}\oplus U(\cG(T^*))$が存在する．ただし，$U\in\Iso(H\oplus H)$は$U(z,y)=(-y,z)$によって定まるユニタリ作用素とした．
+        \item $T$が可閉であることと，$T^*$が稠密に定義されていることとは同値．このとき，$\o{T}=T^{**}$すなわち$\oo{\Graph(T)}=\Graph(T^{**})$が成り立つ．特に，閉作用素$T$について，$T^{**}=T$．
     \end{enumerate}
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $T^*$のグラフから分かる．
+        \item $U(\cG(T^*))=\cG(A)^\perp$の関係が成り立つが，$T^*$は閉だからこれらは互いに直交補空間である．
+        \item $T^*$が稠密に定義されているとき，さらに共役作用素を取れて，$T\subset T^{**}$だから，$T$は前閉である．逆に，
+    \end{enumerate}
+\end{proof}
 
 \begin{definition}[essentially self-adjoint]
     対称作用素$S$は$S\subset S^*$を満たすから，$S^*$も稠密に定義されていて，したがって$S$は可閉である．
@@ -6585,8 +6690,13 @@ title=]
 \subsection{逆作用素と自己共役}
 
 \begin{proposition}
-    $T$を稠密に定義された$H$内の閉作用素で，稠密な像を持った単射とする．
-    このとき，$T^*,T^{-1}$も全く同じ性質を持ち，$(T^*)^{-1}=(T^{-1})^*$が成り立つ．
+    作用素$T:H\to H$が次の3条件を満たすならば，$T^{-1},T^*$も次の3条件を満たし，特に単射であり，$(T^*)^{-1}=(T^{-1})^*$が成り立つ．
+    \begin{enumerate}
+        \item 稠密な定義域を持つ．
+        \item 稠密な像を持つ．
+        \item 単射である．
+        \item 閉作用素である．
+    \end{enumerate}
 \end{proposition}
 
 \begin{corollary}
@@ -6607,7 +6717,7 @@ title=]
 
 \subsection{正規作用素}
 
-\begin{proposition}[正規作用素]
+\begin{proposition}[正規作用素]\label{prop-normal-operator}
     稠密に定義された閉作用素$T$について，次の3条件は同値．
     \begin{enumerate}
         \item $D(T)=D(T^*)$かつ$\forall_{x\in D(T)}\;\norm{Tx}=\norm{T^*x}$．
@@ -6636,7 +6746,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[Friedrichs extension]
+\begin{theorem}[Friedrichs extension, Friedrichs-Freudenthal theorem]
     任意の半有界作用素$S$は，同じ下界を持った自己共役な拡張を持つ．
 \end{theorem}
 
@@ -6646,10 +6756,163 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    対称作用素を自己共役作用素に延長することを試みる．
+    対称閉作用素を自己共役作用素に延長することを試みる．
+    こうして，非有界作用素についてのスペクトル定理を立てることを目指す．
 \end{tcolorbox}
 
-\section{無制限スペクトル理論}
+\subsection{定義と性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有界な自己共役作用素をユニタリ作用素に変換するときに$z\mapsto\exp(iz)$を用いたように，非有界な対称閉作用素を等長作用素に変換するには，Cayley変換$\kappa(z)=\frac{z-i}{z+i}$を用いる．
+\end{tcolorbox}
+
+\begin{definition}[Cayley transformed]
+    $S$を稠密に定義された対称作用素とする．
+    $S$のCayley変換とは，
+    \[\kappa(S):=\frac{S-iI}{S+iI}\]
+    によって定まる作用素とする．定義域と値域は
+    \[\Dom(\kappa(S))=(S+iI)\Dom(S),\quad\Im(\kappa(S))=(S-iI)\Dom(S).\]
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item Cayley変換$\kappa(S):(S+iI)\Dom(S)\to(S-iI)\Dom(S)$は等長写像である．
+        \item $I-\kappa(S)$は単射で，$\Im(I-\kappa(S))=\Dom(S)$を満たす．
+        \item $i(I+\kappa(S))(I-\kappa(S))^{-1}=S$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item Cayley変換は，稠密に定義された対称作用素の全体と，$I-U$が稠密な像を持つような$H$内の等長作用素$U$の全体との間に，順序同型を定める．
+        \item 次の4つの数学的対象に関する閉性は一致する：作用素$S$，像$\Im(S+iI)$，$\Im(S-iI)$，作用素$\kappa(S)$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{自己共役性の特徴付け}
+
+\begin{proposition}
+    稠密に定義された対称作用素$S$について，次の3条件は同値：
+    \begin{enumerate}
+        \item $S$は自己共役．
+        \item $S\pm iI$はいずれも全射．
+        \item $\kappa(S)$はユニタリ．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{不足指数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対称な$S$の自己共役な拡張を見つける問題は，$H$内のユニタリ$U$であって$U|_{\Im(S+iI)}=\kappa(S)$を満たすものを見つけることと同値．
+    これは$\Delta_+=\Delta_-$を満たすとき可能である．
+\end{tcolorbox}
+
+\begin{definition}[defect indeces]
+    $H$を可分とし，$S$をその中の稠密に定義された対称作用素とする．$S$の\textbf{不足指数}とは，
+    \[\Delta_+:=\dim(\Im(S+iI)^\perp),\quad\Delta_-:=\dim(\Im(S-iI)^\perp).\]
+    $\kappa(S)$の定義域と像の閉包の余次元とみなせる．
+\end{definition}
+
+\begin{lemma}
+    対称作用素$S$が閉であるとき，自己共役な拡張を持つことと，指数$\Index\kappa(S)=0$となることとは同値．
+\end{lemma}
+
+\begin{example}[自己共役な拡張を持たない場合]
+    $U$を$H$から真の部分空間への等長作用素とする．例えば，ユニラテラルシフトとすると，$S:=\kappa^{-1}(U)$は極大対称であるが，自己共役ではない．
+\end{example}
+
+\begin{lemma}
+    対象閉作用素$S$について，
+    \begin{enumerate}
+        \item 極大対称であることと，$\Delta_+=0\lor\Delta_-=0$とは同値．
+        \item 自己共役であることと，$\Delta_+=0\land\Delta_-=0$とは同値．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{可換性}
+
+\begin{lemma}
+    $S$を作用素，$T\in B(H)$とする．
+    \begin{enumerate}
+        \item $\Dom(S+T)=\Dom(S),\Dom(TS)=\Dom(S)$．
+        \item $(S+T)^*=S^*+T^*$かつ$(TS)^*=S^*T^*$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[commutative]
+    $S$を作用素，$T\in B(H)$とする．
+    $TS\subset ST$を満たすとき，$S$と$T$とは\textbf{可換}であるという．
+    すなわち，$T(D(S))\subset D(S)$かつ$\forall_{x\in D(S)}\;TSx=STx$であることをいう．
+    グラフでは，$(T\oplus T)(\Graph(S))\subset\Graph(S)$を満たすことをいう．
+\end{definition}
+
+\begin{lemma}
+    $S$を作用素，$T\in B(H)$とする．
+    \begin{enumerate}
+        \item $S$が閉であるとき，$S$と可換な元のなす代数$\{S\}'$は強閉である．
+        \item $T\in\{S\}'\Rightarrow T^*\in\{S^*\}'$．
+        \item 稠密に定義された閉作用素$S$について，$\{S\}'\cap\{S^*\}'$は強閉な単位的$*$-部分代数，すなわち，von Neumann代数である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{付随するvon Neumann代数}
+
+\begin{definition}[affiliated operator]
+    稠密に定義された閉作用素$S$について，
+    \begin{enumerate}
+        \item $W^*(S):=(\{S\}'\cap\{S^*\}')'$をおく．この記法は$S\in B(H)$の場合の$S$が生成するvon Neumann代数の記法\ref{notation-W*(T)}と整合的である．
+        \item von Neumann代数$\A$に対して$W^*(S)\subset\A$が成り立つとき，$S$は$\A$に付随するといい，$S\eta\A$と表される．．これは$\A'\subset\{S\}'\cap\{S^*\}'$に同値．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $S$を自己共役作用素，$T\in B(H)$とする．
+    \begin{enumerate}
+        \item $T\in\{S\}'\Leftrightarrow T\in\{\kappa(S)\}'$．特に，$W^*(S)=W^*(\kappa(S))$．
+        \item $S$がvon Neumann$\A$に付随することと，$\kappa(S)\in\A$とは同値．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    正規作用素$T$がvon Neumann代数$\A$に随伴するとする．このとき，$T=A+iB$を満たす自己共役作用素$A,B$\ref{prop-normal-operator}も$\A$に付随する．
+\end{lemma}
+
+\subsection{作用素のスペクトル}
+
+\begin{definition}[resolvent set, spectrum, resolvent function]
+    $T$を作用素とする．
+    \begin{enumerate}
+        \item $\lambda I-T:\Dom(T)\to H$が全単射で，かつ，$\exists_{t>0}\;\forall_{x\in\Dom(T)}\;\norm{(\lambda I-T)x}\ge t\norm{x}$を満たす$\lambda$全体の集合を\textbf{解核集合}という．
+        \item 解核集合の補集合を\textbf{スペクトル}といい，$\Sp(T)$で表す．
+        \item $R(\lambda):=(\lambda I-T)^{-1}:\C\setminus\Sp(T)\to B(H)$を解核関数という．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    $T$を作用素，$\lambda\notin\Sp(T)$とする．このとき，任意の$\abs{\zeta}<\norm{R(\lambda)}^{-1}$を満たす複素数$\zeta\in\C$に対して，$\lambda-\zeta\notin\Sp(T)$であり，
+    \[R(\lambda-\zeta)=\sum^\infty_{n=0}R(\lambda)^{n+1}\zeta^n.\]
+    特に，$\Sp(T)$は$\C$の閉集合である．
+\end{proposition}
+
+\begin{example}
+    Volterra作用素は空なスペクトルを持つ．
+    $M_\id\in B(L^2(\C))$は非有界なスペクトル$\C$を持つ．
+\end{example}
+
+\subsection{自己共役作用素のスペクトル}
+
+\begin{proposition}
+    自己共役作用素$S$について，
+    \begin{enumerate}
+        \item スペクトル$\Sp(S)$は$\R$の非空な閉部分集合である．
+        \item $\lambda\in\Sp(S)\Leftrightarrow\kappa(\lambda)\in\Sp(\kappa(S))$．
+        \item $\lambda$は固有値である$\Leftrightarrow\;\kappa(\lambda)$は$\kappa(S)$の固有値である．
+    \end{enumerate}
+\end{proposition}
+
+\section{非有界スペクトル理論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -6657,6 +6920,392 @@ title=]
     このとき，Cayley変換を用いる．スペクトルの代数化$\{f(S)\}$を，可換von Neumann代数$W^*(S)$と結びついた正規作用素の代数として調べる．
     この理論の応用としては，Stoneの定理や，非有界作用素の極分解を導く．
 \end{tcolorbox}
+
+\subsection{乗法作用素}
+
+\begin{notation}[essential homomorphism]
+    $X$を$\sigma$-コンパクトな局所コンパクトハウスドルフ空間，
+    $\L(X)$をその上の可測関数，$\B(X)$をBorel関数，$\cN(X)$を零関数とする．
+    \begin{enumerate}
+        \item $\L(X)=\B(X)+\cN(X)$が成り立つ．
+        $L(X):=\L(X)/\cN(X)=\B(X)/\cN(X)$は$*$-代数となる．
+        \item $\L(X)$から$H$内の正規作用素への斉次写像$\Phi$が\textbf{本質的な準同型}であるとは，$\forall_{f,g\in\L(X)}\;\Phi(f+g),\Phi(fg)$はそれぞれ$\Phi(f)+\Phi(g),\Phi(f)\Phi(g)$の閉包であることをいう．
+    \end{enumerate}
+    $\L(X)$
+\end{notation}
+
+\begin{proposition}
+    $L^2(X)$内の乗法作用素への対応$L(X)\ni f\mapsto M_f$は，$L^2(X)$内の正規作用素であってvon Neumann代数$\A:=\Brace{M_f\mid f\in\L^\infty(X)}$に付随する作用素の空間に，本質的な$*$-同型を定める．
+\end{proposition}
+
+\subsection{スペクトル定理}
+
+\begin{theorem}
+    $H$を可分Hilbert空間，$S$をその中の自己共役作用素とし，$\kappa(S)$を重複度なしとする．
+    このとき，ある$\Sp(S)$上の有限Radon積分と同型$U:L^2(\Sp(S))\to H$が存在して，対応
+    \[\xymatrix@R-2pc{
+        L(\Sp(S))\ar[r]&\{W^*(S)\text{に付随する正規作用素のなす}*\text{-代数}\}\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&f(S):=UM_fU^*
+    }\]
+    は本質的$*$-同型である．さらに，$\id(S)=S,1(S)=I$で，$\kappa(S)$の2つの意味は一致する．
+\end{theorem}
+
+\begin{definition}[multiplicity-free]
+    可分なHilbert空間$H$内の自己共役作用素$S$が\textbf{重複度なし}であるとは，ある元$x\in\cap_{n\ge0}\Dom(S^n)$が存在して，$\{S^nx\in H\mid n\ge0\}$が生成する部分空間は$H$上稠密であることをいう．
+\end{definition}
+
+\begin{proposition}
+    自己共役作用素$S$が重複度なしであることと，$\kappa(S)$が重複度なしであることとは同値．
+\end{proposition}
+
+\begin{lemma}
+    略．
+\end{lemma}
+
+\begin{theorem}\label{thm-unbounded-spectral-theorem-2}
+    $H$を可分Hilbert空間，$S$をその中の自己共役作用素とする．
+    このとき，ある$\Sp(S)$上の有限Radon積分が存在して，対応
+    \[\xymatrix@R-2pc{
+        L(\Sp(S))\ar[r]&\{W^*(S)\text{に付随する正規作用素のなす}*\text{-代数}\}\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        f\ar@{|->}[r]&f(S)
+    }\]
+    は本質的$*$-同型である．さらに，$\id(S)=S,1(S)=I$で，$\kappa(S)$の2つの意味は一致する．
+\end{theorem}
+
+\subsection{連続なスペクトル写像}
+
+\begin{proposition}
+    $H$を可分Hilbert空間，$S$をその中の自己共役作用素とする．
+    このとき，任意の$x\in H$に対して$\Sp(S)$上の有限なRadon積分$\int_x$が存在し，
+    スペクトル定理\ref{thm-unbounded-spectral-theorem-2}のRadon積分に関して絶対連続で，
+    \[\forall_{f\in\B(\Sp(S))_+}\quad\int_xf=(f(S)x|x)\]
+\end{proposition}
+
+\begin{corollary}
+    $\{f_n\}\subset\B(\Sp(S))$は$f\in\B(\Sp(S))$に各点収束し，$\forall_{n\in\N}\;\abs{f_n}\le g\in\B(\Sp(S))$を満たすとする．
+    このとき，$\forall_{x\in\Dom(g(S))}\;f_n(S)x\to f(S)x$．
+\end{corollary}
+
+\subsection{強連続1-パラメータユニタリー群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    量子系の発展過程は，強連続1-パラメータユニタリ群となる．スペクトル理論は，この群と，非有界自己共役作用素とをつなぐ．
+\end{tcolorbox}
+
+\begin{definition}
+    \textbf{強連続1-パラメータユニタリ群}または\textbf{$C_0$-ユニタリ群}とは，強連続関数$U:\R\to U(H)$であって，$\forall_{s,t\in\R}\;U_{s+t}=U_sU_t$を満たすものをいう．
+\end{definition}
+
+\subsection{Stoneの定理}
+
+\begin{theorem}[Stone (1932)]
+    $(U_t)_{t\in\R}$を強連続な1-パラメータユニタリ群とする．
+    ある自己共役作用素$S$が存在して，$\forall_{t\in\R}\;U_t=\exp(itS)$を満たす．
+\end{theorem}
+
+\subsection{極分解}
+
+\begin{proposition}
+    任意の稠密に定義された閉作用素$T$の絶対値$\abs{T}$に対して，
+    \begin{enumerate}
+        \item $\Dom(\abs{T})=\Dom(T)$かつ$\forall_{x\in\Dom(T)}\;\norm{\abs{T}x}=\norm{Tx}$．
+        \item 部分等長写像$U$がただ一つ存在して，$\Ker U=\Ker T$かつ$T=U\abs{T}$．
+        \item $U^*U\abs{T}=\abs{T},U^*T=\abs{T},UU^*T=T$．
+    \end{enumerate}
+\end{proposition}
+
+\section{作用素解析}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    スペクトル写像$L(\Sp(S))\to\{W^*(S)\text{に付随する正規作用素のなす}*\text{-代数}\}$を得た．
+    これは，複素関数$f$を，作用素の関数$f(S)$に一般化する手続きとも見れる．
+
+    $X$をBanach空間，$A\in B(X)$とすると，$f$が正則のとき，冪級数によって定義できる\ref{not-extended-exp}．
+    このような，関数代数から，Banach代数$B(X)$への準同型を，operational calculusやfunctional calculusという．
+\end{tcolorbox}
+
+\subsection{Dunford積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Dunford積分はBochner積分の例であり，関数空間上のBanach空間値積分$\O(\Sp(A))\to H(X)$である．
+\end{tcolorbox}
+
+\begin{notation}
+    $\Sp(A)$の近傍で正則な関数の全体を$\F(A)$または$\O(\Sp(A))$で表す．$f\in\F(A)$の定義域を$U_f$で表す．
+\end{notation}
+
+\begin{definition}
+    $f\in\F(A)$について，$\Sp(A)\subset D\subset U_f$を満たす区分的に滑らかな単純閉曲線による境界を持つ領域$D$を用いて，
+    \[f(A):=\frac{1}{2\pi i}\int_{\partial D}f(z)R(z;A)dz\]
+    と定める．
+\end{definition}
+
+\begin{lemma}[operational calculus]
+    $f,g\in\O(\Sp(A))$について，
+    \begin{enumerate}
+        \item $\al f(T)+\beta g(T)=(\al f+\beta g)(T)$．
+        \item $f(T)g(T)=(fg)(T)$．
+        \item $f(\Sp(T))=\Sp(f(T))$．
+    \end{enumerate}
+\end{lemma}
+
+\section{作用素の半群}
+
+\subsection{半群の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \ref{not-extended-exp}のように，1階の線形常微分方程式の初期値問題の解は，フロー$u=(e^{tA}u_0)_{t\in\R}$となる．
+    $A$は一般の(非有界)作用素に一般化出来る．
+
+    フローは1-パラメータ変換群であったが，熱方程式などの拡散方程式の解は$\R_+$で添字付けられた半群となる．
+    これは，解が予測不可能なランダム性を含み，不可逆であることに対応する．
+\end{tcolorbox}
+
+\begin{definition}[one parameter semi-group]
+    Banach空間$X$内の有界線型作用素の族$\{T_t\}_{t\in\R_+}\subset B(X)$が\textbf{1-パラメータ変換半群}とは，
+    \begin{enumerate}
+        \item $T_0=I$．
+        \item $T_tT_s=T_{t+s}$．
+    \end{enumerate}
+    を満たすことをいう．
+    \begin{enumerate}
+        \item $\forall_{t\in\R_+}\;\norm{T_t}\le1$を満たすとき，\textbf{縮小半群}であるという．
+        \item $\exists_{M\ge1}\;\forall_{t\in\R_+}\;\norm{T_t}\le M$を満たすとき，\textbf{有界半群}であるという．
+        \item $\exists_{M\ge1,\beta\in\R}\;\forall_{t\in\R_+}\;\norm{T_t}\le Me^{\beta t}$が成り立つとき，\textbf{準有界半群}であるという．$\beta\le0$と取れるとき，有界である．
+        \item \textbf{強連続半群}または\textbf{$C_0$-半群}とは，族が強連続であることをいう．これは，任意の$x\in X$に対して，そこでの評価が定める$T_t(x):\R_+\to X$が連続であることをいう．\footnote{$B(H)$の作用素強位相は，$H$のノルムが誘導する半ノルムの族が誘導する局所凸位相を言うので．}
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[熱方程式の解の半群]
+    熱方程式の初期値問題
+    \[\pp{u}{t}=\frac{1}{2}\Delta u,\quad u(0,x)=f(x)\]
+    の解は，$N(x,tI)$の確率密度関数$p(t,x,y)$を用いて
+    \[u_f(t,x):=\int_{\R^d}p(t,x,y)f(y)dy\quad f\in C_\infty(\R^d)\]
+    とすると，$u_f(t,x)$は解になる．
+    すなわち，$p$を積分核とする積分作用素$T_p:C_0(\R^d)\to C^\infty(\R^d)$の像が解を与える．
+    \begin{enumerate}
+        \item 初期分布$f\in C_0(\R^d)$には連続性しか仮定していないが，$u_f(t,x)$は$C^\infty$-級である（平滑化）．
+        \item フロー$T_t:\R_+\to B(C_0(\R^d),C^\infty(\R^d))$は半群性を満たす．この条件はChapman-Kolmogorov方程式に同値．
+        \item 強連続である：$\lim_{t\to0}\norm{T_tf-f}=0$．
+        \item 縮小性を満たす：$\norm{T_tf}\le\norm{f}$．
+    \end{enumerate}
+    なお，$x$を出発した粒子が時刻$t$に$y$の近傍に居る確率が$p(t,x,y)dy$となるような確率過程をBrown運動という．
+\end{example}
+
+\begin{example}
+    最も単純なフローは，$X=L^p(0,\infty)$上の平行移動$(T_tu)(x)=u(t+x)$が定める半群$(T_t)_{t\in\R_+}$である．これは強連続である．
+    一方で，$L^\infty(0,\infty)$上で考えると，有界ではあるが強連続ではない．
+\end{example}
+
+\subsection{強連続性の特徴付け}
+
+\begin{theorem}
+    半群$\{T_t\}_{t\in\R_+}\subset B(X)$について，(1)$\Rightarrow$(2)が成り立ち，$t=0$において右強連続ならば(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item $C_0$-半群である．
+        \item 準有界である．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{生成作用素}
+
+\begin{definition}[generator]
+    半群$\{T_t\}_{t\in\R_+}\subset B(X)$について，その\textbf{生成作用素}とは，
+    \begin{enumerate}
+        \item 定義域を$\D(A):=\Brace{u\in X\mid\lim_{h\searrow0}\frac{T_hu-u}{h}\in X\text{が存在する}}$とし，
+        \item $Au:=\lim_{h\searrow0}\frac{T_hu-u}{h}$と対応付けられる作用素をいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $A$を$C_0$-半群$\{T_t\}_{t\in\R_+}\subset B(X)$の生成作用素とする．
+    \begin{enumerate}
+        \item $\forall_{a\in\D(A)}\;[\forall_{t>0}\;T_ta\in\D(A)]\land[\forall_{t\in\R_+}\;T_tAa=At_ta]$．
+        \item $T_ta:\R_+\to X$は連続微分可能で，$\dd{}{t}T_ta=T_tAa=AT_ta$．
+        \item $A$は閉作用素である．
+        \item $A$は稠密に定義されている．また，$\forall_{n\in\N}\;\D(A^n)$も，$\cap_{n\in\N}\D(A^n)$も$X$上稠密である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}
+    $C_0$-半群は，その生成作用素$A$により一意に定まる．
+    その$C_0$-半群を$e^{tA}$で表す．
+\end{theorem}
+
+\begin{theorem}[整合性]
+    $A\in B(X)$のとき，$T_t:=\sum^\infty_{n=0}\frac{t^n}{n!}A_n$とおけば$C_0$-半群であり，その生成作用素は$A$である．
+    またこの対応$B(X)\to X$はノルム減少的である：
+    $\forall_{t\in\R_+}\;\norm{T_t}\le e^{t\norm{A}}$．
+\end{theorem}
+
+\subsection{生成作用素のレゾルベントの性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般に，実数$A<0$について，留数定理より
+    \[\frac{1}{\lambda-A}=\int_{\R_+}e^{-\lambda t}e^{tA}dt\]
+    が成り立つ．この関係は$C_0$-半群に一般化される．
+\end{tcolorbox}
+
+\begin{theorem}
+    $C_0$-半群$e^{tA}$は$\exists_{M>0,\beta\in\R}\;\norm{e^{tA}}\le Me^{\beta t}$を満たす準有界半群とする．
+    任意の$\lambda>\beta$に対して，
+    \begin{enumerate}
+        \item $\lambda\in\rho(A)$．
+        \item $\forall_{a\in X}\;(\lambda-A)^{-1}a=\int_{\R_+}e^{-\lambda t}e^{tA}adt$．
+        \item $\norm{(\lambda-A)^{-1}}\le M(\lambda-\beta)^{-1}$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{縮小半群の吉田-Hilleの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $X$内の稠密に定義された閉線型作用素$A$がある$C_0$-半群の生成作用素になるための十分条件を探す．
+\end{tcolorbox}
+
+\begin{theorem}[Yoshida-Hille]
+    Banach空間$X$内の稠密に定義された閉線型作用素$A$について，次の2条件は同値．
+    \begin{enumerate}
+        \item ある縮小$C_0$-半群の生成作用素となる．
+        \item $\forall_{\lambda>0}\;\lambda\in\rho(A)$かつ$\lambda\norm{(\lambda-A)^{-1}}\le 1$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[R. Phillips]
+    Banach空間$X$内の稠密に定義された閉線型作用素$A$について，次の2条件は同値．
+    \begin{enumerate}
+        \item ある準有界$C_0$-半群$\exists_{M\ge1,\beta\in\R}\;\forall_{t\in\R_+}\;\norm{T_t}\le Me^{\beta t}$の生成作用素となる．
+        \item $\forall_{\lambda>\beta}\;\lambda\in\rho(A)$かつ$\forall_{n\in\N}\;(\lambda-\beta)^n\norm{(\lambda-A)^{-n}}\le M$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{半群の表現定理}
+
+\begin{theorem}
+    $C_0$-半群$e^{tA}$について，
+    \[\forall_{t\in\R_+}\quad e^{tA}=\text{s-}\lim_{n\to\infty}\paren{I-\frac{t}{n}A}^{-n}\]
+\end{theorem}
+
+\subsection{解析的半群}
+
+\begin{definition}[analytic semigroup]
+    $C_0$-半群$\{T_t\}_{t\in\R_+}\subset B(X)$が$\gamma\in(0,\pi/2)$について\textbf{$\gamma$-型の解析的半群}であるとは，次の2条件を満たすことをいう．
+    \begin{enumerate}
+        \item $t\mapsto T_t$が$\Om_\gamma:=\Brace{t\in\C\mid\abs{\arg t}<\gamma,t\ne0}$上の$B(H)$-関数として解析的に延長可能である．
+        \item ある$\delta>0$が存在して，$\Om_\gamma^\delta:=\Brace{t\in\C\mid\abs{\arg t}\le\gamma-\delta,t\ne0}$上で$\Om_\gamma^\delta\ni\abs{t}\to0$のとき$T_t\to I$に強収束する．
+    \end{enumerate}
+\end{definition}
+
+\subsection{初期値問題}
+
+\begin{problem}
+    Banach空間$X$における常微分方程式の初期値問題
+    \[\dd{u}{t}=Au+f(t)\;(t>0,f\in C(\R_+;X))\qquad u(0)=a\]
+    について，正則性条件$u\in C([0,\infty];X)\cap C^1((0,\infty);X)$，$Au\in C((0,\infty);X)$を満たす解$u$を考察する．
+\end{problem}
+
+\begin{proposition}
+    $A$が$C_0$-半群の生成作用素であるならば，任意の$a\in\D(A)$に対して一意の解$u(t)=e^{tA}a$を持つ．
+\end{proposition}
+
+\section{発展方程式}
+
+\subsection{スペクトル定理の特殊化}
+
+\begin{discussion}
+    Hilbert空間$X$内の自己共役作用素$H$が下に半有界とする：$\exists_{c\in\R}\;\forall_{x\in\D(H)}\;(Hx,x)\ge-c\norm{x}^2$．
+    このとき，$H$のスペクトル分解は
+    \[H=\int^\infty_{-c}\lambda dE(\lambda)\]
+    となる．
+\end{discussion}
+
+\begin{problem}[抽象的発展方程式]
+    自己共役作用素$H$に関して，
+    \[\dd{u(t)}{t}=-Hu(t)\;(t>0)\qquad\text{s-}\lim_{t\searrow0}u(t)=x\]
+    を抽象的発展方程式という．
+\end{problem}
+
+\begin{theorem}
+    $T_t:=e^{-tH}=\int^\infty_{-c}e^{-\lambda t}dE(\lambda)\;(t>0)$とする．
+    \begin{enumerate}
+        \item $T_t\;(t>0)$は$X$全域で定義された有界作用素で，$\forall_{t>0}\;\norm{T_t}\le e^{ct}$を満たす．
+        \item $\forall_{t,s>0}\;T_tT_s=T_{t+s}$．
+        \item $\forall_{x\in X}\;\text{s-}\lim_{t\searrow0}T_tx=x$．
+        \item $\forall_{x\in\D(H)}\;\text{s-}\lim_{t\searrow0}\frac{T_tx-x}{t}=-Hx$．
+        \item $\forall_{x\in X,t>0}\;T_tx\in\D(H)$で，$t$に関する強微分$\dd{}{t}T_tx:=\text{s-}\lim_{\delta\to0}\frac{T_{t+\delta}x-T_tx}{\delta}$が存在して$\dd{}{t}T_tx=-HT_tx$が成立する．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    これは，抽象的発展方程式の解が$-H$で生成される$C_0$-半群$e^{-tH}$によって，
+    $u(t)=T_tx=e^{-tH}x$で与えられることを示している．
+\end{remarks}
+
+\subsection{Schrodinger型方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Schrodinger型の方程式については，下半有界とは限らない一般の自己共役作用素$H$について，ユニタリ作用素の1-パラメータ変換群が解を与える．
+\end{tcolorbox}
+
+\subsection{拡散方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    発展方程式の原型の1つが，拡散方程式である．
+\end{tcolorbox}
+
+\begin{example}
+    $\Om\subset\R^m\;(m\ge2)$を領域，$q\in C(\Om;\R)$を下に有界な連続関数とする：$\exists_{c\in\R}\;c\le q<\infty$．
+    $X:=L^2(\Om)$をHilbert空間とし，偏微分作用素$C_0^2(\Om)\to L^2(\Om)$を$A:=-\Laplace+q(x)$と定めると，これは下に半有界な対称作用素だから，Friedrichs拡張$\wt{A}$は自己共役である．
+    よって，初期値関数$f\in C(\Om)\cap L^2(\Om)$を与えたとき，初期値問題
+    \[\pp{u}{t}=\Laplace u-q(x)u\;(t>0)\qquad u(0,x)=f(x)\]
+    の解は$u(t)=T_tf=e^{-t\wt{A}}f$によって得られる．
+\end{example}
+
+
+\begin{definition}
+    さらに，$q\in C^1(\Om)$ならば，作用素$T_t$は積分核$U(t,x,y)$による積分作用素として表現される．
+    この積分核を，拡散方程式の\textbf{基本解}という．
+\end{definition}
+
+\begin{theorem}
+    半群$e^{-t\wt{A}}$に対して，$(0,\infty)\times\Om\times\Om$上連続な関数$U(t,x,y)$が存在して，任意の$f\in L^2(\Om)$に関して
+    \[(T_tf)(x)=\int_\Om U(t,x,y)f(y)dy.\]
+    また，$U(t,x,y)$は任意の$t,s>0$と$x,y\in\Om$について，次を満たす：
+    \begin{enumerate}
+        \item $\int_\Om U(t,x,z)U(s,z,y)dz=U(t+s,x,y)$．
+        \item $U(t,x,y)=\o{U(t,y,x)}$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $\Om$が有界領域ならば，$T_t$はコンパクト作用素である．
+\end{corollary}
+
+\subsection{一般展開定理}
+
+\begin{definition}
+    $(\varphi_n(x;\lambda))_{n\in\N,\lambda\in\R}$が偏微分作用素$A$の\textbf{一般化された固有関数系}であるとは，
+    \[\forall_{n\in\N,\lambda\in\R}\;A\varphi_n(x,\lambda)=\lambda\varphi_n(x;\lambda)\]
+    が成り立つことをいう．
+    一般化された固有関数とは，$\varphi_n\in L^2(\Om)$である必要はないことをいう．
+\end{definition}
+
+\begin{theorem}[一般展開定理]
+    
+\end{theorem}
+
+\begin{theorem}
+    $T_t=e^{-t\wt{A}}$を与える積分核$U(t,x,y)$は次のように表せる：
+    \[U(t,x,y)=\sum_{n\in\N}\int_{-c}^\infty e^{-\lambda t}\varphi_n(x;\lambda)\o{\varphi_n(y;\lambda)}d\rho_n(\lambda).\]
+\end{theorem}
 
 \chapter{Integration Theory}
 

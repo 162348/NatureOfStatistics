@@ -3,7 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -13,6 +14,7 @@
 \begin{quotation}
     まさか情報「科学」らしくなっていることに驚愕している．
     「学習」は統計的には「推定」「予測」と同義であるが，特に「機械」が行うアルゴリズム的行為を表現する際に使う，concept with an attitudeである．
+    同様に，「機械」とは関数のことをいう．
 \end{quotation}
 
 \section{枠組み}
@@ -20,13 +22,13 @@
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     機械の構成の際に，モデルの選択など，人間により恣意的に挿入された偏りを\textbf{帰納バイアス}という．
-    帰納バイアスが弱いことを「万能」という．
+    帰納バイアスが弱いことを「万能」という，頑健性に似た指標である．
     逆に特徴量エンジニアリングやCNNなどは，ドメイン知識に基づいて適切な帰納バイアスを導入することで狭い分野に対する高い性能を目指す．
 \end{tcolorbox}
 
 \begin{definition}[model]\mbox{}
     \begin{enumerate}
-        \item 観測によって得られる情報を\textbf{データ}という．情報理論の対象．
+        \item 観測によって得られる$\X\times \Y$の部分集合を\textbf{データ}という．情報理論の対象．
         データ生成分布を背後に想定することで，推測統計学が始まる．
         \begin{enumerate}[(a)]
             \item 仮説のパラメータを推定するために直接用いられるデータを\textbf{学習データ(training data)}または\textbf{訓練データ}という．
@@ -36,18 +38,22 @@ title=]
             \item データが入力と出力の組$(x,y)\in\X\times\Y$で表されるとき，入力データと出力データという．$\abs{\Y}<\infty$を満たす出力空間の元を\textbf{ラベル}という．$\abs{\Y}=2$を満たすときのデータ$(x,y)\in\X\times\Y$を\textbf{２値データ}という．
         \end{enumerate}
         \item 入力空間から出力空間への関数の族$\F\subset\Map(\X,\Y)$を\textbf{仮説集合(hypothesis set)}または\textbf{統計モデル}という．$\abs{Y}<\infty$であるとき，仮説$f\in\F$を\textbf{判別器(classifier)}といい，これを定める関数$\X\to\R$を\textbf{判別関数(discriminant function)}という．
-        \item 学習データの集合から仮説集合への関数$\X\times\Y\supset D\to\F$を\textbf{学習アルゴリズム}という．
+        \item 学習データの集合から仮説集合への関数$\X\times\Y\supset D\mapsto f\in \F$を\textbf{学習アルゴリズム}という．
         \item 学習アルゴリズムと実際のデータの差を評価する関数を\textbf{損失関数}という．
     \end{enumerate}
 \end{definition}
-\begin{example}
+\begin{example}[問題設定の例]
     $\abs{\Y}<\infty$であるときは判別問題，$\Y=\R$であるときは回帰問題という．
+    このよう，回帰問題ではモデルが関数集合になる．どんな関数が，確率的なゆらぎを持って現れているかを考える場合は，背後に確率分布モデルを想定することにもなる．こちらを「確率的モデリング」と呼ぶらしい．
     それぞれ，0-1損失や二乗損失などの損失関数が使われる．$(x,x',y)\in\X^2\times\Y,\Y=\Z/2\Z$と定式化される問題は，$\X$に順序が誘導されるため，ランキング問題という．
+\end{example}
+\begin{example}[学習の例]
+    $X\times Y$の部分集合から，関数$f:X\to Y$のグラフを対応させることが学習である．
 \end{example}
 
 \begin{definition}
     データ$D\subset\X\times\Y$に対して，
-    新たなデータを生み出すことを考え，$\X\times\Y$上の確率分布，または，$\F\subset\Map(\X\times\yocto,\X\times\Y)$\textbf{生成モデル}という．
+    新たなデータを生み出すことを考え，$\X\times\Y$上の確率分布，または，$\F\subset\Map(\X\times\Y,\X\times\Y)$\textbf{生成モデル}という．
 \end{definition}
 
 \section{損失と相対エントロピー}
@@ -120,6 +126,12 @@ title=]
 \end{tcolorbox}
 
 \section{学習アルゴリズムの性能評価}
+
+\chapter{Gauss過程法}
+
+\begin{quotation}
+    Gauss過程の理論を用いてパターン認識を行う手法は，機械学習の中でも特に奥まったトピック．
+\end{quotation}
 
 \chapter{スパース性}
 
