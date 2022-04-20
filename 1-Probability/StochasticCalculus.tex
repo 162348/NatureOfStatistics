@@ -515,12 +515,6 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{definition}[skelton / Cameron-Martin subspace]
-    \[H:=\Brace{w(t)=\int^t_0h(x)dx\in C_{(0)}([0,1])\;\middle|\;h\in L^2([0,1],dx)}\]
-    と定めると，これは内積$(f_1,f_2):=\int^1_0h_1h_2dx$についてHilbert空間となる．
-    これを$W_0$の骨格，またはCameron-Martin部分空間という．
-\end{definition}
-
 \subsubsection{Wienerの構成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -556,13 +550,6 @@ title=]
 \begin{proposition}[jointly measurable]
     このように構成された$(B_t)_{t\in\R_+}$は，$\Om\times\R_+$上可測である．
 \end{proposition}
-
-\subsection{Cameron-Matrin定理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ドリフト付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
-\end{tcolorbox}
 
 \subsection{酔歩としての構成}
 
@@ -630,7 +617,9 @@ title=]
     平均$0$，共分散$\min$のGauss過程$(W_t)_{t\in[0,1]}$にはあるバージョンが存在し，Brown運動である（見本道は殆ど確実に連続である）．
 \end{theorem}
 
-\subsection{Brown橋の構成}
+\section{Brown運動の変種}
+
+\subsection{変種の例}
 
 \begin{definition}[Brownian bridge]
     共分散を$\Gamma(s,t)=\min(s,t)-\frac{st}{T}$とする中心化されたGauss過程$(B_t)_{t\in[0,T]}\;(T>0)$を\textbf{Brown橋}という．
@@ -656,6 +645,45 @@ title=]
 \begin{proposition}
     任意の$x\in\R$に対して，$B(0)=x$を満たす\textbf{両側Brown運動}$(B_t)_{t\in\R}$が存在する．
 \end{proposition}
+
+\subsection{Cameron-Matrin定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフト$F:\R_+\to\R$付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
+    これはちょうど$F$-Brown橋と標準Brown橋の関係と同じである．
+\end{tcolorbox}
+
+\begin{notation}[skelton / Cameron-Martin subspace]\mbox{}
+    \begin{enumerate}
+        \item 標準Brown運動の法則を$L_0$，ドリフト$F$付きのBrown運動の法則を$L_F$で表す．
+        $L_F\ll L_0\Leftrightarrow L_0(A)=0\Rightarrow L_F(A)=0$がいかなるときか？
+        まず，$F$が連続で，$F(0)=0$が必要なのは明らかである．そうでなければ，$L_F$は連続でなかったり，$0$からスタートしない見本道に正の確率を許してしまうため．
+        \item $D[0,1]:=\Brace{F\in C[0,1]\mid\exists_{f\in L^2[0,1]}\;\forall_{t\in[0,1]}\;F(t)=\int^t_0f(s)ds}$をDirichlet空間という．より一般にDirichlet空間は，Dirichlet積分なる半ノルムが有限となるようなHardy空間の部分空間で，正則関数の再生核Hilbert空間ともなる．
+        このDirichlet空間には特別な名前がついており，skeltonまたはCameron-Martin部分空間と呼ばれる．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[equivalence measure, absolute continuous, singular]\mbox{}
+    \begin{enumerate}
+        \item 2つの測度の零集合の全体が一致するとき，すなわち互いに絶対連続であるとき$\mu\ll\nu\land\nu\ll\mu$，これらは同値であるという．
+        \item 絶対連続性は，測度の同値類の間に順序を定める．
+        \item ２つの測度の「台」が分解出来るとき，すなわち，ある分割$\Om=A\sqcup A^\comp$が存在して$\mu(A)=1\land\nu(A^\comp)=1$が成り立つとき，特異であるといい$\mu\perp\nu$と表す．
+        \item Lebesgue分解により，任意の2つの$\sigma$-有限測度$\mu,\nu$について，一方をもう一方に対して絶対連続部分と特異部分との和に分解できる．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Cameron-Martin]
+    任意の連続関数$F\in C[0,1],F(0)=0$について，次が成り立つ：
+    \begin{enumerate}
+        \item $F\notin D[0,1]$ならば，$L_F\perp L_0$である．
+        \item $F\in D[0,1]$ならば，$L_F$と$L_0$は同値である．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    可微分なドリフト$F$については，Brown運動の法則は同値になる．
+    すなわち，ほとんど確実な事象（見本道の連続性や可微分性）が等しい．
+\end{remarks}
 
 \section{性質}
 
@@ -854,11 +882,13 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
     Wiener測度は，Wiener過程によって誘導されるGauss測度の例である．
-    これが定める積分をうまく定義すると，Stieltjes積分の状況がうまく模倣出来る．
-    ホワイトノイズが積分にあたり，Brown運動が有界変動関数に当たる．
+    Wiener測度が定めるLebesgue積分を考えると，
+    Stieltjes積分の状況がうまく模倣出来，これは伊藤積分の制限になる．
+    このとき，Brown運動が有界変動関数（分布関数）に当たるが，
+    ホワイトノイズが積分にあたる．
 \end{tcolorbox}
 
-\subsection{定義}
+\subsection{定義と像}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -871,12 +901,17 @@ title=]
     は$L^2(\R_+)$の稠密部分空間である．
 \end{notation}
 
-\begin{definition}[Wiener integral]\label{def-Wiener-integral}
+\begin{definition}[Paley-Wiener integral]\label{def-Wiener-integral}
     単関数$\varphi\in\E_0$上の有界線型作用素$\E_0\to L^2(\Om)$
     \[\int_{\R_+}\varphi_tdB_t:=\sum^n_{j=0}a_j(B_{t_{j+1}}-B_{t_j})\]
     は等長写像であるが，この$L^2(\R_+)$への連続延長$B:L^2(\R_+)\mono L^2(\Om)$を\textbf{Wiener積分}という．
     像は$B(\varphi)=\int^\infty_0\varphi_tdB_t\sim N(0,\norm{\varphi}^2_{L^2(\R_+)})$を満たし，$\Im B<L^2(\Om)$は$L^2(\R_+)$と等長同型な，Brown運動が生成するGauss部分空間となる．
 \end{definition}
+
+\begin{lemma}
+    任意の$\varphi\in L^2(\R_+)$のWiener測度によるLebesgue積分は，正規分布に従う確率変数
+    $B(\varphi)\sim N(0,\norm{\varphi}^2_{L^2(\R_+)})$となる．
+\end{lemma}
 
 \subsection{ホワイトノイズ}
 
@@ -887,14 +922,16 @@ title=]
 \end{tcolorbox}
 
 \begin{definition}[white noise]
-    $D\subset\R^m$をBorel集合とする．$D$上の\textbf{ホワイトノイズ}とは，$D$内の測度確定な可測集合
-    $\D:=\Brace{A\in\B(\R^m)\cap P(D)\mid l(A)<\infty}$によって添字付けられた
-    中心化されたGauss確率変数の族$W:=\{W(A)\}_{A\in\D}$であって，
-    Lebesgue測度$l$に関して$E[W(A)W(B)]=l(A\cap B)$を満たすものをいう．
+    $D\subset\R^m$をBorel集合とする．$l$を$\R^m$上のLebesgue測度とする．
+    \begin{enumerate}
+        \item $D$内の測度確定な集合の全体を$\M(D):=\Brace{A\in\B(\R^m)\cap P(D)\mid l(A)<\infty}$と表す．
+        \item $\M(D)$上の平均$0$のGauss過程$(W(A))_{A\in\M(D)}$であって，$\Gamma(A,B)=E[W(A)W(B)]=l(A\cap B)$を満たすものをいう．
+    \end{enumerate}
 \end{definition}
 \begin{remarks}
-    この族$W:\D\ni A\mapsto W(A)$は，線型な等長写像$L^2(D)\ni\varphi\mapsto\int_D\varphi(x)W(dx)\in\o{W}\subset L^2(\Om)$に延長出来る．
-    定義\ref{def-white-noise-1}ではこちらを，Wiener積分の言葉を使わずに描写することでホワイトノイズの定義とした．
+    この族$W:\M(D)\to L^2(\Om)$は，埋め込み$\M(D)\mono L^2(D);A\mapsto 1_A$によって
+    線型な等長写像$L^2(D)\ni\varphi\mapsto\int_D\varphi(x)W(dx)\in\o{W}\subset L^2(\Om)$に延長出来る．
+    そこで，有界線型作用素としてもホワイトノイズは定義できる\ref{def-white-noise-1}．
     ただし，$\o{W}$は$W=\{W(A)\}_{A\in\D}\subset L^2(\Om)$が生成するGauss部分空間である．
 \end{remarks}
 
@@ -913,18 +950,60 @@ title=]
 \end{proposition}
 
 \begin{proposition}
-    $W$を$\R_+$上のホワイトノイズとすると，$W_t:=W([0,t])=W_{1_{[0,t]}}$と定めるとこれはBrown運動である．
+    $W$を$\R_+$上のホワイトノイズとすると，$W_t:=W([0,t])=W_{1_{[0,t]}}$と定めるとこれはBrown運動の修正である．
 \end{proposition}
 
 \subsection{Brown sheet}
 
+\subsection{Path積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    量子力学，量子場理論で生まれた考え方である．
+\end{tcolorbox}
+
+\begin{discussion}
+    伝播関数(propagator)は，粒子が移動する際の確率振幅を与える．
+    これはある積分核$K$が与える積分変換作用素$U$で与えられるが，この積分核が曲者である．
+    場の付値が関数$\varphi$で与えられ，関数$\varphi$の空間上の，作用汎関数$S$の積分
+    \[K(x,y):=\int\exp(iS(\varphi))D\varphi\]
+    で与えられる．しかし，$D\varphi$なる測度が不明瞭どころか，対応する測度が存在しないこともある．
+    \textbf{道積分(path integral)}の語源は，多様体$X$上の粒子を記述するシグマ模型においては，$\varphi\in C([0,1],X)$は厳密に「道」になるため．
+    ここで(古典的)Wiener空間が登場する．
+\end{discussion}
+
 \section{Wiener空間}
+
+\subsection{古典的Wiener空間}
+
+\begin{definition}
+    \begin{enumerate}
+        \item $\Om:=\Brace{\om\in C(\R_+;\R)\mid\om(0)=0}$．
+        \item $\F$を，$\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数とする．
+        \item $P$をWiener測度とする．
+    \end{enumerate}
+\end{definition}
 
 \begin{proposition}[$\sigma$-代数の特徴付け]
     $(\Om,\F,P)$をWiener空間とする．
-    $\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：
-    \[\cC=\Brace{C=\Brace{\om\in\Om\mid\forall_{i\in[k]}\;\om(t_i)\in A_i}\in P(\Om)\;\middle|\;k\in\N_{\ge1},A_1,\cdots,A_k\in\B(\R),0\le t_1<\cdots<t_k}\]
+    \begin{enumerate}
+        \item $\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数$\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：
+        \[\cC=\Brace{C=\Brace{\om\in\Om\mid\forall_{i\in[k]}\;\om(t_i)\in A_i}\in P(\Om)\;\middle|\;k\in\N_{\ge1},A_1,\cdots,A_k\in\B(\R),0\le t_1<\cdots<t_k}\]
+        \item $p_t(x)=(2\pi t)^{-1/2}e^{-x^2/(2t)}$を正規分布の確率密度関数とする．
+        \[P(C)=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k.\]
+        が成り立ち，これの$\F$上への延長はたしかに一意的である．
+        \item 任意の$\om\in\Om$に対して，$B_t(\om):=\om(t)$と定めると，これはBrown運動である．
+    \end{enumerate}
 \end{proposition}
+
+\subsection{抽象的Wiener空間}
+
+\subsection{Skorokhod空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続でない，cadlagな見本過程も許す場合，その空間をSkorokhod空間という．
+\end{tcolorbox}
 
 \section{Brownian Filtration}
 

@@ -2596,9 +2596,9 @@ title=]
 
 \subsection{標準化された部分和についての結果}
 
-\begin{theorem}
-    独立同分布を持つ確率変数列$\{X_n\}\subset\L^1(\Om,\F,P)$は$E[X_n]=m\in\R,\Var[X_n]=v\in\R_+$を満たすとする．
-    このとき，確率変数$Z_n:=\frac{1}{\sqrt{n}}\sum^n_{k=1}(X_k-m)$は，正規分布$N(0,v)$に法則収束する．特に，
+\begin{theorem}[Lindeberg-Levy]
+    独立同分布を持つ確率変数列$\{X_n\}\subset\L^1(\Om,\F,P)$は$E[X_n]=\mu\in\R,\Var[X_n]=\sigma^2\in\R_+$を満たすとする．
+    このとき，確率変数$Z_n:=\frac{1}{\sqrt{n}}\sum^n_{k=1}(X_k-\mu)$は，正規分布$N(0,\sigma^2)$に法則収束する．特に，
     \[\forall_{a<b\in\R}\quad\lim_{n\to\infty}P(a\le Z_n\le b)=\frac{1}{\sqrt{2\pi v}}\int^b_ae^{-\frac{x^2}{2v}}dx.\]
 \end{theorem}
 
@@ -2650,6 +2650,23 @@ title=]
     結合分布は多変量正規分布に収束する．では，$\sqrt{n}(F_n-F)$自体はどうか？これは，標本が与えられる毎に分布関数を確定させる$\X^n\to l^\infty(\R)$なる確率変数で，$F$-ブラウニアン橋と呼ばれる関数$\bG_F:\X^\infty\to l^\infty(\R)$が定める分布に弱収束する．
     Banach空間値確率変数の共分散は定義していないが（いわば無限の成分を持つ行列$\R^2\to\R$），各組$(x_k,x_l)\in\R^2$に対して$\Cov[\bG_F(x_k),\bG_F(x_l)]=F(x_k\land x_l)-F(x_k)F(x_l)$が成り立つ．
 \end{discussion}
+
+\section{中心極限定理の誤差}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極限分布として正規分布を持つ確率変数を，その極限分布によって近似したときの近似誤差は，$1/\sqrt{N}$のオーダーを持つ．
+    これはあまりにも遅い，収束が線型よりも遅い．
+    そのために，別の方法で目標の分布が「裾が軽い」ことを示す必要が応用上出てくる，これが集中不等式である．
+\end{tcolorbox}
+
+\begin{theorem}[Berry-Esseen central limit theorem]\label{thm-Berry-Esseen}
+    独立同分布を持つ確率変数列$\{X_n\}\subset\L^1(\Om,\F,P)$は$E[X_n]=\mu\in\R,\Var[X_n]=\sigma^2\in\R_+$を満たすとする．
+    $S_N:=X_1+\cdots+X_N$について，
+    \[Z_N:=\frac{S_N+E[S_N]}{\sqrt{\Var[S_N]}}=\frac{1}{\sigma\sqrt{N}}\sum^N_{i=1}(X_i-\mu)\xrightarrow{d}N(0,1)\]
+    であるが，$\rho:=\frac{E[\abs{X_1-\mu}^3]}{\sigma^3}$と$g\sim N(0,1)$について，
+    \[\forall_{N\in\N}\;\forall_{t\in\R}\quad\Abs{P[Z_N\ge t]-P[g\ge t]}\le\frac{\rho}{\sqrt{N}}\]
+\end{theorem}
 
 \section{Poissonの少数の法則}
 
@@ -3958,9 +3975,188 @@ title=]
     また，平均や分散などの母数もBanach空間の点となる．実際，確率分布族をBanach空間で添字付ける見方は有効な手法である．
 \end{quotation}
 
+\section{独立確率変数列の集中不等式}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    集中不等式は，確率分布の偏差$\abs{X-\mu}$を捉える．
+    極限分布がGaussであるとき，これを用いて近似することがまず考えられるが，近似誤差が大きい\ref{thm-Berry-Esseen}．
+    そこで，極限定理に依らずに，「裾が軽い」ことを示す方法論が必要となる．
+    その一つが集中不等式である．
+    （極限定理では特性関数が活躍したが，）ここでは，積率母関数に注目することとなる．
+\end{tcolorbox}
 
+\subsection{Chebyshevの不等式}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最も即時的で古典的な上界を与え，多くの場合線型に過ぎない．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X\sim(\mu,\sigma^2)$を実確率変数とする．
+    \begin{enumerate}
+        \item (Markov) $X\ge0$ならば，$\forall_{t>0}\;P[X\ge t]\le\frac{E[X]}{t}$．
+        \item (Chebyshev) $\forall_{t>0}\;P[\abs{X-\mu}\ge t]\le\frac{\sigma^2}{t^2}$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Hoeffdingの不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Rademacher確率変数の線型和の尾部について，Gauss分布と全く同様な収束レート$e^{-t^2/2}$による評価を与えるのがHoeffdingの不等式である．
+    これは理想的な形で，中心極限定理の代替となっている．
+    証明はモーメント母関数により，これは一般の有界な確率変数に一般化出来るが，鋭さは落ちる．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X_1,\cdots,X_N$を独立なRademacher確率変数とし，$a=(a_1,\cdots,a_N)\in\R^N$とする．
+    このとき，
+    \[\forall_{t\in\R_+}\quad P\Square{\sum^N_{i=1}a_iX_i\ge t}\le\exp\paren{-\frac{t^2}{2\norm{a}^2_2}}.\]
+\end{theorem}
+\begin{corollary}
+    \[P\Square{\Abs{\sum^N_{i=1}a_iX_i}\ge t}\le 2\exp\paren{-\frac{t^2}{2\norm{a}^2_2}}.\]
+\end{corollary}
+
+\begin{theorem}[Hoeffding's inequality for general bounded random variable]
+    $X_1,\cdots,X_N$を独立な有界確率変数とする：$\forall_{i\in[N]}\;\exists_{m_i,M_i\in\R}\;\Im X_i\subset[m_i,X_i]$．
+    このとき，
+    \[\forall_{t>0}\quad P\Square{\sum^N_{i=1}(X_i-E[X_i])\ge t}\le\exp\paren{-\frac{2t^2}{\sum_{i=1}^N(M_i-m_i)^2}}\]
+\end{theorem}
+
+\begin{application}[平均の頑健推定]
+    独立な観測$X_1,\cdots,X_N\sim(\mu,\sigma^2)$から平均$\mu$を，誤差$\ep$以内で推定したい．
+    \begin{enumerate}
+        \item $N=O(\sigma^2/\ep^2)$個の標本が存在すれば，確率$3/4$以上で$(\mu-\ep,\mu+\ep)$に入る推定量が構成できる．
+        \item 任意の$\delta\in(0,1)$について，$N=O(\log(\delta^{-1})\sigma^2/\ep^2)$個の標本が存在すれば，確率$1-\delta$以上で$(\mu-\ep,\mu+\ep)$に入る推定量が構成できる．
+    \end{enumerate}
+\end{application}
+
+\subsection{Chernoffの不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Bernoulli変数について，母数$p_i$が小さすぎるとき(Poissonの少数の法則的な現象のとき)，Hoeffdingの不等式は見当違いの結果を与える．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X_i\sim B(p_i)$をBernoulli確率変数とする．和$S_N:=\sum_{i=1}^NX_i$の平均を$\mu:=E[S_N]$で表すと，
+    \[\forall_{t>\mu}\quad P[S_N\ge t]\le e^{-\mu}\paren{\frac{e\mu}{t}}^t.\]
+\end{theorem}
+\begin{remarks}
+    これはPoisson分布的な結果である．実際$X\sim\Pois(\lambda)$ならば，
+    \[\forall_{t>\lambda}\quad P[X\ge t]\le e^{-\lambda}\paren{\frac{e\lambda}{t}}^t.\]
+    これを，各第$i$回での成功確率$p_i$がバラバラな場合でも行っている．
+\end{remarks}
+
+\begin{remark}[Poisson尾部の観察]
+    $k!$をStirlingの公式で近似すると
+    \[P[X=k]\sim\frac{1}{\sqrt{2\pi k}}e^{-\lambda}\paren{\frac{e\lambda}{k}}^k\]
+    を得るから，Poisson分布の尾部と言っても，一番小さい部分が殆どすべてを占めてしまう．
+    大偏差原理的な現象である．
+\end{remark}
+
+\begin{theorem}[小偏差の場合]
+    $X_i\sim B(p_i)$をBernoulli確率変数とする．和$S_N:=\sum_{i=1}^NX_i$の平均を$\mu:=E[S_N]$で表すと，
+    \[\exists_{c>0}\;\forall_{\delta\in(0,1]}\quad P[\abs{S_N-\mu}\ge\delta\mu]\le 2e^{-c\mu\delta^2}\]
+\end{theorem}
+\begin{remarks}
+    これはPoisson分布の
+    \[\forall_{t\in(0,\lambda]}\quad P[\abs{X-\lambda}\ge t]\le 2\exp\paren{-\frac{ct^2}{\lambda}}\]
+    に対応する．$\Pois(\lambda)$は平均$\lambda$近くでは$N(\lambda,\lambda)$にすごく似ているが，大偏差部分では裾は重い：$(\lambda/t)^t$．
+\end{remarks}
+
+\subsection{確率グラフ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ネットワークの確率モデルとなる．
+    $p$が十分大きく，平均して$O(\log n)$の次数を持つとき，どの頂点の次数も$[0.9d,1.1d]$の間にあって，他と結ばれ過ぎていたり，孤立していたりすることは殆どない．
+\end{tcolorbox}
+
+\begin{definition}
+    Erdos-Renyi model $G(n,p)\;(n\in\N,p\in[0,1])$とは，$n$個の頂点と，その任意の2頂点の間を確率$p$で辺が存在するグラフである．
+\end{definition}
+
+\begin{lemma}
+    任意の頂点の次数の期待値は$d:=(n-1)p$となる．
+\end{lemma}
+
+\begin{theorem}[dense graphs are almost regular]
+    ある$C>0$が存在して，任意の$d\ge C\log n$を満たすランダムグラフ$G\sim G(n,p)$は，十分大きな確率(0.9以上)で，任意の頂点の次数が$[0.9d,1.1d]$の間に入る．
+\end{theorem}
+
+\subsection{劣Gauss分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Bernoulli確率変数$X_i$について集中不等式を示したが，どこまで一般の確率変数に適用できるのか？
+\end{tcolorbox}
+
+\begin{proposition}
+    確率変数$X$について，次の4条件は同値で，$E[X]=0$ならば(5)も同値．
+    また，ある定数$C>0$が存在して，パラメータ$K_i>0$はそれぞれ互いの$C$倍を超えない．
+    \begin{enumerate}
+        \item $X$の尾部は$\forall_{t\in\R_+}\;P[\abs{X}\ge t]\le 2\exp\paren{-\frac{t^2}{K_1^2}}$を満たす．
+        \item $X$のモーメントは$\forall_{p\ge 1}\;\norm{X}_{L^p}\le K_2\sqrt{p}$を満たす．
+        \item $X^2$の積率母関数は$\forall_{\abs{\lambda}\le1/K_3}\;E[e^{\lambda^2X^2}]\le\exp(K_3^2\lambda^2)$を満たす．
+        \item $X^2$の積率母関数は$E[e^{X^2/K_4^2}]\le 2$．
+        \item $X$の積率母関数は$\forall_{\lambda\in\R}\;E[e^{\lambda X}]\le e^{K^2_5\lambda^2}$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[sub-gaussian norm]
+    命題の条件を満たす確率変数$X$を\textbf{劣ガウス}であるといい，劣ガウスノルムを(4)を満たす最小の定数$K_4$，すなわち
+    \[\norm{X}_{\psi_2}=\inf\Brace{t>0\mid E[e^{X^2/t^2}]\le 2}\]
+    で定める．
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $X\sim N(0,\sigma^2)$ならば，$\norm{X}_{\psi_2}\le C\sigma$．
+        \item $X$がRademacherならば，$\norm{X}_{\psi_2}\le\frac{1}{\sqrt{\log 2}}=:C$．
+        \item $X$が有界ならば，$\norm{X}_{\psi_2}\le C\norm{X}_\infty$．
+    \end{enumerate}
+    一方で，Poisson分布，指数分布，Pareto分布，もちろんCauchy分布は裾が重く，劣Gaussではない．
+\end{example}
+
+\subsection{Orlicz空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣Gauss分布をさらに一般化すると，Orlicz空間にいきつく．
+\end{tcolorbox}
+
+\subsection{一般化Hoeffding不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣Gaussノルムの言葉を用いて，Hoeffding不等式は一般の劣Gauss確率変数に一般化出来る．
+\end{tcolorbox}
+
+\subsection{劣指数分布}
+
+\begin{lemma}
+    $X$を確率変数とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $X$は劣Gaussである．
+        \item $X^2$は劣指数である．
+    \end{enumerate}
+    このとき，$\norm{X^2}_{\psi_1}=\norm{X}^2_{\psi_2}$．
+\end{lemma}
+
+\subsection{Bernsteinの不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    劣指数分布
+\end{tcolorbox}
+
+\begin{theorem}
+    $X_1,\cdots,X_N$を平均$0$の劣指数確率変数とする．このとき，
+    \[\exists_{c>0}\;\forall_{t\in\R_+}\quad P\Square{\Abs{\sum^N_{i=1}X_i}\ge t}\le 2\exp\paren{-c\min\paren{\frac{t^2}{\sum^N_{i=1}\norm{X_i}^2_{\psi_1}},\frac{t}{\max_{i\in[N]}\norm{X_i}_{\psi_1}}}}.\]
+\end{theorem}
 
 \chapter{離散確率分布}
 
@@ -4244,7 +4440,7 @@ title=]
     Rademacher過程は，幅１のランダムウォークと考えられる．
 \end{tcolorbox}
 
-\begin{definition}[Rademacher distribution, Rademacher / Steinhaus variable]\mbox{}
+\begin{definition}[Rademacher distribution, Rademacher / Steinhaus / symmetric Bernoulli variable]\mbox{}
     \begin{enumerate}
         \item $\Z$上の確率質量関数
         \[f(k)=\frac{1}{2}(\delta(k-1)+\delta(k+1))\]
@@ -4330,7 +4526,7 @@ title=極限分布のお手本]
     逆に発生間隔は指数分布となる．
 \end{tcolorbox}
 
-\subsubsection{極限分布としてのPoisson分布}
+\subsubsection{定義}
 
 \begin{definition}[Poisson distribution (1838)]
     可測空間$(\N,P(\N))$上の\textbf{Poisson分布}$\Pois(\lambda):(0,\infty)\to\M(\N)$とは，確率質量関数$p(x;\lambda)=\frac{\lambda^x}{x!}e^{-\lambda}:\N\to[0,1]$が定める確率分布である．
@@ -4338,7 +4534,9 @@ title=極限分布のお手本]
     平均も分散も$\lambda$に一致する．
 \end{definition}
 
-\begin{proposition}[Poisson's limit theorem]
+
+
+\subsubsection{極限分布としてのPoisson分布}\begin{proposition}[Poisson's limit theorem]
     減衰する確率$p(n):=\frac{\lambda}{n}$についての二項分布$B(n,p(n))$は，$\lim_{n\to\infty}b(x;n,p)=\frac{\lambda^x}{x!}e^{-\lambda}\;(\forall_{x\in\N})$を満たす．
 \end{proposition}
 \begin{proof}
@@ -4414,6 +4612,17 @@ title=]
 \begin{proof}[\textbf{［別証明］}]
     過程$(P_k(t))_{k\in\N}$の定める確率母関数$g(z,t)=\sum^\infty_{k=0}P_k(t)z^k$が，Poisson分布$\Pois(\lambda t)$の確率母関数$e^{\lambda t(z-1)}$に一致することを示しても良い．
 \end{proof}
+
+\subsubsection{正規近似}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正規分布よりも裾が重いことが分かる．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X\sim\Pois(\lambda)$とする．このとき，$\frac{X-\lambda}{\sqrt{\lambda}}\xrightarrow{d}N(0,1)$．
+\end{theorem}
 
 \subsection{負の二項分布}
 

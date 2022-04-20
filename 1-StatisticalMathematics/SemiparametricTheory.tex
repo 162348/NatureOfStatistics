@@ -825,7 +825,7 @@ title=]
     の途があるらしい．「この架け橋によって，実世界の中にある学習システムの挙動を，対応する数学の概念を用いることにより予言することができる．」
 \end{quotation}
 
-\section{Introduction}
+\section{まとめ}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=経験過程論]
@@ -839,7 +839,7 @@ title=経験過程論]
 \begin{definition}[stochastic process, empirical process, sample function / realization / sample path]\mbox{}
     \begin{enumerate}
         \item 確率空間$(\X,\A,P)$と任意の可測空間$T$に関して，可測写像の族$T\to\Meas(\X,\R)$を確率過程という．
-        \item 経験測度$\bP_n:=n^{-1}\sum_{i=1}^n\delta_{X_i}$と任意の可測関数族$\F\subset\Meas(\X,\R)$について，確率過程$(\bP_nf)_{f\in\F}:\F\to\Meas(\X^n,\R)$が定まる．これを\textbf{経験過程}という．
+        \item 経験測度$\bP_n:=n^{-1}\sum_{i=1}^n\delta_{X_i}$と任意の可測関数族$\F\subset\Meas(\X,\R)$について，確率過程$(\bP_nf)_{f\in\F}:\F\to\Meas(\X^n,\R)$が定まる．これを\textbf{一般化された経験過程}という．
         \item 経験過程$\F\to\Meas(\X^n,\R)$が定める確率要素$\X^n\to\Map(\F,\R)$の値$(X_t(x))_{t\in T}$を\textbf{見本関数}，\textbf{実現}または\textbf{標本道}という．これは時系列値の確率変数と見れるため，この道を理解することが目的の一つとなる．\footnote{$w_1\in\X$を銘柄として，$X(w_1)$は時系列を返す，など．}
     \end{enumerate}
 \end{definition}
@@ -850,7 +850,7 @@ title=経験過程論]
 \end{remarks}
 
 \begin{enumerate}
-    \item 経験過程には弱収束の概念が定義できる．経験過程$(\X^n\to\Map(\F,\R))_{n\in\N}$はBanach空間値確率変数の列であり，始域こそ違うが，終域上に定まる測度に関する収束である弱収束は問題なく定義できる．
+    \item 経験過程には弱収束の概念が定義できる．経験過程$(\X^n\to\Map(\F,\R))_{n\in\N}$はBanach空間$l^\infty(\R)$-値確率変数の列であり，始域こそ違うが，終域上に定まる測度に関する収束である弱収束は問題なく定義できる．
     さらに$X_n:\Om_n\to\X$始域が違うことは，外積分の定義に含まれて効いてくるが，$\Om_n:=\coprod_{n\in\N}\X^n$に埋め込んで定義することとする．\footnote{この技術的な議論が完全性(perfect map)の議論である．}
     なお，経験過程の値域は，双対空間$\bP_{(X_1,\cdots,X_n)}:\F\to\R\in\X^{**}$の元であることに注意．これが距離空間というのは部分的な見方である．
     \item Glivenko-Cantelli 1933の古典的な結果$\sup_{t\in\R}\abs{\bF_n(t)-F(t)}\xrightarrow[n\to\infty]{\as}0$
@@ -900,8 +900,10 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    自体はユニタリ表現などのときのように，
     一様ノルムが定める$\sigma$-代数に関して非可測な確率過程が自然に出現する．
-    したがって，従来の弱$*$-収束の定義を拡張したい．
+    ノルム位相が強すぎるのである．
+    位相を弱める方針もありえるかもしれないが，ここでは従来の弱収束の定義を拡張したい．
 \end{tcolorbox}
 
 \begin{definition}[pseudometric]\mbox{}
@@ -1000,7 +1002,7 @@ title=]
     これは見事だ．
 \end{remarks}
 
-\subsection{外積分論}
+\subsection{外積分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1513,7 +1515,7 @@ title=]
             \item ２つの見方は双対的なもので，大した違いはない．基本的に(b)を採用する．
         \end{enumerate}
         \item 
-        こうして，\textbf{経験過程}$\N\to D(\o{\R});n\mapsto\G_n(t)$が定まった．\textbf{このときの値域が$\Meas(\R,\o{\R})$に収まっていないことに注意}\ref{exp-non-measurable-process}．
+        こうして，\textbf{経験過程}$\N\to D(\o{\R});n\mapsto\G_n(t)$が定まった．\textbf{このときの値が関数空間$D(\o{\R})$の大きすぎる$\sigma$-加法族に関して可測とは限らないことに注意}\ref{exp-non-measurable-process}．
         これについて，Brownian bridgeへの収束$\G_n\to\G_F$を弱収束として定義できたことになる．
         あとは，そのための$\F$の十分条件を考えたい．
     \end{enumerate}
@@ -1836,6 +1838,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $l^\infty(T)$-値確率変数がタイトなGauss過程に弱収束するための，f.f.d.が弱収束することに加えて必要な条件を割り出す．
+    これは第一義的には「漸近的タイト性」によって明瞭に捉えられるが，これをさらに計算可能な概念に翻訳し，収束先がタイトなGauss過程である場合についてさらに特殊化する．
 \end{tcolorbox}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1972,7 +1975,7 @@ title=]
     この構成だと$\wt{X}:\wt{B}(T)\to\wt{B}(T)$は確率要素であって確率過程ではなくない？
 \end{remarks}
 
-\subsection{漸近的タイト性の特徴付け}
+\subsection{漸近的タイト性の連続度による特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=漸近的タイト性は「連続度が0に確率収束する」ことに同値]
@@ -2240,7 +2243,7 @@ title=]
     \end{description}
 \end{proof}
 
-\subsection{Banach空間値確率要素}
+\subsection{Banach空間値Gauss確率要素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2266,6 +2269,16 @@ title=]
 
 \section{Glivenko-CantelliクラスとDonskerクラス}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    経験測度$\bP_n$が$P$に各点$f\in\F$で概収束することは，観測値$X_1,\cdots,X_n$が母平均に概収束することと同値で，これを大数の強法則という．
+    これが任意の$f\in\F$について一様に収束する$\sup_{f\in\F}\abs{\bP_nf-Pf}\asto0$ためには，$\F$が大きすぎないことが必要である．
+
+    収束先を見るために，$\sqrt{n}$倍して得る経験過程$\bG_n=\sqrt{n}(\bP_n-P)$に注目する．
+    これが線型汎関数として$l^\infty(\F)$上でタイトなものに弱収束するための条件は，まず$\sup_{f\in\F}\abs{\bP_nf-Pf}$の一様収束性が必要なので，Glivenko-Cantelliの場合以上に$\F$が大きすぎないことが必要である．
+    なお，タイトな過程に弱収束するならば，その極限過程は$F$-固定端Brown運動となる必要がある．
+\end{tcolorbox}
+
 \subsection{定義と例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -2288,10 +2301,10 @@ title=]
     もやは経験過程と呼びたくないほどには一般的な対象となっている．
 \end{remarks}
 
-\begin{proposition}\label{prop-large-number-theorem-to-empirical-process}
+\begin{proposition}[各点収束の結果は古典的]\label{prop-large-number-theorem-to-empirical-process}
     $P\abs{f}<\infty$または$Pf^2<\infty$とする．
     \begin{enumerate}
-        \item 大数の法則より$\bP_n\asto Pf$．
+        \item 大数の法則より$\bP_nf\asto Pf$．
         \item 中心極限定理より$\G_nf\Rightarrow N(0,P(f-Pf)^2)$．
     \end{enumerate}
 \end{proposition}
@@ -2467,7 +2480,7 @@ title=]
 
 
 
-\subsection{最大不等式と被覆数}
+\subsection{Orliczノルムと最大不等式}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=道具１：]
@@ -2890,6 +2903,11 @@ title=道具２：対称化という技法]
 
 \subsubsection{対称化不等式}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    経験過程を対称化すると劣Gauss過程になるから，前節までで議論し，なんとか単純な組み合わせ論的な形に還元した最大化不等式を使える．
+\end{tcolorbox}
+
 \begin{definition}
     経験測度$\bP_n$に対して，
     \begin{enumerate}
@@ -2899,7 +2917,7 @@ title=道具２：対称化という技法]
     ただし，$\ep_1,\cdots,\ep_n$は互いに独立で，$X_1,\cdots,X_n$とも独立なRademacher確率変数とした．
 \end{definition}
 
-\begin{lemma}\mbox{}
+\begin{lemma}[経験過程を対称化すると劣Gaussである]\mbox{}
     \begin{enumerate}
         \item どちらの過程も，平均関数は$0$となる．
         \item 固定された$X_1,\cdots,X_n$について$\bP_n^\circ$はRademacher過程であり，したがって特に劣Gaussである．
@@ -2938,6 +2956,12 @@ title=道具２：対称化という技法]
 \end{proof}
 
 \subsubsection{可測性の問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対称化不等式の右辺が可測になってくれると，応用上さらにうまくいく．
+    そのためには，各点可測クラスを取れば良いことが分かる．
+\end{tcolorbox}
 
 \begin{definition}[measurable class]\label{def-measurable-class}
     $\F\subset\Meas(\X,\R)$が，次を満たすとき，\textbf{$P$-可測クラス}であるという：
@@ -2978,7 +3002,12 @@ title=道具２：対称化という技法]
     ほとんどの構成（特に可測関数の構成と同じようなmaxや基本的な演算など）は連続である．
 \end{remarks}
 
-\subsubsection{Donskerの定理へ}
+\subsubsection{Donskerの定理で必要な可測性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実際に可測性が必要になるのは，$\F_\delta,\F_\infty^2$なる集合であるので，これについての各論を展開する．
+\end{tcolorbox}
 
 \begin{notation}
     クラス$\F$に対して，
@@ -3001,7 +3030,7 @@ title=道具２：対称化という技法]
     クラス$\F\subset\Meas(\X,\R)$について，$\F$が各点可測で，そのある包絡関数$F$が$P^*F^2<\infty$を満たすならば，全ての$0<\delta\le\infty$に対して$\F_\delta$と$F^2_\infty$は各点可測である．
 \end{proposition}
 
-\subsubsection{セミパラメトリック回帰モデル}
+\subsubsection{セミパラメトリック回帰モデルで必要な可測性}
 
 \begin{definition}
     任意の$X=(Y,Z)\in\X:=\R\times\R^k$の分布$P\in\M(\X)$に関して，
@@ -3117,7 +3146,7 @@ title=]
     $\F$が本質的に有限だから成り立つ性質であるという消息を暴いている．
 \end{tcolorbox}
 
-\subsection{第一定理}
+\subsection{ブラケットナンバーの十分条件}
 
 \begin{theorem}\label{thm-Glivenko-Cantelli-1}
     クラス$\F\subset\Meas(\X,\R)$が$\forall_{\ep>0}\;N_{[\;]}(\ep,\F,L_1(P))<\infty$を満たすとする．この時，$\F$は$P$-Glivenko-Cantelliクラスである：$\norm{\bP_n-P}_\F\xrightarrow{\as^*}0$．
@@ -3128,6 +3157,13 @@ title=]
     経験分布関数は，経験測度の$\F:=\Brace{1_{(-\infty,t]}(x)\in\Meas(X,\R)\mid t\in\o{\R}}$への制限
     とみなせるから，$\norm{\bP_n-P}_\F\xrightarrow{\as}0$に同値．これについて定理を考えると，真の分布関数$F$の高々有限個の$\ep$以上のジャンプを分点としてブラケットを取れば，$\F$を被覆することができるから$N_{[\;]}(\ep,\F,L_1(P))<\infty$．よって，確かに$\F$はGilvenko-Cantelliクラスである．
 \end{example}
+
+\subsection{被覆エントロピーの十分条件}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    被覆数については，任意の$\ep>0$について有限であるだけでなく，$n$に関して緩増加であることも必要．
+\end{tcolorbox}
 
 \begin{theorem}
     クラス$\F\subset\Meas(\X,\R)$が
@@ -3177,7 +3213,14 @@ title=]
 \end{lemma}
 
 
-\subsection{一様エントロピーと第二定理}
+\subsection{一様エントロピーの十分条件}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    経験分布だけでなく，（考え得る）あらゆる測度について被覆数を考える．
+    すると，十分条件は少しは簡単になる．
+    そしてこの十分条件は意外と使える．
+\end{tcolorbox}
 
 \begin{definition}[uniform covering number]\mbox{}
     \begin{enumerate}
@@ -3577,7 +3620,8 @@ title=]
     VC classという組み合わせ論的に定義されるクラスについては，
     被覆数の増大が多項式で抑えられるので，
     一様エントロピー積分の条件が満たされる．
-    集合系の包絡関数は可積分である．
+    
+    集合系$\C\subset P(X)$がVCクラスであるとは，分解性能が高すぎないことをいう．
 \end{tcolorbox}
 
 \begin{definition}[VC class: pick out, shatter, VC-index]
@@ -3996,9 +4040,24 @@ title=]
 
 \subsection{単調関数族}
 
-\section{Bootstrapping Empirical Processes}
+\section{確率過程のChaining}
 
-\section{The Function Delta Method}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Chainingは一般の確率過程$(X_t)_{t\in T}$に関して，一様な上界を得る方法である．
+    経験過程の枠に囚われずに考えてみたい．
+    統計的学習理論では，被覆数などの幾何学的性質よりも，さらに組み合わせ論的なVC次元が応用に近い．
+    さらに評価を精密にしlogarithmic gapを消すためには，より幾何学的なTalagrand汎関数$\gamma_2(T)$を考える，これを"generic chaining"という．
+\end{tcolorbox}
+
+\subsection{Dudleyの不等式}
+
+\begin{definition}[sub-gaussian increments]
+    距離空間$(T,d)$上の
+    確率過程$(X_t)_{t\in T}$が\textbf{劣ガウス増分}を持つとは，
+    \[\exists_{K\ge0}\;\forall_{s,t\in T}\;\norm{X_t-X_s}_{\psi_2}\le Kd(t,s)\]
+    を満たすことをいう．
+\end{definition}
 
 \chapter{推測理論}
 
