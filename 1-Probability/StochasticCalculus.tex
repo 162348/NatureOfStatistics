@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -622,7 +622,20 @@ title=]
 
 \begin{proposition}[jointly measurable]
     このように構成された$(B_t)_{t\in\R_+}$は，$\Om\times\R_+$上可測である．
+    ただし，$(\Om,\A,P)$とは，独立同分布確率変数列$(Z_n)$の定義域となる確率空間とする．
 \end{proposition}
+\begin{proof}
+    $B_t=\sum^\infty_{i=0}F_i(t)$と定めたから，$\forall_{n\in\N}\;F_n(t)$は$\Om\times[0,1]$上可測であることを示せば良い．
+    $\R_+$上のBrown運動は，これら$(B_t)_{t\in[0,1]}$の和として表せるため．
+    任意の$c\in\R$について，
+    \[\Brace{(\om,t)\in\Om\times[0,1]\mid F_n(t)>c}\]
+    が可測であることを示せばよいが，この集合は，
+    \begin{enumerate}
+        \item $c\ge0$のとき$\bigcup_{k=1}^{2^{n-1}}\Brace{Z_{\frac{2k-1}{2^n}}\ge c}\times\paren{\frac{2k-1}{2^n}-\frac{Z_{\frac{2k-1}{2^n}}-c}{Z_{\frac{2k-1}{2^n}}}\frac{1}{2^n},\frac{2k-1}{2^n}+\frac{Z_{\frac{2k-1}{2^n}}-c}{Z_{\frac{2k-1}{2^n}}}\frac{1}{2^n}}$．
+        \item $c<0$のとき\[\bigcup_{k=1}^{2^{n-1}}\Brace{Z_{\frac{2k-1}{2^n}}>c}\times\Square{\frac{2k-2}{2^n},\frac{2k}{2^n}}\cup\Brace{Z_{\frac{2k-1}{2^n}}\le c}\times\paren{\left[\frac{2k-2}{2^n},\frac{2k-1}{2^n}-\frac{Z_{\frac{2k-1}{2^n}}-c}{Z_{\frac{2k-1}{2^n}}}\frac{1}{2}\right)\cup\left(\frac{2k-1}{2^n}+\frac{Z_{\frac{2k-1}{2^n}}-c}{Z_{\frac{2k-1}{2^n}}}\frac{1}{2^n},\frac{2k}{2^n}\right]}.\]
+    \end{enumerate}
+    と等しいから，たしかに$\Om\times[0,1]$の積$\sigma$-加法族の元である．
+\end{proof}
 
 \subsection{酔歩としての構成}
 
