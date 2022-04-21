@@ -5106,7 +5106,7 @@ title=]
     すなわち，$X$は確率１で超平面$u^\perp(X-E(X))=0$上に値を取る．
 \end{remark}
 
-\section{特性関数と母関数}
+\section{特性関数と積率母関数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=積分変換]
@@ -5292,32 +5292,6 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{Laplace変換}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $\R_+$上の分布に限っては，特性関数と同等にLaplace変換も扱う．
-\end{tcolorbox}
-
-\begin{notation}
-    \[\P_+:=\Brace{\mu\in\P(\R)\mid\supp\mu\subset[0,\infty)}\]
-    と表す．
-\end{notation}
-
-\begin{definition}
-    $F\in\P_+$に対して，
-    \[\L_F(u):=\int^\infty_0e^{-ux}F(dx)\]
-    で定まる関数$\L_F:\R_+\to\R_+$を，$F$の\textbf{Laplace変換}という．
-\end{definition}
-
-\begin{theorem}[一意性定理]
-    $F,G\in\P_+$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $F=G$．
-        \item $\L_F=\L_G$．
-    \end{enumerate}
-\end{theorem}
-
 \subsection{分布関数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -5345,6 +5319,32 @@ $\lim_{x\to-\infty}F(x)=0,\lim_{x\to\infty}F(x)=1$を満たす右連続な広義
         \item $F$の任意の連続点$x\in\R$について，$F_n(x)\to F(x)$．
     \end{enumerate}
 \end{proposition}
+
+\subsection{Laplace変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R_+$上の分布に限っては，特性関数と同等にLaplace変換も扱う．
+\end{tcolorbox}
+
+\begin{notation}
+    \[\P_+:=\Brace{\mu\in\P(\R)\mid\supp\mu\subset[0,\infty)}\]
+    と表す．
+\end{notation}
+
+\begin{definition}
+    $F\in\P_+$に対して，
+    \[\L_F(u):=\int^\infty_0e^{-ux}F(dx)\]
+    で定まる関数$\L_F:\R_+\to\R_+$を，$F$の\textbf{Laplace変換}という．
+\end{definition}
+
+\begin{theorem}[一意性定理]
+    $F,G\in\P_+$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $F=G$．
+        \item $\L_F=\L_G$．
+    \end{enumerate}
+\end{theorem}
 
 \subsection{積率母関数}
 

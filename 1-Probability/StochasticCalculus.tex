@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -338,7 +338,7 @@ title=]
 \end{tcolorbox}
 
 \begin{definition}[(standard) Brownian motion / Wiener process]
-    $(\Om,\F,P)$上の実確率過程$(B_t)_{t\in\R_+}$が\textbf{Brown運動}であるとは，次の4条件を満たすことをいう：
+    $(\Om,\F,P)$上の実確率過程$(B_t)_{t\in\R_+}$が\textbf{標準Brown運動}であるとは，次の4条件を満たすことをいう：
     \begin{enumerate}[({B}1)]
         \item $B_0=0\;\as$
         \item $\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$は独立．
@@ -347,6 +347,18 @@ title=]
     \end{enumerate}
     $d$個の独立なBrown運動$B^1,\cdots,B^d$の積$B=(B^1_t,\cdots,B^d_t)_{t\in\R_+}$を\textbf{$d$次元Brown運動}という．
 \end{definition}
+\begin{example}[Brown運動ではない例]
+    Brown運動$(B_t)_{t\in\R_+}$に対して，独立でランダムな時刻$U:\Om\to[0,1]$を考える．$U$は$[0,1]$上の一様分布に従うとする．
+    \[\wt{B}_t:=\begin{cases}
+        B_t,&t\ne U,\\
+        0,&t=U.
+    \end{cases}\]
+    とすると，$P[s\ne U\land t\ne U]=0$に注意して，
+    \[E[\wt{B}_t\wt{B}_s]=E[B_tB_s|s\ne U\land t\ne U]+0=E[B_tB_s1_{\Brace{s\ne U,t\ne U}}]P[s\ne U\land t\ne U]=s\land t.\]
+    だから，これは平均$0$で共分散$s\land t$のGauss過程である．
+    特に，Brown運動のバージョンである．
+    一方で，$U=0$である場合を除いて見本道は連続でない，すなわち殆ど確実に見本道は連続でない．
+\end{example}
 
 \begin{lemma}[高次元正規分布の特徴付け]
     正規分布に従う独立な実確率変数$B_{t_1},\cdots,B_{t_n}$について，
@@ -506,7 +518,7 @@ title=]
     $\{Z_n\}_{n\ge0}\subset L^2(\Om)$を$N(0,1)$に従う独立同分布確率変数列とする．
 \end{notation}
 
-\begin{theorem}
+\begin{theorem}[Ito-Nishio]
     上述の設定において，
     \begin{enumerate}
         \item $\sum^\infty_{n=0}Z_n\int^t_0e_n(r)dr$は$L^2(\Om)$内で収束する．
@@ -542,9 +554,70 @@ title=]
         \item $(X_n)$を正規確率ベクトルの列で，$\lim_{n\to\infty}X_n=X\;\as$を満たすとする．$b:=\lim_{n\to\infty}E[X_n],C:=\lim_{n\to\infty}\Cov[X_n]$が存在するならば，$X$は$b,C$が定める正規確率変数である．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\frac{1}{\sqrt{2}\sigma}(X_1+X_2,X_1-X_2)^\top$は，標準正規分布$\frac{1}{\sigma}(X_1,X_2)^\top$の直交行列$\frac{1}{\sqrt{2}}(1,1;1,-1)$による変換であるから，再び標準正規分布である．
+        \item 右辺の不等式については，
+        \begin{align*}
+            P[X>x]&=\frac{1}{\sqrt{2\pi}}\int^\infty_xe^{-\frac{u^2}{2}}du\\
+            &\le\frac{1}{\sqrt{2\pi}}\frac{u}{x}\int^\infty_xe^{-\frac{u^2}{2}}du
+            =\frac{1}{\sqrt{2\pi}}\frac{1}{x}e^{-\frac{x^2}{2}}.
+        \end{align*}
+    \end{enumerate}
+\end{proof}
 
 \begin{construction}
-    
+    $[0,1]$内の小数第$n$位までの2進有理数の集合を
+    \[\D_n:=\Brace{\frac{k}{2^n}\in[0,1]\;\middle|\;0\le k\le 2^n}\]
+    で表し，$\D:=\cup_{n\in\N}\D_n$とする．
+    各$\D_n$上に点を打ち，その線型補完として$C([0,1])$の列を得て，その一様収束極限が（存在して）Gauss過程であることを導けば良い．
+    \begin{description}
+        \item[列の構成] $N(0,1)$に従う独立同分布確率変数列が，ある確率空間$(\Om,\A,P)$上に存在する：$\{Z_n\}\subset L^2(\Om)$．これを用いて，
+        $\D_n$上の確率過程で，
+        \begin{enumerate}
+            \item $B_0=0,B_1=Z_1$，
+            \item $\forall_{r<s<t\in\D_n}\;B_s-B_r\perp B_t-B_s\sim N(0,t-s)$，
+            \item $(B_d)_{d\in\D_n}\perp(Z_t)_{t\in\D\setminus\D_n}$，
+        \end{enumerate}
+        の3条件を満たすものが任意の$n\in\N$について存在することを示す．
+
+        $n=0$のとき，(1)で定まる$B_0,B_1$は，$B_1-B_0=Z_1\sim N(0,1)$かつ$(0,Z_1)$は$(Z_t)_{t\in\D\setminus\{0,1\}}$と独立である．
+        $n>0$のとき，$d\in\D_n\setminus\D_{n-1}$について
+        \[B_d:=\frac{B_{d-1/2^n}+B_{d+1/2^n}}{2}+\frac{Z_d}{2^{(n+1)/2}}\]
+        とおけば良い．実際，このとき$\D_{n-1}\ni B_{d-1/2^n},B_{d+1/2^n}\perp (Z_t)_{t\in\D\setminus\D_{n-1}}$より，帰納法の仮定から$B_d\perp(Z_t)_{t\in\D\setminus\D_n}\subset(Z_t)_{t\in\D\setminus\D_{n-1}}$が成り立つ．
+        よって後は条件(2)の成立を示せば良い．
+        帰納法の仮定から$\frac{B_{d-1/2^n}-B_{d+1/2^n}}{2},\frac{Z_d}{2^{(n+1)/2}}$は独立に$N(0,1/2^{n+1})$に従う．
+        よって，和と差$B_d-B_{d+1/2^n},B_d-B_{d-1/2^n}$も独立に$N(0,1/2^n)$に従う．このとき，$(B_d-B_{d-1/2^n})_{d\in\D_n\setminus\{0\}}$が独立であることを示せば十分である．
+        これらは多次元正規分布を定めるから，対独立性を示せば十分である．
+        
+        これら新たな点が定める新たな$1/2^n$増分は，$\D_{n-1}$の点の凸結合としたから，$\D_{n-1}$の言葉で表せて，独立性は帰納法の仮定から従う．
+        \item[一様収束極限の存在]
+        $(B_d)_{d\in\D_n\setminus\D_{n-1}}$の線型補間を$F_n:[0,1]\to\R$と表す($D_{-1}=\emptyset$とする)と，
+        \[\forall_{n\in\N}\;\forall_{d\in\D_n}\quad B_d=\sum^n_{i=0}F_i(d)=\sum^\infty_{i=0}F_i(d)\]
+        が成り立つ．このとき，$\sum^\infty_{i=0}F_i(t)$は$C([0,1])$の一様ノルムについて収束すること，従って$\norm{F_n}_\infty$が$0$に収束することを示せば良い．
+
+        任意の$c>1$と($\frac{1}{c\sqrt{n}}\le\sqrt{\frac{\pi}{2}}$を満たすくらい)十分大きな$n$について，
+        \[P[\abs{Z_d}\ge c\sqrt{n}]\le2\frac{1}{c\sqrt{n}}\frac{1}{\sqrt{2\pi}}e^{-\frac{c^2n}{2}}\le e^{-\frac{c^2n}{2}}.\]
+        よって，ある$N\in\N$について，
+        \begin{align*}
+            \sum^\infty_{n=N}P[\exists_{d\in\D_n}\;\abs{Z_d}\ge c\sqrt{n}]&<\sum^\infty_{n=N}\sum_{d\in\D_n}P[\abs{Z_d}\ge c\sqrt{n}]\\
+            &\le\sum^\infty_{n=N}(2^n+1)\exp\paren{-\frac{c^2n}{2}}
+        \end{align*}
+        が成り立つから，$c>\sqrt{2\log 2}$を満たす$c$を取れば，級数$\sum^\infty_{n=0}P[\exists_{d\in\D_n}\;\abs{Z_d}\ge c\sqrt{n}]<\infty$が成り立つ．
+        これを満たす$c$を一つ任意に取ると，Borel-Cantelliの補題から，
+        \[P[\limsup_{n\to\infty}\Brace{\exists_{d\in\D_n}\;\abs{Z_d}\ge c\sqrt{n}}]\le\lim_{N\to\infty}\sum_{n=N}^\infty P[\exists_{d\in\D_n}\;\abs{Z_d}\ge c\sqrt{n}]=0.\]
+        すなわち，$\exists_{N\in\N}\;\forall_{n\ge N}\;\forall_{d\in D_n}\;\abs{Z_d}<c\sqrt{n}$．
+        これは，$\forall_{n\ge N}\;\norm{F_n}_\infty<c\sqrt{n}2^{-n/2}$を意味する．
+        よって，$B_t:=\sum^\infty_{i=0}F_i(t)$は確率$1$で一様収束する．
+        \item[極限過程はBrown運動である]
+        任意に$0\le t<s\in[0,1]$を取ると，$\D$の列$(t_n),(s_n)$が存在して$t,s$にそれぞれ収束する．
+        極限過程$B$の連続性より，$B_s=\lim_{n\to\infty}B_{s_n}$が成り立つ．
+        よって，$B_{t_n}\sim N(0,t_n)$より，
+        $E[B_t]=\lim_{n\to\infty}E[B_{t_n}]=0$．
+        また，
+        \[\Cov[B_s,B_t]=\lim_{n\to\infty}\Cov[B_{s_n},B_{t_n}]=\lim_{n\to\infty}s_n=s.\]
+        以上より，$(B_t)_{t\in I}$はBrown運動である．
+    \end{description}
 \end{construction}
 
 \begin{proposition}[jointly measurable]
