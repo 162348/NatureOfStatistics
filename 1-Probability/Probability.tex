@@ -3262,9 +3262,7 @@ title=]
 もマルチンゲールとなることがわかる．
 
 
-
-
-\chapter{Markov過程}
+\chapter{定常過程とMarkov過程}
 
 \begin{quote}
     互いに独立な試行の列（確率変数の列）の，マルチンゲールとは別の方向への一般化を考える．
@@ -3281,6 +3279,29 @@ title=]
     これは大数の法則を一般化する．
     また，推移作用素になり得る作用素は放物型偏微分方程式によって特徴付けられる．
 \end{quote}
+
+\section{定常過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    定常過程については，スペクトル分解とエルゴード定理が証明できる．
+\end{tcolorbox}
+
+\begin{definition}[weak / strong stationary stochastic process]
+    確率過程$(X_t)_{t\in\R}$について，
+    \begin{enumerate}
+        \item $\forall_{t,s,h\in\R}\;m(t+h)=m(t),\Gamma(t+h,s+h)=\Gamma(t,s)$が成り立つとき，すなわち$m$が定数で$\Gamma(s,t)$は$\abs{t-s}$の関数であるとき，\textbf{弱定常過程}という．
+        \item 任意の$n\in\N,\{t_i\}_{i\in[n]}\subset\R$について，有限次元分布が任意の平行移動$h\in\R$について等しい：$\Phi_{t_1+h,\cdots,t_n+h}=\Phi_{t_1,\cdots,t_n}$がとき，\textbf{強定常過程}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    過程$(X_t)_{t\in\R}$について，
+    \begin{enumerate}
+        \item 強定常かつ$X_0\in L^2(\Om)$のとき，弱定常である．
+        \item $(X_t)_{t\in\R}$がGaussであるとき，弱定常性と強定常性とは同値．
+    \end{enumerate}
+\end{lemma}
 
 \section{Kolmogorovの拡張定理}
 
@@ -3649,6 +3670,8 @@ title=熱核の半群性]
     これは，時刻$0$に$x$から初めて，$s+t$に$A$に至るまでの時刻$s$での経由地$y\in S$について積分しても等しくなる，という意味を持つ．
 \end{discussion}
 
+\chapter{加法過程}
+
 \section{加法過程}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -3945,6 +3968,11 @@ title=]
 
 \section{1次元拡散過程}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    与えられた領域$U$をほとんど確実に出ていく強Markov過程を拡散過程という．
+\end{tcolorbox}
+
 \begin{notation}
     $W:=C(\R_+)$上に確率測度の族$(P_x)_{x\in\R}$を考える．
     射影を$X_t:=\pr_t:W\to\R;\om\mapsto\om(t)\;(t\in\R_+)$と表すと，この見本過程$\R_+\to\Map(W,\R)$は任意の$x\in\R$について$(W,P_x)$上連続．
@@ -3952,7 +3980,7 @@ title=]
 \end{notation}
 
 \begin{definition}[diffusion process]
-    確率過程$(X_t)_{t\in\R_+}$が$P_x[X_0=x]=1$と次の条件を満たすとき，$\M:=(\M_x)_{x\in\R},\M_x:=\Brace{X_t(\om)\in\R\mid t\in\R_+,\om\in(C,P_x)}$を\textbf{一様な連続強Markov過程}または\textbf{拡散過程}という．
+    確率過程$(X_t)_{t\in\R_+}$が$P_x[X_0=x]=1$と次の条件を満たすとき，$\M:=(\M_x)_{x\in\R},\M_x:=\Brace{X_t(\om)\in\R\mid t\in\R_+,\om\in(W,P_x)}$を，$x$から始まる\textbf{一様な連続強Markov過程}または\textbf{拡散過程}という．
     \begin{quote}
         (強Markov性) $x\in\R$と有限な$(B_t)$-Markov時刻$\tau:W\to\R_+$，$E\in\B^1(\R^1)$について，
         $P_x[X_{\tau+t}\in E\mid\B_\tau]=P_x[X_t\in E]|_{x=X_\tau}$．

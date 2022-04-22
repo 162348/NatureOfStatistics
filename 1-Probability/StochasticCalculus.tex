@@ -292,6 +292,7 @@ title=]
     title=]
     Kolmogorovの拡張定理は，Hopfの拡張定理の一般化である．
     そこから確率過程論についても，種々の対象が構成できる．
+    $\R_+$上の確率過程も，有限次元周辺分布を指定することで構成できるが，$\R^\infty$の場合と違って一意性は担保されない．
 \end{tcolorbox}
 
 \begin{theorem}
@@ -732,6 +733,28 @@ title=]
     任意の$x\in\R$に対して，$B(0)=x$を満たす\textbf{両側Brown運動}$(B_t)_{t\in\R}$が存在する．
 \end{proposition}
 
+\subsection{Ornstein-Uhlenbeck拡散}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    摩擦の存在下での質量の大きいBrown粒子の速度のモデルとして最小の応用が見つかった，定常過程かつMarkov過程でもあるGauss過程である．
+    なお，この3条件を満たす（時空間変数の線形変換の別を除いて）唯一の非自明な過程である．
+    時間的に平均へドリフトする，平均回帰性(mean-reverting)を持つために，拡散過程でもある．
+\end{tcolorbox}
+
+\begin{definition}[Ornstein-Uhlenbeck diffusion]
+    Brown運動に，時間変数に$\exp(2-)$を合成し，時間に応じて$e^{-t}$にスケールした過程
+    $(X_t:=e^{-t}B_{e^{2t}})_{t\in\R}$を\textbf{Ornstein-Uhlenbeck過程}または\textbf{平均回帰過程}という．
+\end{definition}
+\begin{remarks}\mbox{}
+    \begin{enumerate}
+        \item 一次元周辺分布は$\forall_{t\in\R}\;X_t\sim N(0,1)$である．
+        \item 離散時間の過程に$AR(1)$というものがあり，この連続化とみなせる．
+        \item Brown運動と違って，時間反転可能であり，$(X_t)_{t\in\R_+},(X_{-t})_{t\in\R_+}$は分布が等しい．
+        \item $-\infty$近傍の振る舞いはBrown運動の$0$近傍の振る舞いに関係がある．
+    \end{enumerate}
+\end{remarks}
+
 \subsection{Cameron-Matrin定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -773,26 +796,7 @@ title=]
 
 \section{性質}
 
-\subsection{フラクタル曲線としての見本道の性質}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    任意の$0\le\gamma<\frac{1}{2}$について，$\gamma$-Holder連続であることは，構成１\ref{construction-Kolmogorov}から従う．
-\end{tcolorbox}
-
-\begin{definition}[modulus of continuity]
-    Brown運動のコンパクト集合への制限$B:[0,1]\times\Om\to\R$の\textbf{連続度}とは，
-    \[\limsup_{h\searrow 0}\sup_{t\in[0,1-h]}\frac{\abs{B(t+h)-B(t)}}{\varphi(h)}\le 1\]
-    かつ$\lim_{h\searrow0}\varphi(h)=0$を満たす関数$\varphi:[0,1]\times\Om\to\R$をいう．
-\end{definition}
-\begin{remark}
-    一方で，supを外して，計測関数$\varphi:\R_+\to\R_+$であって，$\limsup_{t\in\R_+}\frac{B(t)}{\varphi(t)}\in\R_+$を満たすものを探すことは，連続度と対になる．
-\end{remark}
-
-\begin{definition}[locally Holder continuous]
-    関数$f:\R_+\to\R$が\textbf{$x$において局所$\al$-Holder連続}であるとは，次を満たすことをいう：
-    \[\exists_{\ep>0}\;\exists_{c>0}\;\forall_{y\in\R_+}\;\abs{y-x}<\ep\Rightarrow\abs{f(x)-f(y)}\le c\abs{x-y}^\al.\]
-\end{definition}
+\subsection{フラクタル曲線としての見本道の対称性}
 
 \begin{proposition}\mbox{}
     \begin{enumerate}
@@ -807,24 +811,12 @@ title=]
         \item 大数の法則：$\lim_{t\to\infty}\frac{B_t}{t}=0\;\as$\footnote{時間反転により，$\infty$での性質を$0$に引き戻して考えることが出来る，という議論の順番がきれいだと考えて入れ替えた．}        
         \item $1/2$-大数の法則\footnote{大数の法則と併せてみると，長い目で見て，Brown運動は線型関数よりは遅く増加するが，$\sqrt{t}$よりはlimsupが速く増加する．}：
         \[\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=+\infty\;\as,\qquad\liminf_{n\to\infty}\frac{B(n)}{\sqrt{n}}=-\infty\;\as\]
-        \item $1/2$-Holder連続ではない：$P\Square{\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}=+\infty}=1$．\footnote{実は，$1/2$-Holder連続な点も存在するが，高々零集合である．また，$\al>1/2$については，ほとんど確実に，任意の点で$\al$-Holder連続でない．これは微分可能性についてのPaleyの結果よりも強い主張である．}
-        \item 連続度\footnote{Levy 1937}：$\varphi(h):=C\sqrt{h\log(1/h)}$はBrown運動の非確率的な連続度であり，$C=\sqrt{2}$のとき最適になる：\footnote{$\limsup$を$\lim$に置き換えても成り立つ．}
-        \[\limsup_{\delta\searrow 0}\sup_{s,t\in[0,1],\abs{t-s}<\delta}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\abs{t-s}}}=1\;\as\]
-        \item 最小包絡関数：$\limsup_{t\to\infty}\frac{B_t}{\sqrt{2t\log\log(t)}}=1\;\as$\footnote{$1/2$-Holder連続性が$1/2$-大数の法則の系であったように，繰り返し対数の法則はこの系になる．}
-        \item 一点における連続性の結果・繰り返し対数の法則\footnote{Khinchin 1933}：\[\forall_{s\in\R_+}\;\limsup_{t\searrow s}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\log\abs{t-s}}}=1\;\as\]
-        \item 殆ど確実に，任意の$0<a<b<\infty$に対して，Brown運動の見本道は$[a,b]$上単調でない．
-        \item ほとんど確実に，局所的な増加点$t\in(0,\infty)\;\st\;\exists_{t\in(a,b)\osub\R_+}\;[\forall_{s\in(a,t)}\;f(s)\le f(t)]\land[\forall_{s\in(t,b)}\;f(t)\le f(s)]$を持たない．
-    \end{enumerate}
-    関数$f$の右・左微分係数を$D^*f(t):=\limsup_{h\searrow0}\frac{f(t+h)-f(t)}{h},D_*f(t)$で表すとする
-    \begin{enumerate}\setcounter{enumi}{13}
-        \item 任意の$t\in\R_+$について，殆ど確実に$B_t$は$t$において微分可能でない上に，殆ど確実に$D^*B(t)=+\infty\land D_*B(t)=-\infty$．
-        \item $B$の見本道は殆ど確実に至る所微分不可能性である．\footnote{Paley et al. 1933, Dvoretzky et al. 1961.}
-        さらに，ほとんど確実に$\forall_{t\in\R_+}\;D^*B(t)=+\infty\lor D_*B(t)=-\infty$．\footnote{なお，ほとんど確実に$\forall_{t\in[0,1)}\;D^*B(t)\in\{\pm\infty\}$という主張は正しくない．}
     \end{enumerate}
 \end{proposition}
 \begin{proof}\mbox{}
     \begin{enumerate}
-        \item \begin{enumerate}[({B}1)]
+        \item 
+        \begin{enumerate}[({B}1)]
             \item $X_0=a^{-1/2}B_0=0\;\as$
             \item $a^{-1/2}(B_{at_n}-B_{at_{n-1}}),\cdots,a^{-1/2}(B_{2}-B_{1})$は，独立な確率変数の可測関数$\R\to\R;x\mapsto a^{-1/2}x$との合成であるから，再び独立である．
             \item $B_{at}-B_{as}\sim N(0,a(t-s))$だから，$X_t-X_s=a^{-1/2}(B_{at}-B_{as})\sim N(0,a(t-s))$．
@@ -859,6 +851,50 @@ title=]
         まず，集合に関するFatouの補題から，$P[\Brace{B_n>c\sqrt{n}\;\io}]\ge\limsup_{n\to\infty}P[\Brace{B_n>c\sqrt{n}}]=P[\Brace{B_1>c}]>0$．
         次に，$X_n:=B_n-B_{n-1}$とすると，$\Brace{B_n>c\sqrt{n}\;\io}=\Brace{\sum^n_{j=1}X_j>c\sqrt{n}\;\io}$は$(X_n)$について可換な事象であるから（手前の有限個の$X_1,\cdots,X_m$に対する置換に対して不変）であるから，Hewitt-Savageの定理より，$P[\Brace{B_n>c\sqrt{n}\;\io}]=1$．
         最後に，任意の$c\in\Z_+$について合併事象を取ると，$P\Square{\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=\infty}=1$を得る．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[ユニタリ変換不変性 / conformal invariance property]
+    多次元正規分布の性質が一般化される．
+    $B$を$d$次元Brown運動，$U\in\GL_d(\R)$を直交行列とする．このとき，$(X_t:=UB_t)_{t\in\R_+}$はBrown運動である．
+\end{proposition}
+
+\subsection{連続性概念}
+
+\begin{definition}[modulus of continuity]
+    Brown運動のコンパクト集合への制限$B:[0,1]\times\Om\to\R$の\textbf{連続度}とは，
+    \[\limsup_{h\searrow 0}\sup_{t\in[0,1-h]}\frac{\abs{B(t+h)-B(t)}}{\varphi(h)}\le 1\]
+    かつ$\lim_{h\searrow0}\varphi(h)=0$を満たす関数$\varphi:[0,1]\times\Om\to\R$をいう．
+\end{definition}
+\begin{remark}
+    一方で，supを外して，計測関数$\varphi:\R_+\to\R_+$であって，$\limsup_{t\in\R_+}\frac{B(t)}{\varphi(t)}\in\R_+$を満たすものを探すことは，連続度と対になる．
+\end{remark}
+
+\begin{definition}[locally Holder continuous]
+    関数$f:\R_+\to\R$が\textbf{$x$において局所$\al$-Holder連続}であるとは，次を満たすことをいう：
+    \[\exists_{\ep>0}\;\exists_{c>0}\;\forall_{y\in\R_+}\;\abs{y-x}<\ep\Rightarrow\abs{f(x)-f(y)}\le c\abs{x-y}^\al.\]
+\end{definition}
+
+\subsection{見本道の連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    任意の$0\le\gamma<\frac{1}{2}$について，$\gamma$-Holder連続であることは，構成１\ref{construction-Kolmogorov}から従う．
+\end{tcolorbox}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $1/2$-Holder連続ではない：$P\Square{\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}=+\infty}=1$．\footnote{実は，$1/2$-Holder連続な点も存在するが，高々零集合である．また，$\al>1/2$については，ほとんど確実に，任意の点で$\al$-Holder連続でない．これは微分可能性についてのPaleyの結果よりも強い主張である．}
+        \item 連続度\footnote{Levy 1937}：$\varphi(h):=C\sqrt{h\log(1/h)}$はBrown運動の非確率的な連続度であり，$C=\sqrt{2}$のとき最適になる：\footnote{$\limsup$を$\lim$に置き換えても成り立つ．}
+        \[\limsup_{\delta\searrow 0}\sup_{s,t\in[0,1],\abs{t-s}<\delta}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\abs{t-s}}}=1\;\as\]
+        \item 最小包絡関数：$\limsup_{t\to\infty}\frac{B_t}{\sqrt{2t\log\log(t)}}=1\;\as$\footnote{$1/2$-Holder連続性が$1/2$-大数の法則の系であったように，繰り返し対数の法則はこの系になる．}
+        \item 一点における連続性の結果・繰り返し対数の法則\footnote{Khinchin 1933}：\[\forall_{s\in\R_+}\;\limsup_{t\searrow s}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\log\abs{t-s}}}=1\;\as\]
+        \item 殆ど確実に，任意の$0<a<b<\infty$に対して，Brown運動の見本道は$[a,b]$上単調でない．
+        \item ほとんど確実に，局所的な増加点$t\in(0,\infty)\;\st\;\exists_{t\in(a,b)\osub\R_+}\;[\forall_{s\in(a,t)}\;f(s)\le f(t)]\land[\forall_{s\in(t,b)}\;f(t)\le f(s)]$を持たない．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
         \item 時間反転により(7)に帰着する．
         $\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}>\sup_{t\in(0,1]}\frac{\abs{B_t-B_0}}{\sqrt{\abs{t-0}}}$であるから，
         \[P\Square{\sup_{t\in(0,1]}\frac{\abs{B_t}}{\sqrt{t}}=\infty}=1\]
@@ -881,22 +917,18 @@ title=]
         
         ここで，任意の$t>0$に対して，$Y_s:=B_{t+s}-B_t$とすると，$Y_s$も標準Brown運動で(3)，$Y_0$にて微分可能でない．
         よって，$B$も$B_t$において微分可能でない．
-        \item 保留．
     \end{enumerate}
 \end{proof}
 
-\begin{example}[Ornstein-Uhlenbeck diffusion]
-    \[X_t:=e^{-t}B(e^{2t})\]
-    によって定まる過程$(X_t)_{t\in\R}$を\textbf{オルンシュタイン＝ウーレンベック拡散}
-    または\textbf{平均回帰過程}という．
-    これはMarkov過程であり，$\forall_{t\in\R}\;X_t\sim N(0,1)$が成り立つ．
-    これは，原点に向かって，原点からの距離に比例したドリフト場の中での拡散のモデルになっている．
-    Ornstein-Uhlenbeck過程は時間反転可能で，$(X_t)_{t\in\R_+},(X_{-t})_{t\in\R_+}$は同じ分布を持つ．
-\end{example}
+\subsection{見本道の可微分性}
 
-\begin{proposition}[ユニタリ変換不変性 / conformal invariance property]
-    多次元正規分布の性質が一般化される．
-    $B$を$d$次元Brown運動，$U\in\GL_d(\R)$を直交行列とする．このとき，$(X_t:=UB_t)_{t\in\R_+}$はBrown運動である．
+\begin{proposition}
+    関数$f$の右・左微分係数を$D^*f(t):=\limsup_{h\searrow0}\frac{f(t+h)-f(t)}{h},D_*f(t)$で表すとする
+    \begin{enumerate}
+        \item 任意の$t\in\R_+$について，殆ど確実に$B_t$は$t$において微分可能でない上に，殆ど確実に$D^*B(t)=+\infty\land D_*B(t)=-\infty$．
+        \item $B$の見本道は殆ど確実に至る所微分不可能性である．\footnote{Paley et al. 1933, Dvoretzky et al. 1961.}
+        さらに，ほとんど確実に$\forall_{t\in\R_+}\;D^*B(t)=+\infty\lor D_*B(t)=-\infty$．\footnote{なお，ほとんど確実に$\forall_{t\in[0,1)}\;D^*B(t)\in\{\pm\infty\}$という主張は正しくない．}
+    \end{enumerate}
 \end{proposition}
 
 \subsection{確率過程としての性質}
