@@ -841,18 +841,23 @@ title=]
     ほとんどの例はその退化と見れる．
 \end{tcolorbox}
 
+\subsubsection{集合上の関数}
+
 \begin{example}[体の積]\mbox{}
     \begin{enumerate}
         \item $\bF^n$には$p\in[1,\infty]$について，$\norm{x}_p:=\paren{\sum\abs{x_k}^p}^{1/p}\;(p<\infty)$，$\norm{x}_\infty=\max\abs{x_k}$などのノルムが入り，いずれも同値である．
         これは特殊な例で，普通Banach空間には自然なノルムが一意に定まる．距離空間に同値な距離が大量にあるのと対照的である．
         \item 体$\bF$の添字集合$J$に関する直積（$l^\infty$-直和）を$l^\infty(J)$で表す．
         \item 体$\bF$の添字集合$J$に関する直和（$l^1$-直和）を$l^1(J)$で表す．
-        \item $J=\N$のとき，これを省略して書く．$l^\infty$は有界列の空間，$l^1$は絶対収束列の空間である．$\sup_{k\in\N}\abs{a_k}<\infty$を満たす数列の空間$c_b$について，$c_b=l^\infty$である．$l^1\subsetneq(l^\infty)^*$である．
-        \item $0$に収束する数列全体の空間を$c_0$で表すと，収束列は有界列であるから，上限ノルムについて$l^\infty$の閉部分空間となる．したがって$c_0$もBanachであり，その双対空間を考えると，$\N$上の有限符号付き測度であるから，$(c_0)^*=l^1$となる\ref{exp-Riesz-Markov-theorem-to-sequence-spaces}．また，$c_0$はいかなるBanach空間のpredualにもならない\ref{cor-predual-of-c0}．
+        \item $J=\N$のとき，これを省略して書く．$l^\infty$は有界列の空間，$l^1$は絶対収束列の空間である．$\sup_{k\in\N}\abs{a_k}<\infty$を満たす数列の空間$c_b$について，$c_b=l^\infty$である．$l^1\subsetneq(l^\infty)^*$である．$l^\infty$は可分でない．
+        \item $0$に収束する数列全体の空間を$c_0$で表すと，収束列は有界列であるから，上限ノルムについて$l^\infty$の可分な閉部分空間となる．したがって$c_0$もBanachであり，その双対空間を考えると，$\N$上の有限符号付き測度であるから，$(c_0)^*=l^1$となる\ref{exp-Riesz-Markov-theorem-to-sequence-spaces}．また，$c_0$はいかなるBanach空間のpredualにもならない\ref{cor-predual-of-c0}．
+        \item 収束列の空間$c$は$l^\infty$の可分な閉部分空間となる．$\forall_{n\in\N}\;e_n=1$を満たす元を$e\in l^\infty$とすると，$c=\bF e+c_0$と表せる．
         \item こうしてノルムが大事になってくる，$L^p(J)$の入り口である．$l^p$空間は$p\ge 1$についてBanach空間，$0<p<1$について$F$-空間である．
         \item $a_k=0\;\fe$を満たす数列全体の空間を$c_c$または$c_{00}$で表す．これはコンパクト収束位相\footnote{任意の有限集合上で収束する}について局所凸空間である．
     \end{enumerate}
 \end{example}
+
+\subsubsection{位相空間上の関数と微分}
 
 \begin{example}[位相空間上の体値関数]\label{exp-Banach-spaces}
     $X$を局所コンパクトハウスドルフ空間とする．
@@ -883,6 +888,35 @@ title=]
     $X$がコンパクトのとき，$(C(X))^*$は符号付Radon測度の空間で，$(C_0(X))^*$は正則なBorel測度全体のなす空間となる．
 \end{example}
 
+\begin{example}
+    $\Om\osub\R^m$を非空な開集合とする．
+    \begin{enumerate}
+        \item $\Om$は$\sigma$-コンパクトだから，$\Om$に至るコンパクト集合の増大列$(K_n)$が存在する．
+        $C(\Om)$に，半ノルムの族$(p_n(f):=\sup_{x\in K_n}\abs{f(x)})_{n\in\N}$が誘導する局所凸位相を入れたものは完備で，したがってこれはFrechet空間となる．
+        距離は
+        \[d(f,g)=\max_{n\in\N}\frac{2^{-n}p_n(f-g)}{1+p_n(f-g)}\]
+        が与える．
+        しかし局所有界でないため，ノルム付け可能ではない\ref{thm-character-of-TVS}．
+        \item 正則関数のなす部分空間$H(\Om)\subset C(\Om)$は閉部分空間だから，やはりFrechet空間である．この空間はHeine-Borel性を持つため，局所有界でなく，したがってノルム付け可能でない．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[滑らかな関数の空間と試験関数の空間]
+    $K\subset\R^n$をコンパクト集合とし，$K\subset\Om\osub\R^n$を開集合とする．
+    \begin{enumerate}
+        \item  $C^\infty(\Om)$は$\Om$に届くコンパクト集合の増大列$(K_i)$について，
+        \[p_N(f):=\max\Brace{\abs{D^\al f(x)}\in\R_+\mid x\in K_N,\abs{\al}\le N}\]
+        として得る半ノルム列$(p_N)_{N\in\N}$に関して，Frechet空間となる．
+        これはHeine-Borel性を持つため，局所有界でなく，ノルム付け可能でない．
+        \item $K$に台を持つ$\Om$上の滑らかな関数の全体を
+        \[D_K:=\Brace{f\in C^\infty(\R^n)\mid \supp f\subset K}\]
+        とすると，これは$C^\infty(\Om)$の閉部分空間となり，再びFrechet空間である．\footnote{$D$の記法はSchwartz以来伝統的である．}
+    \end{enumerate}
+    この空間の上に，任意の多重指数$\al$について，$D^\al:C^\infty(\Om)\to C^\infty(\Om)$は連続になる．
+\end{example}
+
+\subsubsection{測度空間上の関数と積分}
+
 \begin{example}[測度空間上の体値関数の同値類]\label{exp-Banach-space-of-Radon-integrable-functions}
     局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$について，
     可積分関数$f$のなす空間
@@ -910,19 +944,50 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{example}[導関数ノルムを備えたBanach空間]\label{exp-Banach-space-with-derivative-norm}
-    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階以下の導関数がすべて$\Om$上有界である関数の全体を$B^m(\Om)$または$C_b^m(\Om)$で表す．
-    これはある種の1-ノルム$\norm{u}=\sum_{\abs{\al}\le m}\sup_{x\in\Om}\abs{D^\al u(x)}$について，Banach空間となる．
-    $C_b^0(\Om)$は$C_b(\Om)$に一致する．
-    $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
+\begin{example}
+    $I:=[0,1].p\in(0,1)$について，
+    \[L^p(I):=\Brace{f\in\Meas(I,\R)\;\middle|\;\Delta(f):=\int^1_0\abs{f(t)}^pdt<\infty}\]
+    上に，平行移動不変な距離$d(f,g):=\Delta(f-g)$が定まる．$I$でなく可算集合である場合$l^p$などは，これはFrechet空間になるが，
+    $[0,1]$上では局所有界な$F$-空間であるが，局所凸ではないため，Frechet空間とはならない．
+    すなわち，次が成り立つ：$\emptyset,L^p$を除いて凸開集合は存在しない．
 \end{example}
 
-\begin{example}[Lipschitz連続な関数のBanach空間]
-    \[\Lip[a,b]:=\Brace{u\in C([a,b])\mid\exists_{L\in\R}\;\forall_{x,x'}\;\abs{u(x')-u(x)}\le L\abs{x'-x}}\]
-    は，ノルム
-    \[\norm{u}:=\sup_{x\in[a,b]}\abs{u(x)}+\sup_{x\ne x'\in[a,b]}\frac{\abs{u(x')-u(x)}}{x'-x}\]
+\subsubsection{自然な部分空間}
+
+\begin{example}[Lipschitz空間]
+    $I:=[a,b]$上の$\al$-Holder連続な関数の全体
+    \[\Lip^\al(I):=\Brace{f\in C(I)\mid L(f)<\infty},\quad L(f):=\sup_{x\ne y}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}=\sup_{\delta>0}\frac{\om(\delta;f)}{\delta^\al}.\]
+    は，2つの同値なノルム
+    \[\norm{f}:=L(f)+\abs{f(a)}\]
+    \[\nnorm{f}:=L(f)+\norm{f}_\infty\]
     についてBanach空間となる．
+    $L(f)$を$\al$-次Holder定数という．
+    \begin{enumerate}
+        \item さらに，連続度が$\om(\delta;f)=O(\delta)\;(\delta\to0)$を満たすものからなる部分集合$\lip^\al(I):=\Brace{f\in\Lip^\al(I)\mid\lim_{\delta\to0}\frac{\om(\delta;f)}{\delta^\al}=0}$は閉部分空間をなす．
+    \end{enumerate}
 \end{example}
+
+\begin{example}[導関数ノルムを備えたBanach空間]\label{exp-Banach-space-with-derivative-norm}
+    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階以下の導関数がすべて$\Om$上有界である関数の全体を$B^m(\Om)$または$C_b^m(\Om)$で表す．
+    これはある種の1-ノルム$\norm{u}_{C^1}=\sum_{\abs{\al}\le m}\norm{D^\al u}_\infty$について，Banach空間となる．
+    \begin{enumerate}
+        \item $C_b^0(\Om)$は$C_b(\Om)$に一致する．
+        \item $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[Holder空間]
+    局所コンパクトハウスドルフ空間$\Om$上の，$k$階$\al$-Holder連続微分可能な関数の空間を
+    \[C^{k,\al}(\Om):=\Brace{f\in C^k\mid\forall_{n\in[k]}\abs{f^{(k)}}_{C^{0,k}}<\infty}\quad\abs{f}_{C^{0,\al}}:=\sup_{x\ne y\in\Om}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}\]
+    と定めると，これは半ノルムの族$\norm{f}_{C^{k,\al}}:=\norm{f}_{C^k}+\sup_{\abs{\beta}=k}\abs{D^\beta f}_{C^{0,\al}}\;(\norm{f}_{C^k}:=\sup_{\abs{\beta}\le k}\sup_{x\in\Om}\abs{D^\beta}f(x))$について局所凸位相線形空間となり，$\Om$がコンパクトであるときさらにBanach空間となる．
+    \begin{enumerate}
+        \item 包含$C^{0,\beta}(\Om)\mono C^{0,\al}(\Om)\;(0<\al<\beta\le 1)$が存在する．
+        \item Ascoli-Arzelaの定理より，$\norm{-}_{0,\beta}$ノルムにおける有界集合は，$\norm{-}_{-\al}$ノルムにおける相対コンパクト集合に送られる．
+        \item これは，$C^k(\Om)$空間の，$k$に分数を許したバージョンだとみなせる．
+    \end{enumerate}
+\end{example}
+
+\subsubsection{群上の関数}
 
 \begin{example}[群上のBanach algebra]
     特別なクラスである．

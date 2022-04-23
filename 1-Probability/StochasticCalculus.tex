@@ -763,6 +763,16 @@ title=]
     これはちょうど$F$-Brown橋と標準Brown橋の関係と同じである．
 \end{tcolorbox}
 
+\subsubsection{Cameron-Martin部分空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $F(0)=0$を満たす
+    見本道
+    $F\in C([0,1])$のうち，
+    ある$F'\in L^2([0,1])$の積分として得られるものの全体をCameron-Martin部分空間という．
+\end{tcolorbox}
+
 \begin{notation}[skelton / Cameron-Martin subspace]\mbox{}
     \begin{enumerate}
         \item 標準Brown運動の法則を$L_0$，ドリフト$F$付きのBrown運動の法則を$L_F$で表す．
@@ -773,11 +783,36 @@ title=]
     \end{enumerate}
 \end{notation}
 
-\begin{definition}[equivalence measure, absolute continuous, singular]\mbox{}
+\begin{definition}[Dirichlet space]
+    $\Om\subset\C$上のDirichlet空間とは，正則関数の再生核Hilbert空間がなす$H^2(\Om)$の部分空間で，
+    \[\D(\Om):=\Brace{f\in H^2(\Om)\mid \D(f)<\infty}\quad\D(f):=\frac{1}{\pi}\iint_\Om\abs{f'(z)}^2dA=\frac{1}{4\pi}\iint_\Om\abs{\partial_xf}^2+\abs{\partial_yf}^2dxdy.\]
+    この右辺が変分原理であるDirichlet原理を定めるDirichlet積分になっていることから名前がついた．
+\end{definition}
+\begin{definition}
+    $X$を集合，$H\subset\Map(X;\R)$をHilbert空間とする．
+    評価関数$\ev_x:H\to\R$が任意の$x\in X$について有界線型汎関数である$\forall_{x\in X}\;\ev_x\in B(H)$とき，$H$を\textbf{再生核Hilbert空間}という．
+    すなわち，Rieszの表現定理よりある$K_x\in H$が存在して$\ev_x(-)=(-|K_x)$と表せる．この対応$X\to H;x\mapsto K_x$が導く双線型形式$K:X\times X\to\R;(x,y)\mapsto K(x,y):=(K_x|K_y)$を\textbf{再生核}という．
+    再生核は対称で半正定値である．
+\end{definition}
+\begin{theorem}
+    関数$K:X\times X\to\R$は対称かつ半正定値であるとする．このとき，ただ一つのHilbert空間$H$が$\Map(X;\R)$内に存在して，$K$を再生核として持つ．
+\end{theorem}
+
+\subsubsection{Cameron-Martin定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L_F\ll L_0$ならば，標準Brown運動$B$のa.s.性質は$B+F$に引き継がれる．
+    これはちょうどCameron-Martin部分空間について$F\in D[0,1]$に同値．
+    したがって微分を見てみると良い．
+\end{tcolorbox}
+
+\begin{definition}[equivalence measure, absolute continuous, singular]
+    可測空間$(\Om,\B)$上の測度を考える．
     \begin{enumerate}
         \item 2つの測度の零集合の全体が一致するとき，すなわち互いに絶対連続であるとき$\mu\ll\nu\land\nu\ll\mu$，これらは同値であるという．
         \item 絶対連続性は，測度の同値類の間に順序を定める．
-        \item ２つの測度の「台」が分解出来るとき，すなわち，ある分割$\Om=A\sqcup A^\comp$が存在して$\mu(A)=1\land\nu(A^\comp)=1$が成り立つとき，特異であるといい$\mu\perp\nu$と表す．
+        \item ２つの測度の「台」が分解出来るとき，すなわち，ある分割$\Om=A\sqcup A^\comp$が存在して$P(A)\cap\B\subset\cN(\mu)$かつ$P(A^\comp)\cap\B\subset\cN(\nu)$が成り立つとき，特異であるといい$\mu\perp\nu$と表す．
         \item Lebesgue分解により，任意の2つの$\sigma$-有限測度$\mu,\nu$について，一方をもう一方に対して絶対連続部分と特異部分との和に分解できる．
     \end{enumerate}
 \end{definition}
@@ -794,11 +829,42 @@ title=]
     すなわち，ほとんど確実な事象（見本道の連続性や可微分性）が等しい．
 \end{remarks}
 
+\subsubsection{証明}
+
+\begin{notation}
+    $F\in C[0,1],n>0$について，2進小数点$\D_n$で分割した
+    二次変分のたまごを
+    \[Q_n(F):=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\]
+    と表す．
+\end{notation}
+
+\begin{lemma}
+    $F\in C[0,1],F(0)=0$について，
+    \begin{enumerate}
+        \item $(Q_n(F))_{n\in\N}$は増加列である．
+        \item $F\in D[0,1]\Leftrightarrow\sup_{n\in\N}Q_n(F)<\infty$．
+        \item $F\in D[0,1]\Rightarrow Q_n(F)\xrightarrow{n\to\infty}\norm{F'}^2_2$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Paley-Wiener stochastic integral]
+    $(B_t)_{t\in\R_+}$を標準Brown運動とする．$F\in D[0,1]$について，
+    \[\xi_n:=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2}}}\Square{B\paren{\frac{j}{2^n}}-B\paren{\frac{j-1}{2^n}}}\]
+    はほとんど確実に$L^2$-収束する．
+    この極限を$\int^1_0F'dB$で表す．
+\end{lemma}
+
 \section{性質}
 
 \subsection{フラクタル曲線としての見本道の対称性}
 
-\begin{proposition}\mbox{}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    スケール不変であり，時間反転が可能である＝関数$1/t$と$t$によって時間と空間のパラメータを変換すると再びBrown運動である．
+    大数の法則によるとBrown運動が$y=\pm x$が囲む空間から無限回出ることはありえないが，$y=\pm\sqrt{n}$が囲む空間からは殆ど確実に無限回出ていく．
+\end{tcolorbox}
+
+\begin{proposition}\mbox{}\label{prop-character-of-Brownian-motion-1}
     \begin{enumerate}
         \item 自己相似性・スケール不変性：$\forall_{a>0}\;(X_t:=a^{-1/2}B_{at})_{t\ge0}$はBrown運動である．
         \item (原点)対称性：$(-B)_{t\in\R_+}$はBrown運動である．
@@ -810,7 +876,7 @@ title=]
         \end{cases}\]
         \item 大数の法則：$\lim_{t\to\infty}\frac{B_t}{t}=0\;\as$\footnote{時間反転により，$\infty$での性質を$0$に引き戻して考えることが出来る，という議論の順番がきれいだと考えて入れ替えた．}        
         \item $1/2$-大数の法則\footnote{大数の法則と併せてみると，長い目で見て，Brown運動は線型関数よりは遅く増加するが，$\sqrt{t}$よりはlimsupが速く増加する．}：
-        \[\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=+\infty\;\as,\qquad\liminf_{n\to\infty}\frac{B(n)}{\sqrt{n}}=-\infty\;\as\]
+        \[\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=+\infty\;\as,\qquad\liminf_{n\to\infty}\frac{B_n}{\sqrt{n}}=-\infty\;\as\]
     \end{enumerate}
 \end{proposition}
 \begin{proof}\mbox{}
@@ -861,42 +927,163 @@ title=]
 
 \subsection{連続性概念}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一様連続性の強さを定量化する手法が連続度である．
+    $\ep$-$\delta$論法において，$\delta$から$\ep$を与える関数関係を分類することで，連続性を分類する．
+\end{tcolorbox}
+
 \begin{definition}[modulus of continuity]
-    Brown運動のコンパクト集合への制限$B:[0,1]\times\Om\to\R$の\textbf{連続度}とは，
-    \[\limsup_{h\searrow 0}\sup_{t\in[0,1-h]}\frac{\abs{B(t+h)-B(t)}}{\varphi(h)}\le 1\]
-    かつ$\lim_{h\searrow0}\varphi(h)=0$を満たす関数$\varphi:[0,1]\times\Om\to\R$をいう．
+    $(X,\norm{-}_X),(Y,\norm{-}_Y)$をノルム空間とし，$f:X\to Y$を関数とする．
+    $X,Y$のそれ以外の位相的性質は不問とした方が良い．
+    \begin{enumerate}
+        \item $\om(\delta;f):=\sup_{\abs{x-y}\le\delta}\abs{f(x)-f(y)}$とおくと，$\om:[0,\infty]\to[0,\infty]$が定まる．
+        このとき，$\forall_{f\in\Map(X,Y)}\;\om(0;f)=0$に注意．
+    \end{enumerate}
+\end{definition}
+
+\subsubsection{大域的性質}
+
+\begin{lemma}[uniform continuity]
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $\om(-;f)$は$\delta=0$にて連続：$\lim_{\delta\to0}\om(\delta;f)=0$．
+        \item $f$は一様連続．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[Lipschitz continuity, Holder continuity]
+    $f:X\to Y$を関数とする．
+    \begin{enumerate}
+        \item $\om(\delta;f)=O(\delta)$を満たすとき，\footnote{$O(\delta)\;(\delta\to0)$ではなく，$\delta$の全域で$\delta$の定数倍で抑えられることをいう．}$f$はLipschitz定数$\sup_{\delta\in(0,\infty]}\frac{\om(\delta;f)}{\delta}$のLipschitz連続関数という．
+        \item $\al\in[0,1]$について$\om(\delta;f)=O(\delta^\al)$を満たすとき，$f$は$\al$-次Holder連続であるという．なお，$\al$は大きいほど$\delta^\al\;(\delta\in(0,1))$は小さいから，条件は強く，$\al=0$のときは有界性に同値．
+        \item $\abs{f}_{C^{0,\al}}:=\sup_{x\ne y}\frac{\abs{f(x)-f(y)}}{\abs{x-y}}$をHolder係数といい，これはHolder空間$C^{0,\al}$に半ノルムを定める．
+    \end{enumerate}
+    これらの条件は，$\om(\delta;f)$の$\delta\to0$のときの$0$への収束の速さによる分類であるから，これらを満たす関数は特に一様連続であることは明らか．
+\end{definition}
+\begin{remarks}
+    Lipschitz連続性は，$X$上で任意の2点$x\ne y\in X$を取っても，その間の$f$の増分の傾き$\abs{f(x)-f(y)}/\abs{x-y}$はある定数を超えないことを意味する．
+    特に有界な1次導関数を持つ場合，その上限$\sup_{x\in X}f'(x)$はLipschitz定数以下になるが，一致するとは限らない．
+\end{remarks}
+
+\subsubsection{局所的性質}
+
+\begin{lemma}[continuous, locally uniform continuous]
+    $f:X\to Y$と$x_0\in X$について，
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $\lim_{\delta\to0}\om(\delta;f|_{U_\delta(x_0)})=0$．
+        \item $f$は$x_0$において連続．
+    \end{enumerate}
+    また次の2条件も同値．
+    \begin{enumerate}
+        \item ある近傍$x_0\in U\osub X$が存在して，$f|_U$の連続度$\om$は$\delta=0$にて連続．
+        \item $f$は$x_0$において局所一様連続．
+    \end{enumerate}
+\end{lemma}
+\begin{remark}
+    この２つは$X$が局所コンパクトならば同値になる．したがって，たとえば無限次元Banach空間では2つの概念は区別する必要がある．
+\end{remark}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        任意の$\ep>0$を取ると，仮定よりある$\delta>0$が存在して，$\sup_{\abs{x-y}\le\delta,x,y\in U_{\delta}(x_0)}\abs{f(x)-f(y)}<\ep$．
+        よって特に$\abs{x_0-y}<\delta$ならば，$\abs{f(x_0)-f(y)}\le \sup_{\abs{x-y}\le\delta,x,y\in U_{\delta}(x_0)}\abs{f(x)-f(y)}<\ep$．
+        \item[(2)$\Rightarrow$(1)]
+        任意の$\ep>0$を取ると，ある$\delta>0$について$\forall_{y\in X}\;\abs{x_0-y}<\delta\Rightarrow\abs{f(x_0)-f(y)}<\ep/2$が成り立つ．
+        このとき，
+        \[\sup_{\abs{x-y}\le\delta,x,y\in U_\delta(x_0)}\abs{f(x)-f(y)}\le\sup_{\abs{x-y}\le\delta,x,y\in U_\delta(x_0)}\paren{\abs{f(x)-f(x_0)}+\abs{f(x_0)-f(y)}}<\ep.\]
+    \end{description}
+\end{proof}
+
+\begin{definition}
+    Holder係数$\abs{f}_{C^{0,\al}}:=\sup_{x\ne y}\frac{\abs{f(x)-f(y)}}{\abs{x-y}}\in[0,\infty]$が$X$のあるコンパクト集合上で有界ならば，局所Holder連続であるという．
+\end{definition}
+
+\subsubsection{関数の分類}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ある$\om\in\Om$に対して，これを連続度として持つ関数として，連続性に基づいた類別を作れる．
+    似た概念に一様可積分性がある．
+\end{tcolorbox}
+
+\begin{definition}
+    $x=0$において連続で消える関数全体を
+    \[\Om:=\Brace{\om\in\Map([0,\infty],[0,\infty])\mid\lim_{\delta\to0}\om(\delta)=\om(0)=0}\]
+    と表す．
+    $f:X\to Y,x_0\in X$について，
+    \begin{enumerate}
+        \item $\om_{x_0}(\delta;f):=\om(\delta;f|_{U_{\delta}(x_0)})$を，$x_0$における局所連続度としよう．
+        \item 局所連続度の上方集合を$\Om_{x_0}(f):=\Brace{\om_{x_0}\in\Om\mid\forall_{y\in X}\;\abs{f(x_0)-f(y)}\le\om_{x_0}(\abs{x_0-y})}$と表すと，大域連続度の上方集合は$\Om(f):=\bigcap_{x\in X}\Om_x(f)$と表せる．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[equicontinuity, uniform equicontinuity]
+    関数族$\{f_\lambda\}\subset\Map(X,Y)$について，
+    \begin{enumerate}
+        \item 同程度連続であるとは，任意の$x\in X$において，ある$\om_x(\delta;f)\in\Om_x(f)$が存在して，任意の$f_\lambda$の局所連続度(の上界)となっていることをいう．
+        \item 一様に同程度連続であるとは，ある$\om(\delta;f)\in\Om(f)$が存在して，任意の$f_\lambda$の大域連続度(の上界)となっていることをいう．
+    \end{enumerate}
+    これらの概念も，$X$がコンパクトな場合は一致する．
+\end{definition}
+
+\begin{lemma}
+    同程度連続な関数列$(f_n)$がある関数$f$に各点収束するとき，$f$は連続である．
+\end{lemma}
+
+\begin{theorem}
+    有界閉区間$I:=[a,b]$上の関数列$\{f_n\}_{n\in\N}\subset l^\infty(I)$について，次の2条件を満たすならば一様ノルムについて相対コンパクトである，すなわち，一様収束する部分列を持つ．
+    \begin{enumerate}
+        \item 一様有界である：$\exists_{C\in\R}\;\forall_{n\in\N}\;\norm{f_n}_\infty\le M$．
+        \item 一様に同程度連続である．
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{確率化}
+
+\begin{definition}[modulus of continuity]
+    Brown運動のコンパクト集合への制限$B:[0,1]\times\Om\to\R$の\textbf{連続度}$\om_B$とは，
+    \[\sup_{s\ne t\in[0,1]}\frac{\abs{B_t-B_s}}{\om_B(\abs{s-t})}\le 1\]
+    かつ$\lim_{\delta\searrow0}\om_B(\delta)=0$を満たす関数$\om_B(\delta):[0,1]\times\Om\to\R_+$をいう．
 \end{definition}
 \begin{remark}
+    Brown運動の見本道は連続だから，
+    \[\limsup_{h\searrow 0}\sup_{t\in[0,1-h]}\frac{\abs{B_{t+h}-B_t}}{\varphi(h)}\le 1\]
+    を考えても問題ない．
+    これは，特に偏差$h$が小さい場合に関する評価になる．
+    通常の意味での連続度$\om_B(f)$を得るためには，$[0,1]$上で$h$以上離れている2点についての$\sup_{h\le\abs{s-t}\le\delta}\abs{B_s-B_t}$と$\varphi(\delta)$との大きい方を$\om_B(\delta)$として取れば良い．
+
     一方で，supを外して，計測関数$\varphi:\R_+\to\R_+$であって，$\limsup_{t\in\R_+}\frac{B(t)}{\varphi(t)}\in\R_+$を満たすものを探すことは，連続度と対になる．
 \end{remark}
-
-\begin{definition}[locally Holder continuous]
-    関数$f:\R_+\to\R$が\textbf{$x$において局所$\al$-Holder連続}であるとは，次を満たすことをいう：
-    \[\exists_{\ep>0}\;\exists_{c>0}\;\forall_{y\in\R_+}\;\abs{y-x}<\ep\Rightarrow\abs{f(x)-f(y)}\le c\abs{x-y}^\al.\]
-\end{definition}
 
 \subsection{見本道の連続性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
-    任意の$0\le\gamma<\frac{1}{2}$について，$\gamma$-Holder連続であることは，構成１\ref{construction-Kolmogorov}から従う．
+    見本道はコンパクト集合上で一様連続である．それがどのくらい強いかを測る尺度がHolder連続性であるが，
+    見本道は任意の$0\le\gamma<\frac{1}{2}$について，$\gamma$-Holder連続であることは，Kolmogorovの連続変形定理\ref{thm-Kolmogorov-continuity-criterion}から従う．
+
+    連続度の全体は最小元をもつが，ことに$\delta$が十分$0$に近いとき，$\om_B(\delta)=\sqrt{2\delta\log(\delta)}$が最小となる．これは，$\delta^{1/2}$より少し悪いことを意味する．
 \end{tcolorbox}
 
 \begin{proposition}\mbox{}
     \begin{enumerate}
-        \item $1/2$-Holder連続ではない：$P\Square{\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}=+\infty}=1$．\footnote{実は，$1/2$-Holder連続な点も存在するが，高々零集合である．また，$\al>1/2$については，ほとんど確実に，任意の点で$\al$-Holder連続でない．これは微分可能性についてのPaleyの結果よりも強い主張である．}
-        \item 連続度\footnote{Levy 1937}：$\varphi(h):=C\sqrt{h\log(1/h)}$はBrown運動の非確率的な連続度であり，$C=\sqrt{2}$のとき最適になる：\footnote{$\limsup$を$\lim$に置き換えても成り立つ．}
+        \item $1/2$-Holder連続ではない：$P\Square{\sup_{s\ne t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}=+\infty}=1$．\footnote{実は，局所$1/2$-Holder連続な点も存在するが，高々零集合である．また，$\al>1/2$については，ほとんど確実に，任意の点で$\al$-Holder連続でない．これは微分可能性についてのPaleyの結果よりも強い主張である．}
+        \item 連続度の例：ある定数$C>0$について，十分小さい任意の$h>0$と任意の$h\in[0,1-h]$について，\[\abs{B_{t+h}-B_t}\le C\sqrt{h\log(1/h)}\;\as\]
+        \item $\forall c<\sqrt{2}$について，$\forall_{\ep>0}\;\exists_{h\in(0,\ep)}\;\exists_{t\in[0,1-h]}\;\abs{B_{t+h}-B_t}\ge c\sqrt{h\log(1/h)}$．
+        \item 最適評価(Levy 1937)：
+        $C=\sqrt{2}$のとき最適な連続度となる：\footnote{$\limsup$を$\lim$に置き換えても成り立つ．}
         \[\limsup_{\delta\searrow 0}\sup_{s,t\in[0,1],\abs{t-s}<\delta}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\abs{t-s}}}=1\;\as\]
-        \item 最小包絡関数：$\limsup_{t\to\infty}\frac{B_t}{\sqrt{2t\log\log(t)}}=1\;\as$\footnote{$1/2$-Holder連続性が$1/2$-大数の法則の系であったように，繰り返し対数の法則はこの系になる．}
-        \item 一点における連続性の結果・繰り返し対数の法則\footnote{Khinchin 1933}：\[\forall_{s\in\R_+}\;\limsup_{t\searrow s}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\log\abs{t-s}}}=1\;\as\]
-        \item 殆ど確実に，任意の$0<a<b<\infty$に対して，Brown運動の見本道は$[a,b]$上単調でない．
-        \item ほとんど確実に，局所的な増加点$t\in(0,\infty)\;\st\;\exists_{t\in(a,b)\osub\R_+}\;[\forall_{s\in(a,t)}\;f(s)\le f(t)]\land[\forall_{s\in(t,b)}\;f(t)\le f(s)]$を持たない．
+        \item 任意の$\al<1/2$について，殆ど確実に見本道は任意の点で局所$\al$-Holder連続である．
+        \item 任意の$\al>1/2$について，殆ど確実に見本道は任意の点で局所$\al$-Holder連続でない．これはPaley-Wiener-Zygmund 1933よりも強いことに注意．
+        \item ほとんど確実に，見本道のどこかには局所$1/2$-Holder連続であるような点が存在する．これをslow pointという．
     \end{enumerate}
 \end{proposition}
 \begin{proof}\mbox{}
     \begin{enumerate}
-        \item 時間反転により(7)に帰着する．
-        $\sup_{s,t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}>\sup_{t\in(0,1]}\frac{\abs{B_t-B_0}}{\sqrt{\abs{t-0}}}$であるから，
+        \item 時間反転により$1/2$-大数の法則\ref{prop-character-of-Brownian-motion-1}(7)に帰着する．
+        $\sup_{s\ne t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}>\sup_{t\in(0,1]}\frac{\abs{B_t-B_0}}{\sqrt{\abs{t-0}}}$であるから，
         \[P\Square{\sup_{t\in(0,1]}\frac{\abs{B_t}}{\sqrt{t}}=\infty}=1\]
         を示せば良いが，実は
         \[P\Square{\limsup_{t\searrow0}\frac{\abs{B_t}}{\sqrt{t}}=\infty}=1\]
@@ -920,23 +1107,39 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 最小包絡関数：$\limsup_{t\to\infty}\frac{B_t}{\sqrt{2t\log\log(t)}}=1\;\as$\footnote{$1/2$-Holder連続性が$1/2$-大数の法則の系であったように，繰り返し対数の法則はこの系になる．}
+        \item 一点における連続性の結果・繰り返し対数の法則(Khinchin 1933)：\[\forall_{s\in\R_+}\;\limsup_{t\searrow s}\frac{\abs{B_t-B_s}}{\sqrt{2\abs{t-s}\log\log\abs{t-s}}}=1\;\as\]
+    \end{enumerate}
+\end{proposition}
+
 \subsection{見本道の可微分性}
+
 
 \begin{proposition}
     関数$f$の右・左微分係数を$D^*f(t):=\limsup_{h\searrow0}\frac{f(t+h)-f(t)}{h},D_*f(t)$で表すとする
     \begin{enumerate}
         \item 任意の$t\in\R_+$について，殆ど確実に$B_t$は$t$において微分可能でない上に，殆ど確実に$D^*B(t)=+\infty\land D_*B(t)=-\infty$．
-        \item $B$の見本道は殆ど確実に至る所微分不可能性である．\footnote{Paley et al. 1933, Dvoretzky et al. 1961.}
-        さらに，ほとんど確実に$\forall_{t\in\R_+}\;D^*B(t)=+\infty\lor D_*B(t)=-\infty$．\footnote{なお，ほとんど確実に$\forall_{t\in[0,1)}\;D^*B(t)\in\{\pm\infty\}$という主張は正しくない．}
+        \item (Paley-Wiener-Zygmund 1933) $B$の見本道は殆ど確実に至る所微分不可能性である．\footnote{Paley et al. 1933, Dvoretzky et al. 1961.}
+        さらに，ほとんど確実に$\forall_{t\in\R_+}\;D^*B(t)=+\infty\lor D_*B(t)=-\infty$．
+        \item ほとんど確実に$\forall_{t\in[0,1)}\;D^*B(t)\in\{\pm\infty\}$という主張は正しくない．
     \end{enumerate}
 \end{proposition}
 
-\subsection{確率過程としての性質}
+\subsection{見本道の変分}
 
-\begin{definition}
+\begin{proposition}[erratic]\mbox{}
+    \begin{enumerate}
+        \item 殆ど確実に，任意の$0<a<b<\infty$に対して，Brown運動の見本道は$[a,b]$上単調でない．
+        \item ほとんど確実に，局所的な増加点$t\in(0,\infty)\;\st\;\exists_{t\in(a,b)\osub\R_+}\;[\forall_{s\in(a,t)}\;f(s)\le f(t)]\land[\forall_{s\in(t,b)}\;f(t)\le f(s)]$を持たない．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[bounded variation]
     右連続関数$f:[0,t]\to\R$が\textbf{有界変動}であるとは，
     \[V_f^{(1)}(t):=\sup\sum^k_{j=1}\abs{f(t_j)-f(t_{j-1})}<\infty\]
-    を満たすことをいう．
+    を満たすことをいう．有界変動関数は2つの単調増加関数の差で表されるクラスと一致する．
 \end{definition}
 
 \begin{proposition}[2次変動の$L^2$-収束]
@@ -971,7 +1174,7 @@ title=]
     \[\sum^{k_n-1}_{j=0}\paren{B_{t^n_{j+1}}-B_{t^n_j}}^2\xrightarrow{\as}t.\]
 \end{proposition}
 
-\begin{corollary}[全変動]
+\begin{corollary}[全変動の発散]
     区間$[0,t]$における全変動
     \[V:=\sup_{\pi}\sum^{n-1}_{j=0}\abs{B_{t_{j+1}}-B_{t_j}}\]
     は殆ど確実に$\infty$である．
@@ -988,10 +1191,6 @@ title=]
     と表せる．
     $P[V<\infty]=0$でない限り，2次変動が$t$に$L^2$-収束することに矛盾する．
 \end{proof}
-
-\begin{proposition}
-    $X_t:=\int^t_0B_sds$はGauss確率変数である．
-\end{proposition}
 
 
 
@@ -1131,7 +1330,7 @@ title=]
 
 \section{強Markov性}
 
-\section*{Laplace作用素}
+\section{Laplace作用素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]

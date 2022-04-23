@@ -105,10 +105,55 @@ title=]
     これ以降はARMAモデルの限界を乗り越えることを念頭に，非線形モデルなどさまざまな手法が提案されることになる．
 \end{enumerate}
 
-\section{時系列解析の考え方}
-
-通常の統計学は主に独立標本に対する議論であるが，時系列解析は時間軸の間にも従属関係がある状況での統計解析であり，
+通常の統計学は主に独立標本に対する議論であるが，
+時系列解析は時間軸の間にも従属関係がある状況での統計解析であり，
 その点で一般化であると捉えられる．
+
+\subsection{パラメータ付け}
+
+まず，時系列データを定量的に特徴付ける(パラメータ付ける)手法を考える．
+\begin{enumerate}
+    \item 時間領域法：自己相関など．
+    \item 周波数領域法：スペクトル解析など，
+\end{enumerate}
+
+\begin{definition}[autocorrelation function]
+    確率過程の共分散関数の概念を自己相関または自己共分散といい，
+    相関係数版の概念を\textbf{自己相関関数}という．
+\end{definition}
+\begin{remark}
+    しかし，実際のデータから推定しにくい，視覚化しにくいなどの難点がある．
+\end{remark}
+
+\subsection{推定法}
+
+等間隔標本$(X_t)_{t\in\Z}$の
+i.i.d.を仮定するとGlivenko-Cantelliの補題から一致推定が可能であるが，
+一般には他の仮定を必要とする．
+
+\section{基本的性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    i.i.d.以外に等間隔標本$(X_t)_{t\in\Z}$にどんな仮定をおけるかを考える．
+\end{tcolorbox}
+
+\subsection{エルゴード性}
+
+\begin{notation}
+    はじめの$n$回の観測からの
+    標本平均を$\wt{x}=\wt{x}_n:=n^{-1}\sum^n_{t=1}X_t$とする．
+\end{notation}
+
+\begin{definition}[EPCL: ergodic property with a constant limit]
+    \[\exists_{\mu\in\R}\;P\Square{\lim_{n\to\infty}\wt{x}=\mu}=1.\]
+\end{definition}
+
+\section{定常過程}
+
+\section{スペクトル解析}
+
+
 
 \section{リード・ラグ効果とCCK理論}
 
