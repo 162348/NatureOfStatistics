@@ -186,7 +186,7 @@ title=]
     この同一視により，独立性$X_h\indep X_{h'}$は添字空間$H$における直交性として理解できる．
 \end{remark}
 
-\begin{definition}
+\begin{definition}[Gaussian measure]
     $(A,\A,\mu)$を可分な$\sigma$-有限測度空間とする．$H:=L^2(A,\A,\mu)$として，Gauss変数族$X=(X_h)_{h\in H}$を取る．
     この写像$X$を$(A,\A)$上の\textbf{強度$\mu$のGauss測度}という．
     測度確定な可測集合$F\in\A,\mu(F)<\infty$のGauss測度$X(F)$は$X(1_F)$とも表す．
@@ -831,9 +831,16 @@ title=]
 
 \subsubsection{証明}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    証明にはmartingaleを用いる．
+\end{tcolorbox}
+
 \begin{notation}
-    $F\in C[0,1],n>0$について，2進小数点$\D_n$で分割した
-    二次変分のたまごを
+    $F\in C[0,1],n>0$について，2進小数点$\D_n$で分割して考えた，
+    $F$の二次変分
+    \[Q(F):=\lim_{\abs{\Delta}\to0}\sum_{k=1}^n\paren{F(t_k)-F(t_{k-1})}^2\]
+    に至る列を
     \[Q_n(F):=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\]
     と表す．
 \end{notation}
@@ -846,6 +853,26 @@ title=]
         \item $F\in D[0,1]\Rightarrow Q_n(F)\xrightarrow{n\to\infty}\norm{F'}^2_2$．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $(a+b)^2=a^2+2ab+b^2\le 2a^2+2b^2$より，任意の$j\in[2^n]$について，
+        \begin{align*}
+            \Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2&=\Square{\paren{F\paren{\frac{2j-1}{2^{n+1}}}-F\paren{\frac{j-1}{2^n}}}+\paren{F\paren{\frac{j}{2^n}}-F\paren{\frac{2j-1}{2^{n+1}}}}}^2\\
+            &\le2\Square{F\paren{\frac{2j-1}{2^{n+1}}}-F\paren{\frac{j-1}{2^n}}}^2+2\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{2j-1}{2^{n+1}}}}^2
+        \end{align*}
+        これを$j\in[2^n]$について和を取ると，
+        \[\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\le 2\sum^{2^{n+1}}_{j=1}\Square{F\paren{\frac{j}{2^{n+1}}}-F\paren{\frac{j-1}{2^{n+1}}}}^2\]
+        より，$(Q_n(F))_{n\in\N}$の単調増加性を得る．
+        \item \begin{description}
+            \item[$\Rightarrow$] $F\in D[0,1]$のとき，ある$f:=F'\in L^2[0,1]$が存在して，Cauchy-Schwartzより任意の$j\in[2^n]$について
+            \[2^n\paren{\int^{j2^{-n}}_{(j-1)2^{-n}}fdt}^2\le 2^n\int^{j2^{-n}}_{(j-1)2^{-n}}1^2dt\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt=\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt\]
+            が成り立つから，
+            \[Q_n(F)=2^n\sum^{2^n}_{j=1}\paren{\int^{j2^{-n}}_{(j-1)2^{-n}}fdt}^2\le \sum^{2^n}_{j=1}\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt=\norm{f}_2^2<\infty.\]
+            \item[$\Leftarrow$]
+
+        \end{description}
+    \end{enumerate}
+\end{proof}
 
 \begin{lemma}[Paley-Wiener stochastic integral]
     $(B_t)_{t\in\R_+}$を標準Brown運動とする．$F\in D[0,1]$について，

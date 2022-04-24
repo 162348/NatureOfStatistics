@@ -756,9 +756,42 @@ Entropy is a measure of disorder, given by the amount of information necessary t
     また，$\log$の底は分野によってさまざまである．Shanonnのentropyでは$2$，
 \end{remarks}
 
+\section{分割と情報}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ぼくが数学を始めるきっかけとなった写像の標準分解：
+    写像が定める同値類と写像との関係と全くパラレルである．
+    $X$が定める同値関係が$Y$より細かいこと(正確には$\exists_{N\in\N(\Om)}\;\forall_{\ep_1,\ep_2\in\Om\setminus N}\;X(\om_1)=X(\om_2)\Rightarrow Y(\om_1)=Y(\om_2)$)と，$\F[Y]\subset\F[X]$は同値である．
+    $X$はものの位置でもなんでも，あらゆる物理的観測を表し得る．
+    観測は$\Om$の分割を定め，分割は$\sigma$-代数を生成する．
+\end{tcolorbox}
 
+\begin{notation}
+    確率変数$X$に対して，これが$\Om$上に定める分割が生成する最小の閉$\sigma$-代数を$\F[X]<\D(P)$で表すこととしよう．
+    すなわち，
+    $(\Om,\D(P),P)$上の，$\D(P)$の部分$\sigma$-代数であって，すべての$P$-零集合を含むものを\textbf{閉$\sigma$-代数}といい，$\Phi=\Phi(\Om,P)=\Brace{\B\lor2<\D(P)\mid\B<\D(P)}$でらわす．
+\end{notation}
 
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 可測関数$X:\Om\to S$について，$\F[X]:=X^{-1}(\D(P^X))\lor 2$を，$X$で生成される閉$\sigma$-代数という．
+        これは，$X$を可測にする閉$\sigma$-代数の中で最小のものである．
+        \item 確率変数の族$\{X_\lambda\}_{\lambda\in\Lambda}$については，$\F[X_\lambda,\lambda\in\Lambda]:=\bigvee_{\lambda\in\Lambda}\F[X_\lambda]$と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[すべての閉$\sigma$-代数はある観測の結果とみなせる]
+    任意の閉$\sigma$-加法族$\F$に対して，ある実確率変数$X\in\L(\Om)$が存在して，$\F=\F[X]$が成り立つ．
+\end{theorem}
+
+\begin{theorem}
+    $X,Y\in\L(\Om)$について，$X\prec Y\;\as:\Leftrightarrow [\exists_{\varphi\in\Map(\Om,\Om)}\;X=\varphi\circ Y\;\as]$と表すと，これは同値類$\sim$とその上の順序を定め，
+    \begin{enumerate}
+        \item $Y\perc X\;\as\Leftrightarrow\F[Y]\subset\F[X]$．
+        \item $Y\sim X\;\as\Leftrightarrow\F[Y]=\F[X]$．
+    \end{enumerate}
+\end{theorem}
 
 \chapter{有界測度論}
 
@@ -1347,12 +1380,21 @@ title=]
     概収束は距離付け不可能である．
 \end{proposition}
 
-\begin{proposition}[確率収束を定める距離]
+\begin{proposition}[確率収束を定める距離1]
     $X,Y\in\Meas(\Om,\R)$について，$d(X,Y):=E\Square{\frac{\abs{X-Y}}{1+\abs{X-Y}}}$と定める．
     \begin{enumerate}
         \item $d$は距離を定める．
         \item $d$について収束することと，確率収束することは同値．ただし，$X=Y\;\as$を同一視する．
     \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[確率収束を定める距離2]
+        可測関数の全体$\L(\Om)$について．
+        \begin{enumerate}
+            \item 距離$\rho_0(X,Y):=E[\abs{X-Y}\land 1]$について，完備可分な距離空間となる．
+            \item \[\forall_{\ep\in(0,1)}\;\ep P[\abs{X-Y}>\ep]\le\rho_0(X,Y)\le\ep+P[\abs{X-Y}>\ep].\]
+            \item この距離が定める位相は，確率収束を定める．
+        \end{enumerate}
 \end{proposition}
 
 \subsection{一様可積分性の定義と特徴付け}
