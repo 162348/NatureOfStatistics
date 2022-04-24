@@ -410,7 +410,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $T$に値を取る確率変数のうち，試行列$\{\tau=t\}$が$(\F_t)$-適合的でなければ，これはモデルとして認められない場合が多い(大損してからやっぱなかったことにしてほしいとは言えない)．
+    $T$に値を取る確率変数のうち，試行列$\{\tau\le t\}$（いうならば確率過程$(1_{\tau\le t})_{t\in T}$）が$(\F_t)$-適合的でなければ，これはモデルとして認められない場合が多い(大損してからやっぱなかったことにしてほしいとは言えない)．
 \end{tcolorbox}
 
 \subsection{定義と例}
@@ -462,6 +462,11 @@ title=]
 
 \subsubsection{連続の場合}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    離散の場合と異なる点は，$\forall_{t\ge0}\;\Brace{\tau=t}\in\F_t$だけは同値にならない(非可算和を取らないと得られない情報)ことである．
+\end{tcolorbox}
+
 \begin{lemma}[連続の場合の特徴付け]
     $\tau:\Om\to[0,\infty]$について，次の２条件は同値．
     \begin{enumerate}
@@ -478,25 +483,43 @@ title=]
     で定める．$A$が開または閉であるとき，$\tau_A$はMarkov時刻になる．
 \end{example}
 
+\begin{lemma}
+    $\tau:\Om\to\R_+$を確率変数，$(F_t)$を情報系とする．
+    \begin{enumerate}
+        \item $\tau$は停止時である．
+        \item 確率過程$(X_t:=1_{\Brace{t\le\tau}})$は$(F_t)$-適合的である．
+    \end{enumerate}
+\end{lemma}
+
 \subsection{情報量}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     過程を事前に決めた規則でランダムに止める過程も，再びたしかに確率過程となる．
+    この過程が定める情報を，$\tau$までの情報量という．
+    すなわち，止めた前か後かが判別可能であることをいう．
 \end{tcolorbox}
 
 \begin{definition}[stopped process, information]
     $\tau$を$(\F_t)$-停止時，$(X_t)_{t\in T}$を$(\F_t)$-適合過程とする．
     \begin{enumerate}
         \item $(X_{t\land\tau(\om)}(\om))_{t\in T}$はを，\textbf{時点$\tau$で止めた過程}という．これはたしかに確率過程になる．
-        \item \[\F_\tau:=\Brace{A\in\F\mid\forall_{t\in T}\;A\cap\Brace{\tau\le t}\in\F_n}=\F[X_{t\land\tau(\om)}(\om);t\in T]\]
+        \item \[\F_\tau:=\Brace{A\in\F\mid\forall_{t\in T}\;A\cap\Brace{\tau\le t}\in\F_t}=\F[X_{t\land\tau(\om)}(\om);t\in T]\]
         を\textbf{時点$\tau$までの情報量}という．
     \end{enumerate}
 \end{definition}
-\begin{remarks}
-    $A\in\F_\tau$であるとは，$\tau$が$n$時以前に起こっているという追加情報もつけた事象$A\cap\Brace{\tau\le n}$は$\F_n$によって判断可能であることをいう．
+\begin{lemma}[well-definedness]
+    $T=\o{\N}$と事象$A\subset\F$について，
+    次の3条件は同値．
+    \begin{enumerate}
+        \item $A\in\F_t$．
+        \item $A\in\F_\infty$かつ$\forall_{n\in\N}\;A\cap\{\tau=n\}\in\F_n$．
+        \item $\forall_{n\in\o{\N}}\;A\cap\{\tau=n\}\in\F_n$．
+    \end{enumerate}
+\end{lemma}
+\begin{example}
     $\tau$が定数$m$のとき，$\F_\tau=\F_m$となる．
-\end{remarks}
+\end{example}
 
 \begin{theorem}
     $\tau,\sigma$をMarkov時刻とする．次が成り立つ．
@@ -506,6 +529,42 @@ title=]
         \item $\tau\le\sigma$ならば$\F_\tau\subset\F_\sigma$．
     \end{enumerate}
 \end{theorem}
+
+\begin{definition}[predictable / announcable, accessible, totally inaccessible]
+    停止時$\tau$について，
+    \begin{enumerate}
+        \item \textbf{可予測}または\textbf{事前通告可能}であるとは，ある$\forall_{\tau>0}\;\tau_n<\tau$を満たす停止時の増大列$(\tau_n)$の極限であることをいう．
+        \item \textbf{到達可能}であるとは，ある停止時の列$(\tau_n)$が存在して，殆ど確実に$\exists_{n\in\N}\;\tau_n=\tau$が成り立つことをいう．
+        \item \textbf{到達不可能}であるとは，任意の可予測な時刻$\sigma$に対して，$P[\tau=\sigma<\infty]=0$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 適合的な過程の到達時刻(hitting time)は可予測である．
+        \item Poisson過程のジャンプ時刻は到達不可能である．
+    \end{enumerate}
+\end{example}
+
+\subsection{停止時の分解}
+
+\begin{theorem}[停止時の分解]
+    
+\end{theorem}
+
+\subsection{停止時による局所化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\tau$で止める確率過程を$X^\tau_t:=X_{\min(t,\tau)}$と表すと，これを用いて種々の性質を局所化出来る．
+\end{tcolorbox}
+
+\begin{definition}[locally martingale, locally integrable]\mbox{}
+    \begin{enumerate}
+        \item $D$-過程が\textbf{局所martingale}であるとは，$\infty$に収束する停止時の増大列$(\tau_n)$が存在して，任意の$n\in\N$について$1_{\tau_n>0}X^{\tau_n}$がmartingaleになることをいう．
+        \item 非負な増大過程が\textbf{局所可積分}であるとは，$\infty$に収束する停止時の増大列$(\tau_n)$が存在して，$\forall_{n\in\N}\;1_{\tau_n>0}X^{\tau_n}\in L^1(\Om)$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
 \chapter{マルチンゲール}
 
 \begin{quotation}
