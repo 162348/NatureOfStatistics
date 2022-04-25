@@ -67,7 +67,13 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\section{Markov連鎖}
+\section{独立性の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    思うに，確率論とは主体が世界に持ち得るモデルの要で，独立性はそれが持つべき最低限の性質である．
+    従って数学的対象が独立性やその変種概念で彩られることが必要である．
+\end{tcolorbox}
 
 \begin{definition}
     確率変数列$(X_n)$が定める試行の列$(\fA^n)$について，
@@ -77,6 +83,16 @@ title=]
         \item 
     \end{enumerate}
 \end{definition}
+
+複雑な相互作用のある系を，独立な確率変数の系で等価な表現をすることを
+reductionという．
+そのときに因果性（時間的前後関係）を保存する$\forall_{t\in T}\;\F_t=\F'_t$とき，新たな過程を新生過程(innovation)という．
+加法過程は線型演算だけで新生過程が求められる．
+
+i.i.d.をそのまま連続化しようとし，可分性の仮定も満たすものは，加法過程の時間微分を持っていれば良い．それがGauss型でもあるとき，これを白色雑音という．
+
+$\cup_{t\in T}\Im X_t$が離散であるとき，点過程という．
+Vere-Jonesの共著．
 
 \section{無限の場合の独立性}
 
@@ -1604,6 +1620,12 @@ title=熱核の半群性]
 
 \chapter{加法過程}
 
+\begin{quotation}
+    Brown運動の独立増分性を抽出して加法過程といい，時間一様性も加えたものをLevy過程という．
+    Brown運動は連続であるが，Levy過程・加法過程は$D$-過程とする．
+    Poisson過程は高さ1の跳躍でのみ増加する，跳躍のみで増加する過程の代表である．
+\end{quotation}
+
 \section{加法過程}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1615,6 +1637,26 @@ title=]
     大雑把にいえば，連続な加法過程はGauss型，すなわちブラウン運動に限り，非連続的な加法過程はPoisson型に限る．
     任意のLevy過程は，ドリフト付きのBrown運動とLevyのジャンプ過程との和に分解できる．
 \end{tcolorbox}
+
+\subsection{定義と例}
+
+\begin{definition}
+    $(X_t)_{t\in\R_+}$は次の5条件を満たすとき，\textbf{Levy過程}といい，(4)までを満たすとき\textbf{加法過程}という．
+    \begin{enumerate}
+        \item 独立増分である：$\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;X_{t_n}-X_{t_{n-1}},\cdots,X_{t_2}-X_{t_1}$は独立．
+        \item $X_0=0\;\as$
+        \item 確率連続である．
+        \item $D$-過程である．
+        \item 時間一様性：$\forall_{s\in\R_+}\;X_{t+s}\sim X_t$は$t$に依存しない．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[$D$-変形]\mbox{}
+    \begin{enumerate}
+        \item (1),(2),(3)を満たすならば，その修正であって加法過程であるものが存在する．
+        \item (1),(2),(3),(5)を満たすならば，その修正であってLevy過程であるものが存在する．
+    \end{enumerate}
+\end{theorem}
 
 \subsection{定義と例}
 
@@ -1789,6 +1831,34 @@ title=]
     $D$-過程であるが連続過程ではなく，見本過程が至る所ジャンプしているとき，これはPoisson型Levy過程である．
     ここまでいかずとも，少しドリフト$0$分散$0$のBrown運動を混ぜて，ジャンプを持つ加法過程で特に基本的なPoisson過程を見る．
 \end{tcolorbox}
+
+\subsection{配置}
+
+\begin{definition}
+    $(S,\B)$を距離空間上のBorel可測空間とする．
+    \begin{enumerate}
+        \item この上の$\sigma$-有限な測度$m:\B\to\o{\N}$を\textbf{配置}という．
+        \item 配置$m$の\textbf{台}を$A:=\Brace{x\in S\mid m(\{x\})>0}$とする．
+    \end{enumerate}
+\end{definition}
+
+\subsection{定義}
+
+\begin{theorem}
+    $(U_n)$を$\R$上の増加酔歩で，$T_n:=U_n-U_{n-1}\sim\Exp(c)\;(c>0)$とする．
+    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Poisson(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
+    これをパラメータ$c>0$のPoisson過程という．
+\end{theorem}
+\begin{remarks}
+    $X_t$は$t$までに起こった
+    跳躍の回数で，$U_n$は$n$回目の跳躍が起こる時刻である．
+\end{remarks}
+
+\begin{theorem}[compound Poisson process]
+    $\sigma\in P(\R^d)$は$\sigma(\{0\})=0$を満たすとする．
+    パラメータ$c>0$のPoisson過程$(N_t)_{t\in\R_+}$と$\R^d$上の酔歩$(S_n)_{n\in\N},S_1\sim\sigma$は独立であるとする．
+    このとき，$X_t(\om):=S_{N_t(\om)}(\om)$は$\R^d$上のLevy過程である．これを\textbf{$\sigma,c$が定める複合Poisson過程}という．
+\end{theorem}
 
 \subsection{定義}
 

@@ -704,18 +704,42 @@ title=]
 
 \section{Brown運動の変種}
 
-\subsection{変種の例}
+\subsection{固定端Brown運動}
 
 \begin{definition}[Brownian bridge]
     共分散を$\Gamma(s,t)=\min(s,t)-\frac{st}{T}$とする中心化されたGauss過程$(B_t)_{t\in[0,T]}\;(T>0)$を\textbf{Brown橋}という．
     共分散の形から，両端$\partial[0,T]$で固定され，真ん中$T/2$で最も不確実性が大きくなる過程であると分かる．
     これはBrown運動を条件づけた過程$B_t:=[W_t|W_T=0]\;(t\in[0,T])$と理解できる．
 \end{definition}
+\begin{remarks}
+    これは次の微分方程式の解としても実現される：
+    \[dX_t=dB_t+\frac{-X_t}{T-t}dt,\;t\in[0,T),\quad X_0=0.\]
+\end{remarks}
 
 \begin{construction}
     1次元Brown運動$(W_t)$に対して
     $\paren{W_t-\frac{t}{T}W_T}_{t\le T}$とすれば，これはBrown橋である．
 \end{construction}
+
+\begin{proposition}
+    Brown橋は共分散$\Cov[X_s,X_t]=s\lor t-st$が定める連続な中心化されたBrown過程である．
+\end{proposition}
+
+\subsection{多様体上のBrown運動}
+
+\begin{definition}
+    Riemann多様体$(M,g)$上のLaplace作用素$\Laplace_M/2$が生成する拡散過程$(X_t,P_x)_{x\in M}$を$M$上のBrown運動と呼ぶ．ただし，$P_x$は熱方程式の基本解を用いて表示できる．
+\end{definition}
+
+\begin{proposition}
+    任意の$x\in\R$に対して，$B(0)=x$を満たす\textbf{両側Brown運動}$(B_t)_{t\in\R}$が存在する．
+\end{proposition}
+
+\begin{proposition}
+    任意の多様体上のBrown運動に対して，Euclid空間へ多様体を埋め込むこと，または直交枠束を用いることで，あるベクトル場が定める確率微分方程式の解として実現される．
+\end{proposition}
+
+\subsection{幾何Brown運動}
 
 \begin{example}[geometric Brownian motion]
     他の確率過程として，
@@ -723,13 +747,11 @@ title=]
     を幾何ブラウン運動という．
 \end{example}
 
+\subsection{ドリフトと拡散係数を持ったBrown運動}
+
 \begin{example}[Brownian motion with drift and diffusion coefficient]
     標準Brown運動$(B_t)$に対して，$X_t:=x+\mu t+\sigma B_t$によって定まる過程を，$x\in\R$から開始し，$\mu\in\R$のドリフトを持ち，拡散係数$\sigma^2\in\R$のBrown運動という．
 \end{example}
-
-\begin{proposition}
-    任意の$x\in\R$に対して，$B(0)=x$を満たす\textbf{両側Brown運動}$(B_t)_{t\in\R}$が存在する．
-\end{proposition}
 
 \subsection{Ornstein-Uhlenbeck拡散}
 
@@ -750,6 +772,9 @@ title=]
         \item 離散時間の過程に$AR(1)$というものがあり，この連続化とみなせる．
         \item Brown運動と違って，時間反転可能であり，$(X_t)_{t\in\R_+},(X_{-t})_{t\in\R_+}$は分布が等しい．
         \item $-\infty$近傍の振る舞いはBrown運動の$0$近傍の振る舞いに関係がある．
+        \item これが満たす確率微分方程式をLengevin方程式という：
+        \[\dd{U(t)}{t}=-\lambda U(t)+\dot{B}(t)\]
+        ただし$\dot{B}$は白色雑音である．
     \end{enumerate}
 \end{remarks}
 
@@ -878,6 +903,26 @@ title=]
     はほとんど確実に$L^2$-収束する．
     この極限を$\int^1_0F'dB$で表す．
 \end{lemma}
+
+\subsection{Brownian sheet}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $N=2$のBrown運動は，Wiener空間上の確率解析において基本的な役割を果たす．
+\end{tcolorbox}
+
+\begin{definition}
+    $\R_+^N$をパラメータにもつ中心化されたGauss確率変数の族$(X_a)_{a\in\R_+^N}$が次の2条件を満たすとき，$N$次元パラメータのBrown運動という：
+    \begin{enumerate}
+        \item $E[X_aX_b]=a\land b:=\prod_{i=1}^N(a_i\land b_i)$．
+        \item $P[X_0=0]=1$．
+    \end{enumerate}
+\end{definition}
+\begin{proposition}
+    $N=2$のとき，独立な標準Brown運動の列$(B_t^{(n)})_{n\in\N}$を用いて，
+    \[B_{s.t}:=sB_t^{(0)}+\sum_{n=1}^\infty B_t^{(n)}\frac{\sqrt{2}}{n\pi}\sin(n\pi s)\quad(s,t)\in[0,1]\times\R_+\]
+    で構成される．
+\end{proposition}
 
 \section{性質}
 
@@ -1255,7 +1300,7 @@ title=]
     $B(\varphi)\sim N(0,\norm{\varphi}^2_{L^2(\R_+)})$となる．
 \end{lemma}
 
-\subsection{ホワイトノイズ}
+\subsection{白色雑音}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1277,6 +1322,22 @@ title=]
     ただし，$\o{W}$は$W=\{W(A)\}_{A\in\D}\subset L^2(\Om)$が生成するGauss部分空間である．
 \end{remarks}
 
+\subsection{Brown運動の超関数微分としての白色雑音}
+
+\begin{discussion}[白色雑音は，Brown運動の超関数の意味での時間微分である]
+    Wiener測度を緩増加超関数の空間に実現することで，仮想的な時間微分$dB_t$は自然に捉えられる．
+    $\S$をSchwartzの急減少関数の空間とし，$\S'$をその双対空間とし，$\brac{-,-}$をこの間のペアリングとする．
+    このとき，次の定理が成り立つ．
+    \begin{theorem}
+        次を満たす$(\S',\B(\S'))$上の確率測度$\nu$がただ一つ存在する：
+        \[\forall_{\varphi\in\S}\quad\int_{\S'}\exp{i\brac{u,\varphi}}\nu(du)=\exp\paren{-\frac{1}{2}\int_\R\varphi^2(t)dt}\]
+    \end{theorem}
+    このときの確率空間$(\S',\B(\S'),\nu)$を\textbf{白色雑音}という．
+    これを引き起こす過程$\dot{B}$を，$\R$上のBrown運動$(B_t)_{t\in\R}$を用いて構成する．
+    \[\dot{B}(\varphi):=-\int_\R B_t\varphi'(t)dt\quad(\varphi\in\S)\]
+    とすると，これは$(\S,\B(\S))$上の$\S'$-値確率変数であり，白色雑音$\nu$に従う．
+\end{discussion}
+
 \subsection{Brown運動の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1295,7 +1356,6 @@ title=]
     $W$を$\R_+$上のホワイトノイズとすると，$W_t:=W([0,t])=W_{1_{[0,t]}}$と定めるとこれはBrown運動の修正である．
 \end{proposition}
 
-\subsection{Brown sheet}
 
 \subsection{Path積分}
 
@@ -1362,6 +1422,17 @@ title=]
     $P_t[f(x)]=E[f(x+B_t)]$をおくことにより，$\{P_t\}_{t\in\R_+}$は$C_0(\R)$上でHille-吉田の意味での強連続半群となり，
     その生成作用素$\lim_{t\to0}\frac{P_t-I}{t}=\frac{\nabla}{2}$がLaplace作用素である．$I$は恒等作用素とした．
 \end{tcolorbox}
+
+\chapter{ホワイトノイズ解析}
+
+\begin{quotation}
+    \begin{quote}
+        時系列として独立同分布の確率変数列で絵あり，定常時系列として持つスペクトルはフラットすなわち無色である．
+        このような偶然量はノイズと呼ぶのにふさわしい．それ絵はノイズとして見ると厄介なものかもしれないが，最大の情報量をもつので通信の理論には大いに活躍の場がある．
+        そして，一般のガウス過程の中でも元素的なもののとして特徴付けられる．それは「揺らぎ」の典型であり，基本となる．
+    \end{quote}
+    An innovative approach to random fields: Applications of white noise theory.
+\end{quotation}
 
 \chapter{確率解析}
 
