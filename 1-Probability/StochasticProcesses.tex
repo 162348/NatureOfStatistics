@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -75,24 +75,30 @@ title=]
     従って数学的対象が独立性やその変種概念で彩られることが必要である．
 \end{tcolorbox}
 
-\begin{definition}
+\begin{definition}[Markov chain, martingale]
     確率変数列$(X_n)$が定める試行の列$(\fA^n)$について，
     \begin{enumerate}
         \item $\forall_{k\in[n]}\;\forall_{i\in[r_k]}\;P[A_i^k|\A^1\cdots\A^{k-1}]=P[A^k_i|\fA^{k-1}]$が成り立つとき，これを\textbf{Markov連鎖}という．
         \item $\forall_{k\in[n]}\;\forall_{i\in[r_k]}\;E[X_{n+1}|\A^1\cdots\A^n]=X_n\;\as$が成り立つとき，これを\textbf{martingale}という．
-        \item 
     \end{enumerate}
 \end{definition}
 
-複雑な相互作用のある系を，独立な確率変数の系で等価な表現をすることを
-reductionという．
-そのときに因果性（時間的前後関係）を保存する$\forall_{t\in T}\;\F_t=\F'_t$とき，新たな過程を新生過程(innovation)という．
-加法過程は線型演算だけで新生過程が求められる．
+\begin{remark}[確率解析の精神]
+    複雑な相互作用のある系を，独立な確率変数の系で等価な表現をすることを
+    reductionという．
+    そのときに因果性（時間的前後関係）を保存する$\forall_{t\in T}\;\F_t=\F'_t$とき，新たな過程を新生過程(innovation)という．
+    加法過程は線型演算だけで新生過程が求められる．
+    i.i.d.をそのまま連続化しようとし，可分性の仮定も満たすものは，加法過程の時間微分を持っていれば良い．それがGauss型でもあるとき，これを白色雑音という．
+\end{remark}
 
-i.i.d.をそのまま連続化しようとし，可分性の仮定も満たすものは，加法過程の時間微分を持っていれば良い．それがGauss型でもあるとき，これを白色雑音という．
+\section{点過程}
 
-$\cup_{t\in T}\Im X_t$が離散であるとき，点過程という．
-Vere-Jonesの共著．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\cup_{t\in T}\Im X_t$が離散であるとき，点過程という．
+\end{tcolorbox}
+
+
 
 \section{無限の場合の独立性}
 
@@ -1846,7 +1852,7 @@ title=]
 
 \begin{theorem}
     $(U_n)$を$\R$上の増加酔歩で，$T_n:=U_n-U_{n-1}\sim\Exp(c)\;(c>0)$とする．
-    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Poisson(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
+    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Pois(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
     これをパラメータ$c>0$のPoisson過程という．
 \end{theorem}
 \begin{remarks}
