@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -409,7 +409,7 @@ title=]
 \section{停止時}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=過程のランダムな裁断を停止過程という]
     $T$に値を取る確率変数のうち，試行列$\{\tau\le t\}$（いうならば確率過程$(1_{\tau\le t})_{t\in T}$）が$(\F_t)$-適合的でなければ，これはモデルとして認められない場合が多い(大損してからやっぱなかったことにしてほしいとは言えない)．
 \end{tcolorbox}
 
@@ -477,13 +477,13 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{example}
-    $(X_t)$の集合$A\subset\R^d$への到達時刻は
+\begin{example}[hitting time]
+    $F$-適合な$C$-過程$(X_t)$の集合$A\subset\R^d$への\textbf{到達時刻}は
     \[\tau_A(\om):=\inf\Brace{t>0\mid X_t(\om)\in A}\]
-    で定める．$A$が開または閉であるとき，$\tau_A$はMarkov時刻になる．
+    で定める．$A$が開または閉であるとき，$\tau_A$は$F$-停止時になる．
 \end{example}
 
-\begin{lemma}
+\begin{lemma}[特徴付け]
     $\tau:\Om\to\R_+$を確率変数，$(F_t)$を情報系とする．
     \begin{enumerate}
         \item $\tau$は停止時である．
@@ -491,28 +491,45 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\subsection{情報量}
+\begin{proposition}[構成]
+    $(\tau_n)_{n\in\N}$を停止時の可算列とする．
+    $\sup_{n\in\N}\tau_n,\inf_{n\in\N}\tau_n,\sum_{n\in\N}\tau_n$も停止時である．
+\end{proposition}
+
+\subsection{停止過程と情報量}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     過程を事前に決めた規則でランダムに止める過程も，再びたしかに確率過程となる．
     この過程が定める情報を，$\tau$までの情報量という．
-    すなわち，止めた前か後かが判別可能であることをいう．
+    すなわち，$\tau$がどんな実現値を持とうとも，可測になるような集合$A\in\F$のことであって，ランダムな時刻$\tau$までの情報で確定する事象をいう．
 \end{tcolorbox}
 
-\begin{definition}[stopped process, information]
+\begin{definition}[stopped process / optional stopping, information]
     $\tau$を$(\F_t)$-停止時，$(X_t)_{t\in T}$を$(\F_t)$-適合過程とする．
     \begin{enumerate}
-        \item $(X_{t\land\tau(\om)}(\om))_{t\in T}$はを，\textbf{時点$\tau$で止めた過程}という．これはたしかに確率過程になる．
+        \item $X^\tau:=(X_{t\land\tau(\om)}(\om))_{t\in T}$はを，\textbf{$\tau$-停止過程}という．これはたしかに確率過程になる．
+        \item $F^\tau:=\{\F_n^\tau\}$を$F$の\textbf{$\tau$-停止情報系}という．
         \item \[\F_\tau:=\Brace{A\in\F\mid\forall_{t\in T}\;A\cap\Brace{\tau\le t}\in\F_t}=\F[X_{t\land\tau(\om)}(\om);t\in T]\]
         を\textbf{時点$\tau$までの情報量}という．
     \end{enumerate}
 \end{definition}
-\begin{lemma}[well-definedness]
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $\F_\tau$は確かに完備な$\sigma$-代数となる．
+        \item $\tau$は$\F_\tau$-可測である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{離散停止時}
+
+\begin{lemma}[離散停止時の情報の特徴付け]
+    $\F_\tau$は確かに閉$\sigma$-加法族となる．また，
     $T=\o{\N}$と事象$A\subset\F$について，
     次の3条件は同値．
     \begin{enumerate}
-        \item $A\in\F_t$．
+        \item $A\in\F_\tau$．
         \item $A\in\F_\infty$かつ$\forall_{n\in\N}\;A\cap\{\tau=n\}\in\F_n$．
         \item $\forall_{n\in\o{\N}}\;A\cap\{\tau=n\}\in\F_n$．
     \end{enumerate}
@@ -521,14 +538,30 @@ title=]
     $\tau$が定数$m$のとき，$\F_\tau=\F_m$となる．
 \end{example}
 
-\begin{theorem}
+\subsection{連続停止時}
+
+\begin{theorem}[連続停止時の性質]
     $\tau,\sigma$をMarkov時刻とする．次が成り立つ．
     \begin{enumerate}
-        \item $\F_\tau$は$\sigma$-代数である．
+        \item $\F_\tau$は閉$\sigma$-代数である．
+        \item $\F_\tau=\Brace{A\in\F_\infty\mid\forall_{t\in\R_+}\; A\cap\{\tau<t\}\in\F_t}$とも表せる．
         \item $\tau$は$\F_\tau$-可測である．
         \item $\tau\le\sigma$ならば$\F_\tau\subset\F_\sigma$．
+        \item $\F_{\land\tau_n}=\land\F_{\tau_n}$．
+        \item $\{\sigma<\tau\},\{\sigma\le\tau\}\in\F_{\sigma\land\tau}$．
+        \item $\F_{\lor\tau_n}\supset\lor\F_{\tau_n}$．
     \end{enumerate}
 \end{theorem}
+
+\begin{proposition}
+    $F$を情報系とする．
+    \begin{enumerate}
+        \item $F$-停止時の減少列$(\tau_n)$について，$\tau:=\lim\tau_n$も$F$-停止時で，$\F_\tau=\land\F_{\tau_n}$となる．
+        \item 任意の$F$-停止時に対して，離散$F$-停止時の減少列が存在して，その極限に等しい．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{停止時の性質}
 
 \begin{definition}[predictable / announcable, accessible, totally inaccessible]
     停止時$\tau$について，
@@ -555,7 +588,9 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $\tau$で止める確率過程を$X^\tau_t:=X_{\min(t,\tau)}$と表すと，これを用いて種々の性質を局所化出来る．
+    $\tau$で止める確率過程を$X^\tau_t:=X_{\min(t,\tau)}$と表すと，
+    これは過程$X$をランダムに裁断したもののようであり，
+    これを用いて種々の性質を局所化出来る．
 \end{tcolorbox}
 
 \begin{definition}[locally martingale, locally integrable]\mbox{}
@@ -573,65 +608,172 @@ title=]
 
 \section{離散時変数のマルチンゲール}
 
-\subsection{定義}
+\subsection{定義と例}
 
 \begin{definition}[martingale, submartingale]
-    確率過程$(X_n)$が\textbf{情報系$(\F_n)$についてマルチンゲール}であるとは，次の３条件が成り立つことをいう：
-    \begin{enumerate}
-        \item $(\F_n)$-適合的である：$\forall_{n\in\N}\;X_n:\F_n$ measurable.
-        \item 可積分列である：$\forall_{n\in\N}\;E[\abs{X_n}]<\infty$．
+    確率過程$(X_n)$が情報系$(\F_n)$について\textbf{$(\F_n)$-マルチンゲール}であるとは，次の３条件が成り立つことをいう：
+    \begin{enumerate}[({M}1)]
+        \item $(\F_n)$-適合的である：$\forall_{n\in\N}\;X_n\in\L_{\F_n}(\Om)$．
+        \item 可積分列である：$\forall_{n\in\N}\;X_n\in L^1(\Om)$．
         \item martingale性：$\forall_{n\in\N}\;E[X_{n+1}|\F_n]=X_n\;\as$
     \end{enumerate}
-    (3)の代わりに$\forall_{n\in\N}\;E[X_{n+1}|\F_n]\ge X_n\;\as$が成り立つとき，\textbf{劣マルチンゲール}であるといい，
-    $\forall_{n\in\N}\;E[X_{n+1}|\F_n]\le X_n\;\as$が成り立つとき，\textbf{優マルチンゲール}であるという．
+    (3)の代わりに$\forall_{n\in\N}\;E[X_{n+1}|\F_n]\ge X_n\;\as$が成り立つとき，\textbf{$F$-劣マルチンゲール}であるといい，
+    $\forall_{n\in\N}\;E[X_{n+1}|\F_n]\le X_n\;\as$が成り立つとき，\textbf{$F$-優マルチンゲール}であるという．
+    単に\textbf{マルチンゲール}とは，$F$が過程$(X_n)$が定める自然な増大系である場合をいう．
 \end{definition}
-\begin{remarks}
-    (3)は$\forall_{A\in\F_n}\;E[X_{n+1}1_A]=E[X_n1_A]$と同値．
-    これが成り立つならば，繰り返し期待値の法則より，$m>n\ge1\Rightarrow E[X_m|\F_n]=X_n\;\as$であり，特に，$E[X_n]$は$n$に依らず一定である．
-    また，$(X_n)$が劣マルチンゲールであることと，$(-X_n)$が優マルチンゲールであることとは同値．
-\end{remarks}
-
-\begin{example}\mbox{}
+\begin{lemma}[定義の特徴付け]
+    次の条件は(M3)に同値．
     \begin{enumerate}
-        \item $\{Z_n\}\subset\L^1(\Om)$を期待値$0$かつ独立な確率変数列とし，$\F_n$として自然な情報系を取る．和$X_n:=\sum^n_{k=1}Z_k$はマルチンゲールである．
-        $E[X_{n+1}|\F_n]=E[X_n+Z_{n+1}|\F_n]=E[X_n|\F_n]+E[Z_{n+1}|\F_n]$であるが，第1項は$X_n$は$\F_n$可測であるから，$E[X_n|\F_n]=X_n$．また，$\sigma(Z_{n+1})$と$\F_n$は独立だから\ref{lemma-independentness-variable-and-algebra}，$E[Z_{n+1}|\F_n]=E[Z_{n+1}]=0\;\as$．
-        これはKolmogorovの不等式\ref{thm-Kolmogorov-inequality}ですでにあった消息である．
-        \item $(\F_n)$を情報系とし，$X\in\L^1(\Om)$を可積分確率変数とする．$X_n:=E[X|\F_n]$とおけば，$(X_n)$はマルチンゲールである．
-        実際，$E[X_{n+1}|\F_n]=E[E[X|\F_{n+1}]|\F_n]\overset{\as}{=}E[X|\F_n]=X_n$．
+        \item $\forall_{n\in\N}\;\forall_{A\in\F_n}\;E[X_{n+1},A]=E[X_n,A]$．
+        \item $\forall_{n\in\N}\;\forall_{Y\in L^\infty_{\F_n}(\Om)}\;E[X_{n+1}Y]=E[X_nY]$．
     \end{enumerate}
-    (1)の状況は公平な賭けなどの意味論を持つ．コイントスをして，表なら$+x$円，裏なら$-x$円の賭けで，所持金を$X_n$とすると，これはマルチンゲールである．
+\end{lemma}
+
+\begin{lemma}[マルチンゲールの基本性質]
+    $(X_n)$を$(\F_n)$-マルチンゲールとする．
+    \begin{enumerate}
+        \item $\forall_{m\ge n\ge1}\;E[X_m|\F_n]=X_n\;\as$
+        \item $\forall_{n\in\N}\;E[X_n]=\const$
+        \item $(X_n)$は(その自然な情報系について)マルチンゲールである．
+    \end{enumerate}
+    これより，マルチンゲールとは，「ある情報系$F$が存在して$F$-マルチンゲールになる」という性質と同等である．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意の$n\in\N$に対して，$\forall_{k\in\N}\;E[X_{n+k}|\F_n]=X_n$をいう．$k=0$のとき，これは$X_n$の$\F_n$-可測性からわかる．$k>0$のとき，繰り返し期待値の法則と帰納法の仮定から，
+        \[E[X_{n+k}|\F_n]=E[E[X_{n+k}|\F_{n+k-1}]|\F_n]=E[X_{n+k-1}|\F_n]=X_n.\]
+        \item (1)の両辺の期待値を取れば良い．
+        \item $(X_n)$は$(\F_n)$-マルチンゲールだから，$\forall_{n\in\N}\;\sigma[X_1,\cdots,X_n]\subset\F_n$より，繰り返し期待値の法則から，
+        \[E[X_{n+1}|\sigma[X_1,\cdots,X_n]]=E[E[X_{n+1}|\F_n]|\sigma[X_1,\cdots,X_n]]=E[X_n|\sigma[X_1,\cdots,X_n]]=X_n.\]
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[劣マルチンゲールの基本性質]
+    $(X_n)$を$(\F_n)$-マルチンゲールとする．
+    \begin{enumerate}
+        \item $\forall_{m\ge n\ge1}\;E[X_m|\F_n]\ge X_n\;\as$
+        \item $(E[X_n])_{n\in\N}$は実数の単調増加列である．
+        \item $(X_n)$は(その自然な情報系について)劣マルチンゲールである．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    $=$を$\ge$に証明置換すれば良い．
+\end{proof}
+
+\begin{example}[中心化されたi.i.d.列の部分和の列，条件付き期待値の列]\mbox{}
+    \begin{enumerate}
+        \item $\{X_n\}\subset\L^1(\Om)$をi.i.d.列とする．
+        このとき，部分和の列$\paren{S_n:=\sum_{i=1}^nZ_i}$は明らかに$\forall_{n\in\N}\;S_n\in L^1_{\F_n}(\Om)$であるから，条件付き期待値のa.s.線形性と，$X_{n+1}\indep\F_n$より，
+        \[E[S_{n+1}|\F_n]\overset{\as}{=}E[S_n|\F_n]+E[X_{n+1}|\F_n]\overset{\as}{=}S_n+E[X_{n+1}].\]
+        よって，$X_n$が中心化されていたならば，これはマルチンゲールを定める．
+
+        つまり，原点から出発する$\Z$上の対称で単純な酔歩はマルチンゲールである
+        \item $(\F_n)$を情報系とし，$X\in\L^1(\Om)$を可積分確率変数とする．
+        この情報系が定める条件付き期待値の列を$X_n:=E[X|\F_n]$とおけば，$(X_n)$はマルチンゲールである．
+        
+        実際，$\forall_{n\in\N}\;X_n\in L^1_{\F_n}(\Om)$は条件付き期待値の定義から明らかであり，
+        $E[X_{n+1}|\F_n]=E[E[X|\F_{n+1}]|\F_n]\overset{\as}{=}E[X|\F_n]=X_n$．
+    \end{enumerate}
+    (1)の状況は「中心化された公平な賭け」などの意味論を持つ．コイントスをして，表なら$+x$円，裏なら$-x$円の賭けで，所持金を$X_n$とすると，これはマルチンゲールである．
 \end{example}
 
-\begin{lemma}[劣マルチンゲール性の保存]\mbox{}
+\subsection{マルチンゲールの構成}
+
+\begin{lemma}[マルチンゲールの保存]
+    $(X_n),(Y_n)$を$(\F_n)$-[劣]マルチンゲールとする．
+    \begin{enumerate}
+        \item 線型空間：$(aX_n+bY_n+c)$は$(\F_n)$-[劣]マルチンゲールである．
+        \item 
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[劣マルチンゲールの構成]
+    $\psi:\R\to\R$を凸関数，$(X_n)$を$(\F_n)$-マルチンゲールとし，$\{\psi(X_n)\}\subset L^1(\Om,\F)$とする．
+    \begin{enumerate}
+        \item $(\psi(X_n))_{n\in\N}$は$(\F_n)$-劣マルチンゲールである．
+        \item $\psi$が広義単調増加に取れるならば，$(X_n)$が$(\F_n)$-劣マルチンゲールに過ぎなくとも，$(\psi(X_n))_{n\in\N}$は$(\F_n)$-劣マルチンゲールとなる．
+    \end{enumerate}
     \begin{enumerate}
         \item $\psi:\R\to\R$は下に凸，$(X_n)$をマルチンゲールとする．このとき，$\forall_{n\in\N}\;E[\abs{\psi(X_n)}]<\infty$ならば，$(\psi(X_n))$は劣マルチンゲールである．
         特に，ある$p\ge1$に関して$E[\abs{X_n}^p]<\infty$ならば，$(\abs{X_n}^p)$は劣マルチンゲールである．
         \item 下に凸な関数$\psi:\R\to\R$はさらに広義単調増加であるならば，$(X_n)$が劣マルチンゲールの場合でも，$(\psi(X_n))$は劣マルチンゲールになる．
     \end{enumerate}
 \end{lemma}
+\begin{proof}
+    条件$\{\psi(X_n)\}\subset L^1(\Om,\F)$より，任意の$\psi(X_n)$と$\F_m$について条件付き期待値$E[\psi(X_n)|\F_m]$が存在する．
+    \begin{enumerate}
+        \item 条件付き期待値のJensenの不等式と，$(X_n)$が$(\F_n)$-マルチンゲールであることより，
+        \[E[\psi(X_{n+1})|\F_n]\ge\psi(E[X_{n+1}|\F_n])=\psi(X_n)\;\as\]
+        \item 条件付き期待値のJensenの不等式と，$X_n\le E[X_{n+1}|\F_n]\Rightarrow\psi(X_n)\le\psi(E[X_{n+1}|\F_n])\;\as$より，
+        \[E[\psi(X_{n+1})|\F_n]\ge\psi(E[X_{n+1}|\F_n])\ge\psi(X_n)\;\as\]
+    \end{enumerate}
+\end{proof}
+\begin{example}[マルチンゲールに付属する劣マルチンゲール]\mbox{}
+    \begin{enumerate}
+        \item $F$-マルチンゲール$(X_n)$に対して，$(X_n^2),(\abs{X_n})$はいずれも$F$-劣マルチンゲールである．
+        \item $F$-劣マルチンゲール$(X_n)$に対して，$(X_n^+:=X_n\lor0)$も$F$-列マルチンゲールである．
+    \end{enumerate}
+\end{example}
 
-\subsection{Doob分解}
+\subsection{劣マルチンゲールのDoob分解}
 
 \begin{theorem}[Doob-Meyer decomposition theorem]
-    任意の$(\F_n)$-劣マルチンゲール$(X_n)$は，$\F$-マルチンゲールな$M=(M_n)$と可予測な広義増加過程$A=(A_n)$，すなわち，$0=A_0\le A_1\le\cdots,A_n\in L^1(\F_{n-1})\;(n=1,2,\cdots)$\footnote{マルチンゲールに対して$A_n\in L^1(\F_{n-1})$とは，$\F_{n-1}$-可測の意味しかない．}を満たす列$(A_n)$とに一意的に分解される：$X_n=M_n+A_n\;\as$．
+    任意の$(\F_n)$-劣マルチンゲール$(X_n)$は，
+    $(\F_n)$-マルチンゲール$(M_n)$と
+    $(\F_n)$-可予測な広義増加列$(A_n),A_0=0$とが一意的に存在して，これらの和に分解される：$X_n=M_n+A_n\;\as$．
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[一意性] 任意の$n\in\N$について，
+        $(A_n)$の階差列は$\F_n$-可測で可積分$A_{n+1}-A_n\in L^1(\F_n)$であるから，
+        \begin{align*}
+            A_{n+1}-A_n&=E[A_{n+1}-A_n|\F_n]\\
+            &=E[X_{n+1}-E_n|\F_n]-E[M_{n+1}-M_n|\F_n]=E[X_{n+1}-E_n|\F_n]
+        \end{align*}
+        が必要．すなわち，$A_0=0$と併せると，
+        \[A_n:=\sum_{k=0}^{n-1}E[X_{k+1}-X_k|\F_k],\quad M_n:=X_n-A_n\]
+        と一意的に表示されることが必要．
+        \item[存在] 上の構成について，$(A_n)$は$\F_{n-1}$-可測な確率変数の和だから可予測性で，$(X_n)$の劣マルチンゲール性より増大性も明らかだから，あとは$(M_n)$のマルチンゲール性を示せば良い．
+        \begin{align*}
+            E[M_{n+1}-M_n|\F_n]&=E[X_{n+1}-X_n|\F_n]-E[A_{n+1}-A_n|\F_n]\\
+            &=E[X_{n+1}-X_n|\F_n]-E\Square{E[X_{n+1}-X_n|\F_n]|\F_n}=0.
+        \end{align*}
+    \end{description}
+\end{proof}
 
 \subsection{Doobの任意抽出定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    ２つのランダム関数$X,\tau$の交錯を考える．
+    ランダムな時刻についても，同様にマルチンゲール性は保たれる．
 \end{tcolorbox}
 
-\begin{definition}
-    $(\F_n)$-適合な確率過程$(X_n)$と，$\N$-値Markov時刻$\tau$に対して，$X_\tau:\Om\to\R$を$X_\tau(\om):=X_{\tau(\om)}(\om)$で定める．
-\end{definition}
+\subsubsection{抽出過程}
 
-\begin{lemma}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    マルチンゲールから，ある規則に則って，時点$(\tau_n)$を抽出して観察する．
+    これは統計的実験のようなもので，停止過程を一般化する．
+\end{tcolorbox}
+
+\begin{definition}[optional sampling]
+    $F$-停止時の増大列$\Sigma:=\{\sigma_i\}_{i\in\N}$に対して，
+    \begin{enumerate}
+        \item $X^\Sigma:=(X_{\sigma_n})$を\textbf{$\Sigma$-抽出過程}という．
+        \item $\F^\Sigma:=\{\F_{\sigma_n}\}$を\textbf{$\Sigma$-抽出情報系}という．
+    \end{enumerate}
+\end{definition}
+\begin{example}[停止過程は抽出過程である]
+    任意の停止時$\sigma$は停止時の増大列
+    $(\sigma_n:=\sigma\land n)$を定めるから，これについて$\sigma$-停止過程と$(\sigma_n)$-抽出過程とは同じ．
+\end{example}
+
+\begin{lemma}[任意停止点のwell-defined性]
+    マルチンゲール$(X_n)$と停止時$\tau$について，ランダムな停止
     $X_\tau:\Om\to\R$は
     \begin{enumerate}
-        \item $\F$-可測である．
-        \item $\F_\tau$-可測である．
+        \item $\F$-可測かつ可積分である：$X_\tau\in L^1(\Om,\F)$．
+        \item $\F_\tau$-可測である：$X_\tau\in L(\Om,\F_\tau)$．
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
@@ -640,13 +782,40 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{theorem}[有界停止時刻によるマルチンゲール性の保存]
-    $(X_n)$を劣マルチンゲール，$\tau,\sigma$を$\tau\le\sigma$を満たす有界なMarkov時刻とする．このとき，$X_\tau,X_\sigma$は共に可積分で，$E[X_\sigma|\F_\tau]\ge X_\tau\;\as$．
-    $(X_n)$がマルチンゲールであるとき，等号成立．
-\end{theorem}
+\subsubsection{任意抽出に対するマルチンゲール性の保存}
 
-\begin{corollary}[optional sampling theorem]
-    $(X_n)$を$(\F_n)$-劣マルチンゲール，$(\tau_k)$を有界な$(\F_n)$-マルコフ時刻の広義単調増加列とする．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    マルチンゲール性は，ランダム性が入ろうとも$\sigma\le\tau$ならば成り立つ．
+    これにより，任意抽出をしても，取り出されたものはマルチンゲールになる．
+    これはf.d.d.に似ている．
+    点列コンパクト性にも似ている．
+\end{tcolorbox}
+
+\begin{theorem}[有界停止時刻に関するマルチンゲール性]\label{thm-martingale-property-for-random-stopping-time}
+    $\exists_{N\in\N}\;\sigma\le\tau\le N\;\as$を停止時とする．
+    \begin{enumerate}
+        \item $(X_n)$が$(\F_n)$-マルチンゲールならば，$E[X_\tau|\F_\sigma]=X_\sigma\;\as$
+        \item $(X_n)$が$(\F_n)$-劣マルチンゲールならば，$E[X_\tau|\F_\sigma]\ge X_\sigma\;\as$
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{enumerate}[(a)]
+            \item $X_\tau\in L^1(\Om)$である．
+            \[E[\abs{X_\tau}]=\sum^N_{k=0}E[\abs{X_\tau},\{\tau=k\}]\le\sum^N_{k=0}E[\abs{X_k}]<\infty.\]
+            \item $\forall_{n\in\N}\;\forall_{a\in\R}\;\Brace{X_\sigma<a}\cap\{\sigma=n\}=\{X_n<a\}\cap\{\sigma=n\}\in\F_n$より，$X_\sigma$は$\F_\sigma$-可測．
+            \item 任意の$A\in\F_\sigma$をとって，$E[X_\tau,A]=E[X_\sigma,A]$を示せば良い．
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+\begin{remark}[有界でない場合は極めて簡単な反例が存在する]
+    停止時が有界でない場合は反例が存在する．原点から出発する$\Z$上の対称で単純な酔歩はマルチンゲールであり，
+    $-k$への到達時刻$\tau_{-k}:=\min\Brace{n\in\N\mid X_n=-k}$も停止時を定めるが，これは有限ではあっても有界ではなく，$\tau_{-1}<\tau_{-2}$かつ$X_{\tau_{-1}}\equiv-1>X_{\tau_{-2}}\equiv-2\;\as$が成り立つ．
+\end{remark}
+
+\begin{corollary}[任意抽出マルチンゲール性]
+    $(X_n)$を$(\F_n)$-劣マルチンゲール，$(\tau_k)$を有界な$(\F_n)$-マルコフ時刻の広義単調増加列とする：$\forall_{n\in\N}\;\exists_{N_n\in\N}\;\tau_n\le N_n$．
     このとき，$Y_k:=X_{\tau_k}$は$(\F_{\tau_k})$-劣マルチンゲールである．
 \end{corollary}
 
@@ -655,33 +824,125 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     劣マルチンゲールに対しては，$\max_{1\le k\le n}X_K$に関する評価を，$X_n$のみを用いて与えられる．
-    一般の確率過程では決して成り立たない．
-    この背後にはKolmogorovの不等式\ref{thm-Kolmogorov-inequality}がある．
+    一般の確率過程では決して成り立たないが，Kolmogorovの不等式を一般化する形で，マルチンゲールについては成り立つ．
+    このときも，「劣マルチンゲールであるから，最後の時点$S_n$にだけ注目すれば良い」という構造が引き起こす不等式関係なのであった．
 \end{tcolorbox}
 
+\begin{theorem}[Kolmogorov]
+    実確率変数列$\{X_n\}\subset L^2(\Om,\F,P)$は独立で，$E[X_n]=0,V_n:=\Var[X_n]<\infty$を満たすとする．
+    このとき，$S_k:=\sum^k_{i=1}X_k$とおくと，
+    \[\forall_{a>0}\quad P[\max_{k\in[n]}\abs{S_k}\ge a]\le\frac{1}{a^2}\sum^n_{i=1}V_i.\]
+\end{theorem}
+\begin{proof}
+    \[A^*:=\Brace{\om\in\Om\mid\max_{k\in[n]}\abs{S_k}\ge a}\qquad A^*_k:=\Brace{\om\in\Om\mid\forall_{i\in[k-1]}\;\abs{S_i}<a\land\abs{S_k}\ge a}\]
+    とおくと，$A^*=\sum_{k\in[n]}A^*_k$が成り立ち，$A^*_k\in\sigma[X_1,\cdots,X_k]$．
+    いま，$(S^2_n)$は劣マルチンゲールで，特に$\forall_{k\in[n-1]}\;E[Z^2_n,A_k^*]\ge E[Z_k^2,A_k^*]$より，
+    \begin{align*}
+        P[A^*]=\sum_{k\in[n]}P[A^*_k]&\le\sum_{k\in[n]}\frac{1}{a^2}E[S_k^2,A_k^*]&\because A^*_k\text{上では}a^2\le S^2_k\\
+        &\le\frac{1}{a^2}\sum_{k\in[n]}E[S_n^2,A^*_k]
+        =\frac{1}{a^2}E[S_n^2,A^*]\\
+        &\le\frac{1}{a^2}E[S_n^2]
+        =\frac{1}{a^2}\sum^n_{i=1}V_i.
+    \end{align*}
+\end{proof}
+
 \begin{theorem}[Doob inequality]\label{thm-Doob-inequality}
-    $(X_n)$を劣マルチンゲールとする．このとき，$X_n^+:=X\lor0$とすると，任意の$a>0$について，次が成り立つ．
+    $(X_n)$を$(\F_n)$-劣マルチンゲールとする．このとき，$X_n^+:=X\lor0$とすると，
     \begin{enumerate}
-        \item \[P\paren{\max_{1\le k\le n}X_k\ge a}\le\frac{1}{a}E\Square{X_n1_{\Brace{\max_{1\le k\le n}X_k\ge a}}}\le\frac{1}{a}E[X_n^+]\]
-        \item \[P\paren{\min_{1\le k\le n}X_k\le -a}\le\frac{1}{a}E[X_n-X_1]-\frac{1}{a}E\Square{X_n1_{\Brace{\min_{1\le k\le n}X_k\le -a}}}\le\frac{1}{a}E[X_n^+]-\frac{1}{a}E[X_1].\]
+        \item \[\forall_{a>0}\;\forall_{N\in\N}\;\quad P\paren{\max_{1\le k\le N}X_k\ge a}\le\frac{1}{a}E\Square{X_n,\max_{1\le k\le n}X_k\ge a}\le\frac{1}{a}E[X_N^+].\]
+        \item \[\forall_{a>0}\quad P\paren{\min_{1\le k\le n}X_k\le -a}\le\frac{1}{a}E[X_n-X_1]-\frac{1}{a}E\Square{X_n\min_{1\le k\le n}X_k\le -a}\le\frac{1}{a}E[X_n^+]-\frac{1}{a}E[X_1].\]
     \end{enumerate}
 \end{theorem}
+\begin{proof}
+    $(X^+_n)$は劣マルチンゲールだから，
+    初めから非負な劣マルチンゲール$(X_n)$をとっても，一般性を失わない．
+    \begin{enumerate}
+        \item $Y_N:=\max_{0\le k\le N}X_k$tおくと，$(Y_n)$は$(F_n)$-適合的な過程である．
+        これを用いて，$(X_n)$の値を順次監視し，$a$以上の値が出たら停止するためのタイマーを
+        \[\sigma:=\begin{cases}
+            \inf\Brace{k\in N+1\mid X_k\ge a},&Y_N\ge a,\\
+            N,&Y_N<a.
+        \end{cases}\]
+        とすると，これは有界な$(\F_n)$-停止時で，$\{Y_N\ge a\}$上では$X_\sigma\ge a$を満たす．
+        実際，任意の$k\in\N$について，$k<N$のときは，$(Y_n)$が$(\F_n)$-適合的であることより
+        $\{\sigma\le k\}=\{\exists_{m\in k+1}\;X_m\ge a\}=\{Y_k\ge a\}\in\F_k$であり，
+        $k\ge N$のときは$\sigma$は必ず$N$以下であることから$\{\sigma\le k\}=\Om\in\F_k$．
+
+        よって，停止時$\sigma\le N$に関する劣マルチンゲール性
+        \ref{thm-martingale-property-for-random-stopping-time}より，
+        \[E[X_N]\ge E[X_\sigma]\ge aP[Y_N\ge a].\]
+    \end{enumerate}
+\end{proof}
 
 \begin{corollary}
     $\{M_n\}\subset\L^p(\Om)$を$p\ge1$乗可積分なマルチンゲールとする．
     このとき，任意の$a>0$に対して，
     \[P\paren{\max_{1\le k\le n}\abs{M_k}\ge a}\le\frac{1}{a^p}E[\abs{M_n}^p].\]
 \end{corollary}
+\begin{proof}
+    $\psi(x)=x^p$は凸関数になるため，$(\abs{M_n}^p)$は劣マルチンゲールである．
+\end{proof}
 
-\subsection{劣マルチンゲールの収束定理}
+\begin{proposition}
+    $p>1$について，$\{M_n\}\subset\L^p(\Om)$を$p$乗可積分なマルチンゲールとする．このとき，
+    \[E\Square{\max_{1\le k\le n}\abs{M_k}^p}\le\paren{\frac{p}{p-1}}^pE[\abs{M_n}^p].\]
+\end{proposition}
+
+\subsection{上渡回数定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    劣マルチンゲールは，（期待値については）単調に増加する傾向(ドリフト)があり，
+    いつまでも区間$[a,b]$付近には留まらず先に行くか，$[a,b]$内で概収束をする．
+\end{tcolorbox}
+
+\begin{definition}[upcrossing number]\mbox{}
+    \begin{enumerate}
+        \item 実数$a<b$について，確率変数列$\{\sigma_1,\tau_1,\sigma_2,\tau_2,\cdots\}\subset\L(\Om)$を次のように定めると，停止時の狭義単調増加列となる：
+        \begin{align*}
+            \sigma_1&:=\min\Brace{n\ge 1\mid X_n\le a},&\tau_1&:=\min\Brace{n>\sigma_1\mid X_n\ge b},\\
+            \sigma_{k}&:=\min\Brace{n>\tau_{k-1}\mid X_n\le a},&\tau_{k}&:=\min\Brace{n>\sigma_{k}\mid X_n\ge b}.
+        \end{align*}
+        \item 停止時の狭義単調増加列$\sigma_1,\tau_1,\sigma_2,\tau_2,\cdots$に対して，$U_n=\beta_n:=\max\{k\in\N\mid\tau_{k}\le n\}$と定めると，$\N$-値確率変数の列となる．
+        各成分$U_n=\beta_n$を，\textbf{時刻$n$までの$[a,b]$間の上向き横断回数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    $(X_n)$が$(\F_n)$-劣マルチンゲールならば，
+    \[\forall_{N\in\N}\quad E[\beta_N]\le\frac{1}{b-a}E[(X_N-a)^+].\]
+\end{theorem}
+\begin{proof}
+    $k:=\beta_N$とし，
+    確率変数を
+    $Z_N:=\sum^k_{i=1}(X_{\sigma_{i+1}\land N}-X_{\tau_i\land N})$とおく．
+    これは，$a$を2回目以降に初めて$a$を下回った時の点$X_{\sigma_{i+1}}$と，その前に初めて$b$を上回った点$X_{\tau_i}$との距離を(その後は次に$b$を越すまで計測は休憩)，時刻$N$が過ぎるまで足し合わせたものである．
+    なお，マルチンゲールは$D$-過程としたことに注意すると，$X_{\sigma_i}\le a,b\le X_{\tau_i}$が成り立つ．
+    $Z_N$をこのように定義することで，$X_{\sigma_{i+1}}-X_{\tau_i}\le a-b<0$という形での評価が可能になる．
+    \begin{description}
+        \item[$Z_N$の評価] $Z_N\le\beta_N(a-b)+(X_N-a)^+$が成り立つことを示す．
+        \begin{enumerate}[(a)]
+            \item 最後に超えたのが$b$であるとき，
+            \begin{align*}
+                Z_N&=\sum^{k-1}_{i=1}(X_{\sigma_{i+1}}-X_{\tau_i})+(a-X_{\tau_k})+(X_N-a)\\
+                &\le(k-1)(a-b)+(a-b)+(X_N-a)\le k(a-b)+(X_N-a)^+.
+            \end{align*}
+            \item 最後に超えたのが$a$であるとき，
+            \[Z_N=\sum^k_{i=1}(X_{\sigma_{i+1}}-X_{\tau_i})\le k(a-b)\le k(a-b)+(X_N-a)^+.\]
+        \end{enumerate}
+        \item[証明] 両辺の平均値を取ると，$E[Z_N]\le-(b-a)E[\beta_N]+E[(X_N-a)^+]$となるから，$E[Z_N]\ge0$を言えば良い．
+        変な話だが$E[X_{\sigma_{i+1}\land N}]\ge E[X_{\tau_i\land N}]$を示せばこれは従うから，すなわち$\sigma_i,\tau_i$が$F$-停止時であることを示せば結論が従う．
+
+    \end{description}
+\end{proof}
+
+\subsection{マルチンゲール変換}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    劣マルチンゲールの正部分の期待値が「有界」ならば，$X_n$は概収束極限を持つ．
-    その証明では，劣マルチンゲールの上向き横断回数の評価が肝要になる．
+    上渡回数の評価を，確率解析の方法から考える．
+    $(X_n)$のマルチンゲール変換$(H\cdot X)_n$とは，確率積分$\int^t_0HdX$に相当する．
 \end{tcolorbox}
-
-\subsubsection{martingale変換}
 
 \begin{definition}[martingale transformation]
     可予測な過程$(H_n)$と$(\F_n)$-適合的な過程$(X_n)$に対して，新たな確率過程$(X'_n):=((H\cdot X)_n)$を次のように定める
@@ -713,43 +974,27 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\subsubsection{上渡回数定理}
+\subsection{劣マルチンゲールの収束定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    マルチンゲールは，（少なくとも期待値については）単調に増加する傾向があり，いつまでも区間$[a,b]$付近にとどまってはいないか，概収束をする．
-\end{tcolorbox}
-
-\begin{definition}[upcrossing number]\mbox{}
-    \begin{enumerate}
-        \item 実数$a<b$について，列$(\sigma_j)$を次のように定めると，Markov時刻の狭義単調増加列となる：
-        \begin{align*}
-            \sigma_1&:=\min\Brace{n\ge 1\mid X_n\le a},&\sigma_2&:=\min\Brace{n>\sigma_1\mid X_n\ge b},\\
-            \sigma_{2k+1}&:=\min\Brace{n>\sigma_{2k}\mid X_n\le a},&\sigma_{2k+2}&:=\min\Brace{n>\sigma_{2k+1}\mid X_n\ge b}.
-        \end{align*}
-        \item Markov時刻の狭義単調増加列に対して，$U_n:=\max_{k\in\N\mid\sigma_{2k}\le n}$と定めると，$\N$-値確率変数の列となる．
-        成分$U_n$を，\textbf{時刻$n$までの$a\nearrow b$間の上向き横断回数}という．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}
-    $(X_n)$が劣マルチンゲールならば，
-    \[E[U_n]\le\frac{1}{b-a}E[(X_n-a)^+].\]
-\end{theorem}
-
-\subsubsection{劣マルチンゲールの収束定理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+    劣マルチンゲールの正部分の期待値が「有界」ならば，$X_n$は概収束極限を持つ．
+    その証明では，劣マルチンゲールの上向き横断回数の評価が肝要になる．
     劣マルチンゲールに対しても，有界列は収束することに対応する結果が成り立つ．
 \end{tcolorbox}
 
 \begin{theorem}
-    劣マルチンゲール$(X_n)$は$\sup_{n\in\N}E[X_n^+]<\infty$を満たすとする．このとき，ある確率変数$X$が存在して$X=\lim_{n\to\infty}X_n\;\as$かつ可積分$X\in\L^1(\Om)$である．
+    $(\F_n)$-劣マルチンゲール$(X_n)$は
+    $\sup_{n\in\N}E[\abs{X_n}]<\infty$を満たすとする\footnote{一様可積分ならば成り立つ．}．
+    このとき，ある可積分確率変数$X\in L^1(\Om,\F_\infty)$が存在してこれに概収束する：$X=\lim_{n\to\infty}X_n\;\as$
 \end{theorem}
 \begin{remarks}
     劣マルチンゲールに対して，有界性条件$\sup_{n\in\N}E[X_n^+]<\infty$は，平均の一様有界性$\sup_{n\in\N}E[\abs{X_n}]<\infty$に同値．
 \end{remarks}
+
+\begin{corollary}
+    $(X_n)$が$(\F_n)$-マルチンゲールかつ一様可積分ならば，$(X_n)$はある極限$X_\infty\in L^1(\Om,\F_\infty)$に概収束かつ$L^1$-収束し，$\forall_{n\in\N}\;X_n=E[X_\infty|\F_n]$が成り立つ．
+\end{corollary}
 
 \subsection{積率不等式}
 
@@ -758,18 +1003,9 @@ title=]
     Doobの不等式\ref{thm-Doob-inequality}を，マルチンゲールの$p$次のモーメントに関する評価式に書き直せる．
 \end{tcolorbox}
 
-\subsubsection{Doobの不等式の一般化}
-
-\begin{theorem}
-    $p>1$について，$\{M_n\}\subset\L^p(\Om)$を$p$乗可積分なマルチンゲールとする．このとき，
-    \[E\Square{\max_{1\le k\le n}\abs{M_k}^p}\le\paren{\frac{p}{p-1}}^pE[\abs{M_n}^p].\]
-\end{theorem}
-
-\subsubsection{Burkholderの不等式}
-
 \begin{notation}
-    $\{M_n\}\subset\L^2(\Om)$を，$M_0=0$を初項とする2乗可積分なマルチンゲールとする．
-    このとき，$\forall_{n\in\N}\;E[M_n]=0$である．
+    $\{M_n\}\subset\L^2(\Om)$を，$M_0=0$から始まる2乗可積分なマルチンゲールとする．
+    このとき，$\forall_{n\in\N}\;E[M_n]=0$に注意．
 \end{notation}
 
 \begin{definition}
@@ -777,6 +1013,7 @@ title=]
     マルチンゲール$(M_n)$の\textbf{$p$次変分}または\textbf{$p$次変動}とは，次で定まる実数列$([M]_n)$をいう：
     \[[M]_n:=\sum^n_{k=1}\abs{M_k-M_{k-1}}^p.\]
     特に$p=1$のとき，\textbf{変分}あるいは\textbf{全変動}という．
+    この記法は特に$p=2$のときに用いる．
 \end{definition}
 
 \begin{proposition}
@@ -814,7 +1051,7 @@ title=]
 
 \begin{definition}
     $D$-過程$(X_t)$が$(\F_t)$-マルチンゲールであるとは，次の３条件を満たすことをいう．
-    \begin{enumerate}
+    \begin{enumerate}[({M}1)]
         \item $(\F_t)$-適合である：$\forall_{t\ge0}\;X_t$は$\F_t$-可測．
         \item 可積分である：$\forall_{t\ge0}\;X_t\in\L^1(\Om,\F)$．
         \item $\forall_{0\le s\le t}\;E[X_t|\F_s]=X_s\;\as$
@@ -822,17 +1059,135 @@ title=]
     条件(3)の代わりに$\forall_{0\le s\le t}\;E[X_t|\F_s]\ge X_s\;\as$をみたすとき，$(\F_t)$-劣マルチンゲールという．
 \end{definition}
 
-\subsection{Doobの不等式}
+\subsection{DoobのD-変形定理}
 
-\subsection{Doobの任意抽出定理}
+\begin{theorem}
+    任意の確率右連続な$(\F_t)$-劣マルチンゲールに対し，$D$-過程であるような修正$(Y_t)$が存在する．
+\end{theorem}
 
-\subsection{劣マルチンゲールの収束定理}
+\begin{definition}
+    このような$(Y_t)$は識別不可能な違いを除いて一意に定まり，\textbf{$D$-変形}という．
+\end{definition}
 
-\subsection{Doob-Meyer分解}
+\section{Gauss過程}
 
-\subsection{Burkholderの不等式}
+\subsection{定義と特徴付け}
 
-\section{Gauss系}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の線型汎函数について，その値となる1次元確率変数が正則であることを定義に据える．
+\end{tcolorbox}
+
+\begin{definition}
+    確率変数族$\{X_\lambda\}\subset\L(\Om,\F,P)$が\textbf{Gauss系}であるとは，
+    任意の有限次元線型結合が正規分布に従うことをいう．
+    このとき，$\{X_\lambda\}\subset L^2(\Om,\F,P)$が必要．
+\end{definition}
+
+\begin{theorem}
+    確率変数族$\{X_\lambda\}\subset\L(\Om,\F,P)$について，
+    \begin{enumerate}
+        \item Gauss系である．
+        \item 有限次元分布が多変量正規分布に従う．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{中心化されたGauss系}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gauss系の中では独立性と共分散が$0$であることと(従って対独立であること)は同値になる．
+    また，なぜ分散が大事かというと，これは$L^2$-内積であるからだ．
+\end{tcolorbox}
+
+\begin{lemma}[Gauss部分空間]
+    $\S\subset L^2(\Om,\F,P)$をGauss系とする．
+    \begin{enumerate}
+        \item $\S$が生成する線型部分空間$\L[\S]$もGauss系である．
+        \item $\S$が生成するノルム閉部分空間$\oo{\L}[\S]$もGauss系である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[独立性の特徴付け]
+    Gauss系$\S$の部分集合列$\{\S_n\}_{n\in\N}\subset P(\S)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\forall_{i\ne j\in\N}\;\forall_{X\in\S_i,Y\in\S_j}\;\Cov[X,Y]=0$．
+        \item $(\S_n)_{n\in\N}$は独立である．
+    \end{enumerate}
+    特に，2つの中心化されたGauss確率変数$X,Y\in L^2$が独立であるとは，直交すること$(X|Y)=0$と同値．
+\end{theorem}
+
+\begin{lemma}[中心化されたGauss変数の性質]\mbox{}
+    \begin{enumerate}
+        \item 中心化されたGauss変数全体の集合は，$\{1\}$の直交補空間
+        $L_0^2:=\{1\}^\perp$に含まれる．
+        \item $\S_0$が中心化されたGauss系ならば，$\L[\S],\oo{\L}[\S]$もそうである．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    これより，平行移動をして
+    中心化されたGauss変数のみを考えれば良いことになる．ここでは，直交性と独立性が同値になる．
+\end{remarks}
+
+\subsection{正射影としての条件付き期待値}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    中心化されたGauss確率変数の空間の中では，条件付き期待値は正射影となる．
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 任意の部分集合$\S\subset\L(\Om)$に対して，$\F[\S]$-可測な2乗可積分確率変数の全体を$L^2[\S]$または$L^2_\S$で表す．
+        \item Hilbert空間$M$の閉部分空間$M_1$が定める正射影を$\pr_{M_1}$で表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{theorem}[正射影としての条件付き期待値]\mbox{}
+    \begin{enumerate}
+        \item $\S\subset\L(\Om)$を確率変数の集合とする．射影$\pr:L^2(\Om)\to L^2_\S$について，このとき，
+        このとき，$E[X|\S]=\pr(X)$．
+        \item $\S$を中心化されたGauss系，$\cT$をその部分集合とする．
+        射影$\pr:\oo{\L}[\S]\to\oo{\L}[\cT]$について，
+        このとき，$\forall_{X\in\S}\;E[X|\cT]=\pr[X]$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{再生核Hilbert空間}
+
+\begin{definition}[RKHS: reproductive kernel Hilbert space]
+    $X$を集合，$H\subset\Map(X;\R)$をHilbert空間とする．
+    評価関数$\ev_x:H\to\R$が任意の$x\in X$について有界線型汎関数である$\forall_{x\in X}\;\ev_x\in B(H)$とき，$H$を\textbf{再生核Hilbert空間}という．
+    すなわち，Rieszの表現定理よりある$K_x\in H$が存在して$\ev_x(-)=(-|K_x)$と表せる．この対応$X\to H;x\mapsto K_x$が導く双線型形式$K:X\times X\to\R;(x,y)\mapsto K(x,y):=(K_x|K_y)$を\textbf{再生核}という．
+    再生核は対称で半正定値である．
+\end{definition}
+\begin{theorem}
+    関数$K:X\times X\to\R$は対称かつ半正定値であるとする．このとき，ただ一つのHilbert空間$H(K)$が$\Map(X;\R)$内に存在して，$K$を再生核として持つ．
+\end{theorem}
+
+\begin{theorem}
+    $(E,\mu)$を測度空間，$\mu$-体積確定な集合の全体を$\M^1$とする．
+    \begin{enumerate}
+        \item $v_{\al\beta}:=\mu(\al\cap\beta)\;(\al,\beta\in\M^1)$とすると，対称な半正定値関数である．
+        \item これが定めるHilbert空間$H(v)$は$L^2(E,\mu)$と同型である．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Gauss系の平均と分散}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可分な空間上には，平均と共分散を指定すればGauss系が存在する．
+\end{tcolorbox}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\S=(X_\al)_{\al\in A}$をGauss系とし，$m,v$を平均と共分散とする．
+        $v$が定める再生核Hilbert空間$H(v)$は可分である．
+        \item 任意の写像$m:A\to\R$と対称半正定値関数$v$について，再生核Hilbert空間$H(v)$は可分であるとする．
+        このとき，ある確率空間$(\Om,P)$とその上のGauss系$(X_\al)_{\al\in A}$が法則同党を除いて一意的に存在して，$m,v$はそれぞれ平均と共分散である．
+    \end{enumerate}
+\end{theorem}
 
 \chapter{半マルチンゲールと統計解析}
 

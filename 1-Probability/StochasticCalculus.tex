@@ -464,15 +464,13 @@ title=]
 
 \subsection{Gauss過程としての構成}
 
-\begin{theorem}[Kolmogorov's continuity criterion / 正規化定理]\label{thm-Kolmogorov-continuity-criterion}
+\begin{theorem}[Kolmogorov's continuity criterion / 正規化定理 / 連続変形定理]\label{thm-Kolmogorov-continuity-criterion}
     実過程$X=(X_t)_{t\in[0,T]}$が
     \[\exists_{\al,\beta,K>0}\;\forall_{s,t\in[0,T]}\;E[\abs{X_{t}-X_s}^\beta]\le K\abs{t-s}^{1+\al}\]
-    を満たすならば，$X$のある修正$\wt{X}$が存在して，
-    任意の$0\le\gamma<\frac{\al}{\beta}$について次の2条件を満たす．
-    \begin{enumerate}
-        \item $\exists_{G_\gamma\in\Meas(\Om',\R)}\;\forall_{s,t\in[0,T]}\;\abs{\wt{X}_t-\wt{X}_s}\le G_\gamma\abs{t-s}^\gamma$．
-        \item 特に，$\wt{X}$の見本道は$\gamma$-次Holder連続である．
-    \end{enumerate}
+    を満たすならば，$X$のある連続な修正$\wt{X}$が識別不可能な違いを除いて一意的に存在して，
+    任意の$0\le\gamma<\frac{\al}{\beta}$について次を満たす：
+    \[\exists_{G_\gamma\in\L(\Om';\R)}\;\forall_{s,t\in[0,T]}\qquad\abs{\wt{X}_t-\wt{X}_s}\le G_\gamma\abs{t-s}^\gamma.\]
+    特に，$\wt{X}$の見本道は$\gamma$-次Holder連続である．
 \end{theorem}
 \begin{proof}
     \cite{Revus and Yor}I.2 Thm(2.1)は，一般の添字集合$t\in[0,1)^d$上のBanach空間値過程$(X_t)$について示している．
@@ -788,7 +786,7 @@ title=]
     \[\D(\Om):=\Brace{f\in H^2(\Om)\mid \D(f)<\infty}\quad\D(f):=\frac{1}{\pi}\iint_\Om\abs{f'(z)}^2dA=\frac{1}{4\pi}\iint_\Om\abs{\partial_xf}^2+\abs{\partial_yf}^2dxdy.\]
     この右辺が変分原理であるDirichlet原理を定めるDirichlet積分になっていることから名前がついた．
 \end{definition}
-\begin{definition}
+\begin{definition}[RKHS: reproductive kernel Hilbert space]
     $X$を集合，$H\subset\Map(X;\R)$をHilbert空間とする．
     評価関数$\ev_x:H\to\R$が任意の$x\in X$について有界線型汎関数である$\forall_{x\in X}\;\ev_x\in B(H)$とき，$H$を\textbf{再生核Hilbert空間}という．
     すなわち，Rieszの表現定理よりある$K_x\in H$が存在して$\ev_x(-)=(-|K_x)$と表せる．この対応$X\to H;x\mapsto K_x$が導く双線型形式$K:X\times X\to\R;(x,y)\mapsto K(x,y):=(K_x|K_y)$を\textbf{再生核}という．
