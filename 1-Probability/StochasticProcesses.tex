@@ -91,14 +91,6 @@ title=]
     i.i.d.をそのまま連続化しようとし，可分性の仮定も満たすものは，加法過程の時間微分を持っていれば良い．それがGauss型でもあるとき，これを白色雑音という．
 \end{remark}
 
-\section{点過程}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $\cup_{t\in T}\Im X_t$が離散であるとき，点過程という．
-\end{tcolorbox}
-
-
 
 \section{無限の場合の独立性}
 
@@ -1632,10 +1624,10 @@ title=熱核の半群性]
     Poisson過程は高さ1の跳躍でのみ増加する，跳躍のみで増加する過程の代表である．
 \end{quotation}
 
-\section{加法過程}
+\section{定義と例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+    title=]
     見本道が殆ど至る所cadlagである過程を$D$-過程という．
     見本過程$\R_+\to\Meas(\Om,\R);s\mapsto X_s$が確率連続な加法過程で$D$-過程でもあるものを，Levy過程という．
     任意の確率連続な加法過程はLevy過程に同等であり，Levy過程の構造は解明済みである．
@@ -1644,76 +1636,248 @@ title=]
     任意のLevy過程は，ドリフト付きのBrown運動とLevyのジャンプ過程との和に分解できる．
 \end{tcolorbox}
 
-\subsection{定義と例}
-
-\begin{definition}
-    $(X_t)_{t\in\R_+}$は次の5条件を満たすとき，\textbf{Levy過程}といい，(4)までを満たすとき\textbf{加法過程}という．
+\begin{definition}[additive process, Levy process]
+    $(X_t)_{t\in\R_+}$は,，
+    (1),(2)のみを満たすとき\textbf{加法過程}といい，(3)も満たすとき\textbf{Levy過程}といい，(4)も満たすとき\textbf{(時間的に)一様なLevy過程}という．
     \begin{enumerate}
-        \item 独立増分である：$\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;X_{t_n}-X_{t_{n-1}},\cdots,X_{t_2}-X_{t_1}$は独立．
-        \item $X_0=0\;\as$
-        \item 確率連続である．
+        \item 独立増分性・加法性：$\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;X_{t_n}-X_{t_{n-1}},\cdots,X_{t_2}-X_{t_1}$は独立．
+        \item 標準化：$X_0=0\;\as$
         \item $D$-過程である．
-        \item 時間一様性：$\forall_{s\in\R_+}\;X_{t+s}\sim X_t$は$t$に依存しない．
+        \item 時間一様性・定常増分性：$\forall_{s\in\R_+}\;X_{t+s}- X_t$は$t$に依存しない．
+        \item 確率連続である．
     \end{enumerate}
+    (5)は暗黙のうちに仮定してしまうことも多い．
 \end{definition}
 
 \begin{theorem}[$D$-変形]\mbox{}
     \begin{enumerate}
-        \item (1),(2),(3)を満たすならば，その修正であって加法過程であるものが存在する．
-        \item (1),(2),(3),(5)を満たすならば，その修正であってLevy過程であるものが存在する．
+        \item (1),(2),(5)を満たすならば，その修正であって(3)も満たすものが識別不可能な違いを除いて存在する．
+        \item (1),(2),(4),(5)を満たすならば，その修正であって(3)も満たすものが存在する．
     \end{enumerate}
 \end{theorem}
 
-\subsection{定義と例}
-
 \begin{example}
-    $\Z^d$-酔歩は次の性質を満たす：任意の長さ$k\ge2$の部分列$(n_j)_{j\in[k]}$について，\textbf{増分}の過程$(X_{n_j}-X_{n_{j-1}})_{j\in[k]}$は独立．
+    離散時間の加法過程は，遷移確率が空間的に一様なMarkov連鎖と見れる．さらに時間的にも一様なものがLevy過程となる．
+    \begin{enumerate}
+        \item $\Z^d$-酔歩は加法過程である：任意の長さ$k\ge2$の部分列$(n_j)_{j\in[k]}$について，\textbf{増分}の過程$(X_{n_j}-X_{n_{j-1}})_{j\in[k]}$は独立．
+        \item 一般に独立な実確率変数列$(Y_n)_{n\in\N}$の部分和の過程${X_t:=\sum_{k\le t}Y_k(\om)}_{t\in\R_+}$は加法過程である．
+        \item $\R_+$上のLebesgue測度を平均に持つPoisson配置$\{Y(A,\om)\}_{A\in\B^1\cap\R_+}$に対して$X_t(\om):=Y([0,t],\om)$とおくと，これは加法過程である．これを\textbf{Poisson過程}という．
+        これは「Poisson点過程の積分」という意味で，(2)の例の一般化になっている．
+    \end{enumerate}
 \end{example}
 
-\begin{definition}[increment, additive process]
-    次の性質を満たす，初期分布$\delta_0$な$\R^d$-値確率過程$(X_s)_{s\in\R_+}$，すなわち，空間的一様かつ時間一様なMarkov過程を\textbf{加法過程}という．
-    \begin{enumerate}\setcounter{enumi}{2}
-        \item 任意の長さ$k\ge2$の狭義単調増加非負実数列$(s_j)_{j\in[k]},s_0=0$が定める増分列$(X_{s_j}-X_{s_{j-1}})_{j\in[k]}$は独立．
-    \end{enumerate}
+\begin{remark}
     このとき，$S$の原点を$0$とするとその転移確率は一様に$p(s,-):=p(s,0,-)$と表わせ，Chapman-Kolmogorovの等式も
     \[\forall_{s,t\in\R_+}\;\forall_{x,z\in S}\;\int_Sp(s,dy-x)p(t,dz-y)=p(s+t,dz-x)\]
     と表せる．
+\end{remark}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 時間$[s,t]$の間のすべての増分が定める$\sigma$-加法族を$\sigma_{s,t}[dX]:=\sigma[X_v-X_u;u\le v\in[s,t]]$と表す．
+        \item $\sigma_{s+,t}[dX]:=\sigma[X_v-X_u;u\le v\in(s,t]]$．
+        \item 閉$\sigma$-代数についても，$\F_{s,t}[dX]:=\cap_{\ep>0}\sigma_{s-\ep,t+\ep}[dX]\lor 2$．
+    \end{enumerate}
+\end{notation}
+
+\section{付属するマルチンゲール}
+
+\begin{theorem}
+    $X$が確率連続な加法過程ならば，
+    \begin{enumerate}
+        \item $\F_{s,t}=\sigma_{s,t}\lor 2$．
+        \item $s_0<s_1<\cdots<s_n$ならば，$(\F_{s_{i-1}s_i})_{i\in[n]}$は独立．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    これより，$s<t\Rightarrow X_t-X_s$は$\F_s[X]$と独立と分かる．
+\end{remarks}
+
+\begin{proposition}
+    \[Y^a_t:=\frac{e^{iaX_i}}{E[e^{iaX_i}]}\]
+    は$(\F_t[X])$-マルチンゲールである．
+    なお，複素過程がマルチンゲールとは，実部と虚部がいずれもマルチンゲールであることをいう．
+\end{proposition}
+
+\section{Gauss型とPoisson型のLevy過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフトを持ったBrown運動を除いて，他のすべての決定的でないLevy過程は不連続な見本過程を持つことは驚愕の事実である．
+\end{tcolorbox}
+
+\begin{definition}
+    Levy過程の中で，
+    \begin{enumerate}
+        \item 見本過程が殆ど確実に連続であるとき，\textbf{Gauss型}であるという．
+        \item 見本過程が殆ど確実に飛躍$1$で増加する階段関数となるとき，\textbf{Poisson型}であるという．
+    \end{enumerate}
 \end{definition}
 
 \begin{theorem}[Gauss型とPoisson型Levy過程]
     $X$をLevy過程とする．
     \begin{enumerate}
-        \item $X$がさらに概連続過程であれば，増分$X_b-X_a\;(b>a)$はGauss分布に従う．
+        \item $X$がさらに(概)連続過程であれば，増分$X_b-X_a\;(b>a)$はGauss分布に従う．
         \item $X$がさらに殆ど至る所飛躍$1$で増加する階段関数を見本過程に持つならば，増分$X_b-X_a\;(b>a)$はPoisson分布に従う．
     \end{enumerate}
 \end{theorem}
 
-\subsection{Levy-Ito分解}
+\section{ジャンプの描像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の正数$a>0$に対してこれより大きいジャンプ$X_\al(\om)-X_{\al-}(\om)>a$は有限個しかないが，$a\to0$を調べるには慎重な議論が居る．
+\end{tcolorbox}
+
+\begin{definition}
+    $(\Om,\F,P)$について，
+    \begin{enumerate}
+        \item $\F$の部分集合$\{\B_{s,t}\}_{s<t\in\R_+}$が\textbf{加法系}であるとは，次の2条件が成り立つことをいう：
+        \begin{enumerate}[(a)]
+            \item $s<t<u\Rightarrow\B_{s,t}=\B_{s,t}\lor\B_{t,u}$．
+            \item $\paren{[s_i,t_i)}_{i\in[n]}$が互いに素であるならば，$\{\B_{s_i,t_i}\}_{i\in[n]}$は独立．
+        \end{enumerate}
+        \item 確率過程$X$が$X_0=0$を満たし，ある加法系$\{\B_{s,t}\}$について$\forall_{s<t\in\R_+}\;\sigma[X_t-X_s]\subset\B_{s,t}$ならば，$X$は$\sigma_{s,t}[dX]\subset\B_{s,t}$を満たす加法過程である．これを\textbf{$\{\B_{s,t}\}$に従属する加法過程}という．
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    $\sigma_{s,t}[dX]$は加法系であり，これを\textbf{$X$が生成する加法系}という．
+\end{example}
+
+\begin{lemma}[well-definedness]
+    $X=(X_t)$は加法系$\{\B_{s,t}\}$に従属するとする．このとき，$E\in\B(\R\setminus\{0\})$に対して，歩幅の条件$X_\al(\om)-X_{\al-}(\om)\in E$を満たす時刻$\al\in(s,t]$の数$N((s,t]\times E,\om)$は$\B_{s,t}$-可測である．
+\end{lemma}
+
+\begin{lemma}[独立性の十分条件]
+    $X=(X_t)$はLevy過程，$Y=(Y_t)$はPoisson型のLevy過程で，共に加法系$\{\B_{s,t}\}$に従属するとする．
+    この2つが，任意の$\om$に対して，互いの見本過程が共通の飛躍時刻を持たないならば，$X,Y$は独立である．
+\end{lemma}
+
+\begin{lemma}
+    任意の$E\in\B(\R\setminus(-a,a))\;(a>0)$に対して，その歩幅に含まれる跳躍の回数の過程$N_E(t):=N((0,t]\times E,\om)$は，$\{\B_{s,t}\}$に従属するPoisson型Levy過程である．
+\end{lemma}
+
+\begin{notation}
+    $E\in\B(\R\setminus(-a,a))\;(a>0)$に対して，
+    \begin{enumerate}
+        \item $S_E(t):=\sum_{s\le t}(X(s)-X(s-))1_E(X(s)-X(s-))$とおくと，歩幅が$E$に属する跳躍のみを加えていくことにより得られる過程である．これは補題より$\{\B_{s,t}\}$に従属する過程である．また確率連続であり，Levy過程である．
+        \item $X_E(t):=X(t)-S_E(t)$とおいても同様の性質を満たす．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+    任意の互いに素な集合族$E_1,\cdots,E_n\in\B(\R\setminus(-a,a))\;(a>0),\;E:=\sum_{k=1}^nE_k$に対して，
+    \begin{enumerate}
+        \item $N_{E_1},\cdots,N_{E_n},X_E$は独立である．
+        \item $S_{E_1},\cdots,S_{E_n},X_E$も独立である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 飛躍の全体を
+        \[J(\om):=\Brace{(t,X(t,\om)-X(t-,\om))\in\R_+\times\R\mid X(t,\om)-X(t-,\om)\ne0}\]
+        とおく．これは$\Gamma:=\R_+\times\R\setminus\{0\}$の可算な部分集合となる．
+        これは集合値確率変数であることに注意．
+        \item $N(B,\om):=\abs{J(\om)\cap B}\;(B\in\B(\Gamma))$を，$B$の中に入る飛躍の数とする．これは，$\B(\Gamma)$上の$\o{\N}$-値測度に値を取る確率変数となっている．特に，$N:=(N(B,\om))_{B\in\B(\Gamma)}$は固有偶然配置である．この平均(測度)を$n(B):=E[N(B)]$とする．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+    $N=(N(B,\om))$は強度$n$のPoisson固有配置である．
+\end{lemma}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $S_E(t,\om)=\int_{(0,t]}\int_E uN(dsdu)\;(E\in\B(\R\setminus(-a,a)))$．
+        \item この確率変数の特性関数は$\exp\paren{\int_{[0,t]}\int_E(e^{izu}-1)n(dsdu)}$で表せる．
+        \item $\forall_{t\in\R_+}\;\int_{[0,t]}\int_{\R\setminus\{0\}}(u^2\land 1)n(dsdu)<\infty$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{notation}
+    自然数$n\in\N$に対して，歩幅$u$が$[1/n,1]$に入る跳躍を加え合わせると
+    \[S_n(t,\om):=\int_{s\le t}\int_{1/n\le\abs{u}<1}uN(dsdu,\om)=S_E(t,\om)\quad E:=\Brace{u\in\R\setminus\{0\}\mid 1/n\le\abs{u}<1}.\]
+    となり，これはLevy過程になる．これを用いて，
+    \[T_n(t,\om):=S_n(t,\om)-E[S_n(t,\om)]\]
+    は平均$0$のLevy過程である．
+\end{notation}
+
+\begin{lemma}
+    $m>n$について，
+    \[P\Square{\sup_{s\le t}\abs{T_m(s,\om)-T_n(s,\om)}>\ep}\le\frac{1}{\ep^2}\int_{1/m\le\abs{u}<1/n}u^2n_t(du).\]
+    ただし，$n_t(E):=n((0,t]\times E)$とした．
+\end{lemma}
+\begin{remarks}
+    これは，$D[0,t]$-値確率変数$T_n(\om):=(T_n(s,\om))_{0\le s\le t}$が，$D$の一様ノルムについて確率収束することが分かった．
+    $(D[0,t],\norm{-}_\infty)$は$l^\infty([0,t])$の非可分な閉部分空間であることに注意．
+\end{remarks}
+
+\begin{lemma}[Banach空間値確率変数の概収束性]
+    任意の$t\in\R_+$に関して，殆ど確実に，$(T_n(s,\om))_{s\in[0,t]}$は$n\to\infty$のとき一様ノルムについて収束する．
+\end{lemma}
+
+\begin{notation}
+    \[\phi(u):=\begin{cases}
+        u\land 1,&u>0,\\
+        u\lor(-1),&u<0.
+    \end{cases}\]
+\end{notation}
+
+\begin{lemma}
+    \[\int_{s\le t}\int_{\abs{u}\ge 1/n}\phi(u)n(dsdu)=\int_{\abs{u}\ge 1/n}\phi(u)n_t(du)\]
+    は$t$について連続である．
+\end{lemma}
+
+\section{Levy-Ito分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gauss過程が平均と共分散で特徴付けられたように，Levy過程は特性量$(n,m,v)$で特徴付けられる．
+\end{tcolorbox}
 
 \begin{theorem}[Levy過程の分解定理 (Levy-Ito decomposition)]
     $X$をLevy過程とする．
     $\Gamma=\R_+\times(\R\setminus\{0\})$上の固有なPoisson配置$N$と，これと独立なGauss型Levy過程$G$が存在して，
     \[X(t,\om)=G(t,\om)+\lim_{n\to\infty}\Square{\int_{s\le t}\int_{\abs{u}>1/n}(uN(dsdu,\om)-\phi(u)n(dsdu))}\]
     と表せる．
+    ただし，$n$はPoisson配置$N$の平均測度で，
+    \[\int_{s\le t}\int_{\abs{u}\ge0}(u^2\land 1)n(dsdu)<\infty\;(t\in\R_+)\quad n(\{t\}\times\R\setminus\{0\})=0\]
+    を満たす．
 \end{theorem}
 
-\begin{definition}[Levy-Khintchine triplet]
-    Levy過程$X$の連続部分$G$を用いて，$m(t):=E[G(t)],v(t):=\Var[G(t)]$は有限確定する．
-    また，$m$は連続関数，$v$は連続な単調増加関数，$m(0)=v(0)=0$を満たす．
-    また，$n$をPoisson配置$N=N_X$の平均測度，すなわち$\Gamma$上の測度で，次を満たす：
-    \[\forall_{t\in\R_+}\quad n(\{t\}\times(\R\setminus\{0\}))=0,\quad\int_{s\le t}\int_{\abs{u}>0}(u^2\land 1)n(dsdu)<\infty.\]
-    組$(n,m,v)$を，Levy過程$X$の\textbf{特性量}または\textbf{Levy-Khintchine組}という．
+\begin{definition}[Levy-Khintchine triplet]\mbox{}
+    \begin{enumerate}
+        \item Levy過程$X$の連続部分$G$を用いて，
+        \textbf{平均}と\textbf{分散}$m(t):=E[G(t)],v(t):=\Var[G(t)]$は有限確定する．
+        \item $n$をPoisson配置$N=N_X$の平均測度という．
+        \item 組$(n,m,v)$を，Levy過程$X$の\textbf{特性量}または\textbf{Levy-Khintchine組}という．
+    \end{enumerate}
 \end{definition}
 
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $m$は連続関数で$m(0)=0$．
+        \item $v$は連続な単調増加関数で$v(0)=0$．
+        \item $n$は$\Gamma$上の測度(Poisson点過程)で，次を満たす：
+        \[\forall_{t\in\R_+}\quad n(\{t\}\times(\R\setminus\{0\}))=0,\quad\int_{s\le t}\int_{\abs{u}>0}(u^2\land 1)n(dsdu)<\infty.\]
+    \end{enumerate}
+\end{lemma}
+
 \begin{theorem}
-    上記の条件を満たす$(n,m,v)$に対して，これを特性量として持つLevy過程が存在して，法則同等を除いて一意的である．
+    補題の条件を満たす$(n,m,v)$に対して，これを特性量として持つLevy過程が存在して，法則同等を除いて一意的である．
 \end{theorem}
 
-\begin{definition}
+\begin{corollary}[時間的に一様な場合]
     $X_t-X_s\;(t>s)$の確率法則が$t-s$の値のみに関係するようなLevy過程を，\textbf{時間的に一様なLevy過程}という．
     このとき，特性値は次のように表せる．
     \[m_X(t)=mt,\quad v_X(t)=vt,\quad n_X(dtdu)=dt\cdot n(du).\]
-\end{definition}
+\end{corollary}
+
+\begin{corollary}
+    確率分布族$\{\mu_{s,t}\}_{s\le t\in\R_+}\subset P(\R)$は，一貫性条件$\mu_{s,t}*\mu_{t,u}=\mu_{s,u}$を満たし，$(s,t)\mapsto P(\R)$は弱位相について連続とする．
+    このとき，$\forall_{t>s}\;X_t-X_s\sim\mu_{s,t}$を満たすLevy過程$X$が存在し，法則同等を除いて一意的である．
+\end{corollary}
 
 \section{Brown運動}
 
@@ -1838,34 +2002,6 @@ title=]
     ここまでいかずとも，少しドリフト$0$分散$0$のBrown運動を混ぜて，ジャンプを持つ加法過程で特に基本的なPoisson過程を見る．
 \end{tcolorbox}
 
-\subsection{配置}
-
-\begin{definition}
-    $(S,\B)$を距離空間上のBorel可測空間とする．
-    \begin{enumerate}
-        \item この上の$\sigma$-有限な測度$m:\B\to\o{\N}$を\textbf{配置}という．
-        \item 配置$m$の\textbf{台}を$A:=\Brace{x\in S\mid m(\{x\})>0}$とする．
-    \end{enumerate}
-\end{definition}
-
-\subsection{定義}
-
-\begin{theorem}
-    $(U_n)$を$\R$上の増加酔歩で，$T_n:=U_n-U_{n-1}\sim\Exp(c)\;(c>0)$とする．
-    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Pois(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
-    これをパラメータ$c>0$のPoisson過程という．
-\end{theorem}
-\begin{remarks}
-    $X_t$は$t$までに起こった
-    跳躍の回数で，$U_n$は$n$回目の跳躍が起こる時刻である．
-\end{remarks}
-
-\begin{theorem}[compound Poisson process]
-    $\sigma\in P(\R^d)$は$\sigma(\{0\})=0$を満たすとする．
-    パラメータ$c>0$のPoisson過程$(N_t)_{t\in\R_+}$と$\R^d$上の酔歩$(S_n)_{n\in\N},S_1\sim\sigma$は独立であるとする．
-    このとき，$X_t(\om):=S_{N_t(\om)}(\om)$は$\R^d$上のLevy過程である．これを\textbf{$\sigma,c$が定める複合Poisson過程}という．
-\end{theorem}
-
 \subsection{定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1895,6 +2031,28 @@ title=]
     \[N_t:=\max\Brace{k\in\N\mid Z_k\le t}\in\o{\Z}_+\]
     はPoisson過程となり，$P[N_t\in\Z_+]=1$．
 \end{discussion}
+
+\begin{theorem}
+    $(U_n)$を$\R$上の増加酔歩で，$T_n:=U_n-U_{n-1}\sim\Exp(c)\;(c>0)$とする．
+    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Pois(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
+    これをパラメータ$c>0$のPoisson過程という．
+\end{theorem}
+\begin{remarks}
+    $X_t$は$t$までに起こった
+    跳躍の回数で，$U_n$は$n$回目の跳躍が起こる時刻である．
+\end{remarks}
+
+\subsection{複合Poisson過程}
+
+\begin{theorem}[compound Poisson process]
+    $\sigma\in P(\R^d)$は$\sigma(\{0\})=0$を満たすとする．
+    パラメータ$c>0$のPoisson過程$(N_t)_{t\in\R_+}$と$\R^d$上の酔歩$(S_n)_{n\in\N},S_1\sim\sigma$は独立であるとする．
+    このとき，$X_t(\om):=S_{N_t(\om)}(\om)$は$\R^d$上のLevy過程である．これを\textbf{$\sigma,c$が定める複合Poisson過程}という．
+\end{theorem}
+
+\begin{definition}
+        $m=0,v=0$のときの$\psi(z)=\int_{\abs{u>0}}(e^{izu}-1)n(du)$と表せる$\mu$のクラスを，\textbf{複合Poisson分布}という．これに対応する過程を\textbf{複合Poisson過程}という．
+\end{definition}
 
 \subsection{独立増分性}
 
@@ -1965,10 +2123,6 @@ title=]
 
 \subsection{複合Poisson過程}
 
-\begin{definition}
-        $m=0,v=0$のときの$\psi(z)=\int_{\abs{u>0}}(e^{izu}-1)n(du)$と表せる$\mu$のクラスを，\textbf{複合Poisson分布}という．これに対応する過程を\textbf{複合Poisson過程}という．
-\end{definition}
-
 \begin{lemma}
     複合Poisson分布$\mu$は，$v^{*n}$をPoisson分布$p_\lambda$によって加重平均を取ったものである：
     \[\mu=\sum^\infty_{n=1}e^{-\lambda}\frac{\lambda^n}{n!}\nu^{*n}.\]
@@ -2034,6 +2188,262 @@ title=]
     \end{enumerate}
 \end{lemma}
 
+\section{信号処理の用語}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+The problem of optimal non-linear filtering (even for the non-stationary case) was solved by Ruslan L. Stratonovich (1959,[1] 1960[2]).\footnote{\url{https://en.wikipedia.org/wiki/Filtering_problem_(stochastic_processes)}}
+\end{tcolorbox}
+
+\begin{definition}[filtering problem]
+    
+\end{definition}
+
+\begin{definition}[innovation]
+    時系列$(X_t)_{t\in T}$について，$X_t$の観測値と，$\F_s\;(s<t)$による予測の値との差が定める過程を\textbf{新生過程}という．
+    この過程が白色雑音になることは，予測可能な成分をすべて除去しきったとみなせるため，予測として理想的であると考えられる．
+\end{definition}
+
+\chapter{超過程}
+
+\section{ノイズ}
+
+一般に，物理的な干渉過程のモデルをノイズ過程という．
+そして工学系はノイズ過程の合成にさらされており，ここから真の予測可能成分を分離することが普遍的な目標となる(エアバッグの作動など)．
+また通信理論は，ノイズに対して頑健な符号化法の開発が重要な問題となる．
+\begin{quote}
+    The
+better the probabilistic model of a noise process, the better the chance to
+avoid unpredictable consequences of noise. Therefore, it is indispensable
+that mathematicians provide effective noise models. On the other hand, it is
+indispensable that engineers are familiar with the mathematical background
+of noise modelling in order to handle noise models in an optimal way.\cite{Schaffler}
+\end{quote}
+
+\section{点過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率過程の概念を一般化し，
+    空間にランダムに点を打ちたいとする．
+    それも一点ではなく多粒子系を考えたい．
+    そこで，
+    測度をランダム化することを考える．
+    任意の見本過程が可算な定義域を持つとき，点過程という．すなわち，$\bP(T,U)$-値過程をいう．
+\end{tcolorbox}
+
+\subsection{配置と点関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    粒子系を$\R^n$で考えるのではなく，$\R$に点を打って考えるというモデルの転換がある．
+    そこで可算粒子系を考えて見ると，これは$\o{\N}$-値の完備$\sigma$-有限測度とも，有限の台を持つ関数ともみなせる．
+\end{tcolorbox}
+
+\begin{lemma}
+    $(S,\S)$をPolish(完備可分)空間上のBorel可測空間とする．この上の測度$\mu$のうち，
+    完備な$\sigma$-有限測度を特に考える．これは任意の$E\in\S$に対して次の性質を満たす：
+    \begin{enumerate}
+        \item $\forall_{\ep>0}\;\exists_{E'\subset E}\;0<\mu(E')<\ep$．
+        \item $\forall_{\al\in[0,1]}\;\exists_{E'\subset E}\;\mu(E')=\al\mu(E)$．
+        \item $\forall_{\ep>0}\;\exists_{\{E_i\}\subset\S}\;E=\sum_{k\in[n]}E_k,\mu(E_k)<\ep$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[configuration, point function]
+    $(S,\S)$をPolish(完備可分距離)空間上のBorel可測空間とする．
+    \begin{enumerate}
+        \item この上の$\o{\N}$-値の完備$\sigma$-有限測度を\textbf{配置}という．\footnote{Radon測度に制限することもある．}
+        \item 配置の全体を$\M(S)$で表し，漠位相を入れたものを\textbf{配置空間}という．
+        \item $p:S\to\o{\N}$が\textbf{点関数}であるとは，可算な台$D_p:=\{x\in S\mid p(x)>0\}\subset S$を持つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意の配置$m$は，可算個の点(重複を許す)$\{s_i\}\subset S$を用いて$m=\sum_{i\in\N}\delta_{s_i}$と表せる．
+        \item $S$上の配置と点関数とは1対1対応する．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}
+    配置が$\forall_{x\in S}\;m(\{x\})\in\{0,1\}$を満たすとき，\textbf{固有}であるという．
+\end{definition}
+
+\subsection{点関数論}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $T_1,T_2,\cdots$を$[l,r]\;(-\infty<l<r\le\infty)$という形の区間とし，Borel $\sigma$-代数$\cT_1,\cT_2,\cdots$によって可測空間とみなす．
+        \item $U_1,U_2,\cdots$を$\U_1,\U_2,\cdots$を$\sigma$-代数とする可測空間とし，\textbf{状態空間}または\textbf{相空間}という．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[point function, trivial, discrete, graph, restriction]\mbox{}
+    \begin{enumerate}
+        \item $p:T\to U$が\textbf{点関数}であるとは，可算な部分集合$D_p\subset T$上で定義された部分関数をいう．
+        \item $D_p=\emptyset$のとき\textbf{自明}であるといい，$D_p$が集積点を持たないとき\textbf{離散}であるという．
+        \item 点関数の\textbf{グラフ}とは$G(p):=\Brace{(t,p(t))\in T\times U\mid t\in D_p}$をいう．これは可算集合である．
+        \item 集合$E\subset T\times U$内にある$G(p)$の点の数を$N(p;E):=\abs{G(p)\cap E}\in\o{\N}\;(E\subset T\times U)$と表す．これは$p$の\textbf{制限}$p|_E$の定義域の濃度に等しい．
+        \item 点関数の全体を$\bP(T,U)$で表す．$\{p\in\bP\mid N(p,E)=k\}_{E\in\cT\times\U,k\in\o{\N}}$が生成する$\sigma$-代数によって可測空間とみなす．
+    \end{enumerate}
+\end{definition}
+
+\subsection{点過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度値の過程を点過程というのである．したがって，点過程は測度空間上の確率測度となる．
+    白色雑音も$(\S',\B(\S'))$上の確率測度である．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 確率変数$X:\Om\to\M(S)$を，$S$上の\textbf{偶然配置}または\textbf{ランダム点測度}または\textbf{点過程}または\textbf{確率点場}という．
+        \item $\mu(E):=E[X(E)]\;(E\in\S)$は$(S,\S)$上の測度を定め，これを\textbf{平均(測度)}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{ランダム点関数としての性質}
+
+\begin{definition}[point process / random point function, sample point function]
+    可測関数$X:\Om\to \bP(T,U)$を\textbf{点過程}または\textbf{ランダム点関数}という．
+    $X_\om$を\textbf{見本点関数}という．
+\end{definition}
+
+\begin{lemma}
+    2つの点過程$X_1,X_2:T\to U$について，次の2条件は同値．
+    \begin{enumerate}
+        \item 法則同等である：$P^{X_1}=P^{X_2}$．
+        \item $\forall_{n\in\N}\;\forall_{\{k_i\}\subset\N}\;\forall_{\{E_i\}\subset T\times U}\;P[\forall_{i\in[n]}\;N(X_1,E_i)=k_i]=P[\forall_{i\in[n]}\;N(X_2,E_i)=k_i]$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[discrete, differential, stationary]
+    点過程$X:T\to U$について，
+    \begin{enumerate}
+        \item 離散であるとは，$X_\om$は殆ど確実に離散であることをいう．
+        \item $\sigma$-離散であるとは，増大列$\{U_n\}\subset\U$が存在して，$X|_{U_n}$が離散で，$X=X|_{\cup_nU_n}\;\as$が成り立つことをいう．
+        \item 微分であるとは，任意の互いに素な集合$\{T_i\}\subset\cT$について，$(X|_{T_i})_{i\in[n]}$が独立であることをいう．
+        \item 定常であるとは，平行移動に関して確率分布が不変であることをいう．
+    \end{enumerate}
+\end{definition}
+
+\subsection{多項点過程}
+
+\begin{definition}
+    点過程$X:\Om\to\M(S)$が\textbf{多項配置}であるとは，
+    任意の分割$S=\sum_{r=1}^dE_r\;\{E_r\}\subset\S$に対して，結合分布$(X(E_1),\cdots,X(E_d)):\Om\to\o{\N}^d$が$d$次元の多項分布に従うことをいう．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 平均$\mu$に対して，対応する多項配置が法則同等を除いて一意に定まる．
+        \item 任意の$\sigma$-有限完備測度$\mu$に対して，これを平均に持つ多項配置が存在する．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Poisson点過程}
+
+\begin{definition}
+    平均$\mu$を持つ点過程$\Om\to\M(S)$が\textbf{Poisson配置}または\textbf{Poisson点測度}$N(\mu)$であるとは，次の2条件を満たすことをいう：
+    \begin{enumerate}
+        \item $\forall_{E\in\S}\;X(E)\sim\Pois(\mu(E))$．
+        \item $\forall_{E_1,\cdots,E_n\in\S}\;[\forall_{i\ne j\in[n]}\;E_i\cap E_j=\emptyset]\Rightarrow X(E_1),\cdots,X(E_n)$は独立．
+    \end{enumerate}
+\end{definition}
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 強度$dt\otimes \mu$で与えられる$(\R_+\times S,\B(\R_+)\otimes\B(S))$上のPoisson点測度を，$U$上の\textbf{定常Poisson点過程}という．
+        \item $S=\R^d$で$\mu$がLebesgue測度のとき，付随するPoisson点過程はさまざまな不変性を持ち，配置空間$\M(S)$上のLebesgue測度の役割を果たす．
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}[Poisson点過程の存在]
+    Poisson配置は存在する．
+\end{theorem}
+
+\subsection{点関数からみたPoisson点過程}
+
+\begin{definition}[Poisson point process]
+    $X:\R_+\to U$がPoisson点過程であるとは，$\sigma$-離散的かつ微分的かつ定常的な点過程をいう．
+\end{definition}
+
+\subsection{Gauss点過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $S\subset\R^2$上のGauss点測度を白色雑音という．
+    換言すれば，試験関数の空間$\D(\R)$上の測度の空間(したがって双対空間)上のGauss確率測度を白色雑音という．
+    実はこれは，(定常増分過程たる)Brown運動の超関数微分(測度のようなもの)として得られる可分な定常過程とみなせる．
+    ホワイトノイズとは花粉にとっての水中の微粒子である．
+\end{tcolorbox}
+
+\section{確率超過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    点過程の概念を一般化して，ランダム測度の過程を考える．
+    これは逆に体積確定測度で添字付けられた確率場ともみなせる．
+    この2つの見方を併せてノイズと呼ぶ．
+\end{tcolorbox}
+
+\subsection{確率超過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    試験関数の空間$\D$の双対空間$\D'$に値を取る過程を\textbf{確率超過程}という．
+    これは，いくつかの条件を満たす，$\D$で添字付けられた実過程とも見れる．
+\end{tcolorbox}
+
+\begin{lemma}
+    次の2条件を満たす過程$(X_\varphi)_{\varphi\in\D(\R)}$が定める$\Om\to\D'(\R)$は可測になる：
+    \begin{enumerate}
+        \item 線形性：$X_{a\varphi+b\psi}=aX_\varphi+bX_\psi\;\as$
+        \item 連続性：$\D$での収束列$(\varphi_i)$は，法則収束する確率変数列$(X_{\varphi_i})$を定める．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{ノイズ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度確定集合で添字付けられた
+    中心化されたGauss過程であって，互いに相関を持たない性質の良いものとしてノイズを定義する．
+    すると$\Om$上の測度値確率変数とも見れる．超関数は測度の一般化なのであった．
+\end{tcolorbox}
+
+\begin{definition}
+    $(\Om,\S,P)$を確率空間，$(H,\H,\mu)$を測度空間，その測度確定な集合を$\H_\mu:=\{M\in\H\mid\mu(M)<\infty\}$で表す．
+    \begin{enumerate}
+        \item 体積確定集合で添字付けられた確率過程$\{X_M\}_{M\in\H_\mu}\subset\L(\Om;\R)$，または，測度値確率変数$\Om\to\M(H,\H)$が次の条件をみたすとき，\textbf{$\mu$-ノイズ}という：
+        \begin{enumerate}[(a)]
+            \item 中心化：$\forall_{M\in\H_\mu}\;E[X_M]=0$．
+            \item 分散：$\forall_{M\in\H_\mu}\;E[(X_M)^2]=\mu(M)$．
+            \item $\forall_{M_1,M_2\in\H_\mu}\;M_1\cap M_2=\emptyset\Rightarrow X_{M_1\sqcup M_2}=X_{M_1}+X_{M_2}\;\as$．
+            \item $\forall_{M_1,M_2\in\H_\mu}\;M_1\cap M_2=\emptyset\Rightarrow E[X_{M_1}X_{M_2}]=0\;\as$．
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\subsection{ホワイトノイズ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般の2階の確率超過程はホワイトノイズの線形変換とみなせる．
+\end{tcolorbox}
+
+\section{ホワイトノイズ解析}
+
+\begin{quotation}
+    \begin{quote}
+        時系列として独立同分布の確率変数列で絵あり，定常時系列として持つスペクトルはフラットすなわち無色である．
+        このような偶然量はノイズと呼ぶのにふさわしい．それ絵はノイズとして見ると厄介なものかもしれないが，最大の情報量をもつので通信の理論には大いに活躍の場がある．
+        そして，一般のガウス過程の中でも元素的なもののとして特徴付けられる．それは「揺らぎ」の典型であり，基本となる．
+    \end{quote}
+    An innovative approach to random fields: Applications of white noise theory.
+\end{quotation}
+
 \chapter{参考文献}
 
 \begin{thebibliography}{99}
@@ -2041,6 +2451,8 @@ title=]
     Williams - Probability with Martingales
     \bibitem{伊藤清確率論}
     伊藤清『確率論』
+    \bibitem{Schaffler}
+    Schaffler - Generalized Stochastic Processes
 \end{thebibliography}
 
 \end{document}
