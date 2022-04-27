@@ -762,7 +762,221 @@ title=]
 
 \chapter{汎関数推定}
 
+\begin{quotation}
+    まだ名前が定まっていないが，Semiparametric Doubly Robust Targeted Double Machine Learningと呼ばれている．
 
+    おそらく，こういう話である．
+    ノンパラメトリックなパラメータとは汎関数になる(これをtargeted parameterともいう)．
+    汎関数の推定は，モデル$\bP\in\P$の密度自体の推定より簡単で，
+    さらに汎関数に，影響関数の手法が使える良い構造を仮定すると，fast $\sqrt{n}$-収束が実現できる．
+\end{quotation}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $A=a$とした場合の(反実仮想的)観測値を$Y^a$で表す．
+        \item $Z\in\R^m$は観測量とする．
+    \end{enumerate}
+\end{notation}
+
+\section{汎関数の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    本質的に，共変量上で平均を取った回帰関数の形を取る．
+    回帰関数とは何の仮定も置かない場合はただの条件付き期待値であるから，条件付き期待値の平均，という形が標準的である．
+    このような設定に対する意味論は，因果推論とより一般に欠損データである．
+\end{tcolorbox}
+
+\subsection{セミパラメトリック回帰について}
+
+\begin{example}[回帰分析とは，条件付き期待値なる汎関数の推定問題である]
+    $Z=(X,Y)\in\R^2$が観測されたとする．回帰関数$\psi(x;P)=E[Y|X=x]$は汎関数$\R\times\P\to\R$となる．
+
+    そもそも，任意の観測量$Z=(X,Y)$に対して，$Y_i=E[Y_i|X_i]+\ep_i,E[\ep_i|X_i]=0$が成り立つ．
+    これは$X_i$に依存する成分が，条件付き期待値によって可予測に表されていることによる．
+    したがって，二乗誤差について，$E[Y_i|X_i]$は$X_i$から$Y_i$を推定する最適推定量である．
+    $E[Y_i|X_i]$の形を指定するのが回帰モデルである．
+\end{example}
+
+\subsection{処置効果}
+
+\begin{example}[平均処置効果]
+    $Z=(X,A,Y)$とする．
+    \begin{description}
+        \item[positivity] 処置割当がなされる：$0<P[A=a]<1$．
+        \item[consistency] 
+        \item[no unmeasured confounding] 
+    \end{description}
+    母集団がすべて$A=a$の処置を受けたときの結果の期待値
+    \[\psi(P):=E[Y^a]=E[E[Y|X,A=a]]=E[\mu_a(X)]\]
+    は汎関数となる．これは，回帰関数の，$X$(の周辺分布)に関する平均値，という形をしている．
+    回帰関数を$\mu_a(X):=E[Y|X,A=a]$とすることも多い．
+
+    これに対して，平均処置効果は$E[Y^1-Y^0]$と定まる．
+\end{example}
+
+\begin{example}[平均欠損結果]
+    $Z=(X,A,AY)$とする．$A=0$のとき$AY$とは欠損とする．
+    \begin{description}
+        \item[positivity] 
+        \item[missing at random] 
+    \end{description}
+    母集団の平均結果は，回帰関数の$X$に関する平均
+    \[\psi(P):=E[Y]=E[E[Y|X,A=1]]\]
+    となる．これは，数学的には平均処置結果の特別な場合となる．
+\end{example}
+
+\begin{example}[平均で重みづけた処置効果]
+    $Z=(X,A,Y)$とする．平均処置効果と同様の仮定の下で，
+    \[\psi(P)=E[w(X)E[Y^1-Y^0|X]]=\frac{E[\Cov[A,Y|X]]}{E[\Var[A|X]]}\qquad w(X):=\frac{\Var[A|X]}{E[\Var[A|X]]}\]
+\end{example}
+
+\begin{example}[確率的介入効果]
+    $Z=(X,A,Y)$とする．
+    平均処置効果と同様の仮定の下で，
+    $A\sim dG(a|x)$なる確率分布で割り当てられているとき，
+    平均処置結果は
+    \[\psi(P)=E[E[Y|X,A^*]]=\iint E[Y|X=x,A=a]dG(a|x)dP(x).\]
+\end{example}
+
+\begin{example}[操作変数効果 / 局所平均処置効果]
+    $Z=(X,R,A,Y)$とする．
+    \begin{description}
+        \item[positivity] 
+        \item[consistency] 
+        \item[IV-unconfoundedness] 
+        \item[exclusion] 
+        \item[instrumentation] 
+        \item[monotonicity] 
+    \end{description}
+    コンプライアー$A^{r=1}>A^{r=0}$の平均処置効果は
+    \[\psi(P)=E[Y^{a=1}-Y^{a=0}|A^{r=1}>A^{r=0}]=\frac{E[E[Y|X,R=1]]-E[Y|X,R=0]}{E[E[A|X,R=1]]-E[A|X,R=0]}\]
+
+    monotonicityの仮定をeffect homogeneityに置き換えることで，同じ汎関数は，処置された集団に対する効果となる．
+\end{example}
+
+\begin{example}[時間変化する処置効果]
+    
+\end{example}
+
+\subsection{その他}
+
+\begin{example}[密度の期待値]
+    $Z$が真の密度$p$を持つとする．
+    密度の期待値は汎関数になる：
+    \[\psi(P):=E[p(Z)]=\int p(z)^2dz.\]
+\end{example}
+
+\begin{example}[エントロピー]
+    $Z$が真の密度$p$を持つとする．
+    エントロピーは汎関数になる：
+    \[\psi(P)=-\int p(z)\log p(z)dz=-E[\log p(Z)]\]
+\end{example}
+
+\begin{example}[$f$-分離度]
+    $Z=(A,Y)$は，割当$A\in 2$と条件付き密度$p(y|a)$を持つとする．
+    このとき，$p(y|a=1),p(y|a=0)$の分離度は汎関数となる：
+    \[\psi(P)=\int f\paren{\frac{p(y|a=1)}{p(y|a=0)}}p(y|a=0)dy\]
+\end{example}
+
+\section{ノンパラメトリック効率限界}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    target parameter $\psi$とモデル$\P$を設定して後，下界を得ることで，効率性についてのベンチマークを考える．
+    ちょうど，滑らかなパラメトリックモデルに対するCramer-Raoの不等式のような，情報理論的議論である．
+    \textbf{このとき，どのような効率限界が，どのようなモデルに対して成り立つかは，一つ課題である}．
+\end{tcolorbox}
+
+\begin{notation}
+    モデル$\P$を，標本空間$(\R^n,\B(\R^n))$上のすべての確率測度とする．
+\end{notation}
+
+\subsection{パラメトリックモデルの扱い}
+
+\subsubsection{Cramer-Raoの不等式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    滑らかなパラメトリックモデル$\P=(P_\theta)_{\theta\in\R}$について，
+\end{tcolorbox}
+
+\begin{theorem}[Cramer-Raoの不等式]
+    滑らかなパラメトリックモデル$\P=(P_\theta)_{\theta\in\R}$と滑らかな汎関数$\psi:\P\to\R$について，任意の不偏推定量$\wh{\psi}$は次を満たす：
+    \[\forall_{\theta\in\Theta}\quad\Var_\theta[\wh{\psi}]\ge\frac{\psi'(\theta)^2}{\Var_\theta[s_\theta(Z)]}\qquad s_\theta(z)=\pp{}{\theta}\log p_\theta(z).\]
+\end{theorem}
+
+\subsubsection{minimax危険関数の下界}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    より広いクラスについては，次のように，危険関数に言及することによるベンチマークの与え方がある．
+\end{tcolorbox}
+
+\begin{definition}[Holder class]
+    $T\subset\R$を区間，$\beta,L>0$とする．
+    $T$上の$\Sigma(\beta,L)$-Holderクラスとは，$l:=\floor{\beta}$に対して，
+    \[\Sigma(\beta,L):=\Brace{f\in C^{l}(T)\mid f^{(l)}\text{は}\beta-l\text{次Holder連続}}\]
+\end{definition}
+
+\begin{theorem}[Theorem 2.8 \cite{Tsybakov}]
+    $\P$が$\Sigma(\beta,L)$-Holderクラスであるとき，推定量$\wh{\psi}$のミニマックス危険関数の下界は
+    \[\inf_{\wh{\psi}}\sup_{P\in\P}E_P\Square{(\wh{\psi}-\psi(P))^2}\ge Cn^{-\frac{1}{1+d/2s}}\]
+    で与えられる．
+\end{theorem}
+
+\subsubsection{滑らかなパラメトリックモデルの危険関数下界}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cramer-Raoのように，滑らかなパラメトリックモデルに対しては，より繊細な下界を危険関数に対して取れる．
+\end{tcolorbox}
+
+\begin{theorem}[Theorem 8.11 \cite{Asymptotic Statistics}]
+    パラメトリックモデル$P_\theta$は$\theta$について$L_2$-微分可能で，非特異なFisher情報行列$I_\theta=\Var_\theta[s_\theta(Z)]$を持つとする．
+    $\psi(\theta)$は$\theta$上微分可能で微分係数$\psi'(\theta)$を持つとき，任意の推定量$\wh{\psi}$は次を満たす：
+    \[\inf_{\delta>0}\liminf_{n\to\infty}\sup_{\norm{\theta'-\theta}<\delta}nE_{\theta'}\Square{(\wh{\psi}-\psi(\theta'))^2}\ge\psi'(\theta)\Var_\theta[s_\theta(Z)]^{-1}\psi(\theta)^\top.\]
+\end{theorem}
+
+\subsection{部分パラメトリックモデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Stein\footnote{C. Stein. Efficient nonparametric testing and estimation. Proceedings of the Third Berkeley
+    Symposium on Mathematical Statistics and Probability, 1:187–195, 1956.}による．
+\end{tcolorbox}
+
+\begin{definition}[parametric submodel]
+    モデル$\P$内の\textbf{部分パラメトリックモデル}とは，滑らかな写像$(P_\ep)_{\ep\in\R}:\R\to\P$であって$P_0=\bP$を満たすものをいう．
+\end{definition}
+
+\begin{example}
+    任意の中心化された確率変数$h:\Z\to\R$に対して，$\exists_{M\in\R}\;\norm{h}_\infty\le M\land\exists_{\ep<1/M}\;p_\ep(z)\ge0$が成り立つとき，
+    \[p_\ep(z):=dP(z)(1+\ep h(z))\]
+    とおくと，これは1次元の部分パラメトリックモデルであり，次の形の影響関数を持つ：
+    \[\pp{}{\ep}\log p_\ep(z)|_{\ep=0}=\pp{}{\ep}\log(1+\ep h(z))|_{\ep=0}=h(z).\]
+    したがって，この部分モデルの効率限界は，任意の$\ep\in\R$について，
+    \[\frac{\psi'(P_\ep)^2}{\Var_{P_\ep}[s_\ep(Z)]}=\frac{\pp{}{\ep}\psi(P_\ep)|_{\ep=0}}{E_{P_\ep}[h(Z)^2]}\]
+    で与えられる．
+\end{example}
+
+\subsection{道毎の微分可能性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    基本的に$\P$をFrechet多様体と見て，path smoothnessと呼んでいるのであろう．
+\end{tcolorbox}
+
+\section{影響関数による推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実際に効率限界を達成する推定量を，影響関数を用いて構成する．
+\end{tcolorbox}
+
+\begin{notation}
+    モデル$\P$に滑らかさ，または，疎性の仮定をおく．
+\end{notation}
 
 \section{二重にロバストな推定}
 
@@ -4133,6 +4347,8 @@ title=]
     van der Vaart and Wellner "Weak Convergence and Empirical Processes"
     \bibitem{Asymptotic Statistics}
     Van der Vaart, A. W. (2000). Asymptotic statistics, volume 3. Cambridge university press.
+    \bibitem{Tsybakov}
+    Tsybakov - Introduction to Nonparametric Estimation
 \end{thebibliography}
 
 \end{document}
