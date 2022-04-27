@@ -2084,13 +2084,28 @@ title=]
     ただし，$E^\pi$は定常Markov連鎖$(\o{X}_n)_{n\in[l]}$に関する期待値である．
 \end{theorem}
 
-\section{正方格子上のランダムウォーク}
+\section{連続状態空間上のMarkov連鎖}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     次に非有限な状態空間を持つMarkov過程の例を見る．
     代表的なものが，$\Z^d$上のランダムウォークである．
 \end{tcolorbox}
+
+\subsection{Markov性}
+
+\begin{definition}
+    過程$(X_n)_{n\in\N}$が\textbf{Markov過程}であるとは，
+    \[\forall_{E\in\B(\R)}\quad P[X_{n+1}\in E|\sigma[X_1,\cdots,X_n]]=P[X_{n+1}\in E|X_n]\;\as\]
+    が成り立つことをいう．
+\end{definition}
+
+\begin{lemma}[Markov性の特徴付け]
+    過程$(X_n)_{n\in\N}$がMarkov過程ならば，
+    \[\forall_{m\in\N}\;\forall_{E\in\B(\R)}\quad P[X_{n+m}\in E|\sigma[X_1,\cdots,X_n]]=P[X_{n+m}\in E|X_n]\;\as\]
+\end{lemma}
+
+\subsection{正方格子上のランダムウォーク}
 
 \begin{definition}[random walk]
     Markov過程$((X_n),\Z^d,\bP)$の遷移行列$\bP$が，時間一様性に加えて空間一様性$\forall_{x,y,z\in\Z^d}\;p_{xy}=p_{x+z,y+z}$を満たすとき，これを\textbf{酔歩}という．
@@ -2157,13 +2172,39 @@ title=]
     $d$次元の単純酔歩は，$d=1,2$のとき再帰的であり，$d\ge3$のとき再帰的でない．
 \end{theorem}
 
+
+
 \section{連続時間Markov過程}
 
 \subsection{定義}
 
+\begin{definition}
+    過程$(X_t)_{t\in\R_+}$がMarkov過程であるとは，
+    \[\forall_{E\in\B(\R)}\;\forall_{u>t}\;P[X_u\in E|X_s,s\le t]=P[X_u\in E|X_t]\;\as\]
+    が成り立つことをいう．
+\end{definition}
 
+\begin{lemma}
+    過程$(X_t)_{t\in\R_+}$について，次の3条件は同値．
+    \begin{enumerate}
+        \item 過程$(X_t)_{t\in\R_+}$はMarkov過程である．
+        \item 任意の有界Borel可測関数$f:\R\to\R$について，$\forall_{u>t}\;E[f(X_u)|X_s,s\le t]=E[f(X_u)|X_t]\;\as$
+        \item $\forall_{f\in C_c^\infty(\R)}\;\forall_{u>t}\;E[f(X_u)|X_s,s\le t]=E[f(X_u)|X_t]\;\as$
+    \end{enumerate}
+\end{lemma}
 
-\subsection{Chapman-Kolmogorov方程式}
+\subsection{Markov性の十分条件}
+
+\begin{theorem}
+    過程$(X_t)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $(X_t)$はMarkov過程である．
+        \item 任意の$0\le s_1<s_2<\cdots<s_n<t$に対して，
+        \[P[X_t\in E\mid X_{s_1},\cdots,X_{s_n}]=P[X_t\in E\mid X_{s_n}].\]
+    \end{enumerate}
+\end{theorem}
+
+\subsection{転移確率}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=熱核の半群性]
@@ -2175,6 +2216,23 @@ title=熱核の半群性]
     この方法はHormanderが取ったように，偏微分方程式への迂回でもある．
     直接的に確率微分方程式に基づいてBrown運動を「変形する」という確率論的手法を立てたのが伊藤清である．
 \end{tcolorbox}
+
+\begin{definition}[translation probability]
+    $p(t,x,u,E):=P[X(u)\in E\mid X(t)=x]$を\textbf{転移確率}という．
+    また特に，例外点なしにChapman-Kolmogorov方程式を満たすものが存在するとき，それだけを転移確率と呼ぶこともある．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意の2つの転移確率$p,q$は，$p(t,x,u,E)=q(t,x,u,E)\;\dae x$を満たし，例外集合は$E$に無関係に取れるが，$t,u$には依存する．
+        \item
+    次の2条件を持つ転移確率を取れる．
+    \begin{enumerate}[(a)]
+        \item $p(t,x,u,-):\B(\R)\to[0,1]$は確率測度である．
+        \item $p(t,-,u,E):\R\to\R$はBorel可測である．
+    \end{enumerate}
+    \end{enumerate}
+\end{lemma}
 
 \begin{discussion}
     離散集合$I$上の遷移行列$\bP$が満たす規則は次のようにかける．
@@ -2191,6 +2249,76 @@ title=熱核の半群性]
     こうして，行列積は積分に一般化される．(2)を時間一様なChapman-Kolmogorovの等式という．
     これは，時刻$0$に$x$から初めて，$s+t$に$A$に至るまでの時刻$s$での経由地$y\in S$について積分しても等しくなる，という意味を持つ．
 \end{discussion}
+
+\begin{lemma}[Chapman-Kolmogorov]
+    転移確率$p$は次を満たす：
+    \[p(s,x,u,E)=\iont_\R p(s,x,t,dy)p(t,y,u,E)\quad(P^{X(s)})\dae x.\]
+    また，例外集合は$E$に無関係に取れるが，$s,t,u$には依存する．
+\end{lemma}
+
+\subsection{転移確率の特徴付け}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 一般に，次の3条件を満たす関数$p:(s,x,t,E):\R_+\times\R\times\R_+\times\B(\R)\to[0,1]\;(s<t)$を\textbf{転移確率}という：
+        \begin{enumerate}[(a)]
+            \item $p(s,-,t,E):\R\to[0,1]$はBorel可測．
+            \item $p(s,x,t,-):\B(\R)\to[0,1]$は確率測度．
+            \item $\forall_{0\le s<t<u\in\R_+}\;\forall_{x\in\R}\;\forall_{E\in\B(\R)}\;p(s,x,u,E)=\int_\R p(s,x,t,dy)p(t,y,u,E)$．
+        \end{enumerate}
+        \item 転移確率$p$がMarkov過程$(X_t)$を定めるとは，
+        \[\forall_{s,t,E}\;p(s,X(s),t,E)=P[X_t\in E|X_s]\;P\dae\]
+        が成り立つことをいう．
+        \item 転移確率$p$が\textbf{時間的に一様}であるとは，$p(s,x,t,E)=p(0,x,t-s,E)$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    転移確率$p$に対して，
+    \[P[X_t\in E|X_\theta,\theta\le s]=p(s,X(s),t,E)\;P\dae\]
+    を満たす過程$(X_t)$は，$p$が定めるMarkov過程である．
+\end{lemma}
+
+\subsection{加法過程はMarkov過程である}
+
+\begin{theorem}
+    $(X_t)$を加法過程とする．
+    \[\mu_{s,t}(E):=P[X_t-X_s\in E]\;(s<t)\]
+    とおくと，$X$は$p(s,x,t,E):=\mu_{s,t}(E-x)$を転移確率とするMarkov過程である．
+\end{theorem}
+
+\subsection{Markov過程の特性量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Markov過程は，初期分布と転移確率の2つによって，法則同等を除いて一意に定まる．
+\end{tcolorbox}
+
+\begin{lemma}
+    $p$を転移確率とするMarkov過程$(X_t)$について，任意の$n\in\N,0\le s_1<\cdots<s_n$と任意の有界Borel可測関数$f:\R^n\to\R$について
+    \[E[f(X_{s_1},\cdots,X_{s_n})]=\int_\R\cdots\int_\R p_{s_1}(dx_1)p(s_1,x_1,s_2,dx_2)\cdots p(s_{n-1},x_{n-1},s_n,dx_n)f(x_1,x_2,\cdots,x_n),\quad  p_{s_1}(E):=P[X_{s_1}\in E].\]
+\end{lemma}
+
+\begin{corollary}
+    Markov過程は，初期分布$p_0(E):=P[X_0\in E]$と転移確率の2つによって，法則同等を除いて一意に定まる．
+\end{corollary}
+\begin{remark}
+    Levy過程のときのような構成定理をいうには，Kolmogorovの拡張定理を$\R^\infty$上から$\R^{\R_+}$上へと一般化する必要がある．
+\end{remark}
+
+\subsection{Markov過程の保存}
+
+\begin{proposition}
+    単射$f:\R\to\R$について，Markov過程$(X_t)$の像$(f(X_t))$はMarkov過程である．
+\end{proposition}
+
+\begin{proposition}
+    Brown運動$(B_t)$に対して，$(B_t^2)$はMarkov過程である．
+\end{proposition}
+
+\section{生成作用素}
+
+
 
 \chapter{拡散過程}
 

@@ -1396,7 +1396,7 @@ title=]
 \begin{proposition}[$\sigma$-代数の特徴付け]
     $(\Om,\F,P)$をWiener空間とする．
     \begin{enumerate}
-        \item $\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数$\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：
+        \item $\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数$\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：$\B(\Om)=\sigma[\cC]$
         \[\cC=\Brace{C=\Brace{\om\in\Om\mid\forall_{i\in[k]}\;\om(t_i)\in A_i}\in P(\Om)\;\middle|\;k\in\N_{\ge1},A_1,\cdots,A_k\in\B(\R),0\le t_1<\cdots<t_k}\]
         \item $p_t(x)=(2\pi t)^{-1/2}e^{-x^2/(2t)}$を正規分布の確率密度関数とする．
         \[P(C)=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k.\]
@@ -1446,16 +1446,83 @@ title=]
 
 \section{Brown運動に付随するmartingale}
 
+\subsection{代表的なマルチンゲール}
+
 \begin{theorem}
     次の過程は$(\F_t)$-マルチンゲールである．
     \begin{enumerate}
-        \item Brown運動$(B_t)_{t\in\R_+}$．
+        \item Brown運動：$(B_t)_{t\in\R_+}$．
         \item $(B^2_t-t)_{t\in\R_+}$．
-        \item $(\exp(aB_t-a^2t/2))_{t\in\R_+}\;(a\in\R)$．
+        \item 幾何Brown運動：$(\exp(aB_t-a^2t/2))_{t\in\R_+}\;(a\in\R)$．
     \end{enumerate}
 \end{theorem}
 
+\subsection{到達時刻}
+
+\begin{lemma}
+    $\tau_a:=\inf\Brace{t\in\R_+\mid B_t=a}$とすると，これは$(\F_t)$-停止時である．
+\end{lemma}
+
+\begin{proposition}[Laplace transformation of Brownian hitting time]
+    任意の$a>0$について，$\forall_{\al>0}\;E[e^{-\al\tau_a}]=e^{-\sqrt{2\al}a}$．
+\end{proposition}
+
+\begin{corollary}\mbox{}
+    \begin{enumerate}
+        \item Laplace逆変換より，Brown運動の到達時刻の分布関数は，
+        \[P[\tau_a\le t]=\int^t_0\frac{ae^{-a^2/(2s)}}{\sqrt{2\pi s^3}}ds.\]
+        \item $E[\tau_ae^{-\al\tau_a}]=\frac{ae^{-\sqrt{2\al}a}}{\sqrt{2\al}}$．
+        \item $E[\tau_a]=+\infty$．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{脱出時刻}
+
+\begin{proposition}
+    $a<0<b$のとき，
+    \[P[\tau_a<\tau_b]=\frac{b}{b-a}.\]
+\end{proposition}
+
+\begin{proposition}
+    $a<0<b$のとき，脱出時刻を
+    $T:=\inf_{t\in\R_+\mid B_t\notin(a,b)}$とすると$E[T]=-ab$．
+\end{proposition}
+
 \section{強Markov性}
+
+\subsection{強Markov性の証明}
+
+\begin{theorem}[Hunt (1956) and Dynkin and Yushkevich (1956)]
+    $T$を有限な$(\F_t)$-停止時とする．このとき，$(B_{T+t}-B_T)_{t\in\R_+}$は再びBrown運動で，$\F_T$と独立である．
+\end{theorem}
+
+\begin{corollary}
+    $(P_t)$をBrown運動に対応する連続半群とすると，任意の有界な可測関数$f\in\L(\R)\cap l^\infty(\R)$と有限な停止時$T$について，
+    \[E[f(B_{T+t})|\F_T]=(P_tf)(B_T).\]
+\end{corollary}
+
+\subsection{鏡像の原理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Kolmogorovの不等式から始まる不等式原理である．
+\end{tcolorbox}
+
+\begin{theorem}[Levy's reflection princple (1939)]
+    $M_t:=\sup_{s\in[0,t]}B_s$とする．
+    \[\forall_{a>0}\;P[M_t\ge a]=2P[B_t>a].\]
+\end{theorem}
+
+\begin{corollary}
+    任意の$a>0$に対して，$M_a:=\sup_{t\in[0,a]}B_t$は次の密度関数を持つ：
+    \[p(x)=\frac{2}{\sqrt{2\pi a}}e^{-x^2/(2a)}1_{[0,\infty)}(x).\]
+\end{corollary}
+
+\subsection{Brown運動の最大値}
+
+\begin{lemma}
+    殆ど確実に，Brown運動は区間$[0,1]$上のただ一つの点にて最大値を取る．
+\end{lemma}
 
 \section{Laplace作用素}
 
@@ -1479,7 +1546,97 @@ title=]
 
 \section{確率積分}
 
+\subsection{発展的可測}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    発展的可測な確率変数に関しては，見本道毎の積分ではなくて，より大局的な視点で見れる．
+    そしてこのクラスについては，$\int^t_0u_sds$が$\F_t$-可測となる．
+\end{tcolorbox}
+
+\begin{definition}[progressive measurable]
+    過程$(u_t)_{t\in\R_+}$が\textbf{発展的可測}であるとは，
+    \[\forall_{t\in\R_+}\;u|_{\Om\times[0,t]}\in\L(\Om\times[0,t],\F_t\times\B([0,t]))\]
+    を満たすことをいう．
+\end{definition}
+
+\begin{lemma}[発展的可測性の十分条件]
+    適合的な可測過程$u$には，発展的可測なバージョンが存在する．
+\end{lemma}
+
+\subsection{単過程上の定義}
+
+\begin{notation}
+    $\P$を$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする．
+    これが定める2乗可積分関数のHilbert空間を$L^2(\P):=L^2(\Om\times\R_+,\P,P\times l)$と表す，ただし$l$はLebesgue測度とした．
+    ノルムを
+    \[\norm{u}^2_{L^2(\P)}:=E\Square{\int^\infty_{0}u_s^2ds}=\int^\infty_0E[u^2_s]ds\]
+    で表す(最後の等式はFubiniの定理による)．
+\end{notation}
+
+\begin{definition}[simple process, stochastic integral]\mbox{}
+    \begin{enumerate}
+        \item 
+        $u=(u_t)_{t\in\R_+}\in L^2(\P)$が\textbf{単過程}であるとは，
+        \[u_t=\sum_{j=0}^{n-1}\phi_j1_{(t_j,t_{j+1}]}(t),\qquad 0\le t_0<t_1<\cdots<t_n,\phi_j\in\L^2_{\F_{t_j}}(\Om)\]
+        を満たすことをいう．単関数全体の集合を$\E\subset L^2(\P)$で表す．
+        \item 積分$I:\E\to\L^2(\Om)$を
+        \[I(u)=\int^\infty_0 u_tdB_t:=\sum^{n-1}_{j=0}\phi_j(B_{t_{j+1}}-B_{t_j})\]
+        と定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    積分$I:\E\to\L^2(\Om)$は，$u,v\in\E,a,b\in\R$について次を満たす．
+    \begin{enumerate}
+        \item 線形性：$\int^\infty_0(au_t+bv_t)dB_t=a\int^\infty_0u_tdB_t+b\int^\infty_0v_tdB_t$．
+        \item 中心化：$E\Square{\int^\infty_0u_tdB_t}=0$．
+        \item 等長性：$E\Square{\paren{\int^\infty_0u_tdB_t}^2}=E\Square{\int^\infty_0u^2_tdt}$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{延長}
+
+\begin{proposition}
+    $\E\subset L^2(\P)$は稠密．
+\end{proposition}
+
+\begin{proposition}
+    確率積分$I:\E\to L^2(\Om)$は，線型な等長同型$I:L^2(\P)\to L^2(\Om)$に延長できる．
+\end{proposition}
+
+\begin{definition}
+    任意の$[0,T]\;(T>0)$上の積分を
+    \[\int^T_0u_sdB_s:=\int^\infty_0u_s1_{[0,T]}(s)dB_s\]
+    と定める．これは任意の$u\in L^2_T(\P)$に対しても定義できる：
+    \[L^2_T(\P):=L^2(\Om\times[0,T],\P|_{\Om\times[0,T]},P\times l).\]
+\end{definition}
+
+\begin{example}
+    Brown運動自体は発展的可測である．
+    \[\int^T_0B_tdB_t=\frac{1}{2}B^2_T-\frac{1}{2}T\]
+    が成り立つ．
+\end{example}
+
+\subsection{性質}
+
+\begin{proposition}
+    任意の$u,v\in L^2(\P)$について，
+    \begin{enumerate}
+        \item $E[I(u)]=0$．
+        \item $E[I(u)I(v)]=E\Square{\int^\infty_0u_sv_sds}$．
+    \end{enumerate}
+\end{proposition}
+
 \section{不定確率積分}
+
+\begin{notation}
+    \[L^2_\infty(\P):=\Brace{u\in L(\P)\;\middle|\;\forall_{t>0}\;E\Square{\int^t_0u_s^2ds}<\infty}\]
+\end{notation}
+
+なんだこの空間は？$L^2(\P)$から何が落ちるのかわからない．
+
+\subsection{加法性}
 
 \section{一般の過程の積分}
 
@@ -1495,7 +1652,17 @@ title=]
 
 \section{積分表現定理}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^2(\Om)$の元は積分で表現出来る．
+\end{tcolorbox}
+
 \section{Girsanovの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフトを持ったBrown運動が通常のBrown運動に戻るような測度変換を与える．
+\end{tcolorbox}
 
 \chapter{微分作用素と発散作用素}
 
