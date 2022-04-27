@@ -1205,6 +1205,10 @@ title=]
 
 \chapter{半マルチンゲールと統計解析}
 
+\begin{quotation}
+    Levy過程は半マルチンゲールである．
+\end{quotation}
+
 \section{統計推測への応用}
 
 回帰モデル$X_i=f(X_{i-1},\cdots,X_{i-p})+\ep_i$において，
@@ -1231,9 +1235,576 @@ title=]
 \[\int^t_0\frac{1}{Y_s}(dM_s-\al(s)Y_sds)\]
 もマルチンゲールとなることがわかる．
 
+\chapter{加法過程}
+
+\begin{quotation}
+    Brown運動の独立増分性を抽出して加法過程といい，時間一様性も加えたものをLevy過程という．
+    Brown運動は連続であるが，Levy過程・加法過程は$D$-過程とする．
+    Poisson過程は高さ1の跳躍でのみ増加する，跳躍のみで増加する過程の代表である．
+
+    Levy過程の特性量は3つの成分からなり，ドリフト，Brown運動，跳躍過程である．
+    任意のLevy過程は半マルチンゲールである．
+\end{quotation}
+
+\section{定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    見本道が殆ど至る所cadlagである過程を$D$-過程という．
+    見本過程$\R_+\to\Meas(\Om,\R);s\mapsto X_s$が確率連続な加法過程で$D$-過程でもあるものを，Levy過程という．
+    任意の確率連続な加法過程はLevy過程に同等であり，Levy過程の構造は解明済みである．
+
+    大雑把にいえば，連続な加法過程はGauss型，すなわちブラウン運動に限り，非連続的な加法過程はPoisson型に限る．
+    任意のLevy過程は，ドリフト付きのBrown運動とLevyのジャンプ過程との和に分解できる．
+\end{tcolorbox}
+
+\begin{definition}[additive process, Levy process]
+    $(X_t)_{t\in\R_+}$は,，
+    (1),(2)のみを満たすとき\textbf{加法過程}といい，(3)も満たすとき\textbf{Levy過程}といい，(4)も満たすとき\textbf{(時間的に)一様なLevy過程}という．
+    \begin{enumerate}
+        \item 独立増分性・加法性：$\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;X_{t_n}-X_{t_{n-1}},\cdots,X_{t_2}-X_{t_1}$は独立．
+        \item 標準化：$X_0=0\;\as$
+        \item $D$-過程である．
+        \item 時間一様性・定常増分性：$\forall_{s\in\R_+}\;X_{t+s}- X_t$は$t$に依存しない．
+        \item 確率連続である．
+    \end{enumerate}
+    (5)は暗黙のうちに仮定してしまうことも多い．
+\end{definition}
+
+\begin{theorem}[$D$-変形]\mbox{}
+    \begin{enumerate}
+        \item (1),(2),(5)を満たすならば，その修正であって(3)も満たすものが識別不可能な違いを除いて存在する．
+        \item (1),(2),(4),(5)を満たすならば，その修正であって(3)も満たすものが存在する．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    離散時間の加法過程は，遷移確率が空間的に一様なMarkov連鎖と見れる．さらに時間的にも一様なものがLevy過程となる．
+    \begin{enumerate}
+        \item $\Z^d$-酔歩は加法過程である：任意の長さ$k\ge2$の部分列$(n_j)_{j\in[k]}$について，\textbf{増分}の過程$(X_{n_j}-X_{n_{j-1}})_{j\in[k]}$は独立．
+        \item 一般に独立な実確率変数列$(Y_n)_{n\in\N}$の部分和の過程${X_t:=\sum_{k\le t}Y_k(\om)}_{t\in\R_+}$は加法過程である．
+        \item $\R_+$上のLebesgue測度を平均に持つPoisson配置$\{Y(A,\om)\}_{A\in\B^1\cap\R_+}$に対して$X_t(\om):=Y([0,t],\om)$とおくと，これは加法過程である．これを\textbf{Poisson過程}という．
+        これは「Poisson点過程の積分」という意味で，(2)の例の一般化になっている．
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+    このとき，$S$の原点を$0$とするとその転移確率は一様に$p(s,-):=p(s,0,-)$と表わせ，Chapman-Kolmogorovの等式も
+    \[\forall_{s,t\in\R_+}\;\forall_{x,z\in S}\;\int_Sp(s,dy-x)p(t,dz-y)=p(s+t,dz-x)\]
+    と表せる．
+\end{remark}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 時間$[s,t]$の間のすべての増分が定める$\sigma$-加法族を$\sigma_{s,t}[dX]:=\sigma[X_v-X_u;u\le v\in[s,t]]$と表す．
+        \item $\sigma_{s+,t}[dX]:=\sigma[X_v-X_u;u\le v\in(s,t]]$．
+        \item 閉$\sigma$-代数についても，$\F_{s,t}[dX]:=\cap_{\ep>0}\sigma_{s-\ep,t+\ep}[dX]\lor 2$．
+    \end{enumerate}
+\end{notation}
+
+\section{付属するマルチンゲール}
+
+\begin{theorem}
+    $X$が確率連続な加法過程ならば，
+    \begin{enumerate}
+        \item $\F_{s,t}=\sigma_{s,t}\lor 2$．
+        \item $s_0<s_1<\cdots<s_n$ならば，$(\F_{s_{i-1}s_i})_{i\in[n]}$は独立．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    これより，$s<t\Rightarrow X_t-X_s$は$\F_s[X]$と独立と分かる．
+\end{remarks}
+
+\begin{proposition}
+    \[Y^a_t:=\frac{e^{iaX_i}}{E[e^{iaX_i}]}\]
+    は$(\F_t[X])$-マルチンゲールである．
+    なお，複素過程がマルチンゲールとは，実部と虚部がいずれもマルチンゲールであることをいう．
+\end{proposition}
+
+\section{Gauss型とPoisson型のLevy過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフトを持ったBrown運動を除いて，他のすべての決定的でないLevy過程は不連続な見本過程を持つことは驚愕の事実である．
+\end{tcolorbox}
+
+\begin{definition}
+    Levy過程の中で，
+    \begin{enumerate}
+        \item 見本過程が殆ど確実に連続であるとき，\textbf{Gauss型}であるという．
+        \item 見本過程が殆ど確実に飛躍$1$で増加する階段関数となるとき，\textbf{Poisson型}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Gauss型とPoisson型Levy過程]
+    $X$をLevy過程とする．
+    \begin{enumerate}
+        \item $X$がさらに(概)連続過程であれば，増分$X_b-X_a\;(b>a)$はGauss分布に従う．
+        \item $X$がさらに殆ど至る所飛躍$1$で増加する階段関数を見本過程に持つならば，増分$X_b-X_a\;(b>a)$はPoisson分布に従う．
+    \end{enumerate}
+\end{theorem}
+
+\section{ジャンプの描像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の正数$a>0$に対してこれより大きいジャンプ$X_\al(\om)-X_{\al-}(\om)>a$は有限個しかないが，$a\to0$を調べるには慎重な議論が居る．
+\end{tcolorbox}
+
+\begin{definition}
+    $(\Om,\F,P)$について，
+    \begin{enumerate}
+        \item $\F$の部分集合$\{\B_{s,t}\}_{s<t\in\R_+}$が\textbf{加法系}であるとは，次の2条件が成り立つことをいう：
+        \begin{enumerate}[(a)]
+            \item $s<t<u\Rightarrow\B_{s,t}=\B_{s,t}\lor\B_{t,u}$．
+            \item $\paren{[s_i,t_i)}_{i\in[n]}$が互いに素であるならば，$\{\B_{s_i,t_i}\}_{i\in[n]}$は独立．
+        \end{enumerate}
+        \item 確率過程$X$が$X_0=0$を満たし，ある加法系$\{\B_{s,t}\}$について$\forall_{s<t\in\R_+}\;\sigma[X_t-X_s]\subset\B_{s,t}$ならば，$X$は$\sigma_{s,t}[dX]\subset\B_{s,t}$を満たす加法過程である．これを\textbf{$\{\B_{s,t}\}$に従属する加法過程}という．
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    $\sigma_{s,t}[dX]$は加法系であり，これを\textbf{$X$が生成する加法系}という．
+\end{example}
+
+\begin{lemma}[well-definedness]
+    $X=(X_t)$は加法系$\{\B_{s,t}\}$に従属するとする．このとき，$E\in\B(\R\setminus\{0\})$に対して，歩幅の条件$X_\al(\om)-X_{\al-}(\om)\in E$を満たす時刻$\al\in(s,t]$の数$N((s,t]\times E,\om)$は$\B_{s,t}$-可測である．
+\end{lemma}
+
+\begin{lemma}[独立性の十分条件]
+    $X=(X_t)$はLevy過程，$Y=(Y_t)$はPoisson型のLevy過程で，共に加法系$\{\B_{s,t}\}$に従属するとする．
+    この2つが，任意の$\om$に対して，互いの見本過程が共通の飛躍時刻を持たないならば，$X,Y$は独立である．
+\end{lemma}
+
+\begin{lemma}
+    任意の$E\in\B(\R\setminus(-a,a))\;(a>0)$に対して，その歩幅に含まれる跳躍の回数の過程$N_E(t):=N((0,t]\times E,\om)$は，$\{\B_{s,t}\}$に従属するPoisson型Levy過程である．
+\end{lemma}
+
+\begin{notation}
+    $E\in\B(\R\setminus(-a,a))\;(a>0)$に対して，
+    \begin{enumerate}
+        \item $S_E(t):=\sum_{s\le t}(X(s)-X(s-))1_E(X(s)-X(s-))$とおくと，歩幅が$E$に属する跳躍のみを加えていくことにより得られる過程である．これは補題より$\{\B_{s,t}\}$に従属する過程である．また確率連続であり，Levy過程である．
+        \item $X_E(t):=X(t)-S_E(t)$とおいても同様の性質を満たす．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+    任意の互いに素な集合族$E_1,\cdots,E_n\in\B(\R\setminus(-a,a))\;(a>0),\;E:=\sum_{k=1}^nE_k$に対して，
+    \begin{enumerate}
+        \item $N_{E_1},\cdots,N_{E_n},X_E$は独立である．
+        \item $S_{E_1},\cdots,S_{E_n},X_E$も独立である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 飛躍の全体を
+        \[J(\om):=\Brace{(t,X(t,\om)-X(t-,\om))\in\R_+\times\R\mid X(t,\om)-X(t-,\om)\ne0}\]
+        とおく．これは$\Gamma:=\R_+\times\R\setminus\{0\}$の可算な部分集合となる．
+        これは集合値確率変数であることに注意．
+        \item $N(B,\om):=\abs{J(\om)\cap B}\;(B\in\B(\Gamma))$を，$B$の中に入る飛躍の数とする．これは，$\B(\Gamma)$上の$\o{\N}$-値測度に値を取る確率変数となっている．特に，$N:=(N(B,\om))_{B\in\B(\Gamma)}$は固有偶然配置である．この平均(測度)を$n(B):=E[N(B)]$とする．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+    $N=(N(B,\om))$は強度$n$のPoisson固有配置である．
+\end{lemma}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $S_E(t,\om)=\int_{(0,t]}\int_E uN(dsdu)\;(E\in\B(\R\setminus(-a,a)))$．
+        \item この確率変数の特性関数は$\exp\paren{\int_{[0,t]}\int_E(e^{izu}-1)n(dsdu)}$で表せる．
+        \item $\forall_{t\in\R_+}\;\int_{[0,t]}\int_{\R\setminus\{0\}}(u^2\land 1)n(dsdu)<\infty$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{notation}
+    自然数$n\in\N$に対して，歩幅$u$が$[1/n,1]$に入る跳躍を加え合わせると
+    \[S_n(t,\om):=\int_{s\le t}\int_{1/n\le\abs{u}<1}uN(dsdu,\om)=S_E(t,\om)\quad E:=\Brace{u\in\R\setminus\{0\}\mid 1/n\le\abs{u}<1}.\]
+    となり，これはLevy過程になる．これを用いて，
+    \[T_n(t,\om):=S_n(t,\om)-E[S_n(t,\om)]\]
+    は平均$0$のLevy過程である．
+\end{notation}
+
+\begin{lemma}
+    $m>n$について，
+    \[P\Square{\sup_{s\le t}\abs{T_m(s,\om)-T_n(s,\om)}>\ep}\le\frac{1}{\ep^2}\int_{1/m\le\abs{u}<1/n}u^2n_t(du).\]
+    ただし，$n_t(E):=n((0,t]\times E)$とした．
+\end{lemma}
+\begin{remarks}
+    これは，$D[0,t]$-値確率変数$T_n(\om):=(T_n(s,\om))_{0\le s\le t}$が，$D$の一様ノルムについて確率収束することが分かった．
+    $(D[0,t],\norm{-}_\infty)$は$l^\infty([0,t])$の非可分な閉部分空間であることに注意．
+\end{remarks}
+
+\begin{lemma}[Banach空間値確率変数の概収束性]
+    任意の$t\in\R_+$に関して，殆ど確実に，$(T_n(s,\om))_{s\in[0,t]}$は$n\to\infty$のとき一様ノルムについて収束する．
+\end{lemma}
+
+\begin{notation}
+    \[\phi(u):=\begin{cases}
+        u\land 1,&u>0,\\
+        u\lor(-1),&u<0.
+    \end{cases}\]
+\end{notation}
+
+\begin{lemma}
+    \[\int_{s\le t}\int_{\abs{u}\ge 1/n}\phi(u)n(dsdu)=\int_{\abs{u}\ge 1/n}\phi(u)n_t(du)\]
+    は$t$について連続である．
+\end{lemma}
+
+\section{Levy-Ito分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gauss過程が平均と共分散で特徴付けられたように，Levy過程は特性量$(n,m,v)$で特徴付けられる．
+\end{tcolorbox}
+
+\begin{theorem}[Levy過程の分解定理 (Levy-Ito decomposition)]
+    $X$をLevy過程とする．
+    $\Gamma=\R_+\times(\R\setminus\{0\})$上の固有なPoisson配置$N$と，これと独立なGauss型Levy過程$G$が存在して，
+    \[X(t,\om)=G(t,\om)+\lim_{n\to\infty}\Square{\int_{s\le t}\int_{\abs{u}>1/n}(uN(dsdu,\om)-\phi(u)n(dsdu))}\]
+    と表せる．
+    ただし，$n$はPoisson配置$N$の平均測度で，
+    \[\int_{s\le t}\int_{\abs{u}\ge0}(u^2\land 1)n(dsdu)<\infty\;(t\in\R_+)\quad n(\{t\}\times\R\setminus\{0\})=0\]
+    を満たす．
+\end{theorem}
+
+\begin{definition}[Levy-Khintchine triplet]\mbox{}
+    \begin{enumerate}
+        \item Levy過程$X$の連続部分$G$を用いて，
+        \textbf{平均}と\textbf{分散}$m(t):=E[G(t)],v(t):=\Var[G(t)]$は有限確定する．
+        \item $n$をPoisson配置$N=N_X$の平均測度という．
+        \item 組$(n,m,v)$を，Levy過程$X$の\textbf{特性量}または\textbf{Levy-Khintchine組}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $m$は連続関数で$m(0)=0$．
+        \item $v$は連続な単調増加関数で$v(0)=0$．
+        \item $n$は$\Gamma$上の測度(Poisson点過程)で，次を満たす：
+        \[\forall_{t\in\R_+}\quad n(\{t\}\times(\R\setminus\{0\}))=0,\quad\int_{s\le t}\int_{\abs{u}>0}(u^2\land 1)n(dsdu)<\infty.\]
+    \end{enumerate}
+\end{lemma}
+
+
+\begin{theorem}[特性関数 Lévy–Khintchine formula]
+    Levy過程$X$の特性量を$(n,m,v)$とする．
+    \[E[\exp(iz(X(t)-X(s)))]=\exp\Brace{i(m(t)-m(s))z-\frac{1}{2}(v(t)-v(s))z^2+\int_{\abs{u}>0}(e^{izu}-1-i\phi(u)z)n((s,t]\times du)}\]
+\end{theorem}
+
+\begin{theorem}
+    補題の条件を満たす$(n,m,v)$に対して，これを特性量として持つLevy過程が存在して，法則同等を除いて一意的である．
+\end{theorem}
+
+\begin{corollary}[時間的に一様な場合]
+    $X_t-X_s\;(t>s)$の確率法則が$t-s$の値のみに関係するようなLevy過程を，\textbf{時間的に一様なLevy過程}という．
+    このとき，特性値は次のように表せる．
+    \[m_X(t)=mt,\quad v_X(t)=vt,\quad n_X(dtdu)=dt\cdot n(du).\]
+\end{corollary}
+
+\begin{corollary}[構成定理]\label{cor-construction-of-Levy-process}
+    確率分布族$\{\mu_{s,t}\}_{s\le t\in\R_+}\subset P(\R)$は，一貫性条件$\mu_{s,t}*\mu_{t,u}=\mu_{s,u}$を満たし，$(s,t)\mapsto P(\R)$は弱位相について連続とする．
+    このとき，$\forall_{t>s}\;X_t-X_s\sim\mu_{s,t}$を満たすLevy過程$X$が存在し，法則同等を除いて一意的である．
+\end{corollary}
+
+\section{Brown運動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続な加法過程は，必然的にGauss型である．これをBrown運動という．
+    ドリフトはないものをまずは見る．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    熱方程式$u_t(x,t)=u_{xx}(x,t),u(x,0)=0$の基本解
+    \[H(x,t)=\frac{1}{\sqrt{4\pi t}}\exp\paren{-\frac{x^2}{4t}}\]
+    は熱核または熱方程式の初期値問題のGreen関数と呼ばれ，初期条件$u(x,0)=f(x)$に関する解は
+    \[u(x,t)=H*f=\int_\R H(x-y,t)f(y)dy\]
+    と表される．
+    熱の拡散と確率の拡散，エントロピーの概念は深いどこかでつながっているのであろうか．
+\end{tcolorbox}
+
+\begin{definition}
+    確率空間$(\Om,\F,P)$上の実数値確率過程$(B_t)_{t\in\R_+}$が\textbf{Brown運動}であるとは，次の3条件をみたすことをいう：
+    \begin{enumerate}
+        \item $B_0=0\;\as$
+        \item 任意の見本道$B_t(\om):\R_+\to\R$は連続：$B_t\in W$．
+        \item 任意の長さ$n\in\N_{>0}$の$\R_+$の狭義増加列$(t_j)_{j\in[n]},t_j=0$が定める増分の組$(B_{t_j}-B_{t_{j-1}})_{j\in[n]}$は互いに独立にGauss分布$N(0,t_{j}-t_{j-1})$に従う．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    実は(3)のうち増分の正規性はなくても従うことは，Levy過程の理論による．
+\end{remarks}
+
+\begin{theorem}[Brown運動の存在]\label{thm-existence-of-Brownian-motion}
+    ある確率空間$(\Om,\F,P)$が存在して，その上にBrown運動が存在する．
+\end{theorem}
+
+\subsection{Wiener測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    古典的Wiener空間$W_0$は$0$から始まる連続な見本過程$R_+\to\R$全体の空間で，Banach空間となる．
+    Brown運動はここに確率測度を押し出し(見本道のばらつき)，Brown運動は，関数解析的には$W_0$上の確率測度の1つと同一視出来る．
+\end{tcolorbox}
+
+\begin{notation}[classical Wiener space]
+    次の言葉を使えば，Brown運動とはWiener空間に値を持つ確率変数$\Om\to W_0$であって，カリー化$\R_+\to\Meas(\Om,\R)$は任意の有限成分について独立なGauss分布を定めるものをいう．
+    \begin{enumerate}
+        \item $W=W^1:=C(\R_+)$を連続な見本道の空間とする．
+        \item $W_0:=\Brace{w\in W\mid w_0=0}$とする．これを\textbf{古典的Wiener空間}という．
+    \end{enumerate}
+    それぞれの空間には一様ノルムは入れられないので，広義一様収束位相を考え，Borel集合族によって可測空間とみなす．
+    $\R_+$なのでBanach空間ではない．
+\end{notation}
+
+\begin{definition}[Wiener measure (23)]
+    $(W_0,\B(W_0))$上の射影の族$(B_t)_{t\in\R_+},B_t(\om):=\pr_t(\om)=\om_t$がBrown運動になるような確率測度$P$を\textbf{Wiener測度}という．
+\end{definition}
+
+\begin{lemma}
+    Wiener測度は一意的に存在する．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[存在] Brown運動の存在\ref{thm-existence-of-Brownian-motion}による．
+        ある空間$(\Om,\F,P)$上のBrown運動$B:\Om\to W$を取る．これによる像測度$P^B$は$P^B(W_0)=1$を満たすから，$W_0$への制限を取れば，これがWiener測度である．
+        \item[一意性] $W_0$の柱状集合全体$\cC$\ref{remark-cylinder-sets}上では一意的である．$\cC$は$\pi$-系・情報族であり，$\B(W_0)=\sigma(\cC)$を満たすため，一意に延長される．
+    \end{description}
+\end{proof}
+
+\subsection{特性値}
+
+\begin{lemma}[積率]
+    $B_t$の奇数次の積率は消えてきて，偶数次の積率は
+    \[E[B_t^2]=t,\quad E[B_t^4]=3t^2,\quad E[B^6_t]=15t^3,\quad,E[B^{2n+1}_t]=(2n+1)(2n-1)\cdots 3\cdot 1t^{2n+1}.\]
+\end{lemma}
+
+\begin{lemma}[共分散]
+    $\forall_{t,s\in\R_+}\;E[B_tB_s]=t\land s$．
+\end{lemma}
+
+\subsection{独立増分性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    加法過程としての独立増分性は，martingale問題に繋がる．
+\end{tcolorbox}
+
+\begin{notation}
+    ブラウン運動$(B_t)_{t\in\R_+}$の自然な情報系を$\F^B_t:=\sigma[B_s;s\le t]$と表す．
+\end{notation}
+
+\begin{proposition}
+    $0\le s<t$に関して，$B_t-B_s$は$\F_s^B$と独立．
+\end{proposition}
+
+\begin{corollary}
+    Brown運動$(B_t)_{t\in\R_+}$は$(\F^B_t)$に関してmartingaleである．
+    その2次変分は$\brac{B}_t=t$で与えられる．
+\end{corollary}
+
+\subsection{可微分性}
+
+\begin{theorem}[Paley-Wiener-Zygmond]
+    $B_t(\om)$は$\om\dae$に対して，$t$について至る所微分不可能である．
+\end{theorem}
+
+\begin{theorem}[modulus of continuity]
+    $1/2$-Holder連続性よりやや悪い連続度を持つ．
+    \[\limsup_{t_2-t_1=\ep\searrow0,0\le t_1<t_2\le1}\frac{\abs{B_{t_2}-B_{t_1}}}{\sqrt{2\ep\log(1/\ep)}}=1\;\as\]
+\end{theorem}
+
+\begin{theorem}[重複対数の法則]
+    \[\limsup_{t\searrow0}\frac{B_t}{\sqrt{2t\log\log(1/t)}}=1\;\as\]
+\end{theorem}
+
+\section{Poisson過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $D$-過程であるが連続過程ではなく，見本過程が至る所ジャンプしているとき，これはPoisson型Levy過程である．
+    ここまでいかずとも，少しドリフト$0$分散$0$のBrown運動を混ぜて，ジャンプを持つ加法過程で特に基本的なPoisson過程を見る．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R_+$上に強さ$\lambda$のPoisson点過程を考える．その総数を整数で切ったものをPoisson過程と呼ぼう．
+\end{tcolorbox}
+
+\begin{definition}[Poisson process]
+    $(\Om,\F,P)$上の$\Z_+$-値確率過程$(N_t)_{t\in\R_+}$が\textbf{パラメータ$\lambda>0$を持つPoisson過程}であるとは，次の条件を満たすことをいう：
+    \begin{enumerate}
+        \item $N_0=0\;\as$
+        \item 任意の見本道$N_t(\om)$は右連続かつ単調増加である．
+        \item 任意の長さ$n\in\N_{>0}$の$\R_+$の狭義増加列$(t_j)_{j\in[n]},t_0=0$が定める増分の組$(N_{t_j}-N_{t_{j-1}})_{j\in[n]}$は独立で，それぞれパラメータ$\lambda(t_j-t_{j-1})$を持つPoisson分布に従う．
+    \end{enumerate}
+\end{definition}
+
+\begin{discussion}[Poisson過程の構成]
+    Kolmogorovの拡張定理により存在は保証されるが，次のように構成できる．
+    独立にパラメータ$\lambda$の指数分布\ref{def-exponential-distribution}に従う$\R_+$-値確率変数列$(S_j)$を取る：$P[S_j\ge t]=e^{-\lambda t}$．
+    なお，パラメータ$\lambda>0$の指数分布密度関数は
+    \[p(x)=\lambda e^{-\lambda x}1_{[0,\infty)}(x)\]
+    と表せる．
+    このとき
+    \[Z_0=0,\quad Z_k=\sum^k_{j=1}S_j\]
+    とするとこれは強さ$\lambda$のPoisson点過程であり，
+    $t\in\R_+$を超えた$Z_k$の数の過程
+    \[N_t:=\max\Brace{k\in\N\mid Z_k\le t}\in\o{\Z}_+\]
+    はPoisson過程となり，$P[N_t\in\Z_+]=1$．
+\end{discussion}
+
+\begin{theorem}
+    $(U_n)$を$\R$上の増加酔歩で，$T_n:=U_n-U_{n-1}\sim\Exp(c)\;(c>0)$とする．
+    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Pois(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
+    これをパラメータ$c>0$のPoisson過程という．
+\end{theorem}
+\begin{remarks}
+    $X_t$は$t$までに起こった
+    跳躍の回数で，$U_n$は$n$回目の跳躍が起こる時刻である．
+\end{remarks}
+
+\subsection{複合Poisson過程}
+
+\begin{theorem}[compound Poisson process]
+    $\sigma\in P(\R^d)$は$\sigma(\{0\})=0$を満たすとする．
+    パラメータ$c>0$のPoisson過程$(N_t)_{t\in\R_+}$と$\R^d$上の酔歩$(S_n)_{n\in\N},S_1\sim\sigma$は独立であるとする．
+    このとき，$X_t(\om):=S_{N_t(\om)}(\om)$は$\R^d$上のLevy過程である．これを\textbf{$\sigma,c$が定める複合Poisson過程}という．
+\end{theorem}
+
+\begin{definition}
+        $m=0,v=0$のときの$\psi(z)=\int_{\abs{u>0}}(e^{izu}-1)n(du)$と表せる$\mu$のクラスを，\textbf{複合Poisson分布}という．これに対応する過程を\textbf{複合Poisson過程}という．
+\end{definition}
+
+\subsection{独立増分性}
+
+\begin{proposition}
+    $0\le s<t$について，$N_t-N_s$は$\F^N_s=\sigma[N_u;u\le s]$と独立である．
+\end{proposition}
+
+\begin{corollary}
+    $(N_t-\lambda t)_{t\ge0}$は$(\F_t^N)$に関してマルチンゲールである．
+\end{corollary}
+
+\section{無限分解可能分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Levy過程の特性関数は，一般の無限分解可能分布に敷衍できる．
+    これはLevy過程の構成に必要だった一貫性条件\ref{cor-construction-of-Levy-process}からも予見できたかもしれない．
+
+    一様なLevy過程は，ある1-パラメータ連続変換半群$\{\mu_t\}_{t\in\R_+}$で定まる．このとき$\mu_1$は無限可解分布である．
+\end{tcolorbox}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率変数$X$が，任意の$n\in\N$に対して，ある分布$\mu_n$が存在してそれに従う独立同分布変数$n$個の和で表せるとき，
+    これを無限可解であるという．
+    この連続化は半群の構造に注目する，本質的に1-パラメータ化に同じ．
+    これは半群$(P(\R),*,\delta_0)$の言葉を用いて定義できる：連続半群の準同型$\R_+\to P(\R)$であって，$\mu_1=\mu$を満たすものが存在すること．
+    しかも$\delta_0$は極点なので，ここからループを投げるみたいな，$P(\R)$の幾何的な知識と繋がることを表す！
+\end{tcolorbox}
+
+\begin{definition}[decomposable distribution]
+    1次元の分布$\mu\in P(\R)$が\textbf{無限可解}であるとは，分布族$\{\mu_t\}_{t\in\R_+}$が存在して，$\mu$を乗法単位元として$\R_+$と同型な連続半群となることをいう：
+    \begin{enumerate}
+        \item $\R_+\to P(\R);t\mapsto\mu_t$は弱位相に関して連続．
+        \item $\forall_{t,s\in\R_+}\;\mu_t*\mu_s=\mu_{t+s}$．
+        \item $\mu_0=\delta_0$．
+        \item $\mu_1=\mu$．
+    \end{enumerate}
+    すなわち，連続半群の準同型$\R_+\to P(\R)$であって，$\mu_1=\mu$を満たすものが存在することをいう．
+    なお，パラメータの連続変換により，このとき任意の$\mu_t$も無限可解になることに注意．
+\end{definition}
+
+\begin{lemma}[無限可解性の特徴付け]
+    次の4条件は同値．
+    \begin{enumerate}
+        \item $\mu$は無限可解である．
+        \item $\forall_{n\in\N}\;\mu=\mu_n*\mu_n*\cdots *\mu_n$と表せる．
+        \item 任意の$\ep>0$に対し，分解$\mu=\mu_1*\cdots*\mu_n$であって，Levy距離に関して$d_L(\mu_i,\delta)<\ep$を満たすものが存在する．
+        \item $\mu_n=\mu_{n1}*\cdots*\mu_{nm(n)},\max_{k\in[m(n)]}d_L(\mu_{nk},\delta)\to0$を満たす列$(\mu_n)$が存在して，$\mu_n\to\mu$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}[reproducing property]
+    畳み込みの演算について閉じている(そして何らかの関手性を持つ)分布族を\textbf{再生性}というのであった．
+    この分布族の元は，$\delta_0$を含む場合，その分布族の中で完結して取れる．
+    たとえば$\mu=N(m,v)$については$\mu_t:=N(tm,vm)$と取れば良い．
+\end{example}
+
+\begin{example}[時間的に一様なLevy過程]
+    時間的に一様なLevy過程$X$は，$\{\mu_t\sim X_t-X_0\}_{t\in\R_+}$がちょうど1-パラメータ連続半群となり，
+    よっておのずと無限可解である．
+    また逆に，連続半群$(\mu_t)$に対して，これが定める一様なLevy過程が存在するのは構成定理\ref{cor-construction-of-Levy-process}による．
+\end{example}
+
+\subsection{Levy分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    無限可解分布，連続半群$\{\mu_t\}_{t\in\R_+}$，時間的に一様なLevy過程（の法則同値類）$X$の間に，次の全単射対応がある：
+    \[\mu\xrightarrow{\mu=\mu_1}\{\mu_t\}\xrightarrow{\mu_t=P^{X(t)}}X\]
+\end{tcolorbox}
+
+\begin{theorem}[無限可解分布のLevy分解定理]
+    任意の無限可解分布$\mu$は，特性関数$\F\mu(z)$が$\F\mu(z)=e^{\psi(z)}$なる形になる．ただし，
+    \[\psi(z)=imz-\frac{v}{2}z^2+\int_{\abs{u}>0}(e^{izu}-1-i\phi(u)z)n(du),\quad m\in\R,v\ge0,\int_{\abs{u}>0}(u^2\land 1)n(du)<\infty.\]
+\end{theorem}
+
+\begin{corollary}
+    無限可解分布，連続半群$\{\mu_t\}_{t\in\R_+}$，時間的に一様なLevy過程（の法則同値類）$X$の間に，次の全単射対応がある：
+    \[\mu\xrightarrow{\mu=\mu_1}\{\mu_t\}\xrightarrow{\mu_t=P^{X(t)}}X\]
+\end{corollary}
+
+\begin{example}
+    Poisson分布，Cauchy分布もLevy分解を定め，これらに対応する一様Levy過程をPoisson過程，Cauchy過程という．
+\end{example}
+
+\subsection{複合Poisson過程}
+
+\begin{discussion}
+    $\mu$を無限分解可能分布とする．
+    \[\int_{\abs{u}\in(0,1)}\abs{u}n(du)<\infty\]
+    が成り立つとき，$\phi(u)=0$と取ってよい．
+    このとき$\mu$に対応する特性値$(n,m,v)$がただ一つ存在し，特性関数は
+    \[\psi(z)=imz-\frac{v}{2}z^2+\int_{\abs{u}>0}(e^{izu}-1)n(du)\]
+    によって定まる．
+\end{discussion}
+
+\begin{definition}
+    特に$n$が$\R\setminus\{0\}$上で有界で$m=v=0$とする．このとき対応する特性関数は
+    \[\psi(z)=\int_{\abs{u}>0}(e^{izu}-1)n(du)\]
+    によって定まり，このときの無限可解分布$\mu$を\textbf{複合Poisson分布}といい，対応する時間的に一様なLevy過程を\textbf{複合Poisson過程}という．
+\end{definition}
+
+\begin{lemma}[複合Poisson分布の特徴付け]
+    $\lambda:=n(\R\setminus\{0\})<\infty$とする．
+    複合Poisson分布$\mu$は，$v^{*n}$をPoisson分布$\Pois(\lambda)$によって加重平均を取ったものである：
+    \[\mu=\sum^\infty_{n=1}e^{-\lambda}\frac{\lambda^n}{n!}\nu^{*n}.\]
+\end{lemma}
+
+\begin{proposition}
+    $N\sim\Pois(\lambda),(X_n)_{n\in\N}\overset{\iid}{\sim}\nu$で互いに独立とする．
+    \[Y:=X_1+X_2+\cdots+X_N\]
+    は複合Poisson分布$p_{\lambda,\nu}$に従う．
+\end{proposition}
+\begin{remarks}
+    $dt$間に$\lambda dt$の確率で事故が起こり，そのときの損害額は分布$\nu$に従うとする．
+    独立性の仮定の下で，時刻$t$までの被害総額$X(t,\om)$は複合Poisson分布$p_{\lambda,\nu}$に対応する時間的に一様なLevy過程となる．
+\end{remarks}
+
 \chapter{Markov過程}
 
-\begin{quote}
+\begin{quotation}
     互いに独立な試行の列（確率変数の列）の，マルチンゲールとは別の方向への一般化を考える．
     独立性は一切の過去の履歴に依らないが，Markov性は，現在の状態のみに依存する性質を指す．
 
@@ -1247,34 +1818,16 @@ title=]
     すると，Markov過程は推移作用素を定めることで分布が決まる．
     これは大数の法則を一般化する．
     また，推移作用素になり得る作用素は放物型偏微分方程式によって特徴付けられる．
-\end{quote}
+\end{quotation}
 
-\section{Kolmogorovの拡張定理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Hopfの拡張定理の一般化である．
-\end{tcolorbox}
-
-\begin{theorem}\label{thm-Kolmogorov-extension-theorem}
-    確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
-    $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
-    なお，$\R^\N$には直積位相を考える．
-    \begin{quotation}
-        (consistency) $\forall_{n\in\N}\;\forall_{A\in\B(\R^n)}\;\mu_{n+1}(A\times\R)=\mu_n(A)$．
-    \end{quotation}
-    特に，この一貫性条件は$\R^\N$上の測度に延長できるための必要十分条件である．
-    これは$\R$を一般の完備可分空間としても成り立つ．
-\end{theorem}
-
-\section{離散時間のMarkov連鎖}
+\section{離散状態空間上のMarkov連鎖}
 
 \begin{notation}[state space]
     $I$を可算集合とし，これを\textbf{状態空間}とする．
     見本過程は列$\N\to I$となり，経時的に$I$上を動き回りことになる．
 \end{notation}
 
-\subsection{確率行列}
+\subsection{確率行列の扱い}
 
 \begin{history}
     MarkovがMarkov連鎖と確率行列を発明した．言語分析やカードシャッフルの問題に用いるつもりであったが，たちまち他の分野でも有用だと解った．
@@ -1316,6 +1869,25 @@ title=]
     $I$-値確率変数列$\{X_n\}\subset\Meas(\Om,I)$が，\textbf{初期分布$\nu$，遷移行列$\bP$を持つ空間$I$上のMarkov連鎖}であるとは，次が成り立つことをいう：
     \[\forall_{n\in\N}\;\forall_{i_0,\cdots,i_n\in I}\;P(X_0=i_0,\cdots,X_n=i_n)=\nu_{i_0}p_{i_0i_1}\cdots p_{i_{n-1}i_n}.\]
 \end{definition}
+
+\begin{example}
+    壺の中に赤玉$r$，黒玉$b$，合計$N:=r+b$個の玉が入っているとする．
+    $X_n\in\{0,1\}$は$n$回目に取り出した玉が赤であることに対する真理値とすると，$X_1,\cdots,X_N$は独立性もMarkov性も持たない，複雑な相関を持つ．
+    ただし，$Y_n:=\sum_{k=1}^nX_k$とすると，これは$n$回目までに取り出した赤玉の総数となり，$Y_{n-1}$は$Y_n$が定まるためのすべての条件を持っており，Markov性を持つ．
+\end{example}
+
+\subsection{構成}
+
+\begin{theorem}[Kolmogorov]\label{thm-Kolmogorov-extension-theorem}
+    確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
+    $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
+    なお，$\R^\N$には直積位相を考える．
+    \begin{quotation}
+        (consistency) $\forall_{n\in\N}\;\forall_{A\in\B(\R^n)}\;\mu_{n+1}(A\times\R)=\mu_n(A)$．
+    \end{quotation}
+    特に，この一貫性条件は$\R^\N$上の測度に延長できるための必要十分条件である．
+    これは$\R$を一般の完備可分空間としても成り立つ．
+\end{theorem}
 
 \begin{proposition}
     適当な確率空間の上に，初期分布$\nu$と遷移行列$\bP$をもち，殆ど至る所$I$値なMarkov連鎖が存在する．
@@ -1587,6 +2159,10 @@ title=]
 
 \section{連続時間Markov過程}
 
+\subsection{定義}
+
+
+
 \subsection{Chapman-Kolmogorov方程式}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1615,518 +2191,6 @@ title=熱核の半群性]
     こうして，行列積は積分に一般化される．(2)を時間一様なChapman-Kolmogorovの等式という．
     これは，時刻$0$に$x$から初めて，$s+t$に$A$に至るまでの時刻$s$での経由地$y\in S$について積分しても等しくなる，という意味を持つ．
 \end{discussion}
-
-\chapter{加法過程}
-
-\begin{quotation}
-    Brown運動の独立増分性を抽出して加法過程といい，時間一様性も加えたものをLevy過程という．
-    Brown運動は連続であるが，Levy過程・加法過程は$D$-過程とする．
-    Poisson過程は高さ1の跳躍でのみ増加する，跳躍のみで増加する過程の代表である．
-\end{quotation}
-
-\section{定義と例}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    見本道が殆ど至る所cadlagである過程を$D$-過程という．
-    見本過程$\R_+\to\Meas(\Om,\R);s\mapsto X_s$が確率連続な加法過程で$D$-過程でもあるものを，Levy過程という．
-    任意の確率連続な加法過程はLevy過程に同等であり，Levy過程の構造は解明済みである．
-
-    大雑把にいえば，連続な加法過程はGauss型，すなわちブラウン運動に限り，非連続的な加法過程はPoisson型に限る．
-    任意のLevy過程は，ドリフト付きのBrown運動とLevyのジャンプ過程との和に分解できる．
-\end{tcolorbox}
-
-\begin{definition}[additive process, Levy process]
-    $(X_t)_{t\in\R_+}$は,，
-    (1),(2)のみを満たすとき\textbf{加法過程}といい，(3)も満たすとき\textbf{Levy過程}といい，(4)も満たすとき\textbf{(時間的に)一様なLevy過程}という．
-    \begin{enumerate}
-        \item 独立増分性・加法性：$\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;X_{t_n}-X_{t_{n-1}},\cdots,X_{t_2}-X_{t_1}$は独立．
-        \item 標準化：$X_0=0\;\as$
-        \item $D$-過程である．
-        \item 時間一様性・定常増分性：$\forall_{s\in\R_+}\;X_{t+s}- X_t$は$t$に依存しない．
-        \item 確率連続である．
-    \end{enumerate}
-    (5)は暗黙のうちに仮定してしまうことも多い．
-\end{definition}
-
-\begin{theorem}[$D$-変形]\mbox{}
-    \begin{enumerate}
-        \item (1),(2),(5)を満たすならば，その修正であって(3)も満たすものが識別不可能な違いを除いて存在する．
-        \item (1),(2),(4),(5)を満たすならば，その修正であって(3)も満たすものが存在する．
-    \end{enumerate}
-\end{theorem}
-
-\begin{example}
-    離散時間の加法過程は，遷移確率が空間的に一様なMarkov連鎖と見れる．さらに時間的にも一様なものがLevy過程となる．
-    \begin{enumerate}
-        \item $\Z^d$-酔歩は加法過程である：任意の長さ$k\ge2$の部分列$(n_j)_{j\in[k]}$について，\textbf{増分}の過程$(X_{n_j}-X_{n_{j-1}})_{j\in[k]}$は独立．
-        \item 一般に独立な実確率変数列$(Y_n)_{n\in\N}$の部分和の過程${X_t:=\sum_{k\le t}Y_k(\om)}_{t\in\R_+}$は加法過程である．
-        \item $\R_+$上のLebesgue測度を平均に持つPoisson配置$\{Y(A,\om)\}_{A\in\B^1\cap\R_+}$に対して$X_t(\om):=Y([0,t],\om)$とおくと，これは加法過程である．これを\textbf{Poisson過程}という．
-        これは「Poisson点過程の積分」という意味で，(2)の例の一般化になっている．
-    \end{enumerate}
-\end{example}
-
-\begin{remark}
-    このとき，$S$の原点を$0$とするとその転移確率は一様に$p(s,-):=p(s,0,-)$と表わせ，Chapman-Kolmogorovの等式も
-    \[\forall_{s,t\in\R_+}\;\forall_{x,z\in S}\;\int_Sp(s,dy-x)p(t,dz-y)=p(s+t,dz-x)\]
-    と表せる．
-\end{remark}
-
-\begin{notation}\mbox{}
-    \begin{enumerate}
-        \item 時間$[s,t]$の間のすべての増分が定める$\sigma$-加法族を$\sigma_{s,t}[dX]:=\sigma[X_v-X_u;u\le v\in[s,t]]$と表す．
-        \item $\sigma_{s+,t}[dX]:=\sigma[X_v-X_u;u\le v\in(s,t]]$．
-        \item 閉$\sigma$-代数についても，$\F_{s,t}[dX]:=\cap_{\ep>0}\sigma_{s-\ep,t+\ep}[dX]\lor 2$．
-    \end{enumerate}
-\end{notation}
-
-\section{付属するマルチンゲール}
-
-\begin{theorem}
-    $X$が確率連続な加法過程ならば，
-    \begin{enumerate}
-        \item $\F_{s,t}=\sigma_{s,t}\lor 2$．
-        \item $s_0<s_1<\cdots<s_n$ならば，$(\F_{s_{i-1}s_i})_{i\in[n]}$は独立．
-    \end{enumerate}
-\end{theorem}
-\begin{remarks}
-    これより，$s<t\Rightarrow X_t-X_s$は$\F_s[X]$と独立と分かる．
-\end{remarks}
-
-\begin{proposition}
-    \[Y^a_t:=\frac{e^{iaX_i}}{E[e^{iaX_i}]}\]
-    は$(\F_t[X])$-マルチンゲールである．
-    なお，複素過程がマルチンゲールとは，実部と虚部がいずれもマルチンゲールであることをいう．
-\end{proposition}
-
-\section{Gauss型とPoisson型のLevy過程}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ドリフトを持ったBrown運動を除いて，他のすべての決定的でないLevy過程は不連続な見本過程を持つことは驚愕の事実である．
-\end{tcolorbox}
-
-\begin{definition}
-    Levy過程の中で，
-    \begin{enumerate}
-        \item 見本過程が殆ど確実に連続であるとき，\textbf{Gauss型}であるという．
-        \item 見本過程が殆ど確実に飛躍$1$で増加する階段関数となるとき，\textbf{Poisson型}であるという．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}[Gauss型とPoisson型Levy過程]
-    $X$をLevy過程とする．
-    \begin{enumerate}
-        \item $X$がさらに(概)連続過程であれば，増分$X_b-X_a\;(b>a)$はGauss分布に従う．
-        \item $X$がさらに殆ど至る所飛躍$1$で増加する階段関数を見本過程に持つならば，増分$X_b-X_a\;(b>a)$はPoisson分布に従う．
-    \end{enumerate}
-\end{theorem}
-
-\section{ジャンプの描像}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    任意の正数$a>0$に対してこれより大きいジャンプ$X_\al(\om)-X_{\al-}(\om)>a$は有限個しかないが，$a\to0$を調べるには慎重な議論が居る．
-\end{tcolorbox}
-
-\begin{definition}
-    $(\Om,\F,P)$について，
-    \begin{enumerate}
-        \item $\F$の部分集合$\{\B_{s,t}\}_{s<t\in\R_+}$が\textbf{加法系}であるとは，次の2条件が成り立つことをいう：
-        \begin{enumerate}[(a)]
-            \item $s<t<u\Rightarrow\B_{s,t}=\B_{s,t}\lor\B_{t,u}$．
-            \item $\paren{[s_i,t_i)}_{i\in[n]}$が互いに素であるならば，$\{\B_{s_i,t_i}\}_{i\in[n]}$は独立．
-        \end{enumerate}
-        \item 確率過程$X$が$X_0=0$を満たし，ある加法系$\{\B_{s,t}\}$について$\forall_{s<t\in\R_+}\;\sigma[X_t-X_s]\subset\B_{s,t}$ならば，$X$は$\sigma_{s,t}[dX]\subset\B_{s,t}$を満たす加法過程である．これを\textbf{$\{\B_{s,t}\}$に従属する加法過程}という．
-    \end{enumerate}
-\end{definition}
-\begin{example}
-    $\sigma_{s,t}[dX]$は加法系であり，これを\textbf{$X$が生成する加法系}という．
-\end{example}
-
-\begin{lemma}[well-definedness]
-    $X=(X_t)$は加法系$\{\B_{s,t}\}$に従属するとする．このとき，$E\in\B(\R\setminus\{0\})$に対して，歩幅の条件$X_\al(\om)-X_{\al-}(\om)\in E$を満たす時刻$\al\in(s,t]$の数$N((s,t]\times E,\om)$は$\B_{s,t}$-可測である．
-\end{lemma}
-
-\begin{lemma}[独立性の十分条件]
-    $X=(X_t)$はLevy過程，$Y=(Y_t)$はPoisson型のLevy過程で，共に加法系$\{\B_{s,t}\}$に従属するとする．
-    この2つが，任意の$\om$に対して，互いの見本過程が共通の飛躍時刻を持たないならば，$X,Y$は独立である．
-\end{lemma}
-
-\begin{lemma}
-    任意の$E\in\B(\R\setminus(-a,a))\;(a>0)$に対して，その歩幅に含まれる跳躍の回数の過程$N_E(t):=N((0,t]\times E,\om)$は，$\{\B_{s,t}\}$に従属するPoisson型Levy過程である．
-\end{lemma}
-
-\begin{notation}
-    $E\in\B(\R\setminus(-a,a))\;(a>0)$に対して，
-    \begin{enumerate}
-        \item $S_E(t):=\sum_{s\le t}(X(s)-X(s-))1_E(X(s)-X(s-))$とおくと，歩幅が$E$に属する跳躍のみを加えていくことにより得られる過程である．これは補題より$\{\B_{s,t}\}$に従属する過程である．また確率連続であり，Levy過程である．
-        \item $X_E(t):=X(t)-S_E(t)$とおいても同様の性質を満たす．
-    \end{enumerate}
-\end{notation}
-
-\begin{lemma}
-    任意の互いに素な集合族$E_1,\cdots,E_n\in\B(\R\setminus(-a,a))\;(a>0),\;E:=\sum_{k=1}^nE_k$に対して，
-    \begin{enumerate}
-        \item $N_{E_1},\cdots,N_{E_n},X_E$は独立である．
-        \item $S_{E_1},\cdots,S_{E_n},X_E$も独立である．
-    \end{enumerate}
-\end{lemma}
-
-\begin{notation}\mbox{}
-    \begin{enumerate}
-        \item 飛躍の全体を
-        \[J(\om):=\Brace{(t,X(t,\om)-X(t-,\om))\in\R_+\times\R\mid X(t,\om)-X(t-,\om)\ne0}\]
-        とおく．これは$\Gamma:=\R_+\times\R\setminus\{0\}$の可算な部分集合となる．
-        これは集合値確率変数であることに注意．
-        \item $N(B,\om):=\abs{J(\om)\cap B}\;(B\in\B(\Gamma))$を，$B$の中に入る飛躍の数とする．これは，$\B(\Gamma)$上の$\o{\N}$-値測度に値を取る確率変数となっている．特に，$N:=(N(B,\om))_{B\in\B(\Gamma)}$は固有偶然配置である．この平均(測度)を$n(B):=E[N(B)]$とする．
-    \end{enumerate}
-\end{notation}
-
-\begin{lemma}
-    $N=(N(B,\om))$は強度$n$のPoisson固有配置である．
-\end{lemma}
-
-\begin{lemma}\mbox{}
-    \begin{enumerate}
-        \item $S_E(t,\om)=\int_{(0,t]}\int_E uN(dsdu)\;(E\in\B(\R\setminus(-a,a)))$．
-        \item この確率変数の特性関数は$\exp\paren{\int_{[0,t]}\int_E(e^{izu}-1)n(dsdu)}$で表せる．
-        \item $\forall_{t\in\R_+}\;\int_{[0,t]}\int_{\R\setminus\{0\}}(u^2\land 1)n(dsdu)<\infty$．
-    \end{enumerate}
-\end{lemma}
-
-\begin{notation}
-    自然数$n\in\N$に対して，歩幅$u$が$[1/n,1]$に入る跳躍を加え合わせると
-    \[S_n(t,\om):=\int_{s\le t}\int_{1/n\le\abs{u}<1}uN(dsdu,\om)=S_E(t,\om)\quad E:=\Brace{u\in\R\setminus\{0\}\mid 1/n\le\abs{u}<1}.\]
-    となり，これはLevy過程になる．これを用いて，
-    \[T_n(t,\om):=S_n(t,\om)-E[S_n(t,\om)]\]
-    は平均$0$のLevy過程である．
-\end{notation}
-
-\begin{lemma}
-    $m>n$について，
-    \[P\Square{\sup_{s\le t}\abs{T_m(s,\om)-T_n(s,\om)}>\ep}\le\frac{1}{\ep^2}\int_{1/m\le\abs{u}<1/n}u^2n_t(du).\]
-    ただし，$n_t(E):=n((0,t]\times E)$とした．
-\end{lemma}
-\begin{remarks}
-    これは，$D[0,t]$-値確率変数$T_n(\om):=(T_n(s,\om))_{0\le s\le t}$が，$D$の一様ノルムについて確率収束することが分かった．
-    $(D[0,t],\norm{-}_\infty)$は$l^\infty([0,t])$の非可分な閉部分空間であることに注意．
-\end{remarks}
-
-\begin{lemma}[Banach空間値確率変数の概収束性]
-    任意の$t\in\R_+$に関して，殆ど確実に，$(T_n(s,\om))_{s\in[0,t]}$は$n\to\infty$のとき一様ノルムについて収束する．
-\end{lemma}
-
-\begin{notation}
-    \[\phi(u):=\begin{cases}
-        u\land 1,&u>0,\\
-        u\lor(-1),&u<0.
-    \end{cases}\]
-\end{notation}
-
-\begin{lemma}
-    \[\int_{s\le t}\int_{\abs{u}\ge 1/n}\phi(u)n(dsdu)=\int_{\abs{u}\ge 1/n}\phi(u)n_t(du)\]
-    は$t$について連続である．
-\end{lemma}
-
-\section{Levy-Ito分解}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Gauss過程が平均と共分散で特徴付けられたように，Levy過程は特性量$(n,m,v)$で特徴付けられる．
-\end{tcolorbox}
-
-\begin{theorem}[Levy過程の分解定理 (Levy-Ito decomposition)]
-    $X$をLevy過程とする．
-    $\Gamma=\R_+\times(\R\setminus\{0\})$上の固有なPoisson配置$N$と，これと独立なGauss型Levy過程$G$が存在して，
-    \[X(t,\om)=G(t,\om)+\lim_{n\to\infty}\Square{\int_{s\le t}\int_{\abs{u}>1/n}(uN(dsdu,\om)-\phi(u)n(dsdu))}\]
-    と表せる．
-    ただし，$n$はPoisson配置$N$の平均測度で，
-    \[\int_{s\le t}\int_{\abs{u}\ge0}(u^2\land 1)n(dsdu)<\infty\;(t\in\R_+)\quad n(\{t\}\times\R\setminus\{0\})=0\]
-    を満たす．
-\end{theorem}
-
-\begin{definition}[Levy-Khintchine triplet]\mbox{}
-    \begin{enumerate}
-        \item Levy過程$X$の連続部分$G$を用いて，
-        \textbf{平均}と\textbf{分散}$m(t):=E[G(t)],v(t):=\Var[G(t)]$は有限確定する．
-        \item $n$をPoisson配置$N=N_X$の平均測度という．
-        \item 組$(n,m,v)$を，Levy過程$X$の\textbf{特性量}または\textbf{Levy-Khintchine組}という．
-    \end{enumerate}
-\end{definition}
-
-\begin{lemma}\mbox{}
-    \begin{enumerate}
-        \item $m$は連続関数で$m(0)=0$．
-        \item $v$は連続な単調増加関数で$v(0)=0$．
-        \item $n$は$\Gamma$上の測度(Poisson点過程)で，次を満たす：
-        \[\forall_{t\in\R_+}\quad n(\{t\}\times(\R\setminus\{0\}))=0,\quad\int_{s\le t}\int_{\abs{u}>0}(u^2\land 1)n(dsdu)<\infty.\]
-    \end{enumerate}
-\end{lemma}
-
-\begin{theorem}
-    補題の条件を満たす$(n,m,v)$に対して，これを特性量として持つLevy過程が存在して，法則同等を除いて一意的である．
-\end{theorem}
-
-\begin{corollary}[時間的に一様な場合]
-    $X_t-X_s\;(t>s)$の確率法則が$t-s$の値のみに関係するようなLevy過程を，\textbf{時間的に一様なLevy過程}という．
-    このとき，特性値は次のように表せる．
-    \[m_X(t)=mt,\quad v_X(t)=vt,\quad n_X(dtdu)=dt\cdot n(du).\]
-\end{corollary}
-
-\begin{corollary}
-    確率分布族$\{\mu_{s,t}\}_{s\le t\in\R_+}\subset P(\R)$は，一貫性条件$\mu_{s,t}*\mu_{t,u}=\mu_{s,u}$を満たし，$(s,t)\mapsto P(\R)$は弱位相について連続とする．
-    このとき，$\forall_{t>s}\;X_t-X_s\sim\mu_{s,t}$を満たすLevy過程$X$が存在し，法則同等を除いて一意的である．
-\end{corollary}
-
-\section{Brown運動}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    連続な加法過程は，必然的にGauss型である．これをBrown運動という．
-    ドリフトはないものをまずは見る．
-\end{tcolorbox}
-
-\subsection{定義}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    熱方程式$u_t(x,t)=u_{xx}(x,t),u(x,0)=0$の基本解
-    \[H(x,t)=\frac{1}{\sqrt{4\pi t}}\exp\paren{-\frac{x^2}{4t}}\]
-    は熱核または熱方程式の初期値問題のGreen関数と呼ばれ，初期条件$u(x,0)=f(x)$に関する解は
-    \[u(x,t)=H*f=\int_\R H(x-y,t)f(y)dy\]
-    と表される．
-    熱の拡散と確率の拡散，エントロピーの概念は深いどこかでつながっているのであろうか．
-\end{tcolorbox}
-
-\begin{definition}
-    確率空間$(\Om,\F,P)$上の実数値確率過程$(B_t)_{t\in\R_+}$が\textbf{Brown運動}であるとは，次の3条件をみたすことをいう：
-    \begin{enumerate}
-        \item $B_0=0\;\as$
-        \item 任意の見本道$B_t(\om):\R_+\to\R$は連続：$B_t\in W$．
-        \item 任意の長さ$n\in\N_{>0}$の$\R_+$の狭義増加列$(t_j)_{j\in[n]},t_j=0$が定める増分の組$(B_{t_j}-B_{t_{j-1}})_{j\in[n]}$は互いに独立にGauss分布$N(0,t_{j}-t_{j-1})$に従う．
-    \end{enumerate}
-\end{definition}
-\begin{remarks}
-    実は(3)のうち増分の正規性はなくても従うことは，Levy過程の理論による．
-\end{remarks}
-
-\begin{theorem}[Brown運動の存在]\label{thm-existence-of-Brownian-motion}
-    ある確率空間$(\Om,\F,P)$が存在して，その上にBrown運動が存在する．
-\end{theorem}
-
-\subsection{Wiener測度}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    古典的Wiener空間$W_0$は$0$から始まる連続な見本過程$R_+\to\R$全体の空間で，Banach空間となる．
-    Brown運動はここに確率測度を押し出し(見本道のばらつき)，Brown運動は，関数解析的には$W_0$上の確率測度の1つと同一視出来る．
-\end{tcolorbox}
-
-\begin{notation}[classical Wiener space]
-    次の言葉を使えば，Brown運動とはWiener空間に値を持つ確率変数$\Om\to W_0$であって，カリー化$\R_+\to\Meas(\Om,\R)$は任意の有限成分について独立なGauss分布を定めるものをいう．
-    \begin{enumerate}
-        \item $W=W^1:=C(\R_+)$を連続な見本道の空間とする．
-        \item $W_0:=\Brace{w\in W\mid w_0=0}$とする．これを\textbf{古典的Wiener空間}という．
-    \end{enumerate}
-    それぞれの空間には一様ノルムは入れられないので，広義一様収束位相を考え，Borel集合族によって可測空間とみなす．
-    $\R_+$なのでBanach空間ではない．
-\end{notation}
-
-\begin{definition}[Wiener measure (23)]
-    $(W_0,\B(W_0))$上の射影の族$(B_t)_{t\in\R_+},B_t(\om):=\pr_t(\om)=\om_t$がBrown運動になるような確率測度$P$を\textbf{Wiener測度}という．
-\end{definition}
-
-\begin{lemma}
-    Wiener測度は一意的に存在する．
-\end{lemma}
-\begin{proof}\mbox{}
-    \begin{description}
-        \item[存在] Brown運動の存在\ref{thm-existence-of-Brownian-motion}による．
-        ある空間$(\Om,\F,P)$上のBrown運動$B:\Om\to W$を取る．これによる像測度$P^B$は$P^B(W_0)=1$を満たすから，$W_0$への制限を取れば，これがWiener測度である．
-        \item[一意性] $W_0$の柱状集合全体$\cC$\ref{remark-cylinder-sets}上では一意的である．$\cC$は$\pi$-系・情報族であり，$\B(W_0)=\sigma(\cC)$を満たすため，一意に延長される．
-    \end{description}
-\end{proof}
-
-\subsection{特性値}
-
-\begin{lemma}[積率]
-    $B_t$の奇数次の積率は消えてきて，偶数次の積率は
-    \[E[B_t^2]=t,\quad E[B_t^4]=3t^2,\quad E[B^6_t]=15t^3,\quad,E[B^{2n+1}_t]=(2n+1)(2n-1)\cdots 3\cdot 1t^{2n+1}.\]
-\end{lemma}
-
-\begin{lemma}[共分散]
-    $\forall_{t,s\in\R_+}\;E[B_tB_s]=t\land s$．
-\end{lemma}
-
-\subsection{独立増分性}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    加法過程としての独立増分性は，martingale問題に繋がる．
-\end{tcolorbox}
-
-\begin{notation}
-    ブラウン運動$(B_t)_{t\in\R_+}$の自然な情報系を$\F^B_t:=\sigma[B_s;s\le t]$と表す．
-\end{notation}
-
-\begin{proposition}
-    $0\le s<t$に関して，$B_t-B_s$は$\F_s^B$と独立．
-\end{proposition}
-
-\begin{corollary}
-    Brown運動$(B_t)_{t\in\R_+}$は$(\F^B_t)$に関してmartingaleである．
-    その2次変分は$\brac{B}_t=t$で与えられる．
-\end{corollary}
-
-\subsection{可微分性}
-
-\begin{theorem}[Paley-Wiener-Zygmond]
-    $B_t(\om)$は$\om\dae$に対して，$t$について至る所微分不可能である．
-\end{theorem}
-
-\begin{theorem}[modulus of continuity]
-    $1/2$-Holder連続性よりやや悪い連続度を持つ．
-    \[\limsup_{t_2-t_1=\ep\searrow0,0\le t_1<t_2\le1}\frac{\abs{B_{t_2}-B_{t_1}}}{\sqrt{2\ep\log(1/\ep)}}=1\;\as\]
-\end{theorem}
-
-\begin{theorem}[重複対数の法則]
-    \[\limsup_{t\searrow0}\frac{B_t}{\sqrt{2t\log\log(1/t)}}=1\;\as\]
-\end{theorem}
-
-\section{Poisson過程}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $D$-過程であるが連続過程ではなく，見本過程が至る所ジャンプしているとき，これはPoisson型Levy過程である．
-    ここまでいかずとも，少しドリフト$0$分散$0$のBrown運動を混ぜて，ジャンプを持つ加法過程で特に基本的なPoisson過程を見る．
-\end{tcolorbox}
-
-\subsection{定義}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $\R_+$上に強さ$\lambda$のPoisson点過程を考える．その総数を整数で切ったものをPoisson過程と呼ぼう．
-\end{tcolorbox}
-
-\begin{definition}[Poisson process]
-    $(\Om,\F,P)$上の$\Z_+$-値確率過程$(N_t)_{t\in\R_+}$が\textbf{パラメータ$\lambda>0$を持つPoisson過程}であるとは，次の条件を満たすことをいう：
-    \begin{enumerate}
-        \item $N_0=0\;\as$
-        \item 任意の見本道$N_t(\om)$は右連続かつ単調増加である．
-        \item 任意の長さ$n\in\N_{>0}$の$\R_+$の狭義増加列$(t_j)_{j\in[n]},t_0=0$が定める増分の組$(N_{t_j}-N_{t_{j-1}})_{j\in[n]}$は独立で，それぞれパラメータ$\lambda(t_j-t_{j-1})$を持つPoisson分布に従う．
-    \end{enumerate}
-\end{definition}
-
-\begin{discussion}[Poisson過程の構成]
-    Kolmogorovの拡張定理により存在は保証されるが，次のように構成できる．
-    独立にパラメータ$\lambda$の指数分布\ref{def-exponential-distribution}に従う$\R_+$-値確率変数列$(S_j)$を取る：$P[S_j\ge t]=e^{-\lambda t}$．
-    なお，パラメータ$\lambda>0$の指数分布密度関数は
-    \[p(x)=\lambda e^{-\lambda x}1_{[0,\infty)}(x)\]
-    と表せる．
-    このとき
-    \[Z_0=0,\quad Z_k=\sum^k_{j=1}S_j\]
-    とするとこれは強さ$\lambda$のPoisson点過程であり，
-    $t\in\R_+$を超えた$Z_k$の数の過程
-    \[N_t:=\max\Brace{k\in\N\mid Z_k\le t}\in\o{\Z}_+\]
-    はPoisson過程となり，$P[N_t\in\Z_+]=1$．
-\end{discussion}
-
-\begin{theorem}
-    $(U_n)$を$\R$上の増加酔歩で，$T_n:=U_n-U_{n-1}\sim\Exp(c)\;(c>0)$とする．
-    これに対して，$X_t(\om):=n\;\st U_n(\om)\le t<U_{n+1}(\om)$と定めると，$X_t\sim\Pois(ct)$で，$(X_t)_{t\in\R_+}$はLevy過程である．
-    これをパラメータ$c>0$のPoisson過程という．
-\end{theorem}
-\begin{remarks}
-    $X_t$は$t$までに起こった
-    跳躍の回数で，$U_n$は$n$回目の跳躍が起こる時刻である．
-\end{remarks}
-
-\subsection{複合Poisson過程}
-
-\begin{theorem}[compound Poisson process]
-    $\sigma\in P(\R^d)$は$\sigma(\{0\})=0$を満たすとする．
-    パラメータ$c>0$のPoisson過程$(N_t)_{t\in\R_+}$と$\R^d$上の酔歩$(S_n)_{n\in\N},S_1\sim\sigma$は独立であるとする．
-    このとき，$X_t(\om):=S_{N_t(\om)}(\om)$は$\R^d$上のLevy過程である．これを\textbf{$\sigma,c$が定める複合Poisson過程}という．
-\end{theorem}
-
-\begin{definition}
-        $m=0,v=0$のときの$\psi(z)=\int_{\abs{u>0}}(e^{izu}-1)n(du)$と表せる$\mu$のクラスを，\textbf{複合Poisson分布}という．これに対応する過程を\textbf{複合Poisson過程}という．
-\end{definition}
-
-\subsection{独立増分性}
-
-\begin{proposition}
-    $0\le s<t$について，$N_t-N_s$は$\F^N_s=\sigma[N_u;u\le s]$と独立である．
-\end{proposition}
-
-\begin{corollary}
-    $(N_t-\lambda t)_{t\ge0}$は$(\F_t^N)$に関してマルチンゲールである．
-\end{corollary}
-
-\section{無限分解可能分布}
-
-\subsection{定義と特徴付け}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    確率変数$X$が，任意の$n\in\N$に対して，ある分布$\mu_n$が存在してそれに従う独立同分布変数$n$個の和で表せるとき，
-    これを無限可解であるという．
-    これは半群$P(\R)$\ref{lemma-semigroup-of-distributions}の言葉を用いて定義できる．
-\end{tcolorbox}
-
-\begin{definition}
-    1次元の分布$\mu$が\textbf{無限可解}であるとは，分布族$\{\mu_t\}_{t\in\R_+}$が存在して，$\mu$を乗法単位元として$\R_+$と同型な連続半群となることをいう：
-    \begin{enumerate}
-        \item $\R_+\to P(\R);t\mapsto\mu_t$は弱位相に関して連続．
-        \item $\forall_{t,s\in\R_+}\;\mu_t*\mu_s=\mu_{t+s}$．
-        \item $\mu_0=\delta_0$．
-        \item $\mu_1=\mu$．
-    \end{enumerate}
-\end{definition}
-
-\begin{lemma}
-    次の4条件は同値．
-    \begin{enumerate}
-        \item $\mu$は無限可解である．
-        \item $\forall_{n\in\N}\;\mu=\mu_n*\mu_n*\cdots *\mu_n$と表せる．
-        \item 任意の$\ep>0$に対し，分解$\mu=\mu_1*\cdots*\mu_n$であって，Levy距離に関して$d_L(\mu_i,\delta)<\ep$を満たすものが存在する．
-        \item $\mu_n=\mu_{n1}*\cdots*\mu_{nm(n)},\max_{k\in[m(n)]}d_L(\mu_{nk},\delta)\to0$を満たす列$(\mu_n)$が存在して，$\mu_n\to\mu$．
-    \end{enumerate}
-\end{lemma}
-
-\begin{example}
-    畳み込みについて閉じている分布族\ref{exp-reproducing-families}はみな無限可解な分布の例である．
-\end{example}
-
-\begin{example}
-    時間的に一様なLevy過程$X$は，任意の$t\in\R_+$について$X_t$は無限可解である．
-    また逆に，連続半群$(\mu_t)$に対して，これが定める一様なLevy過程が存在する．
-\end{example}
-
-\subsection{Levy分解}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    無限可解分布，連続半群$\{\mu_t\}_{t\in\R_+}$，時間的に一様なLevy過程（の法則同値類）$X$の間に，次の全単射対応がある：
-    \[\mu\xrightarrow{\mu=\mu_1}\{\mu_t\}\xrightarrow{\mu_t=P^{X(t)}}X\]
-\end{tcolorbox}
-
-\begin{theorem}[無限可解分布のLevy分解定理]
-    任意の無限可解分布$\mu$は，特性関数$\F\mu(z)$が$\F\mu(z)=e^{\psi(z)}$なる形になる．ただし，
-    \[\psi(z)=imz-\frac{v}{2}z^2+\int_{\abs{u}>0}(e^{izu}-1-i\phi(u)z)n(du),\quad m\in\R,v\ge0,\int_{\abs{u}>0}(u^2\land 1)n(du)<\infty.\]
-\end{theorem}
-
-\begin{definition}
-    Poisson分布，Cauchy分布もLevy分解を定め，これらに対応する一様Levy過程をPoisson過程，Cauchy過程という．
-\end{definition}
-
-\subsection{複合Poisson過程}
-
-\begin{lemma}
-    複合Poisson分布$\mu$は，$v^{*n}$をPoisson分布$p_\lambda$によって加重平均を取ったものである：
-    \[\mu=\sum^\infty_{n=1}e^{-\lambda}\frac{\lambda^n}{n!}\nu^{*n}.\]
-\end{lemma}
 
 \chapter{拡散過程}
 

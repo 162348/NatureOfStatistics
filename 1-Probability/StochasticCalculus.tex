@@ -1385,10 +1385,10 @@ title=]
 
 \subsection{古典的Wiener空間}
 
-\begin{definition}
+\begin{definition}\mbox{}
     \begin{enumerate}
         \item $\Om:=\Brace{\om\in C(\R_+;\R)\mid\om(0)=0}$．
-        \item $\F$を，$\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数とする．
+        \item $\F$を，$\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数とする．このコンパクト開位相について，$\Om$はFrechet空間となる．
         \item $P$をWiener測度とする．
     \end{enumerate}
 \end{definition}
@@ -1401,24 +1401,59 @@ title=]
         \item $p_t(x)=(2\pi t)^{-1/2}e^{-x^2/(2t)}$を正規分布の確率密度関数とする．
         \[P(C)=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k.\]
         が成り立ち，これの$\F$上への延長はたしかに一意的である．
-        \item 任意の$\om\in\Om$に対して，$B_t(\om):=\om(t)$と定めると，これはBrown運動である．
+        \item 任意の$\om\in\Om$に対して，$B_t(\om):=\om(t)$と見本道を定めると，この対応$\Om\to\Om$はBrown運動である．
     \end{enumerate}
 \end{proposition}
 
 \subsection{抽象的Wiener空間}
 
-\subsection{Skorokhod空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    連続でない，cadlagな見本過程も許す場合，その空間をSkorokhod空間という．
-\end{tcolorbox}
-
 \section{Brownian Filtration}
+
+\begin{definition}[natural filtration]
+    $B$を$(\Om,\F,P)$上のBrown運動とする．
+    \begin{enumerate}
+        \item $\F_t\subset\F\;(t\in\R_+)$を，確率変数族$\{B_s\}_{s\in[0,t]}$と零集合$\cN(P)$が生成する完備な$\sigma$-加法族とする．
+        \item このときの閉$\sigma$-代数の増大系$\{\F_t\}_{t\in\R_+}$を\textbf{自然な情報系}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $\F_t$が完備であることより，次の2条件が成り立つ．
+    \begin{enumerate}
+        \item $(\F_t)$-適合的過程の任意のバージョンは適合的である．
+        \item $(\F_t)$は右連続である：$\forall_{t\in\R_+}\cap_{s>t}\F_s=\F_t$．
+    \end{enumerate}
+\end{lemma}
 
 \section{Markov性}
 
+\begin{theorem}
+    Brown運動$(B_t)_{t\in\R_+}$は自然な情報系$(\F_t)$についてMarkov過程となる．
+    すなわち，
+    \[(P_tf)(x)=\int_\R f(y)p_t(x-y)dy\]
+    で定まる連続半群$(P_t)_{t\in\R_+}$について，
+    \[\forall_{f\in\L(\R)\cap l^\infty(\R)}\;\forall_{s\ge0,t>0}\;E[f(B_{s+t})|\F_s]=(P_tf)(B_s).\]
+    また，$f\in\L(\R)_+$としてもよい．
+\end{theorem}
+
+\begin{proposition}
+    連続半群$(P_t)_{t\in\R_+}$の並行移動密度
+    \[p_t(x-y)=\frac{1}{(2\pi t)^{d/2}}\exp\paren{-\frac{\abs{x-y}^2}{2t}}\]
+    は，熱方程式の初期値問題
+    \[\pp{p}{t}=\frac{1}{2}\Laplace p\;(t>0)\qquad p_0(x-y)=\delta_0(x-y)\]
+    の解である．
+\end{proposition}
+
 \section{Brown運動に付随するmartingale}
+
+\begin{theorem}
+    次の過程は$(\F_t)$-マルチンゲールである．
+    \begin{enumerate}
+        \item Brown運動$(B_t)_{t\in\R_+}$．
+        \item $(B^2_t-t)_{t\in\R_+}$．
+        \item $(\exp(aB_t-a^2t/2))_{t\in\R_+}\;(a\in\R)$．
+    \end{enumerate}
+\end{theorem}
 
 \section{強Markov性}
 
