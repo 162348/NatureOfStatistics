@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \renewcommand{\C}{\mathcal{C}}
 \renewcommand{\Z}{\mathcal{Z}}
@@ -541,7 +541,7 @@ title=]
     \end{enumerate}
 \end{notation}
 
-\chapter{セミパラメトリックモデルの基礎}
+\chapter{セミパラメトリックモデル情報限界}
 
 \begin{quotation}
     一部の特徴はパラメータ付けすることが可能なほど知見があり，一方で残りは生の関数のまんま残しておくモデルをセミパラメトリックモデルという．
@@ -601,6 +601,46 @@ Coxにより72年に導入された生存解析におけるモデル．
     なお，確率関数とは，可測関数$h\circ Z$を表す．
     内積$(h_1|h_2):=E[h_1^Th_2]$を共分散内積と呼ぶ．
 \end{example}
+
+\section{接集合と情報量}
+
+\begin{notation}
+    観測量を$X_1,\cdots$，その標本空間を$\X$とする．
+\end{notation}
+
+\subsection{スコア関数と接集合}
+
+\begin{definition}
+    微分可能な道とは，関数$(P_t)_{t\in\R_+}:[0,\ep)\to\P;P_0=\bP$であって，ある可測関数$g:\X\to\R$に対して
+    \[\int\paren{\frac{dP^{1/2}_t-d\bP^{1/2}}{t}-\frac{1}{2}gdP^{1/2}}^2\xrightarrow{t\to0}0.\]
+    を満たすことをいう．このときの$g$を\textbf{スコア関数}という．
+\end{definition}
+\begin{remark}
+    このとき，$dP^{1/2}$は測度が定める線型作用素の二乗根作用素とする．参照測度の族$(\mu_t)$に対して$\dd{P}{\mu_t}=p_{tt}$とし，
+    \[\int\paren{\frac{p_{tt}^2-p_t^2}{t}-\frac{1}{2}gp_t^{1/2}}d\mu_t\xrightarrow{t\to0}0.\]
+    と理解しても良い．
+\end{remark}
+
+\begin{definition}
+    $P$を通る全ての可微分な道$(P_t)_{t\in\R_+}$に関するスコア関数$g$全体の集合を，$P$における\textbf{接集合}といい，$\dot{\P}_P$で表す．
+\end{definition}
+
+\begin{lemma}
+    任意のスコア関数は$2$乗可積分で，$E_P[g]=0$を満たす．
+    特に，$\dot{\P}_P\subset\L^2(\X,P)$が成り立つ．
+\end{lemma}
+
+\subsection{可微分性}
+
+\begin{definition}[differentiable, efficient influence function]\mbox{}
+    \begin{enumerate}
+        \item 汎関数$\psi:\P\to\R$が$P\in\P$において接空間$\dot{\P}_P$について\textbf{可微分}であるとは，
+        \[\exists_{\dot{\psi}_P\in L^2(P)^*}\;\forall_{g\in\dot{\P}_P}\;\frac{\psi(P_t)-\psi(P)}{t}\xrightarrow{t\to0}\dot{\psi}_P(g)\]
+        を満たすことをいう．
+        \item このときの有界線型汎函数$\dot{\psi}_P:L^2(P)\to\R$は，$\dot{\P}_P$の生成する閉部分空間上では一意に定まる．これを\textbf{有効影響関数}という．
+        $\dot{\P}_P$上への射影として有効影響関数を定めるような，有界線型汎函数$\dot{\psi}_P:L^2(P)\to\R$を\textbf{影響関数}という．
+    \end{enumerate}
+\end{definition}
 
 \section{傾向スコア・マッチング}
 
@@ -944,13 +984,14 @@ title=]
 title=]
     Stein\footnote{C. Stein. Efficient nonparametric testing and estimation. Proceedings of the Third Berkeley
     Symposium on Mathematical Statistics and Probability, 1:187–195, 1956.}による．
+    とは言っても，1次元のものしか考えない場合は，真の分布$\bP$を$\ep=0$にて通る道に他ならない．
 \end{tcolorbox}
 
 \begin{definition}[parametric submodel]
     モデル$\P$内の\textbf{部分パラメトリックモデル}とは，滑らかな写像$(P_\ep)_{\ep\in\R}:\R\to\P$であって$P_0=\bP$を満たすものをいう．
 \end{definition}
 
-\begin{example}
+\begin{example}[効率限界を与える1次元部分モデル]
     任意の中心化された確率変数$h:\Z\to\R$に対して，$\exists_{M\in\R}\;\norm{h}_\infty\le M\land\exists_{\ep<1/M}\;p_\ep(z)\ge0$が成り立つとき，
     \[p_\ep(z):=dP(z)(1+\ep h(z))\]
     とおくと，これは1次元の部分パラメトリックモデルであり，次の形の影響関数を持つ：
@@ -964,10 +1005,64 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    基本的に$\P$をFrechet多様体と見て，path smoothnessと呼んでいるのであろう．
+    まずは分母の$\pp{}{\ep}\psi(P_\ep)$について考えるために，Frechet多様体上の関数$\psi:\P\to\R$が微分可能なクラスについて，その振る舞いを考える．
+    基本的に$\P$を無限次元Frechet多様体と見て，path smoothnessと呼んでいるのであろう．
 \end{tcolorbox}
 
-\section{影響関数による推定量}
+\begin{definition}[smooth / differentiable / asymptotic linear, pathwise differentiable]\mbox{}
+    \begin{enumerate}
+        \item 関数$\psi:\P\to\R$が\textbf{可微分}であるとは，任意の$\o{P}\in\P$に対して，対応する$\varphi(z;\o{P})\in\L^2(\cZ),R_2(P,\o{P})\in\R$が存在して
+        \[\psi(\o{P})-\psi(P)=\int\varphi(z;\o{P})d(\o{P}-P)(z)+R_2(P,\o{P}),\qquad E_P[\varphi(z;P)]=0,\Var_P[\varphi(z;P)]<\infty.\]
+        と表せることをいう．
+        \item 関数$\psi:\P\to\R$が\textbf{道毎に微分可能}であるとは，任意の道$\R\to\P,P_0=\bP$について，
+        \[\pp{}{\ep}\psi(P_\ep)|_{\ep=0}=\int\varphi(z;\bP)s_\ep(z)d\bP(z)\]
+        を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+\begin{remark}[influence curve]
+    この式をvon Mises展開といい，このときの関数$\varphi$を影響関数，道毎の微分，勾配，Neyman直交スコアなどと呼ぶ．
+    なお，母数についての影響関数とは別の概念であるから，この場合は\textbf{影響曲線}と呼び分けることとする．
+
+    ChernozhukovがNeyman直交性と呼んでいるのは，この道毎の微分可能性に同値．
+\end{remark}
+
+\begin{example}[道毎に微分可能な汎関数]\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}
+    可微分ならば，道毎に微分可能である．
+\end{lemma}
+
+\begin{tbox}{red}{}
+    $\P$は$\cZ=\X\times\Y$上の確率測度の空間で，従って各$P$は$L^1(\cZ)$上の汎関数であり，
+    この汎関数$P:L^1(\cZ)\to\R$の"微分"$dP:T_P(L^1(\cZ))=:\dot{\P}_P\to\R$が接空間上の有界線型汎函数として定まる．
+    接空間は$L^2(P)$の部分空間としてHilbert空間の構造も持つから，
+    この微分$dP$は積分核を持つ：$\exists_{\varphi\in\L^2(P)}\;dP(g)=(g|\varphi)_P=\int g\varphi dP$．
+    この積分核$\varphi(z;P)$を影響関数という．
+    だから幾何学的なのか．そして各接空間の内積構造も少しずつ違う，Riemann多様体のようになっている．
+    $T_P(L^1(\cZ))$は，各移動可能な方向$\o{P}\in\O(P)$によって張られる無限次元空間である．
+    これに直接言及は難しいので，現在のセミパラメトリック理論では接集合という概念が登場する．
+\end{tbox}
+
+\subsection{下界}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    汎関数$\psi:\P\to\R$に対して，$\bP$での微分の表現元$\varphi$のノルムの二乗が効率限界である．
+\end{tcolorbox}
+
+\begin{discussion}
+    部分モデルの族
+    \[p_\ep(z):=dP(z)(1+\ep h(z))\qquad \exists_{M\in\R}\;\norm{h}_\infty\le M\land\exists_{\ep<1/M}\;p_\ep(z)\ge0\]
+    のスコアは$h(z)$自身だから，下界はCauchy-Schwartzの不等式によって
+    \[\sup_{P_\ep}\frac{\psi'(P)^2}{\Var[s_\ep(Z)]}=\sup_{h}\frac{\bE[\varphi{Z;\bP}h(Z)]^2}{E[h(Z)^2]}\le\bE[\varphi(Z;\bP)^2]=\Var[\varphi(Z)].\]
+    そしてこの最右辺は達成可能であるから，この，$\varphi\in\dot{\P}_P$のノルムの二乗が効率限界であることがわかった．
+\end{discussion}
+
+\section{影響関数に基づく推定量}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -977,6 +1072,8 @@ title=]
 \begin{notation}
     モデル$\P$に滑らかさ，または，疎性の仮定をおく．
 \end{notation}
+
+\subsection{plug-in推定量の修正}
 
 \section{二重にロバストな推定}
 

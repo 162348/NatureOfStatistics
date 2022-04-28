@@ -2,8 +2,8 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -7951,6 +7951,35 @@ title=]
 \begin{proof}
     Hahn-Banachの定理による．
 \end{proof}
+
+\subsection{Orlicz空間}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 関数$\Phi:\R_+\to[0,\infty]$が\textbf{Young関数}であるとは，ある左連続な広義単調増加関数$\varphi:\R_+\to[0,\infty],\varphi(0)=0$に対して
+        \[\Phi(t)=\int^t_0\varphi(s)ds\;(t\in\R_+)\]
+        と表せることをいう．
+        \item この$\varphi$を\textbf{左導関数}という．
+        \item Young関数$\Phi$が特に$\varphi(\R_{>0})\subset\R_{>0}$を満たし，$\lim_{t\to+0}\varphi(t)=0,\lim_{t\to\infty}\varphi(t)=\infty$を満たすとき，\textbf{$N$-関数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    $(X,\mu)$を$\sigma$-有限な測度空間，$\Phi$をYoung関数とし，$\ep>0$とする．
+    \begin{enumerate}
+        \item $\Phi(\ep L):=\Brace{f\in\Map(X,\R)\;\middle|\;\int_X\Phi(\ep\abs{f(x)})d\mu<\infty}$をOrliczクラスという．
+        \item $L^\Phi(X,\mu):=\bigcup_{0<\ep<\infty}\Phi(\ep L)$を\textbf{Orlicz空間}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[Orlicz空間はBanach空間になる]\mbox{}
+    \begin{enumerate}
+        \item Orlicz空間は，Orliczクラス$\Phi(L)$を含む最小の線型空間となる．
+        \item 次はノルムを定める(Luxemburg-Nakanoノルム)
+        \[\norm{f}_{L^\Phi(X,\mu)}:=\inf\Brace{\lambda>0\;\middle|\;\int_X\Phi\paren{\frac{1}{\lambda}\abs{f(x)}}d\mu\le 1}.\]
+        \item このノルムは完備である．
+    \end{enumerate}
+\end{lemma}
 
 \section{可測性}
 

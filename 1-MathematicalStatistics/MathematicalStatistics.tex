@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1008,12 +1008,20 @@ title=]
 
 \subsection{定理と応用}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    最尤推定量は，真の分布との対数尤度の差，すなわちKL-分離度を最小化するものとして得られた．
+    経験分布の真の分布とのKL-分離度は，$n\in\N$に対応して関数を与える．これを$n\to\infty$の極限で漸近的に最小にするクラスを最小コントラスト推定量という．
+\end{tcolorbox}
+
 \begin{definition}[contrast function, minimum contrast estimator]
     $(\Theta,d)$を距離空間，$(\o{\X},\o{\A},\o{P})$を確率空間とする．
     \begin{enumerate}
-        \item \textbf{コントラスト関数}とは，関数$\o{\Psi}:\o{\X}\times\Theta\to(-\infty,\infty]$をいう．
+        \item \textbf{コントラスト関数}とは，関数$\o{\Psi}:\o{\X}\times\Theta\to(-\infty,\infty]$であって，次を満たすものをいう：
+        \[\forall_{\theta\in\Theta}\quad E_{\theta_0}[\o{\Psi}(x,\theta)]\ge E_{\theta_0}[\o{\Psi}(x,\theta_0)].\]
         \item これを最小にする写像$\wt{\theta}:\o{\X}\to\Theta$を\textbf{最小コントラスト推定量}という．
     \end{enumerate}
+    以降，コントラスト関数の列$(\o{\Psi}_n)$を漸近的に最小にする列$(\wt{\theta}_n)$を考える．
 \end{definition}
 
 \begin{theorem}[最小コントラスト推定量が強一致性を持つための十分条件]
@@ -1072,38 +1080,62 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Huberが1964年に最尤推定を一般化し，"maximum likelihood-type"の頭文字から$M$-推定量のクラスを定めた．\footnote{\url{https://en.wikipedia.org/wiki/M-estimator}}
+    最尤推定量は対数尤度関数を最大化する推定量で，最小コントラスト推定量は真の分布との分離度を最小化する推定量であった．
+    このように，損失関数または効用関数（２つの概念を併せて目的関数）の極値点として与えられる推定量は，
+    モデルが微分可能であるとき，これらは導関数の零点として得られる推定量として一般化できる．
+    これを$M$-推定量という．
+    \footnote{この意味での推定量を$Z$-推定量とし，$M$-推定量は効用関数の最大化で得るものと狭義に解釈することもある．}
+
+    Huberが頑健推定の動機で1964年に最尤推定を一般化し，"maximum likelihood-type"の頭文字から$M$-推定量のクラスを定めた．\footnote{\url{https://en.wikipedia.org/wiki/M-estimator}}
+    実はこれは可微分構造を持つ正則なモデルに関して最適でもある．
     このセミパラメトリックな一般化を経験尤度法(Owen 1988)という．
 \end{tcolorbox}
 
-\subsection{定義}
+\subsection{定義と例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $M$-推定量はロバスト推定の代表である．
 \end{tcolorbox}
 
-\begin{definition}[estimating function / equation]
+\begin{definition}[estimating function / objective function]
     $\Theta\subset\R^p$とする．関数$\psi:\X\times\Theta\to\R^p$に対して，$x_1,\cdots,x_n$が定める経験分布についての平均を
     \[\o{\psi_n}(\theta)=\o{\psi_n}(x,\theta)=\frac{1}{n}\sum^n_{j=1}\psi(x_j,\theta)\]
     とおき，推定方程式$\o{\psi_n}(\wh{\theta_n})=0$の零点となるような，未知パラメータの推定量$\wt{\theta_n}$を\textbf{$M$-推定量}という．
-    $\o{\psi_n}$を\textbf{目的関数}または\textbf{効用関数}，$\psi$を\textbf{推定関数}という．
+    $\psi$またはその標本平均$\o{\psi_n}$を\textbf{目的関数}または\textbf{推定関数}という．
 \end{definition}
 
 \begin{example}\mbox{}
     \begin{enumerate}
         \item 最尤推定量は，スコア関数を推定関数とする$M$-推定量であり，尤度方程式$S_n(x,\theta)=\partial_\theta l(\theta,x)=0$の零点として特徴付けられる．
         \item 最小コントラスト推定量は，$\partial_\theta\Psi_n(\theta)=0$なる推定関数に対応する$M$-推定量である．
+        \item 非線形最小二乗法は，最小二乗$\rho(u)=u^2/2$を損失関数として，これを最小化する$M$-推定量である．このときの推定関数は，この損失関数の微分なので，$\psi(x)=x$である．なお，この$\psi$の代わりに，剪断するHuberの$\psi$（が定める損失関数）を用いたものを，頑健回帰という：
+        \[\psi(u_i):=\begin{cases}
+            u_i,&\abs{u_i}\le H,\\
+            H,&u_i>H,\\
+            -H,&u_i<H.
+        \end{cases}\]
+        このときの$H$を\textbf{調整定数}(tuning constant)という．
     \end{enumerate}
 \end{example}
 
 \subsection{影響関数}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Huber and Ronchetti (2009)\cite{Huber} p.47．
+    Hampel et al. (1986) p.85\cite{Hampel}
+    $M$-推定量の影響関数は，推定関数$\psi$の定数倍になる．
+    特に最尤推定量について言えば，スコア関数の定数倍となる．
+    また，$\Var[\IF^2]$が漸近分散となる．
+    最尤推定量について，これはFisher情報量である．
+\end{tcolorbox}
+
 \begin{theorem}
-    
+    \[\IF(x;P,\theta)=\]
 \end{theorem}
 
-\section{推定量の漸近正規性}
+\section{$M$-推定量の漸近正規性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1168,7 +1200,7 @@ title=]
     最尤法は一般化モーメント法の特殊な場合とみなせる．
 \end{definition}
 
-\section{LeCamのワンステップ推定量}
+\section{LeCamのワンステップ更新による漸近有効推定量の構成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=一致推定量さえ見つかれば，漸近分散は逆Fisher情報行列まで改善できる標準的算譜がある]
@@ -1198,14 +1230,14 @@ title=一致推定量さえ見つかれば，漸近分散は逆Fisher情報行�
     このとき，ワンステップ推定量$\wh{\theta}_n$に対して，定理\ref{thm-asymptotic-normality}と同様の結果が成り立つ．
 \end{theorem}
 
-\section{$M$-推定量の存在}
+\section{Cramerの$M$-推定量の構成}
+
+\section{頑健推定}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Cramerによる．
+    1964年にHuberによって提唱された．
 \end{tcolorbox}
-
-\section{頑健推定}
 
 \subsection{影響関数}
 
@@ -1246,8 +1278,15 @@ title=]
     ある定数$M\in\R$が存在して，$\Gamma_\theta:=\Gamma(P_\theta)$について$\abs{\Gamma^{-1}_\theta\psi(x,\theta)}\le M$を満たす$\psi$が定める$M$-推定量を\textbf{$B$-ロバスト推定量}という．
 \end{definition}
 
-\begin{example}
+\begin{example}[最尤推定]
     最尤推定量は，漸近分散が最小という意味では最適であるが，一般に影響関数は有界にはならない．
+    特に，$Y$方向の誤差について頑健であるが，$X$方向の誤差については有界ではない．
+    ここを補おうとするのが，\textbf{有界影響推定}またはGM推定である．
+\end{example}
+
+\begin{example}[]
+    OLSによって係数を推定した回帰モデルは，崩壊点(breakdown point) $1/n$を持つ非頑健なモデルである．
+    そこで，外れ値＝推定値に高い影響力を持つ影響点を検出する手法「回帰診断」があり，外れ値に対するウェイトを制御することで頑健なパラメータ推定を行うのが頑健回帰となる．
 \end{example}
 
 \subsection{Fisherの一致性}
@@ -1260,6 +1299,14 @@ title=]
 \begin{definition}[Fisher consistency]
     写像$T:P(\X)\to\Theta$が，モデル$(P_\theta)$について，$T(P_\theta)=\theta$を満たすとき，\textbf{Fisher一致性を満たす}という．
 \end{definition}
+
+\section{頑健回帰推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Andersen \textit{Modern Methods for Robust Regression} (2008)
+    
+\end{tcolorbox}
 
 \section{尤度比検定}
 
@@ -2035,6 +2082,10 @@ title=]
     van der Vaart - Asymptotic Statistics
     \bibitem{Helmut Strasser}
     Helmut Strasser "Mathematical Theory of Statistics"
+    \bibitem{Hampel}
+    Hampel - Robust Statistics - 2005
+    \bibitem{Huber}
+    Huber and Ronchetti - Robust Statistics - 2009
 \end{thebibliography}
 
 \end{document}
