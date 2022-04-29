@@ -610,23 +610,41 @@ Coxにより72年に導入された生存解析におけるモデル．
 
 \subsection{スコア関数と接集合}
 
-\begin{definition}
-    微分可能な道とは，関数$(P_t)_{t\in\R_+}:[0,\ep)\to\P;P_0=\bP$であって，ある可測関数$g:\X\to\R$に対して
-    \[\int\paren{\frac{dP^{1/2}_t-d\bP^{1/2}}{t}-\frac{1}{2}gdP^{1/2}}^2\xrightarrow{t\to0}0.\]
-    を満たすことをいう．このときの$g$を\textbf{スコア関数}という．
-\end{definition}
-\begin{remark}
-    このとき，$dP^{1/2}$は測度が定める線型作用素の二乗根作用素とする．参照測度の族$(\mu_t)$に対して$\dd{P}{\mu_t}=p_{tt}$とし，
-    \[\int\paren{\frac{p_{tt}^2-p_t^2}{t}-\frac{1}{2}gp_t^{1/2}}d\mu_t\xrightarrow{t\to0}0.\]
-    と理解しても良い．
-\end{remark}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    LeCunによる概念．
+    全てを$\L^2_*(\X,P)$の中で考える．
+\end{tcolorbox}
 
-\begin{definition}
-    $P$を通る全ての可微分な道$(P_t)_{t\in\R_+}$に関するスコア関数$g$全体の集合を，$P$における\textbf{接集合}といい，$\dot{\P}_P$で表す．
+\begin{notation}
+    \[\L^2_*(\X,P):=\Brace{g\in\L^2(\X,P)\mid E_P[g]=0}.\]
+\end{notation}
+
+\begin{definition}[$P$-path]
+    $\bP\in\P$に対して，$\bP$-道とは，$(P_t)_{t\in\R_+}:[0,\ep)\to\P;P_0=\bP$をいう．
+\end{definition}
+
+\begin{definition}[differentiability of path, score function]
+    ($L^2$-)微分可能な$P$-道とは，$P$-道$(P_t)_{t\in[0,\ep)}$であって，
+    \begin{enumerate}
+        \item ある可測関数$g\in\L(\X,P)$に対して
+        \[\int\paren{\frac{dP^{1/2}_t-dP^{1/2}}{t}-\frac{1}{2}gdP^{1/2}}^2\xrightarrow{t\to0}0.\]
+        を満たすことをいう．このとき，$dP^{1/2}$は測度が定める線型作用素の二乗根作用素とする．
+        すると，$g$は中心化された$P$-2乗可積分関数$g\in\L^2_*(\X,P)$となることが必要．\cite{vanderVaart Semiparametric Theory}
+        \item 参照測度の族$(\mu_t)$に対して$\dd{P}{\mu_t}=p_{tt}$とし，
+        \[\int\paren{\frac{p_{tt}^2-p_t^2}{t}-\frac{1}{2}gp_t^{1/2}}^2d\mu_t\xrightarrow{t\to0}0.\]
+        と理解しても良い．
+    \end{enumerate}
+    このときの$g$を\textbf{スコア関数}や\textbf{道毎の微分}という．
+\end{definition}
+
+\begin{definition}[tangent set / space]
+    $P$を通る全ての可微分な道$(P_t)_{t\in\R_+}$に関するスコア関数$g$全体の集合を，$P$における\textbf{接集合}といい，$\dot{\P}_P$\cite{vanderVaart Semiparametric Theory}または$T_P(\P)$\cite{Pfanzagl}で表す．
+    ほとんどの場合，これは閉部分空間となる．
 \end{definition}
 
 \begin{lemma}
-    任意のスコア関数は$2$乗可積分で，$E_P[g]=0$を満たす．
+    任意のスコア関数は$2$乗可積分で，$E_P[g]=0$を満たす\cite{vanderVaart Semiparametric Theory}．
     特に，$\dot{\P}_P\subset\L^2(\X,P)$が成り立つ．
 \end{lemma}
 
@@ -1061,6 +1079,9 @@ title=]
     \[\sup_{P_\ep}\frac{\psi'(P)^2}{\Var[s_\ep(Z)]}=\sup_{h}\frac{\bE[\varphi{Z;\bP}h(Z)]^2}{E[h(Z)^2]}\le\bE[\varphi(Z;\bP)^2]=\Var[\varphi(Z)].\]
     そしてこの最右辺は達成可能であるから，この，$\varphi\in\dot{\P}_P$のノルムの二乗が効率限界であることがわかった．
 \end{discussion}
+\begin{remark}
+    このときの下界を達成するサブモデルを，least favorableまたはhardestという\cite{Asymptotic Statistics}．
+\end{remark}
 
 \section{影響関数に基づく推定量}
 
@@ -4446,6 +4467,8 @@ title=]
     Van der Vaart, A. W. (2000). Asymptotic statistics, volume 3. Cambridge university press.
     \bibitem{Tsybakov}
     Tsybakov - Introduction to Nonparametric Estimation
+    \bibitem{vanderVaart Semiparametric Theory}
+    Semiparametric Theory
 \end{thebibliography}
 
 \end{document}

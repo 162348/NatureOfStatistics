@@ -1435,6 +1435,81 @@ title=]
     このとき，漸近分布は$\chi^2(k-1)$である．
 \end{example}
 
+\section{局所漸近正規性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+パラメータのスケーリングの違いを除いて，局所漸近正規なモデルはあるガウスモデルに収束する．
+\end{tcolorbox}
+
+\begin{discussion}
+    ある点$\theta_0\in\R^k$に注目して，その周りの
+    局所パラメータを$h:=\sqrt{n}(\theta-\theta_0)$とすると，元の統計的実験$(\X^n,\A^n,(P_\theta^n)_{\theta\in\R^k})$は，
+    $(\X^n,\A^n,(P^n_{\theta_0+h/\sqrt{n}})_{h\in\R^k})$と変換される．
+    するとこの統計的実験は，元の統計的実験$\theta\mapsto P_\theta$が滑らかであるとき，
+    $(\X^n,\A^n,(N(h,I_{\theta_0}^{-1}))_{h\in\R^k})$に漸近する！
+\end{discussion}
+
+\subsection{尤度の拡張}
+
+\begin{discussion}
+    $P_\theta\ll\mu$とし，$p_\theta:=\dd{P_\theta}{\mu}$と表す．
+    ここでは$\theta,h\in\R$のような記法をするが，$k$次元としても$\dot{l}(x)$が$k$ベクトルになり，掛け算が内積または二次形式になるのみである．
+    $l_\theta(x):=\log p_\theta(x)\in C^2(\X)$と仮定すると(この仮定は強すぎるが)，Taylorの定理より，
+    \[\log P_{\theta+h}(x)=l_\theta(x)+\dot{l}_\theta(h)+\frac{1}{2}\ddot{l}_\theta(x)h^2+o_x(h^2).\quad h\in\R^k,h\to0\]
+    \[\log\frac{p_{\theta+h}}{p_\theta}(x)=h\dot{l}_\theta(x)+\frac{1}{2}h^2\ddot{l}_\theta(x)+o_x(h^2).\quad h\in\R^k,h\to0\]
+    ここで尤度比が現れる．特に$x$に観測値$X_1,\cdots,X_n$を代入し，$h$を$\frac{h}{\sqrt{n}}$として$n\to\infty$の極限を考えると，
+    \[\log\prod_{i=1}^n\frac{p_{\theta+h/\sqrt{n}}}{p_\theta}(X_i)=\frac{h}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)+\frac{1}{2}\frac{h^2}{n}\sum^n_{i=1}\ddot{l}_\theta(X_i)+\sum_{i=1}^no_x\paren{\frac{h^2}{n}}\quad(n\to\infty)\]
+    ここで，$E_\theta[\dot{l}_\theta]=0,-E_\theta[\ddot{l}_\theta]=E_\theta[\dot{l}^2_\theta]=I_\theta$だから，
+    \begin{enumerate}
+        \item $\Delta_{n,\theta}:=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)\in\R$とおくと$\Delta_{n,\theta}\xrightarrow{d}N(0,I_\theta)$（中心極限定理）．
+        \item 大数の法則より$\frac{1}{n}\sum^n_{i=1}\ddot{l}_\theta(X_i)\xrightarrow{d}-I_\theta$．
+        \item 3項目はおそらく確率収束（仮定をうまく設定すれば良い）．
+    \end{enumerate}
+    よって，
+    \[\log\prod_{i=1}^n\frac{p_{\theta+h/\sqrt{n}}}{p_\theta}(X_i)=h\Delta_{n,\theta}-\frac{1}{2}I_\theta h^2+o_{p_\theta}(1)\]
+    が成り立つ．
+    実は，必要な過程は，$L^2$-微分の言葉で簡潔に書ける．
+\end{discussion}
+
+\begin{theorem}[局所漸近正規性の十分条件]
+    モデル$(p_\theta)_{\theta\in\Theta\osub\R^k}$は，
+    密度関数の平方根$\theta\mapsto\sqrt{p_\theta}$が$L^2$-微分可能であるとする：
+    \[\exists_{\dot{l}\in\L^2(\X)}\quad\int\paren{\sqrt{p_{\theta+h}}-\sqrt{p_\theta}-\frac{1}{2}h^\top \dot{l}_\theta\sqrt{p_\theta}}^2d\mu=o(\norm{h}^2)\quad(h\to0).\]
+    なお，通常の意味で微分可能であった場合は，
+    \[\frac{1}{2}\dot{l}_\theta\sqrt{p_\theta}=\pp{\sqrt{p_\theta}(x)}{\theta}\quad\Leftrightarrow\quad \dot{l}_\theta=\pp{}{\theta}\log p_\theta(x)\]
+    が必要であることに注意．このとき，
+    \begin{enumerate}
+        \item $E_\theta[\dot{l}]=0\in\R^k$かつ$I_\theta:=E_\theta[\dot{l}_\theta\dot{l}_\theta^\top]\in M_k(\R)$が定まる．
+        \item 任意の収束列$\{h_n\}\subset\Theta,h_n\to h$について，$\Delta_{n,\theta}:=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)\in\R^k$とすると，
+        \[\log\prod_{i=1}^n\frac{p_{\theta+h_n/\sqrt{n}}}{p_\theta}(X_i)=h^\top\Delta_{n,\theta}-h^\top\frac{1}{2}I_\theta h+o_{p_\theta}(1)\]
+    \end{enumerate}
+\end{theorem}
+
+\subsection{正則実験への収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    上の「局所漸近正規性」の意味を，統計的実験列の収束概念以前の状態で考えたい．
+
+\end{tcolorbox}
+
+\begin{discussion}
+    統計的実験が収束するとき，元の実験で弱収束する統計量は，極限実験での弱収束先に法則同等である．
+\end{discussion}
+
+\begin{definition}
+    ランダム化された統計量$T=T(X,U)$とは，$U\sim U([0,1])$にも依存する統計量をいう．
+\end{definition}
+
+\begin{theorem}[局所漸近正規性の十分条件]
+    モデル$(p_\theta)_{\theta\in\Theta\osub\R^k}$は，
+    密度関数の平方根$\theta\mapsto\sqrt{p_\theta}$が$L^2$-微分可能であり，Fisher情報行列$I_\theta:=E_\theta[\dot{l}_\theta\dot{l}_\theta^\top]\in\GL_k(\R)$が可逆であるとする．
+    実験$(P_{\theta+h/\sqrt{n}})_{h\in\R^k}$における統計量$T_n:\X^n\to\R^k$が，
+    任意の$P_{\theta+h/\sqrt{n}}\;(h\in\R^k)$について弱収束するとき，
+    実験$(N(h,I^{-1}_{\theta}))_{h\in\R^k}$上のランダム化された統計量$T:=T(X,U):\X\times[0,1]\to\R^k$が存在して，任意の$h$について同じ収束先へ分布収束する．
+\end{theorem}
+
 \section{尤度比確率場の局所漸近構造}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1558,6 +1633,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     定理の$Z_n(u;\theta_0)$の展開が成り立つとき，すなわち，G1,G2が成り立つとき，統計的実験$(\X^n,\A^n,\{P^n_\theta\}_{\theta\in\Theta})$は$\theta_0$において\textbf{局所漸近正規}であるという．
+
     対応$\R^p\ni u\mapsto Z_n(u;\theta_0)\in C(\R^p)$を尤度比確率場という．
     Ibragimov HasMinskiiは，この関数の$C(\R^p)$上での弱収束を示した：$Z_n(-;\theta_0)\xrightarrow{d}Z(-;\theta_0)$．
 \end{tcolorbox}
