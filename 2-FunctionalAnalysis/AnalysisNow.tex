@@ -2,8 +2,8 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -8509,8 +8509,8 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $X$上のRadon積分の生成する複素線型空間を考えたい．これはRadon電荷$(C_c(X))^*$となる．
-    これはHilbert空間上の作用素の分解（極表示）と同じ働きを持つ．
+    $X$上のRadon積分の生成する複素線型空間を考えたい（Radon積分を実軸として，偏角成分を加えたい）．これはRadon電荷となり，Radon電荷全体の空間は$(C_c(X))^*$の真の部分集合となる．
+    Radon電荷に対する極分解を与え，この系としてJordan分解が得られることを見る．
 \end{tcolorbox}
 
 \begin{definition}[Radon charge]
@@ -8518,14 +8518,14 @@ title=]
     \[\forall_{f\in C_c(X)_+}\;\sup\Brace{\abs{\Phi(g)}\ge0\mid g\in C_c(X),\abs{g}\le f}<\infty\]
     を満たすものとする．
 \end{definition}
-\begin{lemma}
+\begin{lemma}[Radon電荷の抽象的特徴付け]
     $\tau$を弱位相，すなわちセミノルム$f\mapsto\Abs{\int f}$の誘導する位相として，位相線型空間$(C_c(X),\tau)$の双対空間が，Radon電荷全体のなす空間である．
 \end{lemma}
 \begin{proof}
     命題\ref{prop-separating-space-of-functionals}より．
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}[Radon電荷の極分解]
     $X$を$\sigma$-コンパクトな局所コンパクトハウスドルフ空間，$\Phi:C_c(X)\to\R$をRadon電荷とする．
     このとき，Radon積分$\int$とBorel関数$u\in\B(X)$が存在して，$\abs{u}=1$と$\Phi=\int\cdot u\;\paren{\int\text{-}\ae}$を満たす．
 \end{theorem}
@@ -8541,7 +8541,7 @@ title=]
 
 \begin{definition}[total variation]\mbox{}
     \begin{enumerate}
-        \item 定理から得られる積分$\int$を\textbf{全変動}といい，$\abs{\Phi}$で表す．
+        \item $\Phi$の極分解から得られるRadon積分$\int$を\textbf{全変動}といい，$\abs{\Phi}$で表す．
         $u$は「符号」にあたり，これは零関数の差を除いて一意である．
         \item Radon電荷$\Phi$が\textbf{有限}であるとは，全変動$\abs{\Phi}$が有限なRadon積分を定めることをいう．有限なRadon電荷全体の空間を$M(X)$で表し，$\norm{\Phi}=\abs{\Phi}(1)$をノルムとする．
     \end{enumerate}
@@ -8550,7 +8550,7 @@ title=]
     全変動$\abs{\Phi}$は，
     \[\forall_{f\in C_c(X)}\;\abs{\Phi(f)}\le\int\abs{f}\]
     を満たすRadon積分$\int$の中で最小のものとして特徴付けられる．
-    実電荷$\Phi$について，全変動とは$\abs{\Phi}=\Phi_++\Phi_-$に他ならない．
+    実電荷$\Phi$について，全変動とは$\abs{\Phi}=\Phi_++\Phi_-$に他ならず，well-definedである．
 \end{remark}
 
 \begin{proposition}[Riesz-Markov representation theorem]\label{prop-Riesz-Markov-3}
