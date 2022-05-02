@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1315,20 +1315,38 @@ title=]
 \end{tcolorbox}
 
 \begin{notation}
-    推定関数$\Psi:\X\times\Theta\to\R^p$に対して，写像$T:P(\X)\to\Theta$は$\int_\X\psi(x,T(P))P(dx)=0$を満足すると仮定する．
-    このとき，$P$が経験測度（デルタ測度の凸結合）であるとき，$\wt{\theta_n}:=T(P_n)$は推定関数$\Psi$に関する$M$-推定量である．
-    写像$T:P(\X)\to\Theta$はその延長である．
-    デルタ測度は凸集合$P(\X)$の極点であり，Krein-Milmanの定理より，その凸包は$P(\X)$上弱稠密であることに注意．
-    もし$T$が有界線型作用素ならば，一意的な連続延長がある．
+    推定関数$\psi:\X\times\Theta\to\R^p\;(\Theta\osub\R^p)$に対して，汎関数$T:P(\X)\to\Theta$は推定方程式$\forall_{P\in\P}\;\int_\X\psi(x,T(P))P(dx)=0$を満足すると仮定する．
+    すると経験分布$\bP_n$について，$\wt{\theta_n}:=T(\bP_n)$は推定関数$\psi$に関する$M$-推定量である．
+    このようにして，経験分布の汎関数として得られる推定量のクラスを考える．
+
+    推定関数は$\theta$について可微分とし，
+    \[\Gamma(P):=-\int_\X\partial_\theta\psi(y,T(P))P(dy)\quad\in M_p(\R)\]
+    とする．
 \end{notation}
+\begin{remark}[汎関数$T:\P\to\R$の描像は？]
+    $\P$の極点の凸包上での値は$M$-推定量を与え，極点の凸包は$\P$上弱稠密である．
+    したがって$T(P)$の分布は一意に定まる(?)
+\end{remark}
 
 \begin{definition}\mbox{}
     \begin{enumerate}
         \item 確率測度$P\in P(\X)$に対して，$x\in\X$が定めるデルタ測度との$\ep\in[0,1]$が定める凸結合を$P^x_\ep:=(1-\ep)P+\ep\delta_x\in P(\X)\;(x\in\X,\ep\in[0,1])$と定める．
-        \item $T$について，$P\in P(\X)$における$\ep\in[0,1]$に関する微分係数$\IF(x;T,P):=\dd{}{\ep}T(P^x_\ep)|_{\ep=0}=\Gamma(P)^{-1}\psi(x,T(P))$を関数$\X\to\Theta$とみたとき，これを\textbf{$T$の$P$における影響関数}という．
+        \item $T$について，$P\in P(\X)$における$\ep\in[0,1]$に関する微分係数$\IF(x;T,P):=\dd{}{\ep}T(P^x_\ep)|_{\ep=0}(=\Gamma(P)^{-1}\psi(x,T(P)))$を関数$\X\to\Theta$とみたとき，これを\textbf{$T$の$P$における影響関数}という．
         これは，各点$x\in\X$に観測を得た場合に，$M$-推定量を与える写像$T$がどれほど影響を受けるかを表す指標とみなせる．
     \end{enumerate}
 \end{definition}
+
+\begin{lemma}[$M$-推定量の影響関数]
+    $T$が前述条件を満たす$M$推定量を与える汎関数であり，$\forall_{(x,\theta)\in\X\times\Theta}\;\abs{\partial_\theta\psi}$は可積分であるとする．
+    \[\IF(x;T,P)=\Gamma(P)^{-1}\psi(x,T(P)),\qquad\Gamma(P):=-\int_\X\partial_\theta\psi(y,T(P))P(dy)\]
+    特に，$p=1$のとき，推定関数$\psi(x,T(P))\in\R^p$の定数倍である．
+\end{lemma}
+\begin{proof}
+    推定方程式より
+    \[0=\int_\X\psi(x,T(P+\ep\delta_x))(P+\ep\delta_x)(dx)=\int_\X\psi(x,T(P+\ep\delta_x))P(dx)+\ep\psi(x,T(P+\ep\delta_x))\]
+    が成り立つ．この両辺を$\ep$で微分して$\ep=0$を考えると，関数$\forall_{(x,\theta)\in\X\times\Theta}\;\abs{\partial_\theta\psi}$は可積分であるとすると，微分と積分とは交換可能であるから，
+    \[0=\paren{\int_\X\partial_\theta\psi(x,T(P))P(dx)}\cdot\left.\dd{}{\ep}T(P+\ep\delta_x)\right|_{\ep=0}+\psi(x,T(P)).\]
+\end{proof}
 
 \begin{example}
     正規母集団$N(\theta,1)$の位置母数$\theta$に対する最尤推定量$\wt{\theta_n}$の影響関数は$\IF(x;T,N(\theta,1))=x-\theta$となる．したがって，$x\in\R$の絶対値が大きいほど，最尤推定量への影響が大きいため，ここに異常値が来ると，大きく推論に影響する危険がある．
@@ -1339,6 +1357,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     頑健統計では，外れ値による影響がなるべく小さい$M$-推定量を構成することを考える．
+    $M$-推定量の影響関数には推定関数$\psi$が明示的に出現するため，頑健性の考察がしやすい．
 \end{tcolorbox}
 
 \begin{definition}[bias robust estimation]
@@ -1929,6 +1948,248 @@ title=]
     \[\forall_{\gamma,\delta>0}\quad\liminf_{n\to\infty}\sup_{\theta:\abs{\theta-\theta_0}<\delta}E_\theta\Square{\abs{\sqrt{n}(T_n-\theta)}^\gamma}\ge E[\abs{I(\theta_0)^{-1}\Delta(\theta_0)}^\gamma].\]
 \end{theorem}
 
+\section{射影}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    統計量の漸近分布を求める方法の1つに，既に漸近分布が知れている確率変数と漸近同等であることを示す方法がある．
+    このとき，Slutskyの補題の簡単な系から，極限法則が一致することが従う．
+
+    すると，何で近似するかという問題が生じるが，射影は$L^2$-近似であることを考えると，この言葉を使うのが良かろう．
+\end{tcolorbox}
+
+\subsection{Hajekの射影}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hajekの射影は，ある確率変数$X_1,\cdots,X_n$と，それぞれの一変数関数$g_i$との合成$g_1(X_1),\cdots,g_n(X_n)$の形で$T$を最もよく近似する元である．
+\end{tcolorbox}
+
+\begin{notation}
+    \[S:=\Brace{\sum^n_{i=1}g_i(X_i)\in L^2(\Om)\;\middle|\;\forall_{i\in[n]}\;g_i(X_i)\in L^2(\Om)}\]
+    とおく．
+\end{notation}
+
+\begin{lemma}[Hajek projection]
+    $X_1,\cdots,X_n$は独立とする．
+    このとき，任意の$T\in L^2(\Om)$の$S$への射影は
+    \[\pr_S(T)=\sum_{i=1}^nE[T|X_i]-(n-1)E[T]\]
+    と表せる．
+\end{lemma}
+
+\begin{remarks}
+    特に$X_1,\cdots,X_n$が同分布に従うとし，$T=T(X_1,\cdots,X_n):\Om\to\X^n\to\R$を対称な可測関数とする．
+    このとき，条件付き期待値は
+    \[E[T|X_i=x]=E[T(x,X_2,\cdots,X_n)]\]
+    と簡略化されるから，
+    \[S':=\Brace{\sum^n_{i=1}g(X_i)\in\L(\Om)\;\middle|\;g\in\L(\X)}\]
+    上への射影と一致する：$\pr_S=\pr_{S'}$．
+\end{remarks}
+
+\subsection{Hoeffdingの分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一変数関数$g_i:\X\to\R$を用いるのではなく，より変数を多くして，$X_1,\cdots,X_n$の間の複雑な依存関係も表現できるようにすることで，近似の精度を上げることを考える．
+    これは，初めは$(H_{i})_{i\in[n]}$の線型結合で表せる元の空間だったものを，どんどん互いに直交する部分空間を追加することで大きくしていく算譜である．
+\end{tcolorbox}
+
+\begin{notation}
+    任意の$A\in P([n])$に対して，
+    \[H_A:=\Brace{g_A(X_i:i\in A)\in L^2(\Om)\mid g_A\in\L(\X^{\abs{A}}),\;\forall_{B\in P([n])}\;\abs{B}<\abs{A}\Rightarrow E[g_A(X_i:i\in A)|X_j:j\in B]=0}\]
+    と定める．
+\end{notation}
+
+\begin{lemma}
+    各$\{H_A\}_{A\in P(n)}\subset L^2(\Om)$は組ごとに直交している．
+\end{lemma}
+
+\begin{theorem}
+    $X_1,\cdots,X_n$を独立な確率変数，$T\in L^2(\Om)$とする．
+    \begin{enumerate}
+        \item $\pr_{H_A}(T)=\sum_{B\in P(A)}(-1)^{\abs{A}-\abs{B}}E[T|X_i:i\in B]$．
+        \item $\forall_{B\in P(A)}\;T\perp H_B$ならば，$E[T|X_i:i\in A]=0$．
+        \item $\bigoplus_{B\in P(A)}H_B$は，$(X_i)_{i\in A}$の関数で2乗可積分であるものの全体を含む部分空間となる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{remarks}
+    特に$X_1,\cdots,X_n$が同分布に従うとし，$T=T(X_1,\cdots,X_n):\Om\to\X^n\to\R$を対称な可測関数とする．
+    このとき，Hoeffding分解は
+    \[T=\sum^n_{r=0}\sum_{\abs{A}=r}g_r(X_i:i\in A),\qquad g_r(x_1,\cdots,x_r)=\sum_{B\in P[r]}(-1)^{r-\abs{B}}E[T(x_i\in B,X_i\notin B)]\]
+    となり，各項$\sum_{\abs{A}=r}g_r(X_i:i\in A)$は退化した核を持った$r$次の$U$-統計量で，全ての項は互いに直交だから，分散は容易に計算できる：
+    \[\Var[T]=\sum_{r=1}^n \begin{pmatrix}n\\r\end{pmatrix}E[g^2(X_1,\cdots,X_r)].\]
+\end{remarks}
+
+
+
+\section{$U$-統計量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $U$-統計量の理論はHoeffding 1948による．
+    $U$-統計量は最小分散不偏推定量の計算中に自然に現れる．
+
+    $r=1$のとき，核$h$を用いた標本平均の一般化となっている．
+    すなわち，$U_{1,n}=\bP h(X)$．
+    これをさらに$r>1$とすると，
+    基本的にはresampling法の一種で，標本から大きさ$r$の再抽出をして平均を取る．
+    これは標本分割に繋がるのではないか？
+\end{tcolorbox}
+
+\begin{notation}
+    $I_n=[n],(\X,\A)$を可測空間，$X_j\;(j\in I_n)$を独立同分布に従う$\X$-値確率変数，$h:\X^r\to\R$を対称な可測関数とする．
+    部分集合$A:=\{i_1,\cdots,i_r\}\subset I_n$に対して，$X_A=(X_{i_1},\cdots,X_{i_r})$と略記すると，対称性から$h(X_A):=h(X_{i_1},\cdots,X_{i_r})$と表して良い．
+    すなわち，関数$h(X_{-},\cdots,X_{-})$は$I_n^r\to\R$として定めたが，本質的には$[I_n]^r\to\R$である．
+\end{notation}
+
+\subsection{対称な関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対称な関数の取り扱いと表示は仰々しいが，要は対称関数$h:\X^r\to\R$は集合$[\X]^r$上の関数$f:[\X]^r\to\R$と一対一対応する．
+    そして$[\X]^r$なる対象は，$\X$の点から$r$個の抽出として自然に出現する．
+\end{tcolorbox}
+
+\begin{definition}
+    $E[\abs{h(X_A)}]<\infty$とする．部分集合$B\subset A$に対して，
+    \[h(X_A)_B:=\sum_{C:C\subset B}(-1)^{\abs{B}-\abs{C}}E[h(X_A)|X_C]\]
+    とする．$E[h(X_A)|X_{\emptyset}]:=E[h(X_A)]$とした．
+\end{definition}
+
+\begin{lemma}[反転公式]
+    $h(X_A)=\sum_{B:B\subset A}h(X_A)_B$．
+\end{lemma}
+
+\subsection{定義と例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標本$n$個のうち$r$個を選んで，その$r$個の部分集合$A,\abs{A}=r$に対応する値$h(X_A)$の標本平均として得られる統計量のクラスを，$U$-統計量という．
+
+    $\theta:=E[h(X_1,\cdots,X_r)]$の推定を考えると，当然$h$自身は$\theta$の不偏推定量であるが，$h$を核とする$U$-統計量$U_{r,n}$は再び不偏推定量で，より小さい漸近分散を持つ(また漸近正規である)．
+    実際，$U_{r,n}$は$h$の射影(条件付き期待値)となっており，射影はノルム減少的であるから分散を減らすのである．
+\end{tcolorbox}
+
+\begin{definition}[U-statistic with kernel $h$]
+    対称関数$h:\X^r\to\R$を\textbf{核}とする$r$次の\textbf{$U$-統計量}とは，
+    \[U_{r,n}:=\begin{pmatrix}n\\r\end{pmatrix}^{-1}\sum_{A\in[I_n]^r}h(X_A)=\frac{1}{\begin{pmatrix}n\\r\end{pmatrix}}\sum_{\sigma:[r]\mono[n]}h(X_{\sigma(1)},\cdots,X_{\sigma(r)})\]
+    をいう．
+\end{definition}
+\begin{remarks}[標本平均の拡張]
+    単に1つ1つの観測点$X_i$に等しく荷重平均を取る$\bP$を一般化して，
+
+    標本$n$個からの$r$個のすべての選び方についての測度$\o{\bP}\subset P([I_n]^r)$
+    について，ある対応$h:[\X]^r\to\R$に関しての値の平均$U_{r,n}=\o{\bP}h(X,\cdots,X)$をいう．
+\end{remarks}
+
+\begin{definition}
+    $U$-統計量$U_{r,n}$が\textbf{退化次元$i-1$を持つ}とは，$2\le i\le r$に関して，
+    \[E[h(X_1,\cdots,X_r)\mid X_1,\cdots,X_{i-1}]=0,\quad\land\quad E[h(X_1,\cdots,X_r)|X_1,\cdots,X_i]\ne0\]
+    を満たすことをいう．また，$E[h(X_1,\cdots,X_r)|X_1]\ne0$であるとき，\textbf{非退化}であるという．
+\end{definition}
+
+\begin{example}[rank correlation coefficient]
+    明らかに標本平均，不偏分散は，それぞれ$f=\id_\X,f(x_1,x_2)=\frac{(x_1-x_2)^2}{2}$に関する$U$-統計量である．
+    歪度も$k_{3,n}(x)=\sum\frac{(x_i-\o{x}_n)^3n}{(n-1)(n-2)}$が定める$U$-統計量で，とくに3次の$k$-統計量である．
+
+    また，2次元の無作為標本$(X_j,Y_j)\;(j=1,\cdots,n)$に関して，順位の間の相関係数として
+    \[\tau:=\frac{4}{n(n-1)}\sum_{i<j}1_{\Brace{(X_i-X_j)(Y_i-Y_j)>0}}-1\]
+    を\textbf{Kendallの順位相関係数}という．
+    また，
+    \begin{align*}
+        K&:=\Abs{\Brace{\{i,j\}\in[[n]]^2\mid (x_i>x_j\land y_i>y_j)\lor(x_i<x_j\land y_i<y_j)}},\\L&:=\Abs{\Brace{\{i,j\}\in[[n]]^2\mid\lnot(x_i>x_j\land y_i>y_j)\land\lnot(x_i<x_j\land y_i<y_j)}}
+    \end{align*}
+    として$\tau=\begin{pmatrix}n\\2\end{pmatrix}^{-1}(K-L)$とも表せる．
+\end{example}
+
+\begin{example}[K-statistic]
+    キュムラントの最小分散不偏推定量をFisherの$K$-統計量と言い，John Tukeyはこれから一般化$K$-統計量(polykay)を導いたが，
+    これは斉次多項式が定める$U$-統計量に他ならない．
+\end{example}
+
+\begin{example}[V-statistic]
+    対称な関数$h$に関して，
+    \[V_n:=\frac{1}{n^r}\sum_{(i_1,\cdots,i_r)\in I_n^r}h(X_{i_1},\cdots,X_{i_r})\]
+    を$V$-統計量という．$U$-統計量は大きさ$r$の部分標本の抽出について平均を取ったが，$V$-統計量は大きさ$r$の部分標本の，抽出の順序も区別し，また重複も許す．$[I_n]^r$と$I_n^r$の違いである．
+    $V$-統計量はHoeffdingの一年前である1947年にRichard von Misesが導入した．\footnote{von Mises, R. (1947). "On the asymptotic distribution of differentiable statistical functions". Annals of Mathematical Statistics. 18 (2): 309–348. doi:10.1214/aoms/1177730385. JSTOR 2235734.}
+    $v_1>0$のとき，$U$-統計量と漸近同等である．
+
+    $h(x,y)=\frac{(x-y)^2}{2}$が定める2次の$V$-統計量は
+    \[V_{2,n}=\frac{1}{n}\sum^n_{i=1}(x_i-\o{x})^2\]
+    で，これは分散の最尤推定量である．しかし同じ核に対する$U$-統計量は
+    \[U_{2,n}=s=\frac{1}{n-1}\sum^n_{i=1}(x_i-\o{x})^2\]
+    となる．漸近同等ではあるが，不偏推定量となるのは後者である！
+\end{example}
+
+\subsection{漸近正規性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    構成の仕方から明らかに，大数の法則から$U_n$は母数$\theta:=E[h(X_1,\cdots,X_r)]$の不偏推定量となっている．
+    （また，これが逆マルチンゲールになっていることからも従う）．
+    そこで，$\sqrt{n}(U_n-\theta)$の漸近分布を考える．
+
+    そのための道具がHoeffdingの分解で，$U$-統計量は，より退化度の高い$U$-統計量の和として表せる．
+    これは確率変数の分解に似ている．
+\end{tcolorbox}
+
+\begin{notation}
+    $E[\abs{h(X_1,\cdots,X_r)}]<\infty$とする．
+    \[h_k(x_1,\cdots,x_k):=E[h(x_1,\cdots,x_k,X_{k+1},\cdots,X_r)]\quad l\le r\]
+    とし，$h_0:=E[h(X_1,\cdots,X_r)]$とする．
+\end{notation}
+
+\begin{lemma}
+    $\forall_{C\subset A}\;E[h(X_A)|X_C]=h_{\abs{C}}(X_C)$．
+    ただし，$h_0(X_{\emptyset})=h_0$とする．
+\end{lemma}
+
+\begin{definition}
+    $\wh{h_k}:=h_k-\theta\;(k=0,1,\cdots,r)$に関して
+    \[g_k(x_{[k]}):=\sum_{C:C\subset[k]}(-1)^{k-\abs{C}}\wh{h}_{\abs{C}}(x_C)\]
+    と定める．このとき，$\wh{h}_r(X_A)_B=g_{\abs{B}}(X_B)$．
+\end{definition}
+
+\begin{lemma}[Hoeffdingの分解]
+    \[U_n-\theta=\sum^r_{k=1}\begin{pmatrix}n\\k\end{pmatrix}^{-1}\begin{pmatrix}r\\k\end{pmatrix}S_k(n)\]
+    ただし，$S_k(n):=\sum_{B:B\subset I_n,\abs{B}=k}g_k(X_B)$とした．
+\end{lemma}
+
+\begin{lemma}[漸近分布の平均]
+    $h\in L^1(\X^r)$とする．$B\subset I_n,\abs{B}=k>0,b\in B$について，
+    \[E[g_k(X_B)|X_{I_n\setminus\{b\}}]=0.\]
+\end{lemma}
+
+\begin{lemma}[漸近分布の分散]
+    $h\in L^2(\X^r)$とし，$v_k:=E[g_k(X_1,\cdots,X_k)^2]$とおく．
+    $B,C\subset I_n$について，
+    \[E[g_{\abs{B}}(X_B)g_{\abs{C}}(X_C)]=\delta_{B,C}v_{\abs{B}}.\]
+\end{lemma}
+
+\begin{theorem}[中心極限定理]
+    $h\in L^2(\X^r),v_1>0$とする．このとき，
+    \[\sqrt{n}(U_n-\theta)\xrightarrow{d}N(0,r^2v_1).\quad(n\to\infty)\]
+\end{theorem}
+
+\begin{tbox}{red}{}
+    こうして，統計量を汎関数$\P\to\R$と捉え，この漸近分布を考える（あわよくば中心極限定理を目指す）発想が出てくる．
+    これがHoeffdingがvon Misesから受け継いだものである．
+
+    そう，標本平均とは$U$-統計量の一例に過ぎないのであった．
+    そして独立確率変数列の和からマルチンゲールの概念が生まれたのならば，$U$-統計量がマルチンゲールになるのは当然である．
+
+    標本平均も，これに核$h$を重ねたものも，線型汎関数であることは変わらないから，漸近分布は正規である．
+\end{tbox}
+
+\subsection{2標本$U$-統計量}
+
+\subsection{退化$U$-統計量}
+
+\begin{definition}[degenerated]
+    $U$-統計量の列$(U_n)$(の核$(h_n)$)が\textbf{退化している}とは，漸近分散が$r^2v_1=0$であることをいう．
+\end{definition}
+
 \section{情報量規準}
 
 \subsection{枠組みとKL距離}
@@ -2134,154 +2395,7 @@ title=]
     これは必ずパラメトリックモデルの$n^{-1}$よりも遅くなる．
 \end{remarks}
 
-\section{$U$-統計量}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $U$-統計量の理論はHoeffding 1948による．
-    $U$-統計量は最小分散不偏推定量の計算中に自然に現れる．
-
-    基本的にはresampling法の一種で，標本から大きさ$r$の再抽出をして平均を取る．
-    これは標本分割に繋がるのではないか？
-\end{tcolorbox}
-
-\begin{notation}
-    $I_n=[n],(\X,\A)$を可測空間，$X_j\;(j\in I_n)$を独立同分布に従う$\X$-値確率変数，$h:\X^r\to\R$を対称な可測関数とする．
-    部分集合$A:=\{i_1,\cdots,i_r\}\subset I_n$に対して，$X_A=(X_{i_1},\cdots,X_{i_r})$と略記すると，対称性から$h(X_A):=h(X_{i_1},\cdots,X_{i_r})$と表して良い．
-\end{notation}
-
-\subsection{対称な関数}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    対称な関数の取り扱いと表示は仰々しいが，要は対称関数$h:\X^r\to\R$は集合$[\X]^r$上の関数$f:[\X]^r\to\R$と一対一対応する．
-    そして$[\X]^r$なる対象は，$\X$の点から$r$個の抽出として自然に出現する．
-\end{tcolorbox}
-
-\begin{definition}
-    $E[\abs{h(X_A)}]<\infty$とする．部分集合$B\subset A$に対して，
-    \[h(X_A)_B:=\sum_{C:C\subset B}(-1)^{\abs{B}-\abs{C}}E[h(X_A)|X_C]\]
-    とする．$E[h(X_A)|X_{\emptyset}]:=E[h(X_A)]$とした．
-\end{definition}
-
-\begin{lemma}[反転公式]
-    $h(X_A)=\sum_{B:B\subset A}h(X_A)_B$．
-\end{lemma}
-
-\subsection{定義と例}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    標本$n$個のうち$r$個を選んで，その$r$個の部分集合$A,\abs{A}=r$に対応する値$h(X_A)$の標本平均として得られる統計量のクラスを，$U$-統計量という．
-\end{tcolorbox}
-
-\begin{definition}[U-statistic]
-    対称関数$h:\X^r\to\R$を核とする$r$次の\textbf{$U$-統計量}とは，
-    \[U_{r,n}=U_n:=\begin{pmatrix}n\\r\end{pmatrix}^{-1}\sum_{A:A\subset I_n,\abs{A}=r}h(X_A)=\frac{1}{\begin{pmatrix}n\\r\end{pmatrix}}\sum_{\sigma:[r]\mono[n]}h(X_{\sigma(1)},\cdots,X_{\sigma(r)})\]
-    をいう．
-\end{definition}
-\begin{remarks}
-    ある対応$f:\X^r\to\R$に関して，標本$n$個からの$r$個のすべての選び方についての$f$の値の平均
-\end{remarks}
-
-\begin{definition}
-    $U$-統計量$U_{r,n}$が\textbf{退化次元$i-1$を持つ}とは，$2\le i\le r$に関して，
-    \[E[h(X_1,\cdots,X_r)\mid X_1,\cdots,X_{i-1}]=0,\quad\land\quad E[h(X_1,\cdots,X_r)|X_1,\cdots,X_i]\ne0\]
-    を満たすことをいう．また，$E[h(X_1,\cdots,X_r)|X_1]\ne0$であるとき，\textbf{非退化}であるという．
-\end{definition}
-
-\begin{example}[rank correlation coefficient]
-    明らかに標本平均，不偏分散は，それぞれ$f=\id_\X,f(x_1,x_2)=\frac{(x_1-x_2)^2}{2}$に関する$U$-統計量である．
-    歪度も$k_{3,n}(x)=\sum\frac{(x_i-\o{x}_n)^3n}{(n-1)(n-2)}$が定める$U$-統計量で，とくに3次の$k$-統計量である．
-
-    また，2次元の無作為標本$(X_j,Y_j)\;(j=1,\cdots,n)$に関して，順位の間の相関係数として
-    \[\tau:=\frac{4}{n(n-1)}\sum_{i<j}1_{\Brace{(X_i-X_j)(Y_i-Y_j)>0}}-1\]
-    を\textbf{Kendallの順位相関係数}という．
-    また，
-    \begin{align*}
-        K&:=\Abs{\Brace{\{i,j\}\in[[n]]^2\mid (x_i>x_j\land y_i>y_j)\lor(x_i<x_j\land y_i<y_j)}},\\L&:=\Abs{\Brace{\{i,j\}\in[[n]]^2\mid\lnot(x_i>x_j\land y_i>y_j)\land\lnot(x_i<x_j\land y_i<y_j)}}
-    \end{align*}
-    として$\tau=\begin{pmatrix}n\\2\end{pmatrix}^{-1}(K-L)$とも表せる．
-\end{example}
-
-\begin{example}[K-statistic]
-    キュムラントの最小分散不偏推定量をFisherの$K$-統計量と言い，John Tukeyはこれから一般化$K$-統計量(polykay)を導いたが，
-    これは斉次多項式が定める$U$-統計量に他ならない．
-\end{example}
-
-\begin{example}[V-statistic]
-    対称な関数$h$に関して，
-    \[V_n:=\frac{1}{n^r}\sum_{(i_1,\cdots,i_r)\in I_n^r}h(X_{i_1},\cdots,X_{i_r})\]
-    を$V$-統計量という．$U$-統計量は大きさ$r$の部分標本の抽出について平均を取ったが，$V$-統計量は大きさ$r$の部分標本の，抽出の順序も区別し，また重複も許す．$[I_n]^r$と$I_n^r$の違いである．
-    $V$-統計量はHoeffdingの一年前である1947年にRichard von Misesが導入した．\footnote{von Mises, R. (1947). "On the asymptotic distribution of differentiable statistical functions". Annals of Mathematical Statistics. 18 (2): 309–348. doi:10.1214/aoms/1177730385. JSTOR 2235734.}
-    $v_1>0$のとき，$U$-統計量と漸近同等である．
-
-    $h(x,y)=\frac{(x-y)^2}{2}$が定める2次の$V$-統計量は
-    \[V_{2,n}=\frac{1}{n}\sum^n_{i=1}(x_i-\o{x})^2\]
-    で，これは分散の最尤推定量である．しかし同じ核に対する$U$-統計量は
-    \[U_{2,n}=s=\frac{1}{n-1}\sum^n_{i=1}(x_i-\o{x})^2\]
-    となる．漸近同等ではあるが，不偏推定量となるのは後者である！
-\end{example}
-
-\subsection{Hoeffdingの分解}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    構成の仕方から明らかに，大数の法則から$U_n$は母数$\theta:=E[h(X_1,\cdots,X_r)]$の不偏推定量となっている．
-    （また，これが逆マルチンゲールになっていることからも従う）．
-    そこで，$\sqrt{n}(U_n-\theta)$の漸近分布を考える．
-
-    そのための道具がHoeffdingの分解で，$U$-統計量は，より退化度の高い$U$-統計量の和として表せる．
-    これは確率変数の分解に似ている．
-\end{tcolorbox}
-
-\begin{notation}
-    $E[\abs{h(X_1,\cdots,X_r)}]<\infty$とする．
-    \[h_k(x_1,\cdots,x_k):=E[h(x_1,\cdots,x_k,X_{k+1},\cdots,X_r)]\quad l\le r\]
-    とし，$h_0:=E[h(X_1,\cdots,X_r)]$とする．
-\end{notation}
-
-\begin{lemma}
-    $\forall_{C\subset A}\;E[h(X_A)|X_C]=h_{\abs{C}}(X_C)$．
-    ただし，$h_0(X_{\emptyset})=h_0$とする．
-\end{lemma}
-
-\begin{definition}
-    $\wh{h_k}:=h_k-\theta\;(k=0,1,\cdots,r)$に関して
-    \[g_k(x_{[k]}):=\sum_{C:C\subset[k]}(-1)^{k-\abs{C}}\wh{h}_{\abs{C}}(x_C)\]
-    と定める．このとき，$\wh{h}_r(X_A)_B=g_{\abs{B}}(X_B)$．
-\end{definition}
-
-\begin{lemma}[Hoeffdingの分解]
-    \[U_n-\theta=\sum^r_{k=1}\begin{pmatrix}n\\k\end{pmatrix}^{-1}\begin{pmatrix}r\\k\end{pmatrix}S_k(n)\]
-    ただし，$S_k(n):=\sum_{B:B\subset I_n,\abs{B}=k}g_k(X_B)$とした．
-\end{lemma}
-
-\begin{lemma}[漸近分布の平均]
-    $h\in L^1(\X^r)$とする．$B\subset I_n,\abs{B}=k>0,b\in B$について，
-    \[E[g_k(X_B)|X_{I_n\setminus\{b\}}]=0.\]
-\end{lemma}
-
-\begin{lemma}[漸近分布の分散]
-    $h\in L^2(\X^r)$とし，$v_k:=E[g_k(X_1,\cdots,X_k)^2]$とおく．
-    $B,C\subset I_n$について，
-    \[E[g_{\abs{B}}(X_B)g_{\abs{C}}(X_C)]=\delta_{B,C}v_{\abs{B}}.\]
-\end{lemma}
-
-\begin{theorem}[中心極限定理]
-    $h\in L^2(\X^r),v_1>0$とする．このとき，
-    \[\sqrt{n}(U_n-\theta)\xrightarrow{d}N(0,r^2v_1).\quad(n\to\infty)\]
-\end{theorem}
-
-\begin{tbox}{red}{}
-    こうして，統計量を汎関数$\P\to\R$と捉え，この漸近分布を考える（あわよくば中心極限定理を目指す）発想が出てくる．
-    これがHoeffdingがvon Misesから受け継いだものである．
-
-    そう，標本平均とは$U$-統計量の一例に過ぎないのであった．
-    そして独立確率変数列の和からマルチンゲールの概念が生まれたのならば，$U$-統計量がマルチンゲールになるのは当然である．
-
-    標本平均も，これに核$h$を重ねたものも，線型汎関数であることは変わらないから，漸近分布は正規である．
-\end{tbox}
 
 \chapter{漸近展開とその応用}
 

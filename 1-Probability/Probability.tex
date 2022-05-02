@@ -1286,6 +1286,20 @@ title=]
     このとき，$X_n\xrightarrow{p}X\Rightarrow h(X_n)\xrightarrow{p}h(X)$．
 \end{proposition}
 
+\begin{proposition}[確率収束の遺伝]
+    $X_n,X,Y_n,Y$を確率変数とする．
+    \begin{enumerate}
+        \item 定数$c\in\R$については，$X_n\xrightarrow{p}c$と$X_n\xrightarrow{d}c$とは同値．
+        \item $X_n\xrightarrow{d}X$かつ$d(X_n,Y_n)\xrightarrow{p}0$ならば，$Y_n\xrightarrow X$．
+        \item $X_n\xrightarrow{d}X$かつ$Y_n\xrightarrow{p}c$ならば，$(X_n,Y_n)\xrightarrow{d}(X,c)$．
+        \item $X_n\xrightarrow{p}X$かつ$Y_n\xrightarrow{p}Y$ならば，$(X_n,Y_n)\xrightarrow{p}(X,Y)$．
+    \end{enumerate}
+\end{proposition}
+\begin{remark}
+    一方で，結合分布の弱収束は，各成分の弱収束より強い\ref{thm-Slutsky}．
+    これも，各成分の分布だけでは結合分布が定まらないことに起因する．
+\end{remark}
+
 \subsection{連続写像定理とデルタ法}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1333,15 +1347,20 @@ title=]
     これをBanach空間上で行う技法を関数デルタ法という．
 \end{remarks}
 
-\subsection{分布収束と確率収束とタイト性}
+\subsection{分布収束の性質}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    連続写像定理を用いて，分布収束の遺伝法則が求まる．
+    さらに，同じ分布に収束するためには，差$X_n-Y_n$が$0$に確率収束することが必要である．
+    これを漸近同等といい，さらに一様緊密性と併せて
     $O_p(1),o_p(1)$の概念が先に定まる．
     $O_p(1)$の概念はタイトともいうが，$\R$に限れば，確率収束の意味で有界であるための条件に読める．
 \end{tcolorbox}
 
-\begin{theorem}
+\subsubsection{分布収束の遺伝}
+
+\begin{theorem}[Slutsky]\label{thm-Slutsky}
     $X,X_n,Y_n$を確率ベクトルまたは確率行列とする．
     $c$を定数ベクトルまたは定数行列とする．$X_n\xrightarrow{d}X,Y_n\xrightarrow{p}c$のとき，次が成り立つ．
     \begin{enumerate}
@@ -1358,6 +1377,8 @@ title=]
 \begin{corollary}
     $X,X_n,Y_n$が$d$次元確率変数で，$X_n\xrightarrow{d}X$かつ$X_n-Y_n\xrightarrow{p}0$を満たすならば，$Y_n\xrightarrow{d}X$が成り立つ．
 \end{corollary}
+
+\subsubsection{漸近同等性}
 
 \begin{definition}[asymptotically equivalent, bounded in probability / tight]\mbox{}
     \begin{enumerate}

@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \renewcommand{\C}{\mathcal{C}}
 \renewcommand{\Z}{\mathcal{Z}}
@@ -594,13 +594,145 @@ Coxにより72年に導入された生存解析におけるモデル．
 
 セミパラメトリックモデルの解析に於ても，$\beta(\theta)$なる汎関数を推定する際などは，$\theta$の分割は特に数理的な示唆を与えない．
 
-\section{Hilbert空間}
+\section{関数デルタ法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率変数の分布収束について，$r_n(T_n-\theta)$の極限分布から$r_n(\varphi(T_n)-\varphi(\theta))$の極限分布を得る手法をデルタ法というのであった．
+    $T_n$が確率過程である場合についての理論の拡張を関数デルタ法という．
+    $\varphi$はEuclid空間間の可微分写像ではなく，Hilbert空間間の(Hadamard)可微分作用素となる．
+\end{tcolorbox}
 
 \begin{example}[space of mean-zero and bounded second moments random functions]
     標本空間$(X,A,P)$上の$q$次元確率関数$h:X\to\R^q$であって，$E[h(Z)]=0,E[h^T(Z)h(Z)]<\infty$を満たすもの全体はHilbert空間$H_\mb$をなす．
     なお，確率関数とは，可測関数$h\circ Z$を表す．
     内積$(h_1|h_2):=E[h_1^Th_2]$を共分散内積と呼ぶ．
 \end{example}
+
+\subsection{経験過程の場合：von Mises解析}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $P$を真の分布，$\bP_n$を経験分布とする．
+    多くの統計量は，一定の汎関数$\varphi:\P\to\R$について，
+    $\varphi(\bP_n)$という形の汎関数とみなせる．
+\end{tcolorbox}
+
+\begin{theorem}[復習：Taylorの定理]
+    Frechet多様体上の汎関数$\varphi:\P\to\R$は，ある$H\in\P$が定める実関数$\varphi(P+tH):(-\ep,\ep)\to\R$が$C^m$-級であるとする．
+    このとき，
+    \[\varphi(P+tH)-\varphi(P)=t\varphi'_P(H)+\cdots+\frac{t^m}{m!}\varphi^{(m)}_P(H)+o(t^m)\]
+    が成り立つ．ただし，$\varphi'_P:T_P(\P)\to T_{\varphi(P)}(\R)$は線型写像．
+\end{theorem}
+\begin{remarks}[von Mises展開]
+    このTaylor展開に$t=n^{-1/2},H=\bG_n=\sqrt{n}(\bP_n-P)$ととると，
+    \[\varphi(\bP_n)-\varphi(P)=\frac{1}{\sqrt{n}}\varphi'_P(\bG_n)+\cdots+\frac{1}{m!}\frac{1}{n^{m/2}}\varphi^{(m)}_P(\bG_n)+\cdots\]
+    となる．ただし，剰余項は$1/n^{m/2}$と$\varphi^{(m+1)}_P(\bG_n+\delta)$の形をしているため，必ずしも$n\to0$のとき$0$に収束するとは限らない．
+    しかし，$1/n^{m/2}$は十分高次の微小量だし，$\bG_n$は有界であるので，この展開が成り立つとする仮定は合理的である．
+\end{remarks}
+
+\begin{discussion}[1次のvon Mises展開からわかること]
+    仮に$\varphi$は$P$を中心として$\bP_n$方向にvon Mises展開が可能で，2次以上の項が無視できるとき，
+    \[\varphi(\bP_n)-\varphi(P)\approx\frac{1}{\sqrt{n}}\varphi'_P(\bG_n)=\frac{1}{n}\sum^n_{i=1}\varphi'_P(\delta_{X_i}-P)\]
+    と表せる．右辺は$X_i$の，可測関数$\varphi'_P(\delta--P)$との合成であるから，独立な実確率変数の平均である．
+    よって，各項が$L^2(\Om)$に入るならば，
+    中心極限定理より，$\sqrt{n}(\varphi(\bP_n)-\varphi(P))$の分布は正規である．
+
+    今，可測性の過程を置いた対応$\X\ni x\mapsto\varphi'_P(\delta_x-P)\in\R$を\textbf{影響関数}といい，$\IF(x;\varphi,P)$と表す．
+    今まで$\varphi'_P$は線型作用素$T_P(\P)\to T_{\varphi(P)}(\R)$と見ていたが，数学的にはこの段階では，$x\in\X$の定める道毎の微分
+    \[\IF(x;\varphi,P):=\varphi'_P(\delta_x-P)=\left.\dd{}{t}\varphi((1-t)P+t\delta_x)\right|_{t=0}\]
+    とすれば良い．
+    これは，新たな観測$x\in\X$が追加された経験測度$\bP_{n+1}$は
+    \[\varphi(\bP_{n+1})-\varphi(P)\approx\frac{1}{n}\sum^n_{i=1}\varphi'_P(\delta_{X_i}-P)+\IF(x;\varphi,P)\]
+    となるから，漸近分散がその分だけ撹乱されることとなり，$\IF$が$\X$上有界でない場合特に漸近的に問題となる．
+\end{discussion}
+\begin{discussion}[影響関数の具体的表示ができるとき]
+    線型作用素$\varphi'_P:\P\to\R$は，各$\wt{\varphi}_P$を用いて積分作用素$H\mapsto\int_\X\wt{\varphi}_PdH$と等しくなるかも知れない．
+    さらに$\int\wt{\varphi}_PdP=0$もみたす
+    とき，$\wt{\varphi}_P$も\textbf{影響関数}という．
+    実際，
+    \[\varphi'_P(\delta_x-P)=\int\wt{\varphi}_P(d\delta_x-dP)=\int\wt{\varphi}_Pd\delta_x-\int\wt{\varphi}_PdP=\wt{\varphi}_P(x).\]
+\end{discussion}
+\begin{remark}[記法の基礎づけについて]
+    $\int\wt{\varphi}_P(d\delta_x-dP)$という積分形式に演算が定まっているかのような表記や$\int\wt{\varphi}_Pd\delta_x$という未定義積分は，
+    超関数の場合と同様，$\int-d-$をFrechet多様体$\P$上の双線型形式(ペアリング)と思えば良い．
+\end{remark}
+
+\begin{example}[$M$-推定量の影響関数]
+    推定関数$\psi:\X\times\Theta\to\R^p\;(\Theta\osub\R^p)$に対して，汎関数$T:P(\X)\to\Theta$は推定方程式$\forall_{P\in\P}\;\int_\X\psi(x,T(P))P(dx)=0$を満足すると仮定する．
+    すると経験分布$\bP_n$について，$\wt{\theta_n}:=T(\bP_n)$は推定関数$\psi$に関する$M$-推定量である．
+    $T$が前述条件を満たす$M$推定量を与える汎関数であり，$\forall_{(x,\theta)\in\X\times\Theta}\;\abs{\partial_\theta\psi}$は可積分であるとする．
+    \[\IF(x;T,P)=\Gamma(P)^{-1}\psi(x,T(P)),\qquad\Gamma(P):=-\int_\X\partial_\theta\psi(y,T(P))P(dy)\]
+    特に，$p=1$のとき，推定関数$\psi(x,T(P))\in\R^p$の定数倍である．
+\end{example}
+\begin{proof}
+    推定方程式より
+    \[0=\int_\X\psi(x,T(P+\ep\delta_x))(P+\ep\delta_x)(dx)=\int_\X\psi(x,T(P+\ep\delta_x))P(dx)+\ep\psi(x,T(P+\ep\delta_x))\]
+    が成り立つ．この両辺を$\ep$で微分して$\ep=0$を考えると，関数$\forall_{(x,\theta)\in\X\times\Theta}\;\abs{\partial_\theta\psi}$は可積分であるとすると，微分と積分とは交換可能であるから，
+    \[0=\paren{\int_\X\partial_\theta\psi(x,T(P))P(dx)}\cdot\left.\dd{}{\ep}T(P+\ep\delta_x)\right|_{\ep=0}+\psi(x,T(P)).\]
+\end{proof}
+
+\subsection{Hadamard微分可能性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    「$D$全域でGateaux微分可能」という概念を拡張し，任意の点列について極限$\frac{\varphi(\theta+th_t)-\varphi(\theta)}{t}$が導関数の値にノルム収束することを必要とする．
+    これはEuclid空間$\R^n$で全微分可能性を定義したときと並行な議論であるが，なんとノルム空間にとってはこれでもまだFrechet微分可能性より弱い！
+\end{tcolorbox}
+
+\begin{notation}
+    ノルム空間$D$に値を取る
+    統計量の列$(T_n:\Om^n\to D)$を考える．
+    これは経験測度$\bP_n:\Om^n\to D(\o{\R})$の一般化となる．
+    ある可測関数$T:\Om\to D$と$\theta\in D,r_n\to\infty$について$r_n(T_n-\theta)\xrightarrow{d}T$が成り立つとする．
+    このときの，可微分作用素$\varphi:D\to E$の値$\varphi(T)$の極限分布$r_n(\varphi(T_n)-\varphi(\theta))$を考えたい．
+\end{notation}
+
+\begin{definition}[Gateaux differentiable, Hamadard differentiable, Hadamard differentiable tangentally with a subset]
+    ノルム空間$D,E$の間の作用素$\varphi:D\to E$について，
+    \begin{enumerate}
+        \item $\theta\in D$にて\textbf{Gateaux微分可能}とは，写像$\varphi'_\theta:D\to E;h\mapsto\varphi'_\theta(h)\;\st\varphi(\theta+th)-\varphi(\theta)=t\varphi'_\theta(h)+o(t)$が存在することをいう．
+        このとき，$\varphi'_\theta$は線型とは限らない．ある近傍$\theta\in U$について，連続なGateaux微分$U\times D\to E$が存在するならば，$\varphi'_\theta$は連続かつ線型である．
+        \item $\theta\in D$にて\textbf{Hadamard微分可能}とは，連続な線型作用素$\varphi'_\theta:D\to E$が存在して，任意の$h\in D$と$h$へ収束する道$(h_t)$について，
+        \[\Norm{\frac{\varphi(\theta+th_t)-\varphi(\theta)}{t}-\varphi'_\theta(h)}_E\xrightarrow{t\to0}0.\]
+        \item 連続な線型作用素$\varphi'_\theta$が$D_0\subsetneq D$上でしか存在しない場合，$\varphi$は\textbf{$D_0$に接してのみHadamard微分可能}であるという．
+        \item 
+    \end{enumerate}$\theta\in D$にて\textbf{Frechet微分可能}とは，連続な線型作用素$\varphi'_\theta:D\to E$が存在して，$\norm{\varphi(\theta+h)-\varphi(\theta)-\varphi'_\theta(h)}=o(\norm{h})\;(\norm{h}\to0)$．
+\end{definition}
+
+\begin{lemma}[Hadamard微分可能性の特徴づけ]
+    $D$上Gateaux微分可能な作用素$\varphi:D\to E$について，
+    \begin{enumerate}
+        \item Hadamard微分可能である．
+        \item 任意の$\theta\in D$と任意のコンパクト集合$C\subset D$について，$\frac{\varphi(\theta+th)-\varphi(\theta)}{t}$は任意の$h\in C$について一様収束する．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    確率変数の法則収束はProkhorovの定理を通じてコンパクト集合と深い関係があることも，Hadamard微分との関連の深さに寄与している．
+\end{remarks}
+
+\begin{lemma}[微分の強さの関係]\mbox{}
+    \begin{enumerate}
+        \item 作用素$\varphi:D\to E$が$\theta\in D$の近傍でGateaux微分可能で，Gateaux導関数が$\theta$にて連続ならば，$\theta$にてFrechet微分可能である．
+        \item 作用素$\varphi:D\to E$がHadamard微分可能ならばGateaux微分可能で，2つの導関数は一致する．
+        \item 作用素$\varphi:D\to E$が$D$上局所Lipschit連続ならば，任意の点においてGateaux微分可能性はHadamard微分可能性を含意する．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[Hadamard微分の連鎖律]
+    
+\end{proposition}
+
+\subsection{関数デルタ法}
+
+\begin{theorem}
+    $\varphi:D(\varphi)\to E$は$\theta\in D(\varphi)$において$D_0$に接してHadamard微分可能であるとし，統計量の列$(T_n:\Om^n\to D(\varphi))$は$r_n\to\infty$と$T:\Om^\infty\to D_0$について$\sqrt{n}(T_n-\theta)\xrightarrow{d}T$を満たすとする．
+    このとき，
+    \begin{enumerate}
+        \item $r_n(\varphi(T_n)-\varphi(\theta))\xrightarrow{d}\varphi'_\theta(T)$．
+        \item $\varphi_\theta'$が$D$全域で定義されていて連続であるとき，さらに$r_n((\varphi(T_n)-\varphi(\theta)))=\varphi'_\theta(r_n(T_n-\theta))+o_P(1)$．
+    \end{enumerate}
+\end{theorem}
 
 \section{接集合と情報量}
 
