@@ -858,7 +858,25 @@ title=測度の双対空間と前双対空間]
     あるいは，$C_c(X)^*$の元は局所有限$\forall_{K\cpt X}\;\mu(K)<\infty$を満たす正則測度になるという定理とも見れる．
 \end{remark}
 
-\subsection{測度の収束の定義と特徴付け}
+\subsection{確率測度のノルム収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Radon測度のBanach空間$M(\Om)$上でのノルム収束を，全変動収束という．
+    その双対空間は$C_0(\Om,\C)$であるが(Riesz-Markov)，この元に対する収束が弱収束である．
+    確率測度の空間$P(X)$はもちろんノルム閉ではないが，凸である．
+\end{tcolorbox}
+
+\begin{lemma}[確率測度の全変動距離の特徴付け]
+    $\mu,\nu\in P(\Om,\F,P)$について，
+    \[\norm{\mu-\nu}=2\sup_{A\in\F}\abs{\mu(A)-\nu(A)}.\]
+\end{lemma}
+
+\begin{corollary}[Scheffe]
+    $\{X_n\},X\ll\mu$とする．$p_n\to p\;\mu\dae$が成り立つならば，$X_n$は$X$に全変動ノルムについて収束する：$\norm{X_n-X}\to0$．
+\end{corollary}
+
+\subsection{測度の弱収束の定義と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=測度の空間はBanach空間であるが，それ以上に具体的対象である．]
@@ -1261,7 +1279,7 @@ title=]
 
 \subsection{確率収束の性質}
 
-\begin{proposition}
+\begin{proposition}[確率収束に関する連続写像定理]
     $(S_i,d_i)\;(i=1,2)$を可分距離空間とする．
     $X,X_n$を$S_1$-値確率変数，$h:S_1\to S_2$を可測写像とする．
     $P[X\in C]=1$を満たす可測集合$C\in\B(S_1)$上で$h$は連続であるとする．
@@ -1272,23 +1290,47 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    次は分布収束を考える．分布収束は，有界測度論の世界が流入した風景が広がっている．
+    分布収束は，有界測度論の世界が流入した風景が広がっている．
+    分布収束は連続写像で保たれ，平均の周りでの分散についてはについては，デルタ法が成り立つ．
 \end{tcolorbox}
 
+\subsubsection{連続写像定理}
+
+\begin{proposition}[連続写像は弱収束を保つ]
+    $\forall_{T\in C(S_1;S_2)}\;\nu_n\to\nu\Rightarrow \nu_n^T\to\nu^T$．
+\end{proposition}
+
 \begin{theorem}[連続写像定理]
-    $T,T_n:S_1\to S_2$を可測写像とし，$P[X\in C]=1$を満たす可測集合$C\in\B(S_1)$の上で条件(C)が満たされるとする．
-    このとき，$X_n\xrightarrow{d}X$ならば，$T(X_n)\xrightarrow{d}T(X)$．
+    $T,T_n:S_1\to S_2$を可測写像とし，$P[X\in C]=1$を満たすある可測集合$C\in\B(S_1)$が存在して，条件
+    \begin{quote}
+        (C) 任意の$x\in C$に収束する任意の列$\{x_n\}\subset S_1$に対して，$T_n(x_n)\xrightarrow{n\to\infty}T(x)$．
+    \end{quote}
+    が満たされるとする．
+    このとき，$X_n\xrightarrow{d}X$ならば，$T_n(X_n)\xrightarrow{d}T(X)$．
+    特に，$\forall_{n\in\N}\;T_n=T$の場合を考えれば，$T$が$C$上連続ならば，$T(X_n)\xrightarrow{d}T(X)$が成り立つ．
 \end{theorem}
+
+\subsubsection{デルタ法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    パラメータ$\theta\in\R^k$の推定量$T_n:\X^n\to\R^k$と，関数$\varphi:\R^k\to\R$を考える．
+    $T_n\xrightarrow{p}\theta$が成り立つとき，$\varphi$が$\theta$で連続ならば$\varphi(T_n)\xrightarrow{p}\varphi(\theta)$も成り立つ．
+    では，$\sqrt{n}(T_n-\theta)\xrightarrow{d}\varphi'(\theta)\sqrt{n}(T_n-\theta)$も成り立つのであろうか？
+\end{tcolorbox}
 
 \begin{theorem}[デルタ法]\label{thm-delta-method}
     関数$f:\R^{d_1}\supset A\to\R^{d_2}$は$c\in A$で微分可能であるとする．
-    $\forall_{n\in\N}\;P[X_n\in A]=1$を満たす$d_1$次元確率変数列$(X_n)$に対して，
-    $\infty$に発散する係数列$\{b_n\}\subset\R$が定める線型変換は$b_n(X_n-c)\xrightarrow{d}Z$を満たすとする．このとき，
-    \[b_n[f(X_n)-f(c)]-\partial_xf(x)b_n(X_n-c)\xrightarrow{p}0\quad(n\to\infty)\]
+    $\forall_{n\in\N}\;P[X_n\in A]=1$を満たす$d_1$次元確率変数列$\{X_n\}\subset\R^{d_1}$に対して，
+    $\infty$に発散する係数列$\{b_n\}\subset\R$が定める線型変換は$b_n(X_n-c)\xrightarrow{d}Z\in\R^d$を満たすとする．このとき，
+    \[b_n[f(X_n)-f(c)]-\partial_xf(x)b_n(X_n-c)\xrightarrow{p}0\quad(n\to\infty).\]
     特に，$b_n[f(X_n)-f(c)]\xrightarrow{d}\partial_xf(c)Z\;(n\to\infty)$である．
+    $\partial_xf(c)$は$d_2\times d_1$-行列であることに注意．
 \end{theorem}
 \begin{remarks}
-    列$(b_n[f(X_n)-f(c)])$は$(b_n\partial_xf(c)(X_n-c))$に漸近同等である．連続写像定理に対応する，ある種の連鎖律である．
+    列$(b_n[f(X_n)-f(c)])$は$(b_n\partial_xf(c)(X_n-c))$に漸近同等であることがわかった．
+    これは1次のTaylor展開に拠ると思えることが名前の由来である．
+    これをBanach空間上で行う技法を関数デルタ法という．
 \end{remarks}
 
 \subsection{分布収束と確率収束とタイト性}
@@ -2686,7 +2728,7 @@ title=]
     \[\forall_{a<b\in\R}\quad\lim_{n\to\infty}P(a\le Z_n\le b)=\frac{1}{\sqrt{2\pi v}}\int^b_ae^{-\frac{x^2}{2v}}dx.\]
 \end{theorem}
 
-\subsection{一般化}
+\subsection{Lindeberg-Fellerの一般化}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2696,12 +2738,12 @@ title=]
 \end{tcolorbox}
 
 \begin{theorem}
-    $(k_n)_{n\in\N}:\N\to\N$に対して，$(\xi_{n,j})_{j\in[k_n]}$を各$n\in\N$が定める$d$次元独立確率変数列とする．
-    次の2条件を仮定する．
+    $(k_n)_{n\in\N}:\N\to\N$に対して，$(\xi_{n,j})_{j\in[k_n]}=\xi_{n,1},\cdots,\xi_{n,k_n}\in\R^d$を各$n\in\N$が定める独立な$d$次元確率変数の$k_n$-組とし，
+    次の2条件が成り立つとする．
     \begin{enumerate}[({A}1)]
         \item $\xi_{n,j}\in\L^2(\R^d)$は2乗可積分で，期待値ベクトルは零とする：$E[\xi_{n,j}]=0$．
-        \item (Lindeberg) $\Sigma_n:=\sum^{k_n}_{j=1}\Var[\xi_{n,j}]\in M_d(\R)$，$\Sigma:=\lim_{n\to\infty}\Sigma_n$としたとき，次が成り立つ：
-        \[\forall_{\ep>0}\;\lim_{n\to\infty}\sum^{k_n}_{j=1}E[\abs{\xi_{n,j}}^21_{\Brace{\abs{\xi_{n,j}}\ge\ep}}]=0.\]
+        \item $\Sigma_n:=\sum^{k_n}_{j=1}\Var[\xi_{n,j}]\in M_d(\R)$は極限$\Sigma:=\lim_{n\to\infty}\Sigma_n$を持ち，さらに次が成り立つ：
+        $\forall_{\ep>0}\;\sum^{k_n}_{j=1}E[\abs{\xi_{n,j}}^21_{\Brace{\abs{\xi_{n,j}}\ge\ep}}]\xrightarrow{n\to\infty}0$．
     \end{enumerate}
     このとき，
     \[\sum^{k_n}_{j=1}\xi_{n,j}\xrightarrow{d}N_d(0,\Sigma)\quad(n\to\infty)\]
@@ -2723,7 +2765,15 @@ title=]
     $\sqrt{n}(g(\wh{\rho}_n)-g(\rho))\xrightarrow{d}N(0,1)$となり，漸近分散はパラメータ$\rho$に依存しなくなる．このような変換を\textbf{分散安定化変換}という．
 \end{example}
 
-\section{経験分布に対する拡張}
+\subsection{ノルム収束についての中心極限定理}
+
+\begin{theorem}
+    $(\mu,\sigma^2)$に従う2乗可積分な独立同分布列$\{Y_i\}\subset L^2(\Om,\F,P)$について，
+    特性関数がある$\nu\ge1$について$\nu$乗可積分$\int_{\C}\abs{\varphi(t)}^\nu dt<\infty$ならば，和$S_n:=\sum^n_{i=1}Y_i$は$N(n\mu,\sqrt{n}\sigma^2)$にノルム収束する：
+    \[\sup_{B\in\B(\R)}\Abs{P[S_n\in B]-\int_B\frac{1}{\sqrt{2\pi n\sigma^2}}\exp\paren{-\frac{1}{2}\frac{(x-n\mu)^2}{n\sigma^2}}dx}\to0.\]
+\end{theorem}
+
+\subsection{経験分布に対する拡張}
 
 \begin{theorem}[Glivenko-Cantelli]
     $F_n$を経験分布関数，$F$を真の分布関数とする．経験分布関数は，分布関数の一致推定量である：$P[\lim_{n\to\infty}\sup_{x\in\R}\abs{F_n(x)-F(x)}=0]=1$．
