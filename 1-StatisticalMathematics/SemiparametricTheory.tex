@@ -153,7 +153,7 @@ title=]
 
 \section{生存分析}
 
-\chapter{パラメトリックモデル}
+\chapter{パラメトリック有効性}
 
 \section{正則なモデルの定義と十分条件}
 
@@ -541,18 +541,112 @@ title=]
     \end{enumerate}
 \end{notation}
 
-\chapter{セミパラメトリックモデル情報限界}
+\section{局所漸近正規性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+パラメータのスケーリングの違いを除いて，局所漸近正規なモデルはあるガウスモデルに収束する．
+\end{tcolorbox}
+
+\begin{discussion}
+    ある点$\theta_0\in\R^k$に注目して，その周りの
+    局所パラメータを$h:=\sqrt{n}(\theta-\theta_0)$とすると，元の統計的実験$(\X^n,\A^n,(P_\theta^n)_{\theta\in\R^k})$は，
+    $(\X^n,\A^n,(P^n_{\theta_0+h/\sqrt{n}})_{h\in\R^k})$と変換される．
+    するとこの統計的実験は，元の統計的実験$\theta\mapsto P_\theta$が滑らかであるとき，
+    $(\X^n,\A^n,(N(h,I_{\theta_0}^{-1}))_{h\in\R^k})$に漸近する！
+\end{discussion}
+
+\subsection{尤度の拡張}
+
+\begin{discussion}
+    $P_\theta\ll\mu$とし，$p_\theta:=\dd{P_\theta}{\mu}$と表す．
+    ここでは$\theta,h\in\R$のような記法をするが，$k$次元としても$\dot{l}(x)$が$k$ベクトルになり，掛け算が内積または二次形式になるのみである．
+    $l_\theta(x):=\log p_\theta(x)\in C^2(\X)$と仮定すると(この仮定は強すぎるが)，Taylorの定理より，
+    \[\log P_{\theta+h}(x)=l_\theta(x)+\dot{l}_\theta(h)+\frac{1}{2}\ddot{l}_\theta(x)h^2+o_x(h^2).\quad h\in\R^k,h\to0\]
+    \[\log\frac{p_{\theta+h}}{p_\theta}(x)=h\dot{l}_\theta(x)+\frac{1}{2}h^2\ddot{l}_\theta(x)+o_x(h^2).\quad h\in\R^k,h\to0\]
+    ここで尤度比が現れる．特に$x$に観測値$X_1,\cdots,X_n$を代入し，$h$を$\frac{h}{\sqrt{n}}$として$n\to\infty$の極限を考えると，
+    \[\log\prod_{i=1}^n\frac{p_{\theta+h/\sqrt{n}}}{p_\theta}(X_i)=\frac{h}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)+\frac{1}{2}\frac{h^2}{n}\sum^n_{i=1}\ddot{l}_\theta(X_i)+\sum_{i=1}^no_x\paren{\frac{h^2}{n}}\quad(n\to\infty)\]
+    ここで，$E_\theta[\dot{l}_\theta]=0,-E_\theta[\ddot{l}_\theta]=E_\theta[\dot{l}^2_\theta]=I_\theta$だから，
+    \begin{enumerate}
+        \item $\Delta_{n,\theta}:=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)\in\R$とおくと$\Delta_{n,\theta}\xrightarrow{d}N(0,I_\theta)$（中心極限定理）．
+        \item 大数の法則より$\frac{1}{n}\sum^n_{i=1}\ddot{l}_\theta(X_i)\xrightarrow{d}-I_\theta$．
+        \item 3項目はおそらく確率収束（仮定をうまく設定すれば良い）．
+    \end{enumerate}
+    よって，
+    \[\log\prod_{i=1}^n\frac{p_{\theta+h/\sqrt{n}}}{p_\theta}(X_i)=h\Delta_{n,\theta}-\frac{1}{2}I_\theta h^2+o_{p_\theta}(1)\]
+    が成り立つ．
+    実は，必要な過程は，$L^2$-微分の言葉で簡潔に書ける．
+\end{discussion}
+
+\begin{theorem}[局所漸近正規性の十分条件]\label{thm-sufficient-condition-for-parametric-LAN}
+    モデル$(p_\theta)_{\theta\in\Theta\osub\R^k}$は，
+    密度関数の平方根$\theta\mapsto\sqrt{p_\theta}$が$L^2$-微分可能であるとする：
+    \[\exists_{\dot{l}\in\L^2(\X)}\quad\int\paren{\sqrt{p_{\theta+h}}-\sqrt{p_\theta}-\frac{1}{2}h^\top \dot{l}_\theta\sqrt{p_\theta}}^2d\mu=o(\norm{h}^2)\quad(h\to0).\]
+    なお，通常の意味で微分可能であった場合は，
+    \[\frac{1}{2}\dot{l}_\theta\sqrt{p_\theta}=\pp{\sqrt{p_\theta}(x)}{\theta}\quad\Leftrightarrow\quad \dot{l}_\theta=\pp{}{\theta}\log p_\theta(x)\]
+    が必要であることに注意．このとき，
+    \begin{enumerate}
+        \item $E_\theta[\dot{l}]=0\in\R^k$かつ$I_\theta:=E_\theta[\dot{l}_\theta\dot{l}_\theta^\top]\in M_k(\R)$が定まる．
+        \item 任意の収束列$\{h_n\}\subset\Theta,h_n\to h$について，$\Delta_{n,\theta}:=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)\in\R^k$とすると，
+        \[\log\prod_{i=1}^n\frac{p_{\theta+h_n/\sqrt{n}}}{p_\theta}(X_i)=h^\top\Delta_{n,\theta}-h^\top\frac{1}{2}I_\theta h+o_{p_\theta}(1)\]
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[LAN: local asymptotic normal]
+    モデル$(P_{n,\theta}|\theta\in\Theta)_{n\in\N}$が$\theta_0\in\Theta$において\textbf{局所漸近正規}であるとは，
+    \begin{enumerate}
+        \item 行列$r_n,I_{\theta_0}\in M_k(\R)$，
+        \item $P_{\theta_0}$の下で$N(0,I_{\theta_0})$に分布収束する確率変数$\Delta_{n,\theta}:\Om\to\R^k$，
+    \end{enumerate}
+    が存在して，任意の収束列$\{h_n\}\subset\R^k,h_n\to h$について，
+    \[\log\frac{dP_{n,\theta+r_n^{-1}h_n}}{dP_{n,\theta}}=h^\top\Delta_{n,\theta}-\frac{1}{2}h^\top I_\theta h+o_{P_{n,\theta}}(1)\]
+    と展開できることをいう．
+\end{definition}
+\begin{example}
+    $L^2$-微分可能なモデル$(P_\theta)_{\theta\in\Theta}$が定める実験列$(P^n_\theta)$は，$r_n=\sqrt{n}I$を行列として局所漸近正規である．
+\end{example}
+
+\subsection{正規実験への収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    上の「局所漸近正規性」の意味を，統計的実験列の収束概念以前の状態で考えたい．
+
+\end{tcolorbox}
+
+\begin{discussion}
+    統計的実験が収束するとき，元の実験で弱収束する統計量は，極限実験での弱収束先に法則同等である．
+\end{discussion}
+
+\begin{definition}
+    ランダム化された統計量$T=T(X,U)$とは，$U\sim U([0,1])$にも依存する統計量をいう．
+\end{definition}
+
+\begin{theorem}[局所漸近正規性の十分条件]
+    モデル$(p_\theta)_{\theta\in\Theta\osub\R^k}$は，
+    密度関数の平方根$\theta\mapsto\sqrt{p_\theta}$が$L^2$-微分可能であり，Fisher情報行列$I_\theta:=E_\theta[\dot{l}_\theta\dot{l}_\theta^\top]\in\GL_k(\R)$が可逆であるとする．
+    実験$(P_{\theta+h/\sqrt{n}})_{h\in\R^k}$における統計量$T_n:\X^n\to\R^k$が，
+    任意の$P_{\theta+h/\sqrt{n}}\;(h\in\R^k)$について弱収束するとき，
+    実験$(N(h,I^{-1}_{\theta}))_{h\in\R^k}$上のランダム化された統計量$T:=T(X,U):\X\times[0,1]\to\R^k$が存在して，任意の$h$について同じ収束先へ分布収束する．
+\end{theorem}
+
+\chapter{セミパラメトリック有効性}
 
 \begin{quotation}
     一部の特徴はパラメータ付けすることが可能なほど知見があり，一方で残りは生の関数のまんま残しておくモデルをセミパラメトリックモデルという．
+    また別の見方として，$\P\subset P(\X)$を完全に未知として，既知の汎関数$\psi:\P\to\R^p$の値の推定を考える問題はセミパラメトリックモデルである．
+
     このようなモデルは複雑な構造ゆえ，（解析的な解決は無理で）アルゴリズム的な実装のみが可能な，非線形な推定過程を必要とする．
-    そこで，\textbf{最も重要な手続きは漸近理論}となり，実際のサンプルサイズに対するパフォーマンスは，シミュレーションと数値実験によって検証されることとなる．
+    そこで，\textbf{最も重要な手続きは漸近理論}となり(大標本理論の延長)，実際のサンプルサイズに対するパフォーマンスは，シミュレーションと数値実験によって検証されることとなる．
+    しかし多くのパラメータ$\theta$は，古典的モデルと同様の収束レートと漸近正規性をもって推定可能である．
 
     観察研究などで，欠測データへの配慮を行わないこと（"complete case analysis"と呼ばれて，解析ソフトはデフォルトでこの挙動を行うものも多い）は深刻なバイアスをもたらしかねない．
     欠測データと言っても，"censored data"を含む．これは生存解析でよく直面する．\cite{Tsiatis}
 
     一致で漸近正規な統計量をsemiparametric estimatorという．
     これの存在や探し方は，影響関数の幾何学から重大な示唆がある．
+    まず効率性理論(efficiency theory)を議論し，これはパラメトリックな場合をほぼ完璧に一般化する．
+    が，推測理論において未解決問題が多い．
 
     \begin{enumerate}
         \item 最尤推定法は，共変量$x$と結果変数$y$の間のパラメトリックなモデルを立て，その中では「最適」かもしれない．
@@ -734,10 +828,17 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\section{接集合と情報量}
+\section{接空間と情報量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Fisher情報量の概念を拡張するには，部分パラメトリックモデルを考える必要がある．
+    この発想の根底には$\P$をFrechet多様体と見做す態度がある（多様体自体が$\R^n$の貼り合わせなので）．
+    さらに，構成ができてしまうため，部分パラメトリックモデルは局所漸近正規な1次元なもののみを考えれば良いことになり，パラメトリックモデルでの議論が完全に生きる．
+\end{tcolorbox}
 
 \begin{notation}
-    観測量を$X_1,\cdots$，その標本空間を$\X$とする．
+    $\P$に属する未知の分布$P\in\P$に従う観測量を$X_1,\cdots$，その標本空間を$\X$とする．
 \end{notation}
 
 \subsection{スコア関数と接集合}
@@ -745,23 +846,39 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     LeCunによる概念．
-    全てを$\L^2_*(\X,P)$の中で考える．
+    全てを$\L^2_*(\X,P)$の中で考える(なぜならこれはモデルに一切の制限をつけなかった場合の極大な接空間をなす)．
+    非常に語用が混乱しているので注意する必要がある．
+    \begin{enumerate}
+        \item 部分パラメトリックモデル$\ep\mapsto P_\ep$の定める$1/2$乗測度$\ep\mapsto P^{1/2}_\ep$が$\ep=0$で$L^2$-微分可能であることを$\P$が$P_0$にて道毎に微分可能であるといい，
+        \item このような部分パラメトリックモデル$\ep\mapsto P_\ep$が定めるスコア関数全体の集合を接集合$\dot{\P}_{P_0}$という．
+    \end{enumerate}
 \end{tcolorbox}
 
 \begin{notation}
+    確率測度$\P$について中心化されている$(\X,\B)$上の2乗可積分関数全体の空間を
     \[\L^2_*(\X,P):=\Brace{g\in\L^2(\X,P)\mid E_P[g]=0}.\]
+    とする．
 \end{notation}
 
+\begin{discussion}[パラメトリックな場合]
+    パラメトリックモデルが定める密度の平方根関数$\theta\mapsto\sqrt{p_\theta}$が$\theta$において$L^2$-可微分
+    \[\exists_{\dot{l}\in\L^2(\X)}\quad\int\paren{\sqrt{p_{\theta+h}}-\sqrt{p_\theta}-\frac{1}{2}h^\top \dot{l}_\theta\sqrt{p_\theta}}^2d\mu=o(\norm{h}^2)\quad(h\to0).\]
+    ならば，$\theta$において局所漸近正規，すなわち，次の展開が成り立つのであった(定理\ref{thm-sufficient-condition-for-parametric-LAN})．
+    任意の収束列$\{h_n\}\subset\Theta,h_n\to h$について，$\Delta_{n,\theta}:=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{l}_\theta(X_i)\in\R^k$とすると，
+    \[\log\prod_{i=1}^n\frac{p_{\theta+h_n/\sqrt{n}}}{p_\theta}(X_i)=h^\top\Delta_{n,\theta}-h^\top\frac{1}{2}I_\theta h+o_{p_\theta}(1)\]
+    ここで，$\dot{l}_\theta$をスコア関数といい，この$L^2$-ノルム$I_\theta:=P_\theta\dot{l}_\theta\dot{l}_\theta^\top$をFisher情報行列というのであった．
+\end{discussion}
+
 \begin{definition}[$P$-path]
-    $\bP\in\P$に対して，$\bP$-道とは，$(P_t)_{t\in\R_+}:[0,\ep)\to\P;P_0=\bP$をいう．
+    $\bP\in\P$に対して，\textbf{1次元部分パラメトリックモデル}改ため\textbf{$\bP$-道}とは，$(P_t)_{t\in\R_+}:[0,\ep)\to\P;P_0=\bP$をいう．
 \end{definition}
 
-\begin{definition}[differentiability of path, score function]
-    ($L^2$-)微分可能な$P$-道とは，$P$-道$(P_t)_{t\in[0,\ep)}$であって，
+\begin{definition}[$L^2$-differentiability of path, score function]
+    \textbf{$g$をスコア関数として$L^2$-微分可能}な$P$-道とは，$P$-道$(P_t)_{t\in[0,\ep)}$であって，
     \begin{enumerate}
         \item ある可測関数$g\in\L(\X,P)$に対して
         \[\int\paren{\frac{dP^{1/2}_t-dP^{1/2}}{t}-\frac{1}{2}gdP^{1/2}}^2\xrightarrow{t\to0}0.\]
-        を満たすことをいう．このとき，$dP^{1/2}$は測度が定める線型作用素の二乗根作用素とする．
+        を満たすことをいう．このとき，$dP^{1/2}$は測度が定める線型作用素の二乗根作用素とする．\footnote{どうやら任意の$dP^{1/2}$は$L^2(P)$の単位円内に入る？}
         すると，$g$は中心化された$P$-2乗可積分関数$g\in\L^2_*(\X,P)$となることが必要．\cite{vanderVaart Semiparametric Theory}
         \item 参照測度の族$(\mu_t)$に対して$\dd{P}{\mu_t}=p_{tt}$とし，
         \[\int\paren{\frac{p_{tt}^2-p_t^2}{t}-\frac{1}{2}gp_t^{1/2}}^2d\mu_t\xrightarrow{t\to0}0.\]
@@ -769,28 +886,197 @@ title=]
     \end{enumerate}
     このときの$g$を\textbf{スコア関数}や\textbf{道毎の微分}という．
 \end{definition}
+\begin{remarks}[セミパラメトリックモデルの幾何学的描像]
+    $P\in\P$は$L^2(\X,P)$に対して正な線型汎函数を定めるから，$dP\in L^2(\X,P)$だと思える．ここで$dP^{1/2}$は単位円に入る．
+    すると$\P\subset L^2(\X,P)$と思っても良い．
+    すると，$\dot{\P}_P$を$1/2gdP^{1/2}$全体の集合$\P^{1/2}$と同一視すると，その接空間を集めたものと思える．
+\end{remarks}
 
-\begin{definition}[tangent set / space]
-    $P$を通る全ての可微分な道$(P_t)_{t\in\R_+}$に関するスコア関数$g$全体の集合を，$P$における\textbf{接集合}といい，$\dot{\P}_P$\cite{vanderVaart Semiparametric Theory}または$T_P(\P)$\cite{Pfanzagl}で表す．
+\begin{definition}[tangent cone / space]
+    $P$を通る全ての$L^2$-可微分な$P$-道$(P_t)_{t\in\R_+}$に関するスコア関数$g$全体の集合を，$P$における\textbf{接集合}といい，$\dot{\P}_P$\cite{vanderVaart Semiparametric Theory}または$T_P(\P)$\cite{Pfanzagl}で表す．
     ほとんどの場合，これは閉部分空間となる．
+    少なくとも，必ず正錐にはなる．
 \end{definition}
 
 \begin{lemma}
     任意のスコア関数は$2$乗可積分で，$E_P[g]=0$を満たす\cite{vanderVaart Semiparametric Theory}．
-    特に，$\dot{\P}_P\subset\L^2(\X,P)$が成り立つ．
+    特に，$\dot{\P}_P\subset\L^2_*(\X,P)$が成り立つ．
 \end{lemma}
+\begin{remarks}
+    もしモデルがノンパラメトリックであったら，接集合は$\dot{\P}_P=\L^2_*(\X,P)$を満たす．
+\end{remarks}
 
-\subsection{可微分性}
+\begin{example}[スコア関数の構成方法]
+    もし$P$-道$\ep\mapsto dP_\ep$がより強く微分可能ならば，その導関数は$L^2$-導関数と一致して，
+    \[g(x)=\left.\pp{}{\ep}\log dP_\ep(x)\right|_{\ep=0}\]
+    と表せるのであった．よって，構成する際はこれを目安とする．
+    ここでも対数尤度からは逃れられない，極めて基本的な対象である．
+\end{example}
 
-\begin{definition}[differentiable, efficient influence function]\mbox{}
+\begin{lemma}[$L^2$-微分可能な$P$-道の局所漸近正規性]
+    $P$-道$t\mapsto P_t$はスコア$g\in\L(\X)$について$L^2$-微分可能とする．このとき，
     \begin{enumerate}
-        \item 汎関数$\psi:\P\to\R$が$P\in\P$において接空間$\dot{\P}_P$について\textbf{可微分}であるとは，
+        \item $g\in L_*^2(\X,P)$である：$Pg=0,Pg^2<\infty$．
+        \item 次の展開が成り立つ：
+        \[\log\prod^n_{i=1}\frac{dP_{n^{-1/2}}}{dP}(X_i)=\frac{1}{\sqrt{n}}\sum_{i=1}^ng(X_i)-\frac{1}{2}Pg^2+o_P(1).\]
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    定理\ref{thm-sufficient-condition-for-parametric-LAN}による．
+\end{proof}
+
+\subsection{汎関数の可微分性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体上の関数の場合と全く同様に，多様体上の関数$f$が可微分であるとは，その接空間上の汎関数$df$を定めることをいう．
+\end{tcolorbox}
+
+\begin{definition}[differentiable relative to a tangent set, efficient influence function]\mbox{}
+    \begin{enumerate}
+        \item 汎関数$\psi:\P\to\R^k$が$P\in\P$においての\textbf{接空間$\dot{\P}_P$に関して可微分}であるとは，
         \[\exists_{\dot{\psi}_P\in L^2(P)^*}\;\forall_{g\in\dot{\P}_P}\;\frac{\psi(P_t)-\psi(P)}{t}\xrightarrow{t\to0}\dot{\psi}_P(g)\]
-        を満たすことをいう．
-        \item このときの有界線型汎函数$\dot{\psi}_P:L^2(P)\to\R$は，$\dot{\P}_P$の生成する閉部分空間上では一意に定まる．これを\textbf{有効影響関数}という．
-        $\dot{\P}_P$上への射影として有効影響関数を定めるような，有界線型汎函数$\dot{\psi}_P:L^2(P)\to\R$を\textbf{影響関数}という．
+        を満たすことをいう．このとき，合成関数$\R\to\R;t\mapsto P_t\mapsto \psi(P_t)$が通常の意味で微分可能であることも必要で，その微分が道$t\mapsto P_t$の定めるスコア関数$g$上の関数$\dot{\psi}_P$として表現できることを要求する強い条件である．
+        \item このときの有界線型汎函数$\dot{\psi}_P:L^2(P)\to\R$は，$\dot{\P}_P$の生成する閉部分空間上では一意に定まる．
+        これが定めるRiesz表現元$\wt{\varphi}_P\in\dot{\P}_P\subset L^2(P)$を
+        \textbf{有効影響関数}という：$\dot{\psi}_Pg=(\wt{\psi}_P|g)=\int\wt{\psi}gdP$．
+        \item 
+        一方で有効影響関数は
+        $L^2(P)$全域には一意に拡張できるとは限らないので，
+        $\dot{\P}_P$上への射影として有効影響関数を定めるような函数$\dot{\psi}_P\in L^2(P)$を\textbf{影響関数}という．
+        これは確かにパラメトリックな場合の影響関数$\IF(x;T,P):\X\to\R^k$を一般化している．ここでパラメトリックな場合の影響関数を影響曲線というレトロニムを使う．
     \end{enumerate}
 \end{definition}
+\begin{remarks}
+    すなわち，有効影響関数$\dot{\psi}_P\in L^2(P)^*$は特に$\dot{\P}_P$上の有界線型汎函数であり，
+    余接空間の元である．また，$\P^{1/2}\subset B(L^2(P))$上の有界線型汎函数と思っても良い．
+\end{remarks}
+
+\subsection{有効性理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    パラメトリックの場合の最小な漸近分散$\dot{\psi}_\theta I^{-1}_\theta\dot{\psi}_\theta^\top$を同じ役割を，有効影響関数の$L^2$-ノルム$\norm{\wt{\psi}_P}_{L^2(P)}$が果たす．
+    正規化されたスコア関数$I^{-1}_\theta\dot{l}_\theta$と影響関数$\wt{\psi}_P$は同じ役割を果たす．
+    そして，殆ど至る所畳み込み定理はLebesgue測度を利用したパラメトリックな場合特有の議論であったのを除いて，畳み込み定理とLAMがそのまま一般化される．
+    $\psi(P)$の漸近最適な推定量として，一般的には$\psi(\bP_n)$が取れることとなる．
+\end{tcolorbox}
+
+\begin{discussion}
+    $P$-道$t\mapsto P_t$上で汎関数$\psi$を推定する際の情報量限界は，スコア関数を$g$とするとFisher情報量は$Pg^2$であるから，
+    Cramer-Raoの下界
+    \[\frac{(d\psi(P_t)/dt)^2}{Pg^2}=\frac{(\wt{\psi}_P|g)^2}{(g|g)}\]
+    を得る．
+    これを全ての$P$-道，すなわち，全てのスコア関数$g\in\dot{\P}_P$についての上界を取れば良い．
+    実はこれは有効影響関数$\wt{\psi}_P:\X\to\R$の定める有界線型汎函数$\dot{\psi}_P:\dot{\P}_P\to\R$
+\end{discussion}
+
+\begin{proposition}
+    汎関数$\psi:\P\to\R$は$P\in\P$において，$\dot{\P}_P$に関して微分可能であるとする：$\dot{\psi}_P:\dot{\P}_P\to\R$．
+    このとき，
+    \[\sup_{g\in\dot{\P}_P}\frac{(\wt{\psi}_P|g)^2}{(g|g)}=P\wt{\psi}_P^2=\norm{\wt{\psi}_P}_{L^2(P)}.\]
+\end{proposition}
+
+\begin{notation}
+    $P_{t,g}$で，$g\in\dot{\P}_P$に対応する$L^2$-可微分な$P$-道とする．
+\end{notation}
+
+\begin{definition}
+    統計量$T_n$が\textbf{正則}であるとは，ある極限分布$L\in P(\R^n)$が存在して，任意の$g\in\dot{\P}_P$に対して
+    \[\sqrt{n}(T_n-\psi(P_{1/\sqrt{n},g}))\xrightarrow[P_{1/\sqrt{n},g}]{d}L\]
+\end{definition}
+
+\begin{theorem}[畳み込み定理]
+    
+\end{theorem}
+
+\begin{theorem}[LAM]
+    
+\end{theorem}
+
+\begin{lemma}[正規な統計量が最適であるための必要十分条件]
+    $\psi:\P\to\R^k$は$P$において接正錐$\dot{\P}_P$に関して，有効影響関数$\wt{\psi}_P$を持って微分可能であるとする．
+    このとき，統計量列$T_n$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $T_n$は正則で，漸近分布$N(0,P\wt{\psi}\wt{\psi}^\top)$を持つ．
+        \item 展開$\sqrt{n}(T_n-\psi(P))=\frac{1}{\sqrt{n}}\sum_{i=1}^n\wt{\psi}_P(X_i)+o_P(1)$が成り立つ．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    有効影響関数は，確かに新たな観測$X_i$が，漸近分布にどのような影響を与えるかの指標になっているとみれる．
+\end{remarks}
+
+\begin{example}[経験測度]
+    $f\in L^2(\X,P)$を固定して，$\psi(P)=Pf=\ev_f(P)$の推定を考える．
+    極大にとった接集合は$L^2_*(\X,P)$となるが，これだと大きすぎるので，有界なもの$L^\infty_*(\X,P)$を考えよう．
+    任意の$g\in L^\infty_*(\X,P)$に対して，$P$-道$dP_t:=(1+tg)dP$を考えると，$\psi(P_t)=Pf+tPfg$となるから，
+    微分$\dot{\psi}_P$は$g\mapsto Pfg$で定まる．
+    よって，影響関数は$f$で，その$L^2_*(\X,P)$への射影$f-Pf$で有効影響関数$\wt{\psi}_P=f-Pf$が得られる．
+    よって，$\psi(P)$の推定の漸近最適な分散は$P\wt{\psi}_P^2=P(f-Pf)^2$．
+    経験測度$\bP_n$はこれを達成するから，漸近最適な$\psi(P)$の推定量である．
+\end{example}
+
+\section{有効スコア関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    モデルが$\{P_{\theta,\eta}\}_{\theta\in\Theta,\eta\in H},\;(\Theta\osub\R^k)$と表され，その上の
+    汎関数が$\psi(P_{\theta,\eta})=\theta$となる場合について，有効性理論を特殊化する．
+    このとき，スコア関数はパラメトリックモデルのものとノンパラメトリックモデルのものの線形和になる．
+    そして有効影響関数の形は，すごく分かりやすくパラメトリックの場合の一般化となっている．
+\end{tcolorbox}
+
+\begin{discussion}[局外母数の接空間]
+    $t\mapsto\eta_t$を$H$上の$\eta$-道とする．このとき，$P_{\theta,\eta}$-道として
+    $t\mapsto P_{\theta+at,\eta_t}$を取ると，($L^2$-微分可能ならば)そのスコア関数は，$\eta$を固定して得るパラメトリックモデル$(P_{\theta,\eta})_{\theta\in\Theta}$のスコア関数を$\dot{l}_{\theta,\eta}$として，
+    \[\pp{}{t}\log dP_{\theta+ta,\eta_t}|_{t=0}=a^\top\dot{l}_{\theta,\eta}+g\]
+    と表せる．このときの$g$は，$\theta$を固定して得るノンパラメトリックモデル$(P_{\theta,\eta})_{\eta\in H}$の道のスコア関数と見做すことができ，
+    その全体からなる集合を${}_\eta\dot{\P}_{P_{\theta,\eta}}$で表し，\textbf{局外母数$\eta$の接空間}という．
+\end{discussion}
+
+\begin{discussion}
+    パラメータ$t\mapsto\psi(P_{\theta+at,\eta_t})=\theta+at$は微分可能で，微分係数は$a$である．
+    汎関数$\psi$が$\dot{\P}_{P_{\theta,\eta}}$について微分可能であるとき，有効影響関数$\wt{\psi}_{\theta,\eta}:\dot{\P}_{P_{\theta,\eta}}\to\R$が存在して
+    \[a=\pp{}{t}\psi(P_{\theta+at,\eta_t})|_{t=0}=(\wt{\psi}_{\theta,\eta}|a^\top\dot{l}_{\theta,\eta}+g)\]
+    が成り立つ．特に$a=0$ととったとき，$\wt{\psi}_{\theta,\eta}\perp{}_\eta\dot{\P}_{P_{\theta,\eta}}$が必要だとわかる．
+\end{discussion}
+
+\begin{definition}[efficient score function, efficient information matrix]\mbox{}
+    \begin{enumerate}
+        \item $\wt{l}_{\theta,\eta}:=\dot{l}_{\theta,\eta}-\pr_{\dot{\P}_{P_{\theta,\eta}}}(\dot{l}_{\theta,\eta})$を\textbf{有効スコア関数}という．
+        \item $\wt{I}_{\theta,\eta}:=P_{\theta,\eta}\wt{l}_{\theta,\eta}\wt{l}_{\theta,\eta}^\top$を\textbf{有効情報行列}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[汎関数が直交射影である場合の影響関数]\mbox{}
+    \begin{enumerate}[({A}1)]
+        \item 任意の$a\in\R^k$と$g\in{}_\eta\dot{P}_{P_{\theta,\eta}}$に関して，$H$の道$t\mapsto \eta_t$が存在して，これが定める$P_{\theta,\eta}$-道はスコア関数を$a^\top\dot{l}_{\theta,\eta}+g$として$L^2$-微分可能であるとする．
+        \item 有効情報行列$\wt{I}_{\theta,\eta}$は可逆であるとする．
+    \end{enumerate}
+    このとき，直交射影の定める汎関数$\psi(P_{\theta,\eta})=\theta$は$P_{\theta,\eta}$において$\dot{\P}_{\theta,\eta}=\brac{\dot{l}_{\theta,\eta}}\oplus{}_\eta\dot{\P}_{\theta,\eta}$に関して微分可能で，有効影響関数$\wt{\psi}_{\theta,\eta}=\wt{I}_{\theta,\eta}^{-1}\wt{l}_{\theta,\eta}$を持つ．
+\end{lemma}
+\begin{remarks}
+    漸近最適な統計量列の特徴づけは，
+    $\sqrt{n}(T_n-\psi(\theta))=\frac{1}{\sqrt{n}}\sum^n_{i=1}\wt{I}^{-1}_{\theta,\eta}\wt{l}_{\theta,\eta}(X_i)+o_P(1)$
+    が与える．パラメトリックな場合の漸近線型性
+    \[\sqrt{n}(T_n-\psi(\theta))=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{\psi}_\theta I_\theta^{-1}\dot{l}_\theta^\top(X_i)+o_P(1)\]
+    と酷似している．$\dot{\psi}_\theta\dot{l}_\theta^\top$が$\wt{l}_{\theta,\eta}$に当たるのは，射影作用がパラメトリックな場合では$\dot{\psi}_\theta$を乗じることに等価になるのか．
+\end{remarks}
+
+\section{スコア作用素と情報量作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特殊化された理論は分解$\Theta\oplus H$を利用した．一般の汎関数$\psi$についてこの分解を見つけることは困難であり，そのような場合は局外母数の接空間を定めるスコア作用素を用いる．
+\end{tcolorbox}
+
+\section{有効性とデルタ法}
+
+\section{有効スコア方程式}
+
+\section{一般化推定方程式}
+
+\chapter{因果推論法}
 
 \section{傾向スコア・マッチング}
 
@@ -950,10 +1236,12 @@ title=]
 
 \section{一般的な周辺パラメトリックモデルの推定}
 
-\chapter{汎関数推定}
+\chapter{影響関数を用いた汎関数推定}
 
 \begin{quotation}
     まだ名前が定まっていないが，Semiparametric Doubly Robust Targeted Double Machine Learningと呼ばれている．
+    ベイズ的な発想かも知れないが，不確実性の中で唯一頼りになるのは頑健性・反脆弱性である．
+    極めて数学者らしくない発想ではあるが．
 
     おそらく，こういう話である．
     ノンパラメトリックなパラメータとは汎関数になる(これをtargeted parameterともいう)．
@@ -4527,10 +4815,11 @@ title=]
     を満たすことをいう．
 \end{definition}
 
-\chapter{推測理論}
+\chapter{推定理論}
 
 \begin{quotation}
-    
+    $\sqrt{n}$-推定可能なパラメータのみに限定する．
+    実際，多くのパラメータは，漸近正規性などの従来の大標本理論の枠組みには入らないこともある．
 \end{quotation}
 
 \chapter{機械学習}
@@ -4570,7 +4859,7 @@ title=]
     しかしながらCNN (Convolutional Neural Network)などの他の強い帰納バイアスとは異なりTransformerには，データや計算資源のスケールアップに従い単調に性能が向上するというべき則が成立すると考えられている．
 \end{remark}
 
-\chapter{有効推定}
+\chapter{参考文献}
 
 \begin{thebibliography}{99}
     \bibitem{久保木・鈴木}

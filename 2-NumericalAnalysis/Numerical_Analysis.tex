@@ -1,14 +1,15 @@
 \documentclass[uplatex, dvipdfmx]{jsreport}
 \title{数値解析}
-\author{司馬博文 05-210520}
+\author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
 
-\chapter{数の表現}
+\chapter{数の表現と数値解析の概観}
 
 \begin{quotation}
     コンピュータの性能が向上しようと，その数学的な限界（有限性や数の表現など）を
@@ -170,30 +171,69 @@ title=遠すぎる数の和，近すぎる数の差には注意．]
     もう一方は解と係数の関係$x_1x_2=c$で計算する．
 \end{example}
 
-\chapter{代数：連立一次方程式と行列分解}
+\section{連立一次方程式}
 
-\begin{quotation}
-    現実問題の数理モデル化においては，偏微分方程式の近似を経て，問題が連立一次方程式に帰着される場合が多い．
-    素行列でも密行列でも対応できる解析的方法をまずは考えたい．
-    このための霊性を湛えた数学の御堂が代数である．
-    しかし，密行列の場合は，$O(N^2)$の記憶容量，$O(N^3)$の計算量が大きな欠点となる．
+\begin{enumerate}
+    \item 消去法：数値計算誤差がない状況においては必ず有限停止する算譜である．
+    \item 反復法：漸化式によって近似解の列を生成する手法の総称であり，本質的に有限停止はしない．
+    \item 共役勾配法：二つの性質を併せ持つ．
+\end{enumerate}
 
-    こうして，数理手法・算譜の数理的な扱いに集中するのがどうやらこの本の哲学である．
-    ソフトウェアの適切な選択ということである．
-\end{quotation}
+関連する問題として最小二乗問題がある．
+これは，$A$が縦長の行列の場合には，連立一次方程式$Ax=b$は一般には解を持たず，$\norm{Ax-b}_2$を最小にする$x$を求めることを考えることとなる．
 
-\section{連立一次方程式とCramerの公式}
+\section{固有値問題}
+
+\begin{enumerate}
+    \item Hermite行列：固有値が全て実数となることを利用した専用の算譜がある．
+    \item 
+\end{enumerate}
+
+関連する問題として特異値問題があり，特異値は$A^\top A,AA^\top$の固有値の平方根に等しいから
+理論的には問題にならないが，数値計算手法としては特別な手法が考えられる．
+
+\chapter{行列とその分解と変換}
+
+\section{連立一次方程式とCramerの公式から見た線型計算の世界}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=計算量の世界：三角行列への注目]
     Cramerの公式は行列式計算を含むため，乗除算の階数は階乗のオーダーで増えていく．
-    これは最悪な種類の計算量である．もはや計算測度があと$10^n$倍速くなろうと意味をなさない算譜である．
+    これは最悪な種類の計算量である．もはや計算速度があと$10^n$倍速くなろうと意味をなさない算譜である．
     また$\det(\epsilon A)=\epsilon^n\det A$でもあるから，さらに意味を持たない．
     よって，detを用いた正則性の判断は実は難しい．
     こうして，三角行列への注目が誘導される．
 \end{tcolorbox}
 
-\section{Hermite行列と実対称行列}
+また，逆行列が転置によって瞬時に求まることと，数値的に安定である直交行列が定める変換も重用される．
+
+\section{行列の標準形}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    なるべく素な行列で，また対角成分付近に密集していることが好ましい．
+\end{tcolorbox}
+
+\begin{definition}
+    対角行列を一般化したクラスが次の通り．
+    \begin{enumerate}
+        \item 3重対角行列：$\abs{i-j}>1\Rightarrow a_{ij}=0$．副対角成分が非零のとき，\textbf{既約}であるという．
+        \item $w$-帯行列：$\abs{i-j}>w\Rightarrow a_{ij}=0$．$2w+1$を\textbf{帯幅}という．
+    \end{enumerate}
+    $\abs{i-j}=1$を満たす成分$a_{ij}$を\textbf{副対角成分}という．
+
+    非対称性を考慮したクラスは次の通り．
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item 下三角行列：$i<j\Rightarrow a_{ij}=0$．対角成分が全て$1$であるとき，\textbf{単位}的であるという．対角成分が全て$0$であるとき\textbf{狭義}であるという．
+        \item Hessenberg行列：$i>j+1\Rightarrow a_{ij}=0$．
+    \end{enumerate}
+    2つ合わせたクラスは次の通り．
+    \begin{enumerate}\setcounter{enumi}{4}
+        \item $i<j\lor i>j+1\Rightarrow a_{ij}=0$．
+    \end{enumerate}
+\end{definition}
+
+\section{自己共役行列の性質}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -204,10 +244,12 @@ title=]
     \end{itemize}
 \end{tcolorbox}
 
-\begin{definition}[positive definite]\mbox{}
+\subsection{定義と特徴付け}
+
+\begin{definition}[(semi-)positive definite]\mbox{}
     \begin{enumerate}
-        \item Hermite行列が正定値であるとは，固有値が全て正であることを言う．$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}>0$が必要十分．
-        \item Hermite行列が半正定値であるとは，固有値が全て非負であることを言う．$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}\ge 0$が必要十分．
+        \item Hermite行列が正定値であるとは，$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}>0$．固有値が全て正であることと同値．
+        \item Hermite行列が半正定値であるとは，$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}\ge 0$．固有値が全て非負であることと同値．
     \end{enumerate}
 \end{definition}
 
@@ -219,22 +261,53 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-首座小行列(leading principal minor)という語を使う．
+\begin{definition}[submatrix, principal minor, leading principal minor]
+    行列$(a_{ij})_{(i,j)\in I\times J}$について，
+    \begin{enumerate}
+        \item ある集合$\Lambda:=\{i_1<\cdots<i_k\}\subset I\cap J$を用いて，$(a_{i_\lambda,j_{\lambda'}})_{\lambda,\lambda'\in\Lambda}$と表せる行列を\textbf{$\Lambda$-部分行列}または小行列と呼ぶことにしよう．この行列式を\textbf{$k$次主小行列式}という．
+        \item $k$次の\textbf{首座小行列式}とは，$\Lambda=[k]$である場合をいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[半正定値性の特徴付け]
+    正方行列$A\in M_n(\C)$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $A$は半正定値である：$\forall_{x\in\C^n\setminus\{0\}}\;\brac{Ax,x}\ge 0$．
+        \item 任意の主小行列式が非負である．
+        \item 任意の固有値が全て非負である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{一般化}
+
+\begin{definition}[P-matrix (positive)]
+    一般の正方行列$P\in M_n(\C)$について，任意の主小行列式が非負である行列を\textbf{$P_0$-行列}という．
+    任意の任意の主小行列式が正である行列を$P$-行列といい，$P_0$-行列全体の集合は$P$-行列全体の集合の閉包となる．
+\end{definition}
+
+\begin{lemma}
+    $P$-行列かつ$Z$-行列ならば，$M$-行列である．
+\end{lemma}
 
 \section{優対角行列と既約行列}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    対角成分に非零要素が集積した疎行列を捉えるための概念を導入する．
     優対角行列が可逆であるためには，狭義性と既約性が必要．
 \end{tcolorbox}
 
-\begin{definition}[(strictly) diagonally dominant matrix, reducable]
+\subsection{定義}
+
+\begin{definition}[(strictly) diagonally dominant matrix, reducable]\mbox{}
     \begin{enumerate}
-        \item 各i行目について$\abs{a_{ii}}\le\sum^n_{j=1,j\ne i}\abs{a_{ij}}$が成り立つ行列$A$を\textbf{優対角行列}という．
-        \item 各i行目について$\abs{a_{ii}}<\sum^n_{j=1,j\ne i}\abs{a_{ij}}$が成り立つ行列$A$を\textbf{狭義優対角行列}という．
-        \item 正の対角成分をもつ対角行列$D=\diag(d_i)$で，$AD$が狭義優対角行列となるものが存在するとき：$\abs{a_{ii}}d_i\ge\sum^n_{j=1,j\ne i}\abs{a_{ij}}d_j$，$A$を\textbf{一般化狭義優対角行列}という．
-        \item $n\ge 2$のとき，空でない真部分集合$J\subset\{1,\cdots,n\}$であって，$\forall_{i\in J}\;\forall_{j\notin J}\;a_{ij}=0$が成り立つとき，行列$A$を\textbf{可約}という．可約でない行列を\textbf{既約}という．$n=1$の時は，零行列のみを可約とする．
-        \item 
+        \item 各$i$行目について，対角要素の絶対値が非対角要素の絶対値の和よりも大きい行列$A$を，行方向の\textbf{優対角行列}という：
+        $\abs{a_{ii}}\ge\sum^n_{j=1,j\ne i}\abs{a_{ij}}$．
+        \item 真の不等号が成り立つ場合，行列$A$を\textbf{狭義優対角行列}という．
+        \item 正の対角成分をもつ対角行列$D=\diag(d_i)\;d_i>0$で，$AD$が狭義優対角行列となるものが存在するとき，$A$を\textbf{一般化狭義優対角行列}という：$\abs{a_{ii}}d_i\ge\sum^n_{j=1,j\ne i}\abs{a_{ij}}d_j$．
+        \item $A^\top$が(一般化・狭義)優対角行列であるとき，$A$は列方向に(一般化・狭義)優対角であるという．
+        \item $n\ge 2$のとき，空でない真部分集合$J\subset\{1,\cdots,n\}$であって，$\forall_{i\in J}\;\forall_{j\notin J}\;a_{ij}=0$が成り立つとき，行列$A$を\textbf{可約}という．
+        \item 可約でない行列を\textbf{既約}という．$n=1$の時は，零行列のみを可約とする．
     \end{enumerate}
 \end{definition}
 
@@ -242,19 +315,186 @@ title=]
     行列$\begin{pmatrix}2&-1&0\\0&2&-2\\0&2&-2\end{pmatrix}$は優対角行列だが，一般化狭義優対角行列ではなく，非正則である．
 \end{example}
 
-\section{Gaussの消去法}
+\subsection{$M$-行列}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $M$-行列は，(とくにラプラシアンのような最小・最大原理の存在する)微分作用素の離散化の結果として自然に得られる行列$A$を捉えたものである．
+    これの逆$A^{-1}$は積分の離散化になっていると考えられることがinverse positivityに対応する．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 非対角要素が全て非正である行列を\textbf{$Z$-行列}という．
+        \item 正則行列$A=(a_{ij})\in\GL_n(\R)$が\textbf{$M$-行列}であるとは，非対角要素が全て非正であり($Z$-行列)，逆行列$A^{-1}$が非負であるもの(Inverse-positivity)をいう．
+        \item 行列$A=(a_{ij})\in M_n(\C)$が定める行列$(\al_{ij})\in M_n(\R),\;\al_{ij}:=\begin{cases}
+            \abs{a_{ij}},&i=j,\\
+            -\abs{a_{ij}},&i\ne j.
+        \end{cases}$を\textbf{比較行列}という．
+        \item 比較行列が$M$-行列になるような行列$A=(a_{ij})\in M_n(\C)$を$H$-行列という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $M$-行列の対角成分は正になる．
+\end{lemma}
+
+\begin{lemma}
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $A$は$H$行列である．
+        \item $A$は一般化狭義優対角行列である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}
+    行方向に一般化狭義優対角であることと，列方向に一般化狭義優対角であることとは同値．
+\end{corollary}
+
+\section{特異値分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Autonne (1915)が導入した．スペクトル定理の一般化とみれる．
+\end{tcolorbox}
+
+\begin{theorem}[singular value decomposition (実の場合)]
+    任意の$A\in M_{m,n}(\R)$について，直交行列$U\in O_m(\R),V\in O_n(\R)$が存在して，$r:=\rank(A)$とすると
+    \[A=U\Sigma V^\top,\qquad\Sigma=\begin{bmatrix}D&O_{r,n-r}\\O_{m-r,r}&O_{m-r,n-r}\end{bmatrix},\quad D=\diag(\sigma_1,\cdots,\sigma_r),\;(\sigma_1\ge\cdots\ge\sigma_r>0)\]
+    と表せる．
+\end{theorem}
+\begin{remarks}
+    $A$の定める線型変換$\R^n\to\R^m$は，$U,V$の列ベクトル$u_1,\cdots,u_m$と$v_1,\cdots,v_n$について簡単な形で表せる：$Av_i=\sigma_iu_i$．
+\end{remarks}
+
+\begin{corollary}\mbox{}
+    \begin{enumerate}
+        \item $A^\top A=V\Sigma^\top\Sigma V$，$AA^\top=U\Sigma\Sigma^\top U^\top$．
+        \item $A$の特異値は$A^\top A$の非零固有値の正の平方根に等しい．
+        \item $V$の列ベクトルは$A^\top A$の固有ベクトルであり，$U$の列ベクトルは$AA^\top$の固有ベクトルである．
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}[一般化逆行列の公式]
+    任意の$A\in M_{m,n}(\R)$について，特異値分解を$A=U\Sigma V^\top$とする．
+\end{theorem}
 
 \section{LU分解とCholesky分解}
 
-\section{一般の場合のLU分解}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    枢軸選択なしのGauss消去法は，係数行列$A$をLU分解していることに相当する．
+    次の数学的事実が，Gauss消去法の背後にある．
+\end{tcolorbox}
 
-\section{QR分解}
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $A\in M_n(\R)$を，単位下三角行列$L$と上三角行列$U$の積$A=LU$に分解することを\textbf{LU分解}という．
+        \item $A$が自己共役かつ正定値であるとき，下三角行列$C$を用いて$A=CC^\top$と分解できる．この場合を特に\textbf{Cholesky分解}という．
+        \item $A$が自己共役かつ正定値でないとき，単位下三角行列$L$と対角行列$D$を用いて$A=LDL^\top$と分解できる．この場合を特に\textbf{$LDL^T$分解}という．
+    \end{enumerate}
+\end{definition}
+
+\section{基本直交変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    直交変換を繰り返し適用して，特定の良い形の疎行列に収束させる技法が基本となる．
+\end{tcolorbox}
+
+\subsection{Householder変換}
+
+\subsection{Givens変換}
+
+\section{三角化／QR分解}
+
+\section{Hessenberg化／3重対角化}
 
 \section{Schur分解}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    固有値問題の数値解法では，ユニタリ変換を反復適用して上三角行列に収束させることが多いが，その背景には次の数学的事実がある．
+\end{tcolorbox}
+
+\begin{theorem}[Schur decomposition]
+    任意の複素行列$A\in M_n(\C)$は，ユニタリ行列$U$と上三角行列$S$を用いて$A=USU^*$と分解できる．
+    なお，一意性は保証されない．
+\end{theorem}
+
 \section{Moore-Penroseの一般化逆行列}
 
-\chapter{解析：連立一次方程式と行列のノルム}
+\section{行列のノルム}
+
+\subsection{$p$-ノルム}
+
+\begin{definition}[$p$-norm]
+    $M_{m,n}(\R)$上の$p$-ノルムとは，$\R^n,\R^m$の$p$-ノルムが定める作用素ノルムをいう：
+    \[\norm{A}_p:=\sup_{x\ne 0}\frac{\norm{Ax}_p}{\norm{x}_p}=\inf\Brace{c>0\mid\forall_{x\in\R^n}\;\norm{Ax}_p\le c\norm{x}_p}.\]
+\end{definition}
+
+\begin{lemma}
+    $A$の最大の特異値を$\sigma_1(A)$で表す．
+    \begin{enumerate}
+        \item $\norm{A}_1=\max_{j\in[n]}\sum_{i=1}^m\abs{a_{ij}}$．列ベクトルの$1$-ノルムの$\infty$-ノルムになる．
+        \item $\norm{A}_\infty=\max_{i\in[m]}\sum^n_{j=1}\abs{a_{ij}}$．行ベクトルの$1$-ノルムの$\infty$-ノルムになる．
+        \item $\norm{A}_2=\sigma_1(A)$．これを\textbf{スペクトルノルム}ともいう．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Frobeniusノルム}
+
+\begin{definition}
+    $A\in\R^{m\times n}$とみたときの$2$-ノルムを\textbf{Frobeniusノルム}という：
+    \[\norm{A}_F=\paren{\sum^m_{i=1}\sum^n_{j=1}\abs{a_{ij}}^2}^{1/2}=\paren{\sum_{i=1}^r\sigma_i(A)^2}.\]
+\end{definition}
+
+\subsection{スペクトル半径}
+
+\begin{proposition}[スペクトル半径公式]
+    $\forall_{p\in[1,\infty]}\;\lim_{k\to\infty}(\norm{A^k}_p)^{1/k}=\rho(A)\le\norm{A}_p$．
+\end{proposition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 三角不等式：各要素の絶対値を要素とする行列を$\abs{A}:=(\abs{a_{ij}})$とすると，$\rho(A)\le\rho(\abs{A})$．
+        \item $\forall_{A,B\in M_n(\R)}\;\rho(AB)=\rho(BA)$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{条件数}
+
+\begin{definition}[condition number]
+    正則行列$A\in\GL_n(\R)$の$p$-ノルムに関する\textbf{条件数}とは，
+    \[\kappa_p:=\norm{A}_p\norm{A^{-1}}_p\]
+    をいう．
+\end{definition}
+
+\begin{lemma}
+    正則行列$A\in\GL_n(\R)$について，
+    \begin{enumerate}
+        \item $\kappa_2=\frac{\sigma_1(A)}{\sigma_n(A)}$．
+        \item $\kappa_2^{-1}=\inf_{S\in M_n(\R)\setminus\GL_n(\R)}\frac{\norm{S-A}_2}{\norm{A}_2}$．
+    \end{enumerate}
+\end{lemma}
+
+\chapter{代数：連立一次方程式の消去法}
+
+\begin{quotation}
+    現実問題の数理モデル化においては，偏微分方程式の近似を経て，問題が連立一次方程式に帰着される場合が多い．
+    素行列でも密行列でも対応できる解析的方法をまずは考えたい．
+    このための霊性を湛えた数学の御堂が代数である．
+    しかし，密行列の場合は，$O(N^2)$の記憶容量，$O(N^3)$の計算量が大きな欠点となる．
+
+    こうして，数理手法・算譜の数理的な扱いに集中するのがどうやらこの本の哲学である．
+    ソフトウェアの適切な選択ということである．
+\end{quotation}
+
+
+\section{Gaussの消去法}
+
+
+\chapter{解析：連立一次方程式の反復法}
 
 \begin{quotation}
     未知数の多い連立一次方程式系で，係数行列はよく疎行列となる．
@@ -461,6 +701,13 @@ title=視点を逆にする]
     \]
 \end{theorem}
 
+\chapter{連立一次方程式と共役勾配法}
+
+\begin{quotation}
+    Krylov部分空間はロシアの応用数学者で海軍技術者であったアレクセイ・クリロフにちなんで名づけられた。
+    これは数値線形代数において最も成功した手法の一つである。 
+\end{quotation}
+
 \chapter{非線形方程式}
 
 \begin{quotation}
@@ -584,12 +831,7 @@ title=]
 
 \chapter{常微分方程式の初期値問題}
 
-\chapter{連立一次方程式とKrylov部分空間}
 
-\begin{quotation}
-    ロシアの応用数学者で海軍技術者であったアレクセイ・クリロフにちなんで名づけられた。
-    これは数値線形代数において最も成功した手法の一つである。 
-\end{quotation}
 
 \begin{thebibliography}{9}
     \bibitem{Moore-Penrose}
@@ -600,6 +842,8 @@ title=]
     森正武『数値解析』
     \bibitem{杉原正顯}
     杉原正顯・室田一雄『数値計算法の数理』
+    \bibitem{線型計算の数理}
+    杉原正顯・室田一雄『線型計算の数理』
 \end{thebibliography}
 
 \end{document}

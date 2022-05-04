@@ -1298,6 +1298,8 @@ title=一致推定量さえ見つかれば，漸近分散は逆Fisher情報行�
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     一致推定量の漸近有効性を改善する算譜を得たので，次は一致推定量の構成算譜を考える．
+
+    これにより，$\Theta$全域で$L^2$-微分可能で非退化なFisher情報行列を持つ識別可能なパラメトリックモデル$(P_\theta)_{\theta\in\Theta}$には正則で漸近最適な$\theta$の統計量が存在することが示せる．
 \end{tcolorbox}
 
 \section{頑健推定}
@@ -1711,7 +1713,7 @@ title=]
     ランダム化された統計量$T=T(X,U)$とは，$U\sim U([0,1])$にも依存する統計量をいう．
 \end{definition}
 
-\begin{theorem}[局所漸近正規性の十分条件]
+\begin{theorem}[正規実験へ収束するための十分条件]
     モデル$(p_\theta)_{\theta\in\Theta\osub\R^k}$は，
     密度関数の平方根$\theta\mapsto\sqrt{p_\theta}$が$L^2$-微分可能であり，Fisher情報行列$I_\theta:=E_\theta[\dot{l}_\theta\dot{l}_\theta^\top]\in\GL_k(\R)$が可逆であるとする．
     実験$(P_{\theta+h/\sqrt{n}})_{h\in\R^k}$における統計量$T_n:\X^n\to\R^k$が，
@@ -1775,10 +1777,10 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    局所漸近正規なモデルは，正規分布モデルへ収束する実験列を定める．
+    $h\in H$にて局所漸近正規なモデルは，正規分布モデル$N(Jh,J)$へ収束する実験列を定める．
 \end{tcolorbox}
 
-\begin{theorem}
+\begin{theorem}[局所漸近正規ならば，正規実験に収束する]
     $\E_n=(P_{n,h}|h\in H)$を実験列で，パラメータ空間$H\subset\R^d$は$0\in H$を満たすとする．
     $h=0$下で$N(0,J)\;(J\in M_d(\R))$に収束する確率変数列$\Delta_n:\X^n\to\R^d$を用いて
     \[\log\frac{dP_{n,h}}{dP_{n,0}}=h^\top\Delta_n-\frac{1}{2}h^\top Jh+o_{P_{n,0}}(1)\]
@@ -1947,6 +1949,102 @@ title=]
     統計的実験は$\theta_0$にて局所漸近正規であるとする．$\theta$の任意の推定量系列$T_n$について，
     \[\forall_{\gamma,\delta>0}\quad\liminf_{n\to\infty}\sup_{\theta:\abs{\theta-\theta_0}<\delta}E_\theta\Square{\abs{\sqrt{n}(T_n-\theta)}^\gamma}\ge E[\abs{I(\theta_0)^{-1}\Delta(\theta_0)}^\gamma].\]
 \end{theorem}
+
+\section{漸近有効性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    滑らかなパラメトリックモデルの漸近下界は$N(0,I^{-1}_\theta)$が与える．
+\end{tcolorbox}
+
+\begin{notation}
+    $\sqrt{n}(T_n-\psi(\theta))$は全ての$\theta\in\Theta$について分布収束すると仮定して(この仮定を正則性という)，その効率性を比較する．
+\end{notation}
+
+\subsection{実験の下界}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    漸近有効性の議論は，正規な位置母数モデル(Gaussian shiftモデル)での有効推定量の問題に帰着する．
+\end{tcolorbox}
+
+\begin{definition}[regular]
+    統計量の列$(T_n:\X^n\to\Theta)$が$\theta$において\textbf{正則}または\textbf{漸近的法則同等}であるとは，ある極限分布$L_\theta$が存在して，
+    \[\forall_{h\in\Theta}\;\sqrt{n}\paren{T_n-\psi\paren{\theta+\frac{h}{\sqrt{n}}}}\xrightarrow[\theta+h/\sqrt{n}]{d}L_\theta\]
+    が成り立つことをいう．
+    極限分布$L_\theta$が$h$に依ることを許すとき，\textbf{前正則}であるとする．
+    前正則な統計量が正則であるとは，局所一様に取れる消息を表す．
+\end{definition}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}[({E}1)]
+        \item 実験$(P_\theta)_{\theta\in\Theta}$は点$\theta\in\Theta\osub\R^k$で
+        $\theta\mapsto dP^{1/2}$が
+        $L^2$-微分可能で，可逆なFisher行列$I_\theta\in\GL_k(\R)$を持つとする．
+        \item $\psi:\Theta\to\R$は$\theta$で微分可能であるとする．
+        \item 実験$(P_{\theta+h/\sqrt{n}})_{h\in\R^k}$の統計量$T_n$は前正則であるとする．
+    \end{enumerate}
+    このとき，ランダム化された統計量$T$が実験$(N(h,I_\theta^{-1}))_{h\in\R^k}$上に存在して，$T-\dot{\psi}_\theta h\sim L_{\theta,h}$．
+\end{theorem}
+
+\subsection{Gaussモデルの平均の推定}
+
+\subsection{畳み込み定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則な統計量の中で，最適なものは解析的に定まる．
+\end{tcolorbox}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}[({E}1)]
+        \item 実験$(P_\theta)_{\theta\in\Theta}$は点$\theta\in\Theta\osub\R^k$で
+        $\theta\mapsto dP^{1/2}$が
+        $L^2$-微分可能で，可逆なFisher行列$I_\theta\in\GL_k(\R)$を持つとする．
+        \item $\psi:\Theta\to\R$は$\theta$で微分可能であるとする．
+        \item 実験$(P^n_\theta)_{\theta\in\Theta}$の統計量$T_n$は正則で極限分布$L_\theta$を持つとする．
+    \end{enumerate}
+    このとき，ある確率測度$M_\theta\in P(\X)$が存在して，
+    $L_\theta=N(0,\dot{\psi}_{\theta}I^{-1}_\theta\dot{\psi}_{\theta}^\top)*M_\theta$
+    と表せる．
+\end{theorem}
+
+\subsection{局所漸近minimax定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    全く違うアプローチで，最適な統計量が正規分布$N(0,\dot{\psi}_{\theta}I^{-1}_\theta\dot{\psi}_{\theta}^\top)$に漸近的に従うことを示す方法を考える．
+\end{tcolorbox}
+
+\subsection{下界を達成する推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    漸近分布$N(0,\dot{\psi}_{\theta}I^{-1}_\theta\dot{\psi}_{\theta}^\top)$を持つ推定量が最適とわかったから，このようなものの必要十分条件を探す．
+    これは実は漸近線型性である．線形性が正規性に対応するのである！
+\end{tcolorbox}
+
+\begin{lemma}[漸近線型性:最適性の特徴づけ]\mbox{}
+    \begin{enumerate}[({E}1)]
+        \item 実験$(P_\theta)_{\theta\in\Theta}$は点$\theta\in\Theta\osub\R^k$で
+        $\theta\mapsto dP^{1/2}$が
+        $L^2$-微分可能で，可逆なFisher行列$I_\theta\in\GL_k(\R)$を持つとする．
+        \item $\psi:\Theta\to\R$は$\theta$で微分可能であるとする．
+    \end{enumerate}
+    このとき，実験$(P^n_\theta)_{\theta\in\R^k}$の統計量列$(T_n)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item 漸近線型である：$\sqrt{n}(T_n-\psi(\theta))=\frac{1}{\sqrt{n}}\sum^n_{i=1}\dot{\psi}_\theta I_\theta^{-1}\dot{l}_\theta^\top(X_i)+o_P(1)$．
+        \item $T_n$は$\psi(\theta)$に対する正則な統計量の中で最適である：$\forall_{h\in\Theta}\;\sqrt{n}\paren{T_n-\psi\paren{\theta+\frac{h}{\sqrt{n}}}}\xrightarrow[\theta+h/\sqrt{n}]{d}N(0,\dot{\psi}_{\theta}I^{-1}_\theta\dot{\psi}_{\theta}^\top)$．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    $\Delta_{n,\theta}:=\frac{1}{\sqrt{n}}\sum\dot{l}_\theta(X_i)$の部分が$N(0,I_\theta)$に収束する．
+\end{remarks}
+
+\begin{example}
+    適切な正則条件の下で，最尤推定量は漸近線型である．
+    したがってデルタ法によって，任意の汎関数$\psi(\theta)$に対して，plug-in推定量は漸近線型である．
+\end{example}
 
 \section{射影}
 
