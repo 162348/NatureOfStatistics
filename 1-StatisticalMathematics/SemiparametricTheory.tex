@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \renewcommand{\C}{\mathcal{C}}
 \renewcommand{\Z}{\mathcal{Z}}
@@ -1067,8 +1067,70 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    特殊化された理論は分解$\Theta\oplus H$を利用した．一般の汎関数$\psi$についてこの分解を見つけることは困難であり，そのような場合は局外母数の接空間を定めるスコア作用素を用いる．
+    特殊化された理論は分解$\Theta\oplus H$を利用した．
+    一般の汎関数$\psi$についてこの分解を見つけることは困難であり，
+    そのような場合は，より抽象的な枠組みから，「写像の微分」に当たる，
+    「局外母数の接空間を定めるスコア作用素」の考え方を用いる．
 \end{tcolorbox}
+
+\subsection{スコア作用素}
+
+\begin{notation}
+    モデル$\P=\{P_\eta\}_{\eta\in H}$について，
+    $\eta$自体も確率測度で，$\eta\in H$も確率測度のFrechet多様体とみなせる状況を考える．
+    \begin{enumerate}
+        \item モデル$H$上に，$\dot{H}_\eta$について可微分な汎関数$\chi:H\to\R^k$を考え，影響関数を$\wt{\chi}_\eta$とする．
+        \item モデル$\P$上の汎関数$\psi:\P\to H\to\R^k;P_\eta\mapsto\eta\mapsto\chi(\eta)$の推定を考える．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[score operator]
+    モデル$\P$を写像と見た対応$H\to\P;\eta\mapsto P_\eta$が$\dot{H}_\eta$に関して可微分であるとき，微分$A_\eta:\dot{H}_\eta\to\dot{\P}_{P_\eta}\subset L_2(P_\eta);b\mapsto g$を\textbf{スコア作用素}という．
+    この対応は，任意の$H$上の$\eta$-道$t\mapsto\eta_t$に対して，$\P$上の$P_\eta$-道$t\mapsto P_{\eta_t}$が対応し，これがスコア関数の対応$b\mapsto g$を導く．
+    このとき，$\Im(A_\eta)=A_\eta(\dot{H}_\eta)\subset\dot{\P}_{P_\eta}$．
+\end{definition}
+\begin{example}
+    $\eta$が観測不可能量$Y$の分布，$P_\eta$が対応する観測可能量$X=m(Y)$の分布であるとき，スコア作用素$A_\eta:L^2\to L^2$は条件付き期待値に他ならない．
+\end{example}
+
+\subsection{情報量作用素}
+
+\begin{lemma}[adjoint score operatorによる可微分性の特徴付け]
+    モデル$H$上に，$\dot{H}_\eta$について可微分な汎関数$\chi:H\to\R^k$を考え，影響関数を$\wt{\chi}_\eta$とする．
+    \[\xymatrix{
+        \P\ar[dr]^-{\psi}&H\ar[l]_-\P\ar[d]^-\chi\\&\R^k
+    }\]
+    \begin{enumerate}
+        \item $\psi$が$\dot{\P}_{P_\eta}=A_\eta(\dot{H}_\eta)$に関して微分可能であることは，有効影響関数$\wt{\psi}_{P_\eta}\in\dot{\P}_{P_\eta}$が存在して，
+        \[\forall_{b\in\dot{H}_\eta}\quad\brac{\wt{\psi}_{P_\eta},A_\eta b}=\left.\pp{}{t}\psi(P_{\eta_t})\right|_{t=0}=\left.\pp{}{t}\chi(\eta_t)\right|_{t=0}=\brac{\wt{\chi}_\eta,b}_\eta\]
+        が成り立つことと同値．
+        \item $A^*_\eta:L_2(P_\eta)\to \dot{H}_\eta$を用いれば，$\forall_{h\in L_2(P_\eta)}\;\forall_{b\in\dot{H}_\eta}\;\brac{h,A_\eta b}_{P_\eta}=\brac{A^*_\eta h,b}_\eta$が成り立つ．すなわち，$A^*_\eta(\wt{\psi}_{P_\eta})=\wt{\chi}_\eta$．
+    \end{enumerate}
+\end{lemma}
+\begin{remarks}
+    $\P^{-1}:\P\to H;P_\eta\mapsto\eta$とすると，$\psi=\chi\circ \P^{-1}$となる．
+    $\chi$が可微分のとき，$\psi$が可微分であるための必要十分条件は，$\P^{-1}$の微分，すなわち$A_\eta^*$の言葉で与えられる．
+    (線型)方程式$A^*_\eta\wt{\psi}_{P_\eta}=\wt{\chi}_\eta$が解けるときだから，$\wt{\chi}_\eta\in\Im(A^*_\eta)$のとき．
+
+    スコア作用素は，接空間の間の対応（すなわちスコア関数同士の対応）を与えた．
+    スコア作用素の随伴は，逆向きに，余接空間の間の対応を与える．Hilbert空間は自己共役であることを考えると，これは有効影響関数の間に対応を与えていることになる．
+\end{remarks}
+
+\begin{definition}[information operator]
+    特に$\wt{\chi}_\eta\in\Im(A^*_\eta A_\eta)$が成り立つとき，$\wt{\psi}_{P_\eta}=A_\eta(A^*_\eta A_\eta)^-\wt{\chi}_\eta$が成り立つ．このとき，$A^*_\eta A_\eta$を\textbf{情報量作用素}という．
+\end{definition}
+
+\subsection{結果の一般化}
+
+\begin{theorem}
+    写像$\psi:\P\to\R^k$は$P_\eta$において$A_\eta(H_\eta)$に関して微分可能であることは，$\wt{\chi}_eta\in\Im(A^*_\eta:L_2(P_\eta)\to H_\eta)$に同値．
+    このとき，有効影響関数$\wt{\psi}_{P_n}$は$A^*_n\wt{\psi}_{P_\eta}=\wt{\chi}_\eta$を満たす．
+    さらに，$\wt{\chi}_\eta\in\Im(A^*_\eta A_\eta)$も満たすとき，$\wt{\psi}_{P_\eta}=A_\eta(A^*_\eta A_\eta)^-\wt{\chi}_\eta$も成り立つ．
+\end{theorem}
+
+\begin{corollary}
+    汎関数$\chi:H\to\R^k;\eta\mapsto\chi(\eta)$は$\dot{H}_\eta$に関して可微分であるが，影響関数が$\wt{\chi}_\eta\notin\Im(A^*_\eta)$を満たすならば，$P_\eta$にて正則な$\chi$の推定量は存在しない．
+\end{corollary}
 
 \section{有効性とデルタ法}
 
@@ -1236,7 +1298,7 @@ title=]
 
 \section{一般的な周辺パラメトリックモデルの推定}
 
-\chapter{影響関数を用いた汎関数推定}
+\chapter{影響関数を用いた頑健な汎関数推定}
 
 \begin{quotation}
     まだ名前が定まっていないが，Semiparametric Doubly Robust Targeted Double Machine Learningと呼ばれている．
@@ -1449,13 +1511,14 @@ title=]
 
 \begin{definition}[smooth / differentiable / asymptotic linear, pathwise differentiable]\mbox{}
     \begin{enumerate}
-        \item 関数$\psi:\P\to\R$が\textbf{可微分}であるとは，任意の$\o{P}\in\P$に対して，対応する$\varphi(z;\o{P})\in\L^2(\cZ),R_2(P,\o{P})\in\R$が存在して
+        \item 関数$\psi:\P\to\R$が\textbf{von Mises展開可能}であるとは，任意の$\o{P}\in\P$に対して，対応する$\varphi(z;\o{P})\in\L^2(\cZ),R_2(P,\o{P})\in\R$が存在して
         \[\psi(\o{P})-\psi(P)=\int\varphi(z;\o{P})d(\o{P}-P)(z)+R_2(P,\o{P}),\qquad E_P[\varphi(z;P)]=0,\Var_P[\varphi(z;P)]<\infty.\]
         と表せることをいう．
-        \item 関数$\psi:\P\to\R$が\textbf{道毎に微分可能}であるとは，任意の道$\R\to\P,P_0=\bP$について，
+        \item 関数$\psi:\P\to\R$が\textbf{道毎に微分可能}または\textbf{$\dot{\P}_P$に関して可微分}であるとは，任意の道$\R\to\P,P_0=\bP$について，
         \[\pp{}{\ep}\psi(P_\ep)|_{\ep=0}=\int\varphi(z;\bP)s_\ep(z)d\bP(z)\]
         を満たすことをいう．
     \end{enumerate}
+    このとき，関数$\varphi$を\textbf{パラメータ$\psi$の影響曲線}と呼ぶ．
 \end{definition}
 \begin{remark}[influence curve]
     この式をvon Mises展開といい，このときの関数$\varphi$を影響関数，道毎の微分，勾配，Neyman直交スコアなどと呼ぶ．
@@ -1503,6 +1566,12 @@ title=]
     このときの下界を達成するサブモデルを，least favorableまたはhardestという\cite{Asymptotic Statistics}．
 \end{remark}
 
+\begin{corollary}[Corollary 2.6 \cite{vanderVaart Semiparametric Theory}]
+    
+\end{corollary}
+
+\section{有効影響関数の導出}
+
 \section{影響関数に基づく推定量}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1515,6 +1584,130 @@ title=]
 \end{notation}
 
 \subsection{plug-in推定量の修正}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    パラメトリックモデルにおけるNewton法に対応する．
+    これは一段階で$Z$-推定量と同等にまで改善されるNewton0Rhapson反復法の類似である．
+\end{tcolorbox}
+
+\begin{notation}
+    汎関数$\psi:\P\to\R$はvon Mises展開可能とする：
+    \[\exists_{\varphi\in L^2_*(\Z,P)}\;\forall_{\o{P}\in\P}\quad\psi(\o{P})-\psi(P)=\int\varphi(z;\o{P})d(\o{P}-P)(z)+R_2(\o{P},P).\]
+\end{notation}
+
+\begin{discussion}
+    このとき，plug-in推定量$\wt{\psi}_{pi}:=\psi(\wt{\bP})$は，一致性はあるが，1次のバイアス
+    \[\psi(\wh{\bP})-\psi(\bP)=-\int\varphi(z;\wh{\bP})d\bP(z)+R_2(\wh{\bP},\bP)\]
+    を持つ．
+    そこで，バイアスに関する2回目の一致推定$\bP_n\varphi(Z;\wt{\bP})$を用いて，打ち消すことを考える．
+    これを\textbf{ワンステップ推定量}という．
+\end{discussion}
+
+\begin{example}
+    処置群$A=1$に対するノンパラメトリック回帰関数$\mu(X):=E[Y|X,A=1]$の推定量$\wh{\mu}(x)$に対して，$\bP_n\wt{\mu(X)}=:\wt{\psi}_{pi}$とすると，これは平均処置効果$\psi=E[E[Y|X,A=1]]$のplug-in推定量となる．
+    $\mu$の推定に用いた標本と$\bP_n$を定めた標本は別にあり互いに独立であるとすると，plug-in推定量の1次のバイアスが
+    \[E[\wt{\psi}_{pi}-\psi]=\int E[\wt{\mu}(x)-\mu(x)]dP(x)\]
+    となる．
+    これは，第一段階の，ノンパラメトリック回帰関数の推定量$\wh{\mu}$のバイアスの平均となり，大きなノンパラメトリックモデルの標準的なtuningでは$n^{-1/2}$よりさらに遅くなる．
+
+    これは，傾向スコア$\pi(x):=P[A=1|X=x]$に対する推定量$\wh{\pi}$を用いて，$\bP_n\paren{\frac{A(Y-\wh{\mu}(X))}{\wh{\pi}(X)}}$と一致推定出来る．
+\end{example}
+
+\subsection{ワンステップ推定量の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\wh{\psi}=\psi(\wh{\bP})+\bP_n\varphi(Z;\wh{\bP})$の漸近分散を調べる．
+\end{tcolorbox}
+
+\begin{discussion}[ワンステップ推定量の偏差の標準分解]
+    \begin{align*}
+        \wh{\psi}-\psi&=\psi(\wh{\bP})+\bP_n\varphi(Z;\wh{\bP})-\psi(\bP)\\
+        &=(\bP_n-\bP)\varphi(Z;\wh{\bP})+R_2(\wh{\bP},\bP)\\
+        &=\underbrace{(\bP_n-\bP)\varphi(Z;\bP)}_{=:S^*}+\underbrace{(\bP_n-\bP)(\varphi(Z;\wh{\bP})-\varphi(Z;\bP))}_{=:T_1}+\underbrace{R_2(\wh{\bP},\bP)}_{=:T_2}
+    \end{align*}
+    \begin{enumerate}
+        \item $\varphi(Z;\bP)$は$n$に依らないから，これは大数の法則より$O_\bP(1/\sqrt{n})$である．
+        \item $\sqrt{n}(\bP_n-\bP)=:\bG_n$は経験過程で，$\bP$-Donskerクラスについてはタイトな確率過程であるBrown橋$\bG$に弱収束する．クラス$(\varphi(Z;\wh{\bP})-\varphi(Z;\bP))_{n\in\N}$はたしかにDonskerになりそうである．特に分散は縮んでいく．したがって，遅くとも$O_\bP(1/\sqrt{n})$である．
+        \item $T_2$が，一般のplug-in推定量で支配的になり，大きな偏差を生んでしまうが，適切なノンパラメトリックな仮定(疎性や滑らかさ)をおくことによって，高次の微小項になることが示せる．
+    \end{enumerate}
+    $T_1,T_2$が$o_\bP(1/\sqrt{n})$ならば$S^*$が支配的になり，漸近正規性と最適性，$\sqrt{n}$-一致性がすぐに従う．
+\end{discussion}
+
+\subsubsection{$T_1$}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\varphi(Z;\wh{\bP})$が$\varphi(Z;\bP)$に$L^2(\bP)$-収束するならば，
+    Donsker性を満たすか，標本分割法を使えば，$0$に$\sqrt{n}$-収束する．すなわち，$o_\bP(1/\sqrt{n})$．
+    いずれの手法も"overfitting"を避けるための手続きとみなせる．
+\end{tcolorbox}
+
+\begin{discussion}
+    この$L^2(\bP)$-収束の必要十分条件が確定出来ない．
+\end{discussion}
+
+\subsubsection{$T_2$}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    この項が$o_\bP(1)$になり得るという現象が，通常のplug-in推定量とワンステップ推定量の差の全てである．
+    これは現状，ケースバイケースの解析しか出来ていない．
+    が，von Mises展開をより高次にすることによって，何かしら一般的な議論が導けるに違いないだろう．
+\end{tcolorbox}
+
+\subsection{推定方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ワンステップ推定量に代わる理論として，$Z$-推定量の対応物を考えたい．
+\end{tcolorbox}
+
+\begin{discussion}
+    推定方程式$\bP_n\varphi(z;\wh{\bP},\psi)=0$の$\psi$についての解を推定量とすることを考える．
+
+    影響曲線$\varphi$が線型ならば：$\varphi(z;\bP)=\phi(z;\bP)-\psi(\bP)$，この手法はワンステップ推定量に等価である．
+\end{discussion}
+
+\subsection{TMLE}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    van der Laanらによるtargeted maximum likelihood estimationは，漸近的にワンステップ推定量に似た挙動をし，有限標本に対して良い挙動をする．
+\end{tcolorbox}
+
+\section{適応的実験}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    CS用語であり，基本的には無記憶性・忘却的の対義語であり，Markov性と関係が深い．
+
+    また特定の使い方では，頑健性に関連が深い．機械学習・統計的学習はData-adaptive model buildingと表現でき，モデルのmisspecificationのリスクを減らす方策の1つである．
+\end{tcolorbox}
+
+\begin{history}[adaptive / sequential allocation]
+    過去の観測に応じて次にサンプルを取得する対象を選択する問題は\textbf{適応的割当}または\textbf{逐次割当}と呼ばれ，古くから多くの研究がなされている．
+    バンディット問題はその典型である．
+    統計学・確率論の観点から再評価したのがRobins 1952である．
+    特に，治験において，治療に失敗する患者を最小化しながらデータを取るための方法論が議論された．
+\end{history}
+
+\begin{discussion}[この研究がコーナーストーンである理由]
+    影響関数に基づいてワンステップ構成される漸近最適な一致推定量は，"targeted learning"や"debiased machine learning"と呼ばれる．
+    その理由は，モデルに一切の仮定をおいていないノンパラメトリック法なので，
+    むしろデータ生成過程のモデルに適応的推定方策(変数選択(variable selection procedures)や機械学習アルゴリズム)の採用を可能にする．
+    これは，「モデル選択とvalidation」「情報量規準」から，「科学的に正しい統計汎関数の選び方」へ科学の中心を移すことになる．
+    形式科学・自然科学として，数学中心に物理学を情報学全般に回転させることが出来る．\cite{Hines}
+\end{discussion}
+
+\subsection{バンディット問題}
+
+\begin{history}
+    \begin{enumerate}
+        \item 1980s-90sには強化学習(Markov決定過程の中で最適行動を学習する行動者)がこの問題を解いた．
+    \end{enumerate}
+\end{history}
 
 \section{二重にロバストな推定}
 
@@ -4890,6 +5083,10 @@ title=]
     Tsybakov - Introduction to Nonparametric Estimation
     \bibitem{vanderVaart Semiparametric Theory}
     Semiparametric Theory
+
+    \bibitem{Hines}
+    Oliver Hines et. al. Demystifying statistical learning based on
+    efficient influence functions (2021)
 \end{thebibliography}
 
 \end{document}
