@@ -2,8 +2,8 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -888,16 +888,25 @@ title=]
     $X$がコンパクトのとき，$(C(X))^*$は符号付Radon測度の空間で，$(C_0(X))^*$は正則なBorel測度全体のなす空間となる．
 \end{example}
 
-\begin{example}
+\begin{example}[コンパクト開位相は距離化可能だがノルム付け可能でない]
     $\Om\osub\R^m$を非空な開集合とする．
     \begin{enumerate}
         \item $\Om$は$\sigma$-コンパクトだから，$\Om$に至るコンパクト集合の増大列$(K_n)$が存在する．
         $C(\Om)$に，半ノルムの族$(p_n(f):=\sup_{x\in K_n}\abs{f(x)})_{n\in\N}$が誘導する局所凸位相を入れたものは完備で，したがってこれはFrechet空間となる．
         距離は
         \[d(f,g)=\max_{n\in\N}\frac{2^{-n}p_n(f-g)}{1+p_n(f-g)}\]
-        が与える．
+        が与える．$\max_{n\in\N}$の代わりに$\sum_{n\in\N}$としても良いことに注意．
+        この距離についてのCauchy列は，任意の半ノルム$\rho_n$について$0$に収束するから，すなわち任意の$K_n$上で一様収束する．
+        この距離について完備になる．
         しかし局所有界でないため，ノルム付け可能ではない\ref{thm-character-of-TVS}．
         \item 正則関数のなす部分空間$H(\Om)\subset C(\Om)$は閉部分空間だから，やはりFrechet空間である．この空間はHeine-Borel性を持つため，局所有界でなく，したがってノルム付け可能でない．
+    \end{enumerate}
+    コンパクト開位相はホモトピー理論でも使われる位相である．その理由は，局所コンパクト空間が指数化可能になるなど，圏論的に良い性質を持つためである．
+    \begin{enumerate}
+        \item $X$を局所コンパクト，$Y$を任意の位相空間とする．写像$\ev:X\times C(X,Y)\to Y$は連続である．$X$がハウスドルフでもあるとき，位相同型$C(X,C(Y,Z))\simeq_\Top C(X\times Y,Z)$が存在する．
+        \item 任意の位相空間$X,Y,Z$について，$f:X\times Y\to Z$が連続ならば$X\to C(Y,Z)$も連続で，$Y$が局所コンパクトならば逆も成り立つ．
+        \item $Y$が局所コンパクトならば，合成$\circ:C(X,Y)\times C(Y,Z)\to C(X,Z)$は連続．
+        \item 任意の位相空間$X$について，$C(*,X)\simeq_\Top X$．さらに，$X$を離散空間としたとき，コンパクト開位相は積位相に一致する：$C(X,Y)\simeq Y^{\abs{X}}$．
     \end{enumerate}
 \end{example}
 

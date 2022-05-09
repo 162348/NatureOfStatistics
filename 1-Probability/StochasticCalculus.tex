@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1385,6 +1385,11 @@ title=]
 
 \subsection{古典的Wiener空間}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Brown運動は，その見本道全体の確率空間$(\Om,\F,P)$上の恒等写像として標準的に実現できる．
+\end{tcolorbox}
+
 \begin{definition}\mbox{}
     \begin{enumerate}
         \item $\Om:=\Brace{\om\in C(\R_+;\R)\mid\om(0)=0}$．
@@ -1392,6 +1397,16 @@ title=]
         \item $P$をWiener測度とする．
     \end{enumerate}
 \end{definition}
+
+\begin{lemma}
+    $K\compsub\R_*,U\osub\R$について，
+    \[W(K,U):=\Brace{f\in\Om| f(K)\subset U}\]
+    を準基\footnote{一般にコンパクト集合の有限共通部分はコンパクトとは限らないことに注意．}として生成される$\Om$上の位相を\textbf{コンパクト開位相}といい，次が成り立つ．
+    \begin{enumerate}
+        \item $e:\Om\times\R_+\to\R$は連続．特に$\pr_t:\Om\to\R\;(t\in\R_+)$は連続（逆は言えないことに注意）．
+        \item $K_n:=[0,n]$として，半ノルムの族$(\rho_n(\om):=\sup_{t\in K_n}\abs{\om(t)})_{n\in\N}$が定める始位相と一致する．
+    \end{enumerate}
+\end{lemma}
 
 \begin{proposition}[$\sigma$-代数の特徴付け]
     $(\Om,\F,P)$をWiener空間とする．
@@ -1404,6 +1419,32 @@ title=]
         \item 任意の$\om\in\Om$に対して，$B_t(\om):=\om(t)$と見本道を定めると，この対応$\Om\to\Om$はBrown運動である．
     \end{enumerate}
 \end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[$\sigma(\cC)\subset\F$] 任意の$k\in\N,0\le t_1<\cdots<t_k,A_1,\cdots,A_k\in\B^1(\R)$に対して，$C(t_1\in A_1,\cdots,t_k\in A_k)=\bigcap_{i\in[k]}\pr_{t_i}^{-1}(A_i)$と表せる．$A_i$が全て開集合であるとき，$C$も開集合となる．$A_i$が一般のとき，写像の逆像の集合演算に対する関手性より，$C$は開集合または閉集合の可算和・積で表せる．
+            \item[$\F\subset\sigma(\cC)$] コンパクト開位相は半ノルムの族$(\rho_n(\om):=\sup_{t\in K_n}\abs{\om(t)})_{n\in\N}$が定める始位相と一致する：任意の$n\in\N,A\in\B^1(\R)$に関して，$\rho_n^{-1}(A)=W(K_n,A)\in\sigma[\cC]$である．
+        \end{description}
+        \item 
+        $(\Om,\F,P)$は$\sigma$-有限である：時刻$t\in\R_+$を固定し，$\R$の増大コンパクト集合$(A_n)$に対して$C(t\in A_n)$を考えると，$P(C(t\in A_n))<1$である．
+        あとは$\cC$が有限加法的であることと，$P$がその上で完全加法的であることを示せば良い．
+        \begin{description}
+            \item[$\cC$の有限加法性] 任意の$C(\om_1\in A_1,\cdots,\om_k\in A_k)\cup C(\om'_1\in A'_1,\cdots,\om'_l\in A'_l)\in\cC$，$C(\om_1\in A_1,\cdots,\om_k\in A_k)^\comp=C(\om_1\in A_1^\comp,\cdots,\om_k\in A_k^\comp)\in\cC$．
+            \item[$P$の完全加法性] $\{C_n\}\subset\cC$を互いに素な集合列で，$C:=\sum_{n\in\N}C_n\in\cC$を満たすとする．これについて$P(C)=\sum_{n\in\N}P(C_n)$を示せば良い．
+            このとき，必要ならば添字を並び替えることにより，ある$k\le l\in\N$を用いて，
+            \begin{align*}
+                C&=\Brace{\om\in\Om\mid\om(t_1)\in A_1,\cdots,\om(t_k)\in A_k,\om(t_{k+1})\in\R,\cdots,\om(t_l)\in\R},&
+                C_n&=\Brace{\om\in\Om\mid\om(t_1)\in A_1^n,\cdots,\om(t_l)\in A_l^n}
+            \end{align*}
+            と表せる．ただし，
+            \[A_1=\sum_{n\in\N}A_1^n,\cdots,A_k=\sum_{n\in\N}A_k^n,\R=\sum_{n\in\N}A_i^n\;(k<i\le l).\]
+            このとき，$P(C)=\sum_{n\in\N}P(C_n)$は明らか．
+        \end{description}
+        \item $(B_t)_{t\in\R_+}$の任意の見本道$B_t(\om)=\om(t)$は連続である．
+        あとは，$\om:\R_+\to\R$が平均$0$，共分散$\min$のGauss過程であることを示せば良いが，$\om\sim N(0,s)$に注意すると，$E[\om(s)]=0$．
+        
+    \end{enumerate}
+\end{proof}
 
 \subsection{抽象的Wiener空間}
 
