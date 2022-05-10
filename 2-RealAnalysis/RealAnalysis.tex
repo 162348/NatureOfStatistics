@@ -2243,17 +2243,17 @@ title=]
     不定積分の絶対連続性とは，積分域$A\in\B$を十分小さくすればいくらでも絶対値を$0$に近づけられることをいう．
 \end{remarks}
 
-\subsection{変数変換}
+\subsection{測度の押し出しと変数変換}
 
 \begin{definition}
     $(X,\B),(Y,\cC)$を可測空間とする．可測空間の射$\varphi:X\to Y$を$\forall_{C\in\cC}\;\varphi^{-1}(C)\in\B$を満たす写像として定める．これを$\B/\C$-可測ともいう．
 \end{definition}
 
-\begin{theorem}
-    測度空間$(X,\B,\mu)$と測度空間の射$\varphi:X\to Y$について，像測度$\nu:=\mu_*$を$\nu(C):=\mu(\varphi^{-1}(C))\;(C\in\cC)$で定める．このとき，次が成り立つ．
+\begin{theorem}[変数変換]
+    測度空間$(X,\B,\mu)$と測度空間の射$\varphi:X\to Y$について，像測度$\nu:=\varphi_*\mu$を$\nu(C):=\mu(\varphi^{-1}(C))\;(C\in\cC)$で定める．このとき，次が成り立つ．
     \begin{enumerate}
         \item $f\circ\varphi$が$\mu$-可積分であることと，$f$が$\nu$-可積分であることは同値．
-        \item $\int_Xf(\varphi(x))d\mu(x)=\int_Yf(y)d\mu(y)$．
+        \item $\int_Xf(\varphi(x))d\mu(x)=\int_Yf(y)d\nu(y)$．
     \end{enumerate}
 \end{theorem}
 

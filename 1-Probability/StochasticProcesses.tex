@@ -1820,7 +1820,7 @@ title=]
     また，推移作用素になり得る作用素は放物型偏微分方程式によって特徴付けられる．
 \end{quotation}
 
-\section{離散状態空間上のMarkov連鎖}
+\section{離散状態集合上のMarkov連鎖}
 
 \begin{notation}[state space]
     $I$を可算集合とし，これを\textbf{状態空間}とする．
@@ -2178,17 +2178,18 @@ title=]
 
 \subsection{定義}
 
-\begin{definition}
-    過程$(X_t)_{t\in\R_+}$がMarkov過程であるとは，
+\begin{definition}[Markov process]
+    過程$(X_t)_{t\in\R_+}$が\textbf{Markov過程}であるとは，
     \[\forall_{E\in\B(\R)}\;\forall_{u>t}\;P[X_u\in E|X_s,s\le t]=P[X_u\in E|X_t]\;\as\]
     が成り立つことをいう．
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[Markov性の特徴付け]
     過程$(X_t)_{t\in\R_+}$について，次の3条件は同値．
     \begin{enumerate}
         \item 過程$(X_t)_{t\in\R_+}$はMarkov過程である．
         \item 任意の有界Borel可測関数$f:\R\to\R$について，$\forall_{u>t}\;E[f(X_u)|X_s,s\le t]=E[f(X_u)|X_t]\;\as$
+        \item 任意の非負Borel可測関数$f:\R\to\R_+$について，$\forall_{s\ge0,t>0}\;E[f(X_{s+t})|\F_s]=E[f(X_{s+t})|X_s]\;\as$
         \item $\forall_{f\in C_c^\infty(\R)}\;\forall_{u>t}\;E[f(X_u)|X_s,s\le t]=E[f(X_u)|X_t]\;\as$
     \end{enumerate}
 \end{lemma}
@@ -2252,7 +2253,7 @@ title=熱核の半群性]
 
 \begin{lemma}[Chapman-Kolmogorov]
     転移確率$p$は次を満たす：
-    \[p(s,x,u,E)=\iont_\R p(s,x,t,dy)p(t,y,u,E)\quad(P^{X(s)})\dae x.\]
+    \[p(s,x,u,E)=\int_\R p(s,x,t,dy)p(t,y,u,E)\quad(P^{X(s)})\dae x.\]
     また，例外集合は$E$に無関係に取れるが，$s,t,u$には依存する．
 \end{lemma}
 
@@ -2395,6 +2396,12 @@ The problem of optimal non-linear filtering (even for the non-stationary case) w
     時系列$(X_t)_{t\in T}$について，$X_t$の観測値と，$\F_s\;(s<t)$による予測の値との差が定める過程を\textbf{新生過程}という．
     この過程が白色雑音になることは，予測可能な成分をすべて除去しきったとみなせるため，予測として理想的であると考えられる．
 \end{definition}
+
+\chapter{ミキシング過程}
+
+\begin{quotation}
+    非可逆な熱力学的現象のモデルとして，物理学から最初にモデル化された．
+\end{quotation}
 
 \chapter{超過程}
 
@@ -2645,6 +2652,8 @@ title=]
     伊藤清『確率論』
     \bibitem{Schaffler}
     Schaffler - Generalized Stochastic Processes
+    \bibitem{Durrett}
+    Durrett - Probability: Theory and Examples
 \end{thebibliography}
 
 \end{document}

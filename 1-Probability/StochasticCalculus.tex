@@ -3,13 +3,15 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
 
 \chapter{Brown運動}
+
+
 
 \section{記法}
 
@@ -21,6 +23,7 @@
         \item $C_p^\infty(\R^n)$は滑らかな関数であって，その関数自身とその任意の偏導関数は高々多項式の速度で増加する関数の空間とする．\footnote{緩増加関数．\url{https://ncatlab.org/nlab/show/tempered+distribution}}
         \item $C_b^\infty(\R^n):=C_p^\infty(\R^n)\cap\bigcap_{k\in\N}C_b^k(\R^n)$を任意の偏導関数が有界なもののなす部分空間とする．
         \item $C_0^\infty(\R^n):=C^\infty(\R^n)\cap C_c(\R^n)$をコンパクト台を持つ滑らかな関数の空間とする．
+        \item $\L(\Om,\F)$上で$(\Om,\F)$上の可測関数の空間，$\L_\cG(\Om,\F)$で部分$\sigma$-代数$\cG$について$\cG$-可測関数のなす部分空間，$L_b(\Om,\F)$で有界$\F$-可測関数のなす部分空間を表すとする．
     \end{enumerate}
     また，$(\Om,\F,P)$を確率空間とし，$L^p(\Om)$によってその上の$L^p$空間を表す．
 \end{notation}
@@ -778,131 +781,7 @@ title=]
     \end{enumerate}
 \end{remarks}
 
-\subsection{Cameron-Matrin定理}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ドリフト$F:\R_+\to\R$付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
-    これはちょうど$F$-Brown橋と標準Brown橋の関係と同じである．
-\end{tcolorbox}
-
-\subsubsection{Cameron-Martin部分空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $F(0)=0$を満たす
-    見本道
-    $F\in C([0,1])$のうち，
-    ある$F'\in L^2([0,1])$の積分として得られるものの全体をCameron-Martin部分空間という．
-\end{tcolorbox}
-
-\begin{notation}[skelton / Cameron-Martin subspace]\mbox{}
-    \begin{enumerate}
-        \item 標準Brown運動の法則を$L_0$，ドリフト$F$付きのBrown運動の法則を$L_F$で表す．
-        $L_F\ll L_0\Leftrightarrow L_0(A)=0\Rightarrow L_F(A)=0$がいかなるときか？
-        まず，$F$が連続で，$F(0)=0$が必要なのは明らかである．そうでなければ，$L_F$は連続でなかったり，$0$からスタートしない見本道に正の確率を許してしまうため．
-        \item $D[0,1]:=\Brace{F\in C[0,1]\mid\exists_{f\in L^2[0,1]}\;\forall_{t\in[0,1]}\;F(t)=\int^t_0f(s)ds}$をDirichlet空間という．より一般にDirichlet空間は，Dirichlet積分なる半ノルムが有限となるようなHardy空間の部分空間で，正則関数の再生核Hilbert空間ともなる．
-        このDirichlet空間には特別な名前がついており，skeltonまたはCameron-Martin部分空間と呼ばれる．
-    \end{enumerate}
-\end{notation}
-
-\begin{definition}[Dirichlet space]
-    $\Om\subset\C$上のDirichlet空間とは，正則関数の再生核Hilbert空間がなす$H^2(\Om)$の部分空間で，
-    \[\D(\Om):=\Brace{f\in H^2(\Om)\mid \D(f)<\infty}\quad\D(f):=\frac{1}{\pi}\iint_\Om\abs{f'(z)}^2dA=\frac{1}{4\pi}\iint_\Om\abs{\partial_xf}^2+\abs{\partial_yf}^2dxdy.\]
-    この右辺が変分原理であるDirichlet原理を定めるDirichlet積分になっていることから名前がついた．
-\end{definition}
-\begin{definition}[RKHS: reproductive kernel Hilbert space]
-    $X$を集合，$H\subset\Map(X;\R)$をHilbert空間とする．
-    評価関数$\ev_x:H\to\R$が任意の$x\in X$について有界線型汎関数である$\forall_{x\in X}\;\ev_x\in B(H)$とき，$H$を\textbf{再生核Hilbert空間}という．
-    すなわち，Rieszの表現定理よりある$K_x\in H$が存在して$\ev_x(-)=(-|K_x)$と表せる．この対応$X\to H;x\mapsto K_x$が導く双線型形式$K:X\times X\to\R;(x,y)\mapsto K(x,y):=(K_x|K_y)$を\textbf{再生核}という．
-    再生核は対称で半正定値である．
-\end{definition}
-\begin{theorem}
-    関数$K:X\times X\to\R$は対称かつ半正定値であるとする．このとき，ただ一つのHilbert空間$H$が$\Map(X;\R)$内に存在して，$K$を再生核として持つ．
-\end{theorem}
-
-\subsubsection{Cameron-Martin定理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $L_F\ll L_0$ならば，標準Brown運動$B$のa.s.性質は$B+F$に引き継がれる．
-    これはちょうどCameron-Martin部分空間について$F\in D[0,1]$に同値．
-    したがって微分を見てみると良い．
-\end{tcolorbox}
-
-\begin{definition}[equivalence measure, absolute continuous, singular]
-    可測空間$(\Om,\B)$上の測度を考える．
-    \begin{enumerate}
-        \item 2つの測度の零集合の全体が一致するとき，すなわち互いに絶対連続であるとき$\mu\ll\nu\land\nu\ll\mu$，これらは同値であるという．
-        \item 絶対連続性は，測度の同値類の間に順序を定める．
-        \item ２つの測度の「台」が分解出来るとき，すなわち，ある分割$\Om=A\sqcup A^\comp$が存在して$P(A)\cap\B\subset\cN(\mu)$かつ$P(A^\comp)\cap\B\subset\cN(\nu)$が成り立つとき，特異であるといい$\mu\perp\nu$と表す．
-        \item Lebesgue分解により，任意の2つの$\sigma$-有限測度$\mu,\nu$について，一方をもう一方に対して絶対連続部分と特異部分との和に分解できる．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}[Cameron-Martin]
-    任意の連続関数$F\in C[0,1],F(0)=0$について，次が成り立つ：
-    \begin{enumerate}
-        \item $F\notin D[0,1]$ならば，$L_F\perp L_0$である．
-        \item $F\in D[0,1]$ならば，$L_F$と$L_0$は同値である．
-    \end{enumerate}
-\end{theorem}
-\begin{remarks}
-    可微分なドリフト$F$については，Brown運動の法則は同値になる．
-    すなわち，ほとんど確実な事象（見本道の連続性や可微分性）が等しい．
-\end{remarks}
-
-\subsubsection{証明}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    証明にはmartingaleを用いる．
-\end{tcolorbox}
-
-\begin{notation}
-    $F\in C[0,1],n>0$について，2進小数点$\D_n$で分割して考えた，
-    $F$の二次変分
-    \[Q(F):=\lim_{\abs{\Delta}\to0}\sum_{k=1}^n\paren{F(t_k)-F(t_{k-1})}^2\]
-    に至る列を
-    \[Q_n(F):=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\]
-    と表す．
-\end{notation}
-
-\begin{lemma}
-    $F\in C[0,1],F(0)=0$について，
-    \begin{enumerate}
-        \item $(Q_n(F))_{n\in\N}$は増加列である．
-        \item $F\in D[0,1]\Leftrightarrow\sup_{n\in\N}Q_n(F)<\infty$．
-        \item $F\in D[0,1]\Rightarrow Q_n(F)\xrightarrow{n\to\infty}\norm{F'}^2_2$．
-    \end{enumerate}
-\end{lemma}
-\begin{proof}\mbox{}
-    \begin{enumerate}
-        \item $(a+b)^2=a^2+2ab+b^2\le 2a^2+2b^2$より，任意の$j\in[2^n]$について，
-        \begin{align*}
-            \Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2&=\Square{\paren{F\paren{\frac{2j-1}{2^{n+1}}}-F\paren{\frac{j-1}{2^n}}}+\paren{F\paren{\frac{j}{2^n}}-F\paren{\frac{2j-1}{2^{n+1}}}}}^2\\
-            &\le2\Square{F\paren{\frac{2j-1}{2^{n+1}}}-F\paren{\frac{j-1}{2^n}}}^2+2\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{2j-1}{2^{n+1}}}}^2
-        \end{align*}
-        これを$j\in[2^n]$について和を取ると，
-        \[\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\le 2\sum^{2^{n+1}}_{j=1}\Square{F\paren{\frac{j}{2^{n+1}}}-F\paren{\frac{j-1}{2^{n+1}}}}^2\]
-        より，$(Q_n(F))_{n\in\N}$の単調増加性を得る．
-        \item \begin{description}
-            \item[$\Rightarrow$] $F\in D[0,1]$のとき，ある$f:=F'\in L^2[0,1]$が存在して，Cauchy-Schwartzより任意の$j\in[2^n]$について
-            \[2^n\paren{\int^{j2^{-n}}_{(j-1)2^{-n}}fdt}^2\le 2^n\int^{j2^{-n}}_{(j-1)2^{-n}}1^2dt\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt=\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt\]
-            が成り立つから，
-            \[Q_n(F)=2^n\sum^{2^n}_{j=1}\paren{\int^{j2^{-n}}_{(j-1)2^{-n}}fdt}^2\le \sum^{2^n}_{j=1}\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt=\norm{f}_2^2<\infty.\]
-            \item[$\Leftarrow$]
-
-        \end{description}
-    \end{enumerate}
-\end{proof}
-
-\begin{lemma}[Paley-Wiener stochastic integral]
-    $(B_t)_{t\in\R_+}$を標準Brown運動とする．$F\in D[0,1]$について，
-    \[\xi_n:=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2}}}\Square{B\paren{\frac{j}{2^n}}-B\paren{\frac{j-1}{2^n}}}\]
-    はほとんど確実に$L^2$-収束する．
-    この極限を$\int^1_0F'dB$で表す．
-\end{lemma}
 
 \subsection{Brownian sheet}
 
@@ -1383,6 +1262,11 @@ title=]
 
 \section{Wiener空間}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Wiener(1923)が，初期の無限次元空間とその上の微積分の例となった．
+\end{tcolorbox}
+
 \subsection{古典的Wiener空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1390,7 +1274,7 @@ title=]
     Brown運動は，その見本道全体の確率空間$(\Om,\F,P)$上の恒等写像として標準的に実現できる．
 \end{tcolorbox}
 
-\begin{definition}\mbox{}
+\begin{definition}[Wiener space]\mbox{}
     \begin{enumerate}
         \item $\Om:=\Brace{\om\in C(\R_+;\R)\mid\om(0)=0}$．
         \item $\F$を，$\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数とする．このコンパクト開位相について，$\Om$はFrechet空間となる．
@@ -1398,7 +1282,7 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[コンパクト開位相の性質]
     $K\compsub\R_*,U\osub\R$について，
     \[W(K,U):=\Brace{f\in\Om| f(K)\subset U}\]
     を準基\footnote{一般にコンパクト集合の有限共通部分はコンパクトとは限らないことに注意．}として生成される$\Om$上の位相を\textbf{コンパクト開位相}といい，次が成り立つ．
@@ -1407,6 +1291,23 @@ title=]
         \item $K_n:=[0,n]$として，半ノルムの族$(\rho_n(\om):=\sup_{t\in K_n}\abs{\om(t)})_{n\in\N}$が定める始位相と一致する．
     \end{enumerate}
 \end{lemma}
+
+\begin{lemma}[Wiener測度の特徴付け]
+    $(B_t)$を$(\Om',\F',P')$上のBrown運動とする．
+    このとき，$B:\Om'\to\Om;\om'\mapsto B(-,\om')$とするとこれは可測で，$P'^B=P\;\on\F$を満たす．
+    特に，次の変数変換の公式を得る：
+    \[\forall_{\varphi\in\L^1(\Om,\F,P)}\quad\int_\Om\varphi(\om)P(d\om)=\int_{\Om'}\varphi(B(-,\om'))P'(d\om').\]
+\end{lemma}
+\begin{proof}
+    可測性は次の議論より明らか．
+
+    任意の$k\in\N,0\le t_1<\cdots<t_k,A_1,\cdots,A_k\in\B^1(\R)$について，$C(t_1,\cdots,t_k;A_1,\cdots,A_k)$上での値が一致すればよいが，Brown運動の独立増分性と，増分が正規分布に従うことより，
+    \begin{align*}
+        P'^B(C(t_1,\cdots,t_k;A_1,\cdots,A_k))&=P'[B_{t_1}\in A_1,\cdots,B_{t_k}\in A_k]\\
+        &=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k\\
+        &=P[C(t_1,\cdots,t_k;A_1,\cdots,A_k)].
+    \end{align*}
+\end{proof}
 
 \begin{proposition}[$\sigma$-代数の特徴付け]
     $(\Om,\F,P)$をWiener空間とする．
@@ -1441,22 +1342,220 @@ title=]
             このとき，$P(C)=\sum_{n\in\N}P(C_n)$は明らか．
         \end{description}
         \item $(B_t)_{t\in\R_+}$の任意の見本道$B_t(\om)=\om(t)$は連続である．
-        あとは，$\om:\R_+\to\R$が平均$0$，共分散$\min$のGauss過程であることを示せば良いが，$\om\sim N(0,s)$に注意すると，$E[\om(s)]=0$．
-        
+        \begin{enumerate}[({B}1)]
+            \item $\forall_{\om\in\Om}\;B_0(\om)=\om(0)=0$．
+            \item 任意の$0\le t_1<\cdots,t_n$について，$B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$が独立であることを示すために，確率ベクトル$(B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}})^\top$の特性関数を調べる．
+            Brown運動$(W_t)$の独立増分性より，
+            \begin{align*}
+                \int_\Om e^{iu\cdot \begin{pmatrix}B_{t_2}-B_{t_1}\\\vdots\\B_{t_n}-B_{t_{n-1}}\end{pmatrix}}&=\int_{\Om'}e^{iu\cdot \begin{pmatrix}W_{t_2}-W_{t_1}\\\vdots\\W_{t_n}-W_{t_{n-1}}\end{pmatrix}}dP'\\
+                &=\int_{\Om'}e^{iu(W_{t_2}-W_{t_1})}dP'\times\cdots\times\int_{\Om'}e^{iu(W_{t_n}-W_{t_{n-1}})}dP'\\
+                &=\int_\Om e^{iu(B_{t_2}-B_{t_1})}dP\times\cdots\times\int_\Om e^{iu(B_{t_n}-B_{t_{n-1}})}dP.
+            \end{align*}
+            \item 任意の$0\le s<t$について，$B_t-B_s\sim N(0,t-s)$を示す．補題の確率変数$W:\Om'\to\Om$を用いて，
+            \begin{align*}
+                \varphi(u)&=\int_\Om e^{iuB_t(\om)-B_s(\om)}dP(\om)\\
+                &=\int_\Om e^{iu(\om(t)-\om(s))}P(d\om)\\
+                &=\int_\Om e^{iu W(t,\om')-W(s,\om')}P'(d\om')=\exp\paren{-\frac{1}{2}u^2(t-s)}\quad(u\in\R)
+            \end{align*}
+        \end{enumerate}
     \end{enumerate}
 \end{proof}
 
+\subsection{Cameron-Matrin定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドリフト$F:\R_+\to\R$付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
+    これはちょうど$F$-Brown橋と標準Brown橋の関係と同じである．
+\end{tcolorbox}
+
+\subsubsection{Cameron-Martin部分空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $F(0)=0$を満たす
+    見本道
+    $F\in C([0,1])$のうち，
+    ある$F'\in L^2([0,1])$の積分として得られるものの全体をCameron-Martin部分空間という．
+\end{tcolorbox}
+
+\begin{notation}[skelton / Cameron-Martin subspace]\mbox{}
+    \begin{enumerate}
+        \item 標準Brown運動の法則を$L_0$，ドリフト$F$付きのBrown運動の法則を$L_F$で表す．
+        $L_F\ll L_0\Leftrightarrow L_0(A)=0\Rightarrow L_F(A)=0$がいかなるときか？
+        まず，$F$が連続で，$F(0)=0$が必要なのは明らかである．そうでなければ，$L_F$は連続でなかったり，$0$からスタートしない見本道に正の確率を許してしまうため．
+        \item $D[0,1]:=\Brace{F\in C[0,1]\mid\exists_{f\in L^2[0,1]}\;\forall_{t\in[0,1]}\;F(t)=\int^t_0f(s)ds}$をDirichlet空間という．より一般にDirichlet空間は，Dirichlet積分なる半ノルムが有限となるようなHardy空間の部分空間で，正則関数の再生核Hilbert空間ともなる．
+        このDirichlet空間には特別な名前がついており，skeltonまたはCameron-Martin部分空間と呼ばれる．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[Dirichlet space]
+    $\Om\subset\C$上のDirichlet空間とは，正則関数の再生核Hilbert空間がなす$H^2(\Om)$の部分空間で，
+    \[\D(\Om):=\Brace{f\in H^2(\Om)\mid \D(f)<\infty}\quad\D(f):=\frac{1}{\pi}\iint_\Om\abs{f'(z)}^2dA=\frac{1}{4\pi}\iint_\Om\abs{\partial_xf}^2+\abs{\partial_yf}^2dxdy.\]
+    この右辺が変分原理であるDirichlet原理を定めるDirichlet積分になっていることから名前がついた．
+\end{definition}
+\begin{definition}[RKHS: reproductive kernel Hilbert space]
+    $X$を集合，$H\subset\Map(X;\R)$をHilbert空間とする．
+    評価関数$\ev_x:H\to\R$が任意の$x\in X$について有界線型汎関数である$\forall_{x\in X}\;\ev_x\in B(H)$とき，$H$を\textbf{再生核Hilbert空間}という．
+    すなわち，Rieszの表現定理よりある$K_x\in H$が存在して$\ev_x(-)=(-|K_x)$と表せる．この対応$X\to H;x\mapsto K_x$が導く双線型形式$K:X\times X\to\R;(x,y)\mapsto K(x,y):=(K_x|K_y)$を\textbf{再生核}という．
+    再生核は対称で半正定値である．
+\end{definition}
+\begin{theorem}
+    関数$K:X\times X\to\R$は対称かつ半正定値であるとする．このとき，ただ一つのHilbert空間$H$が$\Map(X;\R)$内に存在して，$K$を再生核として持つ．
+\end{theorem}
+
+\subsubsection{Cameron-Martin定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L_F\ll L_0$ならば，標準Brown運動$B$のa.s.性質は$B+F$に引き継がれる．
+    これはちょうどCameron-Martin部分空間について$F\in D[0,1]$に同値．
+    したがって微分を見てみると良い．
+\end{tcolorbox}
+
+\begin{definition}[equivalence measure, absolute continuous, singular]
+    可測空間$(\Om,\B)$上の測度を考える．
+    \begin{enumerate}
+        \item 2つの測度の零集合の全体が一致するとき，すなわち互いに絶対連続であるとき$\mu\ll\nu\land\nu\ll\mu$，これらは同値であるという．
+        \item 絶対連続性は，測度の同値類の間に順序を定める．
+        \item ２つの測度の「台」が分解出来るとき，すなわち，ある分割$\Om=A\sqcup A^\comp$が存在して$P(A)\cap\B\subset\cN(\mu)$かつ$P(A^\comp)\cap\B\subset\cN(\nu)$が成り立つとき，特異であるといい$\mu\perp\nu$と表す．
+        \item Lebesgue分解により，任意の2つの$\sigma$-有限測度$\mu,\nu$について，一方をもう一方に対して絶対連続部分と特異部分との和に分解できる．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Cameron-Martin]
+    任意の連続関数$F\in C[0,1],F(0)=0$について，次が成り立つ：
+    \begin{enumerate}
+        \item $F\notin D[0,1]$ならば，$L_F\perp L_0$である．
+        \item $F\in D[0,1]$ならば，$L_F$と$L_0$は同値である．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    可微分なドリフト$F$については，Brown運動の法則は同値になる．
+    すなわち，ほとんど確実な事象（見本道の連続性や可微分性）が等しい．
+\end{remarks}
+
+\subsubsection{証明}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    証明にはmartingaleを用いる．
+\end{tcolorbox}
+
+\begin{notation}
+    $F\in C[0,1],n>0$について，2進小数点$\D_n$で分割して考えた，
+    $F$の二次変分
+    \[Q(F):=\lim_{\abs{\Delta}\to0}\sum_{k=1}^n\paren{F(t_k)-F(t_{k-1})}^2\]
+    に至る列を
+    \[Q_n(F):=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\]
+    と表す．
+\end{notation}
+
+\begin{lemma}
+    $F\in C[0,1],F(0)=0$について，
+    \begin{enumerate}
+        \item $(Q_n(F))_{n\in\N}$は増加列である．
+        \item $F\in D[0,1]\Leftrightarrow\sup_{n\in\N}Q_n(F)<\infty$．
+        \item $F\in D[0,1]\Rightarrow Q_n(F)\xrightarrow{n\to\infty}\norm{F'}^2_2$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $(a+b)^2=a^2+2ab+b^2\le 2a^2+2b^2$より，任意の$j\in[2^n]$について，
+        \begin{align*}
+            \Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2&=\Square{\paren{F\paren{\frac{2j-1}{2^{n+1}}}-F\paren{\frac{j-1}{2^n}}}+\paren{F\paren{\frac{j}{2^n}}-F\paren{\frac{2j-1}{2^{n+1}}}}}^2\\
+            &\le2\Square{F\paren{\frac{2j-1}{2^{n+1}}}-F\paren{\frac{j-1}{2^n}}}^2+2\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{2j-1}{2^{n+1}}}}^2
+        \end{align*}
+        これを$j\in[2^n]$について和を取ると，
+        \[\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2^n}}}^2\le 2\sum^{2^{n+1}}_{j=1}\Square{F\paren{\frac{j}{2^{n+1}}}-F\paren{\frac{j-1}{2^{n+1}}}}^2\]
+        より，$(Q_n(F))_{n\in\N}$の単調増加性を得る．
+        \item \begin{description}
+            \item[$\Rightarrow$] $F\in D[0,1]$のとき，ある$f:=F'\in L^2[0,1]$が存在して，Cauchy-Schwartzより任意の$j\in[2^n]$について
+            \[2^n\paren{\int^{j2^{-n}}_{(j-1)2^{-n}}fdt}^2\le 2^n\int^{j2^{-n}}_{(j-1)2^{-n}}1^2dt\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt=\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt\]
+            が成り立つから，
+            \[Q_n(F)=2^n\sum^{2^n}_{j=1}\paren{\int^{j2^{-n}}_{(j-1)2^{-n}}fdt}^2\le \sum^{2^n}_{j=1}\int^{j2^{-n}}_{(j-1)2^{-n}}f^2dt=\norm{f}_2^2<\infty.\]
+            \item[$\Leftarrow$]
+
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[Paley-Wiener stochastic integral]
+    $(B_t)_{t\in\R_+}$を標準Brown運動とする．$F\in D[0,1]$について，
+    \[\xi_n:=2^n\sum^{2^n}_{j=1}\Square{F\paren{\frac{j}{2^n}}-F\paren{\frac{j-1}{2}}}\Square{B\paren{\frac{j}{2^n}}-B\paren{\frac{j-1}{2^n}}}\]
+    はほとんど確実に$L^2$-収束する．
+    この極限を$\int^1_0F'dB$で表す．
+\end{lemma}
+
 \subsection{抽象的Wiener空間}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Leonard Gross 31- により，一般のGauss測度を調べるために開発され，Cameron-Martin空間の有用性を抽象的な枠組みから理解できる．
+    Gauss測度の構造定理によると，任意のGauss測度はある抽象Wiener空間上に実現される．
+\end{tcolorbox}
+
 \section{Brownian Filtration}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率変数の族$(B_t)_{t\in[0,T]}$と$B_S-B_T\;(s>T)$は独立である．
+    この定義は，任意の有限部分集合$\{0\le t_1<\cdots<t_n\}\subset[0,T]$に対して，確率ベクトル$(B_{t_1},\cdots,B_{t_n})$と変数$B_S-B_T$とは独立であることをいう．
+    これを，$\F_T\indep B_S-B_T$と表現出来る．
+    これを示すためには，柱状集合をうまく取ることが大事な技法となる．
+\end{tcolorbox}
 
 \begin{definition}[natural filtration]
     $B$を$(\Om,\F,P)$上のBrown運動とする．
     \begin{enumerate}
-        \item $\F_t\subset\F\;(t\in\R_+)$を，確率変数族$\{B_s\}_{s\in[0,t]}$と零集合$\cN(P)$が生成する完備な$\sigma$-加法族とする．
+        \item $\F_t\subset\F\;(t\in\R_+)$を，確率変数族$\{B_s\}_{s\in[0,t]}$と零集合$\cN(P)$が生成する完備な$\sigma$-加法族とする：$\F_t:=\sigma[\cN(P),\B_s|s\in[0,t]]$．
+        \item $(\Om,\F,P)$が古典的Wiener空間であるとき，$\F_0=\{\emptyset,\Om\}$であり，$\F_t$は時刻$t$までの柱状集合
+        \[C(t_1,\cdots,t_n;A_1,\cdots,A_n)\;(t_n\le t)\]
+        が生成する$\sigma$-加法族に一致する．
         \item このときの閉$\sigma$-代数の増大系$\{\F_t\}_{t\in\R_+}$を\textbf{自然な情報系}という．
     \end{enumerate}
 \end{definition}
+
+\begin{lemma}[Blumenthal one-zero law]\mbox{}\label{lemma-Blumenthal}
+    \begin{enumerate}
+        \item 任意の$0<s<t$について，(任意の$\F_s$-可測関数$X:\Om\to\R$は)$\F_s$は$B_t-B_s$に対して独立である．
+        \item $A\in\F_0^+:=\cap_{\ep>0}\F_\ep$ならば，$P[A]\in\{0,1\}$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\F_s$は，$C(s_1,\cdots,s_n;J_1,\cdots,J_n)\;(0\le s_1<\cdots<s_n\le s,J_i\in\B^1(\R))$の形の柱状集合がなす集合体によって生成されるから，Dynkin族定理より，
+        \[P[(B_t-B_s\in I),C(s_1,\cdots,s_n;J_1,\cdots,J_n)]=P[B_t-B_s\in I]P[C(s_1,\cdots,s_n;J_1,\cdots,J_n)]\]
+        を示せば，残りの等式は単調収束定理より従う．
+
+        これは，2つの確率ベクトル$(B_{s_1},\cdots,B_{s_n}),B_t-B_s$の独立性から従う．
+        任意の$i\in[n]$に対して，$\Cov[B_{s_i},B_t-B_s]=\Cov[B_{s_i},B_t]-\Cov[B_{s_i},B_s]=0$を示せば良いが，これは明らか．
+        というのも，左辺は
+        \[\int_{J_1\times\cdots\times J_n\times I}p_{s_1}(x_1)p_{s_2}(x_2-x_1)\cdots p_{s_n}(x_n-x_{n-1})p_{t-s}(x)dx_1\cdots dx_ndx\]
+        と表せるが，これはFubiniの定理より右辺に等しい．
+        \item 
+        $A\in\F^+_0$を任意に取る．
+        \begin{description}
+            \item[環境設定] $n\in\N,0\le t_1<\cdots<t_n,h>0,I_i\in\B^1(\R)$に対して，
+            \[D(t_1,\cdots,t_n;h;I_1,\cdots,I_n):=\Brace{\om\in\Om\mid B_{t_1+h}(\om)-B_{h}(\om)\in I_1,\cdots,B_{t_n+h}(\om)-B_h(\om)\in I_n}\]
+            なる形の集合全体が生成する$\sigma$-代数を$\cG$とすると，実は$\cG=\F$である．
+            \begin{enumerate}[(a)]
+                \item $\F\subset\cG$は，任意の柱状集合$C(s_1,\cdots,s_n;A_1,\cdots,A_n)$は，$\cap_{i\in[n]}C(s_i;A_i)$と表せるから，
+                $C(s;A)\;(s>0,A\in\B^1(\R))$が$\cG$に入っていることを示せば良い．
+                これは$C(s;A)=\limsup_{n\to\infty}\Brace{B_{s+1/n}-B_{1/n}\in A}=\limsup_{n\to\infty}D(s;1/n;A)$より従う．
+                \item $\cG\subset\F$は，
+            \end{enumerate}
+            \item[$A\indep\cG$] $A$は$\F^+_0$の元であるから，特に$A\in\F_h$である．
+            よって，任意の有限部分集合$\{0\le t_1<\cdots<t_n\}\subset\R_+$について，
+            各$B_{t_i+h}-B_{h}$と独立であり，
+            したがって$D(t_1,\cdots,t_n;h;I_1,\cdots,I_n)$とも独立である．
+            $t_1,\cdots,t_n,h,I_1,\cdots,I_n$は任意に取ったから，$A\indep\cG$．
+            すなわち，$\forall_{G\in\cG}\;P[A\cap G]=P[A]P[G]$．
+            \item[結論] 
+            $\F^+_0\subset\F\subset\cG$より，$G=A$と取れる．よって，$P[A]=P[A]P[A]$を得る．
+        \end{description}
+    \end{enumerate}
+\end{proof}
 
 \begin{lemma}
     $\F_t$が完備であることより，次の2条件が成り立つ．
@@ -1465,20 +1564,83 @@ title=]
         \item $(\F_t)$は右連続である：$\forall_{t\in\R_+}\cap_{s>t}\F_s=\F_t$．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $(X_t)_{t\in\R_+}$を$(\Om,\F,P)$上の$(\F_t)$-適合的な確率過程とする：$\forall_{t\in\R_+}\;X_t\in\L_{\F_t}(\Om)$．
+        すなわち，$\forall_{t\in\R_+}\;\forall_{A\in\B^1(\R)}\;\Brace{X_t\in A}\in\F_t$．
+        $Y$を$X$の同値な確率過程とすると，$\forall_{t\in\R_+}\;P^{X_t}=P^{Y_t}$より，
+        特に$P[X_t\in A]=P[Y_t\in A]$が成り立つ．
+        よって$Y$
+        も$(\F_t)$-適合的になる．
+        \item 
+        任意の$t\in\R_+$を取る．$t=0$のときは補題(2)より成り立つ．
+
+        $t>0$のときは，$(B_{h+t}-B_t)_{h\in\R_+}$は再びBrown運動であるから，このBrown運動についての自然な情報系を$(\cG_h)$とすると，
+        $\cG_0$の元はすべてfull setかnull setであるから，$\cG_0\subset\F_t$，特に
+        $\sigma[\F_t,\cG_0]=\F_t$であることより，
+        \[\F_t=\sigma[\F_t,\cG_0]=\cap_{\ep\ge0}\sigma[\F_t,\cG_\ep]=\cap_{\ep>0}\sigma[\F_t,\cG_\ep].\]
+    \end{enumerate}
+\end{proof}
+
+\subsection{詳論}
+
+\begin{notation}
+    $\F^0_s:=\sigma[B_u:u\le s]$とし，$\F^+_s:=\cap_{t>s}\F^0_t$をその右連続化とする．
+    このとき，たしかに$(\F^+_s)$は右連続である：$\cap_{t>s}\F_t^+=\cap_{t>s}\paren{\cap_{u>t}\F^0_u}=\cap_{u>s}\F^0_u=\F_s^+$．
+    $C:=C(\R_+)$とおき，$\cC$をその広義一様位相に関するBorel $\sigma$-集合族とする．
+    スタート地点が$x\in\R$であるBrown運動に対応する測度を$P_x:\cC\to[0,1]$とする．
+\end{notation}
+
+\begin{definition}
+    見本道の$s\in\R_+$での剪断$\theta_s:C\to C$を，$\theta_s(\om)=\om(s+-)\in C$で定める．
+\end{definition}
+
+\begin{theorem}[Brown運動のMarkov性]
+    $Y:C\to\R$を任意の有界$\cC$-可測関数とする．このとき，
+    \[\forall_{s\in\R_+}\;\forall_{x\in\R}\;E_x[Y\circ\theta_s|\F^+_s]=E_{B_s}[Y].\]
+\end{theorem}
+\begin{remarks}
+    ここでは示さないが，右辺が$Y:C\to\R$の$C$の測度$P_x$に関しての平均であり，特に
+    $\F_s^0=\sigma[B_u|u\le s]$-可測である
+\end{remarks}
 
 \section{Markov性}
 
-\begin{theorem}
+\subsection{Markov性}
+
+\begin{theorem}[Markov property]
     Brown運動$(B_t)_{t\in\R_+}$は自然な情報系$(\F_t)$についてMarkov過程となる．
     すなわち，
-    \[(P_tf)(x)=\int_\R f(y)p_t(x-y)dy\]
-    で定まる連続半群$(P_t)_{t\in\R_+}$について，
+    \[(P_tf)(x)=\int_\R f(y)p_t(x-y)dy\;(t>0)\]
+    で，時刻$s$に$x$に居た場合の$f(B_{s+t})$の値の平均を返す関数$P_tf:\R\to\R$への対応$P_t:L_b(\R)\to\L(\R)$
+    のなす1-パラメータ連続半群$(P_t)_{t\in\R_+}$を用いて，
     \[\forall_{f\in\L(\R)\cap l^\infty(\R)}\;\forall_{s\ge0,t>0}\;E[f(B_{s+t})|\F_s]=(P_tf)(B_s).\]
     また，$f\in\L(\R)_+$としてもよい．
 \end{theorem}
+\begin{proof}
+    補題\ref{lemma-Blumenthal}(1)より
+    $\F_s\indep B_{s+t}-B_s$だから，$\forall_{x\in\R}\;f(B_{s+t}-B_s+x)\indep\F_s$だから，
+    \begin{align*}
+        E[f(B_{s+t})|\F_s]&=E[f(B_{s+t}-B_s+B_s)|\F_s]\\
+        &=E[f(B_{s+t}-B_s+x)|\F_s]|_{x=B_s}\\
+        &=E[f(B_{s+t}-B_s+x)]|_{x=B_s}\\
+        &=\int_\R f(y+x)\frac{1}{\sqrt{2\pi t}}e^{-\frac{y^2}{2t}}dy|_{x=B_s}\\
+        &=\int_\R f(y+B_s)\frac{1}{\sqrt{2\pi t}}e^{-\frac{y^2}{2t}}dy\\
+        &=\int_\R f(y)\frac{1}{\sqrt{2\pi t}}e^{-\frac{(B_s-y)^2}{2t}}dy=(P_tf)(B_s).
+    \end{align*}
+\end{proof}
+
+\subsection{Markov半群}
+
+\begin{definition}[transition semigroup]
+    定理に登場した
+    $P_t\varphi(x):=E[\varphi(B_t+x)]\;(\varphi\in \L_b(\R))$
+    で定まる$\{P_t\}_{t\in\R_+}\subset\Map(\L_b(\R),\L(\R))$を\textbf{遷移半群}という．
+    $P_t$は正作用素である：$\varphi\ge0\Rightarrow P_t\varphi\ge0$．
+\end{definition}
 
 \begin{proposition}
-    連続半群$(P_t)_{t\in\R_+}$の並行移動密度
+    連続半群$(P_t)_{t\in\R_+}$の積分核
     \[p_t(x-y)=\frac{1}{(2\pi t)^{d/2}}\exp\paren{-\frac{\abs{x-y}^2}{2t}}\]
     は，熱方程式の初期値問題
     \[\pp{p}{t}=\frac{1}{2}\Laplace p\;(t>0)\qquad p_0(x-y)=\delta_0(x-y)\]
