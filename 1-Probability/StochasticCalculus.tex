@@ -32,7 +32,9 @@
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    \cite{Prato}による．関数解析全開で読みやすい．
+    これから(可分な)無限次元Hilbert空間上のGauss測度に関する積分論を展開することになるから，
+    Gauss測度も無限次元に通用する言葉で定義する．
+    \cite{Prato}による．
 \end{tcolorbox}
 
 \begin{notation}
@@ -43,21 +45,33 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    可分Hilbert空間という一番一般的な方法で，分布の扱い方を定める．
-    共分散とは半正定値対称行列としたが，無限次元から見れば，
-    有限の跡を持つというのが本質であるようだ．
+    今まで確率空間$(\Om,\F)$に言及して平均と分散を定義することはなかったが，
+    可分Hilbert空間$H$を確率空間として，その分布の扱い方を定める．
+    $H$の有限次元分布は有界線型汎関数を通じて定まるが，それはすべて内積で表現できることから，内積を用いた定義になるが，これは成分$X_i$の拡張に過ぎない．
 \end{tcolorbox}
 
 \begin{definition}[mean, covariance operator]
     $\mu\in P(H)$について，
     \begin{enumerate}
-        \item $E[\abs{x}]<\infty$のとき，線型形式$F:H\to\R;x\mapsto\int_H\brac{x,y}\mu(dy)$は有界である．このRiesz表現$\exists!_{m\in H}\;F(x)=\brac{m,x}$を定める元$m\in H$を$\mu$の\textbf{平均}という．
-        \item $E[\abs{x}]\le E[\abs{x}^2]<\infty$のとき，双線型形式$G:H\times H\to\R;(x,y)\mapsto\int_H\brac{x,z-m}\brac{y,z-m}\mu(dz)$は有界である．よって，Riesz表現を定める自己有界作用素$\exists!_{Q\in B(H)}\;\brac{Qx,y}=G(x,y)$を\textbf{共分散}という．
+        \item $E[\abs{x}]<\infty$のとき，任意の$x\in H$に対して，その内積の平均$E[\brac{x|Y}]\;(Y\sim\mu)$を対応させる
+        線型形式$F:H\to\R;x\mapsto\int_H\brac{x|y}\mu(dy)$は有界である(Cauchy-Schwartzによる)．
+        
+        このRiesz表現$\exists!_{m\in H}\;F(x)=\brac{x|m}$を定める元$m\in H$を$\mu$の\textbf{平均}という．
+        \item $E[\abs{x}]\le E[\abs{x}^2]<\infty$のとき，双線型形式$G:H\times H\to\R;(x,y)\mapsto\int_H\brac{x|z-m}\brac{y|z-m}\mu(dz)$は有界かつ対称（自己共役）である．
+        
+        このRiesz表現を定める自己有界作用素$\exists!_{Q\in B(H)}\;\brac{Qx|y}=\brac{x|Qy}=G(x,y)$を\textbf{共分散}という．
     \end{enumerate}
 \end{definition}
+\begin{remarks}
+    平均は，$E[\brac{x|Y}]=\brac{x|m}$という可換性を満たす元$m$，
+    共分散には2つの見方があり，
+    対称な(半)双線型形式$G(x,y)=E[\brac{x|Z-m}\brac{y|Z-m}]=E[(\brac{x|Z}-E[\brac{x|Z}])(\brac{y|Z}-E[\brac{y|Z}])]$とも($\brac{x|Z},\brac{y|Z}$を改めて$X,Y:H\to\R$と定めれば見慣れた共分散の定義$\Cov[X,Y]$となる)，
+    それを表現する有界線型作用素$Q\in B(H)$とも理解できる．
+    $x,y\in H$は添字集合と見る．
+\end{remarks}
 
 \begin{lemma}[共分散作用素の性質]
-    $E[\abs{x}]<\infty$とする．
+    $E[\abs{x}^2]<\infty$とする．
     \begin{enumerate}
         \item $Q$は正作用素であり，かつ自己共役である．
         \item $H$の任意の正規直交基底$(e_k)$について，$\Tr Q:=\sum_{k\in\N}\brac{Qe_k,e_k}=\int_H\abs{x-m}^2\mu(dx)<\infty$．
@@ -65,6 +79,17 @@ title=]
         \item $E[\abs{x}^2]=\Tr Q+\abs{m}^2$．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $Q$を定める双線型形式$G$は対称であったから，$Q$も対称である：$G(x,y)=G(y,x)\Rightarrow\brac{Qx|y}=\brac{Q^*x|y}$．
+        また，$\forall_{x,x\ge0}\;\brac{Qx|x}=G(x,x)\ge0$より正である．
+        \item 単調収束定理とParseval恒等式より，
+        \begin{align*}
+            \Tr Q=\sum_{k\in\N}\brac{Qe_k|e_k}&=\sum_{k\in\N}\int_H\abs{\brac{x-m|e_k}}^2\mu(dx)\\
+            &=
+        \end{align*}
+    \end{enumerate}
+\end{proof}
 
 \begin{notation}
     正作用素の空間を$B^+(H)$とし，有限な跡を持つ作用素の空間を$B^+_1(H)\subset B^+(H)$で表す．
@@ -705,6 +730,13 @@ title=]
     平均$0$，共分散$\min$のGauss過程$(W_t)_{t\in[0,1]}$にはあるバージョンが存在し，Brown運動である（見本道は殆ど確実に連続である）．
 \end{theorem}
 
+\subsection{見本道の空間上への構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C(\R_+)$上の測度を直接構成して，$\id:C(\R_+)\to C(\R_+)$としてBrown運動を得ることも出来る\ref{prop-construction-of-Wiener-measure}．
+\end{tcolorbox}
+
 \section{Brown運動の変種}
 
 \subsection{固定端Brown運動}
@@ -1272,49 +1304,22 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     Brown運動は，その見本道全体の確率空間$(\Om,\F,P)$上の恒等写像として標準的に実現できる．
+    これが4つ目の構成となる．
 \end{tcolorbox}
 
 \begin{definition}[Wiener space]\mbox{}
     \begin{enumerate}
         \item $\Om:=\Brace{\om\in C(\R_+;\R)\mid\om(0)=0}$．
         \item $\F$を，$\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数とする．このコンパクト開位相について，$\Om$はFrechet空間となる．
-        \item $P$をWiener測度とする．
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}[コンパクト開位相の性質]
-    $K\compsub\R_*,U\osub\R$について，
-    \[W(K,U):=\Brace{f\in\Om| f(K)\subset U}\]
-    を準基\footnote{一般にコンパクト集合の有限共通部分はコンパクトとは限らないことに注意．}として生成される$\Om$上の位相を\textbf{コンパクト開位相}といい，次が成り立つ．
-    \begin{enumerate}
-        \item $e:\Om\times\R_+\to\R$は連続．特に$\pr_t:\Om\to\R\;(t\in\R_+)$は連続（逆は言えないことに注意）．
-        \item $K_n:=[0,n]$として，半ノルムの族$(\rho_n(\om):=\sup_{t\in K_n}\abs{\om(t)})_{n\in\N}$が定める始位相と一致する．
-    \end{enumerate}
-\end{lemma}
-
-\begin{lemma}[Wiener測度の特徴付け]
-    $(B_t)$を$(\Om',\F',P')$上のBrown運動とする．
-    このとき，$B:\Om'\to\Om;\om'\mapsto B(-,\om')$とするとこれは可測で，$P'^B=P\;\on\F$を満たす．
-    特に，次の変数変換の公式を得る：
-    \[\forall_{\varphi\in\L^1(\Om,\F,P)}\quad\int_\Om\varphi(\om)P(d\om)=\int_{\Om'}\varphi(B(-,\om'))P'(d\om').\]
-\end{lemma}
-\begin{proof}
-    可測性は次の議論より明らか．
-
-    任意の$k\in\N,0\le t_1<\cdots<t_k,A_1,\cdots,A_k\in\B^1(\R)$について，$C(t_1,\cdots,t_k;A_1,\cdots,A_k)$上での値が一致すればよいが，Brown運動の独立増分性と，増分が正規分布に従うことより，
-    \begin{align*}
-        P'^B(C(t_1,\cdots,t_k;A_1,\cdots,A_k))&=P'[B_{t_1}\in A_1,\cdots,B_{t_k}\in A_k]\\
-        &=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k\\
-        &=P[C(t_1,\cdots,t_k;A_1,\cdots,A_k)].
-    \end{align*}
-\end{proof}
-
-\begin{proposition}[$\sigma$-代数の特徴付け]
+\begin{proposition}[Wiener測度の構成]\label{prop-construction-of-Wiener-measure}
     $(\Om,\F,P)$をWiener空間とする．
     \begin{enumerate}
         \item $\R_+$上の広義一様収束位相が生成するBorel $\sigma$-代数$\F$は次の円筒集合の集合$\cC\subset P(\Om)$によって生成される：$\B(\Om)=\sigma[\cC]$
         \[\cC=\Brace{C=\Brace{\om\in\Om\mid\forall_{i\in[k]}\;\om(t_i)\in A_i}\in P(\Om)\;\middle|\;k\in\N_{\ge1},A_1,\cdots,A_k\in\B(\R),0\le t_1<\cdots<t_k}\]
-        \item $p_t(x)=(2\pi t)^{-1/2}e^{-x^2/(2t)}$を正規分布の確率密度関数とする．
+        \item $p_t(x)=(2\pi t)^{-1/2}e^{-x^2/(2t)}$を正規分布$N(0,t)$の確率密度関数とする．
         \[P(C)=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k.\]
         が成り立ち，これの$\F$上への延長はたしかに一意的である．
         \item 任意の$\om\in\Om$に対して，$B_t(\om):=\om(t)$と見本道を定めると，この対応$\Om\to\Om$はBrown運動である．
@@ -1361,12 +1366,42 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\begin{lemma}[コンパクト開位相の性質]
+    $K\compsub\R_*,U\osub\R$について，
+    \[W(K,U):=\Brace{f\in\Om| f(K)\subset U}\]
+    を準基\footnote{一般にコンパクト集合の有限共通部分はコンパクトとは限らないことに注意．}として生成される$\Om$上の位相を\textbf{コンパクト開位相}といい，次が成り立つ．
+    \begin{enumerate}
+        \item $e:\Om\times\R_+\to\R$は連続．特に$\pr_t:\Om\to\R\;(t\in\R_+)$は連続（逆は言えないことに注意）．
+        \item $K_n:=[0,n]$として，半ノルムの族$(\rho_n(\om):=\sup_{t\in K_n}\abs{\om(t)})_{n\in\N}$が定める始位相と一致する．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Wiener測度の特徴付け]
+    $(B_t)$を$(\Om',\F',P')$上のBrown運動とする．
+    このとき，$B:\Om'\to\Om;\om'\mapsto B(-,\om')$とするとこれは可測で，
+    命題\ref{prop-construction-of-Wiener-measure}(2)で定まる$\Om$上の測度$P$に対して$P'^B=P\;\on\F$を満たす．
+    特に，次の変数変換の公式を得る：
+    \[\forall_{\varphi\in\L^1(\Om,\F,P)}\quad\int_\Om\varphi(\om)P(d\om)=\int_{\Om'}\varphi(B(-,\om'))P'(d\om').\]
+\end{lemma}
+\begin{proof}
+    可測性は次の議論より明らか．
+
+    任意の$k\in\N,0\le t_1<\cdots<t_k,A_1,\cdots,A_k\in\B^1(\R)$について，$C(t_1,\cdots,t_k;A_1,\cdots,A_k)$上での値が一致すればよいが，Brown運動の独立増分性と，増分が正規分布に従うことより，
+    \begin{align*}
+        P'^B(C(t_1,\cdots,t_k;A_1,\cdots,A_k))&=P'[B_{t_1}\in A_1,\cdots,B_{t_k}\in A_k]\\
+        &=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k\\
+        &=P[C(t_1,\cdots,t_k;A_1,\cdots,A_k)].
+    \end{align*}
+\end{proof}
+
 \subsection{Cameron-Matrin定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     ドリフト$F:\R_+\to\R$付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
     これはちょうど$F$-Brown橋と標準Brown橋の関係と同じである．
+
+    この消息を支える$\Om$の稠密部分空間が，普遍的な役割を果たす．
 \end{tcolorbox}
 
 \subsubsection{Cameron-Martin部分空間}
