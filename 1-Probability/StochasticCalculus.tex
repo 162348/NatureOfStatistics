@@ -62,12 +62,15 @@ title=]
         このRiesz表現を定める自己有界作用素$\exists!_{Q\in B(H)}\;\brac{Qx|y}=\brac{x|Qy}=G(x,y)$を\textbf{共分散}という．
     \end{enumerate}
 \end{definition}
-\begin{remarks}
-    平均は，$E[\brac{x|Y}]=\brac{x|m}$という可換性を満たす元$m$，
-    共分散には2つの見方があり，
-    対称な(半)双線型形式$G(x,y)=E[\brac{x|Z-m}\brac{y|Z-m}]=E[(\brac{x|Z}-E[\brac{x|Z}])(\brac{y|Z}-E[\brac{y|Z}])]$とも($\brac{x|Z},\brac{y|Z}$を改めて$X,Y:H\to\R$と定めれば見慣れた共分散の定義$\Cov[X,Y]$となる)，
-    それを表現する有界線型作用素$Q\in B(H)$とも理解できる．
-    $x,y\in H$は添字集合と見る．
+\begin{remarks}\mbox{}
+    \begin{enumerate}
+        \item 平均は，$E[\brac{x|Y}]=\brac{x|m}$という可換性を満たす元$m$，
+        \item 共分散には2つの見方があり，
+        対称な(半)双線型形式$G(x,y)=E[\brac{x|Z-m}\brac{y|Z-m}]=E[(\brac{x|Z}-E[\brac{x|Z}])(\brac{y|Z}-E[\brac{y|Z}])]$とも($\brac{x|Z},\brac{y|Z}$を改めて$X,Y:H\to\R$と定めれば見慣れた共分散の定義$\Cov[X,Y]$となる)，
+        それを表現する有界線型作用素$Q\in B(H)$とも理解できる．
+        \item 内積はベクトル$(X_1,\cdots,X_n)$からの成分の抽出の一般化と見ると，$\brac{x|Z}$とは成分$Z_x$と思える．つまり，
+        $x,y\in H$は添字集合と見る．
+    \end{enumerate}
 \end{remarks}
 
 \begin{lemma}[共分散作用素の性質]
@@ -75,7 +78,7 @@ title=]
     \begin{enumerate}
         \item $Q$は正作用素であり，かつ自己共役である．
         \item $H$の任意の正規直交基底$(e_k)$について，$\Tr Q:=\sum_{k\in\N}\brac{Qe_k,e_k}=\int_H\abs{x-m}^2\mu(dx)<\infty$．
-        \item $Q$はコンパクト作用素である．
+        \item $Q$はコンパクト作用素である．(2)と併せると特に，$Q$は跡類作用素である：$Q\in B^1(H)$．
         \item $E[\abs{x}^2]=\Tr Q+\abs{m}^2$．
     \end{enumerate}
 \end{lemma}
@@ -86,8 +89,9 @@ title=]
         \item 単調収束定理とParseval恒等式より，
         \begin{align*}
             \Tr Q=\sum_{k\in\N}\brac{Qe_k|e_k}&=\sum_{k\in\N}\int_H\abs{\brac{x-m|e_k}}^2\mu(dx)\\
-            &=
+            &=\int_H\sum_{k\in\N}\abs{\brac{x-m|e_k}}^2\mu(dx)=\int_H\abs{x-m}^2\mu(dx)<\infty.
         \end{align*}
+        \item 正作用素$T$が$\exists_{p>0}\;\Tr(\abs{T}^p)<\infty$を満たすならば，コンパクト作用素である．
     \end{enumerate}
 \end{proof}
 
@@ -1667,15 +1671,24 @@ title=]
 
 \subsection{Markov半群}
 
-\begin{definition}[transition semigroup]
+\begin{definition}[transition semigroup, Chapman-Kolmogorov equation]
     定理に登場した
     $P_t\varphi(x):=E[\varphi(B_t+x)]\;(\varphi\in \L_b(\R))$
-    で定まる$\{P_t\}_{t\in\R_+}\subset\Map(\L_b(\R),\L(\R))$を\textbf{遷移半群}という．
-    $P_t$は正作用素である：$\varphi\ge0\Rightarrow P_t\varphi\ge0$．
+    で定まる$\{P_t\}_{t\in\R_+}\subset\Map(\L_b(\R),\L(\R))$は半群の準同型となる：
+    \begin{enumerate}
+        \item $P_0=\id$．
+        \item $P_t\circ P_s=P_{t+s}$，すなわち，
+        \[\forall_{f\in L_b(\R)}\;\iint_{\R\times\R} f(y)p_s(x-y)p_t(z-x)dydx=\int_\R f(y)p_{s+t}(z-y)dy.\]
+    \end{enumerate}
+    これを\textbf{遷移半群}という．
+    
+    また，$P_t$は正作用素である：$\varphi\ge0\Rightarrow P_t\varphi\ge0$．
 \end{definition}
 
-\begin{proposition}
-    連続半群$(P_t)_{t\in\R_+}$の積分核
+
+\begin{proposition}[Brown運動の遷移半群が満たす偏微分方程式]
+    $d$-次元Brown運動の遷移確率のなす
+    連続半群$(P_t)_{t\in\R_+}$を定める積分核
     \[p_t(x-y)=\frac{1}{(2\pi t)^{d/2}}\exp\paren{-\frac{\abs{x-y}^2}{2t}}\]
     は，熱方程式の初期値問題
     \[\pp{p}{t}=\frac{1}{2}\Laplace p\;(t>0)\qquad p_0(x-y)=\delta_0(x-y)\]
@@ -1694,8 +1707,31 @@ title=]
         \item 幾何Brown運動：$(\exp(aB_t-a^2t/2))_{t\in\R_+}\;(a\in\R)$．
     \end{enumerate}
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\forall_{0\le s<t}\;B_t-B_s\indep\F_s$補題\ref{lemma-Blumenthal}(1)より，$E[B_t-B_s|\F_s]=E[B_t-B_s]=0$．
+        \item 任意の$0\le s<t$について，
+        \begin{align*}
+            E[B^2_t|\F_t]&=E[(B_t-B_s+B_s)^2|\F_s]\\
+            &=E[(B_t-B_s)^2|\F_s]+2E[(B_t-B_s)B_s|\F_s]+E[B^2_s|\F_s]\\
+            &=E[(B_t-B_s)^2]+2B_sE[B_t-B_s|\F_s]+B^2_s\\
+            &=t-s+B_2^s.
+        \end{align*}
+        \item 任意の$0\le s<t$について，
+        \begin{align*}
+            E\Square{\exp\paren{aB_t-\frac{a^2t}{2}}\middle|\F_s}&=\exp(aB_s)E\Square{\exp\paren{a(B_t-B_s)-\frac{a^2t}{2}}}\\
+            &=\exp\paren{aB_s-\frac{a^2t}{2}}e^{\frac{(t-s)^2a^2}{2(t-s)}}\frac{1}{\sqrt{2\pi(t-s)}}\int_\R e^{-\frac{(x-(t-s)a)^2}{2(t-s)}}dx\\
+            &=\exp\paren{aB_s-\frac{sa^2}{2}}.
+        \end{align*}
+    \end{enumerate}
+\end{proof}
 
 \subsection{到達時刻}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Brown運動とそれに付随するマルチンゲールを用いて，到達時刻のLaplace変換を得ることが出来る．
+\end{tcolorbox}
 
 \begin{lemma}
     $\tau_a:=\inf\Brace{t\in\R_+\mid B_t=a}$とすると，これは$(\F_t)$-停止時である．
