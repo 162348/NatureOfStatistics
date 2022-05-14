@@ -651,10 +651,12 @@ $\mu_x$の一意性は一般には言えないが，次のような状況では�
     $f\in L^p(\R)\;(p\in[1,\infty])$に対して，$(f*h_\lambda)(x)$は上半平面上で定義された$x+i\lambda\in\bH$の調和関数である．
 \end{theorem}
 
-\chapter{Fourier変換}
+\chapter{Fourier変換と超関数論}
 
 \begin{quotation}
-    
+    前節で，Fourier変換を通じれば，関数をその成分$\al e^{i\lambda x}$に分解できることが解った．
+    物理的にはそれぞれの成分は調和振動子に当たる．
+    これを一般的に展開するには，創作が必要になり，超関数論が要請される．
 \end{quotation}
 
 \section{Formal Property}
@@ -665,24 +667,34 @@ title=]
     一般の関数$f\in L^1(\R)$については，Fourier変換を実数上の関数として調べる．
 \end{tcolorbox}
 
-\begin{notation}\mbox{}
+\subsection{特性関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    指標とは，加法から乗法への群準同型をいう．
+    指標との畳み込み$\wh{f}(t)=(f*e_t)(0)$を\textbf{Fourier変換}という．
+\end{tcolorbox}
+
+\begin{notation}[normalized Lebesgue measure]\mbox{}
     \begin{enumerate}
         \item $dx$を$\R$上のLebesgue測度，$m$をそれを$\sqrt{2\pi}$で割ったものとする：
-        \[\int_\R f(x)dm(x)=\frac{1}{\sqrt{2\pi}}\int_\R f(x)dx.\]
-        \item $p$-ノルムの定義も変わる：
-        \[\norm{f}_p:=\paren{\int_\R\abs{f(x)}^pdm(x)}^{1/p}\quad(1\le p<\infty).\]
-        \item 畳み込み：
-        \[(f*g)(x):=\int_\R f(x-y)g(y)dm(y)\quad(x\in\R)\]
+        $\int_\R f(x)dm(x)=\frac{1}{\sqrt{2\pi}}\int_\R f(x)dx$．一般に，$dm_n(x)=(2\pi)^{-n/2}dx$．
+        \item 内積のスケール変化に合わせて，$p$-ノルムの定義も変わる
+        $\norm{f}_p:=\paren{\int_\R\abs{f(x)}^pdm(x)}^{1/p}\quad(1\le p<\infty)$．
+        \item 畳み込みもリスケールする：
+        $(f*g)(x):=\int_\R f(x-y)g(y)dm(y)\quad(x\in\R)$．
         \item $f\in L^1$に対して，
         $t\in\R$によって定まる積分核$e^{-ixt}$によって積分したものを\textbf{Fourier変換}$\wh{-}:L^1\to L^1$といい，次のように表す：
-        \[\hat{f}(t):=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R)\]
+        $\hat{f}(t):=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R)$．
         \item $L^p(\R),C_0(\R)$を$L^p,C_0$と略記する．
     \end{enumerate}
 \end{notation}
 
 \begin{definition}\mbox{}
     \begin{enumerate}
-        \item $\R$から，$\C$の乗法部分群$S^1$への群準同型を\textbf{指標}という：$\abs{\varphi(t)}=1,\varphi(s+t)=\varphi(s)\varphi(t)$．
+        \item 加法群$\R$から，$\C$の乗法部分群$S^1$への群準同型を\textbf{指標}という：$\abs{\varphi(t)}=1,\varphi(s+t)=\varphi(s)\varphi(t)$．
+        \item 特に，$t\in\R^n$の指標$e_t$とは，指数関数$e_t(x):=e^{it\cdot x}\;(x\in\R^n)$をいう．
+        \item 指標$t\in\R^n$の，$\R^n$上の確率測度に関する積分(との合成)を特性関数という．
     \end{enumerate}
 \end{definition}
 
@@ -717,7 +729,7 @@ title=]
     元の世界に戻す方法があって初めて，Formal Propertyが応用上の意味を持つ．
 \end{tcolorbox}
 
-\subsection{可積分条件}
+\subsection{可積分条件の精査}
 
 \begin{discussion}[Fourier級数に関する逆転公式]
     Fourier係数列が
@@ -752,7 +764,7 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{灯台}
+\subsection{Poisson核}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
