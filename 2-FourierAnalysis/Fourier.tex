@@ -678,37 +678,64 @@ title=]
 \begin{notation}[normalized Lebesgue measure]\mbox{}
     \begin{enumerate}
         \item $dx$を$\R$上のLebesgue測度，$m$をそれを$\sqrt{2\pi}$で割ったものとする：
-        $\int_\R f(x)dm(x)=\frac{1}{\sqrt{2\pi}}\int_\R f(x)dx$．一般に，$dm_n(x)=(2\pi)^{-n/2}dx$．
-        \item 内積のスケール変化に合わせて，$p$-ノルムの定義も変わる
+        $\int_\R f(x)dm(x)=\frac{1}{\sqrt{2\pi}}\int_\R f(x)dx$．
+        
+        一般に，$dm_n(x)=(2\pi)^{-n/2}dx$．
+        \item 内積のスケール変化に合わせて，\textbf{$p$-ノルム}の定義も変わる
         $\norm{f}_p:=\paren{\int_\R\abs{f(x)}^pdm(x)}^{1/p}\quad(1\le p<\infty)$．
-        \item 畳み込みもリスケールする：
+        \item \textbf{畳み込み}もリスケールする：
         $(f*g)(x):=\int_\R f(x-y)g(y)dm(y)\quad(x\in\R)$．
-        \item $f\in L^1$に対して，
-        $t\in\R$によって定まる積分核$e^{-ixt}$によって積分したものを\textbf{Fourier変換}$\wh{-}:L^1\to L^1$といい，次のように表す：
-        $\hat{f}(t):=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R)$．
+        \item $f\in L^1$に対して，指標$e_t(x)=e^{itx}$との畳み込みでの$u=0$の値
+        (各積分核$e^{-ixt}\;(t\in\R)$に関する積分変換)を\textbf{Fourier変換}$\wh{-}:L^1\to L^1$といい，次のように表す：
+        $\hat{f}(t):=(f*e_t)(0)=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R)$．
         \item $L^p(\R),C_0(\R)$を$L^p,C_0$と略記する．
+        \item 多重指数$\al\in\N^n$に対して，\textbf{偏微分作用素}$D_\al$を$D_\al:=(i)^{-n}D^\al=\paren{\frac{1}{i}\pp{}{x_1}}^{\al_1}\cdots\paren{\frac{1}{i}\pp{}{x_n}}^{\al_n}$で表す．このとき，$D_\al e_t=t^\al e_t$が成り立つ．これがFourier変換の偏微分方程式論への応用可能性を支える．
+        \item \textbf{遷移作用素}$\tau_x\;(x\in\R^n)$を$(\tau_x)f(y):=f(y-x)$で定める．
     \end{enumerate}
 \end{notation}
 
-\begin{definition}\mbox{}
+\begin{definition}[character, characteristic function]\mbox{}
     \begin{enumerate}
         \item 加法群$\R$から，$\C$の乗法部分群$S^1$への群準同型を\textbf{指標}という：$\abs{\varphi(t)}=1,\varphi(s+t)=\varphi(s)\varphi(t)$．
         \item 特に，$t\in\R^n$の指標$e_t$とは，指数関数$e_t(x):=e^{it\cdot x}\;(x\in\R^n)$をいう．
-        \item 指標$t\in\R^n$の，$\R^n$上の確率測度に関する積分(との合成)を特性関数という．
+        \item 指標$t\in\R^n$の，$\R^n$上の確率測度に関する積分(との合成)$\varphi(u)=\int_\R e^{iut}dt$を特性関数という．
     \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Fourier変換の関手性]
-    $f\in L^1,\al,\lambda\in\R$とする．Fourier変換は，指標による積を平行移動に，平行移動を指標による積に変換し，畳み込みを各点積に変換する：
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    基底$x:=(x^1,\cdots,x^n)$に対して，これらの組み合わせの冪を簡潔に表記する記法を導入する．
+\end{tcolorbox}
+
+\begin{definition}[multi-index]
+    集合$\N^d$に各点和と$l_1$-ノルム$\abs{\al}:=\al_1+\cdots+\al_d$，階乗$\al!=\al_1!\cdots\al_d!$を備えた区間
+    の元を\textbf{$d$次の多重指数}という．
     \begin{enumerate}
-        \item $g(x)=f(x)e^{i\al x}\Rightarrow\wh{g}(t)=\wh{f}(t-\al)$．
-        \item $g(x)=f(x-\al)\Rightarrow\wh{g}(t)=\wh{f}(t)e^{-i\al t}$．
-        \item $g\in L^1\land h=f*g\Rightarrow\wh{h}(t)=\wh{f}(t)\wh{g}(t)$．
+        \item 二項係数について$\begin{pmatrix}\al\\\beta\end{pmatrix}=\begin{pmatrix}\al_1\\\beta_1\end{pmatrix}\cdots\begin{pmatrix}\al_d\\\beta_d\end{pmatrix}$とする．
+        \item $f\in C^d(\R^d)$に対する偏微分について，$\partial^\al f=\frac{\partial^{\al_1+\cdots+\al_d}}{\partial x_1^{\al_1}\cdots\partial x_d^{\al_d}}f$とする．
+        \item $x\in\R^d$に対して，$x^\al=x_1^{\al_1}\cdots x_d^{\al_d}$とする．
+    \end{enumerate}
+\end{definition}
+
+\subsection{Fourier変換の関手性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Fourier変換は，群準同型$(L_1,\delta_0,*)\to(L_1,1,\cdot)$を与える．また，
+    指標による積を平行移動に，平行移動を指標による積に変換する．
+\end{tcolorbox}
+
+\begin{theorem}[Fourier変換の関手性]
+    $f\in L^1,\al,\lambda\in\R$とする．
+    \begin{enumerate}
+        \item $\wh{\tau_xf}=e_{-x}\wh{f}$．すなわち，$\wh{f(x-\al)}=\wh{f}(t)e^{-i\al t}$．
+        \item $\wh{e_xf}=\tau_x\wh{f}$．すなわち，$\wh{f(x)e^{i\al x}}=\wh{f}(t-\al)$．
+        \item $\wh{(f*g)}=\wh{f}\wh{g}$．
+        \item $h(x)=f\paren{\frac{x}{\lambda}}\;(\lambda>0)$のFourier変換は，$\wh{h}(t)=\lambda^n\wh{f}(\lambda t)$．ただし$f\in L^1(\R^n)$とした．
     \end{enumerate}
     また，次が成り立つ：
-    \begin{enumerate}\setcounter{enumi}{3}
+    \begin{enumerate}\setcounter{enumi}{4}
         \item $g(x)=\o{f(-x)}\Rightarrow\wh{g}(t)=\o{\wh{f}(t)}$．
-        \item $g(x)=f(x/\lambda)\land\lambda>0\Rightarrow g(t)=\lambda f(\lambda t)$．
         \item $g(x)=-ixf(x)\land g\in L^1\Rightarrow\wh{f}$は微分可能で$\wh{f}'(t)=\wh{g}(t)$．
     \end{enumerate}
 \end{theorem}
@@ -727,9 +754,11 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     元の世界に戻す方法があって初めて，Formal Propertyが応用上の意味を持つ．
+    まず$\F:L^1\to C_0$がノルム減少的な線型写像であることが分かる．このうち，$L_1\subset\Im\F$の上では可逆である．
+    特に$\S$上では同型を定める．
 \end{tcolorbox}
 
-\subsection{可積分条件の精査}
+\subsection{ノルム減少性}
 
 \begin{discussion}[Fourier級数に関する逆転公式]
     Fourier係数列が
@@ -756,13 +785,13 @@ title=]
     は一様連続である．
 \end{lemma}
 
-\begin{proposition}
+\begin{theorem}
     $\F:L^1\to C_0$がノルム減少的な写像(short map)であることを定立する．
     \begin{enumerate}
         \item $f\in L^1$ならば$\wh{f}\in C_0$である．
         \item $\norm{\wh{f}}_\infty\le\norm{f}_1$．
     \end{enumerate}
-\end{proposition}
+\end{theorem}
 
 \subsection{Poisson核}
 
@@ -786,9 +815,24 @@ title=]
     $f\in L^p\;(1\le p<\infty)$について，$\lim_{\lambda\to0}\norm{f*h_\lambda-f}_p=0$．
 \end{proposition}
 
+\subsection{Gauss核}
+
+\begin{lemma}
+    $\phi_n(x):=\exp\paren{-\frac{1}{2}\abs{x}^2}\;(x\in\R^n)$とすると，
+    \begin{enumerate}
+        \item $\phi_n\in\S_n$．
+        \item $\wh{\phi}_n=\phi_n$．
+        \item $\phi_n(0)=\int_{\R_n}\wh{\phi_n}dm_n$．
+    \end{enumerate}
+\end{lemma}
+
 \subsection{逆転公式}
 
-\begin{theorem}[The Inversion Theorem]
+\begin{theorem}[The Inversion Theorem]\mbox{}
+    \begin{enumerate}
+        \item $g\in\S_n$のとき，$g(x)=\int_{\R^n}\wh{g}e_xdm_n\;(x\in\R^n)$．
+        \item $f,\wh{f}\in L^1(\R^n)$のとき，$f_0(x):=\int_{\R^n}\wh{f}e_xdm_n\;(x\in\R^n)$と定めると$f_0\in C_0(\R^n)$で，$f=f_0\;\ae x$．
+    \end{enumerate}
     $f,\wh{f}\in L^1$で，
     \[g(x)=\int^\infty_{-\infty}\wh{f}(t)e^{ixt}dm(t)\quad(x\in\R)\]
     を満たすとする．このとき，$g\in C_0$かつ$f=g\;\ae$
@@ -800,7 +844,65 @@ title=]
 
 \section{The Plancherel Theorem}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=$L^1$に入る前に，$L^2$上での完成された議論を見る]
+    $\S_n$は$L_1$上でも$L_2$上でも稠密であるため，$L^1\cap L^2$上のPlancherel作用素は$L^2$上に延長し，\textbf{等長なままである}：$\norm{f_2}=\norm{\wh{f}_2}$．
+    Lebesgue測度は有界でないから$L_2$は$L_1$の部分集合ではないが，$L_2$に「制限」するとFourier-Plancherel変換はすごく振る舞いが良い．
+\end{tcolorbox}
+
+\begin{theorem}
+    次の条件を満たす線型等長同型$\Psi:L^2(\R^n)\mono L^2(\R^n)$が一意的に存在する：$\forall_{f\in\S_n}\;\Psi f=\wh{f}$．
+\end{theorem}
+
 \section{The Banach Algebra $L^1$}
+
+\section{分布}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    解析学にぴったりな議論空間を，代数のことばで得ることを考える．
+\end{tcolorbox}
+
+\subsection{試験関数の空間の定義}
+
+\begin{notation}
+    $\D=\D(\R)=C_c^\infty(\R)$を隆起関数という．
+\end{notation}
+
+\begin{definition}[test function space]
+    非空な開集合$\Om\subset\R^n$に対して，台がコンパクト集合$K\subset\Om$に含まれる関数のなすFrechet空間$\D_K$の合併
+    $\D(\Om):=\cup_{K\compsub\Om}\D_K$を\textbf{試験関数の空間}という．
+    すなわち，$\D(\Om):=C^\infty_c(\Om)=\Brace{\phi\in C^\infty(\Om)\mid\supp\phi\compsub\Om}$．
+\end{definition}
+
+\begin{lemma}
+    ノルムの列$\norm{\phi}_N:=\max\Brace{\abs{D^\al\phi(x)}\in\R_+\mid x\in\Om,\abs{\al}\le N}$を考える．
+    \begin{enumerate}
+        \item このノルムの列は，任意の部分空間$\D_K\subset\D(\Om)$に元々のFrechet空間としての局所凸位相$\tau_K$を定める．
+        \item このノルムの列は，$\D(\Om)$に局所凸で距離化可能な位相を定めるが，完備でない．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{完備な位相の導入}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    完備だが，距離化可能でない位相$\tau$を代わりに導入し，以後は$\D(\R^n)$にはこの位相を入れ，こちらを研究の道具とする．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 絶対凸集合(均衡凸集合)$W\subset\D(\Om)$であって，$\forall_{K\compsub\Om}\;\D_K\cap W\in\tau_K$を満たすもの全体の集合を$\beta$と表す．
+        \item $\beta$の元の平行移動$\phi+W\;(\varphi\in\D(\Om),W\in\beta)$で表される集合の任意合併で得られる集合全体の集合を$\tau$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}\mbox{}\label{thm-topology-on-the-space-of-test-functions}
+    \begin{enumerate}
+        \item $\tau$は$\D(\Om)$に位相を定め，$\beta$は$\tau$の局所基を定める．
+        \item $\tau$は局所凸である．
+    \end{enumerate}
+\end{theorem}
 
 \section{急減少関数空間}
 
@@ -814,23 +916,6 @@ title=]
     緩増加関数の空間$D'(X)$は，線型偏微分方程式を解く自然な場となる．
 \end{tcolorbox}
 
-\subsection{多重指数}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    基底$x:=(x^1,\cdots,x^n)$に対して，これらの組み合わせの冪を簡潔に表記する記法を導入する．
-\end{tcolorbox}
-
-\begin{definition}
-    集合$\N^d$に各点和と$l_1$-ノルム$\abs{\al}:=\al_1+\cdots+\al_d$，階乗$\al!=\al_1!\cdots\al_d!$を備えた区間
-    の元を多重指数という．
-    \begin{enumerate}
-        \item 二項係数について$\begin{pmatrix}\al\\\beta\end{pmatrix}=\begin{pmatrix}\al_1\\\beta_1\end{pmatrix}\cdots\begin{pmatrix}\al_d\\\beta_d\end{pmatrix}$とする．
-        \item $f\in C^d(\R^d)$に対する偏微分について，$\partial^\al f=\frac{\partial^{\al_1+\cdots+\al_d}}{\partial x_1^{\al_1}\cdots\partial x_d^{\al_d}}f$とする．
-        \item $x\in\R^d$に対して，$x^\al=x_1^{\al_1}\cdots x_d^{\al_d}$とする．
-    \end{enumerate}
-\end{definition}
-
 \subsection{定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -839,39 +924,133 @@ title=]
     が，主に議論の対象となる，無限階微分可能な急減少関数とは，任意階の(偏)導関数が急減少であることをいう．
 \end{tcolorbox}
 
-\begin{notation}
-    \[D_j:=\frac{1}{i}\pp{}{x_j},\quad D^\al=D^{\al_1}_1\cdots D^{\al_d}_d=\frac{1}{i^{\abs{\al}}}\partial^\al\]
-\end{notation}
-
 \begin{definition}[rapidly decreasing function, the Schwartz space]
-    $f\in C^\infty(\R^n)$が\textbf{急減少偏導関数を持つ滑らかな関数}であるとは，$\norm{f}_{\al,\beta}:=\sup_{x\in\R^n}\Abs{x^\al D^\beta f(x)}$をノルムとして，
-    \[S(\R^n):=\Brace{f\in C^\infty(\R^n)\mid\forall_{\al,\beta\in\N^n}\;\norm{f}_{\al,\beta}<\infty}\]
-    に属することをいう．
-    これに，半ノルムの族$p_{\al,\beta}(f):=\norm{x^\al\partial_\beta(f)(x)}_{\al,\beta\in\N}$が引き起こす位相を入れた空間$\cS(\R^n)$を\textbf{Schwartz空間}という．
+    $f\in C^\infty(\R^n)$が\textbf{急減少偏導関数を持つ滑らかな関数}であるとは，次の同値な2条件を満たすことをいう：
+    \begin{enumerate}
+        \item $\forall_{N\in\N}\;\sup_{\abs{\al}\le N}\sup_{x\in\R^n}(1+\abs{x}^2)N\abs{(D_\al f)(x)}<\infty$．
+        \item $\forall_{n\in\N,\al\in\N^n}\;\forall_{P\in\R[x]}\;P\cdot D_\al f\in l^\infty(\R^n)$．
+    \end{enumerate}
+    この関数がなす位相線形空間を\textbf{Schwartz空間}といい，$\S_n=\S(\R^n)$で表す．
 \end{definition}
 \begin{remarks}
     無限回微分可能な関数であるが，$\abs{x}\to\infty$を考えたときに，任意階の導関数が，$x$の任意の負冪よりも速くゼロに収束するものをいう．
     これは確率分布との関連で捉えると見通しが良い．どうして収束の速さがFourier変換と関係があるのだろうか．
 \end{remarks}
 
-\begin{example}[Gauss関数]
-    $\forall_{i\in\N^n}\;\forall_{a>0}\;x^ie^{-a\abs{x}^2}\in S(\R^n)$．
+\begin{lemma}[局所凸位相線形空間である]\mbox{}
+    \begin{enumerate}
+        \item 線型空間$X$上の分離的な半ノルム列$\P$が誘導する始位相は第２可算な局所凸位相で，$E\subset X$が有界であることと$p:E\to\R$が有界であることとは同値になる．
+        \item ノルムの列$\sup_{\abs{\al}\le N}\sup_{x\in\R^n}(1+\abs{x}^2)N\abs{(D_\al f)(x)}\;(N\in\N)$は，$\S_n$上に局所凸な位相を定める．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 隆起関数はSchwartz関数である：$C^\infty_c(\R^n)\mono\cS(\R^n)$．
+        \item Gauss関数も急減少する：$\forall_{i\in\N^n}\;\forall_{a>0}\;x^ie^{-a\abs{x}^2}\in S(\R^n)$．
+    \end{enumerate}
 \end{example}
 
-\begin{example}
-    隆起関数はSchwartz関数である：$C^\infty_c(\R^n)\mono\cS(\R^n)$．
-\end{example}
+\subsection{性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $(\S_n,\delta,*)$は「部分群」をなし，
+    Fourier変換は$\S_n$の自己同型で，$*$の構造と両立する．
+\end{tcolorbox}
 
 \begin{theorem}\mbox{}
     \begin{enumerate}
-        \item Schwartz関数は可積分である：$\forall_{p\in[1,\infty]}\;S(\R^n)\subset L^p(\R^n)$．
-        \item 実は，$\forall_{\al\in\N^n}\;\int_{x\in\R^n}x^\al f(x)\dvol(x)<\infty$も満たす．
-        \item $S(\R^n)$は複素Frechet空間をなす．
-        \item Fourier変換$\wh{(-)}:\cS(\R^n)\to\cS(\R^n)$は線型同型を定める．
+        \item $\S_n$はFrechet空間である．
+        \item 次が定める線型写像$\S_n\to\S_n$は連続である：$f\mapsto Pf,f\mapsto gf,f\mapsto D_\al f$．
+        \item $f\in\S_n,P\in \R[x]$について，$\wh{P(D)f}=P\wh{f}$かつ$\wh{Pf}=P(-D)\wh{f}$．
+        \item (逆転定理) $\F|_{\S_n}$は周期$4$の線型同型(全単射な連続線型写像)$\S_n\to\S_n$である．
     \end{enumerate}
 \end{theorem}
 
-\section{急減少関数のFourier変換}
+\begin{theorem}
+    $f,g\in\S_n$とする．
+    \begin{enumerate}
+        \item $f*g\in\S_n$．
+        \item $\wh{fg}=\wh{f}*\wh{g}$．
+    \end{enumerate}
+\end{theorem}
+
+\section{緩増加分布空間}
+
+\subsection{定義と例}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\D(\R^n)\subset\S_n$は稠密である．
+        \item 包含$i:\D(\R^n)\to\S_n$は連続である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[tempered distribution]
+    $L\in\S_n^*$に対して，定理より$u_L:=L\circ i\in\D'(\R^n)$となる．
+    また，$\D(\R^n)$の稠密性より，$L\mapsto u_L$の対応は単射である．こうして対応$\S'_n\ni L\mapsto u_L\in\D'(\R^n)$が定まる．
+    この像に入る$\D'(\R^n)$の元を\textbf{緩増加分布}という．
+    すなわち，$u\in\D'(\R^n)$であって，$\S_n$上への連続な延長を持つものをいう．
+\end{definition}
+
+\begin{example}[任意の可積分関数は緩増加である]\mbox{}
+    \begin{enumerate}
+        \item コンパクトな台を持つ超関数は緩増加である．
+        \item $\R^n$上のBorel測度$\mu$であって，$\exists_{k\in\N}\;\int_{\R^n}(1+\abs{x}^2)^{-k}d\mu(x)<\infty$を満たすものは緩増加である．
+        \item $g\in\L(\R^n)$が$\exists_{N>0,p\in[1,\infty)}\;\int_{\R^n}\abs{(1+\abs{x}^2)^{-N}g(x)}^pdm_n(x)=C<\infty$を満たすならば緩増加である．
+        \item 任意の$g\in L^p(\R^n)\;(p\in[1,\infty])$は緩増加である．
+    \end{enumerate}
+\end{example}
+
+\subsection{閉性}
+
+\begin{theorem}
+    $\al\in\N^m,P\in\R[x],g\in\S_n$とする．$u\in\S'_n$ならば，$D^\al u,Pu,gu\in\S'_n$である．
+\end{theorem}
+
+\subsection{Fourier変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\S_n$にはFourier変換が定まっているので，超関数の方法で$\S'_n$上にも定める．
+\end{tcolorbox}
+
+\begin{definition}
+    $u\in\S'_n$のFourier変換を，
+    $\wh{u}(\phi):=u(\wh{\phi})\;(\phi\in\S_n)$で定める．
+\end{definition}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\F:\S'_n\mono\S'_n$は周期4の線型同型(全単射な連続線型写像であり，逆も連続線型)である．
+        \item $u\in\S'_n,P\in\R[x]$のとき，$\wh{P(D)u}=P\wh{u}$かつ$\wh{Pu}=P(-D)\wh{u}$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}[多項式のFourier変換]
+    
+\end{example}
+
+\begin{corollary}
+    超関数$u$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $u$はある多項式$P\in\S'_n$のFourier変換である．
+        \item $\supp u$は$\{0\}$または$\emptyset$である．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{畳み込みとの関係}
+
+\begin{lemma}[Schwartz空間での収束の特徴付け]
+    $w:=(1,0,\cdots,0)\in\R^n,\phi\in\S_n$とし，
+    \[\phi_\ep(x):=\frac{\phi(x+\ep w)-\phi(x)}{\ep}\quad(x\in\R^n,\ep>0)\]
+    とすると，$\phi_\ep\xrightarrow{\ep\to0}\pp{\phi}{x_1}$．
+\end{lemma}
+
+\begin{definition}
+    $u\in\S'_n,\phi\in\S_n$について，$(u*\phi)(x):=u(\tau_x\widecheck{\phi})\;(x\in\R^n)$と定める．
+\end{definition}
 
 \begin{thebibliography}{9}
     \bibitem{Korevaar}

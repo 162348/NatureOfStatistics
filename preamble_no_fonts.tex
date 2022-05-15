@@ -10,6 +10,7 @@
 \usepackage[usenames, dvipsnames]{xcolor} %xcolorはcolorの拡張．optionの意味はdvipsnamesはLoad a set of predefined colors. forestgreenなどの色が追加されている．usenamesはobsoleteとだけ書いてあった．
 \setcounter{tocdepth}{2} %目次に表示される深さ．2はsubsectionまで
 \usepackage{multicol} %\begin{multicols}{2}環境で途中からmulticolumnに出来る．
+\usepackage{mathabx}\newcommand{\wc}{\widecheck} %\widecheckなどのフォントパッケージ
 
 \usepackage{url}
 \usepackage[dvipdfmx,colorlinks,linkcolor=blue,urlcolor=blue]{hyperref} %生成されるPDFファイルにおいて、\tableofcontentsによって書き出された目次をクリックすると該当する見出しへジャンプしたり、さらには、\label{ラベル名}を番号で参照する\ref{ラベル名}やthebibliography環境において\bibitem{ラベル名}を文献番号で参照する\cite{ラベル名}においても番号をクリックすると該当箇所にジャンプする．囲み枠はダサいので，colorlinksで囲み廃止し，リンク自体に色を付けることにした．
