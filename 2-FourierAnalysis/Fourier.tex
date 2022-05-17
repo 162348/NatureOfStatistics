@@ -1001,6 +1001,7 @@ title=]
         \item $g\in\L(\R^n)$が$\exists_{N>0,p\in[1,\infty)}\;\int_{\R^n}\abs{(1+\abs{x}^2)^{-N}g(x)}^pdm_n(x)=C<\infty$を満たすならば緩増加である．
         \item 任意の$g\in L^p(\R^n)\;(p\in[1,\infty])$は緩増加である．
     \end{enumerate}
+    $e^x\cos(e^x)$は緩増加であるが，$e^x$はそうではない．
 \end{example}
 
 \subsection{閉性}
@@ -1040,7 +1041,12 @@ title=]
     \end{enumerate}
 \end{corollary}
 
-\subsection{畳み込みとの関係}
+\subsection{畳み込み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    超関数の方法で畳み込みを定義する．
+\end{tcolorbox}
 
 \begin{lemma}[Schwartz空間での収束の特徴付け]
     $w:=(1,0,\cdots,0)\in\R^n,\phi\in\S_n$とし，
@@ -1051,6 +1057,90 @@ title=]
 \begin{definition}
     $u\in\S'_n,\phi\in\S_n$について，$(u*\phi)(x):=u(\tau_x\widecheck{\phi})\;(x\in\R^n)$と定める．
 \end{definition}
+
+\begin{theorem}
+    $\phi\in\S_n,u\in\S'_n$とする．
+    \begin{enumerate}
+        \item $u*\phi\in C^\infty(\R^n)$かつ$\forall_{m\in\N,\al\in\N^m}\;D^\al(u*\phi)=(D^\al u)*\phi=u*(D^\al\phi)$．
+        \item $u*\phi$は多項式のオーダーで増加し，特に緩増加である．
+        \item $\wh{u*\phi}=\wh{\phi}\wh{u}$．
+        \item $\forall_{\phi\in\S_n}\;(u*\phi)*\psi=u*(\phi*\psi)$．
+        \item $\wh{u}*\wh{\phi}=\wh{\phi u}$．
+    \end{enumerate}
+\end{theorem}
+
+\section{Paley-Wienerの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=コンパクト台を持つ緩増加関数のFourier変換は整関数を定める]
+    関数の無限大での減衰挙動と，そのFourier変換の解析性との間に対応がつく．このクラスの結果をPaley-Wienerの定理という．
+    古典的な結果は，$\R$への制限が$L^2$に属するような指数型整関数$\C\to\C$の特徴付けを与える定理である．
+\end{tcolorbox}
+
+\subsection{古典的結果}
+
+\begin{notation}
+    $rB=\Delta(0,r)$とする．
+\end{notation}
+
+\begin{lemma}
+    整関数$f:\C^n\to\C$が$\R^n$にて消えるならば，$f=0$である．
+\end{lemma}
+
+\begin{theorem}
+    試験関数$\phi\in\D(\R^n)$とそのFourier変換$f:\C^n\to\C$について，次の2条件は同値．
+    \begin{enumerate}
+        \item ある試験関数$\phi\in\D(\R^n)$が存在して$\exists_{r>0}\;\supp\phi\subset rB$を満たし，
+        \[f(z)=\int_{\R^n}\phi(t)e^{-iz\cdot t}dm_n(t)\quad(z\in\C^n)\]
+        と表せる．
+        \item $f$は整関数で，$\forall_{N\in\N}\;\exists_{\gamma_N<\infty}\;\forall_{z\in\C^n}\abs{f(z)}\le\gamma_N(1+\abs{z})^{-N}e^{r\abs{\Im z}}$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{緩増加超関数への一般化}
+
+\begin{discussion}
+    $u$を$\R^n$上のコンパクト台を持つ超関数とすると，緩増加である：$u\in\S'_n$．
+    よって，$\wh{u}\in\S'_n$が$\wh{u}(\phi):=u(\wh{\phi})\;(\phi\in\S_n)$と定まるのであった．
+
+    このとき，$\wh{u}(x)=u(e_{-x})\;(x\in\R^n)$となる．
+    実際，$\wh{f}(x)=\int fe_xdm_n$に注意すると，
+    \[\wh{u}(\phi)=\int\wh{u}(x)\phi(x)dx=\int u(x)\wh{\phi}(x)dx=u(\wh{\phi}).\]
+    すなわち，超関数$\wh{u}:\R^n\to\R$は関数としてしっかり定まっている．
+    これは解析接続によって$\C^n$上に延長する．
+\end{discussion}
+
+\begin{theorem}
+    $u\in\D'(\R^n)$と$f:\C^n\to\C$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $u\in\D'(\R^n)$であって$\exists_{r>0}\;\supp u\subset rB$を満たすものが存在し，$u$は次数$N$を持ち，$\forall_{z\in\C^n}\;f(z)=u(e_{-z})$を満たす．
+        \item $f$は整関数で，$f|_{\R^n}$は$u$のFourier変換であり，また$\exists_{\gamma<\infty}\;\forall_{z\in\C^n}\;\abs{f(z)}\le\gamma(1+\abs{z})^Ne^{r\abs{\Im z}}$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    この定理によって与えられる整関数$\wh{u}(z)=u(e_{-z})$を，$u$の\textbf{Fourier-Laplace変換}ともいう．
+\end{definition}
+
+\subsection{Laplace変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    普段は$\R_+$へ制限した退化した姿を見るが，$f$が有界なとき$\L f$は右半平面に正則な関数を定め，
+    そして$f$が緩増加関数であるとき$\L f$は整関数を定める．
+    そのTaylor級数展開は，関数をモーメントの線型和として表示する(積率母関数)．
+    その一部を取り出したものがMellin変換である．
+\end{tcolorbox}
+
+\begin{definition}
+    関数$f:(0,\infty)\to\R$について，
+    \begin{enumerate}
+        \item $\L f(x):=\int^\infty_0f(t)e^{-tp}dt$を\textbf{Laplace変換}という．
+        \item $\M f(x):=\int^\infty_0f(t)t^{x-1}dt$を\textbf{Mellin変換}という．
+    \end{enumerate}
+\end{definition}
+
+\section{Sobolevの補題}
 
 \begin{thebibliography}{9}
     \bibitem{Korevaar}

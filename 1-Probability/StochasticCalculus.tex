@@ -1705,6 +1705,7 @@ title=]
         \item Brown運動：$(B_t)_{t\in\R_+}$．
         \item $(B^2_t-t)_{t\in\R_+}$．
         \item 幾何Brown運動：$(\exp(aB_t-a^2t/2))_{t\in\R_+}\;(a\in\R)$．
+        \item 複素幾何Brown運動：$(\exp(iaB_t+a^2t/2))_{t\in\R_+}\;(a\in\R)$．
     \end{enumerate}
 \end{theorem}
 \begin{proof}\mbox{}
@@ -1717,11 +1718,17 @@ title=]
             &=E[(B_t-B_s)^2]+2B_sE[B_t-B_s|\F_s]+B^2_s\\
             &=t-s+B_2^s.
         \end{align*}
-        \item 任意の$0\le s<t$について，
+        \item 任意の$0\le s<t$について，$B_t-B_s\sim N(0,t-s)$なので，
         \begin{align*}
             E\Square{\exp\paren{aB_t-\frac{a^2t}{2}}\middle|\F_s}&=\exp(aB_s)E\Square{\exp\paren{a(B_t-B_s)-\frac{a^2t}{2}}}\\
+            &=\exp\paren{aB_s-\frac{a^2t}{2}}\frac{1}{\sqrt{2\pi(t-s)}}\int_\R e^{ax}e^{-\frac{x^2}{2(t-s)}}dx\\
             &=\exp\paren{aB_s-\frac{a^2t}{2}}e^{\frac{(t-s)^2a^2}{2(t-s)}}\frac{1}{\sqrt{2\pi(t-s)}}\int_\R e^{-\frac{(x-(t-s)a)^2}{2(t-s)}}dx\\
             &=\exp\paren{aB_s-\frac{sa^2}{2}}.
+        \end{align*}
+        \item 任意の$0\le s<t$について，$B_t-B_s\sim N(0,t-s)$の特性関数より，
+        \begin{align*}
+            E\Square{\exp\paren{iaB_t+\frac{a^2t}{2}}\middle|\F_s}&=\exp\paren{iaB_s+\frac{a^2t}{2}}E\Square{\exp\paren{ia(B_t-B_s)}}\\
+            &=\exp\paren{iaB_s+\frac{a^2t}{2}}\exp\paren{-\frac{1}{2}a^2(t-s)}=\exp\paren{iaB_s+\frac{a^2s}{2}}.
         \end{align*}
     \end{enumerate}
 \end{proof}
@@ -1729,19 +1736,54 @@ title=]
 \subsection{到達時刻}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Brown運動とそれに付随するマルチンゲールを用いて，到達時刻のLaplace変換を得ることが出来る．
+title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
+    Brown運動とそれに付随するマルチンゲールを用いて，到達時刻$\tau_a$のLaplace変換を得ることが出来る．
+    これは積率母関数を得たことになるから，Laplace逆変換によって$\tau_a$の分布が分かる．
 \end{tcolorbox}
 
-\begin{lemma}
+\begin{lemma}[到達時刻]
+    $a>0$に対して
     $\tau_a:=\inf\Brace{t\in\R_+\mid B_t=a}$とすると，これは$(\F_t)$-停止時である．
+    ただし，$\Brace{t\in\R_+\mid B_t=a}=\emptyset$のとき，$\tau_a=0$とする．
 \end{lemma}
+\begin{proof}
+    \[\{\tau\le t\}=\cup_{s\le t}\Brace{X_s\le a}=\cup_{n\in\N}\Brace{X_{t-1/n}\le a}\in\F_t.\]
+\end{proof}
 
-\begin{proposition}[Laplace transformation of Brownian hitting time]
-    任意の$a>0$について，$\forall_{\al>0}\;E[e^{-\al\tau_a}]=e^{-\sqrt{2\al}a}$．
+\begin{proposition}[Laplace transformation of Brownian hitting time]\label{prop-hitting-time}
+    任意の$a>0$について，$\forall_{\al>0}\;\M_{\L^{\tau_a}}(-a)=E[e^{-\al\tau_a}]=e^{-\sqrt{2\al}a}$．
 \end{proposition}
+\begin{proof}
+    幾何Brown運動のmartingale性に注目することで，これだけから出てくる．
+    \begin{description}
+        \item[martingaleの用意] 任意の$\lambda>0$について，$M_t:=e^{\lambda B_t-\lambda^2t/2}$はmartingaleである．\footnote{$\lambda=0$のときは$M_t=1$となり，この場合は不適．考えない．}
+        よって特に$\forall_{t\in\R_+}\;E[M_t]=E[M_0]=1$．
+        \item[この幾何Brown運動についての任意抽出]
+        Doobの任意抽出定理より，任意の$N\ge 1$について，$E[M_{\tau_a\land N}|\F_0]=M_0$．両辺の期待値を取って，$E[M_{\tau_a\land N}]=1$．
+        
+        $\forall_{N\in\N}\;M_{\tau_a\land N}=\exp\paren{\lambda B_{\tau_a\land N}-\lambda^2(\tau_a\land N)/2}\le e^{a\lambda}$より，$N\to\infty$の極限について優収束定理が使える．
+        $\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}\xrightarrow{t\to\infty}\frac{-\lambda^2}{2}<0\;(\lambda>0\text{のとき})$だから，
+        十分大きな$T>0$について，$\forall_{t\ge T}\;\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}=:-\ep<0$より，$0\le M_t=e^{t\paren{\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}}}\le e^{-\ep T}$．
+        
+        $T\to\infty$の極限を考えると，$M_t\xrightarrow{t\to\infty}0$．
+        よって，
+        \[\lim_{N\to\infty}M_{\tau_a\land N}=\begin{cases}
+            M_{\tau_a}&\tau_a<\infty,\\
+            0&\tau_a=\infty.
+        \end{cases}\]
+        よって優収束定理から，$E[1_{\Brace{\tau_a<\infty}}M_{t_a}]=1-E[1_{\Brace{\tau_a=\infty}}M_{t_a}]=1$．
+        すなわち，
+        \[E\Square{1_{\Brace{\tau_a<\infty}}\exp\paren{-\frac{\lambda^2\tau_a}{2}}}=e^{-\lambda a}.\]
+        \item[到達時刻はほとんど確実に有限]
+        $\lambda>0$は任意とした．$\forall_{\lambda>0}\;1_{\Brace{\tau_a<\infty}}\exp\paren{-\frac{\lambda^2\tau_a}{2}}\le1_{\Brace{\tau_a<\infty}}$より可積分な上界が存在する．
+        $\lambda\to0$に極限について，単調収束定理より，$E[1_{\Brace{\tau_a<\infty}}]=P[\tau_a<\infty]=1$．
+        よって，
+        \[E\Square{\exp\paren{-\frac{\lambda^2\tau_a}{2}}}=e^{-\lambda a}.\]
+        $\al=\lambda^2/2$の場合を考えれば良い．
+    \end{description}
+\end{proof}
 
-\begin{corollary}\mbox{}
+\begin{corollary}[到達時刻の分布]\mbox{}
     \begin{enumerate}
         \item Laplace逆変換より，Brown運動の到達時刻の分布関数は，
         \[P[\tau_a\le t]=\int^t_0\frac{ae^{-a^2/(2s)}}{\sqrt{2\pi s^3}}ds.\]
@@ -1749,26 +1791,79 @@ title=]
         \item $E[\tau_a]=+\infty$．
     \end{enumerate}
 \end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item Laplace逆変換による．
+        \item 両辺の微分による．
+        \item $\al\to0$の極限を考えることによる．
+    \end{enumerate}
+\end{proof}
+\begin{proof}
+    $\tau_a$の平均は存在しない(発散する)が，殆ど確実に有限になるという不可解な消息がある．
+\end{proof}
 
 \subsection{脱出時刻}
 
-\begin{proposition}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    脱出時刻は到達時刻が定める．
+\end{tcolorbox}
+
+\begin{proposition}[どっちの端から脱出するかの確率]
     $a<0<b$のとき，
     \[P[\tau_a<\tau_b]=\frac{b}{b-a}.\]
 \end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[任意抽出定理] Doobの任意抽出定理より，$\forall_{t\in\R_+}\;E[B_{t\land\tau_a\land\tau_b}]=E[B_0]=0\;\as$
+        $\forall_{t\in\R_+}\;B_{t\land\tau_a\land\tau_b}\in[a,b]$より，優収束定理から$E[B_{\tau_a\land\tau_b}]=0$を得る．
 
-\begin{proposition}
+        ここで到達時刻は$\tau_a,\tau_b<\infty\;\as$を満たすから，$\Om=\Brace{\tau_a<\tau_b}\sqcup\Brace{\tau_b<\tau_a}\sqcup\Brace{\tau_b=\tau_a<\infty}\sqcup\Brace{\tau_a\land\tau_b=\infty}$の直和分解のうち最後の2項は零集合だから，
+        \[0=P[\tau_a<\tau_b]a+(1-P[\tau_a<\tau_b])b.\]
+    \end{description}
+\end{proof}
+
+\begin{proposition}[脱出時刻の期待値]\label{prop-mean-of-Brownian-exit-time}
     $a<0<b$のとき，脱出時刻を
-    $T:=\inf_{t\in\R_+\mid B_t\notin(a,b)}$とすると$E[T]=-ab$．
+    $T:=\inf\Brace{t\in\R_+\mid B_t\notin(a,b)}$とすると$E[T]=-ab$．
 \end{proposition}
+\begin{proof}
+    $B_t^2-t$はmartingaleであるから，任意抽出定理より$\forall_{t\in\R_+}\;E[B^2_{T\land t}]=E[T\land t]$．
+    $t\to\infty$の極限を考えて，
+    \begin{align*}
+        E[T]&=E[B_T^2]=a^2\frac{b}{b-a}+b^2\frac{a}{a-b}\\
+        &=\frac{ab(a-b)}{b-a}=-ab.
+    \end{align*}
+\end{proof}
 
 \section{強Markov性}
 
 \subsection{強Markov性の証明}
 
 \begin{theorem}[Hunt (1956) and Dynkin and Yushkevich (1956)]
-    $T$を有限な$(\F_t)$-停止時とする．このとき，$(B_{T+t}-B_T)_{t\in\R_+}$は再びBrown運動で，$\F_T$と独立である．
+
+    $T:\Om\to\R_+$を有限な$(\F_t)$-停止時とする．このとき，$(\wt{B}_t:=B_{T+t}-B_T)_{t\in\R_+}$は再びBrown運動で，$\F_T$と独立である．
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$T$が有界なとき]
+        任意の$\lambda\in\R$について，$M_t:=\exp\paren{i\lambda B_t+\frac{\lambda^2t}{2}}$はmartingaleである．
+        よってDoobの任意抽出定理より，
+        $\forall_{0\le s\le t}\;E[M_{T+t}|\F_{T+s}]=E[M_{T+s}]$から，$\frac{\lambda^2(T+t)}{2},i\lambda B_{T+s}$が$\F_{T+s}$-可測であることに注意すると，
+        \begin{align*}
+            E\Square{\exp\paren{i\lambda B_{T+t}+\frac{\lambda^2(T+t)}{2}}\middle|\F_{T+s}}&=E\Square{\exp\paren{i\lambda B_{T+s}+\frac{\lambda^2(T+s)}{2}}}\\
+            E\Square{\exp\paren{i\lambda(\underbrace{B_{T+t}-B_{T+s}}_{=\wt{B}_t-\wt{B}_s})}\middle|\F_{T+s}}&=E\Square{\exp\paren{-\frac{\lambda^2}{2}(t-s)}}=\exp\paren{-\frac{\lambda^2}{2}(t-s)}.
+        \end{align*}
+        これは，
+        \begin{enumerate}[({B}1)]\setcounter{enumi}{1}
+            \item 任意の$0\le t_1<\cdots<t_n$について$B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$は独立．
+            \item 任意の$0\le s<t$について$B_t-B_s\sim N(0,t-s)$．
+        \end{enumerate}
+        を含意する．
+        $B_{T+0}-B_T=0$と連続性とを併せるとBrown運動であることが分かる．
+        \item[$T$が一般のとき] \ref{prop-mean-of-Brownian-exit-time}と同様に処理すれば良い．
+    \end{description}
+\end{proof}
 
 \begin{corollary}
     $(P_t)$をBrown運動に対応する連続半群とすると，任意の有界な可測関数$f\in\L(\R)\cap l^\infty(\R)$と有限な停止時$T$について，
