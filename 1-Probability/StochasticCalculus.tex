@@ -34,6 +34,7 @@
 title=]
     これから(可分な)無限次元Hilbert空間上のGauss測度に関する積分論を展開することになるから，
     Gauss測度も無限次元に通用する言葉で定義する．
+    $\R^n$上の正規分布の一般化であると同時に，確率過程の平均と共分散との一般化でもある．
     \cite{Prato}による．
 \end{tcolorbox}
 
@@ -47,7 +48,7 @@ title=]
 title=]
     今まで確率空間$(\Om,\F)$に言及して平均と分散を定義することはなかったが，
     可分Hilbert空間$H$を確率空間として，その分布の扱い方を定める．
-    $H$の有限次元分布は有界線型汎関数を通じて定まるが，それはすべて内積で表現できることから，内積を用いた定義になるが，これは成分$X_i$の拡張に過ぎない．
+    $H$上の有限次元分布は有界線型汎関数を通じて定まるが，それはすべて内積で表現できることから，内積を用いた定義になるが，これは成分$X_i$の拡張に過ぎない．
 \end{tcolorbox}
 
 \begin{definition}[mean, covariance operator]
@@ -79,7 +80,7 @@ title=]
         \item $Q$は正作用素であり，かつ自己共役である．
         \item $H$の任意の正規直交基底$(e_k)$について，$\Tr Q:=\sum_{k\in\N}\brac{Qe_k,e_k}=\int_H\abs{x-m}^2\mu(dx)<\infty$．
         \item $Q$はコンパクト作用素である．(2)と併せると特に，$Q$は跡類作用素である：$Q\in B^1(H)$．
-        \item $E[\abs{x}^2]=\Tr Q+\abs{m}^2$．
+        \item 分散共分散公式：$E[\abs{x}^2]=\Tr Q+\abs{m}^2$．
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
@@ -99,164 +100,104 @@ title=]
     正作用素の空間を$B^+(H)$とし，有限な跡を持つ作用素の空間を$B^+_1(H)\subset B^+(H)$で表す．
 \end{notation}
 
-\subsection{Gauss測度}
+\subsection{Gauss測度の定義と構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $H$上のGauss分布を特性関数の言葉を用いて定義する．
+    このように定義することで，Wiener測度などの無限次元空間上のGauss測度を扱える．
+    そこでの積分が確率解析の主な戦場である．
+\end{tcolorbox}
 
 \begin{definition}[Gaussian measure]
-    $\mu\in P(H)$が\textbf{Gauss測度}であるとは，ある$m\in H,Q\in L^+_1(H)$を用いて，
-    \[\wh{\mu}(h)=e^{i(m|h)}e^{-\frac{1}{2}(Qh,h)}\]
-    と表せるものをいう．$Q$がであるとき，$\mu$は非退化であるという．
+    $\mu\in P(H)$が\textbf{Gauss測度$N(m,Q)$}であるとは，ある$m\in H,Q\in L^+_1(H)$を用いて，
+    \[\wh{\mu}(h)=e^{i(m|h)}e^{-\frac{1}{2}(Qh|h)}\]
+    と表せるものをいう．$Q$が単射$\Ker Q=0$であるとき，$\mu$は非退化であるという．
+
     なお，自己共役作用素$Q=Q^*$が単射であることは，$\Im Q$がノルム閉ならば$Q=Q^*$が可逆であることに同値であるが，実は$\Im Q$がノルム閉であることは必ずしも成り立たない．
     $\mu=N_{m,Q}$と表す．
 \end{definition}
 
-\subsection{Gauss変数の独立性}
+\subsection{Gauss測度の構成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    あるGauss確率変数の成分(一般化して，有界線型汎関数との合成)の間の独立性は，直交性で捉えられる．
+    Banach空間上のGauss測度には特徴があり，ペアリングによって位相が移り合うように，測度も移り合う．
+    双対空間上のGauss測度をノイズと呼ぶ．
+    なお，ペアリングによって微分演算を移すのが超関数微分，積分演算を移すのがPettis積分であった．
+
+    こうして，正規分布に従う独立同分布列(族)の存在定理が，ホワイトノイズ関数という一般的な形で得られる．
+    これが$H$を可分にしていた理由である．
+    するとこのホワイトノイズを標準的な対象として，任意の測度空間$(A,\A,\mu)$にGauss測度を$(L^2(A))^*$の元という形で構成することも出来る．
 \end{tcolorbox}
 
-\begin{proposition}[Gauss変数のaffine変換]
-    $H,K$を可分Hilbert空間，$T(x)=Ax+b\;(A\in H(H,K),b\in K)$をaffine作用素とする．
-    このとき，$T\sim N(Aa+b,AQA^*)$．
-\end{proposition}
+または次のように定義することも出来る\cite{Revus and Yor}
 
-\begin{notation}
-    $H$上の確率変数のうち，特に有界線型汎関数によって定まるもの：$F_v(x)=(x,v)\;(v\in H)$を考える．これはGauss確率変数である：$F_v\sim N_{\brac{Qv,v}}$．
-\end{notation}
-
-\begin{proposition}[独立性の特徴付け]
-    $v_1,\cdots,v_n\in H$とする．
-    \begin{enumerate}
-        \item 線型確率変数$F_{v_1},\cdots,F_{v_n}$が独立である．
-        \item $(Q_{v_1,\cdots,v_n})$は対角行列である．
-    \end{enumerate}
-\end{proposition}
-
-\subsection{ホワイトノイズ関数}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $Q$がコンパクト作用素であること，正作用素であること，すべてが交錯している．
-    white noiseとは中心化された有限な分散を持つ独立確率変数の組として得られる確率ベクトルをいう．
-\end{tcolorbox}
-
-\begin{notation}
-    $\mu=N_Q$を中心化された非退化なGauss分布とする．二乗根作用素$Q^{1/2}$の像$\Im Q^{1/2}$をCameron-Martin部分空間という．
-    これは$H$の真の部分空間であるが，実は$H$上稠密である．
-    この部分空間上に定まる線型作用素$W:\Im Q^{1/2}\to H^*$を
-    \[W_f(x):=\Brac{Q^{-1/2}f,x}\quad(f\in Q^{1/2}(H),x\in H)\]
-    とおく．
-    ひとまず単射な$Q^{1/2}$は$\Im Q^{1/2}$上は可逆だからその上で定義したが，一意な延長$\o{W}:H\mono L^2(H,\mu)$が存在する．この$L^2(H,\mu)$の部分空間はGauss空間である．
-    すると，独立性の特徴付けより，$W_{f_1},\cdots,W_{f_n}$が独立であることと，$f_1,\cdots,f_n$が直交であることは同値．
-\end{notation}
-
-\begin{definition}[white noise]\label{def-white-noise-1}
-    有界線型作用素$W:H\mono L^2(H,\mu);f\mapsto \brac{Q^{-1/2}x,f}=\sum_{h=1}^\infty\lambda_h^{-1/2}\brac{x,e_h}\brac{f,e_h}$
-    を\textbf{ホワイトノイズ}という．
-\end{definition}
-
-\begin{proposition}[white noiseはGauss過程である]\mbox{}
-    \begin{enumerate}
-        \item $z\in H$に対して，値$W_z$は$N(0,\abs{z}^2)$に従う実Gauss変数である．
-        \item $z_1,\cdots,z_n\in H\;(n\in\N)$に対して，$(W_{z_1},\cdots,W_{z_n})$は$N_n(0,(\brac{z_h,z_k})_{h,k\in[n]})$に従うGauss変数である．
-    \end{enumerate}
-\end{proposition}
-
-\begin{proposition}[Cameron-Martin部分空間は零集合]
-    $\mu(Q^{1/2}(H))=0$．
-\end{proposition}
-
-\begin{tbox}{red}{}
-    この記法を使うと，$D$を勾配として，$M\varphi:=Q^{1/2}D\varphi$がMalliavin微分となる．
-    $M$は可閉作用素になり，その閉包はMalliavin-Sobolev空間$D^{1,2}(H,\mu)$上の作用素となる．
-    随伴$M^*$はSkorohod積分またはGauss発散作用素という．
-\end{tbox}
-
-\section{Gauss過程}
-
-\subsection{Gauss空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $X$が$d$次元Gauss変数であるとは，任意の線型汎関数$\al:\R^d\to\R$について$\al(X)$がGauss確率変数であることと同値．
-    この他にも，Gauss変数の独立性はGauss空間で幾何学的に捉えられる．
-\end{tcolorbox}
-
-\begin{notation}
-    $X\sim N(0,0)$として，定数関数はGauss確率変数とする．
-\end{notation}
-
-\begin{proposition}[Gauss確率変数全体の空間は閉部分空間をなす]
-    $(X_n)$を$X\in\Meas(\Om,\R)$に確率収束するGauss確率変数の列とする．このとき，$X$もGaussで，族$\{\abs{X_n}^p\}$は一様可積分で，$X_n\to X$は任意の$p\ge1$について$L^p$-収束もする．
-\end{proposition}
-
-\begin{definition}[Gaussian subspace]
-    Hilbert空間$L^2(\Om,\F,P)$の閉部分空間であって，中心化されたGauss確率変数のみからなるものを\textbf{Gauss空間}という．
-\end{definition}
-
-\begin{proposition}[独立性の特徴付け]
-    $(G_i)_{i\in I}$をあるGauss空間の閉部分空間の族とする．次の2条件は同値：
-    \begin{enumerate}
-        \item $\sigma$-代数$\sigma(G_i)$の族は独立である．
-        \item 各$G_i$は組ごとに直交する：$\forall_{i,j\in I}\;G_i\perp G_j$．
-    \end{enumerate}
-\end{proposition}
-
-\subsection{Gauss測度}
-
-\begin{proposition}[一般化された独立同分布列の存在定理]
+\begin{proposition}[一般化された独立同分布列の存在定理：ホワイトノイズ]
     $H$を可分実Hilbert空間とする．
     ある確率空間$(\Om,\F,P)$とその上の確率変数の族$X=(X_h)_{h\in H}$が存在して，次の2条件を満たす：
     \begin{enumerate}
         \item 写像$X:H\to\Meas(\Om,\R);h\mapsto X_h$は線型である．
         \item 任意の$h\in H$について，確率変数$X_h$は中心化されたGauss変数で，線型写像$X:H\to L^2(\Om)$は等長である：$E[X_h^2]=\norm{h}^2_H$．
-        \item $\Im X\simeq_\Hilb H$は$L^2(\Om)$のGauss部分空間である．
+        \item 埋め込み$\{X_h\}_{h\in H}\mono L^2(\Om)$は$L^2(\Om)$のGauss部分空間である．
     \end{enumerate}
 \end{proposition}
 \begin{remark}
     この同一視により，独立性$X_h\indep X_{h'}$は添字空間$H$における直交性として理解できる．
 \end{remark}
 
-\begin{definition}[Gaussian measure]
-    $(A,\A,\mu)$を可分な$\sigma$-有限測度空間とする．$H:=L^2(A,\A,\mu)$として，Gauss変数族$X=(X_h)_{h\in H}$を取る．
-    この写像$X$を$(A,\A)$上の\textbf{強度$\mu$のGauss測度}という．
+\begin{definition}[Gaussian measure / white noise]
+    $(A,\A,\mu)$を可分な$\sigma$-有限測度空間とする．$H:=L^2(A,\A,\mu)$として，中心化されたGauss変数の族$X=(X_h)_{h\in H}$を取る．
+    この写像$X:L^2(A,\mu)\to\L(\Om)$を$(A,\A)$上の\textbf{強度$\mu$のGauss測度／白色雑音}という．
     測度確定な可測集合$F\in\A,\mu(F)<\infty$のGauss測度$X(F)$は$X(1_F)$とも表す．
 \end{definition}
 
-\begin{definition}[equivalence / version, finite dimensional marginal distributions]\mbox{}
-    \begin{enumerate}
-        \item 同じ状態空間$(E,\E)$を持つ$(\Om,\F,P),(\Om',\F',P')$上の2つの過程$X,X'$が\textbf{同値である}または一方が他方の\textbf{バージョン}であるとは，
-        任意の有限部分集合$\{t_1,\cdots,t_n\}\subset\R_+$と任意の可測集合$A_1,\cdots,A_n\in\E$について，
-        \[P[X_{t_1}\in A_1,\cdots,X_{t_n}\in A_n]=P'[X'_{t_1}\in A_1,\cdots,X'_{t_n}\in A_n]\]
-        \item 測度$P$の$(X_{t_1},\cdots,X_{t_n}):\Om\to E^n$による押し出しを$P_{t_1,\cdots,t_n}:=P^{(X_{t_1},\cdots,X_{t_n})}$で表す．
-        任意の有限集合$\{t_1,\cdots,t_n\}\subset\R_+$に関する押し出し全体の集合$\M_X$を\textbf{有限次元分布}(f.d.d)と呼ぶ．
-    \end{enumerate}
-\end{definition}
-\begin{lemma}[過程の同値性の特徴付け]
-    $X,Y$について，次の3条件は同値．
-    \begin{enumerate}
-        \item $X,Y$は同値である．
-        \item $\M_X=\M_Y$．
-    \end{enumerate}
-\end{lemma}
 
-\begin{definition}[modification, indistinguishable]
-    定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
-    \begin{enumerate}
-        \item 2つは\textbf{修正}または\textbf{変形}であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．\footnote{\cite{Nualart}ではこの概念をequivalenceまたはvarsionと呼んでいる．}
-        \item 2つは\textbf{識別不可能}であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
-    \end{enumerate}
-\end{definition}
 
-\begin{lemma}\mbox{}
-    \begin{enumerate}
-        \item $X,Y$が互いの修正であるならば，同値である．
-        \item $X,Y$が互いの修正であり，見本道が殆ど確実に右連続ならば，識別不可能である．
-    \end{enumerate}
-\end{lemma}
+\section{Gauss確率変数}
 
-\subsection{Gauss過程}
+\subsection{Hilbert空間上のGauss変数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特にGauss測度の押し出しによって構成されるGauss変数を考える．
+    一般の有界線型汎関数，特に回転変換は
+    Gauss測度を保つ．
+\end{tcolorbox}
+
+\begin{proposition}[有界線型汎関数はGauss測度を保つ]
+    $(H,\mu)$を可分な正規Hilbert空間とする：$\mu\sim N(a,Q)$．
+    このとき，任意の可分Hilbert空間$K$へのaffine変換$T:H\to K;x\mapsto Ax+b\;(A\in B(H,K),b\in K)$とすると，$T_*\mu\sim N_{Aa+b,AQA^*}$．
+\end{proposition}
+\begin{proof}
+    特性関数を計算すると，任意の$k\in K$について，
+    \begin{align*}
+        \wh{T_*\mu}(k)&=\int_K e^{i(k|y)}(T_*\mu)(dy)\\
+        &=\int_He^{i(k|T(x))}\mu(dx)\\
+        &=\int_He^{i(k|Ax+b)}\mu(dx)\\
+        &=e^{i(k|b)}\int_He^{i(A^*k|x)}\mu(dx)=e^{i(k|Aa+b)}e^{-\frac{1}{2}(AQA^*k,k)}.
+    \end{align*}
+\end{proof}
+
+\begin{corollary}
+    $(H,\mu)$を可分な正規Hilbert空間とする：$\mu\sim N(0,Q)$．
+    任意の点$z_1,\cdots,z_n\in H$について，$A:H\to\R^n$を$Ax:=((x|z_1),\cdots,(x|z_n))\;(x\in H)$と定めると，
+    $Q_A:=(Qz_i,z_j)_{i,j\in[n]}$について$A\sim N(0,Q_A)$．
+\end{corollary}
+
+\begin{corollary}[Gauss測度の回転不変性]
+    線型写像$R:H\times H\to H\times H$を
+    \[R(x,y):=\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}\]
+    と定めると，$(H\times H,\mu\times\mu)\;(\mu\sim N(0,Q))$上の2つの測度$\mu\times\mu$と$R_*\mu\times\mu$とは等しい：
+    \[\forall_{F\in\L_b(H\times H;H\times H)}\;\int_{H\times H}F(x,y)\mu(dx)\mu(dy)=\int_{H\times H}F(R(x,y))\mu(dx)\mu(dy).\]
+\end{corollary}
+
+\subsection{Gauss過程の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C(T,\R)$上のGauss変数を特にGauss過程ともいう．
+\end{tcolorbox}
 
 \begin{definition}[Gaussian process, centered]
     $(\Om,\F,P)$上の実確率過程$X=(X_t)_{t\in\R_+}$について，
@@ -318,7 +259,160 @@ title=]
     \end{align*}
 \end{proof}
 
-\section{Kolmogorovの拡張定理}
+\subsection{Gauss変数の独立性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    あるGauss確率変数の成分(一般化して，有界線型汎関数との合成)の間の独立性は，直交性で捉えられる．
+\end{tcolorbox}
+
+\begin{proposition}[一般の確率変数の独立性の特徴付け]
+    $X_1,\cdots,X_n:\Om\to H$を確率変数，$X:=(X_1,\cdots,X_n)$を積写像とする．
+    \begin{enumerate}
+        \item $X_1,\cdots,X_n$は独立である．
+        \item 特性関数が分解する：$\forall_{h=(h_1,\cdots,h_n)\in H^n}\;\wh{X}(h)=\prod_{i=1}^n\wh{X_i}(h_j)$．
+        \item 任意の期待値が分解する：$\forall_{\varphi_1,\cdots,\varphi_n\in\L_b(\Om;\R)}\;E[\varphi_1(X_1)\cdots\varphi_n(X_n)]=E[\varphi_1(X_1)]\cdots E[\varphi_n(X_n)]$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{notation}[正規Hilbert空間上の線型な実確率変数]
+    $H$上の実確率変数のうち，特に有界線型汎関数によって定まるもの：$F_v(x)=(x,v)\;(v\in H)$を考える．これはGauss確率変数である：$F_v\sim N_{\brac{Qv,v}}$．
+\end{notation}
+
+\begin{proposition}[Gauss変数の独立性の特徴付け]
+    $v_1,\cdots,v_n\in H$とする．
+    \begin{enumerate}
+        \item 線型確率変数$F_{v_1},\cdots,F_{v_n}$が独立である．
+        \item $(Q_{v_1,\cdots,v_n})$は対角行列である．
+    \end{enumerate}
+    (2)は，各$F_{v_i},F_{v_j}\;(i\ne j)$が$L^2(H)$上で直交することに同値．
+\end{proposition}
+
+\subsection{Gauss空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    $X$が$d$次元Gauss変数であるとは，任意の線型汎関数$\al:\R^d\to\R$について$\al(X)$がGauss確率変数であることと同値．
+    この他にも，Gauss変数の独立性はGauss空間で幾何学的に捉えられる．
+\end{tcolorbox}
+
+\begin{notation}
+    $X\sim N(0,0)$として，定数関数はGauss確率変数とする．
+\end{notation}
+
+\begin{proposition}[Gauss確率変数全体の空間は閉部分空間をなす]
+    $(X_n)$を$X\in\Meas(\Om,\R)$に確率収束するGauss確率変数の列とする．このとき，$X$もGaussで，族$\{\abs{X_n}^p\}$は一様可積分で，$X_n\to X$は任意の$p\ge1$について$L^p$-収束もする．
+    また，$X$の平均と共分散はそれぞれの各点収束極限である．
+\end{proposition}
+
+\begin{definition}[Gaussian subspace]
+    Hilbert空間$L^2(\Om,\F,P)$の閉部分空間であって，中心化されたGauss確率変数のみからなるものを\textbf{Gauss空間}という．
+\end{definition}
+
+\begin{proposition}[独立性の特徴付け]
+    $(G_i)_{i\in I}$をあるGauss空間の閉部分空間の族とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\sigma$-代数$\sigma(G_i)$の族は独立である．
+        \item 各$G_i$は組ごとに直交する：$\forall_{i,j\in I}\;G_i\perp G_j$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{ホワイトノイズ関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $Q$がコンパクト作用素であること，正作用素であること，すべてが交錯している．
+    white noiseとは中心化された有限な分散を持つ独立確率変数の組として得られる確率ベクトルをいう．
+\end{tcolorbox}
+
+\begin{notation}
+    $\mu=N_Q$を中心化された非退化なGauss分布とする．二乗根作用素$Q^{1/2}$の像$\Im Q^{1/2}$をCameron-Martin部分空間という．
+    これは$H$の真の部分空間であるが，実は$H$上稠密である．
+    この部分空間上に定まる線型作用素$W_-(-):\Im Q^{1/2}\times H\to\R$を
+    \[W_f(x):=\Brac{Q^{-1/2}f,x}\quad(f\in Q^{1/2}(H),x\in H)\]
+    とおく．
+
+    なお，$Q$が単射(=像の上で可逆)であることより$Q^{1/2}:H\to\Im Q^{1/2}$も単射で，よって$\Im Q^{1/2}$上で可逆だから，$Q^{-1/2}:\Im Q^{1/2}\to H$はひとまず定まっている．
+    次に$W_-$は有界線型であるから，
+    一意な延長$\o{W}:H\mono L^2(H,\mu)$が存在する．この$L^2(H,\mu)$の部分空間は有界線型汎関数のみからなり，特にGauss空間である．
+    すると，独立性の特徴付けより，$W_{f_1},\cdots,W_{f_n}$が独立であることと，$f_1,\cdots,f_n$が直交であることは同値．
+\end{notation}
+
+\begin{definition}
+    \[Q^{1/2}x:=\sum^\infty_{k=1}\sqrt{\lambda_k}(x|e_k)e_k\quad(x\in H)\]
+    を二乗根作用素という．この像を\textbf{Gauss測度$N(0,Q)$に関するCameron-Martin部分空間}という．
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $Q\in B^1(H)$は可逆でない．特に，$Q^{-1}$は非有界作用素である．
+        \item $Q(H)\subsetneq H$である．
+        \item $Q(H)$は$H$上稠密である．
+        \item $Q^{1/2}(H)$も$H$上稠密である．
+        \item $W:Q^{1/2}(H)\to L^2(H,\mu)$は$H$上に一意に延長し，Hilbert空間の埋め込みを定める．
+        \item $\Im W=\oo{H^*}$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[white noise]\label{def-white-noise-1}
+    Hilbert空間の埋め込み$W:H\mono L^2(H,\mu);f\mapsto \brac{Q^{-1/2}x,f}=\sum_{h=1}^\infty\lambda_h^{-1/2}\brac{x,e_h}\brac{f,e_h}$
+    を\textbf{ホワイトノイズ}という．
+\end{definition}
+
+\begin{proposition}[white noiseはGauss系である]\mbox{}
+    \begin{enumerate}
+        \item $z\in H$に対して，値$W_z$は$N(0,\abs{z}^2)$に従う実Gauss変数である．
+        \item $z_1,\cdots,z_n\in H\;(n\in\N)$に対して，$(W_{z_1},\cdots,W_{z_n})$は$N_n(0,(\brac{z_h,z_k})_{h,k\in[n]})$に従うGauss変数である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Cameron-Martin部分空間は零集合]
+    $\mu(Q^{1/2}(H))=0$．
+\end{proposition}
+
+\begin{tbox}{red}{}
+    この記法を使うと，$D$を勾配として，$M\varphi:=Q^{1/2}D\varphi$がMalliavin微分となる．
+    $M$は可閉作用素になり，その閉包はMalliavin-Sobolev空間$D^{1,2}(H,\mu)$上の作用素となる．
+    随伴$M^*$はSkorohod積分またはGauss発散作用素という．
+\end{tbox}
+
+\section{確率過程の扱い}
+
+\subsection{確率過程の同値性}
+
+\begin{definition}[equivalence / version, finite dimensional marginal distributions]\mbox{}
+    \begin{enumerate}
+        \item 同じ状態空間$(E,\E)$を持つ$(\Om,\F,P),(\Om',\F',P')$上の2つの過程$X,X'$が\textbf{同値である}または一方が他方の\textbf{バージョン}であるとは，
+        任意の有限部分集合$\{t_1,\cdots,t_n\}\subset\R_+$と任意の可測集合$A_1,\cdots,A_n\in\E$について，
+        \[P[X_{t_1}\in A_1,\cdots,X_{t_n}\in A_n]=P'[X'_{t_1}\in A_1,\cdots,X'_{t_n}\in A_n]\]
+        \item 測度$P$の$(X_{t_1},\cdots,X_{t_n}):\Om\to E^n$による押し出しを$P_{t_1,\cdots,t_n}:=P^{(X_{t_1},\cdots,X_{t_n})}$で表す．
+        任意の有限集合$\{t_1,\cdots,t_n\}\subset\R_+$に関する押し出し全体の集合$\M_X$を\textbf{有限次元分布}(f.d.d)と呼ぶ．
+    \end{enumerate}
+\end{definition}
+\begin{lemma}[過程の同値性の特徴付け]
+    $X,Y$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $X,Y$は同値である．
+        \item $\M_X=\M_Y$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[modification, indistinguishable]
+    定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
+    \begin{enumerate}
+        \item 2つは\textbf{修正}または\textbf{変形}であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．\footnote{\cite{Nualart}ではこの概念をequivalenceまたはvarsionと呼んでいる．}
+        \item 2つは\textbf{識別不可能}であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $X,Y$が互いの修正であるならば，同値である．
+        \item $X,Y$が互いの修正であり，見本道が殆ど確実に右連続ならば，識別不可能である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Kolmogorovの拡張定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
@@ -363,7 +457,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\section{定義と特徴付け}
+\section{Brown運動の定義と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1257,9 +1351,10 @@ title=]
     Wiener測度を緩増加超関数の空間に実現することで，仮想的な時間微分$dB_t$は自然に捉えられる．
     $\S$をSchwartzの急減少関数の空間とし，$\S'$をその双対空間とし，$\brac{-,-}$をこの間のペアリングとする．
     このとき，次の定理が成り立つ．
-    \begin{theorem}
+    \begin{theorem}[白色雑音の存在定理]\label{thm-existence-of-white-noise}
+        $(\S',\B(\S'))$上には，標準Gauss測度$N(0,\id_{\S})$がただ一つ存在する．すなわち，
         次を満たす$(\S',\B(\S'))$上の確率測度$\nu$がただ一つ存在する：
-        \[\forall_{\varphi\in\S}\quad\int_{\S'}\exp{i\brac{u,\varphi}}\nu(du)=\exp\paren{-\frac{1}{2}\int_\R\varphi^2(t)dt}\]
+        \[\forall_{\varphi\in\S}\quad\int_{\S'}\exp{i\brac{u,\varphi}}\nu(du)=\exp\paren{-\frac{1}{2}\int_\R\varphi^2(t)dt}=\exp\paren{\frac{1}{2}\brac{\id\varphi,\varphi}}\]
     \end{theorem}
     このときの確率空間$(\S',\B(\S'),\nu)$を\textbf{白色雑音}という．
     これを引き起こす過程$\dot{B}$を，$\R$上のBrown運動$(B_t)_{t\in\R}$を用いて構成する．
