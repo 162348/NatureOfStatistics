@@ -1114,6 +1114,13 @@ title=]
 
 \subsection{見本道の変分}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率過程の2次変分過程は，高頻度取引の分野においてrealized volatilityといい，重要な統計量となっている．
+    その漸近分散を求めるのに，混合型中心極限定理が必要となる．
+    この定理は非エルゴード的な確率システムにおける「中心極限定理」となる．
+\end{tcolorbox}
+
 \begin{proposition}[erratic]\mbox{}
     \begin{enumerate}
         \item 殆ど確実に，任意の$0<a<b<\infty$に対して，Brown運動の見本道は$[a,b]$上単調でない．
@@ -1865,8 +1872,9 @@ title=]
     \end{description}
 \end{proof}
 
-\begin{corollary}
-    $(P_t)$をBrown運動に対応する連続半群とすると，任意の有界な可測関数$f\in\L(\R)\cap l^\infty(\R)$と有限な停止時$T$について，
+\begin{corollary}[時間一様性]
+    $(P_t)$をBrown運動に対応する連続半群とすると，
+    任意の有界な可測関数$f\in\L(\R)\cap l^\infty(\R)$と有限な停止時$T:\Om\to\R_+$について，
     \[E[f(B_{T+t})|\F_T]=(P_tf)(B_T).\]
 \end{corollary}
 
@@ -1874,15 +1882,34 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    確率過程が定めるsupの過程の尾部確率の評価は，
     Kolmogorovの不等式から始まる不等式原理である．
+    Brown運動については，元のBrown運動のことばで完全に特徴付けられる．
+
+    この結果は，到達時刻がもたらす強Markov性から従う．
 \end{tcolorbox}
 
 \begin{theorem}[Levy's reflection princple (1939)]
     $M_t:=\sup_{s\in[0,t]}B_s$とする．
     \[\forall_{a>0}\;P[M_t\ge a]=2P[B_t>a].\]
 \end{theorem}
+\begin{proof}
+    時刻$\tau_a<\infty$で折り返した確率過程を
+    \[\wh{B}_t:=B_t1_{\Brace{t\le\tau_a}}+(2a-B_t)1_{\Brace{t>\tau_a}}\]
+    と定める．
+    \begin{description}
+        \item[$\wh{B}$は再びBrown運動である] いま，到達時刻$\tau_a$は有限な停止時だから，$(B_{t+\tau_a}-a)_{t\in\R_+},(-B_{t+\tau_a}+a)_{t\in\R_+}$はいずれもBrown運動であり，$B_{\tau_a}$と独立．
+        
+        したがって，$(B_t)_{t\in[0,\tau_a]}$の右端に接続した過程は，いずれも同じ過程を定める．1つ目はBrown運動$(B_t)$で，2つ目が$(\wt{B}_t)$である．
+        したがって，$(\wh{B}_t)$もBrown運動である．
+        \item[結論]
+        $\{M_t\ge a\}=\Brace{B_t>a}\sqcup\Brace{M_t\ge a,B_t\le a}$と場合分けすると，2つ目の場合は$\Brace{\wt{B}_t\ge a}$と同値．
+        よって，
+        \[P[M_t\ge a]=P[B_t>a]+P[\wt{B}_t\ge a]=2P[B_t>a].\]
+    \end{description}
+\end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor-density-of-sup-process-of-Brownian-motion}
     任意の$a>0$に対して，$M_a:=\sup_{t\in[0,a]}B_t$は次の密度関数を持つ：
     \[p(x)=\frac{2}{\sqrt{2\pi a}}e^{-x^2/(2a)}1_{[0,\infty)}(x).\]
 \end{corollary}
@@ -1890,8 +1917,23 @@ title=]
 \subsection{Brown運動の最大値}
 
 \begin{lemma}
-    殆ど確実に，Brown運動は区間$[0,1]$上のただ一つの点にて最大値を取る．
+    殆ど確実に，Brown運動$(B_t)_{t\in[0,1]}$ただ一つの点にて最大値を取る．
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] $[0,1]$の分割
+        \[\I_n:=\Brace{\Square{\frac{j-1}{2^n},\frac{j}{2^n}}\in P([0,1])\;\middle|\;1\le j\le 2^n}\]
+        について，
+        \[G:=\Brace{\om\in\Om\mid\exists_{t_1\ne t_2\in[0,1]}\;\sup_{t\in[0,1]}B_t=B_{t_1}=B_{t_2}}\subset\cup_{n\ge 1}\cup_{I_1,I_2\in\I_n,I_1\cap I_2=\emptyset}\Brace{\sup_{t\in I_1}B_t=\sup_{t\in I_2}B_t}\]
+        が成り立つので，$\forall_{n\in\N}\;\forall_{I_1,I_2\in\I_n}\;I_1\cap I_2=\emptyset\Rightarrow P\Square{\sup_{t\in I_1}B_t=\sup_{t\in I_2}B_t}=0$を示せば良い．
+        \item[証明] 任意の閉区間$[a,b]\subset[0,1]$について，確率変数$\sup_{t\in[a,b]}B_t:\Om\to\R$の確率分布$P[\sup_{t\in[a,b]}B_t|\F_a]:\Om\to[0,1]$は絶対連続であることを示せば十分である．
+        
+        $\sup_{t\in[a,b]}B_t=\sup_{t\in[a,b]}(B_t-B_a)+B_a$とみると，
+        $\sup_{t\in[a,b]}(B_t-B_a)$を$\F_a$で条件づけたものは，$\sup_{t\in[0,b-a]}B_t$と同じ確率分布を持つ．
+        系\ref{cor-density-of-sup-process-of-Brownian-motion}より，これは絶対連続である．
+    \end{description}
+\end{proof}
+
 
 \section{Laplace作用素}
 

@@ -687,17 +687,17 @@ title=]
         $(f*g)(x):=\int_\R f(x-y)g(y)dm(y)\quad(x\in\R)$．
         \item $f\in L^1$に対して，指標$e_t(x)=e^{itx}$との畳み込みでの$u=0$の値
         (各積分核$e^{-ixt}\;(t\in\R)$に関する積分変換)を\textbf{Fourier変換}$\wh{-}:L^1\to L^1$といい，次のように表す：
-        $\hat{f}(t):=(f*e_t)(0)=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R)$．
+        \[\hat{f}(t):=(f*e_t)(0)=\int_\R f(x)e_{-t}(x)dm(x)=\int_\R f(x)e_t(0-x)dm(x)=\int_\R f(x)e^{-ixt}dm(x)\quad(t\in\R).\]
         \item $L^p(\R),C_0(\R)$を$L^p,C_0$と略記する．
         \item 多重指数$\al\in\N^n$に対して，\textbf{偏微分作用素}$D_\al$を$D_\al:=(i)^{-n}D^\al=\paren{\frac{1}{i}\pp{}{x_1}}^{\al_1}\cdots\paren{\frac{1}{i}\pp{}{x_n}}^{\al_n}$で表す．このとき，$D_\al e_t=t^\al e_t$が成り立つ．これがFourier変換の偏微分方程式論への応用可能性を支える．
-        \item \textbf{遷移作用素}$\tau_x\;(x\in\R^n)$を$(\tau_x)f(y):=f(y-x)$で定める．
+        \item \textbf{遷移作用素}$\tau_x\;(x\in\R^n)$を$(\tau_xf)(y):=f(y-x)$で定める．
     \end{enumerate}
 \end{notation}
 
 \begin{definition}[character, characteristic function]\mbox{}
     \begin{enumerate}
         \item 加法群$\R$から，$\C$の乗法部分群$S^1$への群準同型を\textbf{指標}という：$\abs{\varphi(t)}=1,\varphi(s+t)=\varphi(s)\varphi(t)$．
-        \item 特に，$t\in\R^n$の指標$e_t$とは，指数関数$e_t(x):=e^{it\cdot x}\;(x\in\R^n)$をいう．
+        \item 特に，$t\in\R^n$の指標$e_t$とは，指数関数$e_t(x):=e^{it\cdot x}\;(x\in\R^n)$をいう．2つの引数について全く対称であることに注意．
         \item 指標$t\in\R^n$の，$\R^n$上の確率測度に関する積分(との合成)$\varphi(u)=\int_\R e^{iut}dt$を特性関数という．
     \end{enumerate}
 \end{definition}
@@ -739,6 +739,31 @@ title=]
         \item $g(x)=-ixf(x)\land g\in L^1\Rightarrow\wh{f}$は微分可能で$\wh{f}'(t)=\wh{g}(t)$．
     \end{enumerate}
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{align*}
+            \wh{\tau_xf}(t)&=\int(\tau_xf)\cdot e_{-t}(y)dm(y)\\
+            &=\int f(y)(\tau_{-x}e_{-t})(y)dm(y)\\
+            &=\int f(y)e_{-t}(y+x)dm(y)\\
+            &=e_{-t}(x)\wh{f}(t)=e_{-x}(t)\wh{f}(t).
+        \end{align*}
+        \item \begin{align*}
+            \wh{e_xf}(t)&=\int(e_xf)(y)e_{-t}(y)dm(y)\\
+            &=\int f(y)e_{-(t-x)}(y)dm(y)=(f*e_{t-x})(0)=(\tau_x\wh{f})(t).
+        \end{align*}
+        \item Fubiniの定理より，
+        \begin{align*}
+            \wh{f*g}(t)&=\int_{\R\times\R}\paren{f(y-x)g(x)dx}e_{-t}(y)dm(y)\\
+            &=\int_\R g(x)e_{-t}(x)dx\int_\R f(y-x)e_{-t}(y-x)dm(y)=\wh{g}(t)\wh{f}(t).
+        \end{align*}
+        Fibiniの定理より，$\mu\dae x$について$\int_\R f(y-x)e_{-t}(y-x)dm(y)$は可積分で，その値は一定であることに注意．
+        \item 簡単な変数変換により分かる．1次元の場合は次のようになり，$n$次元の場合は$\lambda I$の行列式$\lambda^n$がかかる：
+        \begin{align*}
+            \wh{h}(t)&=\int_\R h(x)e_{-t}(x)dm(x)=\int_\R f\paren{\frac{x}{\lambda}}e_{-t}\paren{\frac{x}{\lambda}}dm(x)\\
+            &=\lambda\int_\R f(y)e_{-t}(y)dx=\lambda\wh{f}(t).
+        \end{align*}
+    \end{enumerate}
+\end{proof}
 \begin{remarks}
     以上の結果は，ひとえに$m$の平行移動不変性と，任意の$t\in\R$について積分核$x\mapsto e^{itx}$は$\R$の指標であることによる．
     なお，$\R$の連続な指標はすべて指数関数によって表現される．
