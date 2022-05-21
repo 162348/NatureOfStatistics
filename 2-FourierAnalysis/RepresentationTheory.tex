@@ -1,0 +1,711 @@
+\documentclass[uplatex,dvipdfmx]{jsreport}
+\title{Lie群と表現論}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\begin{quotation}
+    Lie群は，それとその等質空間自身の構造の研究と，変換群としての作用の研究とが両輪となっている．
+    特に，線型空間への作用（ここで関数解析が登場する）を表現という．既約表現を分類し，その構造を理解する＝指標を求めることが目標となる．
+\end{quotation}
+
+\chapter{位相群の表現}
+
+\begin{quotation}
+    数学的には群作用によって，空間の対称性を捉える．
+    空間が可微分であるときには，作用する群にも可微分性をおくのが良いだろう，これをLie群という．
+    群作用のうち基本的な対象が線型なものであり，これを「表現」という．
+\end{quotation}
+
+\section{位相群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標準的な自己位相同型$L_g,R_g\in\Aut_\Top(G)$や$Ad(g)=L_g\circ R_{g^{-1}}$，または演算写像とその合成$\mult\circ(\id_G\times\inv);(x,y)\mapsto xy^{-1}$が連続であることを元に議論する．
+    すると，$e\in G$の近傍全体のなす集合$\U$に注目すれば良い．
+    任意の点$g\in G$について，その近傍全体のなす集合は$L_g(\U)=g\U$であるため．
+    つまり，自己移動によって近傍系が写り合うという意味で「等質的」である．
+    この群$G$にある意味で似ている位相空間が，等質空間である．
+\end{tcolorbox}
+
+\subsection{定義と例}
+
+\begin{definition}[topological group (O. Schreier 1925)]
+    Top内の群(であってHausdorff性を持つもの\ref{prop-characterization-of-Hausdorff-group})を\textbf{位相群}という．
+    さらにDiff内の対象でもあるとき，\textbf{Lie群}という．
+\end{definition}
+
+
+\begin{example}[$p$進整数：位相群だがLie群でない例]
+    素数$p$について，自然な射影
+    \[\cdots\Z/p^4\Z\to\Z/p^3\Z\to\Z/p^2\Z\to\Z/p\Z\]
+    の射影極限$\varprojlim\Z/p^n\Z$を$\Z_p$で表す．これはコンパクト位相群になる．
+\end{example}
+
+\begin{theorem}
+    任意のコンパクト群は，コンパクトLie群の射影極限として得られる．
+\end{theorem}
+
+\begin{example}[円周と同型な位相群]
+    ３つの位相群
+    \begin{enumerate}
+        \item トーラス$\bT=\R/2\pi\Z$に商位相を入れたもの．
+        \item 単位円周$S^1:=\Brace{z\in\C\mid\abs{z}=1}$に$\C$の相対位相を入れたもの．
+        \item 2次元特殊直交群$SO(2)=\Brace{g\in M_2(\R)\mid {}^t\!gg=I,\det g=1}$に$\R^4$の相対位相を入れたもの．
+    \end{enumerate}
+    は互いに同型である．成分毎の計算によって，
+    \[SO(2)=\Brace{\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}\in M_2(\R)\;\middle|\;\theta\in\R}\]
+    と分かる．
+\end{example}
+
+\begin{example}[半直積]
+    半直積$H\rtimes_\pi G$の部分群$H$は閉正規部分群で，位相群としての同型$(H\rtimes G)/H\simeq G$を得る．
+\end{example}
+
+\begin{example}[Affine変換群とEuclid運動群]\mbox{}\label{exp-Affine-transformation-and-Euclid-motion-group}
+    \begin{enumerate}
+        \item 
+    $A\in\GL_n(\R),b\in\R^n$について，$(A,b):\R^n\to\R^n;x\mapsto Ax+b$をaffine変換という．
+    この全体$\Aff(\R^n)$は群をなす．合成法則を見ると，これは積を$(A_1,b_1)\cdot(A_2,b_2):=(A_1A_2,b_1+A_1b)$と定めた
+    半直積群$\Aff(\R^n)\simeq\GL_n(\R)\ltimes\R^n$と同型である．
+    \[\Aff(\R^n):=\Brace{\begin{pmatrix}A&b\\0&1\end{pmatrix}\in\GL_{n+1}(\R)\;\middle|\;A\in\GL_n(\R),b\in\R}\]
+    とも定義できる．
+    \item Affine変換群の部分群$O(n)\ltimes\R^n$は$\R^n$の等長変換の群であり，\textbf{Euclid運動群}という．$n=2$の場合は平面の合同変換群という．
+    \end{enumerate}
+\end{example}
+
+
+\subsection{基本的な内部同型写像}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 任意の$g\in G$に対して，
+        左移動$L_g$，右移動$R_g$は$G$の同相写像である．
+        \item $\Psi:G\to G;x\mapsto x^{-1}$は同相写像である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}
+    $A,B\subset G$を部分集合とする．
+    \begin{enumerate}
+        \item $A$または$B$が開であるとき，$AB$は開である．
+        \item $A$が開であるとき，$A^{-1}$及び$gAg^{-1}$も開である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $A$が開とすると，任意の$b\in B$について$R_b(A)$は開である．よって，$AB=\cup_{b\in B}R_b(A)$も開．
+        \item $A^{-1}$は連続写像である$\inv:G\to G$の像．$gAg^{-1}$は$\Ad(g):G\to G$の像．
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[使える連続写像のレパートリー]\label{lemma-morphism-toolset-for-topological-group}
+    $e\in G$の近傍全体の集合$\U$について，
+    \begin{enumerate}
+        \item $\U\ne\emptyset$．
+        \item $\U$は開集合の基底である：$\forall_{U_1,U_2\in\U}\;\exists_{U_3\in\U}\;(e\in)U_3\subset U_1\cap U_2$．
+        \item $\forall_{U\in\U}\;\exists_{V\in\U}\;V\cdot V^{-1}\subset U$．
+        \item $\forall_{U\in\U}\;\forall_{a\in U}\;\exists_{V\in\U}\;aV\subset U$．
+        \item $\forall_{U\in\U}\;\forall_{g\in G}\;\exists_{V\in\U}\;gVg^{-1}\subset U$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $G\in\U$．
+        \item 基本近傍系だから．
+        \item $\varphi:=\mult\circ(\id_G\times\inv):G\times G\to G;\varphi(x,y)=xy^{-1}$が連続であることと，$\varphi(e,e)=e$であることより，任意の近傍$U$に対して，近傍$V$が存在して$\varphi(V,V)=V\cdot V^{-1}\subset U$を満たす．
+        \item $L_a:G\to G$は$L_a(e)=a$を満たす連続写像であるため．
+        \item $L_g\cdot R_{g^{-1}}=\Ad(g)$について．
+    \end{enumerate}
+\end{proof}
+\begin{remark}
+    上の５つを公理として，$G$の部分集合の族$\U$を定める．$\U(g):=\Brace{gU\mid U\in\U}$とおくと，これらを$g$の基本近傍系とするような位相が$G$に定まる．
+\end{remark}
+
+\subsection{位相群の位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    基本$\{e\}$の近傍系に引き戻して考えるので，$G$の位相は$e$の近傍の言葉で特徴付けられる．
+\end{tcolorbox}
+
+\begin{proposition}[ハウスドルフ位相群の特徴付け]\label{prop-characterization-of-Hausdorff-group}
+    位相群$G$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $G$はHausdorffである．
+        \item $\bigcap_{U\in\U}U=\{e\}$．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    他の点が分離可能ってそう言うことだもんね．位相群本当に面白いな．
+\end{remarks}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 任意の$g\in G\setminus\{e\}$について，$g\notin U$を満たす$U\in\U$が存在するため．
+        \item[(2)$\Rightarrow$(1)] 任意に相異なる$g,h\in G$を取る．相異なるため，$h^{-1}g\ne e$であるから，$h^{-1}g\in U$を満たす$U\in\U$が存在する．このとき，$\mult\circ\inv$の連続性より，$VV^{-1}\subset U$を満たす$V\in\U$が存在し，これについても$h^{-1}g\notin VV^{-1}$．すなわち，$g\notin hVV^{-1}$，$gV\cap hV=\emptyset$．
+    \end{description}
+\end{proof}
+
+\begin{proposition}[Kolmogorov]
+    位相群がHausdorffならば正規である．
+\end{proposition}
+
+\section{位相群の部分群と商空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    部分群については，剰余類分解があるため，閉集合であることの方が，開集合であることより広い概念である．
+    $H$が開ならば，これについての剰余類分解を考えると，$G\setminus H$も開とならざるを得ない．$G/H$が有限ならば，同様のことが閉集合についても成り立つ．
+\end{tcolorbox}
+
+\subsection{基本的性質}
+
+\begin{lemma}[部分群の位相]
+    $G$を位相群，$H$を部分群とする．
+    \begin{enumerate}
+        \item $H$の閉包$\o{H}$は$G$の閉部分群である．
+        \item $H$が$G$の正規部分群ならば，$\o{H}$も$G$の正規部分群である．
+        \item $H$が$G$の開集合ならば，$H$はまた$G$の閉集合である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $g,h\in\o{H}$を任意に取る．$gh^{-1}\in\o{H}\Lrarrow\forall_{U\in\U}\;gh^{-1}U\cap H\ne\emptyset$を示せば良い．
+        $\Ad(h)\circ\mult\circ(\id_G\times\inv)$の連続性（補題\ref{lemma-morphism-toolset-for-topological-group}）より，$hVV^{-1}h^{-1}\subset U$を満たす$V\in\U$が存在する．すなわち，$VV^{-1}h^{-1}\subset h^{-1}U$．
+        $g,h\in\o{H}$より，$gV\cap H\ne\emptyset,hV\cap H\ne\emptyset$であるから，$gu,hv\in H$を満たす$u,v\in V$が存在する．これについて，$(gu)(hv)^{-1}=guv^{-1}h^{-1}\in H$であるから，$gVV^{-1}h^{-1}\subset gh^{-1}U$が空でないことがわかった．
+        \item 
+        $H$が$G$の正規部分群だから，任意の$g\in G$について，$gHg^{-1}=\Ad_g(H)=H$．ここで，$Ad_g:G\iso G$は位相同型であることより，$\o{\Ad_g(H)}=\Ad_g(\o{H})=g\o{H}g^{-1}=\o{H}$．
+        \item $H$による左剰余類分解$G=H\cup\bigcup_{\alpha\in A}a_\alpha H$を考える．$a_\alpha H$は連続写像$L_{a_\alpha}$の像だから開．よって，$H$の補集合$H'=\bigcup_{\alpha\in A}a_{\alpha}H$は開である．
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[部分群の例]\mbox{}
+    \begin{enumerate}
+        \item 位相群$G$の中心は閉部分群である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[商群の位相]\mbox{}
+    \begin{enumerate}
+        \item 左剰余類全体の集合$G/H$に，終位相を入れると，$\pi:G\epi G/H$は開写像となる．
+        \item $H\rsub G$であるとき，$G/H$は位相群である．
+        \item Hausdorff位相群$G$の商群$G/H$がHausdorffであるための必要十分条件は，正規部分群$H$が閉であることである．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Lie群の場合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Lie群は，群構造によって，位相多様体としての微分構造が非常に素直になる]
+    $\R^n$の閉集合で多様体でないものの例にはCantor集合などがある．
+    また，Lie群ではないコンパクト位相群で，位相空間としてはCantor集合と同相なものが存在する．
+    しかし，Lie群についてはこのようなことは起こらなくなる．
+\end{tcolorbox}
+
+\begin{theorem}[von Neumann (1927)]
+    $M_n(\R^n)\simeq\R^{n^2}$の閉部分群$G$は，$M_n(\R)$の相対位相についてLie群になる．特に，多様体である．
+\end{theorem}
+
+\begin{theorem}[可微分多様体の消息 (Whitney 1936 + Grauert 1958)]
+    任意の$C^1$-多様体には，$C^s$-多様体$(s=1,2,\cdots,\infty,\om)$の構造が存在し，元の$C^1$-構造と両立するものは一意的である．
+\end{theorem}
+\begin{remark}
+    一方で，同じ$C^0$-基礎構造を持つ$C^\infty$-多様体は複数存在しうる．特に，7次元球面の上には相異なる$C^\infty$-多様体の構造が存在する．
+    これらはいずれも代数多様体として構成された．
+    さらに，$C^0$-構造に対して，これと両立する$C^1$-構造が存在しない場合もある．
+\end{remark}
+
+\begin{remarks}
+    しかし，Lie群については，$C^0$-Lie群には両立する$C^r$-構造$(r=1,\cdots,\infty,\om)$が一意的に存在する．
+\end{remarks}
+
+\section{位相群の連結部分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群の単位元を含む連結成分は正規閉部分群で，これによる商群は離散群になる．
+\end{tcolorbox}
+
+\subsection{連結位相群の性質}
+
+\begin{theorem}
+    $G$を連結位相群，$U\subset G$を単位元$e$の近傍で，$U=U^{-1}$を満たすものとする．
+    \begin{enumerate}
+        \item この時，$\forall_{g\in G}\;\exists_{k\in\N}\;\forall_{1\le i\le k}\;\exists_{g_i\in U}\;g=g_1\cdots g_k$．
+        \item $G$がコンパクトならば，正整数$n\in\N$が存在して，常に$k=n$と取れる．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{位相群の連結部分の構造}
+
+\begin{lemma}
+    $H<G$を位相群とする．
+    $H,G/H$が連結ならば，$G$も連結である．
+\end{lemma}
+
+\begin{theorem}
+    $G$を位相群とし，$e$を含む連結部分を$G_0$とする．
+    \begin{enumerate}
+        \item $G_0$は$G$の正規閉部分群である．
+        \item $G/G_0$の単位元を含む連結成分$(G/G_0)_0$は自明群である．\footnote{$G_0=\{e\}$となる位相群$G$を完全不連結という．}
+        \item $G$を局所連結とすると，$G/G_0$は離散空間である．
+        \item $g\in G$を含む連結部分は$gG_0$と表せる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 行列式の値が正の$n$次元実行列の全体を$\GL^+_n(\R)$，負のものを$\GL^-_n(\R)$とする．$\GL_n(\R)$の連結成分は$\GL_n^+(\R)\cup\GL_n^-(\R)$の２つからなる．
+        \item $\GL_n(\C)$は連結である．
+    \end{enumerate}
+\end{example}
+
+\section{位相群の作用：等質空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    1-パラメータ群も一種の変換群である．Lieはこのようにして，連続にパラメータ付けられた$\Aut(M)$の部分群を考えた．これはLie群の中心的な例である．
+    多様体の構成\ref{sec-construction}の一般論である．
+    「球面が丸い」とは$SO_n(\R)$の作用で，「直線はまっすぐだ」とは加法群$\R$の作用によって理解している概念である．
+
+    変換群の作用の「最小単位」を等質空間という．軌道分解によってここに辿り着く．
+\end{tcolorbox}
+
+\subsection{位相群の作用と等質空間}
+
+\begin{definition}[topological transformaton group, effective / free, transitive, homogeneous space, isotropy subgroup]\mbox{}
+    \begin{enumerate}
+        \item 位相空間$X$への位相群の作用$\varphi:G\times X\to X$が定まっているとき，$G\to\Aut_\Top(X)$が定まっている．このとき位相群$G$のことを\textbf{（位相）変換群}という．
+        \item 作用が\textbf{効果的}であるとは，$\forall_{x\in X}\;gx=x\Rightarrow g=e$が成り立つことをいう．すなわち，剪断写像$(\varphi,\pr_2):G\times X\to X\times X$が単射である．
+        \item 作用が\textbf{推移的}であるとは，$\forall_{x,y\in X}\;\exists_{g\in G}\;gx=y$が成り立つことをいう．すなわち，剪断写像$(\varphi,\pr_2):G\times X\to X\times X$が全射である．これは軌道が１つであるということであり，この位相空間$X$を，\textbf{位相群$G$の等質空間}という．
+        \item 安定化群$\Stab_G(x):=\Brace{g\in G\mid gx=x}$を，$G$の\textbf{等方部分群}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $x$における等方部分群$\Stab_G(x):=\Brace{g\in G\mid gx=x}$は$G$の部分群になる．
+        \item $G$がHausdorffであるとき，等方部分群は閉である．
+        \item $N:=\Brace{g\in G\mid \forall_{x\in X}\;gx=x}$は$G$の正規閉部分群である．
+        \item $G$が$X$に推移的に作用するとき，$X$の任意の２点における等方部分群$H,H'$は互いに共役である：$\exists_{g\in G}\;gHg^{-1}=H'$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $gx=x\Lrarrow x=g^{-1}x$より逆元について閉じており，$(gh)x=g(hx)=gx=x$より積についても閉じており，単位元を含むため．
+        \item $\varphi(-,x):=\varphi_x:G\to X$を$g\mapsto gx$と定めると，これは作用$\varphi:G\times X\to X$の制限であるため，連続である．このとき，$\Stab_G(x)=\varphi_x^{-1}(x)$と，閉集合の逆像であるため．
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    $G$を位相群，$H$をその正規部分群とすると，$G$は$G/H$の位相変換であり，$G/H$に推移的に作用する：
+    \[\xymatrix@R-2pc{
+        \varphi:G\times G/H\ar[r]&G/H\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (g,\pi(g'))\ar@{|->}[r]&\pi(gg')
+    }\]
+    この作用のcurryingを$T:G\to\Aut_\Top(G/H)$と表し，$T_ga=\varphi(g,a)$と表す．
+\end{example}
+
+\begin{example}[Lie群の作用]\mbox{}
+    \begin{enumerate}
+        \item 左移動$G\times G\to G$は$C^\infty$級の自由作用．
+        \item 共役作用$G\times G\to G$は$C^\infty$級の作用である．$G_x=G\Leftrightarrow x\in Z(G)$．
+        \item 行列のベクトルへの作用$\GL_n(\K)\times\K^n\to\K^n$は$C^\infty$級の作用である．
+        \item 射影変換$\GL_{n+1}(\K)\times\K P^n\to\K P^n$も$C^\infty$級の作用である．
+        \item Möbius変換$\SL_2(\R)\times\H\to\H$も$C^\infty$級の作用である．これは射影変換$\GL_2(\C)\times\C P^1\to\C P^1$の部分作用であるため．
+    \end{enumerate}
+\end{example}
+
+\subsection{等質空間に関する軌道・安定化群定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $SO(n)/SO(n-1)\simeq S^{n-1}$はどう見るべきかというと，$SO(n)$の$S^{n-1}$への推移的な作用において，
+    $SO(n-1)$は安定化群になる．これで割ると，$SO(n)$から$S^{n-1}$の形が見える．
+
+    すなわち，$G/H$というのが標準的な等質空間になり，推移的に作用するなら$H$が存在して$G/H$と同型になる．
+    等質空間$G/H$にはLie環の指数写像を用いて多様体の構造を与えられる．\textbf{$G/H$の内在的なこの多様体の構造と，等質空間$X$の多様体の構造は一致する}．
+\end{tcolorbox}
+
+\begin{theorem}[等質空間に関する軌道・安定化群定理]
+    局所コンパクトハウスドルフ空間$X$を，可算基を持つ位相群$G$の等質空間とする（すなわち，推移的に連続作用している）．
+    $H$を，$x\in X$における$G$の等方部分群とする．
+    \begin{enumerate}
+        \item 次の写像は同相写像である．
+        \[\xymatrix@R-2pc{
+            \alpha:G/H\ar[r]&X\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            gH\ar@{|->}[r]&gx
+        }\]
+        \item $T_g:=\pi(g\cdot -):G\epi G/H$について，$\alpha(T_g\xi)=g\alpha(\xi)$．
+    \end{enumerate}
+\end{theorem}
+\begin{example}[直交群の等質空間としての単位球面]
+    $O(n)\subset\GL_n(\R)$はコンパクト部分群である．列ベクトルの空間として，$U_1(0)\subset\R^n$を$n$次元開球とすると，$O(n)\subset\o(U_1(0))^n$より．
+    ここで，$\norm{Ax}=\norm{x}$を満たすから，$O(n)$の作用は連続写像$S^{n-1}\epi S^{n-1}$を誘導する．また，$O(n)$は推移的に$S^{n-1}$に作用する．
+    したがって，$S^{n-1}$は$O(n)$の等質空間である．
+    点$e_1\in S^{n-1}$における等方部分群は
+    \[H:=\Brace{\begin{pmatrix}1&0\\0&B\end{pmatrix}\;\middle|\;B\in O(n-1)}\]
+    より，軌道と安定化群との関係から，$O(n)/H\simeq O(n)/O(n-1)\simeq S^{n-1}$である．
+
+    全く同様の議論で，$SO(n)/SO(n-1)\simeq S^{n-1}$も成り立つ．
+\end{example}
+\begin{example}[affine空間]
+    affine変換群$\Aff_n(\R)$は局所コンパクトで，$n$次元空間$A^n$の推移的な位相変換群である．
+    原点$0$における等方部分群は$\GL_n(\R)$に等しいから，$\Aff_n(\R)/\GL_n(\R)\simeq A^n$が成り立つ．
+\end{example}
+
+\begin{proposition}
+    $SO(n)$は$O(n)$の，単位元を含む連結成分である．
+\end{proposition}
+
+\subsection{局所コンパクト群の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群は局所コンパクトである．そこで，局所コンパクト性がどう効いてくるか調べる．
+\end{tcolorbox}
+
+\begin{theorem}
+    $G,G'$を局所コンパクト群，$G$は可算基を持つとする．準同型$G\to G'$は常に開である．
+\end{theorem}
+
+\begin{theorem}
+    連結な局所コンパクト群$G$は，$\sigma$-コンパクトである．
+\end{theorem}
+
+\section{Lie群とLie環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群はDiffの群対象だから，可算基をもち，また局所コンパクトである．
+\end{tcolorbox}
+
+\subsection{Lie群と閉部分群定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Lie群の閉部分群は，再びLie群である．
+    これが，与えられた群がLie群であることを示すための一番簡単な方法となる．
+\end{tcolorbox}
+
+\begin{lemma}
+    Lie群$G$の単位元$e$を含む連結成分$G_0$は再びLie群である．
+\end{lemma}
+
+\subsection{Lie環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相空間には位相変換群を考えたが，Lie群には無限小変換のなす結合多元環を考える．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item Lie群$G$上のベクトル場$X$が，$\forall_{g\in G}\;(L_g)_*X=X$を満たす時，\textbf{左不変}であるという．
+        \item $G$の左不変なベクトル場の全体$\g\subset\X(G)$はLie環，すなわち交換子積を備えた結合多元環となる．これを\textbf{Lie群$G$のLie環}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Lie群の次元を$n$とすると，Lie環$\g$の次元も$n$である．
+\end{theorem}
+
+\section{Lie群の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群とは，$C^\infty$級多様体の圏での群対象である．
+\end{tcolorbox}
+
+\begin{remark}
+    任意の群は離散位相を入れることで，$0$次元Lie群になる．
+\end{remark}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $\K^n$は加法についてLie群をなす．
+        \item $\GL_n(\K)$は行列積についてLie群をなす．積演算は成分の二次多項式だから$C^\infty$級で，逆もCramerの公式より$C^\infty$級とわかる．\footnote{多様体となることは，detの正則点の集合となることからわかる（例\ref{example-GL-as-submanifold-of-Euclidean-space}．SLはdetの正則等位集合であり，$\{1\}\subset\R$の逆像なので$\R^{n^2}$の開部分集合であるGLの閉部分集合．}
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}[群の包含写像が滑らかならば，部分Lie群である]
+    Lie群$G$に対して，任意の部分群$H\mono G$は$C^\infty$級多様体である．が，$H\mono G$が埋め込みとは限らないので部分多様体とは限らない．
+    これについて，次を満たすならば，$H$はLie（部分）群である：$\forall_{L\in\Diff}\;\forall_{f:L\to H}\;i\circ fがC^\infty 級\Lrarrow fがC^\infty 級$．
+    特に，$H$が$C^\infty$部分多様体ならば，$H$はLie部分群である．
+\end{lemma}
+\begin{proof}
+    条件は$i:H\mono G$が$C^\infty$級だということを特徴付けているから，$H$の各射は確かに$C^\infty$級である．
+\end{proof}
+
+\begin{example}[Lie部分群]\mbox{}
+    \begin{enumerate}
+        \item $\SL_n(\K),O(n),U(n),SU(n),O(n,\C),\Sp_{2g}(\K)$などは$\GL_n(\K)$の部分群かつ正則部分多様体である．このとき，$i:\SL\mono\GL$は群準同型であるだけでなく滑らかな埋め込みであるから，Lie部分群である．
+        \item $\H:=\Brace{\begin{pmatrix}z&w\\-\o{w}&\o{z}\end{pmatrix}\;\middle|\;z,w\in\C}\simeq\R^4$は$M_2(\C)$の$\R$-部分代数で，非可換体である．
+        $\H^\times=\H\setminus\{0\}$はLie群である．
+        \item $\H^\times$の部分群かつ部分多様体であるから，$S^3\simeq SU(2)$はLie群である．
+        \item 同様に円群$S^1=\{z\in\C^\times\mid\abs{z}=1\}=U(1)=SO(2)$もLie群である．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[Lie群の射]
+    $\det:\GL_n(\K)\to\K^\times$はLie群の射である．
+\end{example}
+
+\section{位相群の表現}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    変換の中で，特に簡単なものは線型変換である．この時の作用を「表現」という．
+    群とは元々種々の空間に対する作用全体のなす空間を捉える概念であったが，一度抽象して線型空間に作用させてしまうと全て統一的に，そして計算可能に理解できる．
+    このとき２つの線形化が考えられる．
+    \begin{enumerate}
+        \item 一点における線形化（微分と同じ発想）：Lie群の随伴表現や，等質空間における等方表現．
+        \item 空間への非線形な作用ではなく，空間上の関数空間への線型な作用を考える：群の正則表現や，等質空間上の準正則表現．
+    \end{enumerate}
+    特に，群の内部作用の線形化は，$*$-代数$C(G)$への線型表現となる．これが群の正則表現の理論である．
+\end{tcolorbox}
+
+\subsection{表現の定義}
+
+\begin{definition}[representation]
+    $G$を群，$V$を$\C$-線型空間とする．群準同型$\pi:G\to\GL_\C(V):=\Aut_\C(V)$を\textbf{表現空間$V$上の表現}という．
+    $\dim\pi:=\dim V$を\textbf{次数}という．
+    写像$G\times V\to V$が連続でもあるとき，\textbf{連続表現}という．
+\end{definition}
+\begin{remarks}
+    この連続表現の定義は，$\forall_{v\in V}\;G\to V;g\mapsto \pi(g)v$が連続であることに同値になる．
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 定値写像$1:G\to1\to\GL_\C(V)$を\textbf{自明な表現}という．
+        \item 包含写像$G\mono\GL_n(\C)$を\textbf{自然表現}という．
+    \end{enumerate}
+\end{example}
+
+\subsection{表現の射}
+
+\begin{definition}[intertwining operator]
+    線型写像$T:V\to V'$
+    群$G$の表現$(\pi,V),(\pi',V')$の間の射または\textbf{$G$-線型写像}とは，
+    任意の$g\in G$について次の図式が可換になることをいう：
+    \[\xymatrix{
+        V\ar[r]^-T\ar[d]_-{\pi(g)}&V'\ar[d]^-{\pi'(g)}\\
+        V\ar[u]^-T&V'
+    }\]
+    同値な射を\textbf{同型}という．
+    $T$が連続でもあるとき，\textbf{絡作用素}という．
+\end{definition}
+
+\subsection{部分と商}
+
+\begin{definition}
+    $(\pi,V)$を$G$-表現とする．
+    \begin{enumerate}
+        \item 部分空間$W\subset V$が$\forall_{g\in G}\;\pi(g)W\subset W$を満たすとき，\textbf{$G$-不変部分空間}であるという．
+        \item $G$-不変部分空間$W$に対して$\pi_W:G\to\GL(W)$を$\pi_W(g):=\pi|_W(g)$で定めると，これを\textbf{部分表現}という．
+        \item $G$-不変部分空間$W$に対して$\pi_{V/W}:G\to\GL(V/W)$を$\pi_{V/W}(g):=\pi|_{V/W}(g)$で定めると，これを\textbf{商表現}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{既約性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    可換な$C^*$-代数の構造は，その1次元表現によって特徴付けられるのであった．
+\end{tcolorbox}
+
+\begin{definition}
+    $G$-表現$(\pi,V)$について，
+    \begin{enumerate}
+        \item $0,V$以外に$G$-\textbf{閉}不変部分空間が存在しないとき，\textbf{既約表現}であるという．
+        \item 有限次元既約表現の全体を$\wh{G}_f$で表す．これは指標空間／スペクトルの一般化でもある．
+        \item $V$の任意の$G$-不変部分空間$W$に対して，その補空間$U$も$G$-不変であるとき，\textbf{完全可約}であるという．すなわち，2つの部分表現の直和として表せる表現をいう．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    ここで，閉でない不変部分空間も存在してはいけないことを要請すると，Lie群の無限次元の既約ユニタリ表現は存在しなくなる．
+\end{remarks}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 1次元表現は既約である．
+        \item 可約な表現は，ブロック行列として$\begin{pmatrix}\pi_1(g)&*\\0&\pi_2(g)\end{pmatrix}$と表せる．
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}[irreducible decomposition]
+    $(\pi,V)$を有限次元$G$-表現とする．
+    \begin{enumerate}
+        \item 自明でない既約な部分表現$(\pi_W,W)\;(0\subsetneq W\subset V)$が存在する．
+        \item $(\pi,V)$が完全可約であるとき，既約表現の直和$(\sigma_1,W_1)\oplus\cdots\oplus(\sigma_r,W_r)\;(r\ge1)$に同型である．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 有限次元であるとき，部分表現が取れる．既約になるか，1次元表現になったときに停止すれば良い．
+        \item (1)を用いると有限停止する．
+    \end{enumerate}
+\end{proof}
+
+\subsection{ユニタリ表現}
+
+\begin{definition}
+    Hilbert空間$V$の等長同型への群準同型
+    $\pi:G\to\Hom_\Hilb(V)$を\textbf{ユニタリ表現}という．
+    $G=\R$のとき，$(\pi_t)_{t\in\R}$を\textbf{強連続ユニタリ群}ともいう．
+\end{definition}
+
+\begin{definition}[unitary dual]\mbox{}
+    \begin{enumerate}
+        \item ユニタリーな絡作用素$T$を\textbf{ユニタリ同値}という．
+        \item 群$G$の既約ユニタリ表現の同値類の全体を$\wh{G}$で表し，\textbf{ユニタリ双対}という．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    2つの既約ユニタリ表現について，ユニタリ同値であることと連続表現として同値であることは同値．
+\end{remark}
+
+\begin{theorem}
+    $G$-ユニタリ表現$(\pi,V)$の部分空間$W$が$G$-不変ならば，直交補空間$W^\perp$も$G$-不変である．
+    $W$が閉ならば$V=W\oplus W^\perp$も成り立つ．
+\end{theorem}
+
+\begin{corollary}
+    群の任意の有限次元ユニタリ表現は完全可約であり，既約表現の直和と同型になる．
+\end{corollary}
+
+\section{Schurの補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=既約表現の間のホム集合の構造決定]
+    Schurの補題は，有限次元(実は無限次元でも)既約表現の間の射の集合$\Hom_G(V,V')$を特徴付ける．
+    同型でない場合は自明な表現のみからなる零線型空間で，同型である場合は1次元線型空間となる．
+
+    可換な$C^*$-代数の構造は，その1次元表現によって特徴付けられるのであったが，その消息はSchurの補題から見ると極めて自然である．
+\end{tcolorbox}
+
+\begin{theorem}[Schur：$\C$の場合]
+    $G$-既約表現$(\pi,V),(\pi',V')$について，$V,V'$は複素Hilbert空間で，一方は有限次元であるとする．
+    ある連続線型写像$A:V\to V'$が$\forall_{g\in G}\;A\pi(g)=\pi'(g)A$を満たすとする．
+    \begin{enumerate}
+        \item $\pi\not\simeq\pi'$のとき，$A=0$．
+        \item $\pi\simeq\pi'$のとき，任意の同型写像$T:V\to V'$に対して，ある$\lambda\in\C$が存在して，$A=\lambda T$と表せる．特に$(\pi,V)=(\pi',V')$のとき，$T=\id_V$と取ると，$A=\lambda\id_V$と表せる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    可換群の体$\C$上の有限次元既約表現は1次元である．
+\end{corollary}
+\begin{remark}
+    体$\R$上の有限次元既約表現には，2次元の場合も存在する．例えば，回転行列$\pi:\R\to\GL_2(\R)$など．
+\end{remark}
+
+\begin{theorem}
+    $\R$上の有限次元既約表現$(\pi,V)$に対して，$\Hom_G(V,V)$は$\R,\C,\bH$のいずれかに同型である．
+\end{theorem}
+
+\section{重複度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    既約表現の間のホム集合の構造はわかったので，一般の場合を既約表現の分解と捉える枠組みを用意する．
+\end{tcolorbox}
+
+\begin{theorem}[multiplicity]
+    $G$-有限次元表現$(\pi,V)$は，既約分解$V=V_1\oplus\cdots\oplus V_k$を満たすとする．
+    このとき，$G$の既約表現$(\tau,W)$に対して，
+    \[\dim\Hom_G(W,V)=\#\Brace{i\in[k]\mid W\simeq V_i}.\]
+    これを$[\pi:\tau]$で表し，\textbf{$\tau$の$\pi$における重複度}という．
+\end{theorem}
+
+\begin{definition}
+    $G$-表現$(\pi,V)$の有限次元既約表現$(\tau,W)\in\wh{G}_f$に対する\textbf{$\tau$-成分}とは，
+    \[V_\tau:=\sum_{\phi\in\Hom_G(W,V)}\Im\phi.\]
+\end{definition}
+
+\begin{proposition}
+    $(\pi,V)$を$G$-表現，$(\tau,W)\in\wh{G}_f$を有限次元既約表現とする．
+    \begin{enumerate}
+        \item $\tau$-成分$V_\tau$は$G$-不変で，$\tau$と同値な表現の直和に分解される．
+        \item $\forall_{v\in V_\tau}\;\dim\sum_{g\in G}\C\pi(g)v\le(\dim\tau)^2$．
+    \end{enumerate}
+\end{proposition}
+
+\section{表現の構成}
+
+\section{Hilbertの第5問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相多様体でもある位相群$G$に対して，解析的構造がただ一つ存在して，$G$はLie群にもなる．
+\end{tcolorbox}
+
+\chapter{Fourier解析と表現論}
+
+\begin{quotation}
+    Fourier級数論はトーラス群$\bT$または$\R$などの可換群上の任意の関数を，既約表現$(e^{iut})$に分解する理論であるが，
+    これは一般の可換とは限らないコンパクト群$G$について拡張した理論を，非可換調和解析という．
+    表現論からみると，調和振動子$e^{iut}$は$L^2(\bT)$の正規直交基底であったが，可換群のユニタリ表現$L^2(\bT)$の既約分解の基底と見れる．
+    調和振動子が$L^2$の正規直交基底であることと，$\bT$の既約ユニタリ表現の分類とが，表裏一体になっている．
+
+    群の正則表現の理論（Peter-Weylの定理や関数環$C(G)$の$*$-代数としての構造）が，元の群の性質を浮き彫りにする．
+    多様体自身を考える代わりに多様体上の関数全体を考えるという考え方は，代数幾何や微分幾何を初め20世紀の数学の諸分野を躍進させた重要な観点であり，幾何的な意味での対称性を研究する変換群論にも群の表現論が深く関わっている１つの裏付けを与えている．
+\end{quotation}
+
+\section{Fourier級数論：トーラス上の調和解析}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $(e_n=e^{int})_{n\in\N}$を基底にして展開したが，$e_n:\bT\to\C^\times$は群準同型である．特に$C^\times=\GL_1(\C)$とみると，これはトーラス群$\bT$の1次元表現である．さらに$\forall_{s\in\bT}\;\abs{e_n(s)}=1$より，ユニタリ表現でもある．
+\end{tcolorbox}
+
+\begin{notation}
+    $f(t)$で，関数$\bT\to\R$と，$2\pi$-周期関数$\R\to\R$とのどちらを表しているかを混用する．
+\end{notation}
+
+\begin{theorem}
+    \begin{enumerate}
+        \item 線型写像$\wh{-}:C(\bT)\to l^2(\Z);f\mapsto\wh{f}(n):=(f|e_{-n})$は単射である．
+        \item $f(t):=\sum^\infty_{n=-\infty}\wh{f}(n)e_t(n)$は(1)の逆を定める．
+        \item $\wh{-}:C(\bT)\to l^2(\Z)$は畳み込み$*$を積とする環と，各点積の環$l^2(\Z)$の間の環準同型である．
+        \item $\wh{-}:L^2(\bT)\to l^2(\Z)$とみると，これはユニタリ作用素である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    トーラス群$\bT$の任意の有限次元既約表現は，ユニタリ表現$e_n$と同値である．
+\end{theorem}
+\begin{remarks}
+    これが$L^2(\bT)$の正規直交基底を定めることは偶然であろうか？この消息がPeter-Weylの定理である．
+\end{remarks}
+
+\section{Fourier変換：実数上の調和解析}
+
+\section{affine変換群とFourier変換}
+
+\section{エルゴード性と既約性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    表現の既約性が，エルゴード性という幾何的な条件によって判別できる．
+\end{tcolorbox}
+
+
+\chapter{行列要素と不変測度}
+
+\chapter{Peter-Weylの定理}
+
+\end{document}
