@@ -248,7 +248,7 @@ title=]
 
 \subsection{位相群の連結部分の構造}
 
-\begin{lemma}
+\begin{lemma}[連結性の遺伝]
     $H<G$を位相群とする．
     $H,G/H$が連結ならば，$G$も連結である．
 \end{lemma}
@@ -384,85 +384,6 @@ title=]
 \begin{theorem}
     連結な局所コンパクト群$G$は，$\sigma$-コンパクトである．
 \end{theorem}
-
-\section{Lie群とLie環}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Lie群はDiffの群対象だから，可算基をもち，また局所コンパクトである．
-\end{tcolorbox}
-
-\subsection{Lie群と閉部分群定理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    Lie群の閉部分群は，再びLie群である．
-    これが，与えられた群がLie群であることを示すための一番簡単な方法となる．
-\end{tcolorbox}
-
-\begin{lemma}
-    Lie群$G$の単位元$e$を含む連結成分$G_0$は再びLie群である．
-\end{lemma}
-
-\subsection{Lie環}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    位相空間には位相変換群を考えたが，Lie群には無限小変換のなす結合多元環を考える．
-\end{tcolorbox}
-
-\begin{definition}\mbox{}
-    \begin{enumerate}
-        \item Lie群$G$上のベクトル場$X$が，$\forall_{g\in G}\;(L_g)_*X=X$を満たす時，\textbf{左不変}であるという．
-        \item $G$の左不変なベクトル場の全体$\g\subset\X(G)$はLie環，すなわち交換子積を備えた結合多元環となる．これを\textbf{Lie群$G$のLie環}という．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}
-    Lie群の次元を$n$とすると，Lie環$\g$の次元も$n$である．
-\end{theorem}
-
-\section{Lie群の例}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Lie群とは，$C^\infty$級多様体の圏での群対象である．
-\end{tcolorbox}
-
-\begin{remark}
-    任意の群は離散位相を入れることで，$0$次元Lie群になる．
-\end{remark}
-
-\begin{example}\mbox{}
-    \begin{enumerate}
-        \item $\K^n$は加法についてLie群をなす．
-        \item $\GL_n(\K)$は行列積についてLie群をなす．積演算は成分の二次多項式だから$C^\infty$級で，逆もCramerの公式より$C^\infty$級とわかる．\footnote{多様体となることは，detの正則点の集合となることからわかる（例\ref{example-GL-as-submanifold-of-Euclidean-space}．SLはdetの正則等位集合であり，$\{1\}\subset\R$の逆像なので$\R^{n^2}$の開部分集合であるGLの閉部分集合．}
-    \end{enumerate}
-\end{example}
-
-\begin{lemma}[群の包含写像が滑らかならば，部分Lie群である]
-    Lie群$G$に対して，任意の部分群$H\mono G$は$C^\infty$級多様体である．が，$H\mono G$が埋め込みとは限らないので部分多様体とは限らない．
-    これについて，次を満たすならば，$H$はLie（部分）群である：$\forall_{L\in\Diff}\;\forall_{f:L\to H}\;i\circ fがC^\infty 級\Lrarrow fがC^\infty 級$．
-    特に，$H$が$C^\infty$部分多様体ならば，$H$はLie部分群である．
-\end{lemma}
-\begin{proof}
-    条件は$i:H\mono G$が$C^\infty$級だということを特徴付けているから，$H$の各射は確かに$C^\infty$級である．
-\end{proof}
-
-\begin{example}[Lie部分群]\mbox{}
-    \begin{enumerate}
-        \item $\SL_n(\K),O(n),U(n),SU(n),O(n,\C),\Sp_{2g}(\K)$などは$\GL_n(\K)$の部分群かつ正則部分多様体である．このとき，$i:\SL\mono\GL$は群準同型であるだけでなく滑らかな埋め込みであるから，Lie部分群である．
-        \item $\H:=\Brace{\begin{pmatrix}z&w\\-\o{w}&\o{z}\end{pmatrix}\;\middle|\;z,w\in\C}\simeq\R^4$は$M_2(\C)$の$\R$-部分代数で，非可換体である．
-        $\H^\times=\H\setminus\{0\}$はLie群である．
-        \item $\H^\times$の部分群かつ部分多様体であるから，$S^3\simeq SU(2)$はLie群である．
-        \item 同様に円群$S^1=\{z\in\C^\times\mid\abs{z}=1\}=U(1)=SO(2)$もLie群である．
-    \end{enumerate}
-\end{example}
-
-\begin{example}[Lie群の射]
-    $\det:\GL_n(\K)\to\K^\times$はLie群の射である．
-\end{example}
-
 \section{位相群の表現}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -707,5 +628,86 @@ title=]
 \chapter{行列要素と不変測度}
 
 \chapter{Peter-Weylの定理}
+
+\chapter{Lie群とLie環}
+
+\section{Lie群とLie環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群はDiffの群対象だから，可算基をもち，また局所コンパクトである．
+\end{tcolorbox}
+
+\subsection{Lie群と閉部分群定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Lie群の閉部分群は，再びLie群である．
+    これが，与えられた群がLie群であることを示すための一番簡単な方法となる．
+\end{tcolorbox}
+
+\begin{lemma}
+    Lie群$G$の単位元$e$を含む連結成分$G_0$は再びLie群である．
+\end{lemma}
+
+\subsection{Lie環}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相空間には位相変換群を考えたが，Lie群には無限小変換のなす結合多元環を考える．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item Lie群$G$上のベクトル場$X$が，$\forall_{g\in G}\;(L_g)_*X=X$を満たす時，\textbf{左不変}であるという．
+        \item $G$の左不変なベクトル場の全体$\g\subset\X(G)$はLie環，すなわち交換子積を備えた結合多元環となる．これを\textbf{Lie群$G$のLie環}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Lie群の次元を$n$とすると，Lie環$\g$の次元も$n$である．
+\end{theorem}
+
+\section{Lie群の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lie群とは，$C^\infty$級多様体の圏での群対象である．
+\end{tcolorbox}
+
+\begin{remark}
+    任意の群は離散位相を入れることで，$0$次元Lie群になる．
+\end{remark}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $\K^n$は加法についてLie群をなす．
+        \item $\GL_n(\K)$は行列積についてLie群をなす．積演算は成分の二次多項式だから$C^\infty$級で，逆もCramerの公式より$C^\infty$級とわかる．\footnote{多様体となることは，detの正則点の集合となることからわかる（例\ref{example-GL-as-submanifold-of-Euclidean-space}．SLはdetの正則等位集合であり，$\{1\}\subset\R$の逆像なので$\R^{n^2}$の開部分集合であるGLの閉部分集合．}
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}[群の包含写像が滑らかならば，部分Lie群である]
+    Lie群$G$に対して，任意の部分群$H\mono G$は$C^\infty$級多様体である．が，$H\mono G$が埋め込みとは限らないので部分多様体とは限らない．
+    これについて，次を満たすならば，$H$はLie（部分）群である：$\forall_{L\in\Diff}\;\forall_{f:L\to H}\;i\circ fがC^\infty 級\Lrarrow fがC^\infty 級$．
+    特に，$H$が$C^\infty$部分多様体ならば，$H$はLie部分群である．
+\end{lemma}
+\begin{proof}
+    条件は$i:H\mono G$が$C^\infty$級だということを特徴付けているから，$H$の各射は確かに$C^\infty$級である．
+\end{proof}
+
+\begin{example}[Lie部分群]\mbox{}
+    \begin{enumerate}
+        \item $\SL_n(\K),O(n),U(n),SU(n),O(n,\C),\Sp_{2g}(\K)$などは$\GL_n(\K)$の部分群かつ正則部分多様体である．このとき，$i:\SL\mono\GL$は群準同型であるだけでなく滑らかな埋め込みであるから，Lie部分群である．
+        \item $\H:=\Brace{\begin{pmatrix}z&w\\-\o{w}&\o{z}\end{pmatrix}\;\middle|\;z,w\in\C}\simeq\R^4$は$M_2(\C)$の$\R$-部分代数で，非可換体である．
+        $\H^\times=\H\setminus\{0\}$はLie群である．
+        \item $\H^\times$の部分群かつ部分多様体であるから，$S^3\simeq SU(2)$はLie群である．
+        \item 同様に円群$S^1=\{z\in\C^\times\mid\abs{z}=1\}=U(1)=SO(2)$もLie群である．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[Lie群の射]
+    $\det:\GL_n(\K)\to\K^\times$はLie群の射である．
+\end{example}
+
 
 \end{document}
