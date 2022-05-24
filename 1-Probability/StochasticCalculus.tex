@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -36,6 +36,7 @@ title=]
     Gauss測度も無限次元に通用する言葉で定義する．
     $\R^n$上の正規分布の一般化であると同時に，確率過程の平均と共分散との一般化でもある．
     \cite{Prato}による．
+    実は，これで一般のBanach空間上のGauss測度を定義したこととなる\ref{thm-Structure-theorem-for-Gaussian-measures}．
 \end{tcolorbox}
 
 \begin{notation}
@@ -1506,6 +1507,7 @@ title=]
 title=]
     ドリフト$F:\R_+\to\R$付きのBrown運動を調べることは，標準Brown運動を調べることに等しい．
     これはちょうど$F$-Brown橋と標準Brown橋の関係と同じである．
+    これは，Banach空間$\Om$上のGauss測度$\mu$の，平行移動に対する挙動を調べていることになる．
 
     この消息を支える$\Om$の稠密部分空間が，普遍的な役割を果たす．
 \end{tcolorbox}
@@ -1632,9 +1634,43 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Leonard Gross 31- により，一般のGauss測度を調べるために開発され，Cameron-Martin空間の有用性を抽象的な枠組みから理解できる．
+    Leonard Gross 31- により，一般のGauss測度を調べるために開発され，見本道の空間$\Om$よりもCameron-Martin空間を主役に置く．
+    可分Hilbert空間$H$上の経路積分など，うまくGauss測度が定義できないことがあるが，これは$H$を稠密部分空間として含むBanach空間$B$を得て，その上での積分として理解できる．
+    この組$(H,B)$を抽象Wiener空間という．
+    $B$上にGauss測度が存在するかやその性質など，多くの部分は$H$で決まる．
+
     Gauss測度の構造定理によると，任意のGauss測度はある抽象Wiener空間上に実現される．
 \end{tcolorbox}
+
+\begin{example}[古典的Wiener空間]
+    $H$をホワイトノイズ全体の集合，すなわち，$b'(0)=0$を満たす$L^2$-導関数$b'$を持つ実関数$b:[0,T]\to\R$にノルム$\norm{b}:=\int_{[0,T]}b'^2(t)dt$を入れて得るHilbert空間とする：
+    \[H:=L^{2,1}_0(T;\R^n):=\Brace{b:[0,T]\to\R\mid 0\text{から始まる見本道}b\text{は絶対連続で微分}b'\text{は}L^2\text{-可積分である}}\]
+    このとき，$B:=\Brace{W\in C(T)\mid W(0)=0}$を見本道の空間とすれば，$(H,B)$は古典的Wiener空間である．
+    $B$上のGauss測度はBrown運動の法則に一致し，Cameron-Matrin部分空間$H$を零集合に持つ．
+    実際，$H$の元であるような見本道（特に微分可能である）は，Brown運動の見本道としては出現しない．
+    逆に言えば，$H$上にうまく積分を定義できれば，$B$上に連続延長するかもしれない．
+    これは測度論・函数解析と確率論の奇妙な融合である！
+\end{example}
+
+\begin{discussion}
+    $H$を可分Hilbert空間とする．$H$上の柱状集合を，有限個の有界線型汎函数$\varphi_1,\cdots,\varphi_n\in H^*$を用いて，
+    \[\Brace{h\in H\mid\varphi_1(h)\in I_1,\cdots,\varphi_n(h)\in I_n}\;(I_1,\cdots,I_n\in\B^1(\R))\]
+    と表せる集合の全体$\cC$とする．これはある$\sigma$-代数$\sigma[\cC]$を生成する．
+    $(H,\cC)$上にGaussな有限加法的測度は上述の方法で定まるが（これを\textbf{柱状集合Gauss測度}という．），これは$\sigma[\cC]$上に完全加法的な延長を持たない．
+
+    ここで，可分Banach空間$B$で，連続線型単射$i:H\mono B$で像が$B$上稠密であるようなものが存在するとする．
+    $B$の柱状集合$C$を，$i^*B\subset H$が柱状集合であることとして定義する．
+    Gross (67)は，$B$の柱状集合体$\cC$上のGaussな有限加法的測度が完全加法的な延長を持つための必要十分条件を導いた．
+    これは$B$が$H$に比べて「十分に大きい」ことと理解できる．
+    このとき，$H$は零集合になる（$H$にGauss測度が存在しないことと整合的）．
+\end{discussion}
+
+\begin{theorem}[Structure theorem for Gaussian measures (Kallianpur–Sato–Stefan 1969 and Dudley–Feldman–le Cam 1971)]\label{thm-Structure-theorem-for-Gaussian-measures}
+    任意の可分Banach空間$B$上の非退化なGauss測度$\mu$とする．このとき，抽象Wiener空間$i:H\mono B$が存在して，$\mu$は$H$上の柱状集合Gauss測度の押し出しによって得られる．
+\end{theorem}
+\begin{remarks}
+    このときの$B$上のGauss測度$\mu$は，任意の汎関数$f\in B^*$に対して，$f_*\mu$は1次元正規分布である．
+\end{remarks}
 
 \section{Brownian Filtration}
 
@@ -1846,37 +1882,48 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
 \begin{lemma}[到達時刻]
     $a>0$に対して
     $\tau_a:=\inf\Brace{t\in\R_+\mid B_t=a}$とすると，これは$(\F_t)$-停止時である．
-    ただし，$\Brace{t\in\R_+\mid B_t=a}=\emptyset$のとき，$\tau_a=0$とする．
+    ただし，$\Brace{t\in\R_+\mid B_t=a}=\emptyset$のとき，$\tau_a=\infty$とする．
 \end{lemma}
 \begin{proof}
-    \[\{\tau\le t\}=\cup_{s\le t}\Brace{X_s\le a}=\cup_{n\in\N}\Brace{X_{t-1/n}\le a}\in\F_t.\]
+    \begin{align*}
+        \Brace{\tau_a>t}&=\cap_{s\in[0,t]}\Brace{B_s<a}\\
+        &=\cup_{k\in\N}\cap_{s\in[0,t]}\Brace{B_s\le a-\frac{1}{k}}\overset{\as}{=}\cup_{k\in\N}\cap_{s\in[0,t]\cap\Q}\Brace{B_s\le a-\frac{1}{k}}\in\F_t.
+    \end{align*}
+    最後の等号は，$\subset$は明らかであるが，$\supset$は，殆ど至る所の$\om\in\Om$に対して$s\mapsto B_s(\om)$が連続であるため，$\exists_{k\in\N}\;\forall_{s\in[0,t]\cap\Q}\;B_s\le a-\frac{1}{k}$は$[0,t]$上でも同様の条件が成り立つことを含意する．
+    よって，$\Brace{\tau_a\le t}\in\F_t$もわかる．
 \end{proof}
 
 \begin{proposition}[Laplace transformation of Brownian hitting time]\label{prop-hitting-time}
-    任意の$a>0$について，$\forall_{\al>0}\;\M_{\L^{\tau_a}}(-a)=E[e^{-\al\tau_a}]=e^{-\sqrt{2\al}a}$．
+    任意の$a>0$について，
+    \[\forall_{\al>0}\;E[e^{-\al\tau_a}]=e^{-\sqrt{2\al}a}.\]
 \end{proposition}
 \begin{proof}
     幾何Brown運動のmartingale性に注目することで，これだけから出てくる．
     \begin{description}
-        \item[martingaleの用意] 任意の$\lambda>0$について，$M_t:=e^{\lambda B_t-\lambda^2t/2}$はmartingaleである．\footnote{$\lambda=0$のときは$M_t=1$となり，この場合は不適．考えない．}
+        \item[martingaleの用意] \mbox{}\\
+        任意の$\lambda>0$について，$M_t:=e^{\lambda B_t-\lambda^2t/2}$はmartingaleである．\footnote{$\lambda=0$のときは$M_t=1$となり，この場合は不適．考えない．}
         よって特に$\forall_{t\in\R_+}\;E[M_t]=E[M_0]=1$．
-        \item[この幾何Brown運動についての任意抽出]
+        \item[この幾何Brown運動についての任意抽出] \mbox{}\\
         Doobの任意抽出定理より，任意の$N\ge 1$について，$E[M_{\tau_a\land N}|\F_0]=M_0$．両辺の期待値を取って，$E[M_{\tau_a\land N}]=1$．
-        
-        $\forall_{N\in\N}\;M_{\tau_a\land N}=\exp\paren{\lambda B_{\tau_a\land N}-\lambda^2(\tau_a\land N)/2}\le e^{a\lambda}$より，$N\to\infty$の極限について優収束定理が使える．
-        $\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}\xrightarrow{t\to\infty}\frac{-\lambda^2}{2}<0\;(\lambda>0\text{のとき})$だから，
-        十分大きな$T>0$について，$\forall_{t\ge T}\;\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}=:-\ep<0$より，$0\le M_t=e^{t\paren{\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}}}\le e^{-\ep T}$．
-        
-        $T\to\infty$の極限を考えると，$M_t\xrightarrow{t\to\infty}0$．
-        よって，
-        \[\lim_{N\to\infty}M_{\tau_a\land N}=\begin{cases}
-            M_{\tau_a}&\tau_a<\infty,\\
-            0&\tau_a=\infty.
-        \end{cases}\]
-        よって優収束定理から，$E[1_{\Brace{\tau_a<\infty}}M_{t_a}]=1-E[1_{\Brace{\tau_a=\infty}}M_{t_a}]=1$．
+        \begin{enumerate}[(a)]
+            \item (関数列の優関数)  $\forall_{N\in\N}\;M_{\tau_a\land N}=\exp\paren{\lambda B_{\tau_a\land N}-\lambda^2(\tau_a\land N)/2}\le e^{a\lambda}$より，$N\to\infty$の極限について優収束定理が使える．
+            \item (関数列の極限) $e^{t\paren{\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}}}\xrightarrow{t\to\infty}e^{-\infty}=0$を示す．
+            いま，大数の法則より\[\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}\xrightarrow{t\to\infty}\frac{-\lambda^2}{2}<0\;(\lambda>0\text{のとき})\]だから，
+            十分大きな$T>0$について，$\forall_{t\ge T}\;\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}=:-\ep<0$より，$0\le M_t=e^{t\paren{\lambda\frac{B_t}{t}-\frac{\lambda^2}{2}}}\le e^{-\ep T}$．
+            
+            $T\to\infty$の極限を考えると，$M_t\xrightarrow{t\to\infty}0$．
+            よって，
+            \[\lim_{N\to\infty}M_{\tau_a\land N}=\begin{cases}
+                M_{\tau_a}&\tau_a<\infty,\\
+                0&\tau_a=\infty.
+            \end{cases}\]
+        \end{enumerate}
+        よって優収束定理から，結局$E[M_{\tau_a}]=1$とわかる．特に，
+        $E[1_{\Brace{\tau_a<\infty}}M_{t_a}]=1-E[1_{\Brace{\tau_a=\infty}}M_{t_a}]=1$．
         すなわち，
         \[E\Square{1_{\Brace{\tau_a<\infty}}\exp\paren{-\frac{\lambda^2\tau_a}{2}}}=e^{-\lambda a}.\]
-        \item[到達時刻はほとんど確実に有限]
+        あとは$1_{\Brace{\tau_a<\infty}}$の部分を外せば良い．
+        \item[到達時刻はほとんど確実に有限] \mbox{}
         $\lambda>0$は任意とした．$\forall_{\lambda>0}\;1_{\Brace{\tau_a<\infty}}\exp\paren{-\frac{\lambda^2\tau_a}{2}}\le1_{\Brace{\tau_a<\infty}}$より可積分な上界が存在する．
         $\lambda\to0$に極限について，単調収束定理より，$E[1_{\Brace{\tau_a<\infty}}]=P[\tau_a<\infty]=1$．
         よって，
@@ -1884,6 +1931,11 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
         $\al=\lambda^2/2$の場合を考えれば良い．
     \end{description}
 \end{proof}
+\begin{remarks}
+    なお，$\tau_a$の確率密度関数を$f:\R_+\to[0,1]$とすると，
+    \[E[e^{-\al\tau_a}]=\int_{\R_+}e^{-\al s}f(s)ds=\L[f](\al)\]
+    とみれる．
+\end{remarks}
 
 \begin{corollary}[到達時刻の分布]\mbox{}
     \begin{enumerate}
@@ -1896,13 +1948,14 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
 \begin{proof}\mbox{}
     \begin{enumerate}
         \item Laplace逆変換による．
-        \item 両辺の微分による．
-        \item $\al\to0$の極限を考えることによる．
+        \item 両辺の$\al$に関する微分による．$e^{-\al\tau_a}$は$\om$に関して可積分であるのはもちろん，$\al$についても可微分で，またその導関数$-\tau_ae^{-\al\tau_a}$も$\om$に関して可積分だから，微分と積分は交換して良い．
+        \item $\al\to0$の極限を考えることによる（単調収束定理）．
     \end{enumerate}
 \end{proof}
-\begin{proof}
+\begin{remarks}
     $\tau_a$の平均は存在しない(発散する)が，殆ど確実に有限になるという不可解な消息がある．
-\end{proof}
+    また，(1)は解析的な方法に依らず，鏡像の原理からも導ける．
+\end{remarks}
 
 \subsection{脱出時刻}
 
@@ -2172,6 +2225,10 @@ title=]
 
 \chapter{微分作用素と発散作用素}
 
+\begin{quotation}
+    Malliavin (1976) はWiener空間またはGauss空間上での無限次元解析を創始した．
+\end{quotation}
+
 \section{有限次元での議論}
 
 \section{Malliavin微分}
@@ -2184,8 +2241,65 @@ title=]
         \item $\brac{e_1,\cdots,e_n}$が張る部分空間への直交射影を$P_n$で表す．
         \item ${}^uC_b(H)$で$H$上の一様連続な有界汎関数全体の集合を表す．これは，一様ノルムについてBanach空間をなす．
         \item ${}^uC_b^k(H)$で$k$階一様連続にFrechet微分可能な汎関数全体のなす空間に，各階の導関数に関する1-ノルムを入れて得るBanach空間とする．
+        \item 成分を$x_k:=\brac{x,e_k}\;(x\in H)$，$D_k\varphi:=\brac{D\varphi,e_k}\;(\varphi\in {}^uC_b^1(H))$．このとき，$D\varphi\in H^*$に注意．
+        \item \textbf{指数関数の空間}を，部分空間
+        \[\E(H):=\Brac{\Re(\ep_h)\in L^2(H,\mu)\mid \ep_h(x):=e^{i\brac{x,h}},x,h\in H}\]
+        とする．
     \end{enumerate}
 \end{notation}
+
+\begin{definition}
+    $M:=Q^{1/2}D:\E(H)\to L^2(H,\mu;H)$とする．これは，
+    \begin{enumerate}
+        \item $\varphi\in\E(H)$はFrechet導関数$D\varphi:H\to H^*$を持つ．これに$Q^{1/2}:H\to\Im Q^{1/2}<H$を合成する．
+        \item $DW_f$は，$W_f$が$f\in Q^{1/2}(H)$に関してしか定義されていない通り，稠密部分空間$\Im Q^{1/2}$上にしか定まっていない．が，$Q^{1/2}DW_f$は$f\in H$上で定まる．
+    \end{enumerate}
+\end{definition}
+
+\subsection{指数関数による近似}
+
+\begin{proposition}
+    任意の$\varphi\in{}^uC_b^1(H)$について，ある二重列$\{\varphi_{n,k}\}\subset\E(H)$が存在して，
+    \begin{enumerate}
+        \item $\forall_{x\in H}\;\lim_{n\to\infty}\lim_{k\to\infty}\varphi_{n,k}(x)=\varphi(x)$．
+        \item $\forall_{x\in H}\;\lim_{n\to\infty}\lim_{k\to\infty}D\varphi_{n,k}(x)=D\varphi(x)$．
+        \item $\forall_{n,k\in\N}\;\norm{\varphi_{n,k}}_0+\norm{D\varphi_{n,k}}_0\le\norm{\varphi}_0+\norm{D\varphi}_0$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}\mbox{}
+    \begin{enumerate}
+        \item ${}^uC_b(H)$は$L^2(H,\mu)$上稠密である．
+        \item $\E(H)$は$L^2(H,\mu)$上稠密である．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{連続延長}
+
+\begin{proposition}
+    $M:\E(H)\to L^2(H,\mu;H)$は可閉である．
+    この定義域を\textbf{Malliavin-Sobolev空間}といい，$D^{1,2}(H,\mu)$で表す．
+    1階導関数との1-ノルムについて，これはHilbert空間をなす．
+\end{proposition}
+
+\begin{proposition}[$C^1$-級緩増加関数はMalliavin微分可能である]
+    $C_1^p(H)\subset D^{1,2}(H,\mu)$．
+\end{proposition}
+
+\begin{proposition}[Lipschitz関数はMalliavin微分可能である]
+    $\Lip^1(H)\subset D^{1,2}(H,\mu)$．
+\end{proposition}
+
+\begin{proposition}[微分積分学の基本定理?]
+    任意の$f\in H$について，$W_f\in D^{1,2}(H,\mu)$で，$MW_f=f$．
+\end{proposition}
+
+\section{Skorokhod積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    随伴$M^*$をSkorohod積分といい，$\delta$とも表す．
+\end{tcolorbox}
 
 \section{Sobolev空間}
 

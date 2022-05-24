@@ -1,0 +1,323 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{関数論再建}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{正則関数}
+
+\section{正則関数の定義と幾何学的性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    のちに等角写像として特徴付けるが，それ以前にそのことを匂わせる幾何学的性質を豊かに持つ．
+\end{tcolorbox}
+
+\begin{definition}[normal / analytic function]
+    関数$f:\C\osup D\to\C$が各点において微分係数を持つとき，\textbf{正則}または\textbf{解析的}という．
+\end{definition}
+
+\begin{lemma}[正則関数が定める実関数]
+    $f:D\to\C$を正則関数とする．$f=u+iv$と表せるとき，$u,v:D\to\R$を\textbf{実部}と\textbf{虚部}という．これらは，
+    \begin{enumerate}
+        \item Cauchy-Riemann方程式を満たす：$u_x=v_y,u_y=-v_x$．
+        \item 調和関数である：$\Laplace u=0,\Laplace v=0$．
+    \end{enumerate}
+    一般に，上の2条件を満たす実関数の組$(u,v)$を\textbf{共役調和関数}という．次が成り立つ：
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item $u,v$を調和関数とする．$u+iv$は正則関数である．
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}[正則関数の微分係数の各種表現とJacobianの特徴付け]
+    $f$が$z_0\in D$で正則とする．
+    \begin{enumerate}
+        \item $f'(z_0)=\pp{f}{z}(z_0)=2\pp{u}{z}(z_0)$．
+        \item $F(x,y):=f(z)$とすると，$F:\R^2\to\C$も微分可能であり，$\det J_F(x_0,y_0)=\abs{f'(z_0)}^2$．
+    \end{enumerate}
+\end{corollary}
+\begin{remarks}[正則関数の局所可逆性について]
+    ここから，$f'(z)\ne0$ならば$z$の近傍で$f$位相同型を定めることが，陰関数定理から従う．
+    が，より複素解析的な証明の方が簡潔で本質的である．
+    またJacobianが$\abs{f'(z)}^2$であることについては，線積分について無限小線分の長さが$\abs{f'(z)}$倍されることと等角写像であることとの単純な帰結ともみれる！
+    Jacobi行列の非対角成分がないのである．
+\end{remarks}
+
+\begin{tbox}{red}{正則関数の大域的可逆性について}
+    陰関数定理の議論の時に夢想したことがあるであろうことに，各点でJacobianが$0$でないならば，その局所的な可逆写像を繋ぎ合わせて大域的な逆射を構成できないか？ということである．
+    正則関数において，この探求の行手を阻むものはただ一つで，像が重なってしまうことである．
+    そこで，定義域と値域を，重なったフィルムを引き剥がすように拡張すれば，一価な単射が定まるかもしれない．
+\end{tbox}
+
+\section{正則性の特徴付け}
+
+\subsection{Cauchy-Riemann作用素による特徴付け}
+
+\begin{definition}[Wirtinger derivative / Cauchy-Riemann operator]
+    次によって定まる作用素$\O(D)\to\O(D)$
+    \begin{align*}
+        \partial_zf&=\frac{\partial}{\partial z}=\frac{1}{2}\left(\frac{\partial}{\partial x}\textcolor{red}{-}i\frac{\partial}{\partial y}\right)\\
+        \overline{\partial}=\partial_{\overline{z}}f&=\frac{\partial}{\partial\overline{z}}=\frac{1}{2}\left(\frac{\partial}{\partial x}\textcolor{red}{+}i\frac{\partial}{\partial y}\right)
+    \end{align*}
+    を\textbf{コーシー・リーマン作用素}という．
+\end{definition}
+
+\begin{definition}[totally differentiable]
+    関数$f:D\to\C$が\textbf{全微分可能}とは，実線型関数$L:D\to \C;x+yi\mapsto\al x+\beta y\;(\al,\beta\in\C)$が存在して，$f(w+z)=f(w)+L(z)+o(\abs{z})$が成り立つことをいう．
+\end{definition}
+
+\begin{lemma}[Wirtinger微分のwell-defined性]
+    $f:D\to\C$が全微分可能であるとする．
+    \begin{enumerate}
+        \item $L(z)=f_x(w)x+f_y(w)y$が成り立つ．
+        \item $f_z:=(f_x-if_y)/2,f_{\o{z}}:=(f_x+if_y)$と置くと，$L(z)=f_z(w)z+f_{\o{z}}(w)\o{z}$が成り立つ．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[微分作用素による特徴付け]
+    $f:D\to\C$について，次は同値．
+    \begin{enumerate}
+        \item $f$は$a\in D$で正則．
+        \item $f$は$a\in D$で全微分可能かつ$f_{\o{z}}(a)=0$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{等角写像としての特徴付け}
+
+\begin{definition}[conformal mapping]
+    $C^1$-級写像$f:D\to\C$が$p\in D$で\textbf{等角}であるとは，
+    $f$が引き起こす$C^1$-道の対応$\gamma\mapsto f\circ\gamma$が，
+    $p$での接空間の内積を保つことをいう．
+\end{definition}
+
+\begin{proposition}[等角性による特徴付け]
+    $f:D\to\C$が$C^1$-級であるとする．次は同値．
+    \begin{enumerate}
+        \item $p\in D$で等角である．
+        \item $\partial_zf(p)\ne0$かつ$\partial_{\o{z}}f(p)=0$．
+    \end{enumerate}
+\end{proposition}
+
+\section{整級数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則関数を構成する強力な手法となる．特に，理論展開の初期段階で指数関数を定義するのに用いられる．
+    この手法の\textbf{普遍性}，すなわち任意の正則関数が整級数展開によって得られることはのちの理論で得られる．
+\end{tcolorbox}
+
+\begin{definition}
+    級数のうち，$\{a_n\}\subset\C$を用いて
+    $\sum_{n=0}^\infty a_nz^n$と表せるものを\textbf{整級数}という．
+\end{definition}
+
+\subsection{Abelの定理}
+
+\begin{theorem}[Abel]
+    任意の整級数に対して，\textbf{収束半径}$R\in[0,\infty]$が定まる：
+    \begin{enumerate}
+        \item $\Delta(0,R)$上にて，整級数は絶対収束する．
+        \item $\forall_{r\in[0,R)}$について$[\Delta(0,r)]$上にて，整級数は一様収束する．
+        \item $\Delta(\infty,R)$上にて，級数は発散する．
+        \item $\Delta(0,R)$上にて整級数は微分可能で，その導関数は項別微分によって得られ，同じ収束半径を持つ．特に，整関数は$\Delta(0,R)$上で正則関数を定める．
+        \item 収束半径$R$は$1/R:=\limsup_{n\to\infty}\sqrt[n]{\abs{a_n}}$で与えられる．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    $R$が求まればこれは一意であることは明らか．いま，$1/R:=\limsup_{n\to\infty}\sqrt[n]{\abs{a_n}}$として，(1)から(4)の性質を示す．
+    \begin{enumerate}
+        \item 任意に$z\in\Delta(0,R)$を取ると，$\abs{z}<\rho<R$を満たす$\rho$が取れる：$1/\rho>1/R$．
+        このとき，limsupの定義から，$\exists_{n_0\in\N}\;\forall_{n\ge n_0}\;\abs{a_n}^{1/n}<1/\rho\Leftrightarrow\abs{a_n}<1/\rho^n$．
+        特に$\abs{a_nz^n}<\paren{\frac{\abs{z}}{\rho}}^n$であるから，三角不等式より，整級数はこの$z$において絶対収束する．
+        \item また特に，任意の$\rho<\rho'<R$に対して，$\abs{a_nz^n}\le(\rho/\rho')^n$によってえ収束する正項優級数が構成できるから，Weierstrassの$M$-判定法より，一様収束である．
+        \item $\abs{z}>R$を満たす$z\in\C$に対しては，$R<\rho<\abs{z}$を満たす$\rho$が取れる：$1/\rho<1/R$．このとき$\abs{a_n}>1/\rho^n$を満たす$n$が無限に存在するから，$\abs{a_nz^n}>\paren{\frac{\abs{z}}{\rho}}^n\;\io$
+        特に整級数は発散する．
+        \item 項別微分が定める級数$\sum^{\infty}_{n=1}na_nz^{n-1}$は同じ収束半径を持つことは，$\lim_{n\to\infty}\sqrt[n]{n}=1$による．
+        あとは，$\Delta(0,R)$上で定める一様収束極限を$f_1$とし，$f'(z)=f_1(z)$を示せば良い．
+    \end{enumerate}
+\end{proof}
+
+\subsection{収束円周上での挙動}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $S$は$(-\infty,1)$に関して対称な角領域で，1を頂点とし，角が$\pi$より小さいものとなる．
+    特に，$S$内の$1$を通る任意の曲線は，単位円周$\partial\Delta$に接しない．
+    $\exists_{M\in\R}\;\abs{1-z}\le M(1-\abs{z})$とは，点$1$よりも円周$\partial\Delta$の方に一定以上の比率で近づかないことをいう．
+    これをStolzの角ともいう．
+\end{tcolorbox}
+
+\begin{theorem}[Abel 2]
+    収束列$(a_n)\in c(\N;\C)$が定める級数$f(z):=\sum_{n\in\N}a_nz^n$について，
+    $\frac{\abs{1-z}}{1-\abs{z}}$が有界になるような経路$z\in\Im\gamma\subset\Delta$で
+    近づければ，$\lim_{S\ni z\to1}f(z)=f(1)$が成り立つ．
+\end{theorem}
+
+\section{関数列の一様収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    復習する．
+\end{tcolorbox}
+
+\begin{definition}
+    $E\subset\C$上の
+    関数列$(f_n)$が\textbf{一様収束}するとは，$\forall_{\ep>0}\;\exists_{n_0\in\N}\;\forall_{n\ge n_0}\;\forall_{x\in E}\;\abs{f_n(x)-f(x)}<\ep$を満たすことをいう．
+\end{definition}
+
+\subsection{一様収束の性質}
+
+\begin{theorem}[一様収束は連続性を保つ]
+    $(f_n)$を$E\subset\C$上の連続関数列とし，極限$f$に一様収束するとする．
+    このとき，$f$は連続である．
+\end{theorem}
+\begin{proof}
+    任意の$x_0\in E$と$\ep>0$をとる．
+    \begin{enumerate}
+        \item $f$は$(f_n)$の一様収束極限だから，$\exists_{n\in\N}\;\forall_{x\in E}\;\abs{f_n(x)-f(x)}<\ep/3$．
+        \item $f_n$は連続だから，$\exists_{\delta>0}\;\forall_{x\in E}\;\abs{x-x_0}<\delta\Rightarrow\abs{f_n(x_0)-f_n(x)}<\ep/3$．
+    \end{enumerate}
+    以上より，任意の$\abs{x-x_0}<\delta$を満たす$x\in E$に対して，
+    \[\abs{f(x)-f(x_0)}\le\abs{f(x)-f_n(x)}+\abs{f_n(x)-f_n(x_0)}+\abs{f_n(x_0)-f(x_0)}<\ep.\]
+\end{proof}
+
+\begin{theorem}
+    $E\subset S$を距離空間$S$の部分集合とし，$x\in S$をその集積点とする．
+    $(f_n)$が$f$に一様収束するとき，$(\lim_{t\to x}f_n(t))_{n\in\N}$は収束し，
+    \[\lim_{n\to\infty}\lim_{t\to x}f_n(t)=\lim_{t\to x}\lim_{n\to\infty}f_n(t)\]
+\end{theorem}
+
+\subsection{コンパクト一様収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一方で，連続関数の列が連続関数に収束するとき，そのモードが一様収束であるとは限らない．
+\end{tcolorbox}
+
+\begin{theorem}
+    $(f_n)$をコンパクト集合$K$上の連続関数の列とする．このとき，
+    \begin{enumerate}
+        \item $(f_n)$はある連続関数$f$に各点収束する．
+        \item $(f_n)$は広義単調減少列である．
+    \end{enumerate}
+    ならば，$(f_n)$は$f$に一様収束する．
+\end{theorem}
+
+\subsection{一様収束と導関数}
+
+\begin{theorem}
+    $[a,b]$上の可微分関数の列$(f_n)$は，ある$x_0\in[a,b]$において各点収束するとする．
+    導関数が定める列$(f'_n)$が一様収束するならば，元の列$(f_n)$も一様収束し，極限と微分が可換になる：$\forall_{x\in[a,b]}\;f'(x)=\lim_{n\to\infty}f'(x)$．
+\end{theorem}
+
+\subsection{一様収束の判定法}
+
+\begin{proposition}[一様収束の判定法]
+    $(f_n)$を$E$上の関数の列で，各点収束極限
+    $f$を持つとする．
+    \begin{enumerate}
+        \item $(f_n)$は一様収束する．
+        \item (Cauchy criterion) $\forall_{\ep>0}\;\exists_{n_0\in\N}\;\forall_{m,n\ge n_0}\;\forall_{x\in E}\;\abs{f_n(x)-f_m(x)}<\ep$．
+        \item $\norm{f_n-f}_\infty\to0$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Weierstrass $M$-test]
+    関数列$(f_n)$は収束する優級数$\{M_n\}\subset\C$を持つとする：$\forall_{n\in\N}\;\norm{f_n}_\infty\le\abs{M_n},\sum_{n\in\N}M_n\in\C$．このとき，級数列$\paren{i=1}^nf_i$は一様収束する．
+\end{proposition}
+
+\section{指数関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多項式，有理関数の次に，
+    絶対に外せない正則関数が指数関数である．
+    これを早速整級数を用いて定義する．
+\end{tcolorbox}
+
+\subsection{定義と性質}
+
+\begin{definition}
+    \[e^z:=1+\frac{z}{1!}+\frac{z^2}{2!}+\cdots+\frac{z^n}{n!}+\cdots\]
+    によって定まる整関数$\exp:\C\to\C$を\textbf{指数関数}という．
+\end{definition}
+\begin{proof}
+    この整級数が$\C$上で収束することを示すには，$\sqrt[n]{n!}\to\infty$を示せば良い．
+\end{proof}
+
+\begin{lemma}
+    $e$は
+    \begin{enumerate}
+        \item 微分方程式$f'(z)=f(z),f(0)=1$を満たすただ一つの解である．
+        \item 指数法則を満たす．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{周期性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    写像$f(y)=e^{iy}$は，実数の加法群から単位円周$S^1:=\partial\Delta$の乗法群へのLie群としての準同型を定めており，この核は$2\pi\Z$となる．
+    $\exp$が定める同型$\o{\exp}:\Z/2\pi\Z\iso S^1$がトーラスとの同型を導く．
+    よって，$\exp$の逆関数というものは本来考えられず，あるとするならば無限個の値を持つ多価関数で，それぞれ$2\pi i$の整数倍の差を持つ．
+\end{tcolorbox}
+
+\begin{theorem}[指数関数の周期性]\label{thm-period-of-exponential}
+    指数関数expは周期である．すなわち，
+    ある正実数$\pi\in\R_{>0}$が存在して，
+    \[ e^w=1\Leftrightarrow w=2\pi in\;\;(n\in\Z) \]
+    を満たす．
+\end{theorem}
+\begin{proof}\mbox{}
+    $w=x+yi$と置くと，$e^{x+yi}=e^xe^{yi}=e^x(\cos y+i\sin y)=1$であるが，$|\cos y+i\sin y|=\cos^2y+\sin^2y=1$
+    より，$|e^x|=1$．$\exp:\R\to\R_{>0}$は全単射なので，$x=0$と分かる．
+
+    続いて，$y$の一番小さい解は$y=2\pi$であること，そしてその他の元は全てこれの整数倍で尽くされることを示す．
+\end{proof}
+
+\subsection{対数関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\log:\C^\times\to?$の像は代数的に考えれば$2\pi\Z$のようなものになるべきである．
+    あるいは，実用上は局所切断(分枝)を取りたいものである．
+\end{tcolorbox}
+
+\begin{definition}
+    $f:D\to\C$が\textbf{対数関数}であるとは，$\exp:\C\to\C^*$の$D$上での切断であることをいう：$\forall_{z\in D}\;\exp(\Log(z))=z$．
+    このとき$0\notin D$が必要．
+\end{definition}
+\begin{remarks}
+    こうして，対数関数をまず，指数関数の局所切断の全体と捉えておく．
+    これは真の対数関数の制限ともみなせる．
+    Ahlforsでは真の対数関数をまずは(定義域をRiemann面に拡張することなく)集合値関数と捉えており，制限として得られる一価関数を\textbf{分枝}と呼んでいる．
+\end{remarks}
+
+\begin{theorem}
+    $\Log:R:=\C\setminus(-\infty,0]\to\C$を$\Log(z):=\log\abs{z}+i\arg z$と定めると，これは$\exp$の$R$上での切断である：$\forall_{z\in R}\;\exp(\Log(z))=z$．
+    また，$R$は$\Log$の定義域として極大である．
+\end{theorem}
+
+\section{一次変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多項式と有理関数とは解析関数の重要な例であるが，これらのより自然な見方を探求してみる．
+\end{tcolorbox}
+
+\chapter{複素積分}
+
+\chapter{留数解析}
+
+\section{留数定理}
+
+\chapter{無限積展開}
+
+\chapter{Dirichlet問題}
+
+\end{document}
