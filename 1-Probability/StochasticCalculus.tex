@@ -134,7 +134,7 @@ title=]
 
 または次のように定義することも出来る\cite{Revus and Yor}
 
-\begin{proposition}[一般化された独立同分布列の存在定理：ホワイトノイズ]
+\begin{proposition}[一般化された独立同分布列の存在定理：ホワイトノイズ]\label{prop-existence-of-noises}
     $H$を可分実Hilbert空間とする．
     ある確率空間$(\Om,\F,P)$とその上の確率変数の族$X=(X_h)_{h\in H}$が存在して，次の2条件を満たす：
     \begin{enumerate}
@@ -360,10 +360,11 @@ title=]
     を\textbf{ホワイトノイズ}という．
 \end{definition}
 
-\begin{proposition}[white noiseはGauss系である]\mbox{}
+\begin{proposition}[white noiseはGauss系である]\mbox{}\label{prop-property-of-white-noise}
     \begin{enumerate}
         \item $z\in H$に対して，値$W_z$は$N(0,\abs{z}^2)$に従う実Gauss変数である．
         \item $z_1,\cdots,z_n\in H\;(n\in\N)$に対して，$(W_{z_1},\cdots,W_{z_n})$は$N_n(0,(\brac{z_h,z_k})_{h,k\in[n]})$に従うGauss変数である．
+        \item $W_{z_1},\cdots,W_{z_n}$が独立であることと$z_1,\cdots,z_n$が直交することは同値．
     \end{enumerate}
 \end{proposition}
 
@@ -380,6 +381,13 @@ title=]
 \section{確率過程の扱い}
 
 \subsection{確率過程の同値性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率過程の全体への同値類の入れ方には選択の余地がある．
+    \cite{Revus and Yor}では有限次元周辺分布が一致することを，\cite{Nualart},\cite{Prato}では修正であることを「同値」と言っている．
+    同値類の中に存在する別の元を「バージョン」ということは変わらない．
+\end{tcolorbox}
 
 \begin{definition}[equivalence / version, finite dimensional marginal distributions]\mbox{}
     \begin{enumerate}
@@ -398,7 +406,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{definition}[modification, indistinguishable]
+\begin{definition}[modification / equivalence / version, indistinguishable]
     定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
     \begin{enumerate}
         \item 2つは\textbf{修正}または\textbf{変形}であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．\footnote{\cite{Nualart}ではこの概念をequivalenceまたはvarsionと呼んでいる．}
@@ -569,7 +577,7 @@ title=]
     \end{description}
 \end{proof}
 
-\section{構成}
+\section{Brown運動の構成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
@@ -834,6 +842,13 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $C(\R_+)$上の測度を直接構成して，$\id:C(\R_+)\to C(\R_+)$としてBrown運動を得ることも出来る\ref{prop-construction-of-Wiener-measure}．
+\end{tcolorbox}
+
+\subsection{白色雑音からの構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \ref{sec-Wiener-integral}節へ．
 \end{tcolorbox}
 
 \section{Brown運動の変種}
@@ -1281,7 +1296,7 @@ title=]
 
 
 
-\section{Wiener積分}
+\section{Wiener積分と白色雑音}\label{sec-Wiener-integral}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
@@ -1378,9 +1393,42 @@ title=]
 \end{proposition}
 
 \begin{proposition}
-    $W$を$\R_+$上のホワイトノイズとすると，$W_t:=W([0,t])=W_{1_{[0,t]}}$と定めるとこれはBrown運動の修正である．
+    $H:=L^2([0,T])$とし，$\mu=N(0,Q)$を非退化なGauss測度とする．
+    $W:H\to L^2(H,\mu)$を$\R_+$上のホワイトノイズとする．
+    \begin{enumerate}
+        \item $B_t:=W([0,t])=W_{1_{[0,t]}}$と定めるとこれはBrown運動の修正である．
+        \item この過程の同値類は，$B\in C(\R_+;L^{2m}(H,\mu))\;(\forall_{m\in\N})$を満たす連続過程である．
+    \end{enumerate}
 \end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{enumerate}[({B}1)]
+            \item $B_t\sim N(0,t)\;(t\ge0)$より，$B_0=0$．
+            \item 任意の$0\le s<t$について，$B_t-B_s=W_{1_{(s,t]}}\sim N(0,t-s)$．
+            \item 任意の$0\le t_1<\cdots<t_n$に対して，$,1_{(t_1,t_2]},\cdots,1_{(t_{n-1},t_n]}$は直交系である．よって\ref{prop-property-of-white-noise}より，その像$B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}$も独立である．
+            \item Gamma関数の反転公式より，
+            \[\int^1_0(1-r)^{\al-1}r^{-\al}dr=B(\al,1-\al)=\frac{\pi}{\sin\pi\al}\]
+            から，恒等式
+            \[\int^t_s(t-\sigma)^{\al-1}(\sigma-s)^{-\al}d\sigma=\frac{\pi}{\sin\pi\al}\quad(0\le s\le\sigma\le t,\al\in(0,1))\]
+            を得る．
+            これを用いれば，
+            \[1_{[0,t]}(s)=\frac{\sin\pi\al}{\pi}\int^t_0(t-\sigma)^{\al-1}\underbrace{1_{[0,\sigma]}(x)(\sigma-s)^{-\al}}_{=:g_\sigma(s)}d\sigma\qquad(s\ge0)\]
+            を得る．このとき，$g_\sigma\in L^2([0,T])$かつ$\norm{g_\sigma}^2=\int^T_0g_\sigma^2(s)ds=\frac{\sigma^{1-\al}}{1-\al}$より，$\al\in\paren{0,\frac{1}{2}}$とリスケールすると，$\norm{g_\sigma}^2=\frac{\sigma^{1-2\al}}{1-2\al}$．
+            よって，$W:H\to L^2(H,\mu)$は有界線型であったから特に一様連続で，
+            \[B_t=W_{1_{[0,t]}}=\frac{\sin\pi\al}{\pi}\int^t_0(t-\sigma)^{\al-1}W_{g_\sigma}d\sigma\]
+            と表示でき，$W_{g_\sigma}\sim N\paren{0,\frac{\sigma^{1-2\al}}{1-2\al}}$．
+            補題より，あとは$\sigma\mapsto W_{g_\sigma}(x)\in L^{2m}([0,T])\;\mu\dae x\in H$を示せば良い．
+            これは正規分布の$2m$次の積率とFubiniの定理から分かる．
+        \end{enumerate}
+        \item 任意の$t>s$について，$B_t-B_s\sim N_{t-s}$の$2m$次の積率から分かる．
+    \end{enumerate}
+\end{proof}
 
+\begin{lemma}
+    $m>1,\al\in\paren{\frac{1}{2m},1},T>0$とし，$f\in L^{2m}([0,T];H)$とする．このとき，
+    \[F(t):=\int^t_0(t-\sigma)^{\al-1}f(\sigma)d\sigma\quad t\in[0,T]\]
+    と定めると，$F\in C([0,T];H)$．
+\end{lemma}
 
 \subsection{Path積分}
 
@@ -1695,9 +1743,11 @@ title=]
 
 \begin{lemma}[自然な情報系の特徴付け]\label{lemma-Blumenthal}
     $(B_t)$を任意のBrown運動で，確率空間$(\Om,\F,P)$上に定義されているとする．
+    このBrown運動の自然な情報系$(\F_t)$について，ここでは$\F_t=\sigma[B_s|s\le t]$として必ずしもすべての$P$-零集合を含まないとして扱う．
+    必要に応じて完備化すれば良い．
     \begin{enumerate}
-        \item (左連続性) このBrown運動の自然な情報系$(\F_t)$について，$\F_t$は柱状集合$C(t_1,\cdots,t_n;I_1,\cdots,I_n)\;(0\le t_1<\cdots<t_n\le t)$の全体によって生成される．また，$t_n<t$としても変わらない．
-        \item ($0$における右連続性) また$\F_t$はBrown運動の族$(B_{t+h}-B_h)_{t\in\R_+,h>0}$の柱状集合$D(t_1,\cdots,t_n;h;I_1,\cdots,I_n)\;(h>0)$の全体によっても生成される：
+        \item (左連続性) $\F_t$は柱状集合$C(t_1,\cdots,t_n;I_1,\cdots,I_n)\;(0\le t_1<\cdots<t_n\le t)$の全体によって生成される．また，$t_n<t$としても変わらない．
+        \item ($0$における右連続性) また$\F$はBrown運動の族$(B_{t+h}-B_h)_{t\in\R_+,h>0}$の柱状集合$D(t_1,\cdots,t_n;h;I_1,\cdots,I_n)\;(h>0)$の全体によっても生成される：
         \[D(t_1,\cdots,t_n;h;I_1,\cdots,I_n):=\Brace{\om\in\Om\mid B_{t_1+h}(\om)-B_{h}(\om)\in I_1,\cdots,B_{t_n+h}(\om)-B_h(\om)\in I_n}\]
         \item ($B_s\indep B_t-B_s$の一般化) 任意の$0\le s<t$について，$\F_s$は$B_t-B_s$に対して独立である．したがって特に，任意の$\F_s$-可測関数$X:\Om\to\R$は$B_t-B_s$と独立である．
         \item (Blumenthal one-zero law) $A\in\F_0^+:=\cap_{\ep>0}\F_\ep$ならば，$P[A]\in\{0,1\}$．
@@ -1705,23 +1755,25 @@ title=]
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{enumerate}
-        \item 
+        \item $\F_t$は任意の有限列$I_1,\cdots,I_n\in\B^1(\R)$と任意の有限列$0\le s_1<\cdots<s_n\le t$を用いて，$C(s_1,\cdots,s_n;I_1,\cdots,I_n)$によって生成されるということである．
+        また，$t_n<t$を満たす柱状集合の全体を用いても，見本道の連続性より，任意の開区間$I\osub\R$について，$\Brace{B_t\in I}=\limsup_{n\to\infty}\Brace{B_{t-1/n}\in I}$と表せる．
         \item $n\in\N,0\le t_1<\cdots<t_n,h>0,I_i\in\B^1(\R)$に対して，
         \[D(t_1,\cdots,t_n;h;I_1,\cdots,I_n):=\Brace{\om\in\Om\mid B_{t_1+h}(\om)-B_{h}(\om)\in I_1,\cdots,B_{t_n+h}(\om)-B_h(\om)\in I_n}\]
         なる形の集合全体が生成する$\sigma$-代数を$\cG$とすると，実は$\cG=\F$である．
         \begin{enumerate}[(a)]
             \item $\F\subset\cG$は，任意の柱状集合$C(s_1,\cdots,s_n;A_1,\cdots,A_n)$は，$\cap_{i\in[n]}C(s_i;A_i)$と表せるから，
-            $C(s;A)\;(s>0,A\in\B^1(\R))$が$\cG$に入っていることを示せば良い．
-            これは$C(s;A)=\limsup_{n\to\infty}\Brace{B_{s+1/n}-B_{1/n}\in A}=\limsup_{n\to\infty}D(s;1/n;A)$より従う．
-            \item $\cG\subset\F$は，
+            $C(s;A)\;(s\ge0,A\in\B^1(\R))$が$\cG$に入っていることを示せば良い．また$A$として区間$(\infty,a)\;(a\in\R)$を取ると，
+            \[\Brace{B_s<a}\overset{\as}{=}\Brace{\lim_{n\to\infty}(B_{s+1/n}-B_{1/n})<a}=\limsup_{n\to\infty}\Brace{B_{s+1/n}-B_{1/n}<a}\in\cG\]
+            \item $\cG\subset\F$は，$(B'_s:=B_{s+h}-B_h)_{s\in\R_+}$は再びBrown運動であることより，$D(t_1;h;I_i)=\Brace{B'_{t_1}\in I_1}\in\sigma[B'_{t_1}]\subset\F$．
         \end{enumerate}
         \item $\F_s$は，$C(s_1,\cdots,s_n;J_1,\cdots,J_n)\;(0\le s_1<\cdots<s_n\le s,J_i\in\B^1(\R))$の形の柱状集合がなす集合体によって生成されるから，Dynkin族定理より，
         \[P[(B_t-B_s\in I),C(s_1,\cdots,s_n;J_1,\cdots,J_n)]=P[B_t-B_s\in I]P[C(s_1,\cdots,s_n;J_1,\cdots,J_n)]\]
         を示せば，残りの等式は単調収束定理より従う．
 
-        これは，2つの確率ベクトル$(B_{s_1},\cdots,B_{s_n}),B_t-B_s$の独立性から従う．
-        任意の$i\in[n]$に対して，$\Cov[B_{s_i},B_t-B_s]=\Cov[B_{s_i},B_t]-\Cov[B_{s_i},B_s]=0$を示せば良いが，これは明らか．
-        というのも，左辺は
+        これは，%2つの確率ベクトル$(B_{s_1},\cdots,B_{s_n}),B_t-B_s$の独立性から従う．
+        %任意の$i\in[n]$に対して，$\Cov[B_{s_i},B_t-B_s]=\Cov[B_{s_i},B_t]-\Cov[B_{s_i},B_s]=0$を示せば良いが，これは明らか．
+        %というのも，
+        左辺は
         \[\int_{J_1\times\cdots\times J_n\times I}p_{s_1}(x_1)p_{s_2}(x_2-x_1)\cdots p_{s_n}(x_n-x_{n-1})p_{t-s}(x)dx_1\cdots dx_ndx\]
         と表せるが，これはFubiniの定理より右辺に等しい．
         \item 
@@ -1731,7 +1783,7 @@ title=]
             よって，任意の有限部分集合$\{0\le t_1<\cdots<t_n\}\subset\R_+$について，
             各$B_{t_i+h}-B_{h}$と独立であり，
             したがって$D(t_1,\cdots,t_n;h;I_1,\cdots,I_n)$とも独立である．
-            $t_1,\cdots,t_n,h,I_1,\cdots,I_n$は任意に取ったから，$A\indep\cG$．
+            $t_1,\cdots,t_n,h,I_1,\cdots,I_n$は任意に取ったから，$A\indep\cG$(Dynkin族定理と単調収束定理による)．
             すなわち，$\forall_{G\in\cG}\;P[A\cap G]=P[A]P[G]$．
             \item[結論] 
             $\F^+_0\subset\F\subset\cG$より，$G=A$と取れる．よって，$P[A]=P[A]P[A]$を得る．
@@ -1878,6 +1930,9 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
     最後の等号は，$\subset$は明らかであるが，$\supset$は，殆ど至る所の$\om\in\Om$に対して$s\mapsto B_s(\om)$が連続であるため，$\exists_{k\in\N}\;\forall_{s\in[0,t]\cap\Q}\;B_s\le a-\frac{1}{k}$は$[0,t]$上でも同様の条件が成り立つことを含意する．
     よって，$\Brace{\tau_a\le t}\in\F_t$もわかる．
 \end{proof}
+\begin{remarks}
+    $\Brace{\tau_a<t}$を示しても十分であるが，これは情報系$(\F_t)$が右連続であることに依る．
+\end{remarks}
 
 \begin{proposition}[Laplace transformation of Brownian hitting time]\label{prop-hitting-time}
     任意の$a>0$について，
@@ -1921,6 +1976,7 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
     なお，$\tau_a$の確率密度関数を$f:\R_+\to[0,1]$とすると，
     \[E[e^{-\al\tau_a}]=\int_{\R_+}e^{-\al s}f(s)ds=\L[f](\al)\]
     とみれる．
+    また$M_t\xrightarrow{t\to\infty}0$はマルチンゲール収束定理からも導ける．
 \end{remarks}
 
 \begin{corollary}[到達時刻の分布]\mbox{}

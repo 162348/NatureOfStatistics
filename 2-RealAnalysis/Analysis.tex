@@ -1,0 +1,152 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{微分積分論再建}
+\author{司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\tableofcontents
+
+\chapter{Riemann-Stieltjes積分}
+
+\begin{quotation}
+    Lebesgue積分とは違って，$\R$の順序構造に強く依存した，Euclid空間上にオーダーメイドの積分が定義できる．
+    これについての古典論を復習する．
+\end{quotation}
+
+\section{定義と存在}
+
+\begin{definition}[(Riemann-)Stieltjes integral]
+    $I:=[a,b]$を閉区間とし，$f:[a,b]\to\R$を有界関数，$\al:[a,b]\to\R$を単調増加関数とする．
+    \begin{enumerate}
+        \item \textbf{分割}$P$とは，$[a,b]$の有限集合$P=\Brace{a=x_0\le x_1\le\cdots\le x_n=b}$をいう．
+        \item 各分割$P\in P([a,b])$に対して，$\Delta\al_i:=\al(x_i)-\al(x_{i-1})$と表し，
+        \[M_i(P):=\sup_{x\in[x_{i-1},x_i]}f(x),\qquad\qquad m_i(P):=\inf_{x\in[x_{i-1},x_i]}f(x)\;(i\in[n])\]
+        とし，
+        \[U(P,f,\al):=\sum^n_{i=1}M_i(P)\Delta\al_i,\qquad\qquad L(P,f,\al):=\sum^n_{i=1}m_i(P)\Delta\al_i\]
+        とする．これを用いて，
+        \[\o{\int^b_a}fd\al:=\inf_{P\in P([a,b]),\abs{P}<\infty}U(P,f,\al),\qquad\qquad\underline{\int^b_a}fd\al=\sup_{P\in P([a,b]),\abs{P}<\infty}L(P,f,\al).\]
+        として得る実数を，\textbf{上／下Stieltjes積分}と呼ぶ．
+        \item 上積分と下積分が一致するとき，\textbf{Stieltjes可積分}であるといい，$f\in\cR([a,b],\al)$と表す．
+    \end{enumerate}
+\end{definition}
+
+\section{関数列の一様収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    復習する．
+\end{tcolorbox}
+
+\begin{definition}
+    $E\subset\C$上の
+    関数列$(f_n)$が\textbf{一様収束}するとは，$\forall_{\ep>0}\;\exists_{n_0\in\N}\;\forall_{n\ge n_0}\;\forall_{x\in E}\;\abs{f_n(x)-f(x)}<\ep$を満たすことをいう．
+\end{definition}
+
+\begin{theorem}[可積分性の特徴付け]
+    関数$f:[a,b]\to\R$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $f\in\cR(\al)$．
+        \item $\forall_{\ep>0}\;\exists_{P\in P([a,b])}\;\abs{P}<\infty\land U(P,f,\al)-L(P,f,\al)<\ep$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[可積分条件]\mbox{}
+    関数$f:[a,b]\to\R$は，
+    \begin{enumerate}
+        \item 連続ならば$f\in\cR(\al)$．
+        \item 単調ならば，$\al$が連続ならば$f\in\cR(\al)$．
+        \item 有界であり，$[a,b]$上に高々有限の不連続点をもち，その任意の点で$\al$は連続であるならば，$f\in\cR(\al)$．
+    \end{enumerate}
+\end{theorem}
+
+
+
+\subsection{一様収束の性質}
+
+\begin{theorem}[一様収束は連続性を保つ]
+    $(f_n)$を$E\subset\C$上の連続関数列とし，極限$f$に一様収束するとする．
+    このとき，$f$は連続である．
+\end{theorem}
+\begin{proof}
+    任意の$x_0\in E$と$\ep>0$をとる．
+    \begin{enumerate}
+        \item $f$は$(f_n)$の一様収束極限だから，$\exists_{n\in\N}\;\forall_{x\in E}\;\abs{f_n(x)-f(x)}<\ep/3$．
+        \item $f_n$は連続だから，$\exists_{\delta>0}\;\forall_{x\in E}\;\abs{x-x_0}<\delta\Rightarrow\abs{f_n(x_0)-f_n(x)}<\ep/3$．
+    \end{enumerate}
+    以上より，任意の$\abs{x-x_0}<\delta$を満たす$x\in E$に対して，
+    \[\abs{f(x)-f(x_0)}\le\abs{f(x)-f_n(x)}+\abs{f_n(x)-f_n(x_0)}+\abs{f_n(x_0)-f(x_0)}<\ep.\]
+\end{proof}
+
+\begin{theorem}
+    $E\subset S$を距離空間$S$の部分集合とし，$x\in S$をその集積点とする．
+    $(f_n)$が$f$に一様収束するとき，$(\lim_{t\to x}f_n(t))_{n\in\N}$は収束し，
+    \[\lim_{n\to\infty}\lim_{t\to x}f_n(t)=\lim_{t\to x}\lim_{n\to\infty}f_n(t)\]
+\end{theorem}
+
+\subsection{コンパクト一様収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一方で，連続関数の列が連続関数に収束するとき，そのモードが一様収束であるとは限らない．
+\end{tcolorbox}
+
+\begin{theorem}
+    $(f_n)$をコンパクト集合$K$上の連続関数の列とする．このとき，
+    \begin{enumerate}
+        \item $(f_n)$はある連続関数$f$に各点収束する．
+        \item $(f_n)$は広義単調減少列である．
+    \end{enumerate}
+    ならば，$(f_n)$は$f$に一様収束する．
+\end{theorem}
+
+\subsection{一様収束と積分}
+
+\begin{theorem}
+    単調増加関数$\al:[a,b]\to\R$に関して，$[a,b]$上の可積分関数の列$\{f_n\}\subset\cR(\al)$が，ある$f$に一様収束しているとする．
+    このとき，
+    \begin{enumerate}
+        \item $f\in\cR(\al)$．
+        \item $\int^b_afd\al=\lim_{n\to\infty}\int^b_af_nd\al$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[項別積分]
+    可積分列$\{f_n\}\subset\cR(\al)$が定める級数は各点収束しているとする：$\forall_{x\in[a,b]}\;f(x)=\sum^\infty_{n=1}f_n(x)$．
+    このとき，
+    \[\int^b_afd\al=\sum^\infty_{n=1}\int^b_af_nd\al.\]
+\end{corollary}
+
+\subsection{一様収束と導関数}
+
+\begin{theorem}
+    $[a,b]$上の可微分関数の列$(f_n)$は，ある$x_0\in[a,b]$において各点収束するとする．
+    導関数が定める列$(f'_n)$が一様収束するならば，元の列$(f_n)$も一様収束し，極限と微分が可換になる：$\forall_{x\in[a,b]}\;f'(x)=\lim_{n\to\infty}f'(x)$．
+\end{theorem}
+
+\subsection{一様収束の判定法}
+
+\begin{proposition}[一様収束の判定法]
+    $(f_n)$を$E$上の関数の列で，各点収束極限
+    $f$を持つとする．
+    \begin{enumerate}
+        \item $(f_n)$は一様収束する．
+        \item (Cauchy criterion) $\forall_{\ep>0}\;\exists_{n_0\in\N}\;\forall_{m,n\ge n_0}\;\forall_{x\in E}\;\abs{f_n(x)-f_m(x)}<\ep$．
+        \item $\norm{f_n-f}_\infty\to0$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Weierstrass $M$-test]
+    関数列$(f_n)$は収束する優級数$\{M_n\}\subset\C$を持つとする：$\forall_{n\in\N}\;\norm{f_n}_\infty\le\abs{M_n},\sum_{n\in\N}M_n\in\C$．このとき，級数列$\paren{i=1}^nf_i$は一様収束する．
+\end{proposition}
+
+\chapter{参考文献}
+
+\begin{thebibliography}{9}
+    \bibitem{Principles of Mathematical Analysis}
+    Walter Rudin - Principles of Mathematical Analysis
+\end{thebibliography}
+
+\end{document}
