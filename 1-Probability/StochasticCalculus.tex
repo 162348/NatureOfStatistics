@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1676,10 +1676,10 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    確率変数の族$(B_t)_{t\in[0,T]}$と$B_S-B_T\;(s>T)$は独立である．
-    この定義は，任意の有限部分集合$\{0\le t_1<\cdots<t_n\}\subset[0,T]$に対して，確率ベクトル$(B_{t_1},\cdots,B_{t_n})$と変数$B_S-B_T$とは独立であることをいう．
-    これを，$\F_T\indep B_S-B_T$と表現出来る．
-    これを示すためには，柱状集合をうまく取ることが大事な技法となる．
+    確率変数の族$(B_t)_{t\in[0,T]}$と$B_s-B_T\;(s>T)$は独立である．
+    これは，任意の有限部分集合$\{0\le t_1<\cdots<t_n\}\subset[0,T]$に対して，確率ベクトル$(B_{t_1},\cdots,B_{t_n})$と変数$B_S-B_T$とが独立であることをいう．
+    これを，$\F_T\indep B_s-B_T$と表現出来る．
+    これを示すためには，再び柱状集合をうまく取ることが大事な技法となる．
 \end{tcolorbox}
 
 \begin{definition}[natural filtration]
@@ -1693,14 +1693,28 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}[Blumenthal one-zero law]\mbox{}\label{lemma-Blumenthal}
+\begin{lemma}[自然な情報系の特徴付け]\label{lemma-Blumenthal}
+    $(B_t)$を任意のBrown運動で，確率空間$(\Om,\F,P)$上に定義されているとする．
     \begin{enumerate}
-        \item 任意の$0<s<t$について，(任意の$\F_s$-可測関数$X:\Om\to\R$は)$\F_s$は$B_t-B_s$に対して独立である．
-        \item $A\in\F_0^+:=\cap_{\ep>0}\F_\ep$ならば，$P[A]\in\{0,1\}$．
+        \item (左連続性) このBrown運動の自然な情報系$(\F_t)$について，$\F_t$は柱状集合$C(t_1,\cdots,t_n;I_1,\cdots,I_n)\;(0\le t_1<\cdots<t_n\le t)$の全体によって生成される．また，$t_n<t$としても変わらない．
+        \item ($0$における右連続性) また$\F_t$はBrown運動の族$(B_{t+h}-B_h)_{t\in\R_+,h>0}$の柱状集合$D(t_1,\cdots,t_n;h;I_1,\cdots,I_n)\;(h>0)$の全体によっても生成される：
+        \[D(t_1,\cdots,t_n;h;I_1,\cdots,I_n):=\Brace{\om\in\Om\mid B_{t_1+h}(\om)-B_{h}(\om)\in I_1,\cdots,B_{t_n+h}(\om)-B_h(\om)\in I_n}\]
+        \item ($B_s\indep B_t-B_s$の一般化) 任意の$0\le s<t$について，$\F_s$は$B_t-B_s$に対して独立である．したがって特に，任意の$\F_s$-可測関数$X:\Om\to\R$は$B_t-B_s$と独立である．
+        \item (Blumenthal one-zero law) $A\in\F_0^+:=\cap_{\ep>0}\F_\ep$ならば，$P[A]\in\{0,1\}$．
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{enumerate}
+        \item 
+        \item $n\in\N,0\le t_1<\cdots<t_n,h>0,I_i\in\B^1(\R)$に対して，
+        \[D(t_1,\cdots,t_n;h;I_1,\cdots,I_n):=\Brace{\om\in\Om\mid B_{t_1+h}(\om)-B_{h}(\om)\in I_1,\cdots,B_{t_n+h}(\om)-B_h(\om)\in I_n}\]
+        なる形の集合全体が生成する$\sigma$-代数を$\cG$とすると，実は$\cG=\F$である．
+        \begin{enumerate}[(a)]
+            \item $\F\subset\cG$は，任意の柱状集合$C(s_1,\cdots,s_n;A_1,\cdots,A_n)$は，$\cap_{i\in[n]}C(s_i;A_i)$と表せるから，
+            $C(s;A)\;(s>0,A\in\B^1(\R))$が$\cG$に入っていることを示せば良い．
+            これは$C(s;A)=\limsup_{n\to\infty}\Brace{B_{s+1/n}-B_{1/n}\in A}=\limsup_{n\to\infty}D(s;1/n;A)$より従う．
+            \item $\cG\subset\F$は，
+        \end{enumerate}
         \item $\F_s$は，$C(s_1,\cdots,s_n;J_1,\cdots,J_n)\;(0\le s_1<\cdots<s_n\le s,J_i\in\B^1(\R))$の形の柱状集合がなす集合体によって生成されるから，Dynkin族定理より，
         \[P[(B_t-B_s\in I),C(s_1,\cdots,s_n;J_1,\cdots,J_n)]=P[B_t-B_s\in I]P[C(s_1,\cdots,s_n;J_1,\cdots,J_n)]\]
         を示せば，残りの等式は単調収束定理より従う．
@@ -1713,15 +1727,6 @@ title=]
         \item 
         $A\in\F^+_0$を任意に取る．
         \begin{description}
-            \item[環境設定] $n\in\N,0\le t_1<\cdots<t_n,h>0,I_i\in\B^1(\R)$に対して，
-            \[D(t_1,\cdots,t_n;h;I_1,\cdots,I_n):=\Brace{\om\in\Om\mid B_{t_1+h}(\om)-B_{h}(\om)\in I_1,\cdots,B_{t_n+h}(\om)-B_h(\om)\in I_n}\]
-            なる形の集合全体が生成する$\sigma$-代数を$\cG$とすると，実は$\cG=\F$である．
-            \begin{enumerate}[(a)]
-                \item $\F\subset\cG$は，任意の柱状集合$C(s_1,\cdots,s_n;A_1,\cdots,A_n)$は，$\cap_{i\in[n]}C(s_i;A_i)$と表せるから，
-                $C(s;A)\;(s>0,A\in\B^1(\R))$が$\cG$に入っていることを示せば良い．
-                これは$C(s;A)=\limsup_{n\to\infty}\Brace{B_{s+1/n}-B_{1/n}\in A}=\limsup_{n\to\infty}D(s;1/n;A)$より従う．
-                \item $\cG\subset\F$は，
-            \end{enumerate}
             \item[$A\indep\cG$] $A$は$\F^+_0$の元であるから，特に$A\in\F_h$である．
             よって，任意の有限部分集合$\{0\le t_1<\cdots<t_n\}\subset\R_+$について，
             各$B_{t_i+h}-B_{h}$と独立であり，
@@ -1734,7 +1739,7 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}[自然な情報系の右連続性]
     $\F_t$が完備であることより，次の2条件が成り立つ．
     \begin{enumerate}
         \item $(\F_t)$-適合的過程の任意のバージョンは適合的である．
@@ -1758,28 +1763,6 @@ title=]
         \[\F_t=\sigma[\F_t,\cG_0]=\cap_{\ep\ge0}\sigma[\F_t,\cG_\ep]=\cap_{\ep>0}\sigma[\F_t,\cG_\ep].\]
     \end{enumerate}
 \end{proof}
-
-\subsection{詳論}
-
-\begin{notation}
-    $\F^0_s:=\sigma[B_u:u\le s]$とし，$\F^+_s:=\cap_{t>s}\F^0_t$をその右連続化とする．
-    このとき，たしかに$(\F^+_s)$は右連続である：$\cap_{t>s}\F_t^+=\cap_{t>s}\paren{\cap_{u>t}\F^0_u}=\cap_{u>s}\F^0_u=\F_s^+$．
-    $C:=C(\R_+)$とおき，$\cC$をその広義一様位相に関するBorel $\sigma$-集合族とする．
-    スタート地点が$x\in\R$であるBrown運動に対応する測度を$P_x:\cC\to[0,1]$とする．
-\end{notation}
-
-\begin{definition}
-    見本道の$s\in\R_+$での剪断$\theta_s:C\to C$を，$\theta_s(\om)=\om(s+-)\in C$で定める．
-\end{definition}
-
-\begin{theorem}[Brown運動のMarkov性]
-    $Y:C\to\R$を任意の有界$\cC$-可測関数とする．このとき，
-    \[\forall_{s\in\R_+}\;\forall_{x\in\R}\;E_x[Y\circ\theta_s|\F^+_s]=E_{B_s}[Y].\]
-\end{theorem}
-\begin{remarks}
-    ここでは示さないが，右辺が$Y:C\to\R$の$C$の測度$P_x$に関しての平均であり，特に
-    $\F_s^0=\sigma[B_u|u\le s]$-可測である
-\end{remarks}
 
 \section{Markov性}
 
@@ -1870,6 +1853,9 @@ title=]
         \end{align*}
     \end{enumerate}
 \end{proof}
+\begin{remarks}
+    (3)は正規分布の積率母関数とも，対数正規分布とも見れる．
+\end{remarks}
 
 \subsection{到達時刻}
 
