@@ -949,7 +949,7 @@ title=]
     で構成される．
 \end{proposition}
 
-\section{性質}
+\section{Brown運動の性質}
 
 \subsection{フラクタル曲線としての見本道の対称性}
 
@@ -1020,7 +1020,7 @@ title=]
     $B$を$d$次元Brown運動，$U\in\GL_d(\R)$を直交行列とする．このとき，$(X_t:=UB_t)_{t\in\R_+}$はBrown運動である．
 \end{proposition}
 
-\subsection{連続性概念}
+\subsection{連続性概念の補足}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1222,7 +1222,7 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{見本道の変分}
+\subsection{変分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1238,16 +1238,18 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\begin{definition}[bounded variation]
-    右連続関数$f:[0,t]\to\R$が\textbf{有界変動}であるとは，
-    \[V_f^{(1)}(t):=\sup\sum^k_{j=1}\abs{f(t_j)-f(t_{j-1})}<\infty\]
-    を満たすことをいう．有界変動関数は2つの単調増加関数の差で表されるクラスと一致する．
-\end{definition}
+\subsubsection{２次変分}
+
+\begin{notation}
+    $\Sigma(0,T)$で，$[0,T]$上の分割$\sigma$全体の集合とする．すると，$\sigma_1\le\sigma_2:\Leftrightarrow\abs{\sigma_1}\le\abs{\sigma_2}$によって分割の集合には順序が定まる．
+    \[J_\sigma:=\sum_{k=1}^n\abs{B_{t_k}-B_{t_{k-1}}}^2\]
+    によって，写像$J:\Sigma(0,T)\to\R_+$が定まる．
+\end{notation}
 
 \begin{proposition}[2次変動の$L^2$-収束]
     $[0,t]$の部分分割$\pi:=(0=t_0<t_1<\cdots<t_n=t)$の系列$(\pi_n),\pi_n\subset\pi_{n+1}$について，$\abs{\pi}:=\max_{j\in n}(t_{j+1}-t_j)$とする．
     このとき，次の$L^2(\Om)$-収束が成り立つ：
-    \[\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2=t\quad\in L^2(\Om).\]
+    \[\lim_{\abs{\pi}\to0}J_\pi=\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2=t\quad\in L^2(\Om).\]
 \end{proposition}
 \begin{proof}
     確率変数列を$\xi_j:=(B_{t_{j+1}}-B_{t_j})^2-(t_{j+1}-t_j)\;(j\in n)$とおくと，これらは中心化された独立な確率変数列になる．
@@ -1275,6 +1277,15 @@ title=]
     このとき，
     \[\sum^{k_n-1}_{j=0}\paren{B_{t^n_{j+1}}-B_{t^n_j}}^2\xrightarrow{\as}t.\]
 \end{proposition}
+
+\subsubsection{１次変分}
+
+\begin{definition}[bounded variation]
+    右連続関数$f:[0,t]\to\R$が\textbf{有界変動}であるとは，
+    \[V_f^{(1)}(t):=\sup\sum^k_{j=1}\abs{f(t_j)-f(t_{j-1})}<\infty\]
+    を満たすことをいう．有界変動関数は2つの単調増加関数の差で表されるクラスと一致する．
+\end{definition}
+
 
 \begin{corollary}[全変動の発散]
     区間$[0,t]$における全変動
@@ -1310,9 +1321,10 @@ title=]
 \subsection{定義と像}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    有界変動な部分は零集合であるから，Stirltjes積分を取ることは出来ない．
-    そこで，単関数についてRiemann和を取る作用素の一意な延長として得られる有界線型作用素$L^2(\R_+)\to L^2(\Om)$をWiener積分とする．
+title=$\Om$に関する抽象化を施して無限次元積分を定義する]
+    有界変動な部分は零集合であるから，Stieltjes積分は零集合上でしか定まらない．
+    そこで，Riemann和=単関数に関するLebesgue積分を取る作用素$\E_0\to L^2(\Om)$の一意な延長として得られる有界線型作用素$L^2(\R_+)\to L^2(\Om)$をWiener積分とする．
+    すなわち，Stieltjes和は任意の$\om\in\Om$については定まらないから，$L^2(\Om,\F,P)$上の元とみてそこでの収束先を積分と定めよう．
 \end{tcolorbox}
 
 \begin{notation}
@@ -1502,6 +1514,7 @@ title=]
             このとき，$P(C)=\sum_{n\in\N}P(C_n)$は明らか．
         \end{description}
         \item $(B_t)_{t\in\R_+}$の任意の見本道$B_t(\om)=\om(t)$は連続である．
+        Brown運動の存在は認めたから，あとは$P$がBrown運動の法則であることを示せば良い．
         \begin{enumerate}[({B}1)]
             \item $\forall_{\om\in\Om}\;B_0(\om)=\om(0)=0$．
             \item 任意の$0\le t_1<\cdots,t_n$について，$B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$が独立であることを示すために，確率ベクトル$(B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}})^\top$の特性関数を調べる．
