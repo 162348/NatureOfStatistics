@@ -308,6 +308,129 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     多項式と有理関数とは解析関数の重要な例であるが，これらのより自然な見方を探求してみる．
+    すると正則関数の例の一つに収まるには極めて豊かな性質が見えてくる．
+\end{tcolorbox}
+
+\subsection{一次変換群}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    １次変換群は$\Aut(\hatC)=\GL_2(\C)/\C I=\PGL_2(\C)$の構造を持つ複素3次元のLie群で，これは射影直線$P^1(\C)$またはRiemann球面の位相変換群である．
+    任意のRiemann面の基本群はMobius群の離散部分群となり，特に重要な離散部分群としてmodular群を持つ．
+\end{tcolorbox}
+
+\begin{definition}
+    $\begin{pmatrix}
+        a&b\\c&d
+    \end{pmatrix}$を用いて$S(z):=\frac{az+b}{cz+d}$で定まる変換を\textbf{１次変換}という．
+\end{definition}
+\begin{discussion}
+    一次変換の扱いにくさの本質は非斉次性である．
+    そこで，$z=z_1/z_2$と見ると斉次化出来て，
+    \[w:=\frac{w_1}{w_2}=\frac{az_1+bz_2}{cz_1+dz_2}\]
+    という，「比の間の対応」とみなせる．
+    このことから，任意の行列のスカラー倍は同じ変換を定めることが分かる．
+    そこで，商群$\GL_2(\C)/\C^\times\simeq\SL_2(\C)/\{\pm1\}$を$\PSL(\C)$と表し，これが一次変換群に同型である．
+    なお，行列の$\al$倍は行列式の$\al^2$倍に等しく，行列式を1に規格化する操作は，2つのスカラー倍$\pm\al$によって達成されるので，さらに$\pm1$で割る必要がある．
+
+    点$z$に対して一見自由度を増やして2変数を用いて$z=z_1/z_2$と見てから割り，「$\C$の非零元の間の比全体の集合」を考えることは，
+    斉次座標によって多様体の構造を持つ射影直線$P^1(\C)$上の点を考えることに等しい．そこでは，$\infty=[1:0]$と対応するから，無限が出現しないという美点もある．
+    構成からこれはRiemann球面$\hatC$に同相である．
+\end{discussion}
+
+\begin{proposition}[標準分解]
+    任意の$S\in\Aut(\hatC)$は，
+    \begin{enumerate}
+        \item 平行移動$\begin{pmatrix}
+            1&\al\\0&1
+        \end{pmatrix}$
+        \item 回転・拡大$\begin{pmatrix}\al&0\\0&1\end{pmatrix}$
+        \item 反転$\begin{pmatrix}0&1\\1&0\end{pmatrix}$
+    \end{enumerate}
+    の積に分解できる．
+\end{proposition}
+
+\subsection{非調和比}
+
+\begin{theorem}[一次変換は鋭推移的である]
+    $\hat{\C}$の相異なる3点$z_2,z_3,z_4$に対して，この順に$1,0,\infty$に移す一次変換$S_{z_2,z_3,z_4}$がただ一つ存在する．
+    すなわち，対応$S:[\hatC]^3\to\Aut(\hatC)$は単射である．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[構成] \[S(z)=\begin{cases}
+            \paren{\frac{z_2-z_4}{z_2-z_3}}\paren{\frac{z-z_3}{z-z_4}}&z_2,z_3,z_4\in\C のとき,\\\vspace{1mm}
+            \frac{z-z_3}{z-z_4}&z_2=\infty のとき,\\\vspace{1mm}
+            \frac{z_2-z_4}{z-z_4}&z_3=\infty のとき,\\\vspace{1mm}
+            \frac{z-z_3}{z_2-z_3}&z_4=\infty のとき,
+        \end{cases}\]
+        と置けば良い．
+        \item[一意性] $1,0,\infty$を動かさない１次変換は恒等写像だけであることを示せば良い．$S=\frac{az+b}{cz+d}$と置く．
+        \begin{align*}
+            \frac{a+b}{c+d}&=1.&\frac{b}{d}&=0,&\frac{a}{c}&=\infty,
+        \end{align*}
+        より，$b=c=0,a=d$．$ad-bc=1$より，$a=d=1$．よって，$S=\id_{\hatC}$．
+    \end{description}
+\end{proof}
+
+\begin{definition}[cross ratio / anharmonic ratio]
+    相異なる3点$z_2,z_3,z_4\in\hatC$に対して，$(z_1,z_2,z_3,z_4):=S_{z_2,z_3,z_4}(z_1)$を\textbf{非調和比}という．
+\end{definition}
+
+\begin{theorem}
+    相異なる4点$z_1,z_2,z_3,z_4\in\hatC$と任意の一次変換$T\in\Aut(\hatC)$に対して，$(Tz_1,Tz_2,Tz_3,Tz_4)=(z_1,z_2,z_3,z_4)$
+\end{theorem}
+\begin{proof}
+    対応$S:[\hatC]^3\to\Aut(\hatC)$の単射性より，$S_{z_2,z_3,z_4}\circ T^{-1}=S_{Tz_2,Tz_3,Tz_4}$．
+    定理の主張は，$S_{z_2,z_3,z_4}(z_1)=S_{z_2,z_3,z_4}T^{-1}(Tz_1)=S_{Tz_2,Tz_3,Tz_4}(Tz_1)$より従う．
+\end{proof}
+
+\subsection{円円対応}
+
+\begin{notation}
+    $\infty$を通る直線を$\C$上の円と呼ぶ．
+\end{notation}
+
+\begin{theorem}
+    相異なる4点$z_1,z_2,z_3,z_4\in\hatC$に対して，次の2条件は同値．
+    \begin{enumerate}
+        \item $(z_1,z_2,z_3,z_4)\in\R$．
+        \item 4点$z_1,z_2,z_3,z_4$は$\C$上で同一の直線または円の上にある．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    一次変換は円を円に写す．
+\end{corollary}
+
+\subsection{対称性：一次変換による幾何}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\C$上の直線を用いた幾何，特に対称性の概念を，円に対して一般化することに応用できる．
+    この先の消息に，Schwartzの鏡映の原理などがある．
+\end{tcolorbox}
+
+\begin{definition}
+    $z,z^*\in\C$が円$C\subset\C$に関して\textbf{対称}であるとは，$\forall_{z_1,z_2,z_3\in[C]^3}\;(z^*,z_1,z_2,z_3)=\o{(z,z_1,z_2,z_3)}$を満たすことをいう．
+\end{definition}
+\begin{remarks}
+    円に関する対称点は，単位円に対する反転変換の一般化となっている．これを\textbf{鏡映変換}という．
+\end{remarks}
+
+\begin{theorem}[対称の原理]
+    一次変換$S\in\Aut(\hatC)$は円$C_1$を円$C_2$に写すとする．このとき，円$C_1$に対称な2点は円$C_2$に関して対称に写される．
+\end{theorem}
+\begin{proof}
+    一度実軸への対称変換を経由して考えれば良い．
+\end{proof}
+
+\section{等角写像の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一次変換は，正則関数の代数的な考察と幾何的な考察（例えば円の族を向きを含めて円の族に写す）とが交差する良い例であった．
+    同様のことを，初等関数で考える．
 \end{tcolorbox}
 
 \chapter{複素積分}
@@ -317,6 +440,8 @@ title=]
 \section{留数定理}
 
 \chapter{無限積展開}
+
+\chapter{調和関数}
 
 \chapter{Dirichlet問題}
 

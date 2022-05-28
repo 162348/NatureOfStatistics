@@ -194,6 +194,11 @@ title=遠すぎる数の和，近すぎる数の差には注意．]
 
 \chapter{行列とその分解と変換}
 
+\begin{quotation}
+    偏微分方程式系など，多くの問題は連立一次方程式系に還元され，行列の問題となる．
+    そこでまずは，行列の扱いについてまとめておく．
+\end{quotation}
+
 \section{連立一次方程式とCramerの公式から見た線型計算の世界}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -239,7 +244,7 @@ title=]
 title=]
     \begin{itemize}
         \item Hermite行列は，内積$\brac{\cdot,\cdot}:V\times W\to K$について定まる随伴関手${}^*:\Hom(V,V)\to\Hom(W^*,W^*)$
-        への対応であり，Hermite性は$\brac{Ax,x}=\o{\brac{x,Ax}}=\brac{x,Ax}$より，$\brac{Ax,x}={}^\exists\lambda\brac{x,x}\in\R$より，固有値は実数になる．
+        への対応であり，Hermite性は$\brac{Ax,x}=\o{\brac{x,Ax}}=\brac{x,Ax}$より，固有値は実数になると同時に，正値性の概念が定まる．
         \item 正則行列による共役変換を相似変換とよび，ある対角行列と相似であることを対角化可能という．Hermite行列は，固有ベクトルの中から正規直交基底を選び出せるので，ユニタリー行列による相似変換で対角化する．
     \end{itemize}
 \end{tcolorbox}
@@ -308,12 +313,37 @@ title=]
         \item $A^\top$が(一般化・狭義)優対角行列であるとき，$A$は列方向に(一般化・狭義)優対角であるという．
         \item $n\ge 2$のとき，空でない真部分集合$J\subset\{1,\cdots,n\}$であって，$\forall_{i\in J}\;\forall_{j\notin J}\;a_{ij}=0$が成り立つとき，行列$A$を\textbf{可約}という．
         \item 可約でない行列を\textbf{既約}という．$n=1$の時は，零行列のみを可約とする．
+        \item $A$が\textbf{既約優対角行列}であるとは，既約な優対角行列であることに加えて，$\exists_{k\in[n]}\;\abs{a_{kk}}>\sum_{j\ne k}\abs{a_{kj}}$を満たすことをいう．
     \end{enumerate}
 \end{definition}
 
 \begin{example}
     行列$\begin{pmatrix}2&-1&0\\0&2&-2\\0&2&-2\end{pmatrix}$は優対角行列だが，一般化狭義優対角行列ではなく，非正則である．
 \end{example}
+
+\subsection{正則性定理}
+
+\begin{theorem}
+    一般化狭義優対角行列と既約優対角行列とは正則である．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[一般化狭義優対角行列] 
+        
+        \item[既約優対角行列] 
+        既約優対角行列が特異であるとすると，$\exists_{x\ne 0}\;Ax=0$．
+        $J:=\Brace{k\in[n]\mid\abs{x_k}=\max_{i\in[n]}\abs{x_i}}$の大きさによって場合分けする．
+        \begin{enumerate}
+            \item $J=[n]$，すなわち，$\abs{x_1}=\cdots=\abs{x_n}\ne0$が成り立つとき，条件$\exists_{k\in[n]}\;\abs{a_{kk}}>\sum_{j\ne k}\abs{a_{kj}}$に矛盾する．
+            まず，式$Ax=0$の任意の$i\in[n]$成分に注目することで，
+            \[a_{ii}x_i+\sum_{j\ne i}a_{ij}x_j=0\]
+            を得るが，ここから三角不等式より，
+            \[\abs{a_{ii}}\abs{x_i}=\Abs{\sum_{j\ne i}a_{ij}x_j}\le\sum_{j\ne i}\abs{a_{ij}}\abs{x_j}=\abs{x_i}\sum_{j\ne i}\abs{a_{ij}}\]
+            すなわち$\abs{a_{ii}}\le\sum_{j\ne i}\abs{a_{ij}}$を得る．\footnote{既約優対角行列の定義がなければ，すべての$i\in[n]$で$\abs{a_{ii}}=\sum_{j\ne i}\abs{a_{ij}}$という状況が起こり得る．}
+            \item 
+        \end{enumerate}
+    \end{description}
+\end{proof}
 
 \subsection{$M$-行列}
 
