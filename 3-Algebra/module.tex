@@ -2,8 +2,8 @@
 \title{今日の代数学}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -23,6 +23,8 @@ title=]
     任意の加群は自由加群の準同型像となる．
 \end{tcolorbox}
 
+\subsection{定義と例}
+
 \begin{definition}\mbox{}
     \begin{enumerate}
         \item 線型空間とは，加群$V$とスカラー積による作用$\cdot:K\times V\to V$との組で，加法についての可換性条件$(a+b)x=ax+bx,a(x+y)=ax+ay$を満たすもののことをいう．
@@ -36,14 +38,6 @@ title=]
     \[K^{(X)}:=\Brace{f\in\Map(X,K)\mid f(x)=0\;\fe}\]
     をいう．これは$X$の元を基底とする$K$-線型空間である．
 \end{example}
-
-\begin{remarks}[直和について]
-    $W_1+W_2$は，ある線型空間$V$について$W_1,W_2\subset V$を満たす場合にしか定義されないが，$W_1\oplus W_2$は必ず定義される直和対象である．
-    この2つが同型になるときは条件$W_1\cap W_2=0$によって特徴付けられ，この場合の記法は$W_1\oplus W_2$と混用＝同一視してしまう．
-    次元に拘らず，線型空間の部分空間はいつも直和因子である（＝補空間$W'$が存在して$V=W\oplus W'$と表せる）．
-    無限次元Hilbertにおいては任意の閉部分空間に対して直交としてこれが標準的に構成でき，これを直交補空間という．
-    射影加群は適当な自由加群の直和因子（に同型）となるような加群として特徴づけられる．
-\end{remarks}
 
 \begin{example}[複素化]\mbox{}
     \begin{enumerate}
@@ -61,9 +55,50 @@ title=]
     \end{enumerate}
 \end{example}
 
+\subsection{部分空間の対応}
+
+\begin{proposition}
+    $\S_V,\S_W$は部分空間の全体がなす束とし，$f:V\to W$を線形写像とする．
+    \begin{enumerate}
+        \item 線形写像$f$は，部分空間を保つ．すなわち，$f^*(V'):=f(V'),f_*(W'):=f^{-1}(W')$によって
+        写像$f_*:\S_V\to\S_W,f^*:\S_W\to\S_V$が定まる．
+        \item $f^*,f_*$をそれぞれ
+        \[\S_{\Ker f}:=\Brace{V'\in\S_V\mid \Ker f\subset V'},\qquad\S_{\Im f}:=\Brace{W'\in\S_W\mid W'\subset\Im f}\]
+        へ制限すると，順序を保つ全単射となる．
+    \end{enumerate}
+\end{proposition}
+
 \begin{definition}
-    線型写像は部分空間を保つ．
+    $\Im f:=f^*(\top)$を像といい，$\Ker f:=f_*(\bot)$を核という．
 \end{definition}
+
+\subsection{直和と商}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般次元の線形空間の任意の部分空間に対して補空間が存在するが，一意とは限らない．
+    直交としての構成や，商空間としての構成が考えられる．
+\end{tcolorbox}
+
+\begin{remarks}[直和について]
+    $W_1+W_2$は，ある線型空間$V$について$W_1,W_2\subset V$を満たす場合にしか定義されないが，$W_1\oplus W_2$は必ず定義される直和対象である．
+    この2つが同型になるときは条件$W_1\cap W_2=0$によって特徴付けられ，この場合の記法は$W_1\oplus W_2$と混用＝同一視してしまう．
+    次元に拘らず，線型空間の部分空間はいつも直和因子である（＝補空間$W'$が存在して$V=W\oplus W'$と表せる）．
+    無限次元Hilbertにおいては任意の閉部分空間に対して直交としてこれが標準的に構成でき，これを直交補空間という．
+    射影加群は適当な自由加群の直和因子（に同型）となるような加群として特徴づけられる．
+\end{remarks}
+
+\begin{proposition}[準同型定理]
+    $f:V\epi W\;(V,W\in\Vect_K)$は全射とする．
+    部分空間$V'\in\S_V$に対して，次の2条件は同値．
+    \begin{enumerate}
+        \item 核の補空間である：$V=V'\oplus\Ker f$．
+        \item $f|_{V'}:V'\to W$は同型である．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    核の補空間$V'$は実はいつでも$V/\Ker f$と同型であるから，$V'\simeq V/\Ker f\iso \Im f$と見るとこれは準同型定理から従う．
+\end{remarks}
 
 \section{行列表示と基底変換}
 
@@ -109,6 +144,265 @@ title=]
 title=]
     $K$が代数的閉であるとき，行列表示の共役類の中から上三角なものを代表系に選び出せる．
     上三角とは$V'\subset V,W'\subset W$であって$f(V')\subset W'$を満たすような部分空間$V',W'$の増大列が取れるということである．
+\end{tcolorbox}
+
+\section{双対空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標準的なペアリングによる随伴理論を見る．
+    $\Coker f:=W/\Im f=\Ker(A^\top)$を解き明かす．
+\end{tcolorbox}
+
+\section{双線型形式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    双対空間の間の標準双線型形式$(-|-):V^*\times V\to K$を一般化し，随伴の理論を立てる．
+\end{tcolorbox}
+
+\subsection{行列表示}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    \begin{enumerate}
+        \item \textbf{双線型形式の行列表示}とは，標準内積による双線型形式の表現への回収である．
+        任意のベクトル$a^\top x\in V,a^\top b\in W\;(a\in K^n,b\in K^m)$について，
+        \[b(a^\top x,b^\top y)=a^\top\begin{pmatrix}
+            b(x_1,b^\top y)\\\vdots\\b(x_n,b^\top y)
+        \end{pmatrix}=a^\top (b(x_i,y_j))_{(i,j)\in[n]\times[m]}b\]
+        \item \textbf{基底変換により受ける変換}は，$Bx=B'Px\in V$を$B'$に関して表すと係数ベクトルが$x\mapsto Px$と変わるのだから，$b(x,y)=(Px)^\top AQy=x^\top(P^\top AQ)y$．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{definition}[双線型形式の行列表示]\mbox{}\label{def-matrix-representation-of-bilinear-forms}
+    \begin{enumerate}
+        \item 双線型形式$b:V\times W\to K$の，基底$x_1,\cdots,x_m\in V$と$y_1,\cdots,y_n\in W$に関する\textbf{行列表示}とは，
+        \[(b(x_i,y_j))_{1\le i\le m\\1\le j\le n}=\begin{pmatrix}b(x_1,y_1)&\cdots&b(x_1,y_n)\\\vdots&\ddots&\vdots\\b(x_m,y_1)&\cdots&b(x_m,y_n)\end{pmatrix}\in M_{mn}(K)\]
+        を指す．
+        \item 行列表示によれば，$b_A:K^n\times K^m\to K$との次の図式が可換になる：
+        \[\xymatrix{
+            K^n\times K^m\ar[r]^-{b_A}\ar[d]_-{x\times y}&K\ar[d]^-{\id_K}\\
+            V\times W\ar[r]_-b&K
+        }\]
+        すなわち，次が成り立つ：
+        \[\forall_{x\in K^n,y\in K^m}\quad b(g(x),g'(y))=b_A(x,y)={}^t\!xAy.\]
+        そして，全ての双線型形式がこのようにして生じる．
+        \item 次の写像は可逆である：
+        \[\xymatrix@R-2pc{
+            \{b\in K^{V\times W}\mid b:V\times W\to Kは双線型形式\}\ar[r]&M_{mn}(K)\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            b_A\ar@{|->}[r]&A
+        }.\]
+        これは有界線形作用素と半双線型式が内積を通じて一対一対応（加えて等長同型でもある）することに対応する．
+    \end{enumerate}
+\end{definition}
+
+
+\begin{proposition}[双線型形式の行列表示の基底変換]
+    $b:V\times W\to K$を双線型形式とする．
+    $V$の基底$B=(x_1,\cdots,x_m)$から$B'=(x_1',\cdots,x_m')$への底の変換行列を$P\in\GL_m(K)$とし，
+    $W$の基底$D=(y_1,\cdots,y_n)$から$D'=(y_1',\cdots,y_n')$への底の変換行列を$Q\in\GL_n(K)$とする．
+    $B,D$に関する$b$の行列表示を$A$とし，$B',D'$に関する$b$の行列表示を$A'$とすると，$A'={}^t\!PAQ$である．
+\end{proposition}
+\begin{proof}
+    任意の$x\in K^n$に対して，ベクトル$Bx\in V$の基底$B'$による係数ベクトルは$Px$と表せる．
+    よって，任意の$x\in K^n,y\in K^m$について，$x^\top A'y=(Px)^\top A(Qy)=x^top(P^\top AQ)y$．
+\end{proof}
+
+\subsection{付随する線形写像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    $b:V\times W\to K$は元々$b:W^*\times W\to K$である．
+    一般の$b:W\times W\to K$に対して$r_b:W\to W^*$をmateという．
+\end{tcolorbox}
+
+\begin{proposition}[双線型形式の行列表示の特徴付け]\label{prop-characterization-of-matrix-representation-of-bilinar-form}
+    $b:V\times W\to K$を双線型形式とする．$y\in W$に対し，写像$r_b(y):V\to K$を$r_b(y)=b(-,y)$と定める．
+    \begin{enumerate}
+        \item 写像$r_b(y):V\to K$は線型形式である．
+        \item $r_b:W\to V^*$は線型写像である．
+        \item $V,W\in\FinVect_K$とする．$B=(x_1,\cdots,x_m),B'=(y_1,\cdots,y_n)$をそれぞれ$V,W$の基底とし，$B^*=(f_1,\cdots,f_m)$を双対基底とする．$b$の$B,B'$に関する行列表示は，線型写像$r_b:W\to V^*$の基底$B',B^*$に関する行列表示に等しい．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $r_b(y)=b(-,y)$は，双線型形式は定義上第一引数に線形性が成り立つから，線型写像である．
+        \item \[\xymatrix@R-2pc{
+            r_b:W\ar[r]&V^*\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            x\ar@{|->}[r]&r_b(x)=b(-,x)
+        }\]
+        $x,y\in W,a\in K$とする．双線型形式の第二引数線形性より，
+        \begin{align*}
+            r_b(x+y)&=b(-,x+y)=b(-,x)+b(-,y)=r_b(x)+r_b(y)\\
+            r_b(ax)&=b(-,ax)=ab(-,x)=ar_b(x)
+        \end{align*}
+        \item 線型写像$r_b:W\to V^*$の基底$B',B^*$に関する行列表示を$A=(a_{ij})$と置くと，$r_b(y_j)$とは$A$の$j$列目の縦ベクトルの成分を用いて$r_b(y_j)=a_{1j}f_1+\cdots+a_{mj}f_m$と表せるから，
+        $b(x_i,y_j)$は，
+        \begin{align*}
+            b(x_i,y_j)&=r_b(y_j)(x_i)\\
+            &=(a_{1j}f_1+\cdots+a_{mj}f_m)(x_i)\\
+            &=a_{ij}
+        \end{align*}
+        となる．
+    \end{enumerate}
+\end{proof}
+
+\subsection{右随伴写像の行列表示}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    $b:V\times W\to K$は元々内積で，内積は$V$と$V^*$の間の同型を定める．
+    これは一般的に，引き戻しによる$r_b^*:\End(V)\to\End(W)$なる対応を定め，これを右随伴という．
+    定義域である$W$が$b$の右脚にあったためである．
+    代数的には，$b(f(x),y)=b(x,g(y))$という対応を意味する．
+
+    双対写像とは，内積に関する随伴なのであった．
+
+    $A:V\to V$の随伴は$A^\top:V^*\to V^*$で定まる．
+    その後，$V\to V^*$に関する基底の変換行列を$P$とすれば，それは当然$P^{-1}A^\top P$となる．
+\end{tcolorbox}
+
+\begin{definition}[non-degenerate, right adjoint]
+    $V,W\in\Vect_K$とし，$b:V\times W\to K$を双線型形式とする．
+    \begin{enumerate}
+        \item $b:V\times W\to K$が\textbf{$W$で非退化}とは，$r_b:W\to V^*$が単射であることをいう．$V$で非退化とは，$l_b:V\to W^*$が単射であることをいう．
+        \item $b$が$W$で非退化とする．$f\in\End_K(V)$に対して，$g\in\End_K(W)$が次の図式を可換にする時，$g$は$f$の\textbf{右随伴写像}という．$g$のことも$f^*$で表す．
+        \[\xymatrix{
+            W\ar[r]^-{r_b}\ar[d]_-g&V^*\ar[d]^-{f^*}\\
+            W\ar[r]^-{r_b}&V^*
+        }\]
+        この図式は，$y\in W$を取って$V^*$上の方程式に換言すれば，
+        \begin{align*}
+            f^*(r_b(y))&=r_b(g(y))\\
+            b(-,y)\circ f=b(f(-),y)&=b(-,g(y))
+        \end{align*}
+        となる．
+        \item $b$が\textbf{非退化}とは，$r_b:W\to V^*$が同型であることをいう．即ち，$V,W$が有限次元である場合は，第一要素も第二要素も単射であることをいう．
+        \item $b$の\textbf{階数}とは，$r_b$の階数をいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[随伴写像の行列表示は双対写像の行列表示の転置と共軛である]
+    $V,W\in\FinVect$，$b:V\times W\to K$を非退化な双線型形式とする．
+    $f:V\to V$を線型写像とし，$f^*:W\to W$をその右随伴写像とする．
+    $B,B'$をそれぞれ$V,W$の基底とし，$B,B'$に関する$b$の行列表示を$P\in\GL_n(K)$とする．
+    $f$の$B$に関する行列表示が$A\in M_n(K)$ならば，$B'$に関する随伴写像$f^*$の行列表示は，
+    $P^{-1}{}^t\!AP\in M_n(K)$
+    である．
+\end{proposition}
+\begin{proof}
+    $f^*$が$f$の随伴であるとは，$f^*$を双対写像$V^*\to V^*$を表す記号としても混用して，
+    \[\xymatrix{
+        W\ar[r]^-{r_b}\ar[d]_-{随伴f^*}&V^*\ar[d]^-{f^*双対写像}\\
+        W\ar[r]_-{r_b}&V^*
+    }\]
+    が可換であることより，$f$の右随伴写像は$f^*=r_b^{-1}\circ f^*\circ r_b$と表せる．
+    $r_b$の$W,V^*$の基底$B',B^*$に関する行列表示も$P$であるから，$f^*$の行列表示は$P^{-1}{}^t\!AP$である．
+\end{proof}
+
+\section{対称双線型形式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特に$V=W$の場合を考えると，非退化な場合右随伴写像と左随伴写像とは一致する．
+    自己共役な双線型形式を実なら対称，複素ならエルミートともいう．
+    対称形式は$b(x,x)=4q(x)-q(x)-q(x)=2q(x)$より，$K$の標数が２でなければ$V$の二次形式と一対一に対応し，極化不等式で関連する．
+\end{tcolorbox}
+
+\subsection{直交性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    内積はさらに非退化かつ半正定値のものをいうが，一般に自己共役なものについて直交なる概念が定まる．
+    （非退化な）対称形式$b:V\times V\to K$に関して，$K$の標数が２でなければ直交基底が存在する（系\ref{cor-existence-of-orthogonal-basis}）．
+\end{tcolorbox}
+
+\begin{definition}[orthogonal set, orthonormal basis]
+    $b$を$V$上の対称形式とする．
+    \begin{enumerate}
+        \item 部分空間$W\subset V$に対し，$W^\perp = \{ x\in V\mid \forall y\in W,\;b(x,y)=0 \}$を，\textbf{$W$の$b$に関する直交（集合）}と言う．$V^\perp$を$b$の\textbf{核}と言う．
+        \item $W\subset V$を部分空間とする．$b:V\times V\to K$の制限$W\times W\to K$が定める$W$の双線型形式を$b$の$W$への\textbf{制限}と呼び，$b_W$で表す．
+        \item $V$の基底$x_1,\cdots,x_n$に関する$b$の行列表示が対角行列であるとき，$x_1,\cdots,x_n$は\textbf{$b$に関する直交基底}であると言う．$b$の行列表示が単位行列であるとき，$x_1,\cdots,x_n$は\textbf{$b$の正規直交基底}であると言う．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[空間の直交に沿った分解]\label{prop-decomposition-along-orthogonal-space}
+    $V\in\FinVect$とし，$b$をその上の対称形式とする．$W\subset V$を部分空間とし，$b_W:W\times W\to K$をそこへの制限とする．
+    \begin{enumerate}
+        \item 次の３条件は同値．
+        \begin{enumerate}[(1)]
+            \item $b_W$は非退化である．
+            \item $V=W\oplus W^\perp$．
+            \item $W\cap W^\perp=0$．
+        \end{enumerate}
+        特に，$b$が非退化であることは，$V^\perp=0$によって特徴付けられる．
+        \item $b$が非退化ならば，$\dim V=\dim W+\dim W^\perp$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}\label{cor-existence-of-orthogonal-basis}
+    $V\in\FinVect$とし，$b$をその上の対称形式とする．
+    \begin{enumerate}
+        \item $W$を$V$の部分空間とし，$W^\perp$をその直交とする．$b,b_W$がいずれも非退化ならば，$b_{W^\perp}$も非退化である．
+        \item $K$の標数が$2$でなければ，$b$の直交基底が存在する．
+        \item $V=W\oplus W'$かつ$W'\subset V^\perp$とすると，次の２条件は同値である．
+        \begin{enumerate}[(1)]
+            \item $b_W$が非退化．
+            \item $W'=V^\perp$．
+        \end{enumerate}
+    \end{enumerate}
+\end{corollary}
+
+\begin{lemma}
+    $K$の標数が$2$でないとする．
+    $b\ne 0$ならば，$\exists x\in V,\;b(x,x)\ne 0$．
+\end{lemma}
+
+\subsection{随伴}
+
+\begin{definition}[adjoint mapping]
+    $V\in\Vect$とし，$b$をその上の非退化対象形式とする．$f\in\End(V)$に対して，
+    $r_b=l_b$であるから，右随伴写像$f^*_r$と左随伴写像$f^*_l$が一致する．これを\textbf{随伴写像}という．
+    \[\xymatrix{
+        V\ar[r]^-{r_b}\ar[d]_-{f_r^*}&V^*\ar[d]^-{f^*}&V\ar[l]_-{l_b}\ar[d]^-{f^*_l}\\
+        V\ar[r]^-{r_b}&V^*&V\ar[l]_-{l_b}
+    }\]
+    今回は$V=W$としているためである．
+\end{definition}
+
+\begin{definition}[symmetric transformation, orthogonal transformation]
+    $V\in\Vect$とし，$b$をその上の非退化対称形式とする．
+    \begin{enumerate}
+        \item $f\in\End(V)$が随伴写像$f^*$と等しい時，$f$は$b$に関して\textbf{対称変換}であるという：$\forall_{x,y\in V}\;b(f(x),y)=b(x,f(y))$．
+        \item $f\in\End(V)$が随伴写像$f^*$の逆写像である時，$f$は$b$に関して\textbf{直交変換}であるという：$\forall_{x,y\in V}\;b(f(x),f(y))=b(x,y)$．ただしこの特徴付けは，対称変換の場合と違って有限次元の場合に限る．
+    \end{enumerate}
+\end{definition}
+
+\subsection{自己共役性が示唆すること}
+
+\begin{remarks}
+    半双線型形式は内積の一般化で，特に（正規化すれば）「類似度」を測っているともみれる．
+    対称の場合はさらに踏み込んで（正規化すれば）「向き」のようなものを測っているとみれる．
+    それが対称であるとは，任意のベクトルの組$(x,y)$に対して，引かれあうなら引かれ合う，離れあうなら離れあうと，対称な変換を施すことになる．
+    したがって固有ベクトルの存在はある種の不動点定理の帰結のように理解できる．
+
+    実固有ベクトルの存在を示したい．$\partial B$上の点に注目すれば，有限次元のときこれはコンパクトだから，
+    どこかで最大値$\norm{A}=:\al\in\R_+$を取る．
+    この点$x\in\partial B$について，$\al^2=(Ax|Ax)=(x|AAx)$となるから，$\al\in\R_+$が固有値であるか，$A$が向きに関して対合であるだけで
+    真の固有ベクトルは$\al x+Ax$であるかである：$\al Ax+AAx=\al(Ax+\al x)$．
+
+    また，対称形式は直交性を保存するので，固有ベクトルの中から直交基底を選び出せる．
+    $x\in\partial B$を固有ベクトルとすると，その直交補空間の元$u\in (\R x)^\top$について$(Ax|u)=(x|Au)$より，$(\R x)^\top$は$A$-不変部分空間である．
+    よって対称形式$b$は$(\R x)^\top$に制限できて，再びここには固有ベクトルが存在する．
+
+    直交変換の随伴が逆写像になることは，
+\end{remarks}
+
+\subsection{慣性律}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
 \end{tcolorbox}
 
 \chapter{環上の加群}
