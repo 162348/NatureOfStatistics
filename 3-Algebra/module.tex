@@ -2,11 +2,114 @@
 \title{今日の代数学}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
+
+\chapter{体作用を持つ加群}
+
+\begin{quotation}
+    受ける作用を環からにすると環上の加群論，
+    さらに群からの作用を追加すると表現論となる．
+\end{quotation}
+
+\section{線型空間とその射}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    全ての線型空間は自由加群になるという意味で，環上の加群の理論が縮退する．
+    任意の加群は自由加群の準同型像となる．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 線型空間とは，加群$V$とスカラー積による作用$\cdot:K\times V\to V$との組で，加法についての可換性条件$(a+b)x=ax+bx,a(x+y)=ax+ay$を満たすもののことをいう．
+        \item 作用を保つような加群の射を\textbf{線型写像}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[free module]
+    基底を持つ加群を自由加群という．標準的には次のように構成できる：
+    \textbf{集合$X$上の自由加群}とは
+    \[K^{(X)}:=\Brace{f\in\Map(X,K)\mid f(x)=0\;\fe}\]
+    をいう．これは$X$の元を基底とする$K$-線型空間である．
+\end{example}
+
+\begin{remarks}[直和について]
+    $W_1+W_2$は，ある線型空間$V$について$W_1,W_2\subset V$を満たす場合にしか定義されないが，$W_1\oplus W_2$は必ず定義される直和対象である．
+    この2つが同型になるときは条件$W_1\cap W_2=0$によって特徴付けられ，この場合の記法は$W_1\oplus W_2$と混用＝同一視してしまう．
+    次元に拘らず，線型空間の部分空間はいつも直和因子である（＝補空間$W'$が存在して$V=W\oplus W'$と表せる）．
+    無限次元Hilbertにおいては任意の閉部分空間に対して直交としてこれが標準的に構成でき，これを直交補空間という．
+    射影加群は適当な自由加群の直和因子（に同型）となるような加群として特徴づけられる．
+\end{remarks}
+
+\begin{example}[複素化]\mbox{}
+    \begin{enumerate}
+        \item $V\in\Vect_\R$の\textbf{複素化}$V_\V$とは，加群$V\oplus V$に対して，作用$*:\C\times (V\oplus V)\to V\oplus V$を
+        \[(a+bi)*\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}ax-by\\bx+ay\end{pmatrix}\]
+        と定めたものをいう．このとき，
+        \[\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}x\\0\end{pmatrix}+i\begin{pmatrix}
+            y\\0
+        \end{pmatrix}\]
+        が成り立つことに注意すると，$\dim_\R(V)=\dim_\C(V_\C)$がわかる．
+        すなわち，$V$のコピーを用意して，第一成分を事実上の実部，第二成分を事実上の虚部と扱い，複素数による作用を甘受する．
+        \item $\R$-線型写像$f:V\to W$に対して，直和$f\oplus f:V\oplus V\to W\oplus W$は作用$*:\C\times (V\oplus V)\to V\oplus V$と$*:\C\times(W\oplus W)\to W\oplus W$とを保つ．
+        すなわち，$\C$-線型写像である．
+        これを\textbf{複素化}という．また，複素化により行列表示は変わらない．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    線型写像は部分空間を保つ．
+\end{definition}
+
+\section{行列表示と基底変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{enumerate}
+        \item 基底$(x_1,\cdots,x_n)$は左から（横ベクトルとして）作用し，係数ベクトル（反変ベクトル）は右から（縦ベクトルとして）作用する．これが内積の標準的表記である（左から風が吹いても抵抗感は少ない）．
+        \item 基底が変換される時，基底変換行列$P$が縦ベクトルには左から作用し，横ベクトルには右から作用する．これは，基底変換行列を，新たな基底から古い基底を取った空間への恒等写像$\id_V$の行列表示として定めれば，$y^\top=x^\top P$とは定義である．
+        \item その結果，$y^\top Ax=y^\top Q(Q^{-1}AP)x$という表示が成り立つ．$yQ$が新しい基底で，$Px$が新しい基底による係数行列である．
+    \end{enumerate}
+
+    \begin{enumerate}
+        \item ペアリング$\brac{-,-}:V\times W\to K$とは双線型形式である．$V$が横ベクトルの空間（$C^\op$にあたる）であり，$W^*$に当たる．双対基底も，元はといえば$\brac{e,-}\in V^*$の一般化である．
+        \item 双線型形式$b:V\times W\to K$の行列表示とは，$b:W\to V^*$の$V$の双対基底に関する行列表示ともみなせる．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{definition}[行列表示(matrix representation), 基底変換行列(transformation matrix)]\mbox{}
+    \begin{enumerate}
+        \item $f:V\to W\in\FinVect_K$の基底$B\subset V,B'\subset W$に関する行列表示とは，$x_i\in B$の像$f(x_i)\in W$の$B'$による成分表示を第$i$列にもつ行列をいう．
+        \item $V$の基底$B$を基底$B'$に写す$V$の自己同型の$B$による行列表示を，\textbf{$B$から$B'$への底の変換行列}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    これは$y_i$の行き先の基底$x_1,\cdots,x_n$による成分表示を第$i$列にして行列を作ることに等しい．
+    基底に右から作用すると考えて
+    \[(y_1\;\cdots\;y_n) = (x_1\;\cdots\;x_n)\begin{pmatrix}a_{11}&\cdots&a_{1n}\\\vdots&\ddots&\vdots\\a_{n1}&\cdots&a_{nn}\end{pmatrix}=(x_1\;\cdots\;x_n)A\]
+    と捉えられる．
+\end{remarks}
+
+\begin{proposition}[底の変換行列の特徴づけ]\label{prop-transformation-matrix}
+    有限次元線型空間$V$について，$P\in\GL_n(K)$を基底$B$から$B'$への底の変換行列とする．
+    \begin{enumerate}
+        \item 恒等写像$\id_V$の基底$\textcolor{red}{B',B}$に関する行列表示は$P$である．
+        \item 有限次元線型空間$W$について，$Q\in\GL_m(K)$を$D$から$D'$への底の変換行列とする．線型写像$f:V\to W$の$B,D$に関する行列表示$A$と$B',D'$に関する行列表示$A'$との間に，次の関係がある：
+        \[A'=Q^{-1}AP\]
+    \end{enumerate}
+\end{proposition}
+
+\section{Jordan標準形}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $K$が代数的閉であるとき，行列表示の共役類の中から上三角なものを代表系に選び出せる．
+    上三角とは$V'\subset V,W'\subset W$であって$f(V')\subset W'$を満たすような部分空間$V',W'$の増大列が取れるということである．
+\end{tcolorbox}
 
 \chapter{環上の加群}
 

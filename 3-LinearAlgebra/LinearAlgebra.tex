@@ -1,8 +1,9 @@
 \documentclass[uplatex, dvipdfmx]{jsreport}
-\title{代数と幾何（担当：阿部紀行先生）}
+\title{代数と幾何}
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
 \input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
@@ -1180,6 +1181,19 @@
         K^n\ar[u]^-{B'}\ar[r]_-{\times P}&K^n\ar[u]_-{B}\ar[r]_-{\times A}&K^m\ar[u]_-D
     }\]
 \end{remarks}
+
+\subsection{まとめ}
+
+\begin{enumerate}
+    \item 基底$(x_1,\cdots,x_n)$は左から（横ベクトルとして）作用し，係数ベクトル（反変ベクトル）は右から（縦ベクトルとして）作用する．これが内積の標準的表記である（左から風が吹いても抵抗感は少ない）．
+    \item 基底が変換される時，基底変換行列$P$が縦ベクトルには左から作用し，横ベクトルには右から作用する．これは，基底変換行列を，新たな基底から古い基底を取った空間への恒等写像$\id_V$の行列表示として定めれば，$y^\top=x^\top P$とは定義である．
+    \item その結果，$y^\top Ax=y^\top Q(Q^{-1}AP)x$という表示が成り立つ．$yQ$が新しい基底で，$Px$が新しい基底による係数行列である．
+\end{enumerate}
+
+\begin{enumerate}
+    \item ペアリング$\brac{-,-}:V\times W\to K$とは双線型形式である．$V$が横ベクトルの空間（$C^\op$にあたる）であり，$W^*$に当たる．双対基底も，元はといえば$\brac{e,-}\in V^*$の一般化である．
+    \item 双線型形式$b:V\times W\to K$の行列表示とは，$b:W\to V^*$の$V$の双対基底に関する行列表示ともみなせる．
+\end{enumerate}
 
 \section{核と像}
 
@@ -3318,6 +3332,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
     反変Hom関手$\Hom_\Vect(-,K)$を$\Hom_\Vect(f,K)=f^*$と言うように${}^*$で表す．
+    これは内積という標準的なペアリングに関する随伴である．
     この行列表示について，$(A\times)^*={}^t\!A\times$の関係が成り立つ（命題\ref{prop-matrix-representation-of-dual-map}）．
     行列を転置させると言う操作は，Hom集合の間の関手を取ってたのである！そんな2-射的な操作だったのか！
 \end{tcolorbox}
@@ -3659,13 +3674,19 @@ title=]
 \chapter{双線型形式}
 
 \begin{quotation}
-    線型空間とその双対空間を考察したいま，これを統合する立場に立てる．この概念をVectの立場から一つのデータ構造と演算で包摂できることが線型代数の威力である．
+    線型空間とその双対空間を考察したいま，これを統合する立場に立てる．
+    ペアリング$V\times W\to K$は内積$V^*\times V\to K$の一般化で，
+    これを考えることで$V,W$の情報を相互に流入させることができる．
+    これはadjointと同じ形である．
+
+    内積に限らず，任意の有限次元線型空間の間の（半）双線型形式は，標準基底を通じて行列が定める（半）双線型形式で表せる．
+    一般の線型空間については，行列の代わりに有界線形作用素を考えれば良い．
     
-    そもそも双線型写像はVectに生息するわけではないが，うまくcurryingし記法を工夫することで扱える．
-    この方法は極めて普遍的であり，実際完全にVect上に取り込める代数的手法である．
-    重線型写像とは，テンソル対称に分解するようなVectの射のことである．
-    「論理を可換図式がになって，残りは行列積の計算に落とし込む」の手法がさらに鮮やかになる．
-    行列はうまく使えばこんな高度な内容を全て行列積一つに落とし込めてしまえる！
+    %そもそも双線型写像はVectに生息するわけではないが，うまくcurryingし記法を工夫することで扱える．
+    %この方法は極めて普遍的であり，実際完全にVect上に取り込める代数的手法である．
+    %重線型写像とは，テンソル対象に分解するようなVectの射のことである．
+    %「論理を可換図式がになって，残りは行列積の計算に落とし込む」の手法がさらに鮮やかになる．
+    %行列はうまく使えばこんな高度な内容を全て行列積一つに落とし込めてしまえる！
     \begin{enumerate}
         \item 双線型形式は双対空間への線型写像と見るcurryingの発想により，行列表示を持つ．
         \item 対称的な双線型形式を調べる．
@@ -3703,11 +3724,22 @@ title=]
 \subsection{双線型形式の行列表示と変換}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
-    双線型形式はcurryingによって線型写像とみなせるので，行列表示を持つ．
+    %双線型形式はcurryingによって線型写像とみなせるので，行列表示を持つ．
 
-    変換については，基底$x_1,\cdots,x_m\in V$と$y_1,\cdots,y_n\in W$についての表示を$A\in M_{mn}(K)$とする．
-    $V$の基底$x'_1,\cdots,x'_m$への変換を$P\in\GL_m(K)$とすると，$P$の縦ベクトル$p_i$は，$x'_i$を作るための基底$x_1,\cdots,x_m$による献立なので，
-    $AP$で達成される．その双対については，${}^t\!QAP$で達成される．テンソルの変換もこの類似である（命題\ref{prop-basis-change-of-tensor}）．
+    %変換については，基底$x_1,\cdots,x_m\in V$と$y_1,\cdots,y_n\in W$についての表示を$A\in M_{mn}(K)$とする．
+    %$V$の基底$x'_1,\cdots,x'_m$への変換を$P\in\GL_m(K)$とすると，$P$の縦ベクトル$p_i$は，$x'_i$を作るための基底$x_1,\cdots,x_m$による献立なので，
+    %$AP$で達成される．その双対については，${}^t\!QAP$で達成される．
+    \begin{enumerate}
+        \item \textbf{双線型形式の行列表示}とは，標準内積による双線型形式の表現への回収である．
+        任意のベクトル$a^\top x\in V,a^\top b\in W\;(a\in K^n,b\in K^m)$について，
+        \[b(a^\top x,b^\top y)=a^\top\begin{pmatrix}
+            b(x_1,b^\top y)\\\vdots\\b(x_n,b^\top y)
+        \end{pmatrix}=a^\top (b(x_i,y_j))_{(i,j)\in[n]\times[m]}b\]
+        \item \textbf{基底変換により受ける変換}は，$Bx=B'Px\in V$を$B'$に関して表すと係数ベクトルが$x\mapsto Px$と変わるのだから，$b(x,y)=(Px)^\top AQy=x^\top(P^\top AQ)y$．
+    \end{enumerate}
+    
+    テンソルの変換（命題\ref{prop-basis-change-of-tensor}）と見た目は似ているが，これは基底変換に近い．
+    古いベクトル$A$を新しいベクトル$B$で表すと，$A=PB$となることに対して，新たに右側に（退化していた）$Q^\top$が出現する場合が高次のテンソルである．
 \end{tcolorbox}
 
 \begin{definition}[双線型形式の行列表示]\mbox{}\label{def-matrix-representation-of-bilinear-forms}
@@ -3715,15 +3747,15 @@ title=]
         \item 双線型形式$b:V\times W\to K$の，基底$x_1,\cdots,x_m\in V$と$y_1,\cdots,y_n\in W$に関する\textbf{行列表示}とは，
         \[(b(x_i,y_j))_{1\le i\le m\\1\le j\le n}=\begin{pmatrix}b(x_1,y_1)&\cdots&b(x_1,y_n)\\\vdots&\ddots&\vdots\\b(x_m,y_1)&\cdots&b(x_m,y_n)\end{pmatrix}\in M_{mn}(K)\]
         を指す．
-        \item $b$の行列表示$A$によって得た$A$倍写像$A\times $とは，次の図式を可換にする射$b\circ g\times g':K^{m+n}\to K$である．
+        \item 行列表示によれば，$b_A:K^n\times K^m\to K$との次の図式が可換になる：
         \[\xymatrix{
-            K^n\ar[r]^-{g'}\ar[d]_-j&W\ar[d]^-j\\
-            K^{m+n}\ar[r]^-{g\times g'}&V\times W\ar[r]^-b&K\\
-            K^m\ar[u]^-i\ar[r]_-g&V\ar[u]_-i
+            K^n\times K^m\ar[r]^-{b_A}\ar[d]_-{x\times y}&K\ar[d]^-{\id_K}\\
+            V\times W\ar[r]_-b&K
         }\]
-        しかし，$A$は$1\times(m+n)$行列とはしない．$m\times n$行列とし，左右で分けて書くのである：
-        \[b\circ g\times g'(x,y)=b(g(x),g'(y))=b_A(x,y)={}^t\!xAy.\]
-        \item 次の写像は可逆である：
+        すなわち，次が成り立つ：
+        \[\forall_{x\in K^n,y\in K^m}\quad b(g(x),g'(y))=b_A(x,y)={}^t\!xAy.\]
+        そして，全ての双線型形式がこのようにして生じる．
+        \item (Rieszの表現定理) 次の写像は可逆である：
         \[\xymatrix@R-2pc{
             \{b\in K^{V\times W}\mid b:V\times W\to Kは双線型形式\}\ar[r]&M_{mn}(K)\\
             \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
@@ -3749,32 +3781,32 @@ title=]
     $B,D$に関する$b$の行列表示を$A$とし，$B',D'$に関する$b$の行列表示を$A'$とすると，$A'={}^t\!PAQ$である．
 \end{proposition}
 \begin{proof}
-    \[\xymatrix{
-        K^m\ar[r]^-{g_B}&V\ar[d]&K^m\ar[l]_-{g_{B'}}\ar@/_2pc/[ll]_-{P\times}\\
-        K^{m+n}\ar[d]\ar[u]\ar[r]^-{g_B\oplus g_D}&V\times W&K^{m+n}\ar[l]_-{g_{B'}\oplus g_{D'}}\ar[d]\ar[u]\\
-        K^n\ar[r]_-{g_D}&W\ar[u]&K^n\ar[l]^-{g_{D'}}\ar@/^2pc/[ll]^-{Q\times}
-    }\]
-    いま，$B,D$に関する$b$の行列表示が$A$だから，右の方から$(a,a')\in K^m\oplus K^n$を取ると，上の図式が可換だから，
-    \begin{align*}
-        g_{B'}\oplus g_{D'}(a,a')&=b(g_{B'}(a),g_{D'}(a'))={}^t\!aA'a'\\
-        (g_B\oplus g_D)\circ(P\times\oplus Q\times)(a,a')&=b(g_B(Pa),g_D(Qa'))={}^t\!(Pa)AQa'={}^t\!a({}^tPAQ)a'
-    \end{align*}
-    の２つは等しい．よって，$A'={}^t\!PAQ$．
+    %\[\xymatrix{
+    %    K^m\ar[r]^-{g_B}&V\ar[d]&K^m\ar[l]_-{g_{B'}}\ar@/_2pc/[ll]_-{P\times}\\
+    %    K^{m+n}\ar[d]\ar[u]\ar[r]^-{g_B\oplus g_D}&V\times W&K^{m+n}\ar[l]_-{g_{B'}\oplus g_{D'}}\ar[d]\ar[u]\\
+    %    K^n\ar[r]_-{g_D}&W\ar[u]&K^n\ar[l]^-{g_{D'}}\ar@/^2pc/[ll]^-{Q\times}
+    %}\]
+    %いま，$B,D$に関する$b$の行列表示が$A$だから，右の方から$(a,a')\in K^m\oplus K^n$を取ると，上の図式が可換だから，
+    %\begin{align*}
+    %    g_{B'}\oplus g_{D'}(a,a')&=b(g_{B'}(a),g_{D'}(a'))={}^t\!aA'a'\\
+    %    (g_B\oplus g_D)\circ(P\times\oplus Q\times)(a,a')&=b(g_B(Pa),g_D(Qa'))={}^t\!(Pa)AQa'={}^t\!a({}^tPAQ)a'
+    %\end{align*}
+    %の２つは等しい．よって，$A'={}^t\!PAQ$．
+    任意の$x\in K^n$に対して，ベクトル$Bx\in V$の基底$B'$による係数ベクトルは$Px$と表せる．
+    よって，任意の$x\in K^n,y\in K^m$について，$x^\top A'y=(Px)^\top A(Qy)=x^top(P^\top AQ)y$．
 \end{proof}
-\begin{remark}
-    これも，「論理を可換図式がになって，残りは行列積の計算に落とし込む」のパターンである．
-\end{remark}
 
-\subsection{双線型写像をcurryingしてVectに取り込む：双線型形式の行列表示の特徴付け}
+\subsection{付随する線型写像}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
-    双線型写像は，双対空間を考えることで，線型写像として明快に調べることができる．
-    それにはcurryingをするのである．$b:V\times W\to K$を$r_b:W\to V^*$と$l_b:V\to W^*$との２通りで見る．
-    行列表示では，括弧()をどちらにつけるかの結合の議論に等しい．
-    「双線型写像$b:V\times W\to K$の行列表示とは，currying $r_b:W\to V^*$の，基底$B',B^*$に関する行列表示である」とまとまる．
-    これがテンソルの力である．
+    $b:V\times W\to K$は元々$b:W\to W^*$である．
+    %双線型写像は，双対空間を考えることで，線型写像として明快に調べることができる．
+    %それにはcurryingをするのである．$b:V\times W\to K$を$r_b:W\to V^*$と$l_b:V\to W^*$との２通りで見る．
+    %行列表示では，括弧()をどちらにつけるかの結合の議論に等しい．
+    %「双線型写像$b:V\times W\to K$の行列表示とは，currying $r_b:W\to V^*$の，基底$B',B^*$に関する行列表示である」とまとまる．
+    %これがテンソルの力である．
 
-    思えばHom関手とは，curryingしっぱなしだったのか．それがbifunctorか！
+    %思えばHom関手とは，curryingしっぱなしだったのか．それがbifunctorか！
 \end{tcolorbox}
 
 \begin{proposition}[双線型形式の行列表示の特徴付け]\label{prop-characterization-of-matrix-representation-of-bilinar-form}
@@ -3831,15 +3863,21 @@ title=]
     \end{enumerate}
 \end{example}
 
-\subsection{非退化な双線型形式は，双対空間への単射を定める}
+\subsection{随伴：情報の流入}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
-    Hom関手と双線型写像はbifunctor性という点で似通っている．
-    そこで随伴という用語が転用された．
-    右成分または左成分について単射な双線型写像$b$は，右または左随伴写像を定める：$b(f(-),y)=b(-,g(y))$．
-    これはbifunctorが備わる２つの空間$V,W$の間に必ず備わる対（双対を超える存在）のようなもの．
-    「別の空間に跨った内積（の二通りのcurringが左随伴と右随伴）」という直感の持ち方が筋が良いのでは？
-    次節以降は$V=W$の場合，即ち空間内に内積の構造が収まっている場合を考える．
+    $b:V\times W\to K$は元々内積で，内積は$V$と$V^*$の間の同型を定める．
+    これは一般的に，引き戻しによる$r_b^*:\End(V)\to\End(W)$なる対応を定め，これを右随伴という．
+    定義域である$W$が$b$の右脚にあったためである．
+    代数的には，$b(f(x),y)=b(x,g(y))$という対応を意味する．
+
+    双対写像とは，内積に関する随伴なのであった．
+    %Hom関手と双線型写像はbifunctor性という点で似通っている．
+    %そこで随伴という用語が転用された．
+    %右成分または左成分について単射な双線型写像$b$は，右または左随伴写像を定める：$b(f(-),y)=b(-,g(y))$．
+    %これはbifunctorが備わる２つの空間$V,W$の間に必ず備わる対（双対を超える存在）のようなもの．
+    %「別の空間に跨った内積（の二通りのcurringが左随伴と右随伴）」という直感の持ち方が筋が良いのでは？
+    %次節以降は$V=W$の場合，即ち空間内に内積の構造が収まっている場合を考える．
 \end{tcolorbox}
 
 種々の概念を，curryingによって得る線型写像$r_b$の言葉で曇りなく定義する．
@@ -3865,15 +3903,14 @@ title=]
 \end{definition}
 \begin{remark}[記号の混用]\mbox{}
     \begin{enumerate}
-        \item $b$が$W$で非退化の時，$W\supset\Ker r_b=0$より，$0$との係数比較ができる$\forall x\in V b(x,y)=0\Rightarrow y=0\in W$ということである．一言で言えば，第二成分単射．
-        \item well-definednessとしては，$V^*$上の方程式$b(f(-),y)=b(-,g(y))$は確かに$b$が第二成分について単射である時，$g(y)$の値は一意に定まるので，このような写像$g$は一意的である．
-        \item 標準双線型形式$b=\langle\;,\;\rangle$は非退化である．$r_b=1_{V^*},l_b=1_{W^*}$だからである．
-        \item $f^*$は随伴写像と双対写像で混用されることになるが，厳密に同一視できるのは$\dim V=\dim W$の時，$r_b:W\to V^*$が同型の時に限る．少し強引に思えるが，双線型形式の下では，特に元の空間とその双対空間とはセットで考え勝ちであり，同一視のモチベーションがある．
-        \item 逆に言えば，$b$が非退化ならば，$\dim V=\dim W$である．
+        \item $b$が非退化であるとき，随伴は一意である．
+        $V^*$上の方程式$b(f(-),y)=b(-,g(y))$は確かに$b$が第二成分について単射である時，$g(y)$の値は一意に定まるので，このような写像$g$は一意的である．
+        \item $f^*$は随伴写像と双対写像で混用されることになるが，厳密に同一視できるのは$\dim V=\dim W$の時，$r_b:W\to V^*$が同型の時に限る．
+        \item $b$が非退化ならば，$\dim V=\dim W$である．
     \end{enumerate}
 \end{remark}
 
-\begin{proposition}[定義の左右対称性]
+\begin{proposition}[定義の左右対称性と非退化性の特徴付け]
     $V,W\in\FinVect$とし，$b:V\times W\to K$を双線型形式とする．
     \begin{enumerate}
         \item $r_b:W\to V^*$の階数と$l_b:V\to W^*$の階数とは等しい．
@@ -3895,7 +3932,13 @@ title=]
     \end{description}
 \end{proof}
 
-\subsection{随伴写像}
+\subsection{随伴の行列表示}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $A:V\to V$の随伴は$A^\top:V^*\to V^*$で定まる．
+    その後，$V\to V^*$に関する基底の変換行列を$P$とすれば，それは当然$P^{-1}A^\top P$となる．
+\end{tcolorbox}
 
 \begin{proposition}[随伴写像の行列表示は双対写像の行列表示の転置と共軛である]
     $V,W\in\FinVect$，$b:V\times W\to K$を非退化な双線型形式とする．
@@ -3948,11 +3991,13 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable,
     title=単一空間上の双線型形式を考える]
-    線型写像が，部分空間に対して言及するための圧倒的効果を持つことを圏論的に見てきた．
-    その力を受け継ぐように，空間上に定められた
-    内積の構造は，空間の基底の取り方（正規直交基底の概念）などを基底するだけの基本的対象としてふさわしい．
-    内積の表現行列が対角行列になるようなものを直交基底と呼んでいるのであって，直交の概念が先にあるわけではない．
-    $b(x,-)$の核として平面の方程式を与えることなど，高校数学ではポピュラーな話題である．
+    より内積に近い要素である自己共役性を追加して，より特殊な議論を展開する．
+    すると，より代数的な対称として，2次形式と一対一対応する．
+    %線型写像が，部分空間に対して言及するための圧倒的効果を持つことを圏論的に見てきた．
+    %その力を受け継ぐように，空間上に定められた
+    %内積の構造は，空間の基底の取り方（正規直交基底の概念）などを基底するだけの基本的対象としてふさわしい．
+    %内積の表現行列が対角行列になるようなものを直交基底と呼んでいるのであって，直交の概念が先にあるわけではない．
+    %$b(x,-)$の核として平面の方程式を与えることなど，高校数学ではポピュラーな話題である．
 \end{tcolorbox}
 
 \subsection{対称形式と２次形式}
@@ -4098,11 +4143,11 @@ title=]
     $b(x,y)=\frac{1}{2}(b(x+y,x+y)-b(x,x)-b(y,y))$だから，とだけ書いてある．
 \end{proof}
 
-\subsection{随伴写像}
+\subsection{随伴写像を解した変換の定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
-    対称形式はcurryingによって同じ写像を作り出すから（$r_b=l_b$），
-    対称形式の下では，右随伴写像と左随伴写像が一致する．
+    対称変換は直交の概念と（基底の中でも）正規直交基底の概念とを定めた．
+    引き続いて，随伴写像を介することによって，対称変換と直交変換なる概念が定まる．
 \end{tcolorbox}
 
 \begin{definition}[adjoint mapping]
@@ -4112,13 +4157,14 @@ title=]
         V\ar[r]^-{r_b}\ar[d]_-{f_r^*}&V^*\ar[d]^-{f^*}&V\ar[l]_-{l_b}\ar[d]^-{f^*_l}\\
         V\ar[r]^-{r_b}&V^*&V\ar[l]_-{l_b}
     }\]
+    今回は$V=W$としているためである．
 \end{definition}
 
 \begin{definition}[symmetric transformation, orthogonal transformation]
     $V\in\Vect$とし，$b$をその上の非退化対称形式とする．
     \begin{enumerate}
-        \item $f\in\End(V)$が随伴写像$f^*$と等しい時，$f$は$b$に関して\textbf{対称変換}であるという．
-        \item $f\in\End(V)$が随伴写像$f^*$の逆写像である時，$f$は$b$に関して\textbf{直交変換}であるという．
+        \item $f\in\End(V)$が随伴写像$f^*$と等しい時，$f$は$b$に関して\textbf{対称変換}であるという：$\forall_{x,y\in V}\;b(f(x),y)=b(x,f(y))$．
+        \item $f\in\End(V)$が随伴写像$f^*$の逆写像である時，$f$は$b$に関して\textbf{直交変換}であるという：$\forall_{x,y\in V}\;b(f(x),f(y))=b(x,y)$．ただしこの特徴付けは，対称変換の場合と違って有限次元の場合に限る．
     \end{enumerate}
 \end{definition}
 \begin{remark}
@@ -4130,6 +4176,23 @@ title=]
     従って確かに対合的に戻ってきていて，$f=f^*$や$f^{*-1}$となる可能性がある．
     しかし，直接図式を可換にする関係があるのは随伴と双対で，随伴と元の$f$とでは使い方の向きが違うと思われる．
 \end{remark}
+\begin{remarks}
+    半双線型形式は内積の一般化で，特に（正規化すれば）「類似度」を測っているともみれる．
+    対称の場合はさらに踏み込んで（正規化すれば）「向き」のようなものを測っているとみれる．
+    それが対称であるとは，任意のベクトルの組$(x,y)$に対して，引かれあうなら引かれ合う，離れあうなら離れあうと，対称な変換を施すことになる．
+    したがって固有ベクトルの存在はある種の不動点定理の帰結のように理解できる．
+
+    実固有ベクトルの存在を示したい．$\partial B$上の点に注目すれば，有限次元のときこれはコンパクトだから，
+    どこかで最大値$\norm{A}=:\al\in\R_+$を取る．
+    この点$x\in\partial B$について，$\al^2=(Ax|Ax)=(x|AAx)$となるから，$\al\in\R_+$が固有値であるか，$A$が向きに関して対合であるだけで
+    真の固有ベクトルは$\al x+Ax$であるかである：$\al Ax+AAx=\al(Ax+\al x)$．
+
+    また，対称形式は直交性を保存するので，固有ベクトルの中から直交基底を選び出せる．
+    $x\in\partial B$を固有ベクトルとすると，その直交補空間の元$u\in (\R x)^\top$について$(Ax|u)=(x|Au)$より，$(\R x)^\top$は$A$-不変部分空間である．
+    よって対称形式$b$は$(\R x)^\top$に制限できて，再びここには固有ベクトルが存在する．
+
+    直交変換の随伴が逆写像になることは，
+\end{remarks}
 
 \begin{example}[標準内積]
     $V=K^n$とし，$b:K^n\times K^n\to K$を，単位行列が定める非退化対称形式$b(x,y)={}^t\!xy$とする．
@@ -4146,7 +4209,10 @@ title=]
 \subsection{実数上の対称形式と符号数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
-    $\FinVect_\R$上の対称形式には，符号数が定まる．
+    対称行列は対角化可能で，固有値が$n$個定まる．
+    この符号の組は不変である．言い換えれば，
+    $\FinVect_\R$上の対称形式＝$\R$の二次形式には，
+    符号数が定まる．
 \end{tcolorbox}
 
 \begin{proposition}[直交基底とlaw of inertia]
@@ -4198,16 +4264,27 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\begin{lemma}
+    $V\in\FinVect_\R$について，
+    \begin{enumerate}
+        \item $V$上の正定値対称双線型形式は非退化である．これを\textbf{内積}という．
+        \item $b$が正定値ならば，$V$には正規直交基底が存在する．
+    \end{enumerate}
+\end{lemma}
+
 \section{エルミート形式}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
-    $\C$の内積を考える．すると，「対称」の語が「エルミート」となり，「直交」の語が「ユニタリー」となる．
-    自然を説明する力が増すのと同時に，用語にも神秘性が帯びる．
-    これは，$V$の共軛を考えることで双線型形式に帰着される，
-    双線型性を複素共役によって崩した概念である．
-    でも何故か対称行列の方がHermite共軛の退化した概念だと思えるのが複素数の不思議なところである．
-    対角化の理論はエルミート形式において決着する．
-    右側が崩れていることがHom関手の流儀と異なる点が気になる．
+    対称形式を複素化する．
+    自己共役な半双線型形式をエルミート形式という．
+    さらに正定値であるとき，内積という．
+    %$\C$の内積を考える．すると，「対称」の語が「エルミート」となり，「直交」の語が「ユニタリー」となる．
+    %自然を説明する力が増すのと同時に，用語にも神秘性が帯びる．
+    %これは，$V$の共軛を考えることで双線型形式に帰着される，
+    %双線型性を複素共役によって崩した概念である．
+    %でも何故か対称行列の方がHermite共軛の退化した概念だと思えるのが複素数の不思議なところである．
+    %対角化の理論はエルミート形式において決着する．
+    %右側が崩れていることがHom関手の流儀と異なる点が気になる．
 \end{tcolorbox}
 
 \subsection{エルミート形式の定義}
