@@ -425,15 +425,369 @@ title=]
     一度実軸への対称変換を経由して考えれば良い．
 \end{proof}
 
+\subsection{Steinerの円}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $z$の平面と$w$の平面との座標直線の対応をみるのは等角写像に対する標準的な分析である．
+    一次変換についてはSteinerの円が知られている．
+\end{tcolorbox}
+
 \section{等角写像の例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     一次変換は，正則関数の代数的な考察と幾何的な考察（例えば円の族を向きを含めて円の族に写す）とが交差する良い例であった．
     同様のことを，初等関数で考える．
+    これは実関数のグラフを見ることに相等する．
+
+    また，この方法によって正則関数が特徴付けられるということが，Riemannの写像定理である．
+    その手法はRiemann面を導入することで，非単射な正則関数についても実行可能になる．
 \end{tcolorbox}
 
+\subsection{初等関数}
+
+\begin{definition}[ramification point, branch point, fundamental region]\mbox{}
+    \begin{enumerate}
+        \item $f:O\to\C$について，点$z_0\in O$の周りを一周しても元の値に戻らないとき，$z_0$を\textbf{分岐点}，$f(z_0)$を\textbf{分岐値}という．
+        \item $\C$からたかだか有限個の曲線を除いた領域へ単射に写される定義域の部分集合を\textbf{基本領域}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[多項式]
+    $w=z^n\;(n\in\N)$は
+    角領域を$\C\setminus(0,\infty)$に写す．
+    \begin{enumerate}
+        \item $n$個の角領域$(k-1)\frac{2\pi}{n}<\arg z<k\frac{2\pi}{n}$の各々と，$\C\setminus(0,\infty)$が微分同相になる．
+        \item なお，このとき$0,\infty$を通る任意の単純閉曲線に沿った切り口で$\C$を貼り合わせればよく，その選択に関してRiemann面はwell-definedである．一方で点$w=0$は$n$枚のシートとつながっている．これを\textbf{$n$位の分岐点}という．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[指数関数]
+    $w=e^z$は帯領域を$\C\setminus[0,\infty)$に写す．
+    \begin{enumerate}
+        \item 帯領域$(k-1)2\pi<y<k2\pi$の各々を$\C\setminus[0,\infty)$に写す．
+    \end{enumerate}
+\end{example}
+
 \chapter{複素積分}
+
+\begin{quotation}
+    多くの正則関数の性質は，積分の言葉を用いれば証明できる．
+    その理由は，任意の正則関数がCauchyの積分表示を持つため，積分論を通じて正則関数を調べることが出来る．
+
+    積分の中でも特に，微分係数の定義に用いられる形
+    \[\lim_{\zeta\to z}\frac{f(\zeta)-f(z)}{\zeta-z}\]
+    に注目する．
+\end{quotation}
+
+\section{積分の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cauchyの積分定理は，微分形式の積分を$df=\partial_zfdz+\partial_{\o{z}}fd\o{z}$に関して自然に定義したとき，Greenの定理の直接的な帰結である（微分形式は最低でも$C^1$級であった）．
+    しかしこのとき，曲線の$C^1$-級という，ベクトル解析的な消息が入ってしまう．
+    より複素解析的な議論は，複素積分をRiemann和の議論まで戻って議論するところから始まる．
+\end{tcolorbox}
+
+\subsection{積分の定義}
+
+\begin{notation}[curve, path]
+    \textbf{曲線}を連続関数$[a,b]\to X$の意味で使い，そのうち特に\textbf{道}を区分的に$C^1$級な曲線として使う．
+\end{notation}
+
+\begin{discussion}[複素積分の定義: contour integral]
+    $f$を連続関数とする．
+    \begin{enumerate}
+        \item 道$\gamma$に沿った$f:\Im\gamma\to\C$の\textbf{複素線積分}を，
+        \[\int_\gamma f(z)dz=\int^b_af(z(t))z'(t)dt.\]
+        で定める．これは$\C$-線形写像となり，三角不等式（ある種のノルム減少性）を満たす．
+        \item 一般の曲線$\gamma$に沿った複素線積分を，
+        \[\int_\gamma fdz:=\lim_{\abs{\Delta}\to0}\sum^n_{j=1}f(\gamma(\xi_j))(\gamma(t_j)-\gamma(t_{j-1}))\]
+        で定め，これが実数値となるとき\textbf{可積分}であるという．
+        \item 同様にして，スカラー場の線積分の対応物として，\textbf{弧長積分}が得られる：
+        \[\int_\gamma f\abs{dz}:=\lim_{\abs{\Delta}\to0}\sum^n_{j=1}f(\gamma(\xi_j))\abs{\gamma(t_j)-\gamma(t_{j-1})}.\]
+    \end{enumerate}
+\end{discussion}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $C^1$-級曲線は長さ確定であり，$\Length(\gamma):=\int_\gamma 1\cdot\abs{dz}=\int_\gamma\abs{\gamma'(t)}dt$．
+        \item 形式的三角不等式：$\gamma$を道，$f$を連続とすると，
+        \[\Abs{\int_\gamma fdz}\le\int_\gamma\norm{f}_\gamma\abs{dz}\le\norm{f}_\gamma\Length(\gamma)\]
+        \item 関数$f:D\to\C$が連続で，曲線$\gamma:[a,b]\to D$が長さ確定ならば，$f$は$\gamma$上可積分である．
+        \item 特に$\gamma$が道でもあるとき，その積分値は1-形式の積分と一致する：
+        \[\int_\gamma fdz=\int^b_af(\gamma(t))\gamma'(t)dt.\]
+    \end{enumerate}
+\end{proposition}
+
+\subsection{ベクトル解析からの流入}
+
+\begin{discussion}[ベクトル解析の結果の翻訳]
+    Euclid空間の可縮な領域$D\subset\R^n$について，任意の$C^\infty$-級の$p$-形式$\om\in\Om^p(U)\;(p\ge 1)$は，閉ならば完全形式である．
+    これはポテンシャルが存在するためである．この方法を用いれば，可縮は仮定が緩いにしても，星型領域上では同様のことが正則関数についても示せる．
+\end{discussion}
+
+\begin{theorem}
+    $D$を星型領域，$a\in D^\circ$をその内点とする．
+    $f:D\to\C$が連続で，$D\setminus\{a\}$上正則とすると，
+    \begin{enumerate}
+        \item $f$は$D$上で正則な原始関数を持つ．
+        \item $D$内の任意の道$\gamma$について，$\int_\gamma fdz=0$．
+    \end{enumerate}
+\end{theorem}
+
+\section{回転数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    まず，対数関数とその複素積分を用いて，曲線がある点の周りを何周するかを解析的なことばで捉えられる．
+\end{tcolorbox}
+
+\subsection{定義と性質}
+
+\begin{definition}[winding number]
+    閉道$\gamma:[a,b]\to\C$について，
+    \[\xymatrix@R-2pc{
+        n(\gamma,-):\C\setminus\Im\gamma\ar[r]&\Z\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        a\ar@{|->}[r]&\frac{1}{2\pi i}\int_\gamma\frac{d\zeta}{\zeta-a}
+    }\]
+    を\textbf{回転数}という．
+\end{definition}
+\begin{proof}
+    曲線$\gamma$を表すパラメータを$z:[\al,\beta]\to\Im\gamma$とすると，
+    \[h(t):=\int^t_\al\frac{z'(t)}{z(t)-a}dt\]
+    とおき，$e^{h(\beta)}=1$を示せば，指数関数の周期性から$n(\gamma,-)\subset 2\pi i\Z$が示せる．
+
+    微積分学の基本定理より，
+    \[h'(t)=\frac{z'(t)}{z(t)-a}\quad\fe\]
+    これより，関数$H(t):=e^{-h(t)}(z(t)-a)$は$[\al,\beta]$上定値関数である．実際，この導関数は
+    \[H'(t)=-h'(t)e^{-h(t)}(z(t)-a)+e^{-h(t)}z'(t)=0\quad\fe\]
+    特に$t=\beta$の場合を考えて$e^{h(\beta)}=\frac{z(\beta)-a}{z(\al)-a}=1$．
+\end{proof}
+\begin{remarks}[対数関数のRiemann面を登っていく描像]
+    直感的には，
+    \[\int_\gamma\frac{dz}{z-a}=\int_\gamma d\log(z-a)=\int_\gamma d\log\abs{z-a}+i\int_\gamma d\arg(z-a)\]
+    が成り立つが，$\arg$には$\gamma$上一価な分枝が定義出来ない．
+    第二項が$2\pi i$という値の原因になっている．
+\end{remarks}
+
+\begin{proposition}[回転数の性質]
+    $\gamma$を閉道，$\C\setminus\Im\gamma=\sqcup_{\lambda\in\Lambda}V_\lambda$を連結成分への分解とする．
+    \begin{enumerate}
+        \item $n(\gamma,z)$の各連結成分への制限は定値．
+        \item 非有界な連結成分の上では$n(\gamma,z)=0$を満たす．
+    \end{enumerate}
+\end{proposition}
+
+\section{Cauchyの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cauchyの定理を編み上げる過程は，位相的な洗練である．
+    はじめは長方形領域から行い，最終的にはホモトピーの言葉で定理を完成させる．
+    なお，積分領域$T$や$[\Delta(a,r)]$に対して，これを含む連結な開近傍上で正則関数が定義されていることを考えることに注意．
+\end{tcolorbox}
+
+\subsection{Cauchyの定理}
+
+\begin{lemma}[閉三角形領域に対するCauchyの定理]
+    $D\subset\C$を領域，$p\in D$とし，連続関数$f:D\to\C$は$D\setminus\{p\}$上正則とする．
+    このとき，任意の閉三角形$T\subset D$について，
+    \[\int_{\partial T}f(z)dz=0.\]
+\end{lemma}
+\begin{remarks}
+    有限個の特異点（ただしその上でも連続）を除いて任意の閉三角形$T$上で正則な関数は，$\partial T$上での積分が零である．
+    実は有限個の特異点$(\zeta_j)$上で連続性がわからなくとも，$\lim_{z\to\zeta_j}(z-\zeta_j)f(z)=0$がなりたてば良い．
+\end{remarks}
+\begin{proof}
+    一般の三角形$T\subset D$について，$\eta(T):=\int_{\partial T}f(z)\;dz$と置く．
+    \begin{description}
+        \item[$p\notin T$の場合] $T$を４つの三角形$(T_1^j)_{j\in[4]}$に分割すると$\eta(T)=\sum^4_{j=1}\eta(T_1^j)$．この時，$T_1:=\max_{j\in[4]}T_1^j$と置くと，
+        \[|\eta(T)|\le 4|\eta(T_1)|.\]
+        同様にして分割を繰り返すと，三角形の包含列
+        \[ T=:T_0\supset T_1\supset T_2\supset\cdots \]
+        を得，
+        \[ |\eta(T)|\le 4^{j}|\eta(T_j)|\;\;\;(j\in\N) \]
+        が成り立つ．各三角形について$z_j\in T_j$を取る．すると，
+        \[ k>j\Rightarrow z_k\in T_j \]
+        が成り立つ．$diam(T_j):=\max\{|z-w|\mid z,w\in T_j\}$と置くと，$diam(T_j)=2^{-j}diam(T)$だから，$(z_j)$はCauchy列である．よって，$a:=\bigcap_{j=0}^\infty T_j$とおけばこれが極限点$a=\lim_{j\to\infty}z_j$に他ならない．
+
+        $p\notin T$としたから$f$は$a$で微分可能で，
+        \[ f(z)=f(a)+f'(a)(z-a)+(z-a)\varphi(z)\;\;\;(\lim_{z\to a}\varphi(z)=0) \]
+        と置けるから，
+        \begin{align*}
+            \eta(T_j)&:=\int_{\partial T_j}(f(a)+f'(a)(z-a)+(z-a)\varphi(z))\;dz\\
+            &=\int_{\partial T_j}(z-a)\varphi(z)\;dz\;\;\;(補題)\\
+            |\eta(T_j)|&\le\int_{\partial T_j}|z-a||\varphi(z)|\;|dz|\\
+            &\le diam(T_j)|\varphi|_{T_j}L(\partial T_j)\\
+            &= 2^{-j}diam(T)|\varphi|_{T_j}2^{-j}L(\partial T)\\
+            &= 4^{-j}diam(T)L(\partial T)|\varphi|_{T_j}.
+        \end{align*}
+        すると，
+        \begin{align*}
+            |\eta(T)|&\le 4^j|\eta(T_j)|\\
+            &\le diam(T)L(\partial T)|\varphi|_{T_j}\xrightarrow{j\to\infty}0.
+        \end{align*}
+        \item[$p\in T$の場合] $T$を同様に$4^j$個の三角形に分割する．どの段階でも，$p$を含む$T^k$は高々$6$個である．
+        上での議論より，$p$を含まない全ての$T^k_j$について，$\eta(T^k)=0$であることはわかっているから，$|\eta(T^{k_0})|:=\max_{k}|\eta(T^k)|$と置くと，
+        \begin{align*}
+            |\eta(T)|&\le\sum^{4^j}_{k=1}|\eta(T^k_j)|\le 6|\eta(T^{k_0}_j)|\\
+            |\eta(T^k)|&=\int_{\partial T^k}|f(z)|\;|dz|\le|f|_TL(\partial T^k)=|f|_T2^{-j}L(\partial T)\\
+            |\eta(T)|&\le 6|f|_T2^{-j}L(\partial T)\xrightarrow{j\to\infty}0.
+        \end{align*}
+    \end{description}
+\end{proof}
+
+\subsection{Cauchyの積分表示}
+
+\begin{theorem}[閉円板に対するCauchyの積分表示]
+    $f:D\to\C$を正則とする．$[\Delta(a,r)]\subset D$ならば，
+    \[\forall_{z\in\Delta(a,r)}\quad f(z)=\frac{1}{2\pi i}\int_{\partial\Delta(a,r)}\frac{f(\zeta)}{\zeta-z}d\zeta\]
+\end{theorem}
+
+\begin{theorem}[一般の曲線に対するCauchyの積分表示]
+    $D$を星型領域，$f:D\to\C$を正則関数，$\gamma:[\al,\beta]\to D$を閉道とする．このとき，次が成り立つ：
+    \[\forall_{z\in D\setminus\Im\gamma}\quad\frac{1}{2\pi i}\int_\gamma\frac{f(\zeta)}{\zeta-z}d\zeta=n(\gamma,z)f(z).\]
+\end{theorem}
+
+\subsection{高階導関数に対するCauchyの評価}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    微分も積分を用いてかけることを通じて，正則関数が$C^\infty$-級であることを示す．
+\end{tcolorbox}
+
+\begin{lemma}
+    $\gamma:[a,b]\to D$を道，$\varphi:\Im\gamma\to\C$を連続関数とする．$\C\setminus\Im\gamma$上の関数
+    \[F_n(z):=\int_\gamma\frac{\varphi(\zeta)}{(\zeta-z)^n}d\zeta\]
+    は$\C\setminus\Im\gamma$上正則であり，その導関数は$F'_n(z)=nF_{n+1}(z)$を満たす．
+\end{lemma}
+
+\begin{theorem}
+    正則関数$f:D\to\C$について，
+    \begin{enumerate}
+        \item $f$は$D$上無限回微分可能である．
+        \item 任意の円板$[\Delta(a,r)]\subset D$に対して，$n$階導関数は
+        \[f^{(n)}(z)=\frac{n!}{2\pi i}\int_{\partial\Delta(a,r)}\frac{f(\zeta)}{(\zeta-z)^{n+1}}d\zeta\]
+        と表せる．
+        \item $\abs{f^{(n)}(a)}\le\frac{n!}{r^n}\norm{f}_{\partial\Delta(a,r)}$．
+    \end{enumerate}
+\end{theorem}
+
+\section{局所整級数展開}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則関数の最も重要な性質に急ごう．
+    任意の正則関数は，収束する整級数（関数要素）の「貼り合わせ」によって定まる．
+    この観点から得られる大域的解析関数をWeierstrassの大域的解析関数というのであった．
+\end{tcolorbox}
+
+\subsection{Taylorの定理}
+
+\begin{theorem}[Taylorの定理]
+    領域上の正則関数$f:D\to\C$と任意の点$z_0\in D$について，
+    \begin{enumerate}
+        \item 任意の$n\in\N$について，正則関数$f_n\in\O(D)$が存在し，次が成り立つ
+        \[f(z)=\sum^{n-1}_{k=0}\frac{f^{(k)}(z_0)}{k!}(z-z_0)^k+f_n(z)(z-z_0)^n\quad\on D.\]
+        \item このとき剰余項$f_n$は，任意の閉円板$[\Delta(z_0,r)]\subset D$に対して，その内部$\Delta(z_0,r)$上で
+        \[f_n(z)=\frac{1}{2\pi i}\int_{\partial\Delta(z_0,r)}\frac{f(\zeta)}{(\zeta-z_0)^n(\zeta-z)}d\zeta\quad\on\Delta(z_0,r).\]
+        と表示出来る．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{整級数展開}
+
+\begin{corollary}
+    領域上の正則関数$f:D\to\C$と任意の点$z_0\in D$について，任意の開円板$\Delta(z_0,r)\subset D$上において
+    \[f(z)=\sum^\infty_{n=0}\frac{f^(n)(z)}{n!}(z-z_0)^n\quad\on\Delta(z_0,r)\]
+    が成り立つ．ただし，右辺の収束は広義一様収束とした．
+\end{corollary}
+
+\section{特異点}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cauchyの積分表示による簡単な帰結を確認する．
+\end{tcolorbox}
+
+\begin{definition}
+    連続関数$f:D\to\C$について，値が定義されないことも含めて，関数が正則にならない点$z_0\in\C$を\textbf{特異点}という．
+    \begin{enumerate}
+        \item 他の特異点を含まない開近傍が取れるような特異点を\textbf{孤立特異点}という．
+        \item 孤立特異点のうち$\lim_{z\to a}f(z)\in\hatC$が定義出来ないとき，これを\textbf{真性特異点}という．
+    \end{enumerate}
+\end{definition}
+
+\subsection{定数関数の特徴付け}
+
+\begin{corollary}[Liouville]
+    $\C$上で有界な整関数は，定数関数である．
+\end{corollary}
+
+\begin{corollary}[代数学の基本定理]
+    定数でない多項式は零点を持つ．
+\end{corollary}
+
+\subsection{正則関数の特徴付け}
+
+\begin{corollary}[Morera]
+    領域$D$上の連続関数$f:D\to\C$について，
+    任意の三角形$T\subset D$に対して
+    \[\int_{\partial T}f(\zeta)d\zeta=0\]
+    が成り立つならば，$D$上正則である．
+\end{corollary}
+
+\subsection{特異点の除去}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特異点が除去できる十分条件は2つほどあるが，本質は特異点周りの漸近挙動である．
+\end{tcolorbox}
+
+\begin{corollary}[連続性による除去]
+    連続関数$f:D\to\C$が高々有限個の点を除いて正則ならば，$D$上で正則である．
+\end{corollary}
+
+\begin{corollary}[除去可能特異点の特徴付け]
+    1点$p\in D$を除いた領域上の関数$f:D\setminus\{p\}\to\C$は正則であるとする．このとき，次の2条件は同値．
+    \begin{enumerate}
+        \item $f$は$D$上正則に延長でき，その延長は一意的である．
+        \item $\lim_{z\to p}(z-p)f(z)=0$．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{零点と極}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    零点は特異点ではなく，極は正則性を失うという意味で特異点であるが，この2つは表裏一体である．
+    いずれも孤立する．
+\end{tcolorbox}
+
+\begin{definition}
+    $f:D\to\C$を零でない正則関数とする．
+    \begin{enumerate}
+        \item $f(z_0)=0$を満たす点$z_0\in D$を\textbf{零点}という．
+        \item $\min\Brace{n\in\N\mid f^{(n)}(z_0)=0}$を，零点$z_0$の\textbf{位数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[位数は有限である]
+    $f:D\to\C$を正則関数，$z_0\in D$を零点とする．$\forall_{j\in\N}\;f^{(j)}(z_0)=0$が成り立つならば，$f$は零関数である．
+\end{proposition}
+
+\subsection{一致の定理}
+
+\begin{theorem}
+    $f:D\to\C$を零でない正則関数とする．このとき，$f$の零点はいずれも孤立点である．
+\end{theorem}
+
+\begin{corollary}[一致の定理]
+    $f,g:D\to\C$を正則関数である．ある$D$内に集積点を持つ部分集合上で値が一致するならば，$D$上で一致する．
+\end{corollary}
 
 \chapter{留数解析}
 
