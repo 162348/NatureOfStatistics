@@ -378,6 +378,11 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\begin{remark}[随伴写像の行列表示]
+    非退化Hermite形式$h$の行列表示が$A\in\GL_n(\C)$で，自己準同型$f$の行列表示を$C\in M_n(\C)$とする．
+    この時，随伴写像$f^*$の行列表示は$\overline{A}^{-1}C^*\overline{A}\in M_n(\C)$である．
+\end{remark}
+
 \subsection{自己共役性が示唆すること}
 
 \begin{remarks}
@@ -398,12 +403,156 @@ title=]
     直交変換の随伴が逆写像になることは，
 \end{remarks}
 
-\subsection{慣性律}
+\subsection{対角化の理論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    
+    正規行列の可換系は一斉対角化可能である．
 \end{tcolorbox}
+
+\begin{proposition}[正規行列の可換系は一斉対角化可能]
+    $V\in\FinVect_\C,h:V\times V\to\C$を正定値hermite形式とする．
+    $S\subset\End_\C(V)$が次の2条件を満たすならば，$V$の$h$-正規直交基底であって，$S$の元を一斉に対角化するものが存在する．
+    \begin{enumerate}
+        \item 可換系である：$\forall_{f,g\in S}\;f\circ g=g\circ f$．
+        \item 正規である：$\forall_{f\in S}\;f\circ f^*=f^*\circ f$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{lemma}[随伴は多項式変換である]
+    $V\in\FinVect_\C,f\in\End_\C(V)$を正規変換とする．このとき，$\exists_{P\in\C[X]}\;P(f)=f^*$が成り立つ．
+\end{lemma}
+
+
+\subsection{慣性律}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable]
+    対称行列は対角化可能で，固有値が$n$個定まる．
+    この符号の組は不変である．言い換えれば，
+    $\FinVect_\R$上の対称形式＝$\R$の二次形式には，
+    符号数が定まる．
+\end{tcolorbox}
+
+\begin{proposition}[直交基底とlaw of inertia]
+    $V\in\FinVect_\R$とし，$b$をその上の対称形式とする．
+    \begin{enumerate}
+        \item $b$に関する直交基底$x_1,\cdots,x_n$であって，$b(x_i,x_i)\in\{0,\pm 1\}\;(i\in[n])$を満たすものが存在する．
+        \item (慣性律) $x_1,\cdots,x_n$と$y_1,\cdots,y_n$を$b$に関する直交基底であって，
+        \begin{align*}
+            b(x_i,x_i)&=\begin{cases}
+                1&1\le i\le rのとき,\\
+                -1&r<i\le r+sのとき,\\
+                0&r+s<i\le nのとき,
+            \end{cases}\\
+            b(y_i,y_i)&=\begin{cases}
+                1&1\le i\le r'のとき,\\
+                -1&r'<i\le r'+s'のとき,\\
+                0&r'+s'<i\le nのとき,
+            \end{cases}
+        \end{align*}
+        を満たすものとする．このとき，$r=r',s=s'$である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 系\ref{cor-existence-of-orthogonal-basis}.2より，直交基底$x_1,\cdots,x_n\in V$が存在する．$b(x_i,x_i)\ne 0$なる$i\in[n]$に対して，$x_i$を$\frac{x_i}{\sqrt{|b(x_i,x_i)|}}$で置き換えれば良い．
+        \item $V$の部分空間を次のように定める．\begin{align*}
+            V_+&=\langle x_1,\cdots,x_n\rangle,&V_-&=\langle x_{r+1},\cdots,x_{r+s}\rangle,&V_0&=\langle x_{r+s+1},\cdots,x_n\rangle\\
+            V'_+&=\langle y_1,\cdots,y_n\rangle,&V'_-&=\langle y_{r+1},\cdots,y_{r+s}\rangle,&V'_0&=\langle y_{r+s+1},\cdots,y_n\rangle
+        \end{align*}
+        系\ref{cor-existence-of-orthogonal-basis}.3より，$V_+\oplus V_-$と$V'_+,V'_-$上で$b$は非退化だから，
+        $V_0=V'_0=V^\perp$．従って，$\dim V_++\dim V_-=\dim V'_++\dim V'_-=\dim V-\dim V^\perp$．
+        
+        今，$V_+\supset V_+\cap(V'_-\oplus V^\perp)=0$である．何故なら，この元$x\in V_+\cap(V'_-\oplus V^\perp)$は$x\in V_+$より$b(x,x)\ge 0$で，$x\in V'_-\oplus V^\perp$より$b(x,x)\le 0$なので，$b(x,x)=0$よって$x\in\Ker b=0$である．
+        同様に$V_-\supset V_-\cap(V'_+\oplus V^\perp)=0$であるから，
+        \begin{align*}
+            \dim V_++\dim V'_-&\le\dim V-\dim V^\perp,&\dim V'_++\dim V_-&\le\dim V-\dim V^\perp
+        \end{align*}
+        ２式の左辺の和は$2(\dim V-\dim V^\perp)$であるから，これは等号が成り立つ．以上より，$\dim V_+=\dim V'_+,\dim V_-=\dim V'_-$
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[positive definite, negative definite, signature]
+    $V\in\Vect_\R$とし，$b$をその上の対称形式とする．
+    \begin{enumerate}
+        \item 次が成り立つとき，$b$を\textbf{正定値}という：$\forall x\in V\setminus\{0\},\;b(x,x)>0$．$-b$が正定値であることを，\textbf{負定値}であるという．
+        \item 命題の条件を満たす$b$に関する直交基底$B=(x_1,\cdots,x_n)$について，自然数の対$(r,s)\in\N^2$のことを，$b$の\textbf{符号数}という．
+        \item $b$の符号数が$(r,s)$であるとは，$b$を次のように表現する$V$の基底が存在するということである：\[\begin{pmatrix}1_r&0&0\\0&1_s&0\\0&0&0\end{pmatrix}\]
+        \item 従って，$b$が正定値とは，符号数が$(\dim V,0)$であり，$b$を単位行列に表現する$V$の基底が存在するような非退化対称形式をいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $V\in\FinVect_\R$について，
+    \begin{enumerate}
+        \item $V$上の正定値対称双線型形式は非退化である．これを\textbf{内積}という．
+        \item $b$が正定値ならば，$V$には正規直交基底が存在する．
+    \end{enumerate}
+\end{lemma}
+
+\section{テンソル積}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    双線型写像$V\times W\to V'$を分解するという普遍性を満たす対象$V\otimes W$が，商空間として構成出来る．
+    さらにその商として外積の空間が定まる．
+\end{tcolorbox}
+
+\chapter{自己準同型環の研究}
+
+\begin{quotation}
+    自己準同型環$\End_K(V)$は線形空間でもある，すなわち，代数をなす．
+    $V$が位相線形空間のときのBanach代数$B(V)$に当たる．
+
+    さらに，環$K[X]$上の加群として見れる．
+\end{quotation}
+
+\section{最小多項式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    環準同型$\rho:K[X]\to\End(\End_K(V))$の核はイデアルになるが，その生成元$\varphi$を最小多項式という．
+    固有多項式の知見と併せると$\deg(\varphi)\le\dim V$がわかる．
+\end{tcolorbox}
+
+\begin{notation}
+    \[\xymatrix@R-2pc{
+        e:K[X]\times\End_K(V)\ar[r]&\End_K(V)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        (F,f)\ar@{|->}[r]&F(g)
+    }\]
+    を，$f^0=\id_V,f^2:=f\circ f$で定める．
+\end{notation}
+
+\begin{proposition}[環の作用]
+    $e$は環の作用である．すなわち，
+    $\rho:K[X]\to\End(\End_K(V))$は環準同型を定める：
+    \begin{enumerate}
+        \item $\forall_{f\in\End_K(V)}\;\forall_{F,G\in K[X]}\;(F+G)(f)=F(f)+G(f)$．
+        \item $\forall_{f\in\End_K(V)}\;\forall_{F,G\in K[X]}\;(FG)(f)=F(f)\circ G(f)$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[最小多項式のwell-definedness]
+    $V\in\FinVect_K,f\in\End_K(V)$とする．
+    \[I_f:=\Brace{F\in K[X]\mid F(f)=0}\]
+    は，$0$を省けば，$K$倍の違いを除いて$\deg$に関する最小元を持つ．
+    そのうちモニックなものを\textbf{最小多項式}という．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$I_f$はイデアルである] $0\in I_f$である．$\forall_{F,G\in I_f}\;(F+G)(f)=F(f)+G(f)=0$．$\forall_{F\in I_f,G\in K[X]}\;(FG)(f)=F(f)\circ G(f)=0$．
+        \item[生成元が最小元である] $K[X]$はEuclid整域，特に単項イデアル整域であるから，ある$F\in I_f$によって単項生成される．
+        任意の$f\in K[X]$に対して，$g\in(f)\Leftrightarrow f|g$であるから，Euclid関数の性質より$I_f$の生成元が，求める最小元である．
+    \end{description}
+\end{proof}
+
+\begin{example}[スカラー倍の最小多項式]\mbox{}
+    \begin{enumerate}
+        \item $f$がスカラー倍であることと，最小多項式の次数が$1$であることとは同値．
+    \end{enumerate}
+    
+\end{example}
 
 \chapter{環上の加群}
 
@@ -1066,11 +1215,7 @@ title=]
     ただし，$e_i$は$2$以上の自然数で，$e_1|\cdots|e_s$を満たし，$r$と$e_1,\cdots,e_s$は$M$に対して一意的に定まる．
 \end{corollary}
 
-\chapter{テンソル積とテンソル代数}
 
-\chapter{有限群の表現論}
-
-\chapter{Noether加群}
 
 \begin{thebibliography}{9}
     \bibitem{斎藤毅}
