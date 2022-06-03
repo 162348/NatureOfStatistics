@@ -537,6 +537,62 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\subsection{線積分の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    領域は一般のままとして，Cauchyの定理が成り立つような自然な曲線$\gamma$のクラスを探す．
+\end{tcolorbox}
+
+\begin{definition}
+    曲線の形式和を\textbf{チェイン}と呼び，チェイン上での積分を次の右辺で定める．
+    \[\int_{\gamma_1+\cdots+\gamma_n}fdz:=\sum_{i=1}^n\int_{\gamma_i}fdz.\]
+    閉曲線の形式和で表せるチェインを\textbf{サイクル}という．
+\end{definition}
+
+\section{単連結領域}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ベクトル解析で得たPoincareの補題は，正則関数については美しく満たされる．
+\end{tcolorbox}
+
+\subsection{単連結性の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の曲線についてCauchyの定理が成り立つような領域の自然なクラスは，単連結性による．
+\end{tcolorbox}
+
+\begin{definition}[homologue]
+    任意の閉曲線$\gamma_1,\gamma_2:\partial\Delta\to D$が$\forall_{p\in\C\setminus D}\;n(\gamma_1,p)=n(\gamma_2,p)$を満たすとき，2つはホモローグであるという．
+\end{definition}
+
+\begin{theorem}
+    領域$D\subset\C$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $D$の任意の閉曲線$\gamma:\partial\Delta\to D$は1点にホモトピックである：$\gamma\simeq 1_p$．このとき，連続延長$\wt{\gamma}:[\Delta]\to D$を持つ．
+        \item $\hatC\setminus D$は連結である．
+        \item $D$内の任意の閉曲線$\gamma$は$0$とホモトーグである：$\forall_{a\in\C\setminus D}\;n(\gamma,a)=0$．
+        \item 1次のde Rhamコホモロジーが消える：微分$\dd{}{z}:\O(D)\to\O(D)$は全射．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{原始関数の存在}
+
+\begin{corollary}
+    単連結領域上の零でない正則関数$f:D\to\C$に対して，$\log f(z),\sqrt[n]{f(z)}$の一価な分枝が$D$上で存在する．
+\end{corollary}
+
+\subsection{多重連結性}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 単連結でない領域$D$を\textbf{多重連結}であるという．
+        \item $\hatC\setminus D$が連結成分を$n$個もつとき，\textbf{$n$重連結}であるという．
+    \end{enumerate}
+\end{definition}
+
 \section{回転数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -639,6 +695,16 @@ title=]
         \end{align*}
     \end{description}
 \end{proof}
+
+\begin{theorem}[ホモロジーの言葉によるCauchyの定理]
+    開集合$D$上の正則関数$f:D\to\C$と閉曲線$\gamma:\partial\Delta\to D$についての条件$\int_\gamma fdz=0$について，
+    \begin{enumerate}
+        \item 任意の$D$に関して$0$とホモローグな閉曲線$\gamma$に対して成り立つ．
+        \item $D$が単連結ならば，任意の閉曲線に対して成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+
 
 \subsection{Cauchyの積分表示}
 
@@ -772,6 +838,9 @@ title=]
     \begin{enumerate}
         \item $f(z_0)=0$を満たす点$z_0\in D$を\textbf{零点}という．
         \item $\min\Brace{n\in\N\mid f^{(n)}(z_0)=0}$を，零点$z_0$の\textbf{位数}という．
+        \item 正則関数$f:\Delta^*(z_0,r)\to\C$に対し，$f(z_0)=\infty$を満たす点$z_0\in D$を\textbf{極}という．
+        \item このとき，$1/f:\Delta^*(z_0,r)\to\C$も正則で，$z_0$で連続だから除去可能な零点となる．この$1/f$の零点の位数を，$f$の極の位数という．
+        \item 連続関数$f:D\to\C$であって，極を除いて正則な関数を\textbf{有理型}という．このとき，$f^{-1}(\infty)$は離散集合であるか，$f=\infty$となるかのいずれかである．そこで有理型関数と言ったとき前者も仮定することが多い．
     \end{enumerate}
 \end{definition}
 
@@ -789,9 +858,116 @@ title=]
     $f,g:D\to\C$を正則関数である．ある$D$内に集積点を持つ部分集合上で値が一致するならば，$D$上で一致する．
 \end{corollary}
 
+\subsection{真性特異点}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    整級数展開の観点から孤立特異点が分類できる．
+    極には主要部が決まる．
+    級数が収束しない場合は，Hilbertによる結果と同様，任意の値に収束させることが出来る．
+\end{tcolorbox}
+
+\begin{proposition}[孤立特異点の分類]
+    $f:\Delta^*(a,r)\to\C$を正則関数とする．
+    次のいずれかが成り立つ．
+    \begin{enumerate}
+        \item $\forall_{\al\in\R}\;\lim_{z\to a}\abs{z-a}^\al \abs{f(z)}=0$．
+        \item $\exists_{h\in\Z}\;\forall_{\al>h}\;\lim_{z\to a}\abs{z-a}^\al\abs{f(z)}\land\forall_{\al<h}\;\lim_{z\to a}\abs{z-a}^\al\abs{f(z)}=\infty$．このときの$\al\in\Z$を\textbf{代数的位数}といい，極のとき正，正則のとき非正，零点のとき負となる．
+        \item $\forall_{\al\in\R}\;\lim_{z\to a}\abs{z-a}^\al\abs{f(z)}\notin\Brace{0,\infty}$．このとき$a$を\textbf{真性孤立特異点}という．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Weierstrass]
+    正則関数は真性特異点の任意の近傍内で，任意の複素数値に，いくらでも近づき得る．
+\end{theorem}
+
+\subsection{偏角の原理と零点の数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極の主要部に言及したが，
+    対数微分の方法により，零点（あるいは極）の個数を数えることが出来る．
+    また，主要部とは要は多項式なので，重複度とはその零点・極の周りでの像曲線の回転数に他ならない．
+\end{tcolorbox}
+
+\begin{theorem}[偏角の原理]
+    $f:D\to\C$を領域上の零でない正則関数，$\gamma:[a,b]\to D$を$f$の零点$f^{-1}(0)=\Brace{z_1,\cdots,z_n}$を通らない閉曲線とする．
+    このとき，次が成り立つ：
+    \[\sum_{j=1}^nn(\gamma,z_j)\cdot m_{z_j}=\frac{1}{2\pi i}\int_\gamma\frac{f'(z)}{f(z)}dz.\]
+\end{theorem}
+
+\begin{corollary}[零点の近傍での対応]
+    連続関数$f:D\to\C$は$z_0\in D$で解析的であるとき，$f-w_0\;(f(z_0)=:w_0)$は$z_0$を零点に持つ．この位数を$n\ge1$とする．
+    \begin{enumerate}
+        \item ある$\ep>0$と$\delta>0$が存在して，任意の$a\in\Delta(w_0,\delta)$に対して，$f(z)=a$の$\Delta(z_0,\ep)$上の解は重複度を込めて$n$個の根を持つ．
+        \item ある$\ep>0$と$\delta>0$が存在して，$a\in\Delta^*(w_0,\delta)\Rightarrow\abs{f^{-1}(a)\cap\Delta^*(z_0,\ep)}=n$を満たす．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{開写像定理}
+
+\begin{corollary}
+    定数でない正則関数は開写像である．
+\end{corollary}
+
+\begin{corollary}
+    $f:D\to \C$を正則関数，$z_0\in D$を領域内の点とする．
+    \begin{enumerate}
+        \item $f'(z_0)\ne0$ならば，ある近傍について$f|_{U}:U:=f^{-1}(\Delta(w_0,r))\to \Delta(w_0,r)$は位相同型かつ等角写像となる．
+        \item 正則関数$f:U\to V$が全単射ならば，逆写像も正則である．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{Roucheの定理}
+
+\begin{theorem}[Rouche]
+    $D$を道$\partial D$で囲まれた有界領域，$f,g$を$[D]$の近傍上の正則関数である．
+    境界道$\partial D$上での条件
+    \[\forall_{z\in\partial D}\quad\abs{f(z)-g(z)}<\abs{f(z)}+\abs{g(z)}\]
+    を満たすならば，$f,g$の$D$上での重複度も込めた零点の個数は等しい．
+\end{theorem}
+
+\section{最大値の原理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続延長の問題の足がかりになる．
+\end{tcolorbox}
+
+\subsection{最大値の原理}
+
+\begin{theorem}
+    領域上の正則関数$f:D\to\C$が，この上で最大値$\max_{z\in D}\abs{f(z)}\in\R$を持つならば，$f$は定数である．
+\end{theorem}
+
+\begin{corollary}
+    正則関数$f:D\to\C$は，コンパクト部分集合$K\subset D$上にて$\abs{f(z)}\le\max_{w\in\partial K}\abs{f(w)}$を満たす．
+    $K$の内点にて等号成立した場合，$f$は定数である．
+\end{corollary}
+
+\subsection{Schwartzの補題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正規化された正則関数$f:\Delta\to\Delta,f(0)=0$は，ノルム減少的で，$0$でのJacobianも縮小的(1以下)である．
+\end{tcolorbox}
+
+\begin{theorem}
+    正規化された正則関数$f:\Delta\to\Delta,f(0)=0$について，
+    \begin{enumerate}
+        \item $\forall_{z\in\Delta}\;\abs{f(z)}\le\abs{z}$．
+        \item $\abs{f'(0)}\le 1$．
+    \end{enumerate}
+    が成り立つ．また，ある点$z_0\in\Delta^*$で(1)の等号が成立するか，(2)の等号が成立するとき，$\exists_{\theta\in[0,2\pi]}\;f(z)=e^{i\theta}z$と表せる．
+\end{theorem}
+
 \chapter{留数解析}
 
 \section{留数定理}
+
+\section{偏角の原理}
+
+\section{定積分の計算}
 
 \chapter{無限積展開}
 
