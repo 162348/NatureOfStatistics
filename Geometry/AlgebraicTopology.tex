@@ -2,7 +2,8 @@
 \title{代数的位相幾何}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/Dropbox/数理科学/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -801,9 +802,15 @@ title=]
 
 \section{Van Kampenの定理}
 
-\chapter{ホモロジー}
+\chapter{特異ホモロジー論}
 
-\section{一般化ホモロジーの公理}
+\begin{quotation}
+    各次元$n$に対して，$n$次元の「穴」の数を数える技法を特異ホモロジー論といい，現代的な意味でのホモロジー論の例となる．
+\end{quotation}
+
+\chapter{一般化ホモロジー}
+
+\section{生息する圏の準備}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -929,22 +936,30 @@ title=]
     は完全系列になる．
 \end{lemma}
 
-\subsection{ホモロジー理論の公理}
+\section{一般化ホモロジー理論の公理}
 
 \begin{axiom}[homology group]
-    共変関手$H_n:\Top^{/}\to\Ab$が次を満たすとき，その像をホモロジー群という．
+    共変関手$H_n:\Top^{*/}\to\Ab$が次を満たすとき，その像をホモロジー群という．
     \begin{description}
-        \item[ホモトピー公理] $f,g$がホモトピックならば，$f_*=g_*$．
-        \item[空間対から完全列を定める関手] 
-        \item[切除公理] 
-        \item[次元公理] 単元集合$(\{p\},\emptyset)\in\Top$について，$H_n(\{p\})\simeq
+        \item[(1) ホモトピー不変性] $f,g:(X,A)\to (Y,B)$がホモトピックならば，像が一致する：$f_*=g_*:H_n(X,A)\to H_n(Y,B)$．
+        \item[(2) 空間対から完全列を定める関手] 空間対$(X,A)$から長完全系列
+        \[\xymatrix@R-1pc{
+            \cdots\ar[r]^-{\partial_*}&H_n(A)\ar[r]^-{i_*}&H_n(X)\ar[r]^-{j_*}&H_n(X,A)\ar[r]^-{\partial_*}&H_{n-1}(A)\ar[r]^-{i_*}&\cdots
+        }\]
+        への対応も共変的になる．$\partial_*:H_n(X,A)\to H_{n-1}(A)$を\textbf{連結準同型}という．
+        ただし，$i:A\mono X$とし，$j:(X,\emptyset)\mono(X,A)$とした．
+        \item[(3) 切除公理] $B\subset A\subset X$を満たす閉集合$A$と開集合$B$について，包含写像$\iota:(X\setminus B,A\setminus B)\mono (X,A)$は同型$\iota_*:H_n(X\setminus B,A\setminus B)\iso H_n(X,A)$に対応する．
+        \item[(4) 次元公理] 単元集合$(\{p\},\emptyset)\in\Top$について，
+        \[H_n(\{p\})\simeq
         \begin{cases}
             \Z,&n=0,\\
             0,&n>0.
-        \end{cases}$
+        \end{cases}\]
         が成り立ち，同型も一意に取れる．
     \end{description}
 \end{axiom}
+
+
 
 \chapter{コホモロジー}
 

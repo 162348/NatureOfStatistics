@@ -586,10 +586,26 @@ title=]
 
 \subsection{多重連結性}
 
+\begin{history}[連結度から$n$重連結性へ]
+    VC次元も似たような「群構造の発見」がなされるのだろうか？
+    \begin{description}
+        \item[Riemann 1851 『複素一変数関数の一般論の基礎』] で連結度（初めての位相不変量？）が定義された．
+        はじめ，単連結性の概念は「境界$\partial D$上の2点を結ぶ$D$内の曲線が必ず$D$を２つに分割する」ことを言った．
+        横断線$n$本が領域を$m$個に分割するとき，$n-m$を連結度といい，連結度$-1$を単連結と言った．
+        \item[Riemann 1857 『アーベル関数の理論』]
+        $n$個の閉曲線$S^1\to D$の組であり，どの組み合わせを取っても$D$の部分領域の完全境界をなさない最大の$n$に対して，$n+1$を$n$重連結とよんだ．
+        \item[Betti数]
+        Riemannはよくイタリアに療養に行っていた，そこでBettiがこの考えを曲面から一般の次元に拡張したものを用いた．
+        これをPoincareが拾って，「位置解析」で，ホモロジー同値の言葉を使って新たな定義を与え，Betti数と呼んだ．
+        なんとなくVC次元に似ている．
+        \item[Noetherが数から群へ] 
+    \end{description}
+\end{history}
+
 \begin{definition}\mbox{}
     \begin{enumerate}
         \item 単連結でない領域$D$を\textbf{多重連結}であるという．
-        \item $\hatC\setminus D$が連結成分を$n$個もつとき，\textbf{$n$重連結}であるという．
+        \item $\hatC\setminus D$が連結成分を$n$個もつとき，\textbf{$n$重連結}または\textbf{連結度$n$}であるという．
     \end{enumerate}
 \end{definition}
 
