@@ -808,6 +808,114 @@ title=]
     各次元$n$に対して，$n$次元の「穴」の数を数える技法を特異ホモロジー論といい，現代的な意味でのホモロジー論の例となる．
 \end{quotation}
 
+\section{特異単体}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    点$\sigma_0\to X$，曲線$\sigma_1\to X$という概念同様，標準単体の埋め込みを特異単体という．
+\end{tcolorbox}
+
+\subsection{単体}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R^n$で考えられる最も簡単な図形を単体という．
+    それは，$p+1$個の頂点と辺とで囲まれる有界領域で，そこでは座標表示が可能である．
+\end{tcolorbox}
+
+\begin{notation}[simplex, ordered simplex]
+    \textbf{$p$-単体}とは，$x_1-x_0,\cdots,x_p-x_0\in\R^n$が線形独立な$p+1$点の凸包をいう．
+    点$\{x_0,\cdots,x_p\}$を\textbf{頂点}という．
+    頂点が順序付きで指定されているとき，対象$(x_0,\cdots,x_p)$を\textbf{向き付き$p$-単体}という．
+    特に$\{e_1,\cdots,e_{p+1}\}$を頂点とする単体を\textbf{標準$p$-単体}という．
+\end{notation}
+
+\begin{proposition}[単体の特徴付け]
+    $\{x_0,\cdots,x_p\}\subset\R^n$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $x_1-x_0,\cdots,x_p-x_0$は線型独立である．
+        \item $\forall_{s_i,t_i\in\R}\;\sum_{i\in[p]}s_ix_i=\sum_{i\in[p]}t_ix_i\land\sum_{i\in[p]}s_i=\sum_{i\in[p]}t_i\Rightarrow\forall_{i\in[p]}s_i=t_i$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $p$-単体$s$は，$\{x_0,\cdots,x_p\}$の凸包であるとする．
+    このとき，任意の点$x\in s$に対して，ただ一つの係数列$t_i\in\R_+^{p+1},\sum_{i\in p+1}t_i=1$が存在して，表示$\sum_{i\in[p]}t_ix_i$を持つ．
+\end{corollary}
+\begin{remarks}
+    標準単体
+    \[\sigma_p:=\Brace{(t_0,\cdots,t_p)\in\R_+^{p+1}\mid\sum t_i=1}\]
+    からの写像$f:\sigma_p\to s;(t_0,\cdots,t_p)\mapsto\sum t_ix_i$は連続である．
+    さらに，同相であることも分かる．
+    そこで，任意の$p$-単体は標準単体の像となる．
+\end{remarks}
+
+\subsection{特異単体}
+
+\begin{definition}[singular $n$-simplex]
+    $X$を位相空間とする．
+    \begin{enumerate}
+        \item $X$内の\textbf{特異$p$-単体}とは，標準単体からの連続写像$\phi:\sigma_p\to X$をいう．
+        $X$の点と曲線は，特異$0$-単体と$1$-単体である．
+        \item 特異$p$-単体について，\textbf{$i$-面}とは特異$(p-1)$-単体$\partial_i\phi(t_0,\cdots,t_{p-1}):=\phi(t_0,\cdots,t_{i-1},0,t_i,\cdots,t_{p-1})$をいう．
+        \item 連続写像$f:X\to Y$による特異$p$-単体$\phi:\sigma_p\to X$の\textbf{押し出し}とは，$f_\#\phi:=f\circ\phi$をいう．
+    \end{enumerate}
+\end{definition}
+
+\section{チェイン}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特異$n$-単体上の自由アーベル群の元を鎖といい，そのうち特に境界を持たないものを\textbf{サイクル}という．
+\end{tcolorbox}
+
+\subsection{自由アーベル群}
+
+\begin{definition}[free, singular $n$-chain]\mbox{}
+    \begin{enumerate}
+        \item アーベル群$G$が\textbf{自由}であるとは，生成系$A\subset G$が取れることをいう：$\forall_{g\in G}\;\exists!_{n_x\in\Z}\;g=\sum_{x\in A}n_x\cdot x\land n_x=0\;\fe$
+        \item 関手$S_n:\Top\to\Ab$を，任意の位相空間$X\in\Top$に対して，すべての特異$n$-単体が生成する自由アーベル群$S_n(X)\in\Ab$として対応させる．
+        \item 任意の元は
+        \[\sum_{\phi}n_\phi\cdot\phi\in S_n(X),\qquad n_\phi=0\;\fe\]
+        なる表示を一意的に持ち，\textbf{特異$n$-鎖}という．
+        \item 面作用素$\partial_i:\sigma_n\to\sigma_{n-1}$は群準同型$\partial_i:S_n(X)\to S_{n-1}(X)$に，
+        \[\partial_i\paren{\sum_\phi n_\phi\cdot\phi}=\sum n_\phi\cdot\partial_i\phi\]
+        によって対応する．これを用いて，
+        \[\partial:=\sum^n_{i=0}(-1)^i\partial_i\]
+        によって定まる，特異$n$-単体から特異$(n-1)$-単体への対応
+        を\textbf{境界作用素}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[特異$2$-単体]
+    特異$2$-単体$\phi:\sigma_2\to\R^2$は三角形となり，その境界$\partial\phi:\sigma_1\to\R^2$は
+    $[\phi(e_3),\phi(e_2)]-[\phi(e_3),\phi(e_1)]+[\phi(e_2),\phi(e_1)]$となる．さらにこの境界を取ると，3頂点がうまく打ち消し合い，空集合となる．
+\end{example}
+
+\begin{proposition}
+    次の合成$\partial^2$は零写像である：
+    \[\xymatrix@R-1pc{
+        S_n(X)\ar[r]^-{\partial}&S_{n-1}(X)\ar[r]^-{\partial}&S_{n-2}(X).
+    }\]
+\end{proposition}
+\begin{remarks}
+    $n$-鎖の境界は，境界を持たない$(n-1)$-鎖になることをいう．
+    すなわち，$B_n(X)\subset Z_n(X)$が成り立ち，ホモロジー群の定義をwell-definedとする．
+\end{remarks}
+
+\begin{definition}[$n$-cycle, $n$-boundary, $n$-th singular homology group]\mbox{}
+    \begin{enumerate}
+        \item 境界作用素$\partial:S_n(X)\to S_{n-1}(X)$の核$Z_n(X):=\Ker\partial$の元を\textbf{$n$-サイクル}という．
+        \item 境界作用素$\partial:S_{n+1}(X)\to S_{n}(X)$の像$B_n(X):=\Im\partial$の元を\textbf{$n$-境界}という．
+        \item $S_n(X)$上での商$H_n(X):=Z_n(X)/B_n(X)$を\textbf{$X$の$n$次の特異ホモロジー群}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    そもそもサイクル（閉曲線）の研究から始まった．
+    しかし$Z_n(X)$では本質的ではなく，ある種の同値類を考えたい．
+    そこで，差$C_1-C_2$が一次元上の鎖の境界をなすとき，$C_1\simeq C_2$とするのである．
+\end{remarks}
+
 \chapter{一般化ホモロジー}
 
 \section{生息する圏の準備}
