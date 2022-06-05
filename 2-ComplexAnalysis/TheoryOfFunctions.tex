@@ -470,6 +470,7 @@ title=]
     \end{enumerate}
 \end{example}
 
+
 \chapter{複素積分}
 
 \begin{quotation}
@@ -573,16 +574,27 @@ title=]
     \begin{enumerate}
         \item $D$の任意の閉曲線$\gamma:\partial\Delta\to D$は1点にホモトピックである：$\gamma\simeq 1_p$．このとき，連続延長$\wt{\gamma}:[\Delta]\to D$を持つ．
         \item $\hatC\setminus D$は連結である．
-        \item $D$内の任意の閉曲線$\gamma$は$0$とホモトーグである：$\forall_{a\in\C\setminus D}\;n(\gamma,a)=0$．
+        \item $D$内の任意の閉曲線$\gamma$は$0$とホモローグである：$\forall_{a\in\C\setminus D}\;n(\gamma,a)=0$．
         \item 1次のde Rhamコホモロジーが消える：微分$\dd{}{z}:\O(D)\to\O(D)$は全射．
     \end{enumerate}
 \end{theorem}
+\begin{remark}
+    (2)により，$D$が単連結であることと$\hatC\setminus D$が単連結であることとは同値になるが，これは2次元に特有の性質となる．
+\end{remark}
 
 \subsection{原始関数の存在}
 
 \begin{corollary}
     単連結領域上の零でない正則関数$f:D\to\C$に対して，$\log f(z),\sqrt[n]{f(z)}$の一価な分枝が$D$上で存在する．
 \end{corollary}
+
+\subsection{チェインとサイクル}
+
+\begin{definition}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{definition}
 
 \subsection{多重連結性}
 
@@ -608,6 +620,57 @@ title=]
         \item $\hatC\setminus D$が連結成分を$n$個もつとき，\textbf{$n$重連結}または\textbf{連結度$n$}であるという．
     \end{enumerate}
 \end{definition}
+
+\subsection{連結性について}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R$では連結性と弧状連結性とが同値になるが，
+    $\R^n,\C^n$一般については，任意の開集合についてしか言えない．
+\end{tcolorbox}
+
+\begin{lemma}[domain, region]
+    $D\subset\C$とする．次の２条件を考える．
+    \begin{enumerate}[(1)]
+        \item $D$は弧状連結．
+        \item $D$は連結．
+    \end{enumerate}
+    (1)$\Rightarrow$(2)が成り立ち，$D$が開集合の時(2)$\Rightarrow$(1)も成り立つ．
+    このような$D$を\textbf{領域}と言う．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $\emptyset\ne V\subset D$を開かつ閉とし，$V=D$を導く．
+        任意の$p\in V,q\in D$について，これを結ぶ任意の道$\gamma:[0,1]\to D$に対し\footnote{道とは区間からの連続写像のこと}，実数$m$を$m=\sup\{t\in[0,1]\mid\gamma(t)\in V\}$と置いた時，$m=1$が導かれることを示せば良い．
+
+        $V$は$D$-閉だから，$m=\max\{t\in[0,1]\mid\gamma(t)\in V\}$でもある．即ち$\gamma(m)\in V$．
+        また$V$は$D$-開だから，$\gamma(m)\in V$の近傍$U$が存在して$U\cap D\subset V$を満たす．
+        これより，$m<1$ならば，$\gamma$の連続性より，ある$\epsilon>0$が存在して$\gamma(m+\epsilon)\in U\cap D\subset V$を満たすので，$m$の定義（最大性）に矛盾．
+        従って，$m=1$である．
+        \item[(2)$\Rightarrow$(1)] 
+        任意の$p\in D$について，$V=\{q\in D\mid pとqを結ぶ道\gamma_q:[0,1]\to Dが存在する\}$
+        とすると，$V=D$が従うことを示す．
+
+        $V$は$D$-開と示す．任意に$q\in V$を取ると，$q\in D$でもあるから，$\epsilon>0$が存在して$\Delta(q,\epsilon)\subset D$である．
+        この時，任意の$r\in\Delta(q,\epsilon)$について，$\gamma_q$に線分$[q,r]$を繋げたものは再び道だから，
+        $\Delta(q,\epsilon)\subset V$が従う．
+
+        $V$は$D$-閉と示す．$D$内に収束する$V$の点列$(z_n)$を任意に取る．ある$\epsilon>0$が存在して，$\Delta(z_\infty,\epsilon)$は十分大きな$N$について，$z_n\;(n\ge N)$を含む．
+        すると，$\gamma_{z_N}$と線分$[z_N,z_\infty]$を繋げたものは道である．よって，$z_\infty\in V$．
+    \end{description}
+\end{proof}
+
+\begin{example}[位相幾何学者の正弦曲線]
+    \[I=[-i,i],\quad
+    V=\Brace{
+        x+i\sin\frac{\pi}{x}\;\middle|\;x\in (0,1)
+    }\]
+    とし，
+    $D=I\cup V$と定めるとこれは連結であるが弧状連結ではない．
+    原点$O$と$V$は共有点は持たないが，位相的に分離不可能であるから，$D$は２つの連結部分に分解することはできない．
+    かと言って共有点は持たないので，道で結べない．
+\end{example}
 
 \section{回転数}
 
@@ -664,7 +727,7 @@ title=]
 
 \subsection{Cauchyの定理}
 
-\begin{lemma}[閉三角形領域に対するCauchyの定理]
+\begin{lemma}[閉三角形領域に対するCauchyの定理 (Goursat)]
     $D\subset\C$を領域，$p\in D$とし，連続関数$f:D\to\C$は$D\setminus\{p\}$上正則とする．
     このとき，任意の閉三角形$T\subset D$について，
     \[\int_{\partial T}f(z)dz=0.\]
@@ -767,6 +830,38 @@ title=]
     この観点から得られる大域的解析関数をWeierstrassの大域的解析関数というのであった．
 \end{tcolorbox}
 
+\subsection{Weierstrassの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則関数列も連続関数列と同様，一様収束極限には正則性が遺伝する．
+\end{tcolorbox}
+
+\begin{theorem}[Weierstrass]\label{thm-Weierstrass-convergence-theorem}
+    各領域$\Om_n$上で正則な関数$f_n$の列$(f_n)$は，領域$\Om$上で各点収束極限$f:\Om\to\C$を持ち，さらにこの収束は広義一様であるとする．
+    このとき，
+    \begin{enumerate}
+        \item $f$は$\Om$上正則である．
+        \item $k$階導関数の列$(f_n^{(k)})$は$\Om$上で$f^{(k)}$に広義一様収束する．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    各項が正則関数からなる級数
+    \[f(z)=f_1(z)+f_2(z)+\cdots\]
+    の収束モードが広義一様収束でもあるとき，$f$は$\Om$上正則で，項別の微分を許す．
+\end{corollary}
+
+\subsection{Hurwitzの定理}
+
+\begin{theorem}[Hurwitz]
+    正則関数列$\{f_n\}\subset\O(\Om)$がある$f$に一様収束するとする．
+    \begin{enumerate}
+        \item 任意の$f_n$が零点を持たないならば，$f$も持たないか，定数$0$である．
+        \item 任意の$f_n$が単射ならば，$f$も単射か，定数関数である．
+    \end{enumerate}
+\end{theorem}
+
 \subsection{Taylorの定理}
 
 \begin{theorem}[Taylorの定理]
@@ -784,24 +879,38 @@ title=]
 
 \begin{corollary}
     領域上の正則関数$f:D\to\C$と任意の点$z_0\in D$について，任意の開円板$\Delta(z_0,r)\subset D$上において
-    \[f(z)=\sum^\infty_{n=0}\frac{f^(n)(z)}{n!}(z-z_0)^n\quad\on\Delta(z_0,r)\]
+    \[f(z)=\sum^\infty_{n=0}\frac{f^{(n)}(z)}{n!}(z-z_0)^n\quad\on\Delta(z_0,r)\]
     が成り立つ．ただし，右辺の収束は広義一様収束とした．
 \end{corollary}
 
-\section{特異点}
+\subsection{Laurent展開}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Cauchyの積分表示による簡単な帰結を確認する．
+    $1/z$の整級数は，反転した世界での正則関数のTaylor展開，すなわち円の外側$\Delta(z_0,r_1,\infty)$上で定義された$\infty$で消える正則関数を表す．
+    
+    これと通常のTaylor展開とを組み合わせることで，円環領域での級数展開を得る．
+    すると特異点の周りでの様子について考えることも可能となる．
 \end{tcolorbox}
 
+\begin{theorem}
+    $f:D\to\C$は円環$\Delta(z_0,r_1,r_2)\subset D$上で正則であるとする．
+    このとき，
+    \[f(z)=\sum^\infty_{n=-\infty}a_n(z-z_0)^n\quad\on\Delta(z_0,r_1,r_2),\qquad a_n=\frac{1}{2\pi i}\int_{\partial\Delta(z_0,s)}(z-z_0)^{-n-1}f(z)dz.\]
+    で，右辺は$\Delta(z_0,r_1,r_2)$上広義一様に絶対収束する．
+\end{theorem}
+\begin{proof}
+    次の主張を示せば良い．
+    \begin{quote}
+        $\Delta(z_0,r_2)$上の正則関数$F_1$と$\infty$で消える$\Delta(z_0,r_1,\infty)$上の正則関数$F_2$とが存在して，$f=F_1+F_2\;\on\Delta(z_0,r_1,r_2)$と一意的に表せる．
+    \end{quote}
+\end{proof}
+
 \begin{definition}
-    連続関数$f:D\to\C$について，値が定義されないことも含めて，関数が正則にならない点$z_0\in\C$を\textbf{特異点}という．
-    \begin{enumerate}
-        \item 他の特異点を含まない開近傍が取れるような特異点を\textbf{孤立特異点}という．
-        \item 孤立特異点のうち$\lim_{z\to a}f(z)\in\hatC$が定義出来ないとき，これを\textbf{真性特異点}という．
-    \end{enumerate}
+    $F_2$を\textbf{主要部}という．
 \end{definition}
+
+\section{正則関数の描像}
 
 \subsection{定数関数の特徴付け}
 
@@ -822,6 +931,31 @@ title=]
     が成り立つならば，$D$上正則である．
 \end{corollary}
 
+\subsection{有理型関数}
+
+\begin{definition}
+    連続関数$f:D\to\hatC$であって，$D\setminus f^{-1}(\infty)$上正則な関数を\textbf{有理型関数}という．
+\end{definition}
+
+\begin{theorem}
+    $\hatC$上の有理型関数$f:\hatC\to\hatC$は有理関数である．
+\end{theorem}
+
+\section{特異点}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cauchyの積分表示による簡単な帰結を確認する．
+\end{tcolorbox}
+
+\begin{definition}
+    連続関数$f:D\to\C$について，値が定義されないことも含めて，関数が正則にならない点$z_0\in\C$を\textbf{特異点}という．
+    \begin{enumerate}
+        \item 他の特異点を含まない開近傍が取れるような特異点を\textbf{孤立特異点}という．
+        \item 孤立特異点のうち$\lim_{z\to a}f(z)\in\hatC$が定義出来ないとき，これを\textbf{真性特異点}という．
+    \end{enumerate}
+\end{definition}
+
 \subsection{特異点の除去}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -833,11 +967,12 @@ title=]
     連続関数$f:D\to\C$が高々有限個の点を除いて正則ならば，$D$上で正則である．
 \end{corollary}
 
-\begin{corollary}[除去可能特異点の特徴付け]
+\begin{corollary}[除去可能特異点の特徴付け (Riemann)]
     1点$p\in D$を除いた領域上の関数$f:D\setminus\{p\}\to\C$は正則であるとする．このとき，次の2条件は同値．
     \begin{enumerate}
         \item $f$は$D$上正則に延長でき，その延長は一意的である．
         \item $\lim_{z\to p}(z-p)f(z)=0$．
+        \item $a$の近傍が存在して，$f$はその上で有界になる．
     \end{enumerate}
 \end{corollary}
 
@@ -856,7 +991,7 @@ title=]
         \item $\min\Brace{n\in\N\mid f^{(n)}(z_0)=0}$を，零点$z_0$の\textbf{位数}という．
         \item 正則関数$f:\Delta^*(z_0,r)\to\C$に対し，$f(z_0)=\infty$を満たす点$z_0\in D$を\textbf{極}という．
         \item このとき，$1/f:\Delta^*(z_0,r)\to\C$も正則で，$z_0$で連続だから除去可能な零点となる．この$1/f$の零点の位数を，$f$の極の位数という．
-        \item 連続関数$f:D\to\C$であって，極を除いて正則な関数を\textbf{有理型}という．このとき，$f^{-1}(\infty)$は離散集合であるか，$f=\infty$となるかのいずれかである．そこで有理型関数と言ったとき前者も仮定することが多い．
+        \item 連続関数$f:D\to\hatC$であって，極を除いて正則な関数を\textbf{有理型}という．このとき，$f^{-1}(\infty)$は離散集合であるか，$f=\infty$となるかのいずれかである．そこで有理型関数と言ったとき前者も仮定することが多い．
     \end{enumerate}
 \end{definition}
 
@@ -894,7 +1029,9 @@ title=]
 \end{proposition}
 
 \begin{theorem}[Weierstrass]
-    正則関数は真性特異点の任意の近傍内で，任意の複素数値に，いくらでも近づき得る．
+    正則関数$f:D\setminus\{a\}\to\C$は真性特異点$a$の任意の近傍内で，任意の複素数値に，いくらでも近づき得る．
+    すなわち，
+    \[\forall_{\al\in\hatC}\;\exists_{r>0}\;\exists_{\{z_n\}\subset\Delta^*(z,r)}\quad\lim_{n\to\infty}z_n=a\land\lim_{n\to\infty}f(z_n)=\al.\]
 \end{theorem}
 
 \subsection{偏角の原理と零点の数}
@@ -961,12 +1098,17 @@ title=]
     $K$の内点にて等号成立した場合，$f$は定数である．
 \end{corollary}
 
-\subsection{Schwartzの補題}
+\subsection{Schwarzの補題}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     正規化された正則関数$f:\Delta\to\Delta,f(0)=0$は，ノルム減少的で，$0$でのJacobianも縮小的(1以下)である．
 \end{tcolorbox}
+
+\begin{history}
+    Hermann Schwarz 1843-21はドイツ人数学者．
+    Laurent Schwartz 1915-02はフランス人で，超関数(distribution)に名前を残す．Fields賞受賞者．
+\end{history}
 
 \begin{theorem}
     正規化された正則関数$f:\Delta\to\Delta,f(0)=0$について，
@@ -976,6 +1118,24 @@ title=]
     \end{enumerate}
     が成り立つ．また，ある点$z_0\in\Delta^*$で(1)の等号が成立するか，(2)の等号が成立するとき，$\exists_{\theta\in[0,2\pi]}\;f(z)=e^{i\theta}z$と表せる．
 \end{theorem}
+
+\subsection{正則自己同型の分類}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一次変換の理論と，Schwatzの補題とで，単位円板の正則自己同型群の構造が定まる．
+\end{tcolorbox}
+
+\begin{theorem}[単位円板の双正則写像は一次変換と回転の合成である]
+    単位円板の双正則写像$f:\Delta\to\Delta$がある$a\in\Delta$について$f(a)=0$を満たすとする．
+    このとき，
+    \[\exists_{\theta\in\R}\quad f(z)=e^{i\theta}\frac{z-a}{1-\o{a}z}.\]
+\end{theorem}
+
+\begin{corollary}[上半平面の双正則写像は特殊線型群が定める一次変換である]
+    上半平面の双正則写像$f:H\to H$について，
+    \[\exists_{A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in\SL_2(\R)}\quad f(z)=\frac{az+b}{cz+d}\]
+\end{corollary}
 
 \chapter{留数解析}
 
