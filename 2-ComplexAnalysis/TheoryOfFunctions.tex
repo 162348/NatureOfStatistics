@@ -6,6 +6,7 @@
 \input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
 %\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
+\newcommand{\Logdomain}{\C\setminus(-\infty,0]}
 \begin{document}
 \tableofcontents
 
@@ -590,9 +591,11 @@ title=]
 
 \subsection{チェインとサイクル}
 
-\begin{definition}
+\begin{definition}\mbox{}
     \begin{enumerate}
-        \item 
+        \item 曲線(特異$1$-単体)が生成する自由アーベル群$S_1(D)$の元，いわば「形式和」を\textbf{チェイン}という．任意のチェイン上で積分が線型写像として定まることに注意．
+        \item 境界作用素$\partial:S_{2}(D)\to S_1(D)$の核の元を\textbf{サイクル}という．特異$2$-単体とは曲面に他ならないから，閉曲線とその形式和のことを\textbf{サイクル}と呼ぶ．
+        \item 曲線$\gamma_1,\gamma_2\in S_1(D)$がホモローグであるとは，$\gamma_1-\gamma_2$が$0$とホモローグであることをいう．すなわち，$H_n(D):=Z_n(D)/B_n(D)$の元であることをいう．
     \end{enumerate}
 \end{definition}
 
@@ -620,6 +623,35 @@ title=]
         \item $\hatC\setminus D$が連結成分を$n$個もつとき，\textbf{$n$重連結}または\textbf{連結度$n$}であるという．
     \end{enumerate}
 \end{definition}
+
+\begin{lemma}[ホモロジー基底]
+    $\Om$を$n$-重連結領域とする．ある閉曲線$\gamma_1,\cdots,\gamma_{n-1}$が存在して，
+    任意の曲線$\gamma\in S_1(\Om)$に対して，
+    \[\gamma\sim c_1\gamma_1+\cdots+c_{n-1}\gamma_{n-1}\]
+    が成り立つ．このときのサイクル$\gamma_1,\cdots,\gamma_{n-1}$は領域$\Om$の\textbf{ホモロジー基底}であるという．
+\end{lemma}
+
+\begin{definition}
+    $\gamma_1,\cdots,\gamma_{n-1}$をホモロジー基底とする．
+    微分$fdz$は，任意の$f\in\O(D)$に対して，
+    \[M:=\Brace{\gamma_1\in S_1(D)\;\middle|\;\forall_{\gamma_2\in S_1(D)}\;\int_{\gamma_1+\gamma_2}fdz=\int_{\gamma_1}fdz.}\]
+    をホモロジー基底$\gamma_1,\cdots,\gamma_{n-1}$に関する微分$fdz$の\textbf{周期加群}という．
+\end{definition}
+
+\begin{remarks}[ベクトル解析論の決着]
+    任意のサイクルの上の$f(s)$の積分は周期の整数係数の1次結合となり，一般の始点と終点が異なる曲線については，周期の整数係数の1次結合だけの差を無視すれば一意に定まる．
+    周期が$0$になることが単連結性であり，これが1価な不定積分の存在のための必要十分条件となる．
+    通常Cauchyの定理は，右辺の周期がすべて$0$になるときについて述べられる．
+\end{remarks}
+
+\begin{example}
+    円環$\Delta(z_0,r_1,r_2)$は$2$-重連結で，ホモロジー基底は任意の円周$\partial\Delta(z_0,r)\;(r\in(r_1,r_2))$となる．
+    円周を一つ取り$C$とすると，円環内の任意のサイクル$\gamma$は$\gamma\sim nC$と表わせ，$n=n(\gamma,0)$となる．
+    サイクル$\gamma$上の正則関数の積分はただ一つの周期
+    \[P=\int_Cfdz\]
+    の整数倍となる．
+    これが留数の先駆けである．
+\end{example}
 
 \subsection{連結性について}
 
@@ -775,11 +807,11 @@ title=]
     \end{description}
 \end{proof}
 
-\begin{theorem}[ホモロジーの言葉によるCauchyの定理]
+\begin{theorem}[ホモロジーの言葉によるCauchyの定理]\label{thm-Cauchy}
     開集合$D$上の正則関数$f:D\to\C$と閉曲線$\gamma:\partial\Delta\to D$についての条件$\int_\gamma fdz=0$について，
     \begin{enumerate}
         \item 任意の$D$に関して$0$とホモローグな閉曲線$\gamma$に対して成り立つ．
-        \item $D$が単連結ならば，任意の閉曲線に対して成り立つ．
+        \item 特に，$D$が単連結ならば，任意の閉曲線に対して成り立つ．
     \end{enumerate}
 \end{theorem}
 
@@ -797,6 +829,12 @@ title=]
     \[\forall_{z\in D\setminus\Im\gamma}\quad\frac{1}{2\pi i}\int_\gamma\frac{f(\zeta)}{\zeta-z}d\zeta=n(\gamma,z)f(z).\]
 \end{theorem}
 
+\begin{theorem}[ホモロジーの言葉によるCauchyの積分表示]\label{thm-Cauchy-representation}
+    $f:D\to\C$を領域上の正則関数，$\gamma\in S_1(\Om)$を$0$にホモローグなサイクルとする．
+    このとき，
+    \[\forall_{z\in D\setminus\Im\gamma}\quad n(\gamma,z)f(z)=\frac{1}{2\pi i}\int_\gamma\frac{f(\zeta)}{\zeta-z}d\zeta\]
+\end{theorem}
+
 \subsection{高階導関数に対するCauchyの評価}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -810,7 +848,7 @@ title=]
     は$\C\setminus\Im\gamma$上正則であり，その導関数は$F'_n(z)=nF_{n+1}(z)$を満たす．
 \end{lemma}
 
-\begin{theorem}
+\begin{theorem}\label{thm-Cauchy-evaluation}
     正則関数$f:D\to\C$について，
     \begin{enumerate}
         \item $f$は$D$上無限回微分可能である．
@@ -879,7 +917,7 @@ title=]
 
 \begin{corollary}
     領域上の正則関数$f:D\to\C$と任意の点$z_0\in D$について，任意の開円板$\Delta(z_0,r)\subset D$上において
-    \[f(z)=\sum^\infty_{n=0}\frac{f^{(n)}(z)}{n!}(z-z_0)^n\quad\on\Delta(z_0,r)\]
+    \[f(z)=\sum^\infty_{n=0}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n\quad\on\Delta(z_0,r)\]
     が成り立つ．ただし，右辺の収束は広義一様収束とした．
 \end{corollary}
 
@@ -890,6 +928,7 @@ title=]
     $1/z$の整級数は，反転した世界での正則関数のTaylor展開，すなわち円の外側$\Delta(z_0,r_1,\infty)$上で定義された$\infty$で消える正則関数を表す．
     
     これと通常のTaylor展開とを組み合わせることで，円環領域での級数展開を得る．
+    $2$-重連結領域上での表示を得るのだ．
     すると特異点の周りでの様子について考えることも可能となる．
 \end{tcolorbox}
 
@@ -1043,11 +1082,43 @@ title=]
     また，主要部とは要は多項式なので，重複度とはその零点・極の周りでの像曲線の回転数に他ならない．
 \end{tcolorbox}
 
-\begin{theorem}[偏角の原理]
-    $f:D\to\C$を領域上の零でない正則関数，$\gamma:[a,b]\to D$を$f$の零点$f^{-1}(0)=\Brace{z_1,\cdots,z_n}$を通らない閉曲線とする．
-    このとき，次が成り立つ：
-    \[\sum_{j=1}^nn(\gamma,z_j)\cdot m_{z_j}=\frac{1}{2\pi i}\int_\gamma\frac{f'(z)}{f(z)}dz.\]
+\begin{theorem}[偏角の定理]\label{thm-argument-principle}
+    定数でない有理型関数$f:D\to\hatC$について，零点と極とを$\{a_j\}:=f^{-1}(0),\{b_k\}:=f^{-1}(\infty)$，その重複度を$\{m_{a_j}\},\{m_{b_k}\}$とおく．
+    このとき，$0$とホモローグな$D\setminus(\{a_j\}\cup\{b_j\})$のサイクル$\gamma$に対して，
+    \[\frac{1}{2\pi i}\int_\gamma\frac{f'(z)}{f(z)}dz=\sum_{j}n(\gamma,a_j)m_{a_j}-\sum_kn(\gamma,b_k)m_{b_k}.\]
+    なお，右辺は有限和となる．
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] 集合$U:=\Brace{a\in\C\mid n(\gamma,a)=0}$はいくつかの連結成分の合併からなるため開集合で，また閉曲線はコンパクトであるから，ある$r>0$が存在して，$\Delta(0,r,\infty)\subset U$．
+        よって$\C\setminus U$はコンパクトで，
+        零点と極とは孤立するから，$\Brace{a_j\in f^{-1}(0)\mid n(\gamma,a_j)\ne 0}\cup\Brace{b_k\in f^{-1}(\infty)\mid n(\gamma,b_k)\ne0}$は有限集合である．
+        したがって，$\gamma$を閉曲線とし，零点または極が$D$内に1つだけある場合について示せば良い．
+        \item[零点]
+        正則関数$f:\Delta(a,r)\to\C$は$a$のみを$m$位の零点に持つとする．
+        このとき，$f_m(a)\ne0$を満たす正則関数が存在して，
+        \[f(z)=(z-a)^mf_m(z),\quad f'(z)=m(z-a)^{m-1}f_m(z)+(z-a)^{m}f'_m(z)\]
+        が成り立つから，
+        \[\frac{f'(z)}{f(z)}=\frac{m}{z-a}+\frac{f'_m(z)}{f_m(z)}\]
+        第二項は再び正則関数だから，Cauchyの積分定理\ref{thm-Cauchy}と留数定理\ref{thm-residue}より，結論を得る．
+        \item[極] $m$位の極を$-m$位の零点と見做すと，零点の場合の議論と全く同様な結果が成り立つ．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    $\Gamma:=f(\Im\gamma)$とおくと，
+    \[\int_\gamma\frac{f'(z)}{f(z)}dz=\int_\Gamma\frac{dw}{w}\]
+    であるから，偏角の原理は$n(\Gamma,0)=\sum_{j\in\N}n(\gamma,a_j)$ともみなせる．
+    すなわち，$m$位の零点$a_j$の周りでの1周は，像$f(a_j)$の周りで$\Gamma$は$m$周する．
+\end{remarks}
+
+\subsection{Roucheの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    偏角の原理は，零点の数を数えているとも思えたが，もっと示唆的な見方としては，$m$位の零点の周りの円周$\partial\Delta(a,s)$を，$m$周する閉曲線に写す局所対応の消息を与えていると考えられる．
+    また，$\Gamma:=f(\partial D)$が$0$を囲まないとき，$f$は$D$内に零点を持たないこととなる．
+    この消息は，$f-g$が$f$(と$g$)に比べて大きく動かないときに起こる．
+\end{tcolorbox}
 
 \begin{corollary}[零点の近傍での対応]
     連続関数$f:D\to\C$は$z_0\in D$で解析的であるとき，$f-w_0\;(f(z_0)=:w_0)$は$z_0$を零点に持つ．この位数を$n\ge1$とする．
@@ -1056,8 +1127,65 @@ title=]
         \item ある$\ep>0$と$\delta>0$が存在して，$a\in\Delta^*(w_0,\delta)\Rightarrow\abs{f^{-1}(a)\cap\Delta^*(z_0,\ep)}=n$を満たす．
     \end{enumerate}
 \end{corollary}
+\begin{proof}
+    (2)を示せば良い．
+    円周$\partial\Delta(z_0,r)\subset D$を取り，
+    $\Gamma:=f(\partial\Delta(z_0,r))$とする．
+    $\C\setminus\Gamma$の$w_0$を含む連結成分を$V$とすると，
+    $V$上で回転数$n(\Gamma,w_0)$は一定だから，
+    \[\forall_{b\in V}\quad\sum_{j}n(\gamma,z_j(b))=\frac{1}{2\pi i}\int_{\partial\Delta(z_0,r)}\frac{f'(z)}{f(z)-b}dz=n(\Gamma,b)\qquad\paren{\{z_j(a)\}:=f^{-1}(a)}\]
+    よって，ある$\ep>0$を$f'$が$\Delta^*(z_0,\ep)$上で$0$にならないように取れば，
+    逆写像定理\ref{thm-inverse-mapping-between-Euclid-spaces}より，
+    $f:\Delta^*(z_0,\ep)\to V$は$n$対$1$写像になる．
+\end{proof}
+
+\begin{theorem}[Rouche]
+    $D$を道$\partial D$で囲まれた有界領域，$f,g$を$[D]$の近傍上の正則関数である．
+    境界道$\partial D$上での条件
+    \[\forall_{z\in\partial D}\quad\abs{f(z)-g(z)}<\abs{f(z)}+\abs{g(z)}\]
+    を満たすならば，$f,g$の$D$上での重複度も込めた零点の個数は等しい．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[仮定の解釈] 三角不等式より，$\forall_{z\in\partial D}\;\abs{f(z)-g(z)}\le\abs{f(z)}-\abs{g(z)}$であるから，仮定は$\forall_{z\in\partial D}\;0\notin[f(z),g(z)]$と同値．
+        \item[ホモトピーの構成] ホモトピーを
+        \[f_t(z):=tf(z)+(1-t)g(z)\]
+        と定めると，$f_t:[D]\times[0,1]\to\C$は，$\partial D$上に零点を持たず，$[0,1]$について連続である．
+        \item[結論] 
+        よって，任意の$t\in[0,1]$について，$f_t:[D]\to\C$の$D$内での零点の個数は
+        \[N_t:=\frac{1}{2\pi i}\int_{\partial D}\frac{f'_t}{f_t}dz=\frac{1}{2\pi i}\paren{t\int_{\partial D}\frac{f'}{f}dz+(1-t)\int_{\partial D}\frac{g'}{g}dz}\]
+        と表せる．右辺は$t$に関して連続であることより，$N_t$は$t$に依らず一定である．
+        よって，$f$の零点の個数$N_1$と$g$の零点の個数$N_0$とは等しい．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    弱い仮定
+    \[\abs{f(z)-g(z)}<\abs{f(z)}\Leftrightarrow\Abs{\frac{g(z)}{f(z)}-1}<1\quad\on\Im\gamma\]
+    で述べられることもある．
+    これは，正則関数$F:=g/f:\Im\gamma\to\C$が，$\Gamma:=F(\Im\gamma)\subset\Delta(1,1)$を満たすことを意味する．
+    すると，偏角の定理は有理型関数$F$の零点$\{a_j\}$と極$\{b_k\}$に対し，
+    \[0=n(\Gamma,0)=\frac{1}{2\pi i}\int_\gamma\frac{F'}{F}dz=\sum_jn(\gamma,a_j)m_{a_j}-\sum_kn(\gamma,b_k)m_{b_k}\]
+    が成り立つ．$f$の零点が$F$の零点，$g$の零点が$F$の極だから，これは$f,g$の零点の個数が重複度を込めて等しいことを意味する．
+\end{remarks}
+
+\subsection{逆関数の表示}
+
+\begin{corollary}
+    $g:\Om\to\C$を解析関数とし，有理型関数$f:\Om\to\hatC$は偏角の原理\ref{thm-argument-principle}と同じ仮定を置く．
+    このとき，
+    \begin{enumerate}
+        \item \[\frac{1}{2\pi i}\int_\gamma g(z)\frac{f'(z)}{f(z)}dz=\sum_jn(\gamma,a_j)g(a_j)-\sum_kn(\gamma,b_k)g(b_k).\]
+        \item $f|_{\Delta(z_0,\ep)}$は単射であるとする．$g=\id_\Om$とすると，
+        \[f^{-1}(w)=\frac{1}{2\pi i}\int_{\partial\Delta(z_0,\ep)}\frac{f'(z)}{f(z)-w}zdz.\]
+    \end{enumerate}
+\end{corollary}
 
 \subsection{開写像定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    偏角の原理から得た局所対応の知識が，重要な知見に結晶する．
+\end{tcolorbox}
 
 \begin{corollary}
     定数でない正則関数は開写像である．
@@ -1071,13 +1199,14 @@ title=]
     \end{enumerate}
 \end{corollary}
 
-\subsection{Roucheの定理}
+なお，一般のEuclid空間の間の関数についての逆写像定理は次の通り．
 
-\begin{theorem}[Rouche]
-    $D$を道$\partial D$で囲まれた有界領域，$f,g$を$[D]$の近傍上の正則関数である．
-    境界道$\partial D$上での条件
-    \[\forall_{z\in\partial D}\quad\abs{f(z)-g(z)}<\abs{f(z)}+\abs{g(z)}\]
-    を満たすならば，$f,g$の$D$上での重複度も込めた零点の個数は等しい．
+\begin{theorem}\label{thm-inverse-mapping-between-Euclid-spaces}
+    $f:\R^n\osup A\to\R^n$を$C^1$級写像とする．$\det f'(a)\ne 0\;(a\in A)$ならば，ある開近傍$a\in U\osub A$が存在して，
+    \begin{enumerate}
+        \item $V:=f(U)$は開集合．
+        \item $f:U\to V$は全単射で，逆写像$f^{-1}:V\to U$も$C^1$-級．
+    \end{enumerate}
 \end{theorem}
 
 \section{最大値の原理}
@@ -1139,7 +1268,88 @@ title=]
 
 \chapter{留数解析}
 
+\begin{quotation}
+    複素領域での正則関数の積分は，ホモロジー基底が定める周期の整数倍となる．
+    これは理論の特殊化に過ぎないが，実用的には熟練を必要とする．
+\end{quotation}
+
 \section{留数定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の孤立特異点$a\in D$に対して，ある$R\in\C$が存在して，$f(z)-\frac{R}{z-a}$は正則になる（特に単連結領域上で原始関数を持つ）．
+    真性特異点であるときは，主要部が級数で得られるので，簡単に求まることは少ないが，$m$位の極であるときは高々$m$項和なので，先にLaurent展開が求まることが多い．
+    すると周期から複素積分が求まってしまう．
+\end{tcolorbox}
+
+\begin{definition}[residue]
+    正則関数$f:\Delta^*(a,r)\to\C$の$a\in\C$での\textbf{留数}とは，ある$\delta>0$が存在して，$f(z)-\frac{R}{z-a}$が$\Delta^*(a,\delta)$上1価の解析関数の導関数となるような複素数$R\in\C$のことをいう．
+    $R=\Res_{z=a}f(z)$と表す．
+\end{definition}
+
+\begin{theorem}\label{thm-residue}
+    領域$D$から孤立特異点$\{a_j\}_{j\in\N}$を除いて正則な関数$f:D\setminus\{a_j\}_{j\in\N}\to\C$と，$0$にホモローグで$\{a_j\}$と交わらないサイクル$\gamma$とに対して，
+    \[\frac{1}{2\pi i}\int_\gamma f(z)dz=\sum_{j\in\N}n(\gamma,a_j)\Res_{z=a_j}f(z).\]
+    なお，右辺は必ず有限和となる．
+\end{theorem}
+\begin{remarks}
+    これはCauchyの積分表示を系として持つ消息になっている．
+\end{remarks}
+
+\section{留数の計算}
+
+\begin{proposition}[極での留数]
+    $a\in\C$は正則関数$f:\Delta(a,r)\to\hatC$の$m$位の極であるとする．
+    このとき，
+    \begin{enumerate}
+        \item 正則関数$\varphi:\Delta(a,r)\to\C$が存在して，
+        \[f(z)=B_h(z-a)^h+\cdots+B_1(z-a)^{-1}+\varphi(z)\]
+        と展開できる．
+        \item $\Res_{z=a}f(z)=B_1=\frac{1}{2\pi i}\int_{\partial\Delta(a,s)}fdz$が成り立つ．
+        \item 正則関数$g(z):=(z-a)^mf(z)$のTaylor級数展開の$(z-a)^{m-1}$の係数とも等しい：
+        \[\Res_af=\frac{1}{(m-1)!}\lim_{z\to a}\dd{^{m-1}}{z^{m-1}}((z-a)^mf(z)).\]
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item Laurent展開と同様の議論による．
+        \item $B_1(z-a)^{-1}$の項を除いて，ほかは明らかにある正則関数の導関数となっている．
+    \end{enumerate}
+\end{proof}
+\begin{remark}
+    理論的には(3)の通りだが，より形式的な議論になるが，計算上はLaurent展開が先に求まるとした方が見通しが良い．
+\end{remark}
+
+\begin{example}[Laurent展開を考える例]
+    $f(z)=\frac{1}{\sin^3z}$は$0$に３位の極を持つ．
+    この留数は，直接Laurent展開して，
+    \begin{align*}
+        \sin^{-3}z&=z^{-3}\paren{1-\frac{1}{6}z^2+[z^4]}^{-3}\\
+        &=z^{-3}+\frac{1}{2}z^{-1}+[z]
+    \end{align*}
+    より，留数は$\frac{1}{2}$．
+\end{example}
+
+\begin{example}[真性特異点の留数]
+    $f(z)=\frac{e^{\frac{1}{z}}}{z^2+1}$は$z=0$に真性特異点を持つ．
+    \begin{align*}
+        f(z)&=\frac{e^{\frac{1}{z}}}{z^2+1}=\paren{\sum^\infty_{n=0}\frac{1}{n!}\frac{1}{z^n}}\paren{\sum^\infty_{m=0}(-1)^mz^{2m}}
+    \end{align*}
+    より，
+    \begin{align*}
+        \Res_0f&=\frac{1}{z}\cdot 1+\frac{1}{3!z^3}\cdot(-z^2)+\frac{1}{5!z^5}\cdot z^4+\cdots\\
+        &=\sum^\infty_{n=0}\frac{(-1)^n}{(2n+1)!}=\sin 1.
+    \end{align*}
+    今回は，積分が求まるので，留数定理によりこの結果を確認できる．
+    この関数は部分分数展開により$f(z)=\frac{1}{2!}\paren{\frac{e^{\frac{1}{z}}}{z-i}-\frac{e^{\frac{1}{z}}}{z+i}}$とも表せ，$\abs{z}=r>1$での積分は$0$である．
+    なぜならば，homotopy型のCauchyの定理\ref{thm-Cauchy's-theorem-in-terms-of-homotopy}より
+    $r>1$に依らずに積分$\int_{\abs{z}=r}f(z)\;dz$の値は一定．特に$r\to\infty$の場合を考えて，$=0$である．
+    従って，$\Delta(0,r)$内の特異点は$z=0,i,-i$だから，
+    \begin{align*}
+        0=\Res_0f+\frac{1}{2!}\paren{e^{\frac{1}{i}}-e^{\frac{1}{-i}}}=\Res_0f+\sin (-1)=\Res_0f-\sin 1.
+    \end{align*}
+    なお，$z=i,-i$に於ける留数とは，補題\ref{lemma-residue-integral-expression}より，$\int_{\abs{z}=r}\frac{e^{\frac{1}{z}}}{z-i}\;dz=\left.e^{\frac{1}{z}}\right|_{z=i}$に等しい．
+\end{example}
 
 \section{偏角の原理}
 
@@ -1147,8 +1357,977 @@ title=]
 
 \chapter{無限積展開}
 
+\begin{quotation}
+    正則関数の具体的な表示を得たい（と言っても極限の形になるが）という実用的要請に答える．
+
+    例えば有理関数は，部分分数分解と，分母分子の因数分解という2つの分類法があった．
+    これは有理型関数の見地から見ると明瞭になる．
+\end{quotation}
+
+\section{部分分数展開}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    整関数に関する場合はTaylorの定理から示せるが，一般の領域への一般化はRungeの定理などの準備を必要とする．
+\end{tcolorbox}
+
+\subsection{整関数に関するMittag-Lefflerの定理}
+
+\begin{theorem}
+    $\{b_n\}\subset\hatC$を$\infty$に収束する列とし，$P_n\in\C[z]$を定数項のない多項式とする．
+    このとき，$b_n$に特異部を$P_n\paren{\frac{1}{z-b_n}}$とする極を持つような有理型関数$f:\C\to\hatC$が存在し，
+    ある多項式列$\{p_n\}\subset\C[z]$と整関数$g\in\O(\C)$が存在して
+    次の表示を持つ：
+    \[f(z)=\sum_{n\in\N}\paren{P_n\paren{\frac{1}{z-b_n}}-p_n(z)}+g(z).\]
+\end{theorem}
+
+\subsection{Mittag-Lefflerの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\subsection{部分分数展開の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily,
+    title=有理型関数の部分分数展開]
+    前回見たAffine空間のような描像であるが，
+    整関数$g$が恒等的に$0$である時には，等式を得る．
+
+    なお，１位の極を持つ場合は，Gamma関数の収束性の問題に直面するので，
+    ２位の場合より議論が一筋縄では行かなくなる．
+    
+    それぞれを，有理式でない場合の有理型関数のうち一番簡単なものを例にとって考える．
+    いずれも整関数が$0$になる例．
+    しかし$\frac{\pi^2}{\sin^2\pi z}$と$\pi\cot\pi z=\pi\frac{1}{\tan\pi z}$とが有理型関数であるとは，随分射程の広い理論を得たものだ．
+\end{tcolorbox}
+
+\begin{proposition}[自乗のものは解きやすい]\label{prop-partial-fractional-decomposition}
+    \[\frac{\pi^2}{\sin^2\pi z}=\sum_{n\in\Z}\frac{1}{(z-n)^2}\]
+\end{proposition}
+\begin{proof}
+    $f(z):=\frac{\pi^2}{\sin^2\pi z}$と置くと，$f^{-1}(\infty)=\Z$で，極は全て２位．
+    \begin{description}
+        \item[特異部の計算]
+    その主要部は，$z=0$では
+    \begin{align*}
+        f(z)&=\frac{\pi^2}{\sin^2\pi z}=\frac{\pi^2}{\paren{\pi z-\frac{\pi^3z^3}{6}+O(z^5)}^2}\\
+        &=\frac{1}{z^2\paren{1-\frac{\pi^2z^2}{6}+O(z^5)}^2}=\frac{1}{z^2}\paren{1+\frac{\pi^2z^2}{3}+O(z^3)}
+    \end{align*}
+    より$\frac{1}{z^2}$で，\footnote{$\frac{\sin\pi z}{\pi}=z+z^3\varphi(z)\;(\varphi(0)\ne 0)$を用いても良い．先生はもはや上のような具体的な議論はしないようだ．}
+    $z=n\in\Z$では，$f(z)$の周期性から，$\frac{1}{(z-n)^2}$である．\footnote{$z=n$とは$z-n=0$である．従って，周期性（基本周期$1$）とは，変数を$z\mapsto z-n$に変換した場合に同じ値になることをいう．}
+        \item[無限和の収束性] 
+        $\sum_{n\in\Z}\frac{1}{(z-n)^2}$が$\C$上で$\hatC$-関数に広義一様収束することを示す．
+        実際，$\abs{z}\le N$を満たす$N$に対して，
+        tailの部分が
+        \[\sum^\infty_{n=N+1}\frac{1}{\abs{z\pm n}^2}\le\sum^\infty_{n=N+1}\frac{1}{\abs{N-n}^2}\le\sum^\infty_{m=1}\frac{1}{m^2}<\infty\]
+        であることからわかる．
+        \item[整関数$g=0$]
+        こうして，整関数$g(z):=f(z)-\sum_{n\in\Z}\frac{1}{(z-n)^2}$が定まる．これが$g=0$であることを示せば，定理\ref{thm-partial-fraction-decomposition}より結論を得る．
+        これには，$[0,1]\times(-\infty,\infty)$で有界であることを示せば周期性より定数関数であることがわかり，$\infty$での値から$g=0$であることを結論づける．
+        \begin{enumerate}
+            \item $x\in\R$に依らず，$f$が$\abs{\Im z}\to\infty$について$0$に一様収束$\lim_{\abs{y}\to\infty}\sup_{x\in\R}f(x+iy)=0$することを示す．
+            $\sin \pi(x+iy)=\frac{e^{\pi i(x+iy)}-e^{-\pi i(x+iy)}}{2i}$であるから，
+            \begin{align*}
+                \abs{2\sin\pi(x+iy)}&=\Abs{e^{\pi i(x+iy)}-e^{-\pi i(x+iy)}}\\
+                &=\Abs{e^{-\pi y}e^{\pi ix}-e^{\pi y}e^{-x\pi i}}\\
+                &=\Abs{e^{2\pi ix}e^{-\pi y}-e^{\pi y}}&\because 両辺に\times\Abs{e^{\pi is}}\\
+                &\ge\Abs{e^{-\pi y}-e^{\pi y}}&等号成立はx\in\Z のとき\\
+                \therefore\quad 0<\frac{1}{\abs{\sin\pi(x+iy)}}&\le\frac{2}{\Abs{e^{-\pi y}-e^{\pi y}}}
+            \end{align*}
+            より，
+            \begin{align*}
+                \abs{f(x+iy)}&=\Abs{\frac{\pi^2}{\sin^2\pi(x+iy)}}\le(2\pi^2)\Abs{e^{-\pi y}-e^{\pi y}}\xrightarrow{\abs{y}\to\infty}0.
+            \end{align*}
+            \item $x\in[0,1]$に依らず，命題の式の右辺が$\abs{\Im z}\to\infty$について$0$に一様収束$\lim_{\abs{y}\to\infty}\sup_{x\in[0,1]}\sum_{n\in\Z}\abs{x+yi-n}^{-2}=0$することを示す．
+            いま，任意の$\epsilon>0$に対して，
+            \[\sum_{\abs{n}>N}\abs{x+iy-n}^{-2}\le\sum_{\abs{n}>N}\abs{x-n}^{-2}<\epsilon\]
+            である．残りは$\abs{y}>\delta$を満たす$\delta$について
+            \[\sum_{\abs{n}\le N}\abs{x+iy-n}^{-2}<(2N+1)\delta^{-2}\]
+            が成り立つことより，$\delta$を十分大きくとれば$\abs{n}\le N$の和も$\epsilon$以下に出来る．総じて，
+            \[\abs{y}>\delta\Rightarrow\sum_{n\in\Z}\frac{1}{(z-n)^2}\le 2\epsilon\]
+            を得た．
+            \item 以上より，$\lim_{\abs{y}\to\infty}\sup_{x\in[0,1]}g(x+iy)=0-0=0$．よって，$g$は帯状集合$[0,1]\times(-\infty,\infty)$上で有界で，$g$の周期$1$より，結局$\C$上で有界である．よって，Liouvilleの定理\ref{thm-Liouville}より，$g$は定数関数であるが，$\abs{y}\to\infty$の時の値より，$g=0$．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}
+    証明の構造は次のとおり．
+    \begin{enumerate}
+        \item 左辺$f(z)$の極の主要部を全て計算する．
+        \item すると，定理\ref{thm-partial-fraction-decomposition}より，それらの無限和と整関数$g$の和として$f$が表せることを使う．無限和が収束することを示す必要がある．
+        \item 最後に示すべきは$g=0$である．これで命題の式を得る．
+    \end{enumerate}
+\end{remarks}
+
+\begin{proposition}[次に１位の極を持つもの]
+    \[\pi\cot\pi z=\frac{1}{z}+\sum_{n\in\Z\setminus\{0\}}\paren{\frac{1}{z-n}+\frac{1}{n}}.\]
+\end{proposition}
+\begin{proof}
+    $\pi\cot\pi z$の$n\in\Z$での極の主要部は$\frac{1}{z-n}$であるが，
+    級数$\sum_{n\in\Z\setminus\{0\}}\frac{1}{z-n}$は収束しない．
+    \begin{description}
+        \item[無限和のデザイン] 同じ無限和を，
+        \[\frac{1}{z}+\sum_{n\in\Z\setminus\{0\}}\paren{\frac{1}{z-n}+\frac{1}{n}}=\frac{1}{z}+\sum_{n\in\Z\setminus\{0\}}\frac{z}{n(z-n)}<\frac{1}{z}+\sum_{n\in\Z\setminus\{0\}}\frac{z}{n^2}.\]
+        と考えると，優級数が見つかるために，収束を示せる．これは有理型関数に広義一様収束する．
+        従って，整関数$g$が存在して，
+        \[\pi\cot\pi z=\frac{1}{z}+\sum_{n\in\Z\setminus\{0\}}\paren{\frac{1}{z-n}+\frac{1}{n}}+g(z).\]
+        \item[$g=0$：今回は微分で解決する]
+        両辺を微分すると，
+        \[-\frac{\pi^2}{\sin^2\pi z}=-z^2-\sum_{n\in\Z\setminus\{0\}}\frac{1}{(z-n)^2}+g'(z)\]
+        より，命題\ref{prop-partial-fractional-expansion}より，$g'(z)=0$だから，$g$は定数関数である．
+        ここで，
+        \begin{align*}
+            \sum_{n\in\Z\{0\}}\paren{\frac{1}{z-n}-\frac{1}{n}}&=\sum^\infty_{n=1}\paren{\paren{\frac{1}{z-n}-\frac{1}{n}}+\paren{\frac{1}{z+n}+\frac{1}{n}}}\\
+            &=\sum^\infty_{n=1}\frac{2z}{z^2-n^2}
+        \end{align*}
+        より，
+        \[\pi\cot\pi z=\frac{1}{z}+\sum^\infty_{n=1}\frac{2z}{z^2-n^2}+g\]
+        であるが，左辺は奇関数，$\frac{1}{z}+\sum^\infty_{n=1}\frac{2z}{z^2-n^2}$も奇関数なので，$g=0$．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    $\cot$というのは，$\frac{1}{\sin\pi z}$だと周期が$2$になり，$1$だと$(-1)^n$が付くのがわずわらしい．これを消すためのデザインである．
+\end{remarks}
+
+\begin{example}\mbox{}
+        \[\tcboxmath{\frac{\pi}{\sin\pi z}=\lim_{m\to\infty}\sum_{\abs{n}\le m}\frac{(-1)^n}{z-n}.}\]
+        これは有理型関数$\frac{\pi}{\sin\pi z}$の$n\in\Z$での主要部が$\frac{(-1)^n}{z-n}$であることから予想がつく．
+    右辺が一様収束することは，$\pm$の対をセットで考えると
+    \[\lim_{m\to\infty}\sum_{\abs{n}\le m}\frac{(-1)^n}{z-n}=\frac{1}{z}+\sum^\infty_{n=1}(-1)^n\frac{2z}{z^2-n^2}\]
+    であることからわかる．さて，等式は，\textbf{偶数と奇数で分ける}と見えてくる：
+    \begin{align*}
+        \sum_{\abs{n}\le m}\frac{(-1)^n}{z-n}&=\sum_{\abs{2n}\le m}\frac{1}{z-2n}-\sum_{\abs{2n+1}\le m}\frac{1}{z-2n-1}\\
+        &=\frac{1}{2}\sum_{\abs{2n}\le m}\frac{1}{z/2-n}-\frac{1}{2}\sum_{\abs{2n+1}\le m}\frac{1}{(z-1)/2-n}\\
+        \xrightarrow{m\to\infty}&\frac{1}{2}\pi\cot\pi\frac{z}{2}-\frac{1}{2}\pi\cot\pi\frac{z-1}{2}\\
+        &=\frac{\pi}{2}\paren{\frac{\cos\frac{\pi}{2}z}{\sin\frac{\pi}{2}z}-\frac{\cos\paren{\frac{\pi}{2}z-\frac{\pi}{2}}}{\sin\paren{\frac{\pi}{2}z-\frac{\pi}{2}}}}\\
+        &=\frac{\pi}{2}\paren{\frac{\cos\frac{\pi}{2}z}{\sin\frac{\pi}{2}z}+\frac{\sin\frac{\pi}{2}z}{\cos\frac{\pi}{2}z}}\\
+        &=\frac{\pi}{2}\frac{1}{\sin\frac{\pi}{2}\cos\frac{\pi}{2}}=\frac{\pi}{2}\frac{2}{\sin\pi z}=\frac{\pi}{\sin\pi z}.
+    \end{align*}
+\end{example}
+
+\begin{itembox}[l]{極を二次元的に持つ有理型関数}
+    $\Z+i\Z$に極を持つ有理型関数
+    \begin{align*}
+        f(z)&=\sum_{n,m\in\Z}\frac{1}{(z-n-im)^k}\quad(k\ge 3)
+    \end{align*}
+    は，$f(z+1)=f(z+i)=f(z)$をみたし，$1,i$を周期とする．
+    このような有理型関数を楕円関数という．
+    これはRiemann球面ではなく，Torus上の有理型関数とみなせばよく，
+    この大地の上の関数の研究を楕円関数論という．
+    三角関数は楕円関数の退化と考えられる．
+\end{itembox}
+
+\section{無限積展開}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    無限積$\prod_{n\in\N}z_n$が収束するとは，$z_n\ne0\;\fe$で，これらを除いた部分積の極限が$\R\setminus\{0\}$上収束することをいう．
+\end{tcolorbox}
+
+\begin{definition}[複素数の無限積の収束]\mbox{}
+    \begin{enumerate}
+        \item 
+    複素数列$(z_n)_{n\in\N}$に対し，無限積$\prod_{n\in\N}z_n$が収束するとは，
+    \[\exists N\in\N,\;\exists \alpha_N\in\C,\;\alpha_N=\lim_{m\to\infty}\prod_{n=N}^mz_n\ne 0\]
+    が成り立つことをいう．
+        \item この時，無限積の極限値を$\prod_{n\in\N}z_n:=\al_N\prod^{N-1}_{k=1}z_k$とする．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[関数列の無限積の収束]\mbox{}
+    \begin{enumerate}
+        \item 関数列$(f_n)$の無限積$\prod^\infty_{n=1}f_n$が収束するとは，$\exists_{N\in\N}\;F_N(z):=\lim_{m\to\infty}\prod^m_{n=N}f_n(z)$が収束し，零点を持たない．
+        \item 無限積を$\prod^\infty_{n=1}f_n:=F_N\prod^{N-1}_{n=1}f_n$と定め，$F_m$が一様収束するとき，無限積が一様収束するという．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[対数微分]
+    領域$D$上の零でない正則関数の列$(f_n)$に対して，$F_n:=\prod^\infty_{n=1}f_n$は広義一様収束するとする．
+    このとき，$F$は正則であり，
+    \[\frac{F'}{F}=\prod^\infty_{n=1}\frac{f'_n}{f_n}\]
+    が成り立つ．
+\end{lemma}
+
+\subsection{収束の特徴付け}
+
+\begin{lemma}[無限積の収束に必要な自明な必要条件]
+    無限積$\prod_{n=1}^\infty z_n$が収束するならば，$\lim_{n\to\infty}z_n=1$である．
+\end{lemma}
+\begin{proof}
+    ある$M\in\N$が存在して，$P_m:=\prod^m_{n=M}z_n$は$\al\ne0$に収束する．このとき，
+    \[\lim_{m\to\infty}z_m=\lim_{m\to\infty}\frac{P_m}{P_{m-1}}=\frac{\al}{\al}=1.\]
+\end{proof}
+
+\begin{remark}
+    そこで，無限積を$\prod^\infty_{n=1}(1+a_n)$と見ることを考える．これが収束するには，$\lim_{n\to\infty}a_n=0$が必要．
+    無限積の収束の判定では最初の有限項は無視して良いから，最初から$\abs{a_n}<1$を仮定しても実用性を失わない．
+    すると，列$(1+a_n)$は右半平面上の点列である．
+    $z$が負の実軸上にないときは，$\log z$を虚部の値域が
+    $(-\pi,\pi)$
+    に含まれるように取れる．
+    これを対数の主値といい，$\Log:\Logdomain\to\C$で表すのであった\ref{def-principle-value-of-log}．
+\end{remark}
+
+\begin{theorem}[無限積が収束することの特徴付け]
+    $\Delta$内の点列$(a_n)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\prod^\infty_{n=1}(1+a_n)$は収束する．
+        \item $\sum^\infty_{n=1}\Log(1+a_n)$は収束する．
+    \end{enumerate}
+    ただし，$\Log:\Logdomain\to\C$は主値とした：$\pi<\Im\log(1+a_n)\le\pi$．
+\end{theorem}
+
+\begin{proposition}
+    $\Delta$内の点列$(a_n)$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $\sum^\infty_{n=1}\abs{a_n}<\infty$．
+        \item $\sum^\infty_{n=1}\abs{\Log(1+a_n)}<\infty$．
+        \item $\prod_{n=1}^\infty(1+a_n)$が絶対収束する．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    関数列$(f_n)$について，$\sum_{n\in\N}f_n$が一様収束すれば，$\prod_{n\in\N}(1+f_n)$も一様収束する．
+\end{theorem}
+
+\subsection{整関数に関するWeierstrassの定理}
+
+\begin{theorem}[Weierstrass]\mbox{}\label{thm-Weierstrass-pre}
+    \begin{enumerate}
+        \item $\C$内に集積点を持たない点列$\{a_n\}$に対して，整関数$f:\C\to\C$であって，その零点が重複度もこめて$\{a_n\}$と一致するものが存在する．
+        \item さらに$a_1=a_2=\cdots=a_m=0,a_n\ne0(n>m)$とするとき，多項式の列$(P_n)_{n=m+1}^\infty$が存在して，\[f(z)=z^me^{g(z)}\prod_{n=m+1}^\infty\paren{1-\frac{z}{a_n}}e^{P_n(z)}\]
+        と表示できる．ここで$g(z)$は零点を持たない整関数で，無限積は
+        広義一様収束する
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    一般の複素領域における証明は\ref{thm-Weierstrass-zero}．
+    ここでは構成的に証明する．
+\end{proof}
+
+\begin{example}[genus]
+    $\N$に１位の零点を持つ整関数は，$P_n(z)=z/n$ととれて，次のような積表示を持つ：
+    \[\tcboxmath{e^{g(z)}\prod^{\infty}_{n=1}\paren{1-\frac{z}{n}}e^{z/n}}\]
+    これは，$(P_n)$を常に１次式として取っている．
+    実は，ある自然数$k\in\N$に対して，$0$でない$a_n$に関する和$\sum_{n\in\N,a_n\ne0}\abs{a_n}^{-k-1}$が有限であるとき，$P_n(z)$として$k$次式を取れる．
+    このような$k\in\N$の最小値を，列$(a_n)$の\textbf{種数}といい，$a_n=n$の場合，種数は１である．
+    種数次の多項式を用いた無限積表示を特に\textbf{基本乗積}という．
+\end{example}
+
+\begin{corollary}
+    $\C$上の有理型関数$F:\C\to\hatC$は，２つの整関数$f,g$の商$f/g$として表せる．
+\end{corollary}
+
+\begin{example}
+    \[\tcboxmath{\sin\pi z=\pi z\prod_{n\in\Z\setminus\{0\}}\paren{1-\frac{z}{n}}e^{z/n}=\pi z\prod^\infty_{n=1}\paren{1-\frac{z^2}{n^2}}}\]
+\end{example}
+
+\subsection{Weierstrassの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    零点についても，全く同様な構成が可能で，これは零点に限らない（補間定理）．
+\end{tcolorbox}
+
+\begin{theorem}[Weierstrass]\ref{thm-Weierstrass-zero}
+    領域$D\subset\C$内の$D$上に集積点を持たない\footnote{$D$の点であって，全ての開近傍が$Z$に交わってしまうような点がない．任意の$z\in D$が$Z\cup\{z\}$の孤立点であることをいう}離散部分集合$Z\subset D$を考える．写像$m:Z\to\N_+$に対して，$f\in\O(D)$であって，$f$の零点は$Z$のみで，$a\in Z$での零点の位数が$m(a)$であるようなものが存在する．
+\end{theorem}
+
+\begin{corollary}[補間定理]\ref{thm-interpolation}
+    $D\subset\C$を領域，$Z\subset D$をその離散部分集合とする．
+    任意の関数$f:Z\to\C$は正則関数$\o{f}:D\to\C$に延長できる．
+\end{corollary}
+
+\section{Gamma関数}
+
+\section{Stirlingの公式}
+
+\chapter{Cauchy-Riemann方程式}
+
+\begin{quotation}
+    Cauchy-Riemann方程式を偏微分方程式として考察する理論を，歴史的に自然な出発点として
+    Mittag-Lefflerの定理から始める．極という特異点の言葉を避けるため，貼り合わせの言葉で同値換言する．
+    さらに有理型関数への言及を避けるため，Cousinの第一問題という純粋に正則関数についての問題に還元する（同値ではない，Mittag-Lefflerの定理の拡張になっている）．
+    Cousinの第一問題は開被覆を任意に取る問題設定の局所性が煩雑なので，$\Cinf$関数の世界を借りることによって偏微分方程式の解の存在問題に帰着する．
+    ここに辿り着くまで多くの命が燃やされた．
+    
+    「Stein多様体上の解析的な問題には位相的な障害しかない」ことを岡の原理という（第三論文でのテーマ）．
+    \begin{quote}
+        Cousinの第二問題だけは未知の位相的条件を明らかにすることが残されているが，多分本質的困難はないであろうと予想していたのである．
+
+        結果はその通りであった．しかも，今第三者として見直してみると実に見事な出来栄えである．主定理はこう云っているのである．
+
+        二複素変数の空間に於て，単葉，連結，有限な正則領域内に零点（複数）が与えられたとき，若し非解析解があるならば解析解もある．
+        
+        『春雨の曲』第七稿
+    \end{quote}
+    岡潔はLeviの問題に取り組んで世界で初めて解決したが，後年にLars Valter Hörmander 31-12が関数解析と偏微分方程式の手法によって$\o{\partial}$-問題を解決することの帰結として解き直した．
+    Hörmanderの教科書に記述がある内容である．
+    $\partial_z$が全射を定める空間を単連結というのであった．
+    $\o{\partial}$が全射を定める空間を考えることで解決する．
+    関数解析の勝利であるか？
+    領域化された議論と「その上の関数」という空間に対する位相解析への導入．
+    作用素$\partial_z$を全射にする領域$D$を単連結といい，作用素$\partial_{\o{z}}$を全射にする領域$D$を
+\end{quotation}
+
+\section{Mittag-Lefflerの定理とCousinの問題}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極とそこでの主要部を局所的に指定することで，領域の上に同じ特異点挙動をする（局所的に差が正則である）有理型関数を構成することができるか？
+    この議論を，極という特異点の知識から，偏微分方程式の解の存在条件という多変数関数論のアイデアへと還元していく．
+    するとCousinの問題という，局所的なデータ（開被覆とその上の有理型関数）から大域的な有理型関数を構成するクラスの問題に行き着く．
+    関数の芽の考え方に近く，層という概念とコホモロジー(Čech cohomology)の概念の霊性源であることがすぐにわかる．
+    Mittag-Lefflerの定理の一般次元化がCousinの第一問題であり，Cartanにより層係数コホモロジーの言葉で，「一次元ホモロジー群が$0$になるときは常に解ける，特にStein多様体上では常に解ける」と解決された．
+    第二問題は，第一問題が加法的であるとしたら乗法的なもので，与えられた零点を持つ一変数正則函数の存在についてのヴァイエルシュトラスの定理の多次元への一般化となっている．
+\end{tcolorbox}
+
+\begin{theorem}[Mittag-Leffler]\label{thm-Mittag-Leffler}
+    任意の領域$\Omega\subset\C$について，
+    次の２つの同値な主張が成り立つ．
+    \begin{enumerate}
+        \item $\Omega$上の離散集合（＝集積点\footnote{集積点は孤立点の対義語}を持たない）を$\{z_j\}_{j\in\N}\subset\Omega$と附番し，対応する定数のない多項式の列$P_j\in\C[z],P_j(0)=0$を考える．$\Omega$上の有理型関数$f\in\M(\Omega)$で，極は$\{z_j\}_{j\in\N}$で，かつ，$z_j$での主要部が$P_j\paren{\frac{1}{z-z^j}}$であるようなものが存在する．
+        \item $\Omega$の開被覆$\{\Omega_j\}_{j\in\N}$と対応する有理型関数の列$(f_j)\in\prod_{j\in\N}\M(\Omega_j)$で$f_j-f_{l_j}\in\O(\Omega_j\cap\Om_{l_j})$を満たすものに対して，有理型関数$f\in\M(\Omega)$であって，$f-f_j\in\O(\Omega_j)$を満たすものが存在する．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[２つの条件が同値であることの証明] \mbox{}\\
+        \begin{description}
+            \item[(1)$\Rightarrow$(2)] 任意に開被覆$\{\Om_j\}_{j\in\N}$とその上の有理型関数の列$(f_j)\in\prod_{j\in\N}\M(\Omega_j)$を取る．$S:=\Brace{z\in\Om\mid\exists_{j\in\N}\;zはf_jの極}$と定めると，これは$\Omega$の離散集合で特に可算あるから\footnote{離散集合$S\mono\R^2$は，$\Q^2$が$\R^2$上稠密であるから，$\Q^2$への単射を持つはずだが，$\Q^2$の時点で可算集合であるから，$S$も可算．}，附番$S=\{z_l\}_{l\in\N}$が取れる．
+            これに対して，$P_j\in\C[z]$を$P_l\paren{\frac{1}{z-z_l}}$が$f_j$の主要部となるように選ぶと，これは(2)の仮定より$f_j$の取り方に依らない．(1)が定める$\{z_j\}$と$\{P_j\}$に関する有理型関数$f\in\M(\Om)$は，当然$f-f_j\in\O(\Om_j)$を満たす．
+            \item[(2)$\Rightarrow$(1)] 離散集合$\{z_j\}_{j\in\N}\subset\Omega$と対応する多項式の列$P_j\in\C[z]$を任意に取る．$\Om_j$を他の$z_i\;(i\ne j)$を含まない$z_j$の任意の近傍を取り，$f_j:=P_j\paren{\frac{1}{z-z_j}}\in\M(\Om_j)$とおく．そして，$\Om_0:=\Om\setminus\{z_j\}_{j\in\N},f_0:=0$とおく．$(\Om_j)$の取り方より，$\Om_j\cap\Om_k$は$j\ne k$のときそもそも極を取る点を含まないから，明らかに$f_j-f_k\in\O(\Om_j\cap\Om_k)$が成り立つ．
+        \end{description}
+        \item[(2)の証明] Cousinの第一問題\ref{problem-Cousin-I}から従う．$g_{jk}:=f_j-f_k\in\O(\Om_j\cap\Om_k)$と置くと，これはCousinの問題のcocycle条件を満たすから，解$(g_j)$が存在する．これに対して$f:=f_j+g_j\;(\on\Om_j)$と定めれば，$f$は$\Om$上で定まる．$(f_j+g_j)-(f_k+g_k)=(f_j-f_k)+(g_j-g_k)=g_{jk}+g_{kj}=0\;(\on\Om_j\cap\Om_k)$であるため．
+    \end{description}
+\end{proof}
+
+\begin{problem}[Cousin I：]\label{problem-Cousin-I}
+    領域$\Om$の可算開被覆$(\Om_j)_{j\in J}$と正則関数$g_{jk}\in\O(\Om_j\cap\Om_k)\;(j,k\in J,\Om_j\cap\Om_k\ne\emptyset)$が，cocycle条件
+    \begin{align*}
+        g_{jk}+g_{kj}&=0,\quad(\on\Om_j\cap\Om_k\ne\emptyset),&g_{jk}+g_{kl}+g_{lj}&=0,\quad(\on\Om_j\cap\Om_k\cap\Om_l\ne\emptyset),
+    \end{align*}
+    を満たすとする．このとき，必ず$g_j\in\O(\Om_j)$であって$g_{jk}=g_k-g_j\;(\on\Om_j\cap\Om_k\ne\emptyset)$を満たすものが作れるか？\footnote{作れる場合，cocycle条件（貼り合わせの条件）と大域的関数$g$の存在とが同値になる．}
+\end{problem}
+\begin{remark}
+    すでに有理型関数という言葉も，$\Om$上の大域的関数にも言及されない形にまで還元されていることに注意．
+    有理型関数を正則関数の貼り合わせの問題と見るというのが現代的な視点である．
+\end{remark}
+
+\begin{proposition}[$\Cinf$関数での解の存在]\label{prop-solution-to-Cousin-I-of-C-infty-functions}
+    Cousinの第一問題\ref{problem-Cousin-I}は，$C^\infty$関数については常に解ける．
+\end{proposition}
+\begin{proof}
+    領域$\Om$の可算開被覆$(\Om_j)_{j\in J}$と正則関数$g_{jk}\in\O(\Om_j\cap\Om_k)\;(j,k\in J,\Om_j\cap\Om_k\ne\emptyset)$を任意に取る．
+    \begin{description}
+        \item[構成] $\{\Om_j\}$に属する１の分割$\{\varphi_j\}_{j\in J}$を取る：
+        \begin{itemize}
+            \item $\varphi_j\in C^\infty(\Om)$，$\supp\varphi_j\subset\Om_j$．
+            \item $\sum_{j\in J}\varphi_j=1$で局所有限：$\forall_{z\in\Om}\;\exists_{V:zの近傍}\;\abs{\Brace{j\in J\mid V\cap\supp\varphi_j\ne\emptyset}}<\infty$．\footnote{１の分割の存在は難しくて，まず連続関数で作ってから，modifierで滑らかにする．}
+        \end{itemize}
+        これに対して$g_j:=\sum_{k\in J}\varphi_k\cdot g_k\;(\on\Om_j)$とおく．ただし，$\varphi_kg_k$は$\Om_k$の外では$0$とする．すると，$g_j\in\Cinf(\Om_j)$である．
+        \item[証明]
+        $\Om_j\cap\Om_k\ne\emptyset$について，
+        \begin{align*}
+            g_j(z)-g_k(z)&=\sum_{l\in J}\paren{\varphi_l(z)g_{lj}(z)-\varphi_l(z)g_{lk(z)}}\\
+            &=\sum_{j\in J}\varphi_l(z)\paren{g_{lj}(z)-g_{lk}(z)}\\
+            &=g_{jk}(z)\sum_{j\in J}\varphi_l(z)&\because g_{jk}+g_{kl}+g_{lj}=0\\
+            &=g_{jk}(z).
+        \end{align*}
+    \end{description}
+\end{proof}
+\begin{remark}
+    １の分割の存在証明は難しくて，まず連続関数で作ってから，mollifierで滑らかにする．
+    $\Cinf$関数なら貼り合わせが自由にできるが，正則関数では１の分割が作れない．
+\end{remark}
+
+\begin{example}[Cousin Iが解けない例と単連結性との関係の観察]
+    $(g_{jk}),(g_j)$を定数関数として与えて簡単な例を作っても重要な示唆が得られる．
+    領域として$\Om:=\Brace{z\in\C\mid 1<\abs{z}<2}$を考えると，これは単連結ではない（単連結性の特徴付け\ref{prop-characterization-of-simply-connectedness}）．
+    しかし，３つの単連結な開集合$\Om_1,\Om_2,\Om_3\;(\Om_1\cap\Om_2\cap\Om_3=\emptyset)$で被覆でき，
+    \begin{align*}
+        g_{12}&=1,&g_{23}&=10,&g_{31}&=100,
+    \end{align*}
+    と定めれば，$(g_{jk})$はcocycle条件を満たしてしまうが，一次方程式
+    \[\begin{cases}
+        -g_1+g_2\hphantom{+g_3}&=g_{12}=1\\
+        \hphantom{-g_1}-g_2+g_3&=g_{23}=10\\
+        \hphantom{-}g_1\hphantom{-g_2}\;-g_3&=g_{31}=100
+    \end{cases}\]
+    は解を持たない．
+    \[\det\begin{pmatrix}-1&1&0\\0&-1&1\\1&0&-1\end{pmatrix}=0.\]
+
+    しかし，$\Om':=\Brace{z\in\C\mid\abs{z}<1}$と定めると，同じく３つの開集合$\Om'_1,\Om'_2,\Om'_3$で被覆できるが，$\cap_{i=1,2,3}\Om'_i\ne\emptyset$が成り立つときは（$\Om$の場合と異なり，このように取ることが可能であるが，もちろんこれを満たさない例も作れるであろう），値域の空間に条件$g_{12}+g_{23}+g_{31}=0$が加わるから，$\rank\begin{pmatrix}-1&1&0\\0&-1&1\\1&0&-1\end{pmatrix}=2$と併せると，これは解を持つ．
+
+    これは，$\Om,\Om'\subset\C$では１次のcohomology群が異なることに起因する．そのため，単連結性\ref{prop-characterization-of-simply-connectedness}が肝要となるのである．
+\end{example}
+
+\section{Cauchy-Riemann方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Cousinの第一問題を偏微分方程式の解の存在問題に帰着する]
+    では正則関数はどうであるかというと，
+    定数関数よりはたくさんあるが，
+    滑らかな関数よりはない．
+    この消息を探るためには，$\Cinf$関数の特殊化として正則関数を捉える視点が有用である．
+    \textbf{Cousinの第一問題を微分方程式の問題に還元する視点が肝要}になる．
+
+    $\forall_{g\in\O(D)}\;\exists_{f\in\O(D)}\;\pp{f}{z}=g$が成り立つとき，$D\subset\C$を単連結というのであった（単連結性の特徴付け\ref{prop-characterization-of-simply-connectedness}）．
+    同様のことをCauchy-Riemann作用素$\o{\partial}$ \ref{def-CR-operator}で，さらに$\Cinf$関数について考える．
+    これは正則凸という領域のクラス（ある意味で「連結性を仮定しない単連結」＝「任意の閉曲線が１点にhomotopic」）を定め，多変数関数論への入口となる．
+\end{tcolorbox}
+
+\begin{theorem}[コーシーリーマン作用素の全射性]\label{thm-Cauchy-Riemann-operator-is-epic}
+    領域$\Om\subset\C$上の任意の$\Cinf$関数$f\in\Cinf(\Om)$に対して，$\pp{u}{\o{z}}=f$を満たす$\Cinf$関数$u\in\Cinf(\Om)$が存在する：$\forall_{g\in\Cinf(\Om)}\;\exists_{f\in\Cinf(\Om)}\;\pp{f}{\o{z}}=g$．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[構成] 補題\ref{lemma-holomorphic-compact}より，正則凸なコンパクト集合の「狭義」単調増加列$(K_j)$で$\cup_{j\in\N}K_j=D$を満たすものを取る．
+        各$K_j$に対して，$D$にコンパクトな台を持つ$C^\infty$関数$\psi_j\in C_0^\infty(D)$を，$K_j$の近傍で$1$になるように取る．$\psi_0=0$とする．これに対して，$\varphi_j:=\psi_j-\psi_{j-1}\;(j=1,2,\cdots)$とすると，$(\varphi_j)$は$C^\infty$級の１の分割である：
+        \begin{enumerate}[(a)]
+            \item $\varphi_{j+1}(=\psi_{j+1}-\psi_j)$は$K_j$の近傍で$0$なコンパクト台を持つ$C^\infty$関数，
+            \item $\sum_{j=1}^\infty\varphi_j=1\;\on D$．
+        \end{enumerate}
+        実際，(b)については，局所有限であることによる．任意に$z\in D$を取ると，$\exists_{m\in\N_+}\;z\in K_m\land\varphi_j(z)=0\;(j>m)$であるから（すなわち$m=\min\Brace{j\in\N_+\mid z\in K_j}$），\[\sumj\varphi_j(z)=\sum_{j=1}^m\varphi_j(z)=\sum^m_{j=1}(\psi_j(z)-\psi_{j-1}(z))=\psi_m(z)-\psi_0(z)=1.\]
+
+        ここで，任意に取った$g\in C^\infty(D)$に対して，$g_j:=\varphi_jg$と定めると，$\varphi_j$がコンパクトな台を持つことより，$g_j\in C_0^\infty(D)$である．
+        すると補題\ref{lemma-existence-of-solution-to-PDE-when-compact-support}より，$\partial_{\o{z}}\wt{f}_j=g_j$を満たす$\wt{f}_j\in C^\infty(D)$が存在する．$g_j$は$K_{j-1}$の近傍で$0$なので，$\wt{f}_j\in\O(K_{j-1})$である（正則性の特徴付け\ref{thm-charactorization-of-complex-differentialability}）．
+        すると，各$K_{j-1}$は正則凸であることから，Rungeの定理\ref{thm-Runge}(3)$\Rightarrow$(1)より，$\norm{\wt{f}_j-h_j}_{K_{j-1}}<2^{-j}$を満たす$h_j\in\O(D)$が存在する．これに対して$f_j:=\wt{f}_j-h_j$とおけば，$\partial_{\o{z}}f_j=\partial_{\o{z}}\wt{f}_j-\partial_{\o{z}}h_j=g_j-0=g_j$である．
+        これに対して$f:=\sumj f_j$と定めると，これは各$K_l$上で一様収束するから，$D$上で広義一様収束する．\footnote{$D$内の任意のコンパクト集合$K$上で，任意の$\epsilon>0$に対して，$K_j$を十分大きく取れば良い．}
+        このとき，$f$が滑らかで，$\partial_{\o{z}}f=g\;\on D$を示せば良い．
+        \item[確認]
+        任意の$\overset{\circ}{K}_m$上で$\partial_{\o{z}}f=g\;\on\overset{\circ}{K}_m$を示せば十分である．
+        $K_m$上では，$f=\sum^m_{j=1}f_j+\sum_{j=m+1}^\infty f_j$と分解すると，第２項の無限和は，各項が$\norm{f_j}_{K_m}<2^{-j}\;(j>m)$と評価でき，また特に$f_j\in\O(K_m)$であるから，$K_m$上で一様収束する正則関数列である．したがって，第二項は全体として$\overset{\circ}{K}_m$上正則である（正則性の遺伝\ref{thm-propagation-of-regularity-through-compact-convergence}）．\footnote{$f_j$の定義域は$K_j$の近傍であるが，一様収束するための評価は$K_j$上でしか成り立たないので，結局正則性が遺伝するのは$\overset{\circ}{K}_j$上にて．}
+        よって，\[\partial_{\o{z}}f=\sum^m_{j=1}\partial_{\o{z}}f_j=\sum^m_{j=1}g_j=g\sum^m_{j=1}\varphi_j=g\qquad\on\overset{\circ}{K}_m.\]
+    \end{description}
+\end{proof}
+\begin{remarks}
+    正則凸なコンパクト増大列（$\sigma$-有限性に似ている議論）を取って１の分割を構成し，これを用いてコンパクト台を持つ関数の議論を全体に持ち上げている．
+    その途中での$C^\infty$級関数と正則関数との交錯が美しい．
+\end{remarks}
+
+\begin{lemma}[Cousinの第一問題の定理への還元への成功]
+    定理\ref{thm-Cauchy-Riemann-operator-is-epic}の設定下では，Cousinの第一問題\ref{problem-Cousin-I}は正則関数について常に解ける．
+\end{lemma}
+\begin{proof}
+    正則関数は特に$\Cinf$関数だから，
+    正則関数についてのCousinの第一問題$(\Om_j),(g_{jk})$に対する，$\Cinf$解$(g_j)$が存在して，$g_j-g_k=g_{kj}\in\O(\Om_j\cap\Om_k)$を満たす\ref{prop-solution-to-Cousin-I-of-C-infty-functions}．
+    問題の仮定より，各$g_{jk}$は正則だから，両辺を$\o{z}$で偏微分すると$\pp{g_j}{\o{z}}-\pp{g_k}{\o{z}}=0$（正則性の特徴付け\ref{thm-charactorization-of-complex-differentialability}）．
+    したがって，関数$g:\Om\to\C$を$g=\pp{g_j}{\o{z}}\;\on\Om_j$を満たすように定めると，これは確かに$\Om$上全域で$\Cinf$級に定まる（重なっている部分で$\pp{g_j}{\o{z}}=\pp{g_k}{\o{z}}$であるため）．
+    これに対して，$\pp{u}{\o{z}}=-g$を満たす$u\in\Cinf(\Om)$を取る（定理\ref{thm-Cauchy-Riemann-operator-is-epic}）．
+    これに対して，$\wt{g}_k:=g_k+u$とおくと，これは正則で，Cousin Iの解となる．
+    \begin{enumerate}
+        \item $\pp{\wt{g}_k}{\o{z}}=\pp{g_k}{\o{z}}+\pp{u}{\o{z}}=g-g=0$より正則．
+        \item $(\wt{g}_k)$は大域的な関数$g+u:\Om\to\C$を定め，cocycle条件を満たす．
+    \end{enumerate}
+\end{proof}
+
+\begin{lemma}[解の存在の十分条件：コンパクト台]\mbox{}\label{lemma-existence-of-solution-to-PDE-when-compact-support}
+    \begin{enumerate}
+        \item (Cauchyの積分表示\ref{thm-Cauchy's-integral-expression}の$C^1$関数への一般化) $\Om$を区分的$C^1$級境界を持つ有界領域とする．任意の$f\in C^1([\Om])$に対して，
+        \begin{align*}
+            f(z)&=\frac{1}{2\pi i}\int_{\partial\Om}\frac{f(w)}{w-z}dw+\frac{1}{2\pi i}\int_\Om\frac{1}{w-z}\pp{f(w)}{\o{w}}dw\wedge d\o{w}\\
+            &=\frac{1}{2\pi i}\int_{\partial\Om}\frac{f(w)}{w-z}dw-\frac{1}{\pi}\int_\Om\frac{1}{w-z}\pp{f(w)}{\o{w}}dudv\qquad(z\in D)
+        \end{align*}
+        が成り立つ（ただし，$w=u+iv$とした．$d\o{w}\wedge dw=2idu\wedge dv$に注意）．
+        \item (コンパクト台を持つ$g$についての解の表示) $g\in\Cinf(D)$がコンパクトな台を持つとき，$g$は$\C\setminus D$では$g=0$と定義することが，$g$の$\C$への$\Cinf$級の延長を与えることから，
+        \[f(z)=\int_\C\frac{g(w)}{w-z}\frac{dw\wedge d\o{w}}{2\pi i}=-\frac{1}{\pi}\int_\C\frac{g(z+w)}{w}dudv\]
+        が定まり，$\pp{f}{\o{z}}=g$の解を与える．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $z$と$w$が衝突する際に非積分関数は正則性を失うので，$z$を含まない部分での積分族で近似すれば良い．
+        任意の$\epsilon>0$について，$\Om_\ep:=\Om\setminus\Delta(z,\ep)$とおいて，$C^1$級1-形式$\frac{f(w)}{w-z}dw$に対して$\Om_\ep$上においてGreenの定理\ref{prop-Green}より，
+        \begin{align*}
+            d\paren{\frac{f(w)}{w-z}dw}&=d\paren{\frac{f(w)}{w-z}}\wedge dw\\
+            &=\paren{\pp{}{w}\paren{\frac{f(w)}{w-z}}dw+\pp{}{\o{w}}\paren{\frac{f(w)}{w-z}}d\o{w}}\wedge dw\\
+            &=\frac{1}{w-z}\pp{f(w)}{\o{w}}d\o{w}\wedge dw+f(w)\underbrace{\pp{\paren{\frac{1}{w-z}}}{\o{w}}}_{=0}d\o{w}\wedge dw\\
+            &=-\frac{1}{w-z}\pp{f(w)}{\o{w}}dw\wedge d\o{w}
+        \end{align*}
+        に注意すれば，
+        \[\int_{\partial\Om-\partial\Delta(z,\ep)}\frac{f(w)}{w-z}dw=-\int_{\Om_\ep}\frac{1}{w-z}\pp{f(w)}{\o{w}}dw\wedge d\o{w}\]
+        を得る．$\epsilon\to0$を考えると，$\partial\Delta(z,\ep)$での積分は$2\pi if(z)$に収束する．これはCauchyの積分表示\ref{thm-Cauchy}(2)の証明と全く同一で，$f$の連続性のみから従う．
+        \item 
+        \[f(z)=-\frac{1}{\pi}\int_\C\frac{g(z+w)}{w}dudv\]
+        を$\o{z}$で偏微分すると，$\Abs{\pp{g(z+w)}{\o{z}}}$は$z$に依らず$w$について可積分なので，Lebesgueの優収束定理より微分と積分の交換が可能で，
+        \begin{align*}
+            \pp{f}{\o{z}}&=-\frac{1}{\pi}\int_\C\pp{g(z+w)}{\o{z}}\frac{1}{w}dudv\\
+            &=-\frac{1}{\pi}\int_\C\frac{1}{w-z}\pp{g(w)}{\o{z}}dudv
+        \end{align*}
+        これが$=g(z)$であることは次のようにしてわかる．$\supp g$は有界閉であるから，特に有界より，$\supp g\subset\Delta(0,R)$を満たす$R>0$が存在する．
+        $\Om:=\Delta(0,R)$と置くとこれは区分的$C^1$級の有界閉領域だから，(1)より，
+        \[g(z)=\frac{1}{2\pi i}\int_{\partial\Om}\frac{g(w)}{w-z}dw-\frac{1}{\pi}\int_\Om\frac{1}{w-z}\pp{g(w)}{\o{z}}dudv\]
+        であるが，$\supp g\subset D$は有界閉であるから，特に閉より，$\partial D$上では$g=0$である．よって，
+        \[\frac{1}{2\pi i}\int_{\partial\Om}\frac{g(w)}{w-z}dw=0\qquad\qquad\therefore\quad g(z)=-\frac{1}{\pi}\int_\Om\frac{1}{w-z}\pp{g(w)}{\o{z}}dudv.\]
+    \end{enumerate}
+\end{proof}
+
+\begin{notation}
+    領域$D$上で定義されたコンパクトな台を持つ$C^\infty$級関数全体からなる集合を$C_0^\infty(D)$で表す．
+\end{notation}
+
+\begin{lemma}[領域の「正則-コンパクト性」]\label{lemma-holomorphic-compact}
+    任意の領域$D$に対して，コンパクト集合$K_j\subset D$の列$(K_j)$で，次を満たすものが存在する：
+    \begin{enumerate}
+        \item $K_1\subset\overset{\circ}{K_2}\subset K_2\subset\overset{\circ}{K_3}\subset K_3\subset\cdots$を満たす増大列で，$\cup_{j\in\N}K_j=D$．
+        \item 各$K_j$は$D$で正則凸：$\forall_{j\in\N}\;\wh{K_j}_D=K_j$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \[L_j:=\Brace{z\in D\mid\dist(z,\partial D)\ge\frac{1}{j}かつ\abs{z}\le j}\]
+    とおくと，$(L_j)$は(1)を満たすコンパクト集合の列である．
+
+    これに対して，$K_j:=\wh{L_j}_D$とおくと，$K_j$もコンパクト\ref{remarks-convex-hull}で，(2)を満たす正則凸な集合である．
+    $K_j\subset\overset{\circ}{K}_{j+1}$は明らかでないが，必要な$(K_j)$の部分列を取ることより，(1)を満たすようにできる．
+\end{proof}
+\begin{remarks}
+    $\wh{\wh{K}}=\wh{K}$を用いて，コンパクト集合の正則凸包を取ることで，正則凸なコンパクト集合を構成する．
+\end{remarks}
+
+\section{Rungeの近似定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=岡の原理：関数論を位相的条件に還元する]
+    コンパクト台を持つ$g\in\Cinf(D)$については解が存在することがわかった\ref{lemma-existence-of-solution-to-PDE-when-compact-support}．
+    そこで，解析にはよくある発想で，一般の$g\in\Cinf(D)$に対して，$D$内にコンパクトな台を持つ関数の列$(g_n)$で近似し，$f:=\lim_{n\to\infty}f_n$と構成すれば，これは$\pp{f}{\o{z}}=g$を満たすのではないかという作戦が立つ．
+    しかし$(g_n)$の積分の列$(f_n)$の収束性が問題になる．$f_n$を$\O(D)$において補正・近似することを考えるのがRungeの近似定理である（関数空間の稠密性）．
+    すると議論が領域化される．
+
+    コンパクト集合$K\subset D$に正則凸包の意味で「穴が空いていない」とき（$K=\wt{K}_D$），$K$上の正則関数は$D$上一様に近似できる．
+    $K$を特に離散的に取ると，これは補間定理を意味する．
+\end{tcolorbox}
+
+\begin{notation}[コンパクト集合上の正則関数]
+    コンパクト集合$K\subset D$に対して，$\O(K):=\cup_{K\subset U}\O(U)$を$K$の開近傍$U$で定まっている正則関数の集合と定める．すなわち，$f\in\O(K)$は，$f\in\O(U)$について$f|_K$を考えていることに相当する．
+\end{notation}
+
+\begin{definition}[holomorphically convex hull]\mbox{}
+    \begin{enumerate}
+        \item $V\subset D$が相対コンパクトであるとは，$V$の$D$に於ける閉包がコンパクトであることをいう．これは，$[V]\subset D$かつ$V$が有界であることに同値．よって，$V$が相対コンパクトでないことは，$\partial V\not\subset D$または$V$が非有界であることに同値．\footnote{「$D$で相対コンパクト」というときは，空間$D$内で閉包をとるわけだが，空間$D$には相対位相$D\mono\C$が入っている，ということである．}
+        \item コンパクト集合上の正則関数の空間$\O(K)$に一様ノルムを$\norm{f}_K:=\max_{z\in K}\abs{f(z)}$で定める．
+        \item コンパクト集合$K\subset D$に対して，$\wh{K}_D:=\Brace{z\in D\mid\forall_{f\in\O(D)}\;\abs{f(z)}\le\norm{f}_K}$を，$K$の$D$に於ける\textbf{正則凸包}という．
+        \item $K=\wh{K}_D$が成り立つとき，$K$は$D$で\textbf{正則凸}であるという．これが近似可能性の特徴付けになる（Rungeの近似定理\ref{thm-Runge}）．
+        \item 領域$D$が正則凸であるとは，任意のコンパクト集合$K\subset D$に対して，$\wh{K}_D$も$D$内でコンパクトになることをいうようだ．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}[正則凸包とは？]\label{remarks-convex-hull}
+    正則凸包の条件は最大値の原理のようなことを言っていて「最大値の原理が成り立つ集合」とも読める．
+    また，正則凸包は閉集合である：$\wh{K}=\bigcap_{f\in\O(\C)}\Brace{z\in\C\mid\abs{f(z)}\le\norm{f}_K}$．\footnote{一般の領域$D\subset\C$については，$D$で閉であることしか言えてないわけであるが，境界点$a\in\partial D$について$D$上の正則関数$f(z)=\frac{1}{z-a}\in\O(D)$を考えると，$a$での$\C$の開近傍は十分小さくとれば$\wt{K}_D$とは交わらない．よって，$\wh{K}_D$は$\C$でも閉だとわかる．このような都合の良い関数が取ってこれるのが一変数の特徴であるという．}
+    そして，特に$f=\id$の場合を考えることで，$\abs{z}\le\norm{\id}_K$を満たす必要があるから，有界でもある．
+    （実はこうして$\wh{K}_D$が再びコンパクトになるのは，$D$が領域だからである．）
+    正則凸包は初めは抽象的に感じるかもしれないが，非常に有効で解析学に遍く使われる手法である．
+    Rungeの近似定理\ref{thm-Runge}の(2)$\Leftrightarrow$(3)より，\textbf{$\wh{K}_D$とは，$K$に対して，$D\setminus K$の相対コンパクトな連結成分（＝$D$にすっぽり包まれている有界集合）を合併したものになる}ことが解る．
+    したがって，$K=\wh{K}_D$であるとは，$K$は「任意のループが１点にhomotopicである」という意味で「単連結」であることだとも言える．\footnote{一般に単連結であるというときは基本群を考えるので連結性を仮定する．}
+\end{remarks}
+\begin{remark}[convex hullでみる凸包に対する直感]
+    「線型凸包」の概念になら直感が効く．
+    コンパクト集合$K\subset\R^n$に対して，線型写像に関する同様の定式化
+    \[\wh{K}_D:=\Brace{x\in\R^n\mid\forall_{f\in\Hom_\R(\R^n,\R)}\;f(x)\le\sup_{w\in K}f(w)}\]
+    は$K$の凸包（$K$を含む最小の凸集合）を定める．\footnote{平面上あるいは低次元ユークリッド空間内の有限点集合に対してその凸包を計算するアルゴリズム問題は、計算幾何学の基本的問題の一つである。凸包問題はパターン認識，地理情報処理などに広く応用される．パターン認識の分野においては，平面上の$m,n$点からなる２つの集合があるとき，それぞれについて凸包を作り，これが線型分離可能ならば，２つの集合は本質的に異なると見なすことが多い．２次元において，有限離散集合の凸包は多角形になる．}
+    これは，線型写像$f:\R^n\to\R$が定数で抑えられる$f(x)<c$という条件は$\R^n$上に超平面によって指定される半平面を定め，これがあらゆる「測量の仕方」$f\in\Hom_\R(\R^n,\R)$について成り立つことは凸性を表す．
+    これを一般化して，調和関数・劣調和函数についての凸包なども考えられる．
+\end{remark}
+
+\begin{theorem}[Runge's approximation theorem (1885)]\label{thm-Runge}
+    領域$D$内のコンパクト集合$K\subset D$に対して，次の３条件は同値である．
+    \begin{enumerate}
+        \item (関数論) 任意の$f\in\O(K)$が$D$上の正則関数で一様に近似可能である：$\forall_{f\in\O(K)}\;\forall_{\ep>0}\;\exists_{g\in\O(D)}\;\norm{f-g}_K<\ep$．\footnote{$D=\C$の場合も含意している点に注意．この場合は，Taylor展開を考えれば，「多項式近似が出来るか？」という問題と同値．こちらの方をRungeの定理と呼ぶことが多い．}
+        \item (位相) $D\setminus K$は$D$上相対コンパクトな連結成分を持たない．
+        \item (中間：正則凸) $K=\wh{K}_D$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    (3)$\Rightarrow$(2),(2)$\Leftrightarrow$(1),そして(2)$\Leftrightarrow$(1)を既知として(1)$\Rightarrow$(3)を示す．
+    \begin{description}
+        \item[(3)$\Rightarrow$(2)] 
+        対偶を示す．(2)が成り立たない，すなわち，$D\setminus K$が$[V]\subset D$を満たす有界な連結成分$V$を持つと仮定して，$z\in\wh{K}_D$を満たす$z\in D\setminus K$を構成する．このとき特に$\partial V\subset D$である．
+        \begin{enumerate}[(a)]
+            \item いま，$\partial V\subset K$が成り立つ．実際，任意の$a\in\partial V$について，$\partial V\subset D$より$a\in D$でもある．領域$D$は開集合より，$\exists_{\ep>0}\;\Delta(a,\ep)\subset D$である．よって，$V$が連結成分であることより，任意の$0<\ep'\le\ep$に対して，$\Delta(a,\ep')\cap K=\Delta(a,\ep')\setminus D\ne\emptyset$が成り立つ．これは$a$が$K$の触点であることを意味し，$K$が閉集合であることより$a\in K$が従う．
+            \item したがって，$\partial V\subset K$より，この相対コンパクトな連結成分$V$の点$z\in V$を取れば，最大値の原理\ref{cor-maximum}より，
+            \[\abs{f(z)}\le\max_{w\in\partial V}\abs{f(w)}\le\norm{f}_K\quad\forall_{f\in\O(D)}\]
+            という評価が常に出来るから，$z\in\wh{K}_D$となる．$z\in V\subset D\setminus K$より(3)は成り立たない．
+        \end{enumerate}
+        \item[(1)$\Rightarrow$(2)]
+        対偶を示す．(2)が成り立たない，すなわち，$D\setminus K$が$[V]\subset D$を満たす有界な連結成分$V$を持つと仮定して，$D$上の正則関数の列$(f_n)$で，正則関数に収束しないものを構成する．
+        \begin{enumerate}[(a)]
+            \item 任意の$a\in V$に対して，$f(z):=\frac{1}{z-a}\in\O(K)$であり，$\norm{f_n-f}_K\to0$を満たす$\O(D)$の関数列$(f_n)$が存在すると仮定して矛盾を導く．
+            \item $f_n$はノルム$\norm{\cdot}_K$に関するCauchy列なので，$\norm{f_n-f_m}_{[V]}\le\norm{f_n-f_m}_{\partial V}\le\norm{f_n-f_m}_K$より，$\norm{\cdot}_{[V]}$に関してもCauchy列になる．
+            \item そこで，$f_n$の$[V]$上での（一様）収束極限を$f_\infty\in\O(V)\cap C([V])$とすると，$[V]$上での連続性より，$\partial V$上でも$(z-a)f_\infty(z)=1$が成り立つ．よって，一致の定理より，$[V]$上でも$(z-a)f_\infty(z)=1$が成り立つが，これは$f_\infty$が$a$で正則であることに矛盾する．
+        \end{enumerate}
+        \item[(2)$\Rightarrow$(3)] 
+        $K\subset\wh{K}_D$は明らかなので，$K\supset\wh{K}_D$を示せば良い．
+        対偶命題$a\notin K\Rightarrow a\notin\wh{K}_D$を示す．
+        \begin{enumerate}[(a)]
+            \item 任意の$a\in D\setminus K$を取り，$a$を含む$D\setminus K$の連結成分を$V$とする．(2)の仮定より，$V$は相対コンパクトではない．
+            $V$は開集合だから，$\epsilon>0$が存在して，$V\setminus[\Delta(a,\ep)]$であり，$D$上相対コンパクトではない（相対コンパクトでないことは$\partial V\not\subset D$または$V$が非有界であることと同値で，いずれの性質も明らかに保たれる）．
+            よって，$K':=K\cup[\Delta(a,\ep)]$も(2)の仮定を満たすから，(1)の近似が成り立つ．
+            \item $f\in\O(K')$として$f=\chi_{[\Delta(a,\ep)]}$を取ると，(1)より，$\max_{z\in K}\abs{f(z)-g(z)}<\frac{1}{3}$を満たすような$g\in\O(D)$が存在する．したがって，$f$は$K$上では$0$で$[\Delta(a,\ep)]$上では$1$だから，
+            \[\abs{g(a)}\ge\frac{2}{3}>\frac{1}{3}>\max_{z\in K}\abs{g(z)}\]
+            となり，これは$a\notin\wh{K}_D$を意味する．
+        \end{enumerate}
+        \item[(2)$\Rightarrow$(1)] 
+        任意に$f\in\O(K)$を取ると，$f$の定義域を$K\subset U\osub D$とすると，$f\in\O(U)$でもある．$f$を一様に近似する$D$上の正則関数の列を，まず$f$を$\partial U(\subset D\setminus K)$上に極を持つ有理関数$R$で$K$上一様に近似してから，有理関数$R$を$\partial D$上（$D=\C$などの場合は十分遠くに）に極を持つ有理関数で$K$上一様に近似することで，有理関数に注目して構成する．
+        \begin{enumerate}
+            \item Cauchyの積分表示の被積分関数が$z$の有理式であり，それが一様連続であるために，Riemann和を任意制度で取ることができる．$F$のRiemann和とは有理関数の和で，有理関数である．
+            
+            $U$は有界としても良い．$f:=\dist(K,\partial U)>0$とする．$\C$を一辺$d/2$の正方形に分割し，$U$に含まれる閉正方形を附番し，$E_1,\cdots,E_n$とする．$E:=\cup_{j=1}^nE_j$と定めると，これは$U$に含まれるコンパクト集合で，$K\subset E\subset U$である．よって，$z\in K$上で$f(z)=\frac{1}{2\pi i}\int_{\partial E}\frac{f(\zeta)}{\zeta-z}d\zeta$が成り立つ\ref{thm-Cauchy's-integral-expression}．
+
+            この被積分関数$F(z,\zeta):=\frac{1}{2\pi i}\frac{f(\zeta)}{\zeta-z}$は，コンパクトな定義域$(z,\zeta)\in\partial\times K$上一様連続なので，特に$\forall_{\epsilon>0}\;\exists_{\delta>0}\;\abs{\zeta-\zeta'}<\delta,z\in K\Rightarrow\abs{F(z,\zeta)-F(z,\zeta')}<\epsilon$が成り立つ．
+            よって，折線$\partial E$を長さ$\delta$以下の線分$[\zeta_j,\zeta_{j+1}]\;(j\in N)$に分割すれば，このRiemann和$R(z):=\frac{1}{2\pi i}\sum^N_{j=1}F(z,\zeta_j)(\zeta_{j+1}-\zeta_j)$は$z$のRiemann和とは有理関数で，任意の$z\in K$に対して次の評価を満たす：
+            \begin{align*}
+                \abs{f(z)-R(z)}&\le\frac{1}{2\pi}\Abs{\sum^N_{j=1}\int_{[\zeta_j,\zeta_{j+1}]}(F(z,\zeta)-F(z,\zeta_j))d\zeta}\\
+                &\le L(\partial E)\epsilon.
+            \end{align*}
+            \item 
+            任意の$j\in n$について，$\zeta_j\in D\setminus K$を含む連結成分$V$を取ると，仮定(2)より$[V]\subsetneq D$または$V$は非有界である．
+            \begin{description}
+                \item[$V$の閉包が$D$をはみ出るとき] $\zeta'_j\in\partial V\cap\partial D$が存在して，$V\subset D\setminus K$が連結より，$K$と交わらない長さ確定な曲線で$\zeta_j,\zeta_j'$を結ぶことができるから，補題\ref{lemma-transportation-of-poles-of-rational-functions}より，$R$の第$j$項$\frac{F(z,\zeta_j)(\zeta_j-\zeta_{j+1})}{2\pi i}$は$\zeta_j'$にのみ極を持つ有理式$R_j$で$K$上一様に近似できる．
+                \item[$V$が非有界のとき] $\zeta_j'\in V$であって，$K\subset\Delta(0,\abs{\zeta_j'})$を満たすように出来る．$V$は連結だから$\zeta_j,\zeta_j'$は$K$と交わらない長さ確定な曲線で結べて，補題\ref{lemma-transportation-of-poles-of-rational-functions}より，$\frac{F(z,\zeta_j)(\zeta_{j+1}-\zeta_j)}{2\pi i}$は$\zeta_j'$に極を持つ有理関数$\wt{R}$で$K$上一様に近似できる．
+                すると，$\wt{R}$の$0$でのTaylor展開は$\Delta(0,\abs{\zeta_j'})$上広義一様収束，$K$上一様収束するから，これを有限項で止めて得る多項式$R$で$K$上一様に近似できる．
+            \end{description}
+            以上より，有理式$\sum_{j=1}^nR_j$によって$f$を$K$上一様に近似できる．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}\mbox{}
+    \begin{enumerate}
+        \item (2)の反例としては，$D=\Delta(0,10),K=[\Delta(0,2,3)]$が考えられる．$D\setminus K$の連結成分のうち単連結な方の点$a$について，関数$\frac{1}{z-a}$は$\O(K)$の元ではあるが，$a\in D$に極を持つため$\O(D)$の元ではない．近似しようとすると最大値の原理が崩れることになる．
+        \item しかし，$D=\Delta(0,1,10)$とすると問題がない．$D\setminus K$の２つの連結成分の閉包はいずれも$D$に完全には含まれておらず，いずれも相対コンパクトではない．$a\in D\setminus K$について，これを極とする正則関数を考えても，実は$\C\setminus D$のコンパクトな連結成分内に極を持つ有理式で近似可能である．
+        \item (2)$\Rightarrow$(3)の証明はRungeの近似定理の威力の良い証左となっている．$f=\chi_{[\Delta(a,\ep)]}\in\O(K)$は$D$上に延長できない．できたとすると，一致の定理より$f=0\land f=1$である必要があり，これは矛盾．しかし，任意の正数で誤差を指定すれば，その範囲内では延長できるのである．
+        \item (2)$\Rightarrow$(1)について，Cauchyの積分表示の被積分関数$F$が$z$の有理式であることに注目し，Riemann和を任意精度で取ることができることを一様近似に活用する．$F$のRiemann和とは有理関数の和で，有理関数である．こんな美しい手法思いついてみたい．正方形分割で積分路を作るこの証明は創作の息吹を感じるが，数学としては，statementが$\O(K)\overset{\textrm{dense}}{\supset}\O(D)|_K$の稠密性を表しているので，$\O(K)$をBanach空間と見て，Hahn-Banachの定理から証明できる．
+    \end{enumerate}
+\end{remarks}
+
+\begin{lemma}[有理式の極の曲線に沿った移動]\label{lemma-transportation-of-poles-of-rational-functions}
+    $K\subset\C$をコンパクト集合，$\gamma:[0,1]\to\C$を$K$と交わらない長さ確定な曲線とする．\footnote{$C^1$級曲線は長さ確定である\ref{thm-C1-length-definedness}．}
+    この時，$\gamma(0)$にのみ極をもつ有理関数は，$\gamma(1)$にのみ極を持つ有理関数で，$K$上一様に近似できる．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] $d:=\dist(\Im\gamma,K)>0$($\Im\gamma\cap K=\emptyset$より)とおき，$[0,1]$の細分$0=t_0<t_1<\cdots<t_n=1$を$\gamma([t_j,t_{j+1}])$の長さが$d/3$以下になるようにとる．
+        ($\gamma$が長さ確定な曲線のとき，連続性からこの操作ができる)．
+        これについて，任意の$j\in n$について，
+        任意の$a:=\gamma(t_j)$にのみ極をもつ有理関数は$R(z)=\sum_{l=-N}^ma_l(z-a)^l$と表せるから，これを$b:=\gamma(t_{j+1})$にのみ極を持つ有理関数で$K$上一様に近似すれば良い．これを$n$回繰り返せば，誤差は$n\epsilon$で評価できるためである．
+        \item[証明]
+        $R$は，$a$（と$\infty$）にのみ極を持つから，$b$を中心とした円環$\Delta(b,\abs{a-b},\infty)$上で正則より，この上でのLaurent展開$R(z)=\sum_{l=-\infty}^mb_l(z-b)^l$が存在する\ref{thm-decomposition-of-holomorphic-function}．\footnote{$b$に極を持つ成分については，$R$の$a,b$周りでの振る舞いは指定されていないので，真性特異点の可能性もあり，Laurent展開の主要部は無限項の可能性がある．しかし，$\infty$を特異点とする成分については，$\infty$は$m$位の極であるという性質は変わってはいけないので，Taylor展開が$m$次で停止する．}
+        これは円環$\Delta(a,\abs{a-b},\infty)$上で広義一様収束するため，特に$K$上で一様収束する．
+        このLaurent展開の主要部を，十分大きい$M>0$次の項で切れば，$\sum^m_{-M}b_l(z-b)^l$は$R$との誤差（一様ノルム$\norm{\cdot}_K$による距離）を$z\in K$上一様に，任意に小さくできる．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    本質は「証明」部分で，十分細かく分割すれば，$K$を排斥したまま円環$\Delta(b,r,\infty)$であって，有理関数$R$がその上で正則であるようなものが取れる．
+    これのLaurent展開を取ることが，「一様に近似」に当たるのである．
+\end{remarks}
+
+\begin{tbox}{red}{}
+    正則凸包についてRungeの定理が含意することと，線型凸包との関係を，関数解析（Hahn-Banachの定理）の観点から考えてみたい．
+    $n\ge 2$のとき，$K\subset D\subset\C^n$について，$\wt{K}_D$を求めるのは難しく，位相だけからは定まらなくなるので，函数解析から離陸してしまう，とのこと．
+\end{tbox}
+
+\section{Weierstrassの定理と補間定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Cauchy-Riemann作用素$\partial_{\o{z}}:C^\infty(D)\epi C^\infty(D)$の全射性\ref{thm-Cauchy-Riemann-operator-is-epic}を用いて，零点を指定して正則関数を構成することを考える．
+    証明の方針は２段階で，まず$\Cinf$関数の理論（台をうまく取った関数）を用いて$\Cinf$関数を構成し，Cauchy-Riemann方程式の全射性を用いて補正する方法を考える．
+    \begin{itemize}
+        \item Weierstrassの零点からの構成$\Map(Z,\N_+)\to\O(D)$．
+        \item 補完定理：$Z$上での値からの正則延長の存在．
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{lemma}\label{lemma-branch-of-log}
+    $a,b\in\C$を結ぶJordan曲線（自己交叉のない曲線）$\gamma:[0,1]\mono\C$について，$\C\setminus[\gamma]$上では多価関数$\log\frac{z-a}{z-b}$の１価の分枝が存在する．
+\end{lemma}
+\begin{proof}
+    一次分数変換$F(z):=\frac{z-a}{z-b};\hatC\iso\hatC$により，$\Im\gamma$は$0$と$\infty$を結ぶ$\hatC$内のJordan曲線$F(\Im\gamma)$に写る（単射の合成は単射）．
+    よって，$D:=\hatC\setminus[\Im\gamma]$の像$F(D)$は，連結集合$F([\Im\gamma])$の補集合なので，$0$を含まない単連結領域である（単連結性の特徴付け\ref{prop-characterization-of-simply-connectedness}）．
+    よって，$F(D)$上には正則関数$\log:F(D)\to\C$が定まる\ref{lemma-existence-of-log}（$F(D)$は原点を含まないので，$\log w$の$w\in F(D)$は$F(D)$上零点を持たないことに注意）．
+    以上より，$\log\circ F:\C\setminus[\gamma]\mono\hatC\setminus[\gamma]\iso F(D)\to\C$は正則．
+\end{proof}
+
+\begin{theorem}[Weierstrass]\label{thm-Weierstrass-zero}
+    領域$D\subset\C$内の$D$上に集積点を持たない\footnote{$D$の点であって，全ての開近傍が$Z$に交わってしまうような点がない．任意の$z\in D$が$Z\cup\{z\}$の孤立点であることをいう}離散部分集合$Z\subset D$を考える．写像$m:Z\to\N_+$に対して，$f\in\O(D)$であって，$f$の零点は$Z$のみで，$a\in Z$での零点の位数が$m(a)$であるようなものが存在する．
+\end{theorem}
+\begin{proof}
+    $D=\C$の場合は定理\ref{thm-Weierstrass-pre}で示したから，ここでは$D\ne\C$すなわち$\partial D\ne\emptyset$の場合を考える．
+    まず，零点が$Z$のみで，各零点$a\in Z$の近傍$U_a$では$g(z)=(z-a)^{m(a)}h_a(z)\;(h_a\in\O(U_a))$と表示できる（したがって正則）であるような$C^\infty$級関数$g\in\Cinf(D)$を構成する，位相幾何の問題を解く．
+    次に，これを補正して$D$上正則にすることを考える．
+    \begin{enumerate}
+        \item 
+    \begin{description}
+        \item[準備] 任意の$a\in Z$に対して，$d:=\dist(a,\partial D)\;(\partial D\ne\emptyset)$とし，$\abs{b-a}=d$を満たす$b\in\partial D$をとる．$Z$は$D$上離散的なので，$a$と$b$を連結集合$(\Delta(a,d)\setminus Z)\cup\{a,b\}$内でJordan曲線$\gamma$を用いて結ぶことができる．
+        このJordan曲線の補集合$D\setminus[\Im\gamma]$では対数関数の分枝が定まるが，$[\Im\gamma]$上では定まらない．この問題を克服するために，$[\Im\gamma]$の近傍で$1$となる滑らかな関数を定める．
+        まず$\Im\gamma$の$\Delta(a,d)$での近傍$V$を，$Z\setminus\{a\}$と交わらないように選ぶ（$\Im\gamma$上の各点でこのような近傍をとって合併すれば良い）．
+        そして，$\rho_a\in\Cinf(D)$であって，$\supp\rho_a\subset V$かつ$\rho_a$は$\Im\gamma$の$\Delta(a,d)$でのさらに小さい近傍上で$1$となるものを取る．\footnote{取れるのか？}
+        \item[構成]
+        $D\setminus[\Im\gamma]$上には$\log\paren{\frac{z-a}{z-b}}$の分枝が定まる\ref{lemma-branch-of-log}から，
+        \[g_a(z):=\begin{cases}
+        \exp\paren{m(a)\rho_a(z)\log\frac{z-a}{z-b}},&z\in D\setminus[\Im\gamma],\\
+        \paren{\frac{z-a}{z-b}}^m,z\in[\Im\gamma].
+        \end{cases}\]
+        と定めると，$\rho_a$が$[\Im\gamma]$の近傍で$1$なので$D\cap[\Im\gamma]$上で$\Cinf$級に繋がり，$g$は$D$上$\Cinf$級に定まる．そして，$a$にのみ$m$位の零点をもち，$a$の近傍で表示$\paren{\frac{z-a}{z-b}}^m$の表示を持つわけだから，正則である．
+        \item[総合] $\rho_a$は（少なくとも）$V$の外では$0$としたので$g_a$は$1$であるから，
+        $\supp(g_a-1)\subset\supp\rho_a\subset\Delta(a,d)$なので，$(\supp(g_a-1))_{a\in Z}$は局所有限だから，$g:=\prod_{a\in Z}g_a$は各点において有限項を除いて$1$で，$a\in Z$にのみ$m(a)$位の零点をもち，その近傍で正則である．
+    \end{description}
+    \item この$g\in\Cinf(D)$を補正して正則にすることを考える．
+    零点を増やさぬように，$h\in\Cinf(D)$を用いて$f(z):=g(z)e^{h(z)}$の形で正則関数$f\in\O(D)$構成することを考える．
+    そのためには，
+    \[\pp{}{\o{z}}(ge^h)=e^h\paren{\pp{g}{\o{z}}+g\pp{h}{\o{z}}}\]
+    であるから，$\pp{h}{\o{z}}=-\frac{1}{g}\pp{g}{\o{z}}$を満たす$h\in\Cinf(D)$を構成すれば良い．
+
+    右辺$-\frac{1}{g}\pp{g}{\o{z}}$は$g$の零点$a\in Z$上で値が定まらないことが問題だが，
+    $g$は$a$の近傍$U_a$上正則なので，$\frac{-1}{g}\pp{g}{\o{z}}$は$U_a\setminus\{a\}$上では零だから，$a$でも$g(a)=0$と定めると，$D$全体で$\Cinf$級に定まっている．
+    よって，Cauchy-Riemann作用素の全射性\ref{thm-Cauchy-Riemann-operator-is-epic}より，$h\in\Cinf(D)$が取れる．よって，$f\in\O(D)$が定まる．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    これまた極めて手作り感のある証明で，(1)の位相幾何の問題（２次のcohomologyが$H^2(D,\Z)=0$である）は複素平面の各種性質を駆使して逍遥遊しているような感覚である．（零点$Z$の分布によっては解けないことも十分ある）．
+    Mittag-Lefflerの定理\ref{thm-Mittag-Leffler}とはまた違った消息で，１の分割で位相幾何的な議論を迂回することができないことが肝要となる．
+    なお，層のコホモロジーを使うと，Cousinの問題と同じように解決できる．Cousin IIも同様な位相的な障害に阻まれるが，同様のcohomologyの問題$H^2(D,\Z)=0$に行き着く．
+\end{remarks}
+
+\begin{theorem}[補間定理]\label{thm-interpolation}
+    $D\subset\C$を領域，$Z\subset D$をその離散部分集合とする．
+    任意の関数$f:Z\to\C$は正則関数$\o{f}:D\to\C$に延長できる．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$\Cinf$級での構成] まず，$\Cinf$級の延長$g:D\to\C$を考える．
+        $Z=:\{a_j\}_{j\in\N}$が有限集合ならば$f$として多項式を取れば良いから，可算無限の場合を考える．\footnote{非可算無限ならば集積点を持つ？}
+        $Z$の離散性より，各$d_j>0$が存在して，$B_j:=\Delta(a_j,d_j)$が互いに交わらないようにできる．このとき，$\rho_j\in\Cinf(D)$を$\supp\rho_j\subset B_j$かつ$a_j$の近傍では$\rho_j=1$となるようにとり，$g(z):=\sumj\rho_j(z)f(a_j)$と定めると，$g\in\Cinf$であり，$f$の$\Cinf$延長となっている．
+        \item[正則に補正]
+        この$g$を$Z$上での値を変えずに正則にすることを考える．$h\in\O(D)$を，$Z$に一位の零点を持つような正則関数とする（Weierstrassの定理\ref{thm-Weierstrass-zero}）．
+        これに対して$\o{f}:=g+\psi\;(\psi\in\Cinf(D))$とおくと，$\o{f}(a)=g(a)$であるから，あとは$\o{f}\in\O(D)$となるように$\psi\in\Cinf(D)$を選べば良い．
+        これは，
+        \begin{align*}
+            \pp{\o{f}}{\o{z}}=0&\Lrarrow\pp{g}{\o{z}}+h\pp{\psi}{\o{z}}=0\\
+            &\Lrarrow\pp{\psi}{\o{z}}=\frac{1}{h}\pp{g}{\o{z}}
+        \end{align*}
+        を満たす$\psi\in\Cinf(D)$を取れば良いのだが，いま$g$は$Z$の近傍で定数としたから，$\partial_{\o{z}}g$は$Z$の近傍で$0$．よって，$\frac{1}{h}\pp{g}{\o{z}}$が定義できない範囲では$0$と定めれば，これは$D$上$\Cinf$級とみなせる．
+        よってCauchy-Riemann作用素の全射性\ref{thm-Cauchy-Riemann-operator-is-epic}から従う．
+    \end{description}
+\end{proof}
+
+\section{正則領域}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正則関数が自然に生息するのはどんな場の上にであろうか．
+    実は一次元の場合は，全ての開集合が正則領域となる．
+    この証明はWeierstrassの定理\ref{thm-Weierstrass-zero}と一致の定理\ref{cor-identity-theorem}による．
+\end{tcolorbox}
+
+\begin{definition}[domain of holomorphy]\mbox{}
+    \begin{enumerate}
+        \item 領域$D$上の正則関数$f\in\O(D)$に対して，次が成り立つとき，$D$を$f$の\textbf{存在領域}という：$\forall_{p\in\partial D}\;\forall_{p\in U:近傍}\;\forall_{g\in\O(U)}\;\forall_{V\subset D\cap U:連結成分}\;f\ne g\;\on V$．\footnote{例えば$\log$について$\C\setminus[0,\infty)$は存在領域ではない．$3\in[0,\infty)$の近傍$\Delta(3,1)$上全域では$\log$に一致させられないが，$\Delta(3+1/2i,1/2)$上で一致するような延長は存在する．Riemann面の言葉で表現するともっとスッキリするだろう．}
+        \item $f$を特に指定しないとき，一般に\textbf{正則領域}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    任意の領域$D\subsetneq\C$はある正則関数$f\in\O(D)$の存在領域である．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[構成] 任意の領域$D\subsetneq\C$に対し，$\partial D\ne\emptyset$なので，$D_j:=\Brace{z\in D\mid\dist(z,\partial D)<\frac{1}{j}}$とおく．$Z:=\cupj \paren{D_j\cap\paren{\frac{1}{2^j}\Z+\frac{i}{2^j}\Z}}$とすると，これは$D$内の離散集合で，$\partial D$の全ての点を集積点とする（任意の$z\in\partial D$の任意の近傍は$Z$と交わる）．すると，Weierstrassの定理\ref{thm-Weierstrass-zero}より，この離散集合$Z$上に零点を持つ正則関数$f\in\O(D)$が存在する．
+        \item[確認] 仮にこの$f$が，境界点$a\in\partial D$のある近傍$U$上での正則な関数$g\in\O(U)$であって，$D\cap U$のある連結成分上で$f$に一致するものが存在すれば，？？？
+        ともかく，境界点$a\in\partial D$の近傍での正則な延長が存在するとしたら，零点は$a$に集積するので一致の定理より$f=0$が必要だが，これは矛盾．
+    \end{description}
+\end{proof}
+\begin{remark}
+    円板上では具体的に構成可能で，Riemannの写像定理で単連結領域上にも具体的に構成可能である．
+\end{remark}
+
+\section{多変数の正則関数への拡張}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=一変数と多変数で同じところ]
+    基本的な結果は素直に拡張できるが，正則関数の存在域というのが恐ろしく掴みにくくなる．
+    現在は一般の複素多様体上のDolbeault operatorと複素多様体上のde Rham cohomologyの理論をDolbeault cohomologyの理論でまとめられているようだ．
+\end{tcolorbox}
+
+\begin{definition}[Dolbeault operator]\mbox{}
+    \begin{enumerate}
+        \item 領域$D\subset\C^n$上の$C^1$級複素数値関数$f\in C^1(D)$が\textbf{正則}であるとは，次が成り立つことをいう：$\forall_{j\in[n]}\;\pp{f}{\o{z}_j}=0$．
+        \item 微分作用素$\o{\partial}:\Omega^0(D)\to\Omega^1(D)$を$\o{\partial}f:=\sum_{j=1}^n\partial_{\o{z}_j}fd\o{z}_j$と定めれば，正則条件は$\o{\partial}f=0$と表せる．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Cauchyの積分表示]\label{thm-Cauchy-integral-expression-multivariable}
+    任意の点$a=(a_1,a_2)\in D$に対して，十分大きな$r_1,r_2>0$が存在して，$(z_1,z_2)\in\Delta(a,r)$上で次が成り立つ：
+    \[f(z)=\frac{1}{(2\pi i)^2}\int_{\abs{z_1-a_1}=r_1}\int_{\abs{z_2-a_2}=r_2}\frac{f(\zeta_1,\zeta_2)}{(\zeta_1-z_1)(\zeta_2-z_2)}d\zeta_1d\zeta_2\]
+    ただし，$[\Delta(a_1,r_1)]\times[\Delta(a_2,r_2)]\subset D$を満たす範囲で．
+\end{theorem}
+\begin{proof}
+    多変数正則関数は各変数ごとにも正則だから，Cauchyの積分表示を変数毎に適用することで得られる．
+\end{proof}
+
+\begin{theorem}[多変数複素関数の冪級数展開]
+    任意の$a\in D$について，その近傍上で
+    \[f(z)=\sum_{j,k=0}^\infty A_{jk}(z_1-a_1)^j(z_2-a_2)^k\]
+    が成り立つ（特に$\Delta(a_1,r_1)\times\Delta(a_2,r_2)$で収束）．
+\end{theorem}
+\begin{remark}
+    しかし，正確にどのような領域上で収束するかの議論は難しく，収束半径のような指標はない．正則凸性の概念が開発された．
+\end{remark}
+
+\begin{theorem}[一致の定理]\label{thm-identity-multivariable}
+    $f\in\O(D)$が空でない開集合上で零であれば，零関数である．
+\end{theorem}
+\begin{proof}
+    冪級数展開が零になる領域が開かつ閉であるため．
+\end{proof}
+
+\section{多変数のCauchy-Riemann方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=一変数と多変数で違うところ：Hartogs現象]
+    $\Cinf$級関数から$\Cinf$級1-形式へのCauchy-Riemann作用素$\o{\partial}:\Omega^0(D)\to\Omega^1(D)$がいつ逆像を持つか？
+    実は$\o{\partial}^2=0$を満たす範囲では（明らかにcohomologyの消息）全射で，さらに$f$をコンパクト台を持つように選べてしまう．
+    このことより，コンパクトな「穴」の空いている領域は，正則領域ではないことがわかる．
+    特に，孤立特異点は常に除去可能である．
+    また，孤立した零点を持たない．
+    これは一変数の場合とは全く違う消息である．
+    一変数で成立するが多変数では成り立たない現象をハルトークス現象(Hartogs' phenomenon)という。この現象は、このハルトークスの拡張定理や正則領域の考え方、ひいては多変数複素函数論の発展を導いた。
+\end{tcolorbox}
+
+\begin{discussion}[逆像を持つ必要条件：閉形式である]\label{discussion-CR-operator-in-mulivariable}
+    $\o{\partial}:\Omega^1(D)\to\Omega^2(D)$を，$g=g_1d\o{z}_1+g_2d\o{z}_2$に対して
+    \[\o{\partial}g:=\sum_{j=1}^n\o{\partial}g_j\wedge d\o{z}_j=\frac{1}{2}\paren{\pp{g_2}{\o{z}_1}-\pp{g_1}{\o{z}_2}}d\o{z}_1\wedge d\o{z}_2\]
+    と定めると，$\o{\partial}f=g$のとき，
+    $f\in\Cinf(D)$は特に$C^2$級で，
+    $\partial_{\o{z}_1}\partial_{\o{z}_2}f=\partial_{\o{z}_2}\partial_{\o{z}_1}f$より$\partial_{\o{z}_2}g_1=\partial_{\o{z}_1}g_2$となり，$\o{\partial\partial}f=\o{\partial}g=0$が必要．
+\end{discussion}
+
+\begin{theorem}[十分性]\label{thm-CR-operator-in-multivariable-is-epic}
+    コンパクト台を持つ1-形式$g=g_1d\o{z}_1+g_2\o{z}_2\;(g_1,g_2\in\Cinf_0(\C^2))$が$\o{\partial}g=0$を満たすとする．
+    このとき，あるコンパクト台を持つ$\Cinf$関数$f\in C_0^\infty(\C^2)$が存在して$\o{\partial}f=g$が成り立つ．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[解の構成] 先ず$\partial_{\o{z}_1}f=g_1$を解くと，１変数の場合\ref{lemma-existence-of-solution-to-PDE-when-compact-support}より，
+        \begin{align*}
+            f(z)&=\frac{1}{2\pi i}\int_\C\frac{g_1(\zeta,z_2)}{\zeta-z_1}d\zeta\wedge d\o{\zeta}\\
+            &=\frac{1}{2\pi i}\int_\C\frac{g_1(z_1-\zeta,z_2)}{\zeta}d\zeta\wedge d\o{\zeta}.
+        \end{align*}
+        実はこれは２変数の場合$\o{\partial}f=g$を満たしてしまう．
+        実際，$\o{\partial}g=0$なので$\partial_{\o{z}_2}g_1=\partial_{\o{z}_1}g_2$（議論\ref{discussion-CR-operator-in-mulivariable}）とCauchyの積分表示\ref{thm-Cauchy-integral-expression-multivariable}より，
+        \begin{align*}
+            \partial_{\o{z}_2}f(z)&=\frac{1}{2\pi i}\int_\C\frac{\partial_{\o{z}_2}g_1(z_1-\zeta,z_2)}{\zeta}d\zeta\wedge d\o{\zeta}\\
+            &=\frac{1}{2\pi i}\int_\C\frac{\partial_{\o{z}_1}g_2(z_1-\zeta_1,z_2)}{\zeta}d\zeta\wedge d\o{\zeta}=g_2(z).
+        \end{align*}
+        \item[コンパクト台を持つ]
+        $\supp g:=\supp g_1\cup\supp g_2$はコンパクトだから，$L>0$が存在して$\supp g$は球$\abs{z}\le L$に含まれる．
+        このとき$g$は$\abs{z}>L$にて$0$であるから$\o{\partial}f=0$で，$f$は$\abs{z}>L$にて正則である．
+        したがって，特に$\abs{z_2}>L$という開集合に注目すれば，この上で$g_1(z)=0$なので$f(z)=\frac{1}{2\pi i}\int_\C\frac{g_1(z_1-\zeta,z_2)}{\zeta}d\zeta\wedge d\o{\zeta}=0$である．
+        よって一致の定理より，$\abs{z}>L$上では$f=0$である．
+    \end{description}
+\end{proof}
+\begin{remarks}
+    最後のコンパクト台を持つところで，正則関数の一致の定理の消息だけ借りているのが面白い．
+\end{remarks}
+
+\begin{theorem}[Hartogs (1906)]\label{thm-Hartogs}
+    $D\subset\C^2$を領域，その中のコンパクト集合$K\subset D$を$D\setminus K$が連結であるとする．
+    このとき，任意の正則関数$f\in\O(D\setminus K)$は$K$上にも$\o{f}\in\O(D)$に延長できる．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$\Cinf$級での構成] 
+        $\rho\in\Cinf_0(D)$を$K$の近傍で$1$になるように取り，\[f_0:=\begin{cases}(1-\rho)f,&z\in D\setminus K,\\0,&z\in K.\end{cases}\]と定めると，$f_0\in\Cinf(D)$である．
+        \item[正則に補正]
+        $\o{\partial}f_0$の$\opart$による逆像の元を$f_0$から引くことで，これを正則にすることを考える．
+        $f$は正則なので，$\opart f_0=-\opart\rho\cdot f$より$\supp\opart f_0\subset\supp\opart\rho(\subset D\setminus K)$なので，$\opart f_0\in\Omega^1(D)$は$\C^2\setminus D$上では零と定めると，$\C^2$上にコンパクトな台を持つ$\Cinf$級1-形式$g$に延長でき，$\opart g=0$は$\C^2\setminus D$では勿論，$D$上でも$\opart g=\opart(\opart f_0)=0$を満たす．
+        よって，定理\ref{thm-CR-operator-in-multivariable-is-epic}より，$\opart h=g$を満たす$h\in\Cinf_0(\C^2)$が存在する．
+        これに対して$\o{f}:=f_0-h$と定めると，$\opart\o{f}=\opart f_0-\opart h=g-g=0$より$\o{f}\in\O(D)$．
+        \item[検証] こうして構成した正則関数$\o{f}\in\O(D)$が$D\setminus K$上で$\o{f}=f$を満たすことを示せば良い．
+        $h$は$\opart h=g$を満たすので，$\supp g$の外では正則で，かつコンパクトな台を持つので，$\C^2\setminus\supp g$の有界でない連結部分$V$\footnote{実はただ一つ}上では$h=0$となる．
+        また$\supp g=\supp\opart f_0\subset\supp\opart\rho\subset D\setminus K$なので，特に$V\cap D\ne\emptyset$で，その上では$\o{f}=f_0+0=f$が成り立つ（$V$は$\C^2\setminus\supp g\subset\supp\opart\rho$の非有界な連結部分なので，$\rho=0$であり，$f_0=f$）．
+        $D\setminus K$は連結なので，その一部$V\cap D\subset D\setminus K$で一致するならば，$D\setminus K$上全域で$\o{f}=f$である．
+    \end{description}
+\end{proof}
+\begin{remark}
+    このコーシー・リーマンの方程式によるアプローチは、Leon Ehrenpreisが論文 (Ehrenpreis 1961) で導入したとのこと．
+\end{remark}
+
+\begin{corollary}
+    多変数正則関数$f\in\O(D)$の零点集合$Z:=f^{-1}(0)$はコンパクトでない．
+    特に，多変数正則関数の零点は孤立しない．
+\end{corollary}
+\begin{proof}
+    $\frac{1}{f}\in\O(D\setminus Z)$を考える．$Z$がコンパクトならば，$Z\subset K:=\Brace{z\in D\mid\abs{z}\le 1-\epsilon}$を満たす$\epsilon>0$が存在する．
+    特に$\frac{1}{f}\in\O(D\setminus K)$より，Hartogsの拡張定理\ref{thm-Hartogs}より，これは$\O(D)$上に延長できるが，これは矛盾．
+\end{proof}
+\begin{remarks}
+    多変数関数の零点集合を追い求める旅は，まさに雲を掴むよう．
+    多項式でこれを考えるのが代数幾何で（代数学の基本定理など成り立たない），正則関数でこれを考えるのが
+    解析空間．
+\end{remarks}
+
+\begin{theorem}
+    領域$D\subset\C^n$について，次の条件は同値．
+    \begin{enumerate}
+        \item $\opart f=g$が解ける．
+        \item $D$は正則領域である．
+        \item $D$は正則凸：コンパクト集合$K\subset D$に対し，$\wh{K}_D$もコンパクト．\footnote{この条件は多変数の場合は「相対コンパクトな穴を埋めろ」という純位相的な操作にはならない．}
+        \item $D$は擬凸(subharmonic functionを用いる)である．\footnote{かなり微分幾何的に定義できるこの概念で特徴づける理論が岡潔の理論で，一度は完成を見る．}
+    \end{enumerate}
+    (2)$\Rightarrow$(4)を岡の補題という．
+    (1)で打開策を見つけ，同様にsubharmonic functionで解いたのがLars Valter Hörmanderであり，
+    以降多変数関数論は偏微分方程式論化された．
+    現代ではSobolev空間などの道具が揃っているので(1)が標準的な方法となっている．
+\end{theorem}
+
 \chapter{調和関数}
 
-\chapter{Dirichlet問題}
+\begin{quotation}
+    正則関数の理論は，そのまま共役調和関数の組に関する理論である．
+    が，調和関数の方がより一般的な存在であり，それそのものの性質を見たほうが自然な場合も多い．
+\end{quotation}
+
+\section{定義と例}
+
+\begin{definition}
+    領域上の実関数$u:\C\osup\Om\to\R$が\textbf{調和}または\textbf{ポテンシャル関数}であるとは，$C^2$-級かつ
+    \[\Laplace u=\pp{^2u}{x^2}+\pp{^2u}{y^2}=0\]
+    を満たすことをいう．
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 調和関数の全体は線型空間をなす．
+        \item $u$が調和ならば，$f:=u_x-iu_y$は正則である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item Laplace方程式が線型であるため．
+    \end{enumerate}
+\end{proof}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item $ax+by$は調和である．
+        \item $\log r$は調和であり，絶対値$r$のみの関数で調和なものは$a\log r+b$なる2次元部分空間に限る．
+    \end{enumerate}
+\end{example}
+
+\chapter{等角写像とDirichlet問題}
+
+\begin{quotation}
+    単連結領域の間の双正則同値の分類定理をRiemannの写像定理という．
+    これは正規族の理論によって解けるが，
+    多重連結領域への一般化は，ディリクレ問題（Laplace方程式の境界値問題）の考察となる．
+\end{quotation}
+
+\chapter{楕円関数}
+
+\chapter{大域的解析関数}
 
 \end{document}
