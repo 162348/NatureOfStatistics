@@ -599,7 +599,39 @@ title=]
 
 \section{ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
 
+\subsection{Introduction}
+
+
+
 \section{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
+
+\subsection{Introduction}
+
+\begin{notation}
+    $X_1,X_2,\cdots$が，確率変数$(\Om,\F,\bP)\to(S,\S)$であって，$\bP^{X_1}=:P$に従うとする．
+    $\F_n\subset\L(S)$で添字付けられた経験過程
+    \[\paren{\bG_nf:=\sqrt{n}(\bP_n(f-Pf))}_{f\in\F_n}\]
+    の$l^\infty(\L(S))$上での収束を見る．
+    この上限$Z_n:S^n\to\R$の過程$(Z_n:=\sup_{f\in\F_n}\bG_nf)_{n\in\N}$と法則同等になる中心化されたGauss過程$B_n:\Om'\to l^\infty(\L(S))\;\st\;Z_n\overset{d}{=}\sup_{f\in\F_n}B_n$を満たすものを探すことを考える．
+    このとき，各$B_n$の共分散は
+    \[\Cov[B_n(f),B_n(g)]=E[B_n(f)B_n(g)]=\Cov[f(X_1),g(X_1)]\]
+    を満たすとする．
+\end{notation}
+
+\subsection{Abstract approximation theorem}
+
+\begin{theorem}
+    次を仮定する．
+    \begin{enumerate}[({A}1)]
+        \item $\F\subset l^\infty(\L(S))$は各点可測である：ある可算部分集合$\cG\subset\F$が存在して，$\forall_{f\in\F}\;\exists_{\{g_m\}\subset\cG}\;\forall_{x\in S}\;g_m(x)\to f(x)$．
+        \item 包絡関数は積律有限：$\exists_{q\ge 3}\;F\in\L^q(P)$．
+        \item $\F$は$P$-前Gaussである：ある一様に緊密な中心化Gauss過程$G_P:\Om'\to l^\infty(\F)$が存在して，共分散が
+        \[\forall_{f,g\in\F}\quad E[G_P(f)G_P(g)]=P(fg)=E[f(X_1)g(X_1)]\]
+        を満たす．
+    \end{enumerate}
+    このとき，$\kappa^3\ge E[\norm{\bE_n[\abs{f(X_i)}^3]}_\F]$を満たすある正定数$\kappa>0$が存在して，任意の$\ep\in(0,1]$と$\gamma\in(0,1)$に対して，$\wt{Z}\overset{d}{=}\sup_{f\in\F}G_Pf$が存在して，
+    \[\bP\Square{\abs{Z-\wt{Z}}>K(q)\Delta_n(\ep,\gamma)}\le\gamma\paren{1+\delta_n(\ep,\gamma)}+\frac{C\log n}{n}.\]
+\end{theorem}
 
 \chapter{副読本}
 

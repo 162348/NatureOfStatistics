@@ -28,8 +28,68 @@
 将来はこのような研究者になりたいと考えていた．
 特に読みふけたのはDaniel Kahneman "Thinking Fast and Slow"の翻訳書\cite{Kahneman}で，
 
-
 \subsection{研究計画について}
+
+\section{影響関数を用いたワンステップ推定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    滑らかなノンパラメトリックモデルにおける最適な推定量は，ワンステップ推定量として構成できる．
+    その（滑らかな）セミパラメトリックモデルにおける対応物としては，影響関数なる無限次元解析の言葉が自然に現れる．
+    そこで，標準的な構成法を得るには，Malliavin解析からの知見が生きる可能性が十分にある．
+\end{tcolorbox}
+
+\begin{notation}
+    以下，断りなく用いる記法をここにまとめる．
+    \begin{enumerate}
+        \item $\L^2(\X,P_\theta;\R^p)$により，確率空間$(\X,P_\theta)$上の2乗可積分な$\R^p$-値関数の全体のなす線型空間を表す．
+        $\X$が明らかな場合は省略し，$p=1$の場合は$\R^p$も省略する．
+        \item $P(\X)$によって，可測空間$(\X,\F)$上の確率測度全体のなす空間とする．
+        \item $f:\X\nrightarrow\R$によって，$\X$の全体で定義されているとは限らない部分関数$f|_{\Dom f}:\Dom f\to\R$を表す．
+    \end{enumerate}
+\end{notation}
+
+\subsection{パラメトリックモデルの場合}
+
+推定量の有効性を漸近分散の小ささで測ることとしよう．
+すると，正則性条件を満たす滑らかなパラメトリックモデルについては，次の結果が成り立つのであった．
+
+\begin{theorem}[Cramer-Rao]
+    $U\osub\R^q$で添字付けられたパラメトリックモデル$(P_\theta)_{\theta\in U}$と，偏微分可能な関数$g:\R^q\to\R^p$と，その$\theta\in U$における不偏推定量$\delta\in\L^2(\X^n;\R^p)$とについて，次を仮定する：
+    \begin{enumerate}[({A}1)]\setcounter{enumi}{-1}
+        \item 分布族$(P_\theta)_{\theta\in U}$はある$\sigma$-有限な参照測度$\mu\in P(\X)$に関して絶対連続とし，そのRadon-Nikodym微分を$p_\theta:\X\to[0,1]$で表す．
+        \item $p_-(x):U\to[0,1]$は$P_\theta\dae\; x$に関して偏微分可能である．
+        \item $p_\theta(x)>0$を満たす点$(x,\theta)$の上で，
+        スコア関数の第$i$成分$\psi_i:\X\times U\nrightarrow\R$を
+        $\psi_i(x,\theta):=\pp{\log p_\theta(x)}{\theta_i}=\frac{1}{p_\theta}\pp{p_\theta}{\theta_i}$と定めると\footnote{$\Brace{x\in\X\mid p_\theta(x)=0}$上で$\psi_i(-,\theta)$は定義されていないことに注意．}，二次の絶対積率が有限$\psi_i(-,\theta)\in\L^2(P_\theta)$：
+        \[E_{P_\theta}[\abs{\psi_i}^2]=\int_\X\abs{\psi_i(x,\theta)}^2p_\theta(x)\mu(dx)<\infty\qquad(\forall_{i\in[q]}).\]
+        \item 各$\theta\in U$におけるFisher情報行列$I=(I_{ij})$を，第$(i,j)$-成分を
+        \[I_{ij}(\theta):=\Cov_{P_\theta}[\psi_i,\psi_j]=\int_\X\pp{\log p_\theta(x)}{\theta_i}\pp{\log p_\theta(x)}{\theta_j}\cdot p_\theta(x)\mu(dx)\qquad(\forall_{i,j\in[q]}).\]
+        とすることによって定めると，正定値な対称行列となる．
+        \item 不偏推定量$\delta$は$\psi:=(\psi_1,\cdots,\psi_q)^\top$が定める推定方程式の解であり：
+        $E_{P_\theta}[\psi]=\int_\X\psi(x,\theta)p_\theta(x)\mu(dx)=0\in\R^q$，かつ，次の微分と積分の可換性が成り立つ：
+        \[\int_\X\delta(x)\psi_i(x,\theta)p_\theta(x)\mu(dx)\paren{=\int_\X\delta(x)\pp{p_\theta}{\theta_i}\mu(dx)}=\pp{}{\theta_i}\int_\X\delta(x)p_\theta(x)\mu(dx)\qquad(i\in[q]).\]
+    \end{enumerate}
+    このとき，関数$g:\R^q\to\R^p$のJacobi行列を$J(\theta):=\pp{g}{\theta}\in M_{p,q}(\R)$とすると，次の行列不等式が成り立つ：
+    \[\Var_\theta[\delta]\ge J(\theta)I(\theta)^{-1}J(\theta)^\top.\]
+\end{theorem}
+\begin{proof}
+    任意に$\theta\in U$を取り，$I:=I(\theta),J:=J(\theta)$と略記する．
+    \begin{description}
+        \item[共分散への翻訳] 仮定(A4)より，
+        \[J=\pp{g(\theta)}{\theta}=\pp{}{\theta}E_\theta[\delta]=E_\theta[\delta\psi^\top].\]
+        これと$E_\theta[\psi]=0$より，
+        \[\Cov_\theta[\psi,\delta]=E_\theta[\psi\delta^\top]=J^\top.\]
+        $I=E_\theta[\psi\psi^\top]=\Var_\theta[\psi]$．
+        \item[証明] すると，Cauchy-Schwartzの不等式の証明と同様に，$\Var_\theta[\delta-JI^{-1}\psi]\ge O$であることから，$\Cov$の双線型性のみから従う．
+        また，対称行列$S$に対して，$S^{-1}=(S^{-1})^\top=(S^\top)^{-1}$であることとFisher情報行列が対称であることに注意すると，
+        \begin{align*}
+            O&\le\Var_\theta[\delta-JI^{-1}\psi]=\Cov[\delta-JI^{-1}\psi,\delta-JI^{-1}\psi]\\
+            &=\Var_\theta[\delta]-JI^{-1}\Cov_\theta[\psi,\delta]-\Cov_\theta[\delta,\psi]I^{-1} J^\top+JI^{-1}\Var[\psi]I^{-1}\psi^\top\\
+            &=\Var_\theta[\delta]-JI^{-1}J^\top.
+        \end{align*}
+    \end{description}
+\end{proof}
 
 \section{Malliavin解析による汎関数推定量の漸近展開}
 
@@ -38,6 +98,10 @@
 \begin{thebibliography}{99}
     \bibitem{Kahneman}
     ダニエル・カーネマン『ファスト＆スロー』（村井章子著・訳，早川書房，2012年）．
+    \bibitem{吉田}
+    吉田朋広『数理統計学』(朝倉書店，2006)
+    \bibitem{van der Vaart}
+    van der Vaart - Asymptotic Statistics
 \end{thebibliography}
 
 \end{document}
