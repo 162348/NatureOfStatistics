@@ -1,0 +1,17 @@
+\begin{proof}
+    任意に$\theta\in U$を取り，$I:=I(\theta),J:=J(\theta)$と略記する．
+    \begin{description}
+        \item[共分散への翻訳] 仮定(P4)より，
+        \[J=\pp{g(\theta)}{\theta}=\pp{}{\theta}E_\theta[\delta]=E_\theta[\deltag^\top].\]
+        これと$E_\theta[g]=0$より，
+        \[\Cov_\theta[g,\delta]=E_\theta[g\delta^\top]=J^\top.\]
+        $I=E_\theta[gg^\top]=\Var_\theta[g]$．
+        \item[証明] すると，Cauchy-Schwartzの不等式の証明と同様に，$\Var_\theta[\delta-JI^{-1}g]\ge O$であることから，$\Cov$の双線型性のみから従う．
+        また，対称行列$S$に対して，$S^{-1}=(S^{-1})^\top=(S^\top)^{-1}$であることとFisher情報行列が対称であることに注意すると，
+        \begin{align*}
+            O&\le\Var_\theta[\delta-JI^{-1}g]=\Cov[\delta-JI^{-1}g,\delta-JI^{-1}g]\\
+            &=\Var_\theta[\delta]-JI^{-1}\Cov_\theta[g,\delta]-\Cov_\theta[\delta,g]I^{-1} J^\top+JI^{-1}\Var[g]I^{-1}g^\top\\
+            &=\Var_\theta[\delta]-JI^{-1}J^\top.
+        \end{align*}
+    \end{description}
+\end{proof}

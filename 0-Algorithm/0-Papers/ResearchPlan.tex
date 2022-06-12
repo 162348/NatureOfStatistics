@@ -6,6 +6,7 @@
 \input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
 %\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
+\newcommand{\Sub}{\mathrm{Sub}}
 \begin{document}
 
 \begin{abstract}
@@ -42,54 +43,149 @@ title=]
 \begin{notation}
     以下，断りなく用いる記法をここにまとめる．
     \begin{enumerate}
-        \item $\L^2(\X,P_\theta;\R^p)$により，確率空間$(\X,P_\theta)$上の2乗可積分な$\R^p$-値関数の全体のなす線型空間を表す．
-        $\X$が明らかな場合は省略し，$p=1$の場合は$\R^p$も省略する．
-        \item $P(\X)$によって，可測空間$(\X,\F)$上の確率測度全体のなす空間とする．
+        \item $\L^2(\X,P;\R^p)$により，確率空間$(\X,P)$上の2乗可積分な$\R^p$-値関数の全体のなす線型空間を表す．
+        $\X$が明らかな場合は省略し，$p=1$の場合は$\R^p$も省略する．$L^2(\X,P;\R^p)$で，零集合の差を除いて等しい関数を同一視して得るHilbert空間を表し，ノルム$\norm{-}$は特に断りがない限り，このHilbert空間において考える．
+        内積を$(-|-)$で表す．
+        \item $L^2_0(P):=\Brace{g\in L^2(P)\mid E[g]=0}$を中心化された確率変数のなす部分空間とする．
+        \item $P(\X)$によって，可測空間$(\X,\A)$上の確率測度全体のなす空間とする．
         \item $f:\X\nrightarrow\R$によって，$\X$の全体で定義されているとは限らない部分関数$f|_{\Dom f}:\Dom f\to\R$を表す．
     \end{enumerate}
 \end{notation}
 
-\subsection{パラメトリックモデルの場合}
+\subsection{パラメトリックモデルの効率限界}
 
-推定量の有効性を漸近分散の小ささで測ることとしよう．
-すると，正則性条件を満たす滑らかなパラメトリックモデルについては，次の結果が成り立つのであった．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    推定量の有効性を漸近分散の小ささで測ることとしよう．
+    すると，正則性条件を満たす滑らかなパラメトリックモデルについては，
+    Fisher情報量が下界を与えるのであった(Cramer-Raoの不等式)．
+    後ほどセミパラメトリックモデルの場合と比較するため，Cramer-Raoの不等式が
+    成立するための十分条件をなるべく弱い形で述べる．
+\end{tcolorbox}
 
-\begin{theorem}[Cramer-Rao]
-    $U\osub\R^q$で添字付けられたパラメトリックモデル$(P_\theta)_{\theta\in U}$と，偏微分可能な関数$g:\R^q\to\R^p$と，その$\theta\in U$における不偏推定量$\delta\in\L^2(\X^n;\R^p)$とについて，次を仮定する：
-    \begin{enumerate}[({A}1)]\setcounter{enumi}{-1}
+\begin{theorem}[Cramer-Rao]\label{thm-Cramer-Rao}
+    $U\osub\R^q$で添字付けられたパラメトリックモデル$(P_\theta)_{\theta\in U}$と，偏微分可能な関数$\psi:U\to\R^p$と，その$\theta\in U$における不偏推定量$\wh{\psi}\in\L^2(\X^n;\R^p)$とについて，次を仮定する：
+    \begin{enumerate}[({P}1)]\setcounter{enumi}{-1}
         \item 分布族$(P_\theta)_{\theta\in U}$はある$\sigma$-有限な参照測度$\mu\in P(\X)$に関して絶対連続とし，そのRadon-Nikodym微分を$p_\theta:\X\to[0,1]$で表す．
         \item $p_-(x):U\to[0,1]$は$P_\theta\dae\; x$に関して偏微分可能である．
         \item $p_\theta(x)>0$を満たす点$(x,\theta)$の上で，
-        スコア関数の第$i$成分$\psi_i:\X\times U\nrightarrow\R$を
-        $\psi_i(x,\theta):=\pp{\log p_\theta(x)}{\theta_i}=\frac{1}{p_\theta}\pp{p_\theta}{\theta_i}$と定めると\footnote{$\Brace{x\in\X\mid p_\theta(x)=0}$上で$\psi_i(-,\theta)$は定義されていないことに注意．}，二次の絶対積率が有限$\psi_i(-,\theta)\in\L^2(P_\theta)$：
-        \[E_{P_\theta}[\abs{\psi_i}^2]=\int_\X\abs{\psi_i(x,\theta)}^2p_\theta(x)\mu(dx)<\infty\qquad(\forall_{i\in[q]}).\]
+        スコア関数の第$i$成分$g_i:\X\times U\nrightarrow\R$を
+        $g_i(x,\theta):=\pp{\log p_\theta(x)}{\theta_i}=\frac{1}{p_\theta}\pp{p_\theta}{\theta_i}$と定めると\footnote{$\Brace{x\in\X\mid p_\theta(x)=0}$上で$g_i(-,\theta)$は定義されていないことに注意．}，二次の絶対積率が有限$g_i(-,\theta)\in\L^2(P_\theta)$：
+        \[E_{P_\theta}[\abs{g_i}^2]=\int_\X\abs{g_i(x,\theta)}^2p_\theta(x)\mu(dx)<\infty\qquad(\forall_{i\in[q]}).\]
         \item 各$\theta\in U$におけるFisher情報行列$I=(I_{ij})$を，第$(i,j)$-成分を
-        \[I_{ij}(\theta):=\Cov_{P_\theta}[\psi_i,\psi_j]=\int_\X\pp{\log p_\theta(x)}{\theta_i}\pp{\log p_\theta(x)}{\theta_j}\cdot p_\theta(x)\mu(dx)\qquad(\forall_{i,j\in[q]}).\]
+        \[I_{ij}(\theta):=\Cov_{P_\theta}[g_i,g_j]=\int_\X\pp{\log p_\theta(x)}{\theta_i}\pp{\log p_\theta(x)}{\theta_j}\cdot p_\theta(x)\mu(dx)\qquad(\forall_{i,j\in[q]}).\]
         とすることによって定めると，正定値な対称行列となる．
-        \item 不偏推定量$\delta$は$\psi:=(\psi_1,\cdots,\psi_q)^\top$が定める推定方程式の解であり：
-        $E_{P_\theta}[\psi]=\int_\X\psi(x,\theta)p_\theta(x)\mu(dx)=0\in\R^q$，かつ，次の微分と積分の可換性が成り立つ：
-        \[\int_\X\delta(x)\psi_i(x,\theta)p_\theta(x)\mu(dx)\paren{=\int_\X\delta(x)\pp{p_\theta}{\theta_i}\mu(dx)}=\pp{}{\theta_i}\int_\X\delta(x)p_\theta(x)\mu(dx)\qquad(i\in[q]).\]
+        \item 不偏推定量$\wh{\psi}$は$g:=(g_1,\cdots,g_q)^\top$が定める推定方程式の解であり：
+        $E_{P_\theta}[g]=\int_\X g(x,\theta)p_\theta(x)\mu(dx)=0\in\R^q$，かつ，次の微分と積分の可換性が成り立つ：
+        \[\int_\X\delta(x)g_i(x,\theta)p_\theta(x)\mu(dx)\paren{=\int_\X\delta(x)\pp{p_\theta}{\theta_i}\mu(dx)}=\pp{}{\theta_i}\int_\X\delta(x)p_\theta(x)\mu(dx)\qquad(i\in[q]).\]
     \end{enumerate}
-    このとき，関数$g:\R^q\to\R^p$のJacobi行列を$J(\theta):=\pp{g}{\theta}\in M_{p,q}(\R)$とすると，次の行列不等式が成り立つ：
-    \[\Var_\theta[\delta]\ge J(\theta)I(\theta)^{-1}J(\theta)^\top.\]
+    このとき，関数$\psi:\R^q\to\R^p$のJacobi行列を$J(\theta):=\pp{\psi}{\theta}\in M_{p,q}(\R)$とすると，次の行列不等式が成り立つ：
+    \[\Var_\theta[\wh{\psi}]\ge J(\theta)I(\theta)^{-1}J(\theta)^\top.\]
 \end{theorem}
 \begin{proof}
     任意に$\theta\in U$を取り，$I:=I(\theta),J:=J(\theta)$と略記する．
     \begin{description}
-        \item[共分散への翻訳] 仮定(A4)より，
-        \[J=\pp{g(\theta)}{\theta}=\pp{}{\theta}E_\theta[\delta]=E_\theta[\delta\psi^\top].\]
-        これと$E_\theta[\psi]=0$より，
-        \[\Cov_\theta[\psi,\delta]=E_\theta[\psi\delta^\top]=J^\top.\]
-        $I=E_\theta[\psi\psi^\top]=\Var_\theta[\psi]$．
-        \item[証明] すると，Cauchy-Schwartzの不等式の証明と同様に，$\Var_\theta[\delta-JI^{-1}\psi]\ge O$であることから，$\Cov$の双線型性のみから従う．
+        \item[共分散への翻訳] 仮定(P4)より，
+        \[J=\pp{\wh{\psi}(\theta)}{\theta}=\pp{}{\theta}E_\theta[\delta]=E_\theta[\delta g^\top].\]
+        これと$E_\theta[g]=0$より，
+        \[\Cov_\theta[g,\delta]=E_\theta[g\delta^\top]=J^\top.\]
+        $I=E_\theta[gg^\top]=\Var_\theta[g]$．
+        \item[証明] すると，Cauchy-Schwartzの不等式の証明と同様に，$\Var_\theta[\delta-JI^{-1}g]\ge O$であることから，$\Cov$の双線型性のみから従う．
         また，対称行列$S$に対して，$S^{-1}=(S^{-1})^\top=(S^\top)^{-1}$であることとFisher情報行列が対称であることに注意すると，
         \begin{align*}
-            O&\le\Var_\theta[\delta-JI^{-1}\psi]=\Cov[\delta-JI^{-1}\psi,\delta-JI^{-1}\psi]\\
-            &=\Var_\theta[\delta]-JI^{-1}\Cov_\theta[\psi,\delta]-\Cov_\theta[\delta,\psi]I^{-1} J^\top+JI^{-1}\Var[\psi]I^{-1}\psi^\top\\
+            O&\le\Var_\theta[\delta-JI^{-1}g]=\Cov[\delta-JI^{-1}g,\delta-JI^{-1}g]\\
+            &=\Var_\theta[\delta]-JI^{-1}\Cov_\theta[g,\delta]-\Cov_\theta[\delta,g]I^{-1} J^\top+JI^{-1}\Var[g]I^{-1}g^\top\\
             &=\Var_\theta[\delta]-JI^{-1}J^\top.
         \end{align*}
     \end{description}
 \end{proof}
+
+
+\begin{corollary}
+    特に$q=p=1$の場合，$\Var_\theta[\wh{\psi}]\ge\frac{\paren{\pp{\psi(\theta)}{\theta}}^2}{\Var_\theta[g]}$．
+\end{corollary}
+
+\subsection{セミパラメトリックモデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    パラメトリックモデル上の汎関数$\P\to\R$は，（識別可能性条件などに基づく）$\P\simeq U$の同一視によって，
+    Euclid空間上の関数とみなせたため，正則性条件の記述も議論も初等的であった．
+    しかしセミパラメトリックモデルでは$\P$は局所的に無限次元線型空間となる，\href{https://ncatlab.org/nlab/show/Fr%C3%A9chet+manifold}{Frechet多様体}というべき対象である．
+    そこで，正則性条件の記述自体も数学的な準備が必要となり，適切な正則性条件を見つけることも困難となる．
+    そのうち一つの自然な概念には，局所漸近正規性の成立を一つの規準とした「$L^2$-微分可能性」がある．
+\end{tcolorbox}
+
+モデル$\P\subset P(\X)$上の点$P\in\P$を真の分布として，$\psi(P)$の値を推定する際の効率限界を得るためには，
+モデル$\P$も有限次元に制限すればパラメトリックモデルであるから，
+そのような「部分パラメトリックモデル」のそれぞれについてCramer-Raoの下界を求め，
+その下限を求める，という方針が考え得る（最良の下界を与えるかは議論の余地が残る）．
+ここで，１次元の部分パラメトリックモデルとは，
+幾何学的には道$[0,1]\to\P$を取ることに他ならないが，
+すべての連続写像$[0,1]\to\P$が定める部分パラメトリックモデルが正則性条件を満たすわけではないから，
+適切なクラスを定める必要がある．
+これが次の，正則なパラメトリックモデルと付随するスコア関数の概念である．
+%幾何学的な類比から，「接集合」などの概念が定義されるが，通常の可微分多様体の場合と違って，$\P$の全体も
+
+なお，引き続き，(P0)と同様の仮定：
+\begin{enumerate}[({S}1)]\setcounter{enumi}{-1}
+    \item ある$\sigma$-有限な参照測度$\mu\in P(\X)$に関してモデル$\P$の元はすべて絶対連続とし，そのRadon-Nikodym微分を対応する小文字$p:\X\to[0,1]$で表す．
+\end{enumerate}
+をおく．
+
+\begin{definition}[regular parametric model / regular path, tangent set]
+    モデル$\P\subset P(\X)$と分布$P\in\P$に対して，
+    \begin{enumerate}
+        \item \textbf{正則な部分パラメトリックモデル}または\textbf{スコア関数$g$に関して$L^2$-微分可能な$P$-道}とは，
+        $P_0=P$を満たす写像$(P_t):[0,1]\to\P$であって，ある2乗可積分な関数$g:\X\to\R$が存在して，
+        \begin{equation}\label{eq-regular-path}
+            \Norm{\frac{\sqrt{p_t}-\sqrt{p}}{t}-\frac{1}{2}g\sqrt{p}}^2=\int_\X\paren{\frac{\sqrt{p_t}-\sqrt{p}}{t}-\frac{1}{2}g\sqrt{p}}^2d\mu\xrightarrow{t\to0}0
+        \end{equation}
+        ただし，ノルムはHilbert空間$L^2(\X,\mu)$上で考えた．
+        以降，この条件を満たす写像$[0,1]\to\P$を簡単に\textbf{正則な$P$-道}といい，その全体を$\Sub_P(\P)$で表す．
+        \item 次の集合をモデル$\P$の$P$における\textbf{接集合}または\textbf{接正錐}という：
+        \[\dot{\P}_P:=\Brace{g\in\L^2(\X,\mu)\;\middle|\;\exists_{(P_t)\in\Sub_P(\P)}\;g\text{は部分モデル}(P_t)\text{のスコア関数である}}.\]
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    式(\ref{eq-regular-path})は，関数$q(t,x):=\sqrt{p_t(x)}$が，$L_2(\mu)$の意味で$t=0$において微分係数$q'(0,x)$を持ち，これを用いて
+    \[g(x):=2\frac{q'(0,x)}{q(0,x)}=2\left.\pp{\log q(t,x)}{t}\right|_{t=0}\]
+    と定めることに等しい．これを$p_t(x)$で書き直すと，$q'(t,x)=\pp{q(t,x)}{t}=\pp{\sqrt{p_t(x)}}{t}=\frac{1}{2}\frac{p'_t(x)}{\sqrt{p_t(x)}}$より，
+    \[g(x)=\frac{p'_0(x)}{p_0(x)}=\frac{p'(x)}{p(x)}=\pp{}{t}\log p_t(x)|_{t=0}.\]
+    したがってこれは，存在すれば，部分モデル$(P_t)\in\Sub_P(\P)$のスコアに他ならない．
+\end{remark}
+
+続いて，汎関数$\psi:\P\to\R$が満たすべき正則性条件について考える．
+パラメトリックな場合では，関数$\psi:U\to\R$は単に偏微分可能としたのであった．
+
+\begin{definition}[pathwise differentiable, von Mises differentiable]
+    汎関数$\psi:\P\to\R$について，
+    \begin{enumerate}
+        \item 接正錐$\dot{\P}_P$に関して\textbf{道ごとに微分可能}とは，任意のスコア関数$g\in\dot{\P}_P$と対応する部分モデル$(P_t)\in\Sub_P(\P)$に対して，連続線型汎関数$\dot{\psi}_P:L_2(P)\supset\dot{\P}_P\to\R$が存在して，
+        \[\frac{\psi(P_t)-\psi(P)}{t}\xrightarrow{t\to0}\dot{\psi}_P(g)\;\in\R\]
+        が成り立つことをいう．
+        汎関数$\dot{\psi}_P:\dot{\P}_P\to\R$を$\psi$の$P$における\textbf{微分}と呼ぶ．
+        \item 連続線型汎関数$\dot{\psi}_P:\dot{\P}_P\to\R$に対して，
+        \[\Brace{\wt{\psi}\in L^2(\mu)\;\middle|\;\dot{\psi}_P(g)=(\wt{\psi}_P|g)=\int\wt{\psi}_PgdP}\ne\emptyset\]
+        が成り立つ．この集合の点で，$\dot{\P}_P$が生成する閉部分空間との距離が最も近い元$\wt{\psi}_P$を\textbf{有効影響関数}という．
+        \item \textbf{von Mises可微分}であるとは，任意の$P'\in\P$に対して，対応する$\wt{\psi}(x;P')\in\L^2_0(P),R_2(P,P')\in\R$が存在して，
+        \[\psi(P')-\psi(P)=\int_\X\wt{\psi}(x;P')(P'-P)(dx)+R_2(P,P')\]
+        が成り立つことをいう．\footnote{この剰余項$R_2$に高次の影響関数とその線型作用素による像，いわば$\int_\X\wt{\psi}'(P'-P)^2(dx)$とも書くべき項が入っており，その解析的な性質についての理論はありえるだろう．}
+    \end{enumerate}
+\end{definition}
+
+\subsection{セミパラメトリックモデルの効率限界}
+
+\begin{theorem}[7.2 \cite{Bolthausen}]
+    \begin{enumerate}[({S}1)]
+        \item $\theta\mapsto P_{\theta,\eta}$は$L^2$-微分可能である．
+        \item $P_{\theta_n,\eta}[\norm{\wh{l}_{n,\theta_n}-\wh{l}_{\theta_n,\eta}}^2]\xrightarrow{P}0$．
+        \item 有効情報行列$\wt{I}_{\theta,\eta}$は正則になる．
+        \item $\sqrt{n}$-一致性$\sqrt{n}P_{\theta_n,\eta}[\wh{l}_{n,\theta_n}]\xrightarrow{P}0$が成り立つ．
+    \end{enumerate}
+    このとき，$(\wh{\theta}_n)$は$(\theta,\eta)$において漸近有効である．
+\end{theorem}
+
 
 \section{Malliavin解析による汎関数推定量の漸近展開}
 
@@ -102,6 +198,10 @@ title=]
     吉田朋広『数理統計学』(朝倉書店，2006)
     \bibitem{van der Vaart}
     van der Vaart - Asymptotic Statistics
+    \bibitem{Bolthausen}
+    Bolthausen - Lectures on Probability Theory And Statistics
+    \bibitem{Kennedy}
+    Edward Kennedy - Semiparametric Doubly Robust Targeted Double Machine Learning
 \end{thebibliography}
 
 \end{document}
