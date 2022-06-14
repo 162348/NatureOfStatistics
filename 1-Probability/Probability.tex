@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -2789,6 +2789,8 @@ title=]
 title=]
     偏差値は，統計的な分布が正規分布で近似できることを暗黙裡に認めて算出している．
     どう考えても「極限分布の標準分解」とか呼ぶべきだと思うが，Pólyaが1920年の論文で「確率論において中心的な役割を果たすであろう」ということから命名した．
+    
+    標準化された確率変数の$2$次までの積率は確定しており，漸近的に$3$次以上のキュムラントも消えるための十分条件がi.i.d.である．
 \end{tcolorbox}
 
 \subsection{標準化された部分和についての結果}
@@ -3327,7 +3329,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $\Z_+:=\N$上の離散分布を扱う際には，確率母関数もよく用いられる．
+    $\Z_+:=\N$上の離散分布を扱う際には，確率母関数もよく用いられ，ここから積率母関数も特性関数も求まる．
     $\varphi(u)=g(e^{iu})$なので，特性関数の微分と確率母関数の微分は本質的に等価で，便利な方を使えば良い．
 \end{tcolorbox}
 
@@ -4138,7 +4140,8 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=積分変換]
-    期待値作用素が積分によって定義されるため，積分変換による分析手法が肝要になる．
+    期待値作用素が積分によって定義されるため，「ある関数の平均を考える」こと，すなわち
+    積分変換による分析手法が肝要になる．
     Fourier解析により，関数空間における議論に変換することで，古典的な中心極限定理や分布の高次近似の結果をもたらすことが出来る．
 
     逆転公式とは，母関数から元の確率分布を復元する算譜である．
@@ -4220,11 +4223,12 @@ title=]
 \end{tcolorbox}
 
 \begin{proposition}
-    $\nu\in\P^d$とする．ある$m\in\Z_+$に関して
+    $\nu\in\P^d$とする．ある$m\in\Z_+$に関して，
     \[\int\abs{u}^m\abs{\varphi_F(u)}du<\infty\]
-    が成り立つならば，$\nu$は$C^m$-級密度関数
+    ならば，$\nu$の確率密度関数
     \[f(x)=\frac{1}{(2\pi)^d}\int e^{-iu\cdot x}\varphi_F(u)du\]
-    をもち，$\forall_{k\le m}\;f^{(k)}\in C_0(\R^d)$が成り立つ．
+    は$C^m$-級で，
+    さらに$\forall_{k\le m}\;f^{(k)}\in C_0(\R^d)$が成り立つ．
 \end{proposition}
 
 \subsection{特性関数と分布の収束の対応}
@@ -4378,6 +4382,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    通常はLaplace変換$L(t)=E[e^{-tX}]$ではなく，その逆$M(t):=L(-t)$が用いられ，これを統計学の観点からは積率母関数という．
     積率母関数が$u=0$の近傍で定義されるとき，これにより確率分布が一意に決定される．
     理論的な欠点は常に存在するとは限らないところで，漸近展開などで用いられるのは特性関数である．
     存在するならば特性関数に対して$\varphi(u)=\fM(e^{iu})$なる関係があり，解析接続を通じて一意性定理が述べられる．
@@ -4393,7 +4398,7 @@ title=]
 \end{definition}
 
 \begin{lemma}[マクローリン展開係数は積率である]
-    $\fM_\nu$が原点の近傍で存在するならば，そこで滑らかであり，$\forall_{n\in\Z^d_+}\;\partial^n\fM_\nu(0)=\al_n$．
+    $\fM_\nu$が原点の近傍で存在するならば，そこで$C^\infty$級であり，$\forall_{n\in\Z^d_+}\;\partial^n\fM_\nu(0)=\al_n$．
     特に，
     \begin{enumerate}
         \item $\al_1=\partial\fM_\nu(0)=\partial(\log\fM_\nu)(0)=\partial\fC_\nu(0)$．
