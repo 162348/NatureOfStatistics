@@ -2050,8 +2050,7 @@ title=]
 
 \subsection{強Markov性の証明}
 
-\begin{theorem}[Hunt (1956) and Dynkin and Yushkevich (1956)]
-
+\begin{theorem}[Hunt (1956) and Dynkin and Yushkevich (1956)]\mbox{}\\
     $T:\Om\to\R_+$を有限な$(\F_t)$-停止時とする．このとき，$(\wt{B}_t:=B_{T+t}-B_T)_{t\in\R_+}$は再びBrown運動で，$\F_T$と独立である．
 \end{theorem}
 \begin{proof}\mbox{}
@@ -2065,13 +2064,30 @@ title=]
             E\Square{\exp\paren{i\lambda(\underbrace{B_{T+t}-B_{T+s}}_{=\wt{B}_t-\wt{B}_s})}\middle|\F_{T+s}}&=E\Square{\exp\paren{-\frac{\lambda^2}{2}(t-s)}}=\exp\paren{-\frac{\lambda^2}{2}(t-s)}.
         \end{align*}
         これは，
-        \begin{enumerate}[({B}1)]\setcounter{enumi}{1}
-            \item 任意の$0\le t_1<\cdots<t_n$について$B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$は独立．
-            \item 任意の$0\le s<t$について$B_t-B_s\sim N(0,t-s)$．
-        \end{enumerate}
-        を含意する．
-        $B_{T+0}-B_T=0$と連続性とを併せるとBrown運動であることが分かる．
+        まず任意の$0\le s\le t$について$\wt{B_t}-\wt{B_s}\sim N(0,t-s)$であることを表しており，さらに任意の$0\le t_1\le t_2\le t_3$について，$B_{t_3}-B_{t_2}\indep B_{t_2}-B_{t_1}$も含意している．
+        $B_{T+0}-B_T=0$と，$(B_t)_{t\in\R_+}$から受け継いだ連続性とを併せるとBrown運動であることが分かる．
         \item[$T$が一般のとき] \ref{prop-mean-of-Brownian-exit-time}と同様に処理すれば良い．
+        
+        任意の$N\in\N$に対して，$T\land N$は有界な停止時だから，$\forall_{0\le s\le t}\;T\land N+s\le T\land N+t\le N+t$も有界．
+        よって，Doobの任意抽出定理より，
+        \[\forall_{0\le s\le t}\quad E\Square{M_{T\land N+t}|\F_{T\land N+s}}=M_{T\land N+s}.\]
+        すなわち，
+        \[\forall_{N\in\N}\;\forall_{0\le s\le t}\quad E\Square{\exp\paren{i\lambda\paren{B_{T\land N+t}-B_{T\land N+s}}}\;\middle|\;\F_{T\land N+s}}=\exp\paren{-\frac{\lambda^2}{2}(t-s)}.\]
+
+        ここで，
+        \[E\Square{\exp\paren{i\lambda(B_{T+t-B_{T+s}})}|\F_{T+s}}=\exp\paren{-\frac{\lambda^2}{2}(t-s)}\]
+        を示したい．右辺は明らかに$\F_{T+s}$-可測で可積分であるから，任意の$A\in\F_{T+s}$に対して
+        \[E\Square{\exp\paren{-\frac{\lambda^2}{2}(t-s)}1_A}=E\Square{E\Square{\exp\paren{i\lambda(B_{T+t}-B_{T+s})}|\F_{T+s}}1_{A}}\]
+        を示せば良い．いま，$A\in\F_{T+s}$より，$A\cap\Brace{T\le N}\in\F_{N+s}$である．特に，$A\cap\Brace{T\le N}\in\F_{T\land N+s}$．
+        よって，右辺は
+        \begin{align*}
+            &E\Square{E\Square{\exp\paren{i\lambda(B_{T+t}-B_{T+s})}|\F_{T+s}}1_{A}}\\
+            &=E\Square{E\Square{\exp\paren{i\lambda(B_{T+t}-B_{T+s})}|\F_{T+s}}1_{A\cap\Brace{T\le N}}}+E\Square{E\Square{\exp\paren{i\lambda(B_{T+t}-B_{T+s})}|\F_{T+s}}1_{A\cap\Brace{T>N}}}\\
+            &=E\Square{\exp\paren{-\frac{\lambda^2}{2}(t-s)}1_{A\cap\Brace{T\le N}}}+E\Square{E\Square{\exp\paren{i\lambda(B_{T+t}-B_{T+s})}|\F_{T+s}}1_{A\cap\Brace{T>N}}}.
+        \end{align*}
+        ここで$N\to\infty$の極限を考えると，第1項は単調収束定理，第2項は優収束定理により，総じて右辺は
+        \[\exp\paren{-\frac{\lambda^2}{2}(t-s)}\]
+        に収束する．
     \end{description}
 \end{proof}
 
