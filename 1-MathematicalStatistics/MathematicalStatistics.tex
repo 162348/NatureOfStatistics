@@ -904,6 +904,12 @@ title=]
     漸近論が準備できたことにより，尤度比検定はより理解できるようになった．
 
     これらの暗黙の枠組みは漸近決定理論であり，「統計的実験列の極限」というアイデアである．
+    \begin{enumerate}
+        \item 一致性：大数の法則
+        \item 一致性のオーダー：収束レート
+        \item 漸近分布：中心極限定理とその精緻化
+    \end{enumerate}
+    の3つの観点が肝要となる．
 \end{quotation}
 
 \section{一致推定量}
@@ -919,6 +925,9 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     統計推測においては，Bayes法と最尤法とが双璧をなす．
+    最尤推定量が一致性を持つのは，i.i.d.の場合はWald，これを一般化してHuberが示した．
+    また，正則な場合は有効な推定量にもなるが，これは「尤度最大」であることは関係がなく，「尤度方程式の根である」ことによる．
+    そこで，$Z$-推定量なる対象に議論が移る．
 \end{tcolorbox}
 
 \begin{problem}
@@ -943,7 +952,7 @@ title=]
     \end{align*}
 \end{remark}
 
-\subsection{一致性}
+\subsection{定義}
 
 \begin{remarks}[最尤推定量の一致性]\label{remarks-consistency-of-MLE}
     大数尤度関数$l_n(\theta):=\log L_n(\theta)=\sum_{j=1}^n\log p(x_j,\theta)$は，独立同分布に従う確率変数の和である．よって，大数の法則により，真値$\theta_0\in\Theta$について，
@@ -993,7 +1002,45 @@ title=]
     \end{enumerate}
 \end{example}
 
-\section{一様対数の法則}
+\subsection{存在の必要条件}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極限実験$\{P_\theta\}$において，$\delta_n$が離散位相を定めていれば良い．
+\end{tcolorbox}
+
+\begin{notation}
+    $(\X_n,\A_n,\{P_{n,\theta}\}_{\theta\in\Om})\;(\Om\osub\R^p)$を統計的実験の列とする．
+\end{notation}
+
+\begin{definition}
+    弱一致推定量$(\wh{\theta}_n)$が\textbf{局所一様}であるとは，
+    \[\forall_{\theta\in\Om}\;\forall_{\ep>0}\;\exists_{\delta>0}\;\lim_{n\to\infty}\sup_{\norm{\theta'-\theta}<\delta}P_{n,\theta'}[\norm{\wh{\theta_n}-\theta'}>\ep]=0\]
+    が成り立つことをいう．
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $\theta_1,\theta_2\in\Om$に対して，$P_{n,\theta_1},P_{n,\theta_2}$を優越する$\sigma$-有限測度$\mu_n$が取れる．
+        \item $L^1(\mu_n)$-ノルムが，$\{P_{n,\theta}\}$上に距離$\delta_n$を定める．
+        \item この距離は全変動ノルムの2倍$\delta_n(\theta_1,\theta_2)=2\sup_{A\in\A_n}\abs{P_{n,\theta_1}(A)-P_{n,\theta_2}(A)}$と特徴付けられる．特に，$\Im\delta_n\subset[0,2]$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    統計的実験列$(\X_n,\A_n,\{P_{n,\theta}\}_{\theta\in\Om})\;(\Om\osub\R^p)$について，
+    \begin{enumerate}
+        \item $\theta$の一致推定量が存在するならば，$\theta_1\ne\theta_2\Rightarrow\lim_{n\to\infty}\delta_n(\theta_1,\theta_2)=2$．
+        \item 局所一様一致推定量が存在するならば，$\forall_{\ep>0}\;\delta_{\delta>0}\;\forall_{\theta\in\Om}\;\lim_{n\to\infty}\sup_{\ep<\norm{\theta'-\theta}<\delta}\delta_n(\theta,\theta')=2$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{proof}
+
+\section{一様大数の法則}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1035,6 +1082,14 @@ title=]
     このとき，$\o{U}(\theta):=\int_\X U(x,\theta)P(dx)\in\R$は連続で，
     \[\lim_{n\to\infty}\sup_{\theta\in\Theta_1}\abs{\o{U_n}(\theta)-\o{U}(\theta)}=0\quad\as\]
 \end{theorem}
+
+\section{一致推定量の収束の速度}
+
+\begin{definition}
+    一致推定量$(\wh{\theta}_n)$が，無限大に発散する正数列$\{c_n\}\subset l_\infty(\N;\R_+)$に関して
+    \textbf{オーダー$(c_n)$を持つ}とは，$c_n(\wh{\theta}_n-\theta)$が極限分布を持つこと，すなわち裾が無限大へ逃げて分布が潰れてしまうことがないことをいう：
+    \[\forall_{\theta_0\in\Om}\;\exists_{\delta>0}\;\lim_{L\to\infty}\limsup_{n\to\infty}\sup_{\norm{\theta-\theta_0}<\delta}P_{n,\theta}[c_n\norm{\wh{\theta}_n-\theta}>L]=0.\]
+\end{definition}
 
 \section{最小コントラスト推定}
 
@@ -2647,6 +2702,8 @@ title=]
     稲垣宣生『数理統計学』
     \bibitem{Lehmann}
     E. L. Lehmann - Nonparametrics: Statistical Methods Based on Randks
+    \bibitem{竹内啓}
+    竹内啓『統計的推定の漸近理論』
 \end{thebibliography}
 
 \end{document}
