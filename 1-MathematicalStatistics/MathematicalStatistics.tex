@@ -925,7 +925,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     統計推測においては，Bayes法と最尤法とが双璧をなす．
-    最尤推定量が一致性を持つのは，i.i.d.の場合はWald，これを一般化してHuberが示した．
+    最尤推定量がごく自然な条件の下で一致性を持つのは，i.i.d.の場合はWald，これを一般化してHuberが示した．
     また，正則な場合は有効な推定量にもなるが，これは「尤度最大」であることは関係がなく，「尤度方程式の根である」ことによる．
     そこで，$Z$-推定量なる対象に議論が移る．
 \end{tcolorbox}
@@ -1094,7 +1094,7 @@ title=]
 \section{最小コントラスト推定}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=パラメトリック法内での一般化]
     最尤推定の枠組みを一般化して，まずは一様大数の法則を準備した．
     最小コントラスト推定なる一般的な枠組みを用意して，一様大数の法則と一致性との間の十分条件を示す．
     $U,U_n$に関わる仮定は，ここまで削ぎ落とすことが出来る．
@@ -1178,12 +1178,13 @@ title=]
 \section{$M$-推定量}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=最尤法のノンパラメトリック化]
     最尤推定量は対数尤度関数を最大化する推定量で，最小コントラスト推定量は真の分布との分離度を最小化する推定量であった．
     このように，損失関数または効用関数（２つの概念を併せて目的関数）の極値点として与えられる推定量は，
     モデルが微分可能であるとき，これらは導関数の零点として得られる推定量として一般化できる．
     これを$M$-推定量という．
     \footnote{この意味での推定量を$Z$-推定量とし，$M$-推定量は効用関数の最大化で得るものと狭義に解釈することもある．}
+    この一般化は，分布関数$f$への言及を除去しており，ノンパラメトリック化と言える．
 
     Huberが頑健推定の動機で1964年に最尤推定を一般化し，"maximum likelihood-type"の頭文字から$M$-推定量のクラスを定めた．\footnote{\url{https://en.wikipedia.org/wiki/M-estimator}}
     実はこれは可微分構造を持つ正則なモデルに関して最適でもある．
@@ -2235,6 +2236,12 @@ title=]
     すなわち，関数$h(X_{-},\cdots,X_{-})$は$I_n^r\to\R$として定めたが，本質的には$[I_n]^r\to\R$である．
 \end{notation}
 
+\begin{discussion}
+    モデル$\P$の母数$\gamma$が\textbf{推定可能}であるとは，自然数$r\in\N$と$r$変数関数$h$が存在して，
+    \[\forall_{P\in\P}\;X_1,\cdots,X_r\overset{\iid}{\sim} P\Rightarrow E_P[h(X_1,\cdots,X_r)]=\gamma\]
+    を満たすことをいう．このときの最小の$r$を\textbf{次数}という．条件を満たす$h$は必ず対称に取れる．
+\end{discussion}
+
 \subsection{対称な関数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -2273,6 +2280,8 @@ title=]
 
     標本$n$個からの$r$個のすべての選び方についての測度$\o{\bP}\subset P([I_n]^r)$
     について，ある対応$h:[\X]^r\to\R$に関しての値の平均$U_{r,n}=\o{\bP}h(X,\cdots,X)$をいう．
+
+    このとき，標本平均の場合と違って，各項は互いに独立ではない！
 \end{remarks}
 
 \begin{definition}
@@ -2312,6 +2321,10 @@ title=]
     で，これは分散の最尤推定量である．しかし同じ核に対する$U$-統計量は
     \[U_{2,n}=s=\frac{1}{n-1}\sum^n_{i=1}(x_i-\o{x})^2\]
     となる．漸近同等ではあるが，不偏推定量となるのは後者である！
+\end{example}
+
+\begin{example}[Wilcoxon統計量]
+    Wilcoxon統計量が漸近正規であることも，$U$-統計量に関係する．
 \end{example}
 
 \subsection{漸近正規性}

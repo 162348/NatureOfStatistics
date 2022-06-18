@@ -53,6 +53,14 @@
 経済にミクロとマクロがあるように，生物統計学にも臨床統計と疫学統計がある．
 これらをまとめて生物統計学と呼ぶようだ．
 
+\section{因果推論}
+
+物理学実験手法は確率された数理科学であるが，その他の自然科学・社会科学に
+回転させるには，因果推論の技法が必要になる．
+物理現象をモデルするのにはEuclid空間などが用いられたが，
+社会現象・生物現象をモデル化するには，確率や因果といった概念の形式化も必要となる．
+Newtonの「力」のようなものである．
+
 \chapter{ノンパラメトリック推定}
 
 \begin{quotation}
@@ -160,47 +168,7 @@ title=]
     とする．このとき，$T:=\sqrt{N}(U-\theta)$は漸近正規で，$N(0,4\sigma_1^2)$に従う．
 \end{theorem}
 
-\chapter{多変量解析}
 
-\section{歴史}
-
-\begin{enumerate}
-    \item 現代的な数理統計学の理論体系が確立したのは1920sのFisher, Neyman, E. S. Pearsonらによる．
-    \item この枠組み（相関分析など）に沿って，30sからは自然な形で多変量に拡張された．Fisher自身も多くの貢献をしたが，Hotelling, Wilks, Wishartらの仕事が基礎になっている．
-    \item 多変量推測統計のAndersonによる標準的教科書"An Introduction to Multivariate Statistical Analysis"は1958年に刊行された．この頃には多変量正規分布と線型モデルに基づく推測理論の基礎は確立していた．
-    \item 1970s以降の計算機時代では，今日ではほとんどのデータは多変量データであり，取り立てて多変量分析と言わなくても，新たな統計手法は押し並べて多変量データを扱う手法となっている．
-    今日の統計パッケージの中にある探索的データ解析や射影追跡などは，正規分布を前提としない，非線形的手法である．
-\end{enumerate}
-\cite{フロンティア１}の序文．
-
-\begin{example}
-    回帰分析，分散分析，主成分分析，判別分析，因子分析，分割表，グラフィカルモデル．
-\end{example}
-
-\section{多変量解析の考え方}
-
-多変量解析においては，連続分布としては多変量正規分布以外に扱いやすい分布が少ない．
-ところが，実際のデータ解析の場面では多変量正規分布の仮定の妥当性が疑われる場面が多く，
-記述統計的な手法と推測統計的な手法の間に大きなギャップがあるのが現状．\cite{フロンティア１}
-
-\section{用語と記法}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    行列やベクトルを言葉として用いるのが特徴であり，経済学はこのAndersonらの慣習を強く受け継いでいる．
-\end{tcolorbox}
-
-\begin{definition}[data matrix, sample size, dimension]\mbox{}
-    \begin{enumerate}
-        \item 多変量データを\textbf{データ行列}とも呼ぶ．一般には行を個体，列を変数とする．それぞれの添字を$t$と$i,j$と使い分ける．
-        \item $n\times m$データ行列の行数$n$を\textbf{標本の大きさ}といい，列数$m$を標本の\textbf{次元}という．\footnote{高次元データを，なんらかの形で２次元空間に写して解釈する記述統計的手法を，次元の縮約という．}
-        \item 値が数ではない変数を\textbf{質的変数}という．これを量的変数に変換する手法を\textbf{数量化}という．
-    \end{enumerate}
-\end{definition}
-\begin{remark}[spatial statistics, random field]
-    データ行列の古典的な枠組みに入らない多変量データには，地理的なデータなどがある．これには\textbf{空間統計}や\textbf{確率場}の手法がある．
-    また，質問表に分岐がある場合は，特定の回答をした者以外の値が\textbf{欠測値}となる．
-\end{remark}
 
 \chapter{臨床統計}
 
@@ -220,13 +188,18 @@ title=]
 
 \section{治験とは何か}
 
-\begin{definition}[clinical research]\mbox{}
+\begin{definition}[clinical research, case-history research, observational study, cohort / prospective / follow-up study, case-control / retrospective study, double blind test]\mbox{}
     \begin{enumerate}
         \item ヒトを対象にした医学研究のことを\textbf{臨床研究}，それ以外を\textbf{非臨床研究}という．
-        \item 臨床研究は，設計のない\textbf{症例報告}から，コホート研究などの\textbf{観察研究}，通常の診療行為以外の介入を行う\textbf{介入研究}または\textbf{臨床試験}という．
+        \item 臨床研究は，設計のない\textbf{症例報告}から，コホート研究＝追跡研究＝前向き研究や患者-対照研究＝後ろ向き研究などの\textbf{観察研究}，通常の診療行為以外の介入を行う\textbf{介入研究}または\textbf{臨床試験}という．新薬開発における介入研究を\textbf{治験}という．
         \item 抗がん剤を除いた治験は，3段階に分けられる．第I相は安全性の検査，第II相は主に第III相の設計のための予備調査をする．第III相にて，効果の定量的な評価のために，盲検などの本格的なデザインがなされる．
+        \item 二重盲検とは，患者だけでなく医者も，処置群か対照群か判別がつかないように設計された試験をいう．
     \end{enumerate}
 \end{definition}
+\begin{remark}
+    疫学的には，仮説生成のために患者-対照研究を行い，仮設検定のためにコホート研究を行う．
+    症例対照研究は，マッチングなどにより因果効果の測定をする観察研究である．
+\end{remark}
 
 \section{FDA draft guidance for adaptive design}
 
@@ -240,7 +213,8 @@ title=]
 
 \begin{history}
     FDA Modernization Act (97)では，"adequate and well-controlled  clinical trials"によって被験薬の効果を認めることとしている．これは，
-    試験目的，解析方法，デザイン，患者選択，患者割り当て，試験参加者，反応の評価，効果の評価の8要件からなる．
+    試験目的，解析方法，デザイン，患者選択，患者割り当て，試験参加者，反応の評価，効果の評価の8要件を満たすprotocol(実施計画書)によって認められる．
+    デザインに組み込まれたプロトコル逸脱を，adaptiveという．
 \end{history}
 
 \begin{definition}[adaptive design]
@@ -359,6 +333,247 @@ title=]
     Analyzing the determinants of health of a population and the threats it faces is the basis for public health.
 \end{quote}
 疫学とは「ある人間集団を対象として，人間の健康と人間に生じる異常の原因を，宿主・病因・環境・行動のそれぞれの面から研究する分野」である．
+
+\section{実験計画法}
+
+\begin{history}
+    元々はFisherが20sに農学試験をモデルに理論化した．
+    注目したい要因（これを\textbf{因子}という）による効果を\textbf{要因効果}，それ以外を\textbf{実験誤差}と呼ぶ．
+    各因子（変数）のカテゴリ数（定義域の濃度）を\textbf{水準(level)}という．
+    要因効果と実験誤差とに分解して解析する手法を\textbf{分散分析}という．
+\end{history}
+
+\begin{axiom}
+    実験計画の3原則は以下の通りで，(3)が物理学にはない，特有のものである．
+    \begin{enumerate}
+        \item 局所管理科：因子以外の要因を一定にする．
+        \item 同条件でなるべく反復する．
+        \item 無作為化，または，介入ができない場合は共変量調整
+    \end{enumerate}
+\end{axiom}
+
+\section{ブロックデザイン}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    edgeが任意個数の頂点と結合できるグラフをハイパーグラフといい，ブロックデザインはハイパーグラフである．
+\end{tcolorbox}
+
+複数の因子があるとき，どのブロックでどの因子を共通とするかの定め方が，「均一」になるデザインを「ブロック」という．
+これは特殊なハイパーグラフを構成する問題になる．
+その後分散分析がなされ，処置効果が推定される．
+最も効率よく処置効果が推定できるようなブロックデザインが問題になり，これを最適計画と呼ぶ．
+
+\chapter{計算統計学}
+
+\begin{quotation}
+    統計的な手法を用いて，次元の呪いや爆発的な計算量を乗り越える手法をいう．
+    統計学には計算機科学者の参入もあり，全く違う統計モデル観がある．
+    生物統計学とは世界観が違う．
+    特に隠れ変数がその萌芽で，ベイズ法というのは隠れ変数の極みとも思えるのではないか（推定量を推定分布としてしまう）．
+    \begin{enumerate}
+        \item 統計量は解析的な計算でも求められるが，リサンプリングによる実験を手元で繰り返すことによって近似計算も可能である（ブートストラップ Efron 79）．
+        \item 確率計算は時折，高次元の積分計算を必要とする．する．超一様分布列が用いられることもある．
+    \end{enumerate}
+\end{quotation}
+
+\section{リサンプリング法}
+
+\begin{history}
+    ブートストラップは計算機を援用したリサンプリング法である．
+    リサンプリング法自体の歴史は古く，1960sにSimonが社会学にて用いている．数式が増えてな統計学専攻生のシミュレーションの手段として使われていた．
+    70sに計算機が成熟する前に，モンテカルロ法などの有効性が議論されていた．
+\end{history}
+
+\begin{history}[Bootstrapの正当化]
+    70sで計算環境の整備によりブートストラップ法が提案され，その後70s後半に，これを正当化する2つの理論が生まれた．
+    \begin{enumerate}
+        \item Huber 81による頑健統計学の完成で，統計的汎関数の理論が広く知られた．
+        \item Bhattacharya and Ghosh 78のEdgeworth展開理論も成熟した．
+    \end{enumerate}
+    ノンパラメトリック最尤法と解釈できる．名前は"by one's own bootstraps"（自力で行う）から．なんの自力かというと電力供給を計算機にすれば良いだけ，という意味である．
+\end{history}
+
+\begin{discussion}
+    いろいろな滑らかさが十分条件になるが，例えばTukeyが普及させたjackknife法(Quenouille)は非復元リサンプリング法であるが，推定量$\wh{\theta}$の経験分布関数に対する滑らかさが必要になる．
+    ブートストラップを簡単に言えば，$H(F)$が滑らかで，何かの期待値として表されているとき，近似可能である，という原理である．
+    $F$を経験分布関数$\bF_n$で推定するときは特にノンパラメトリックブートストラップという．
+\end{discussion}
+
+\begin{definition}
+    $T:=T(X_1,\cdots,X_n)$を$\theta$の推定量とし，$X_i$を除いた$n-1$個のデータから定まる推定量を$T_i$とする．
+    $J^i:=nT-(n-1)T_i$として，
+    \[J(T):=\frac{1}{n}\sum_{i=1}^nJ^i\]
+    を\textbf{jackknife statistic}という．
+\end{definition}
+
+\begin{theorem}
+    $T$が一致推定量でなく，さらに$\exists_{\theta_1\in\R}\;E[T]=\theta+\frac{\theta_1}{n}$を満たすならば，$J(T)$は一致推定量である．
+\end{theorem}
+
+\section{超一様分布列}
+
+\begin{history}[low-discrepancy sequences]
+    Hammersley and Handscomb "Monte Carlo Methods"(1964)では「準乱数(quasi-random numbers)」と，疑似乱数と区別して呼ばれていた．
+
+    一様分布論は，空間内の点列の漸近分布を議論するエルゴード理論の一部であるが，これが"irregularities of distribution"なる分野に変化した．
+    分布の不規則性＝一様分布からのズレの尺度を"discrepancy"と呼ぶ．
+
+    数値積分では5,6次元を超えると，「最後の手法(last resort)」としてのモンテカルロ法しか残らないことが知られているが，収束が非常に遅い．
+    1960sにすでに，モンテカルロ法の問題点を克服するために，「準乱数」が用いられていた．特に，ソ連での水爆開発でのモンテカルロ計算の高速化に研究されていた．
+    Riemann積分の代表点を「一様に」取ると，うまく積分の値に収束するかもしれない．
+    特にMBS(morgage-backed securities)の価格計算では360次元の数値積分が登場するが，このような例でも著しい高速化が可能になった．
+\end{history}
+
+\section{平均場近似}
+
+\begin{history}
+    多体問題を1体問題に帰着される手法として平均場近似が考えられていた(Weiss 07)．
+    統計手法では，大自由度統計モデルに関する積分（平均）の計算において，特殊な分布属では計算の困難さが下がり，真の分布が近似できる．
+
+    統計計算が容易になるグラフ構造に関して，汎用的なアルゴリズムの形で初めて明確に議論したのがPearl(88)である，
+    これをグラフによる因果推論の議論と同時に発表したため，混乱されやすいが，全く独立の2つの議論である．
+
+\end{history}
+
+\section{EM法}
+
+\begin{discussion}
+    統計モデルの変数は，観測変数／顕在変数と潜在変数／隠れ変数の22種類があり，音声認識での隠れマルコフモデルや，時系列解析の状態空間モデル，
+    因子分析モデルなどのCS的な統計モデルでは隠れ変数を持つモデルが多い．
+    そのようなモデルのパラメータに対する最尤推定を行うアルゴリズムをEM法(Dempster, Larid, Rubin 77)である．
+
+    ただし，Eステップに計算困難性があり，例えばモンテカルロ法で近似できるが，以前計算量は大きい．
+    変分近似を採用する手法を\textbf{一般化EM法}という．
+\end{discussion}
+
+\section{変分ベイズ法}
+
+\begin{history}
+    ベイズ推定は最尤推定と異なり，未学習データの予測値ではなく予測分布を求める．
+    少ないデータ数に対して最尤推定よりも高い汎化能力を持つ利点はあるが，計算困難性が強い．
+    特に積分計算について，従来はMCMC法が用いられたが，ここに変分近似ほうを用いる手法は\textbf{変分ベイズ法}と呼ばれる．
+\end{history}
+
+\section{マルコフ連鎖モンテカルロ法}
+
+\begin{history}
+    統計物理で1950sに導入され（動的モンテカルロ法とも呼ばれる），統計科学の分野に流入したのは1990sで，これがベイズ統計のきっかけとなった．
+    計算の困難さがアルゴリズムの発展によって除去されたことによる影響が大きい．
+    また変数の離散・連続の別を撤廃したことが実質的には大きい．
+\end{history}
+
+基本的には種々の離散・連続分布から，解析的性質がよくわかっているか／どれほど高次元かに依らずサンプルを得るための
+手法である．
+
+\section{逐次モンテカルロ法}
+
+\begin{history}
+    分野によってはparticle filter / Monte Carlo filterや，ロボティクスではcondensationと呼ばれる手法の総称．
+    遺伝的アルゴリズムに似た面もあるが，状態空間モデルに基づく統計を背景にしている．
+\end{history}
+
+\chapter{計量経済学と多変量解析}
+
+\section{歴史}
+
+\begin{enumerate}
+    \item 現代的な数理統計学の理論体系が確立したのは1920sのFisher, Neyman, E. S. Pearsonらによる．
+    \item この枠組み（相関分析など）に沿って，30sからは自然な形で多変量に拡張された．Fisher自身も多くの貢献をしたが，Hotelling, Wilks, Wishartらの仕事が基礎になっている．
+    \item 多変量推測統計のAndersonによる標準的教科書"An Introduction to Multivariate Statistical Analysis"は1958年に刊行された．この頃には多変量正規分布と線型モデルに基づく推測理論の基礎は確立していた．
+    \item 1970s以降の計算機時代では，今日ではほとんどのデータは多変量データであり，取り立てて多変量分析と言わなくても，新たな統計手法は押し並べて多変量データを扱う手法となっている．
+    今日の統計パッケージの中にある探索的データ解析や射影追跡などは，正規分布を前提としない，非線形的手法である．
+\end{enumerate}
+\cite{フロンティア１}の序文．
+
+\begin{example}
+    回帰分析，分散分析，主成分分析，判別分析，因子分析，分割表，グラフィカルモデル．
+\end{example}
+
+\section{多変量解析の考え方}
+
+多変量解析においては，連続分布としては多変量正規分布以外に扱いやすい分布が少ない．
+ところが，実際のデータ解析の場面では多変量正規分布の仮定の妥当性が疑われる場面が多く，
+記述統計的な手法と推測統計的な手法の間に大きなギャップがあるのが現状．\cite{フロンティア１}
+
+\section{用語と記法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    行列やベクトルを言葉として用いるのが特徴であり，経済学はこのAndersonらの慣習を強く受け継いでいる．
+\end{tcolorbox}
+
+\begin{definition}[data matrix, sample size, dimension]\mbox{}
+    \begin{enumerate}
+        \item 多変量データを\textbf{データ行列}とも呼ぶ．一般には行を個体，列を変数とする．それぞれの添字を$t$と$i,j$と使い分ける．
+        \item $n\times m$データ行列の行数$n$を\textbf{標本の大きさ}といい，列数$m$を標本の\textbf{次元}という．\footnote{高次元データを，なんらかの形で２次元空間に写して解釈する記述統計的手法を，次元の縮約という．}
+        \item 値が数ではない変数を\textbf{質的変数}という．これを量的変数に変換する手法を\textbf{数量化}という．
+    \end{enumerate}
+\end{definition}
+\begin{remark}[spatial statistics, random field]
+    データ行列の古典的な枠組みに入らない多変量データには，地理的なデータなどがある．これには\textbf{空間統計}や\textbf{確率場}の手法がある．
+    また，質問表に分岐がある場合は，特定の回答をした者以外の値が\textbf{欠測値}となる．
+\end{remark}
+
+\section{構造方程式モデル}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    構造方程式・同時方程式(simultaneous equiation)は，
+    なんと，数理統計学の「推定方程式」なる用語と同義である！
+\end{tcolorbox}
+
+\begin{history}[同時方程式モデル]
+    29世界恐慌で，統計的な手法の変革が迫られた．
+    特にA. Cowlesがコウルズ委員会を創始し，現在のCowles財団となっている．
+    この委員会のモノグラフKoopmans (50), Hood and Koopmans (53)が同時方程式モデルの始まりである．
+    Klein (50)がこれをマクロ計量モデルに応用した．
+\end{history}
+
+同時方程式は2本などに見えても，実際は無数に存在し，見かけ上は全ての方程式を同時に満たす．
+（満たすべき方程式の線型空間でも生成しているのか？）
+この全体を構造型または構造方程式と呼ぶ．
+
+\section{状態空間モデル}
+
+観測方程式と推移方程式の組みをいい，推移方程式により変化していく観測されない変数（\textbf{状態変数}）を推定することが問題になる．
+将来の値を予測する推定問題に加えて，現在利用可能な変数から現在の状態変数を推定するのが\textbf{濾過問題(filtering)}，過去の状態変数を推定するのが\textbf{平滑問題(smoothing)}である．
+
+\section{プロビットモデル}
+
+割り当てなど，説明変数がダミー変数になることはよくあるが，
+結果変数がダミー変数になるとき，制限被説明変数モデル(limiteddependent variable model)という．
+ここで，条件付き確率$P[Y_i=1|X_i]=\Phi(\al+\beta X_i)$を考えるとき，
+$\Phi$が正規ならば\textbf{プロビットモデル}，ロジスティックモデルならロジットモデルである．
+Tobin (58)はTobitモデルも開発した．
+
+\chapter{フィルタリング理論と工学}
+
+\section{歴史}
+
+\begin{history}
+    Kalman (60), Kalman and Bucy (61)による．70sから経済にも応用された．
+\end{history}
+
+\chapter{頑健統計}
+
+\begin{quotation}
+    ある時期，正規分布から外れた状態の下でもロバストであるような推定量についての研究が盛んに行われたことがあった．
+    その結論としては，位置母数に関する限り，正規分布を想定した推定方法は，正規分布からのズレが著しく大きくない限り十分効率が良い＝ロバストである．
+    また，正規分布からのズレが大きい時も，標本数が著しく小さくない限り，そのことが検出できることがわかる．
+\end{quotation}
+
+\section{議論}
+
+母数$\theta$を観測した値$X_i$から推定することを考えると，$X_i=\theta+\ep_i$と表せる．
+
+
+例えば誤差分布に正規分布を仮定することは，よく管理された実験を表す．
+もっと裾が長いことの方が考ええる．
+このときに，正規分布に対する精度が落ちても，頑健な統計量を考えたい．
+$M$推定量の改良として，最小化する目的関数を
+\[\sum\rho(X_i-\theta)\quad\rho(u)=u^21_{\abs{u}\le k}+(2k\abs{u}-k^2)1_{\abs{u}>k}\]
+とすることによってこれを与えたのがHuberである．
 
 \chapter{時系列解析}
 

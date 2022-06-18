@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -48,12 +48,9 @@
 \section{枠組み}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    因果推論の枠組みは，推定したい目的量を，理想化された介入のことばによって定義することを可能にする．
-    （この形式的成果は，きっと因果推論の他にも使えるが，概念上因果と結びつきが深い）．
-    現実には出来ない設定に対して，同一視可能な設定を作り上げる手法を考える，と捉えると，営みは圏論的である．
-    Pearlのgraphical criteriaは極めてpromisedだと思う．
-    潜在反応と構造方程式はその例である．
+title=「潜在」の接頭語は，結果変数の確率変数化をいう．]
+    結果変数は，割り当てや共変量などが定める可測空間$(\Om,\F,P)$上の可測関数であるが，これを測るための情報$\F$を人類は持ち得ない，という形式化が，Rubin因果モデルである．
+    そこで，人類に可測な範囲への射影を取ることは（条件付き）期待値を取ることとなり，これを平均処置効果という．
 \end{tcolorbox}
 
 \begin{notation}[outcomes that would have been observed under some intervention]\mbox{}
@@ -309,11 +306,15 @@ title=]
     例えば社会科学分野であまり使われていない理由は，中間変数間の部分的な独立性や変数の親子関係などの仮定が明確である場合が少ないからである．むしろそれらの確定が目的のひとつだったりする．
 \end{discussion}
 
-\section{因果効果の推定}
+\section{準実験デザインでの因果効果の推定}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-無作為割当が出来ない場合は，共変量を利用することで，無作為割当の状態を推定し，因果効果の推定値を出すことになる．
+    無作為割当が出来ない場合（観察研究）は，ロバスト性を目指して，
+    共変量を利用することで，無作為割当の状態を推定し，因果効果の推定値を出すことになる．
+    操作変数法と回帰分断デザインと中断時系列デザインは，観測されていない交絡因子も補正できる．
+    差分の差分析は良くデザインすれば，ある程度ロバストである．
+    そのほかは，全ての交絡因子が測定されているわけではない場合，非常に脆弱である．
 \end{tcolorbox}
 
 \begin{definition}[marginal structural model]\mbox{}
@@ -323,11 +324,12 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\subsection{強く無視できる割当条件}
+\subsection{目指すもの：強く無視できる割当条件}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    RCTのように比較が出来るための，共変量$x$が満たすべき条件である．
+    RCTのように比較が出来るためには，「共変量の全てが観測されている」＝「十分な情報を持っている」ことが必要である．
+    このことは，共変量$x$が，これで条件づけると割り当て確率と潜在的結果変数とが独立になる，という条件に翻訳できる．
 \end{tcolorbox}
 
 \begin{axiom}[strongly ignorable treatment assignment (Rosenbaum \& Rubin 1983), conditional effect, marginal effect]
@@ -341,11 +343,78 @@ title=]
     共変量が同じ対象者については，処置群と対照群で潜在的な結果変数の期待値は同じである：
 \end{lemma}
 
+\subsection{操作変数法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    無作為割り当ての理想的な状況からの乖離要因を考慮する．
+    因果推論が叫ばれるずっと前から計量経済学の手法であった．
+    傾向スコア解析で補正出来ないものは「観測されていない共変量」であり，これについては相変わらず操作変数法が用いられる．
+\end{tcolorbox}
+
+\begin{definition}[instrumental variable]
+    介入に影響を与える変数であって，介入を通じてのみしかアウトカムへの影響を持たない変数をいう．
+    これを数学的に抽象化すると，回帰モデル$y=k(x)+e$において，$x,e$は独立ではない（観測されていない共変量が存在する）とき，$e$と独立な確率変数$v$を\textbf{操作変数}という．
+    なお，条件$E[e|X]=0$を計量経済学では\textbf{外生性}といい，「内生性問題の解決に，操作変数法が用いられる」と表現される．
+\end{definition}
+\begin{remark}
+    数学的には単純なことであるが，$e\indep v$が実証的に証明できない場合が多いため，ある種の禁忌肢である．
+\end{remark}
+
+\begin{example}
+    心臓カテーテル治療を介入とする実験において，自宅から病院までの距離は操作変数である．
+    重症度が交絡因子となり，介入を受けられるかどうかを決定してしまっているためである．
+\end{example}
+
+\begin{axiom}
+    IV法を用いるための前提条件は
+    \begin{enumerate}
+        \item Exclusion restriction：IVが直接アウトカムに影響を与えず，介入因子のみを通じる．
+        \item No instrument-outcome confounder：IVとアウトカムの両方に影響を与える交絡因子は存在しない．
+        \item Instrumental relevance：介入因子を強く予測する．
+    \end{enumerate}
+\end{axiom}
+
+\begin{example}[局所処置効果]
+    不服従者を除いた「割り当て服従者の中での因果効果」をLATEという．
+    このとき，割り当て自体が，実際に処置を受けるかどうかの操作変数になる，という理解をする．
+\end{example}
+
+\subsection{回帰分断デザイン}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    自然実験がたまたまこの条件を満たすことがある．
+\end{tcolorbox}
+
+\begin{history}[Regression discontinuity design]
+    Thistlethwaite and Campbell 60による．
+\end{history}
+
+\begin{definition}
+    説明因子が$X\in 2$のとき，ある連続変数$Z$であって，$\exists_{c\in\R}\;Z>c\Rightarrow X=1\land Z<c\Rightarrow X=0$を満たすとき，$c$の近傍に$Z$の値を持つサブグループは，
+    次の条件を満たすとき
+    強く無視できる割り当て条件を満たし得る．
+    \begin{enumerate}
+        \item カットオフ値$c$の近傍において，アウトカムに影響を与えるそのほかの因子は大きく変化しない．
+        \item カットオフ値$c$の近傍において，潜在的アウトカムは連続である．
+    \end{enumerate}
+\end{definition}
+
+\subsection{差分の差法}
+
+介入群と対照群のそれぞれについて，処置の前後の計4-組のデータが得られたときに使える解析法である．
+
 \subsection{マッチング（均衡化）}
 
-処置群と対照群で，共変量の値が等しい対象者の組を考える．
+共変量の値で同値類を作り，その中で
+処置群と対照群とに分ける．
+
 当然，共変量の次元が多いと難しくなる（\textbf{次元問題}）．
 また，共変量の分布が大きくずれると，その部分についてはマッチング不可能（\textbf{サポート問題}）．
+このような場合，共変量を一元化する方法が\textbf{傾向スコア・マッチング}である．
+傾向スコアは，マッチングだけでなく，層別解析でも回帰分析でも利用される．
+
 
 \begin{example}\mbox{}
     \begin{enumerate}
@@ -355,42 +424,58 @@ title=]
     \end{enumerate}
 \end{example}
 
-\subsection{サブグループ解析（恒常化・限定）}
-
-条件付き効果を推定する．
-
 \subsection{層別解析}
 
-ある程度粗い同値類を作って解析する．
+交絡因子だと思われる変数に依って
+同値類を作って，その中で解析する．
 
 \subsection{回帰分析}
 
-各群ごとに回帰関数$E[y_i|z=i,x]$を推定し，その差の標本平均を取る．
-
-\begin{example}\mbox{}
-    \begin{enumerate}
-        \item 共分散分析モデル
-        \item パス解析モデル
-        \item Cox回帰
-        \item 多群の構造方程式モデル
-    \end{enumerate}
-    いずれも，回帰関数を誤って設定すると大きなバイアスを生じる．パラメトリックな手法の限界である．
+\begin{example}[共分散分析]
+    原因変数に加えて共変量も同時にモデルに投入すること．
+    交絡因子を追加して重回帰モデルを立て，各変量による結果$y$への影響の大きさを「分散分析」する．
+    共変量が連続であるとき，これを離散化せずに利用できる点で層別解析より優れている．
 \end{example}
-
-\begin{problem}\mbox{}
-    \begin{enumerate}
-        \item 結果変数と共変量のモデリングが必要である．
-        \item 直接因果効果の推定値は得られない．
-    \end{enumerate}
-\end{problem}
-
-この問題を解決するために，傾向スコア解析法など，ノンパラメトリック・セミパラメトリックな手法が要請される．
-特に，潜在的な結果変数と説明変数との間はパラメトリックな仮定を置くが，共変量$x$とその他の変数の間には回帰関係を仮定せずに解析するとなると，これはセミパラメトリックモデルとなる．
 
 \begin{example}[局所多項式回帰 Stone 1977：ノンパラメトリック]
     バンド幅をどう指定するか，次元の呪いなどの問題点が残る．
     突破口があるならCSであるが，社会科学分野で解析手法として用いられることはまだあまりない．
 \end{example}
+
+\subsection{逆傾向スコア荷重による一致推定量}
+
+\begin{theorem}[IPW (Rubin 85)]
+    傾向スコアの逆数で積分した値は，平均処置効果の不偏推定量となり，傾向スコアの一致推定に成功すればIPW推定量も一致推定量である．
+\end{theorem}
+
+潜在的な結果変数と説明変数との間はパラメトリックな仮定を置くが，
+共変量$x$とその他の変数の間には回帰関係を仮定せずに解析するとなると，
+これはセミパラメトリックモデルとなる．
+
+すると，回帰モデルのパラメトリックな部分に脆弱性が生じる．
+平均処置効果の推定では，傾向スコアの推定もパラメトリックモデルにするなら，脆弱性は2つである．
+それぞれについて頑健にしたいが，さらに高い頑健性として，「二重の頑健性」が考え得る．
+
+\begin{discussion}
+    そもそも逆確率による重みづけは，モンテカルロ法のimportance samplingでも出現する．
+    少しずれた確率分布から得られたサンプルから，真の確率分布の下での何らかの確率変数の期待値を計算する一般的手法である．
+\end{discussion}
+
+\section{共変量選択}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    モデルに追加した説明変数$s$は，$X$の上流にあり，かつ，その全体$S$によって$X,Y$を共通に説明する全ての流れが遮断されているとき，バックドア基準を満たすという．
+\end{tcolorbox}
+
+\begin{definition}[バックドア基準]
+    因果グラフ$G$において，有向道$X\to Y$があるとする．
+    このとき，頂点集合$S$が次を満たすとき，$(X,Y)$についてバックドア基準を満たすという：
+    \begin{enumerate}
+        \item $\forall_{s\in S}\;X\not\to s$．
+        \item $X$を始点とする有向道を$G$から除いたグラフにおいて，$S$は$X$と$Y$を有向分離する．
+    \end{enumerate}
+\end{definition}
 
 \section{因果探索の基本問題}
 
