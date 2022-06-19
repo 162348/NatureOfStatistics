@@ -3,8 +3,8 @@
 \author{05-210520 司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \newcommand{\Sub}{\mathrm{Sub}}
 \renewcommand{\contentsname}{エッセイ：統計モデルの標準理論}
@@ -89,8 +89,8 @@ $H=0$のときがパラメトリックモデル，$\Theta=0$のときがノン�
 このエッセイでは，第2〜5節にて
 \begin{enumerate}[{第}1{節}]\setcounter{enumi}{1}
     \item まず，影響関数を用いた有効な一致推定量の標準的構成法をみて，パラメトリックモデルの古典理論との比較を通じて，共通点と相違点，特に無限次元空間の出現によってどのような点に困難が生じるかを考える．
-    \item 次に，その手法で最も重要な概念である影響関数の数学的性質をよく考え，今後どのような発展が考え得るかを議論する．特に，セミパラメトリックモデルでは解析的な一般論はその難しさ故に今まで見られなかったため，標本の数が十分大きくない場合はシミュレーションなどによってパフォーマンスが測られたが，漸近展開の手法がこの点についても強力な一般論を提供できる可能性，または漸近論的手法が適用可能であるための必要十分条件を考える．
-    \item さらに，応用の可能性を2つ議論する．一つは頑健統計への応用である．セミパラメトリックモデルはパラメトリックな部分もあるので，ここに相変わらずパラメトリックな仮定が現実と違ってしまうこと(misspecification)に対する脆弱性があるが，これがどのように解消され得るかを考える．
+    \item 次に，その手法で最も重要な概念である影響関数の数学的性質をよく考え，今後どのような発展が考え得るかを議論する．特に，セミパラメトリックモデルでは解析的な一般論はその難しさ故に今まで見られなかったため，標本の数が十分大きくない場合はシミュレーションなどによってパフォーマンスが測られたが，漸近展開の手法がこの点についても強力な一般論を提供できる可能性を考える．
+    \item さらに，応用の可能性を2つ議論する．1つは頑健統計への応用である．セミパラメトリックモデルはパラメトリックな部分もあるので，ここに相変わらずパラメトリックな仮定が現実と違ってしまうこと(misspecification)に対する脆弱性があるが，これがどのように解消され得るかを考える．
     \item 2つ目に，必要な正則性条件を満たさないために漸近理論が適用できない場合などに於ては，他の方法で分布を近似することを考えることとなる．
     このような，漸近理論と両輪となるような，分布近似法による理論展開の可能性を議論する．
 \end{enumerate}
@@ -105,6 +105,7 @@ $H=0$のときがパラメトリックモデル，$\Theta=0$のときがノン�
         \item $P(\X)$によって，可測空間$(\X,\A)$上の確率測度全体のなす空間とする．
         \item $f:\X\nrightarrow\R$によって，$\X$の全体で定義されているとは限らない部分関数$f|_{\Dom f}:\Dom f\to\R$を表す．
     \end{enumerate}
+    また，セミパラメトリックモデルに関する仮定は(S0)〜(S5)，パラメトリックモデルに関する仮定は(P1)〜(P4)がある．
 \end{notation}
 
 \section{影響関数を用いたワンステップ推定に関するレビュー}
@@ -360,13 +361,6 @@ title=]
     近似精度の改良へ至る前に可能な応用として，頑健な推定量の構成があり得る．特に，二重に頑健な推定量は，セミパラメトリックモデル特有の性質である．
 \end{tcolorbox}
 
-\section{正規近似への応用}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    
-\end{tcolorbox}
-
 \begin{thebibliography}{99}
     %\bibitem{Kahneman}
     %ダニエル・カーネマン『ファスト＆スロー』（村井章子著・訳，早川書房，2012年）．
@@ -378,6 +372,16 @@ title=]
     Bolthausen - Lectures on Probability Theory And Statistics
     \bibitem{Kennedy}
     Edward Kennedy - Semiparametric Doubly Robust Targeted Double Machine Learning
+    \bibitem{Bickel}
+    Bickel - 
+    \bibitem{Econometrica}
+    \bibitem{Double/Debiased Machine Learning for Treatment and Structural Parameters}
 \end{thebibliography}
+
+\begin{enumerate}
+    \item 
+    \item 漸近展開やめる？？回収出来ないならもういい．漸近展開は知られてない．
+    \item 
+\end{enumerate}
 
 \end{document}
