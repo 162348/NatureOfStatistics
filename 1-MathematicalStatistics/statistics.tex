@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -605,6 +605,18 @@ $M$推定量の改良として，最小化する目的関数を
 \[\sum\rho(X_i-\theta)\quad\rho(u)=u^21_{\abs{u}\le k}+(2k\abs{u}-k^2)1_{\abs{u}>k}\]
 とすることによってこれを与えたのがHuberである．
 
+\section{von Mises解析}
+
+\begin{history}
+    von Mises (47)で意識されたのは"Volterra derivative"である．
+    これは60sの頑健統計の勃興，特にHampelの博士論文(68)まで待って，「影響曲線」なる概念に進化した．
+    1980sに，Frechet微分，Hadamard微分，コンパクト微分の言葉で基礎づけがなされた．（\cite{von Mises calculus}全文）．
+    \begin{quote}
+        The purpose of these notes is to provide von Mises' theory with a rig-
+orous mathematical framework which is sufficiently straightforward so that it can be applied routinely with little more effort than is required for the calculation of the influence curve. The approach presented here is based on the Hadamard derivative and is applicable to diverse forms of sta- tistical functionals.\cite{von Mises calculus}
+    \end{quote}
+\end{history}
+
 \chapter{高次元統計学}
 
 \section{lasso推定量}
@@ -720,6 +732,8 @@ title=]
     シリーズ生命倫理学『医学研究』
     \bibitem{Klein-Moeschberger}
     John P. Klein and Melvin L. Moeschberger - Survival Analysis
+    \bibitem{von Mises calculus}
+    Luisa T. Fernholz.  (1983)．
 \end{thebibliography}
 
 \end{document}

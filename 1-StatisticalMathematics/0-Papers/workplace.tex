@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -601,7 +601,31 @@ title=]
 
 \subsection{Introduction}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{enumerate}
+        \item $M$推定量$\wh{\theta}$に分布の形が十分近いような，Gauss過程の$M$-推定量$\wh{\theta}_G$の構成法を提示する．
+        \item 十分条件と，収束レートを考える．
+        \item 乗数ブートストラップ法を与える．
+        \item セミパラメトリックモデルと，non-Donskerなモデルとで同様のことを考える．
+        \item 推定関数$\psi$が滑らかでない場合も使える．
+    \end{enumerate}
+\end{tcolorbox}
 
+\subsection{Gaussian Approximation for $M$-estimator}
+
+\begin{notation}
+    $\ep\in(0,1]$に対して，
+    \begin{enumerate}
+        \item $H(\ep):=\log\cN(\ep,\Theta,\norm{-})$を計量エントロピーとする．
+        \item $J(\ep):=\int^\ep_0\sqrt{1+H(\delta)}d\delta$を計量エントロピー積分とする．
+    \end{enumerate}
+\end{notation}
+
+\begin{theorem}
+    以上の仮定が成り立つとき，任意の可測集合$A\subset\Theta,\ep\in(0,1]$に対して，$N$が存在して，任意の$n\ge N$に対して，
+    \[\exists_{C>0}\quad \Abs{\bP_Z\Square{\wh{\theta}\in A}-\bP_G\Square{\wh{\theta}\in A}}\le C\paren{\ep+\frac{H(\ep)}{n^{5/8}}+\frac{\Delta(n,\ep)}{\ep^\kappa}(\sqrt{H(\ep)}+1)}.\]
+\end{theorem}
 
 \section{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
 

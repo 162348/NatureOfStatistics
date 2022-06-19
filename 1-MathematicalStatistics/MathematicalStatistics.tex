@@ -1249,9 +1249,9 @@ title=]
 \subsection{一致性を持つ$M$-推定量の漸近分布}
 
 \begin{notation}
-    モデルの可微分構造を仮定：$\Theta\subset\R^p$を可測集合とする．推定関数$\psi:\X\times\Theta\to\R^p$とし，$\psi(x,-)$は連続とする．
-    $\psi_n(\theta):=\bP_n\psi(x,\theta)=\sum_{j=1}^n\psi(x_j,\theta)$と定める．
-    $\o{\psi}_n(\theta):=\bE_n[\psi(\theta)]=\frac{1}{n}\psi_n(\theta)$，
+    $\Theta\subset\R^p$を可測集合，$\psi:\X\times\Theta\to\R^p$を推定関数とし，$\psi(x,-)$は連続とする．
+    $\psi_n(\theta):=\sum_{j=1}^n\psi(x_j,\theta)$，
+    $\o{\psi}_n(\theta):=\bE_n[\psi(\theta)]=\frac{1}{n}\psi_n(\theta)$と定め，真の平均を
     $\o{\psi}(\theta):=\int_\X\psi(x,\theta)P(dx)$と定める．
 \end{notation}
 
@@ -1264,7 +1264,7 @@ title=]
         \item $\psi(x,\theta_0)\in\L^2(P;\R^p)$で，$P\psi(x,\theta_0)=0$．
         \item $\exists_{M\in\L^1(\X,\R)}\;\forall_{x\in\X,\theta\in B}\;\abs{\partial_\theta\psi(x,\theta)}\leq M(x)$．
         さらに，$\Gamma:=-P\partial_\theta\psi(x,\theta_0)$は正則．
-        \item 確率変数列$\wt{\theta}_n:\X^n\to\Theta$が$\wh{\theta}_n\xrightarrow{p}$かつ$\psi_n(\wh{\theta}_n)=o_p(\sqrt{n})$を満足する．
+        \item 確率変数列$\wt{\theta}_n:\X^n\to\Theta$が$\wh{\theta}_n\xrightarrow{p}\theta_0$かつ$\psi_n(\wh{\theta}_n)=o_p(\sqrt{n})$を満足する．
     \end{enumerate}
     このとき，
     \[\sqrt{n}(\wh{\theta}_n-\theta_0)-\Gamma^{-1}\frac{1}{\sqrt{n}}\psi_n(\theta_0)=o_p(1)\quad(n\to\infty).\]
@@ -1379,7 +1379,7 @@ title=一致推定量さえ見つかれば，漸近分散は逆Fisher情報行�
 
 \begin{theorem}[ワンステップ推定量が漸近正規であるための十分条件]
     $\theta_0\in\Theta^\circ$，$B\subset\Theta$を$\theta_0$の開近傍とする．
-    条件(E1)~(E4)を仮定し，次の条件を仮定する：
+    条件(E1)〜(E4)を仮定し，次の条件を仮定する：
     \begin{enumerate}[({E}1)]\setcounter{enumi}{5}
         \item 初期推定量の列$\wh{\theta}^0_n:\X^n\to\Theta$が$\sqrt{n}$-一致性を持つ：$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$．\footnote{条件$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$は，弱一致性$\wh{\theta}^0_n-\theta_0=o_p(1)$を含意することに注意．これに加えて，$n^{-1/2}$倍の範囲で真値$\theta_0$を捕まえていることは要求する．}
     \end{enumerate}
