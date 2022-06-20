@@ -3,8 +3,8 @@
 \author{05-210520 司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \newcommand{\Sub}{\mathrm{Sub}}
 \renewcommand{\contentsname}{エッセイ：統計モデルの標準理論}
@@ -336,7 +336,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    影響関数の概念はHampelの頑健統計に関する博士論文(1968)にて登場するが，
+    影響関数の概念はHampelの頑健統計に関する博士論文(1968)\cite{Hampel68}にて登場するが，
     前節のように，セミパラメトリックモデルにおける漸近有効性の文脈でも自然に登場した．
     これはさらに元を辿れば，von Misesの1947年の論文で"Volterra微分"の概念の精緻化でもある．
     このように，独立の文脈で着想された無限次元微分の概念を，
@@ -349,7 +349,7 @@ title=]
 \end{tcolorbox}
 
 \begin{history}
-    von Mises (1947)では，Volterra (1913)に於て，無限個の変数を持つ関数を
+    von Mises (1947)では，Volterra (1913)\cite{Vito Volterra}に於て，無限個の変数を持つ関数を
     「線の関数(fonction de ligne)」とみなし，その連続性や微分可能性，さらにはTaylor級数展開を考えたことに着想を得て，
     統計的汎関数にも同様の微分とTaylor級数展開が考え得ることを議論している．
 \end{history}
@@ -371,9 +371,9 @@ title=]
     %\bibitem{Kahneman}
     %ダニエル・カーネマン『ファスト＆スロー』（村井章子著・訳，早川書房，2012年）．
     \bibitem{吉田}
-    吉田朋広『数理統計学』(朝倉書店，2006)
+    吉田朋広．(2006)．\textit{数理統計学}．朝倉書店．
     \bibitem{van der Vaart}
-    van der Vaart - Asymptotic Statistics
+    van der Vaart, A. W. (1998) \textit{Asymptotic Statistics}. Cambridge Series in Statistical and Probabilistic Mathematics, Cambridge.
     \bibitem{Bolthausen}
     Bolthausen - Lectures on Probability Theory And Statistics
     \bibitem{Kennedy}
@@ -382,6 +382,14 @@ title=]
     Bickel - 
     \bibitem{Econometrica}
     \bibitem{Double/Debiased Machine Learning for Treatment and Structural Parameters}
+    \bibitem{Hampel68}
+    Hampel, F. R. (1968). \textit{Contributions to the theory of robust estimation}. Unpublished dissertation, Berkeley: University of California.
+    \bibitem{A Note on Functions of Lines}
+    Bliss, G. A. (1915). A Note on Functions of Lines. \textit{Proceedings of the National Academy of Sciences of the United States of America}. Vol. 1, No. 3 (Mar. 15, 1915), pp. 173-177 (5 pages).
+    \bibitem{Vito Volterra}
+    Vito Volterra. (1913). Le\c{c}ons sur les fonctions de lignes. Paris: Gauthier-Villars.
+    \bibitem{von Mises}
+    von Mises, R. (1947). On the Asymptotic Distribution of Differentiable Statistical Functions.  Ann. Math. Statist. 18(3): 309-348 (September, 1947). DOI: 10.1214/aoms/1177730385.
 \end{thebibliography}
 
 \begin{enumerate}
