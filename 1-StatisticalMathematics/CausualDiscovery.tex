@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1346,6 +1346,41 @@ title=]
     \end{enumerate}
     と定める．
 \end{definition}
+
+\chapter{Targeted Learning}
+
+\section{歴史}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Pearlの構造因果モデルを理解するには，計量経済学からの系譜を知る必要があったのだ！
+\end{tcolorbox}
+
+\begin{history}[Marschakと計量経済学のノンパラ化 + グラフィカルモデル]
+    Cowles財団が構造方程式モデリングにお熱だったころ，Jacob Marschak (53)だけは，個々のパラメータ推定は大事ではなく，その全体で見ると良い（統計的汎関数の推定＝ノンパラへの転換）ことに気づき，Heckman(2000)が再発見した．
+    これを"Marschak's Maxim"という：”the desired quantity can often be identified without ever specifying
+    the functional or distributional forms of these economic models"．
+    当時の統計学者からは，そもそも定義できない量を推定しようとするその姿勢は，形而上学的でお気楽に思えたのだろう．
+    これは統計学者の観点からは出て来ないパラダイムシフトである，実際Karl Pearson (11)が"what if"という言葉を追放した．
+    実験的な研究者の政策問題(policy question)には，因果の言葉が欠かせないのである．
+
+    個々で何より，Donald Rubin (74)が，Neyman (23)の潜在結果の概念を一般化し，統計学の中で地位を取り戻させた．
+    これでMarschak's Maximは化けの皮を被って転生した．
+    何より，targeted questionを，推定可能な量に落とし込むという意味で極めて強力であるが，このままでは，構造方程式モデルの表現力に劣る．
+    実際，データ生成過程を理解する，という点では，まだまだ平均処置効果だけでは情報が少なすぎる．
+    一方で，パラメトリックの頭になっていた計量経済学者が，成分をそもそも持たない定式化に
+    考え方を移行する契機となった．
+    いまでは，Pearlのグラフィカルモデルを用いて，政策問題と，推定すべき因果効果との関係に，アルゴリズム的な対応がついた．
+    これが，最後のピースであった．
+    \begin{quote}
+        Lacking the benefits of graphical models, nonparametric re-
+    searchers have difficulties locating instrumental variables in a system of equations,
+    recognizing the testable implications of such systems, deciding if two such systems
+    are equivalent, if two counterfactuals are independent given another, whether a set
+    of measurements will reduce bias, and, most importantly, reading the causal and
+    counterfactual information that such systems convey (Pearl 2009, pp. 374–380).
+    \end{quote}
+\end{history}
 
 \begin{thebibliography}{99}
     \bibitem{清水昌平}

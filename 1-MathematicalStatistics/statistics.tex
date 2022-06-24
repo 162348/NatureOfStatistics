@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -489,7 +489,7 @@ title=]
     遺伝的アルゴリズムに似た面もあるが，状態空間モデルに基づく統計を背景にしている．
 \end{history}
 
-\chapter{計量経済学と多変量解析}
+\chapter{計量経済学と多変量・時系列解析}
 
 \section{歴史}
 
@@ -530,6 +530,41 @@ title=]
     データ行列の古典的な枠組みに入らない多変量データには，地理的なデータなどがある．これには\textbf{空間統計}や\textbf{確率場}の手法がある．
     また，質問表に分岐がある場合は，特定の回答をした者以外の値が\textbf{欠測値}となる．
 \end{remark}
+
+\section{経験論 vs 計量経済学}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    構造方程式モデルの前夜まで繋ぐ歴史がある．
+\end{tcolorbox}
+
+\begin{history}[empiricsを乗り越えた偉人たち：Slutsky, KoopmansとCowles委員会の時代]
+    経済学では，Sir William Pettyが 17 世紀イギリスにおいて経済データを記録して（作り出して）以来、経験的／実証的な研究がずっと重要な役割を果たしてきた．\footnote{労働価値説を初めて唱え、政治算術派の先駆となったことから、古典派経済学と統計学の始祖ともいわれる。}
+    \begin{enumerate}
+        \item 帰納的アプローチ・記述統計学：データを慎重に検討することで経済学的な洞察が得られる．
+        \item 理論的アプローチ・推測統計学：既存の統計理論の検証が大事（ちょうど実験物理学のように）．
+    \end{enumerate}
+    Léon Walras 34-10 (仏)は経済分析に数学的手法を積極的に活用し，一般均衡理論を最初に定式化した．つまり，「需要曲線」を初めて定立した．
+    これは，凸解析や不動点定理などでかなりの分析が可能な数学的に優れた構造を持ち，例えば均衡価格の存在が示せる．
+    そこで弟子のHenry Mooreは，統計的な検証をしようと試みる．さらにその弟子が同様の研究を1930sまで続け，Pigouなども同様の研究をしている．
+    その後すぐにアメリカでWesley Clair Mitchell 74-48を中心に，ビジネスサイクルの研究がNational Bureau of Economic Researchで始まった．
+    その中心的な手法が帰納的アプローチであった．SchumpeterやPigouは理論研究を志向したが，その統計手法は徹底されたものではなかった．
+    NBERの研究は特にEugene Slutsky 1880-1948や\textbf{Tjalling Koopmans} 10-86によって批判され，Cowles財団を立ち上げ，これが数理経済学・計量経済学の先駆けとなった．
+    Kantorovichとノーベル記念賞を受賞した．
+\end{history}
+
+\begin{history}[Haavelmoによる確率論的アプローチによるCawles財団の加速]
+    Tinbergenはこの方向からビジネスサイクル理論に切り込み，Keynesと戦った．
+    Tinbergenを乗り越える形で，計量経済学は一気に「確率論的アプローチ」の色を深めた，特にHaavelmo 11-．
+    これにCawles委員会も応え，教科書なども整備されていった．
+
+    ある意味で、ホーヴェルモーの研究は昔の計量経済学者たちが事実上主張してきたことではあった。でも、それを確固たるものにしたのは ホーヴェルモーだ。クープマンス主導のコウルズ委員会 と、古参の NBER 制度学派たち（Rutlege Vining が筆頭) との間の手法論争は、1947 年から 1949 年まで続き、その結果として確率的理論研究が経験論的経済学での支配的な理論として確立した。
+\end{history}
+
+\begin{history}[Cowles委員会の超克：Lucasの時系列]
+    Herman Woldは，連立方程式系の大規模モデルの「同時手法」を批難し，代わりに再帰的手法を支持した．
+    \textbf{Robert E. Lucas} 37- (1976) が最も有名な批判を発表した。大規模モデルの構造パラメータはとりわけ政策に用いられるときには一定だと想定されている。でもこれは新マクロ経済学理論の本流になりつつあった理論の主張とは一致しないのだ、と彼は主張したのだった。 別の一連の論文で ルーカスは新しい計量経済学の方法論を述べた。それが\textbf{時系列の計量経済学}だ。
+\end{history}
 
 \section{構造方程式モデル}
 
