@@ -36,7 +36,7 @@
 セミパラメトリックモデルは，パラメトリックモデルの表現力とノンパラメトリックモデルの事前仮定の少なさとの両方の美点を採ろうとすると
 自然に辿り着く統計モデルのクラスで，
 初めは生存時間解析の手法においてCoxが1972年に開発した比例ハザードモデルからその歴史が始まる．
-続いて計量経済学や疫学・生物統計学など，多くの分野にて同時多発的に生じた統計的因果推論の問題など，さらには天文学などの応用の現場で自然に生じるモデルである\cite{Bickel}が，
+続いて計量経済学や疫学・生物統計学など，多くの分野にて同時多発的に生じた統計的因果推論の問題など，さらには天文学などの応用の現場で自然に生じるモデルである(\cite{Bickel},\cite{Bickel and Robins})が，
 そのパラメータ空間が無限次元になることにより必然的に数学的な困難さが付きまとう統計手法に対して，
 有用な共通言語を提供できる可能性は，「数学を軸足に置いた応用」の良い例になるのではないかと考える．
 その内容については，エッセイにて詳述した．
@@ -103,7 +103,7 @@ $H=0$のときがパラメトリックモデル，$\Theta=0$のときがノン�
     また，セミパラメトリックモデルに関する仮定は(S0)〜(S5)，パラメトリックモデルに関する仮定は(P1)〜(P4)がある．
 \end{notation}
 
-\section{影響関数を用いたワンステップ推定に関するレビュー}
+\section{パラメトリックモデルに於ける有効推定量の標準的構成法}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -170,6 +170,49 @@ title=]
 \begin{corollary}\label{cor-Cramer-Rao}
     特に$q=p=1$の場合，$\Var_\theta[\wh{\psi}]\ge\frac{\paren{\pp{\psi(\theta)}{\theta}}^2}{\Var_\theta[g]}$．
 \end{corollary}
+
+\subsection{パラメトリックモデルにおけるワンステップ推定量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\begin{notation}
+    $\Theta\subset\R^p$を可測集合，$\psi:\X\times\Theta\to\R^p$を推定関数とし，$\psi(x,-)$は連続とする．
+    $\psi_n(\theta):=\sum_{j=1}^n\psi(x_j,\theta)$，
+    $\o{\psi}_n(\theta):=\bE_n[\psi(\theta)]=\frac{1}{n}\psi_n(\theta)$と定め，真の平均を
+    $\o{\psi}(\theta):=\int_\X\psi(x,\theta)P(dx)$と定める．
+
+    $\Theta$-値確率変数の列$(\wh{\theta}^0_n)$に対して，新しい推定量の列を
+    \[\wh{\theta}_n:=\wh{\theta}^0_n-[\partial_\theta\psi_n(\wh{\theta}^0_n)]^{-1}\psi_n(\wh{\theta}^0_n)\]
+    によって定めると，右辺は
+    \[\X^*_n:=\Brace{x\in\X^n\mid\wh{\theta}^0_n\text{において}\psi_n\text{は微分可能で}\partial_\theta\psi_n(\wh{\theta}^0_n)\text{は正則で}\wh{\theta}_n\in\Theta}\]
+    上で定まるから，これを$\X$上に可測に延長する．延長の仕方は任意で良い．
+    こうして得た$(\wh{\theta}_n)$を\textbf{$(\wh{\theta}_n^0)$を初期推定量とするワンステップ推定量}という．
+\end{notation}
+
+\begin{theorem}
+    $\theta_0\in\Theta^\circ$とし，$\theta_0\in B\subset\Theta$を開近傍とする．
+    次の条件を仮定する．
+    \begin{enumerate}[({E}1)]
+        \item 推定関数$\psi:\X\times\Theta\to\R^p$は$B$上$C^1$級．
+        \item $\psi(-,\theta)$は可測．
+        \item $\psi(x,\theta_0)\in\L^2(P;\R^p)$で，$P\psi(x,\theta_0)=0$．
+        \item $\exists_{M\in\L^1(\X,\R)}\;\forall_{x\in\X,\theta\in B}\;\abs{\partial_\theta\psi(x,\theta)}\leq M(x)$．
+        さらに，$\Gamma:=-P\partial_\theta\psi(x,\theta_0)$は正則．
+        \item 確率変数列$\wt{\theta}^0_n:\X^n\to\Theta$が$\sqrt{n}$-一致性を持つ：$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$．\footnote{条件$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$は，弱一致性$\wh{\theta}^0_n-\theta_0=o_p(1)$を含意することに注意．これに加えて，$n^{-1/2}$倍の範囲で真値$\theta_0$を捕まえていることは要求する．}
+    \end{enumerate}
+    このとき，ワンステップ推定量$\wh{\theta}_n$に対して，
+    \[\sqrt{n}(\wh{\theta}_n-\theta_0)=-\Gamma^{-1}\frac{1}{\sqrt{n}}\psi_n(\theta_0)+o_P(1).\]
+    特に，$\Sigma:=\Gamma^{-1}\Phi(\Gamma^{\top})^{-1}$，$\Phi:=\int_\X\phi\phi^{\top}(x,\theta_0)P(dx)$について，
+    \[\sqrt{n}(\wh{\theta}_n-\theta_0)\xrightarrow{d}N_p(0,\Sigma).\]
+    が成り立つ．
+\end{theorem}
+
+
+
+\section{セミパラメトリックモデルに於ける有効推定量の標準的構成法}
 
 \subsection{統計的汎関数の微分可能性}
 
@@ -240,10 +283,12 @@ title=]
     \end{enumerate}
 \end{definition}
 
+
 \subsection{セミパラメトリックモデルの効率限界}
 
 \begin{theorem}[ノンパラメトリック一致推定量の最小分散]
-    任意のノンパラメトリックモデル$\P\subset P(\X)$と，有効影響関数を$\wt{\psi}(x;P)=\wt{\psi}_P(x)$としてvon Mises可微分かつ$\dot{\P}_P$に関して道毎に可微分な汎関数$\psi:\P\to\R$と，その$P\in\P$における不偏推定量$\wh{\psi}\in\L^2(\X^n;\R)$について，(S0)と(N1)〜(N4)を仮定する．
+    任意のノンパラメトリックモデル$\P\subset P(\X)$と，有効影響関数を$\wt{\psi}(x;P)=\wt{\psi}_P(x)$としてvon Mises可微分かつ$\dot{\P}_P$に関して道毎に可微分な汎関数$\psi:\P\to\R$と，その$P\in\P$における不偏推定量$\wh{\psi}\in\L^2(\X^n;\R)$について，
+    (S0)と以下の(N1)〜(N3)，そして定理\ref{thm-semiparametric-one-step}の(N4)を仮定する．
     \begin{enumerate}[({N}1)]
         \item 積分と極限の可換性：任意の$(P_t)\in\Sub_P(\P)$に関して，$(\wt{\psi}_P(p_t-p))$は非負値の可積分な優関数を持つ．
         \item von Mises展開の正当性：任意の$(P_t)\in\Sub_P(\P)$に関して，von Mises展開の2次の剰余項は$R_2(P_t,P)=o(t)$．
@@ -277,46 +322,9 @@ title=]
     このとき，$(\wh{\theta}_n)$は$(\theta,\eta)$において漸近有効である．
 \end{theorem}
 
-\subsection{パラメトリックモデルにおけるワンステップ推定量}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    
-\end{tcolorbox}
-
-\begin{notation}
-    $\Theta\subset\R^p$を可測集合，$\psi:\X\times\Theta\to\R^p$を推定関数とし，$\psi(x,-)$は連続とする．
-    $\psi_n(\theta):=\sum_{j=1}^n\psi(x_j,\theta)$，
-    $\o{\psi}_n(\theta):=\bE_n[\psi(\theta)]=\frac{1}{n}\psi_n(\theta)$と定め，真の平均を
-    $\o{\psi}(\theta):=\int_\X\psi(x,\theta)P(dx)$と定める．
-
-    $\Theta$-値確率変数の列$(\wh{\theta}^0_n)$に対して，新しい推定量の列を
-    \[\wh{\theta}_n:=\wh{\theta}^0_n-[\partial_\theta\psi_n(\wh{\theta}^0_n)]^{-1}\psi_n(\wh{\theta}^0_n)\]
-    によって定めると，右辺は
-    \[\X^*_n:=\Brace{x\in\X^n\mid\wh{\theta}^0_n\text{において}\psi_n\text{は微分可能で}\partial_\theta\psi_n(\wh{\theta}^0_n)\text{は正則で}\wh{\theta}_n\in\Theta}\]
-    上で定まるから，これを$\X$上に可測に延長する．延長の仕方は任意で良い．
-    こうして得た$(\wh{\theta}_n)$を\textbf{$(\wh{\theta}_n^0)$を初期推定量とするワンステップ推定量}という．
-\end{notation}
-
-\begin{theorem}
-    $\theta_0\in\Theta^\circ$とし，$\theta_0\in B\subset\Theta$を開近傍とする．
-    次の条件を仮定する．
-    \begin{enumerate}[({E}1)]
-        \item 推定関数$\psi:\X\times\Theta\to\R^p$は$B$上$C^1$級．
-        \item $\psi(-,\theta)$は可測．
-        \item $\psi(x,\theta_0)\in\L^2(P;\R^p)$で，$P\psi(x,\theta_0)=0$．
-        \item $\exists_{M\in\L^1(\X,\R)}\;\forall_{x\in\X,\theta\in B}\;\abs{\partial_\theta\psi(x,\theta)}\leq M(x)$．
-        さらに，$\Gamma:=-P\partial_\theta\psi(x,\theta_0)$は正則．
-        \item 確率変数列$\wt{\theta}^0_n:\X^n\to\Theta$が$\sqrt{n}$-一致性を持つ：$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$．\footnote{条件$\wh{\theta}^0_n-\theta_0=O_p(1/\sqrt{n})$は，弱一致性$\wh{\theta}^0_n-\theta_0=o_p(1)$を含意することに注意．これに加えて，$n^{-1/2}$倍の範囲で真値$\theta_0$を捕まえていることは要求する．}
-    \end{enumerate}
-    このとき，ワンステップ推定量$\wh{\theta}_n$に対して，
-    \[\sqrt{n}(\wh{\theta}_n-\theta_0)=-\Gamma^{-1}\frac{1}{\sqrt{n}}\psi_n(\theta_0)+o_P(1).\]
-    特に，$\Sigma:=\Gamma^{-1}\Phi(\Gamma^{\top})^{-1}$，$\Phi:=\int_\X\phi\phi^{\top}(x,\theta_0)P(dx)$について，
-    \[\sqrt{n}(\wh{\theta}_n-\theta_0)\xrightarrow{d}N_p(0,\Sigma).\]
-    が成り立つ．
-\end{theorem}
-
 \subsection{影響関数を用いたワンステップ推定量}
+
+セミパラメトリックモデルの2-step推定量は$\sqrt{n}$-一致性を持ちえる．
 
 \begin{theorem}\label{thm-semiparametric-one-step}
     $\wh{\bP}$を$\bP$の推定量とする．
@@ -326,7 +334,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\section{影響関数の概念について}
+\subsection{影響関数の概念について}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -343,7 +351,7 @@ title=]
 \end{tcolorbox}
 
 \begin{history}
-    von Mises (1947)では，Volterra (1913)\cite{Vito Volterra}に於て，無限個の変数を持つ関数を
+    von Mises (1947,\cite{von Mises})では，Volterra (1913,\cite{Vito Volterra})に於て，無限個の変数を持つ関数を
     「線の関数(fonction de ligne)」とみなし，その連続性や微分可能性，さらにはTaylor級数展開を考えたことに着想を得て，
     統計的汎関数にも同様の微分とTaylor級数展開が考え得ることを議論している．
 \end{history}
@@ -367,25 +375,26 @@ title=]
     \bibitem{van der Vaart}
     van der Vaart, A. W. (1998) \textit{Asymptotic Statistics}. Cambridge Series in Statistical and Probabilistic Mathematics, Cambridge.
     \bibitem{Bolthausen}
-    Bolthausen - Lectures on Probability Theory And Statistics
+    Bolthausen, E., Vaart, A., and Perkins, E. (2002). \textit{Lectures on Probability Theory and Statistics}. Springer Berlin, Heidelberg.
     \bibitem{Kennedy}
-    Edward Kennedy - Semiparametric Doubly Robust Targeted Double Machine Learning
+    Kennedy, E. H. (2022). Semiparametric Doubly Robust Targeted Double Machine Learning: A Review. arXiv: 2203.06469.
     \bibitem{Bickel}
     Bickel, P. J., Chris A.J. Klaassen, Ya'acov Ritov, Wellner, J. A. (1998) \textit{Efficient and Adaptive Estimation for Semiparametric Models}. Springer New York.
-    \bibitem{Econometrica}
-    \bibitem{Double/Debiased Machine Learning for Treatment and Structural Parameters}
+    \bibitem{Bickel and Robins}
+    Bickel, P. J., Kwon, J. (2001). Inference for Semiparametric Models: Some Questions and an Answer. \textit{Statistica Sinica}. 11, 863-960.
     \bibitem{Hampel68}
     Hampel, F. R. (1968). \textit{Contributions to the theory of robust estimation}. Unpublished dissertation, Berkeley: University of California.
     \bibitem{A Note on Functions of Lines}
     Bliss, G. A. (1915). A Note on Functions of Lines. \textit{Proceedings of the National Academy of Sciences of the United States of America}. Vol. 1, No. 3 (Mar. 15, 1915), pp. 173-177 (5 pages).
     \bibitem{Vito Volterra}
-    Vito Volterra. (1913). Le\c{c}ons sur les fonctions de lignes. Paris: Gauthier-Villars.
+    Vito Volterra. (1913). \textit{Le\c{c}ons sur les fonctions de lignes}. Paris: Gauthier-Villars.
     \bibitem{von Mises}
-    von Mises, R. (1947). On the Asymptotic Distribution of Differentiable Statistical Functions.  Ann. Math. Statist. 18(3): 309-348 (September, 1947). DOI: 10.1214/aoms/1177730385.
+    von Mises, R. (1947). On the Asymptotic Distribution of Differentiable Statistical Functions. \textit{The Annals of Mathematical Statistics}. 18(3): 309-348 (September, 1947). DOI: 10.1214/aoms/1177730385.
+    \bibitem{Newey and McFadden}
+    Newey, W. K., and McFadden, D. (1994). Large Sample Estimation and Hypothesis Testing. \textit{Handbook of Econometrics}. Volume 4. North-Holland, an imprint of Elsevier, Amsterdam.
 \end{thebibliography}
 
 \begin{enumerate}
-    \item 
     \item 漸近展開やめる？？回収出来ないならもういい．漸近展開は知られてない．
     \item Frechet多様体の話を，Doubly Robustで拾えたら最強．
     純粋数学の方法が，Doubly Robustで活かす可能性を見せると売れる．
