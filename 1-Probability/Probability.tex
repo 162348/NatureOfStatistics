@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -2814,8 +2814,8 @@ title=]
     $(k_n)_{n\in\N}:\N\to\N$に対して，$(\xi_{n,j})_{j\in[k_n]}=\xi_{n,1},\cdots,\xi_{n,k_n}\in\R^d$を各$n\in\N$が定める独立な$d$次元確率変数の$k_n$-組とし，
     次の2条件が成り立つとする．
     \begin{enumerate}[({A}1)]
-        \item $\xi_{n,j}\in\L^2(\R^d)$は2乗可積分で，期待値ベクトルは零とする：$E[\xi_{n,j}]=0$．
-        \item $\Sigma_n:=\sum^{k_n}_{j=1}\Var[\xi_{n,j}]\in M_d(\R)$は極限$\Sigma:=\lim_{n\to\infty}\Sigma_n$を持ち，さらに次が成り立つ：
+        \item 正規化：$\xi_{n,j}\in\L^2_0(\R^d)$は2乗可積分で，期待値ベクトルは零とする：$E[\xi_{n,j}]=0$．
+        \item Lindeberg条件：$\Sigma_n:=\sum^{k_n}_{j=1}\Var[\xi_{n,j}]\in M_d(\R)$は極限$\Sigma:=\lim_{n\to\infty}\Sigma_n$を持ち，さらに次が成り立つ：
         $\forall_{\ep>0}\;\sum^{k_n}_{j=1}E[\abs{\xi_{n,j}}^21_{\Brace{\abs{\xi_{n,j}}\ge\ep}}]\xrightarrow{n\to\infty}0$．
     \end{enumerate}
     このとき，

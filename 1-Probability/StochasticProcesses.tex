@@ -3,7 +3,7 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
 %\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
@@ -1713,7 +1713,7 @@ title=]
     しかも$\delta_0$は極点なので，ここからループを投げるみたいな，$P(\R)$の幾何的な知識と繋がることを表す！
 \end{tcolorbox}
 
-\begin{definition}[decomposable distribution]
+\begin{definition}[infinitely decomposable distribution]
     1次元の分布$\mu\in P(\R)$が\textbf{無限可解}であるとは，分布族$\{\mu_t\}_{t\in\R_+}$が存在して，$\mu$を乗法単位元として$\R_+$と同型な連続半群となることをいう：
     \begin{enumerate}
         \item $\R_+\to P(\R);t\mapsto\mu_t$は弱位相に関して連続．
@@ -1745,6 +1745,10 @@ title=]
     時間的に一様なLevy過程$X$は，$\{\mu_t\sim X_t-X_0\}_{t\in\R_+}$がちょうど1-パラメータ連続半群となり，
     よっておのずと無限可解である．
     また逆に，連続半群$(\mu_t)$に対して，これが定める一様なLevy過程が存在するのは構成定理\ref{cor-construction-of-Levy-process}による．
+\end{example}
+
+\begin{example}
+    安定分布（正規分布，Cauchy分布，片側Levy分布），複合Poisson分布，$F$分布，対数正規分布，$t$分布など正規分散平均混合[増田弘毅, 2002]．(Steutel and van Harn, 2004)．
 \end{example}
 
 \subsection{Levy分解}
