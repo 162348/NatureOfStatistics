@@ -747,12 +747,79 @@ title=]
     
 \end{remarks}
 
-\chapter{浸透理論}
+\chapter{乱数}
 
 \begin{quotation}
+    サイコロを使う，国勢調査報告書の中の数字を抜き出す．
+    擬似乱数という計算機援用による方法がvon Neumannによって始められた．
+    これは「一様性」を満たせば良いので，「予測不可能かどうか」を厳密な意味で満たしている必要はない．
+\end{quotation}
+
+\section{一様乱数の生成法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lehmer (1948)による線形合同法(linear congruential method)が40年に渡って使われてきた．
+    が，高次元化や，大量の乱数を作る実験には不向きである．
+    そこで現代的には，$M$-系列を用いる方法などがある．
+\end{tcolorbox}
+
+\begin{model}
+    よく選択された$a,M$について，
+    \[X_n\equiv aX_{n-1}+c\mod M\]
+    を用いて非負正数列$(X_n)$を生成する．
+\end{model}
+\begin{remarks}
+    高次元になればなるほど規則的にバラバラになってしまう．
+    これを「多次元疎結晶構造」という．
+    そこで，高次の項を追加することも考えられる．
+\end{remarks}
+
+\begin{definition}
+    次の3条件を満たす独立なRademacher確率変数列$(X_n)_{n\in[T]}$を\textbf{擬似ランダム系列}という．
+    \begin{enumerate}
+        \item $\lim_{T\to\infty}\frac{\abs{\Brace{n\in[T]\mid X_n=1}}}{\abs{\Brace{n\in[T]\mid X_n=-1}}}=1$．
+        \item $\lim_{T\to\infty}\frac{\abs{\Brace{n\in[T]\mid X_n=X_{n+1}=\cdots=X_{n+k+1}}}}{\abs{\Brace{n\in[T]\mid X_n=X_{n+1}=\cdots=X_{n+k}}}}=1$．
+        \item $\lim_{T\to\infty}\frac{1}{T-s}\sum_{t=1}^{T-s}X_tX_{t+s}=1_{s=0}$．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    自己相関のないRademacher確率変数を，位相をずらして各桁とすれば良い．
+\end{remarks}
+
+\section{一様乱数の変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $X:=F^{-1}(U)$とすれば，所望の分布が得られる．これを逆関数法という．
+\end{tcolorbox}
+
+\begin{notation}
+    分布関数$F$に対して，$F^{-1}(y)=\inf\Brace{x\in\R\mid F(x)\ge y}$と定める．この値をquantilesという．
+\end{notation}
+
+\section{統計的検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    例えば合同法に対するスペクトル検定によって，乱数の精度を検証できるが，1周期全体の帯域的性質はわかっても，局所的な性質は検定に頼って泥臭く検証していくことになる．
+    これは結局適合度検定であり，$\chi^2$-検定やKolmogorov-Smirnov検定となる．
+    K-S検定では
+    \[K_n:=\max(K_n^+,K_n^-),\qquad\paren{K_n^+:=\sqrt{n}\max_{x\in\R}(F_n(x)-F(x)),K_n^-:=\sqrt{n}\max_{x\in\R}(F(x)-F_n(x))}.\]
+    なる統計量を用いる．これは可測性が怪しいはず．
+\end{tcolorbox}
+
+\chapter{数理物理学}
+
+
+
+\section{浸透理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
     percolation理論は，ランダム系の統計的考察をする数理工学の分野と，spin glass (磁性体のスピンがアモルファスのように乱雑なまま固まっった物質のこと)における秩序の拡散を記述する．
     狭義には，相転移の最も簡単なモデルをいう．
-\end{quotation}
+\end{tcolorbox}
 
 \chapter{参考文献}
 

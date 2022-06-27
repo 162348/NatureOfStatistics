@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -3994,9 +3994,11 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{remark}
+\begin{remark}[確率母関数との関係]
     なお，積率母関数は，確率母関数$G(z):=E[z^X]$に対して$G[e^t]=\fM_X(t)$なる関係もある．
 \end{remark}
+
+\clearpage
 
 \subsection{キュムラント母関数}
 
@@ -4027,6 +4029,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    $n$次の積率の列$(\al_n:=E[X^n])$に対して，これを持つ確率分布は構成できるか？という問題は，極限定理に関するChebyshev P. L. (1874)の漸近論の研究で初めて議論された(\cite{Encyclopaedia3}, Prokhorov, A.V.担当部分)．
     積率問題の解の存在は，Hahn-Banachの定理の応用である．
     ここでは確率的な文脈であるが，物理的にも，電荷密度$\rho$に関する条件として読める．
 \end{tcolorbox}
@@ -4036,11 +4039,11 @@ title=]
 \end{problem}
 
 \begin{proposition}
-    有限個への制限$\al|_{[N]}$について，これを満たす積率問題の解は存在する．
+    任意の有限個への制限$\al|_{[N]}$について，これを満たす積率問題の解は存在する．
 \end{proposition}
 
 \begin{theorem}[存在の必要十分条件]
-    区間$[a,b]$上の分布であって，積率$\al$を持つものを考える．
+    区間$[a,b]$上の分布であって，積率$\al$を持つものを考える．次の2条件は同値．
     \begin{enumerate}
         \item 積率問題は解を持つ．
         \item $\exists_{c>0}\;\forall_{N\in\N}\;\forall_{a_k\in\R}\;\Abs{\sum^N_{k=0}a_k\al_k}\le c\max_{a\le x\le b}\Abs{\sum^N_{k=0}a_kx^k}$．
@@ -4048,12 +4051,25 @@ title=]
 \end{theorem}
 
 \begin{theorem}[一意性の十分条件]
-    $(\al_n)_{n\in\N}$が$\exists_{t_0>0}\;\sum^\infty_{n=1}\frac{\abs{\al_n}}{n!}t^n_0<\infty$を満たすならば，$\al$を積率とする分布はただ一つである．
+    $(\al_n)_{n\in\N}$が
+    次の条件のいずれか
+    を満たすならば，$\al$を積率とする分布はただ一つである．
+    \begin{enumerate}
+        \item $\exists_{t_0>0}\;\sum^\infty_{n=1}\frac{\abs{\al_n}}{n!}t^n_0<\infty$．
+        \item Carleman条件：$\sum_{n=1}^\infty\frac{1}{a_{2n}^{1/2n}}=\infty$．
+    \end{enumerate}
 \end{theorem}
 
 \begin{example}
     ３次以上のキュムラントがすべて$0$になる確率分布は，正規分布に限る．
 \end{example}
+
+\begin{proposition}[極限定理・モーメント法への応用]
+    累積分布関数の列$(F_n)$は，任意の$k\ge1$位の積率$\al_k^n<\infty$が存在するとする．
+    任意の$k\in\N$について，極限$\al_k^n\xrightarrow{n\to\infty}\al_k<\infty$が存在するならば，
+    ある部分列$(F_{n_j})_{j\in\N}$が存在して，$(\al_k)$を積率の列としてもつ分布$F$に弱収束する．
+    列$(\al_k)$を積率とする分布がただ一つならば，$n_j=j$と取れる．
+\end{proposition}
 
 \subsection{多次元確率変数の特性関数}
 
@@ -5639,6 +5655,8 @@ title=]
     Adams, W. J. (1974). \textit{The Life and Times of the  Central Limit Theorem}.
     \bibitem{Kolmogorov}
     Gnedenko, B. V., and Kolmogorov A. N. (1954). \textit{Limit Distribution for Sums of Independent Random Variables}
+    \bibitem{Encyclopaedia3}
+    Hazewinkel, M. (1995). Encyclopaedia of Mathematics Volume 3. Springer U.S.
 \end{thebibliography}
 
 \end{document}

@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -212,14 +212,6 @@ title=]
     1st stepに対して頑健なGMM推定量を定める局所頑健＝直交モーメント関数の標準的構成法．
     1st stepというのは，モデル選択や正則化が産むバイアスを含むので，特に機械学習に応用先がある．
 \end{tcolorbox}
-
-\subsection{疑問点}
-
-\begin{enumerate}
-    \item Many economic and causal parameters depend on nonparametric or high dimensional first steps.
-    全般的に"first step"が何を指しているかわからない．
-
-\end{enumerate}
 
 \subsection{Introduction}
 
@@ -659,9 +651,128 @@ title=]
 
 \chapter{二重に頑健な推定量}
 
-\section{Introduction to Double Robust Methods for Imcomplete Data}
+\begin{quotation}
+    (Chernozhukov 2016,\cite{Chernozhukov16})では二重に頑健な推定量が構成できる推定関数のクラスが今までで一番一般的な枠組みで探求されている・
+    (Rotnitzky and Robins et. al. 2020,\cite{Rotnitzky})では生物統計学者が，今までにない関数クラスを発見した．
+    その第1段階について精査されているのが(Chernozhukov 2018\cite{Chernozhukov18}, 2022\cite{Chernozhukob22})である．
+    (Seaman et. al., 2018 \cite{Seaman})と(Bickel and Robins, 2001 \cite{Bickel and Robins})が良い入門記事である．
+\end{quotation}
 
-\subsection{概観}
+\section{定義}
+
+\begin{definition}[identifying estimating function / moment function, locally robust / orthogonal moment function, debiased GMM estimator, plug-in GMM estimator]
+    セミパラメトリックモデル$\P=(P_{(\theta,\gamma)})_{(\theta,\gamma)\in\Theta\times H}\;(\Theta\subset\R^p,H\subset\Map(\Xi;\R))$のパラメータ$\theta$の推定を考える．
+    \begin{enumerate}
+        \item 真値$\theta_0\in\Theta,\gamma_0\in H$に対して，$E[g(X,\gamma_0,\theta_0)]=0$かつ$\forall_{\theta\in\Theta\setminus\{\theta_0\}}\;E[g(X,\gamma_0,\theta)]\ne 0$を満たす関数$g:\X\times H\times\Theta\to\R^q$を\textbf{推定関数}\cite{Bickel and Robins}又は\textbf{識別可能積率関数}\cite{Chernozhukov16}という．
+        \item このような推定関数が，\textbf{局所頑健}又は\textbf{(Neyman)直交性を持つ}\cite{Chernozhukov16}とは，積率条件$g$が第1段階推定量に対して微分が消えることをいう（第1段階のミスに対して頑健である）：
+        \item 直交な積率関数から，cross-fittingを用いて構成された標本積率方程式の解として得られるGMM推定量を，\textbf{脱バイアス化された推定量}という．一方で，通常の識別可能な積率関数を用いて構成された推定量を\textbf{代入推定量}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    通常，モーメント関数$g$は，第1段階で推定される未知関数$\gamma$を含む．
+    そこで推定量$\wh{\gamma}$を用いて
+    \[\frac{1}{n}\sum_{i=1}^ng(x_i,\wh{\gamma},\theta)=0\]
+    を解くことになるが，$\wh{\gamma}$の一致推定に失敗すると，$\theta$は決して見つからないことになる．
+    そこでモーメント関数$g$に対して，第1段階のミスに関する影響関数を加えることで，直交性を持つモーメント関数が構成できる，という理論である．
+    第1段階のミスはパラメトリックに起きるわけではないので，必然的にセミパラメトリックな理論となる．
+\end{remarks}
+
+\begin{advantage}[plug-in GMMと比較した際の美点]\mbox{}
+    \begin{enumerate}
+        \item 第1段階でモデル選択がなされた場合でも，debiased GMMの信頼区間は有効なままである．これは機械学習を第1段階に採用した際にも当てはまる．
+        \item 正則化された第1段階を採用する2段階推定において，debiased GMM推定量は$\sqrt{n}$-一致性を持つ．
+        \item 直交積率関数が第1段階についてaffineならば，debiased GMM推定量は二重に頑健になる．
+        \item debiased GMMは，剰余項がより速く収束し，平均二乗誤差も2次の微小項について減少している．
+        \item debiased GMMを構成するための正則性条件は，通常の積率関数に課される条件よりも一般的で，単純明快である．
+        \item debiased GMMは，第1段階推定量の$L^2$-一致性とその収束の速さに関する条件の下で，漸近正規性を持つ．
+    \end{enumerate}
+\end{advantage}
+
+\section{議論}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 真の分布が$F$であるとき，標本数$n$を大きくすると，$\wh{\gamma}\xrightarrow{n\to\infty}\gamma(F)$なる確率収束極限を持つとする（正則性条件その1ということでR1と呼ぶ）．$\gamma(F)=\gamma_0$のとき，$\wh{\gamma}$は弱一致推定量である．
+        \item $\mu(F):=E[g(X,\mu(F),\theta)]$なる統計的汎関数の(ノンパラメトリック)影響関数の定義には，Gateaux微分としての特徴づけ
+        \[\left.\dd{}{t}E[g(X,\gamma(F_t),\theta)]\right|_{t=0}=\int_\X\phi(x,\gamma_0,\al_0,\theta)H(dx),\quad E[\phi(X,\gamma_0,\al_0,\theta)]=0.\]
+        ただし，$F_t$は真の分布$F_0$を$H$方向に接道したもので，$\al$は追加で作った自由度である．
+        $\phi$は第1段階の$\gamma$の推定がミスったときの，第2段階の積率方程式の漸近的な振る舞いに与える影響（微分係数）を表している．
+        またおまけで，$\al$についての影響も取り入れている．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[orthogonal moment function, debiased sample moment function]\mbox{}
+    \begin{enumerate}
+        \item $\psi(X,\gamma,\al,\theta):=g(X,\gamma,\theta)+\phi(X,\gamma,\al,\theta)$を\textbf{直交モーメント関数}という．
+        \item \textbf{脱バイアス化された標本モーメント関数}とは，$\wh{\psi}(\theta):=\wh{g}(\theta)+\wh{\phi}$をいう．ただし，
+        \[\wh{g}(\theta):=\frac{1}{n}\sum_{k=1}^K\sum_{i\in I_k}g(X_i,\wh{\gamma}_k,\theta),\quad\wh{\phi}:=\frac{1}{n}\sum_{k=1}^K\sum_{i\in I_k}\phi(X_i,\wh{\gamma}_k,\wh{\al}_k,\wh{\theta}_k).\]
+        \item $\wh{\theta}:=\argmin_{\theta\in\Theta}\wh{\psi}(\theta)^\top\wh{\Psi}^{-1}\wh{\psi}(\theta)$は脱バイアス化されたGMM推定量となる．また，荷重行列の選択に$\wh{\Psi}^{-1}$を選択すると漸近最適になることに注意．ただし，
+        \[\wh{\Psi}:=\sum_{k=1}^K\sum_{i\in I_k}\wh{\psi}_{ik}\wh{\psi}_{ik}^\top,\quad \wh{\psi}_{ik}:=g(X_i,\wh{\gamma}_k,\wh{\theta}_k)+\phi(X_i,\wh{\gamma}_k,\wh{\al}_k,\wh{\theta}_k).\]
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    影響関数を構成するために，同時に$\theta$の推定量も考えなきゃいけないのか．盲点であった．
+\end{remark}
+
+\section{背景}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    計量経済学，生物統計学などのあらゆる分野において，因果推論の文脈＝欠測データの文脈で，ノンパラメトリック又は高次元な第1段階を含んだ2段階推定モデルが採用されているのが現状である(Marschak's Maximの影響だろうか？)．
+    このときの第1段階の推定について，2つのモデルを立てて，どちらかで正解すれば，この2段階推定法で得られる推定量が一致性を持つ，という性質を考える．
+    また，この直交性を用いて，ちょっとした適合度検定を行える．
+\end{tcolorbox}
+
+\subsection{機械学習について}
+
+共変量や状態変数が高次元であるとき，機械学習の採用が望まれる．Lasso, Dantzig, neural nets, boostingなど．
+正則化とは，特にBayesの観点からはモデルについての事前情報を追加することをいう．
+これはモデル選択同様，第1段階にバイアスを増やすことになる．
+そこで，Debiasedで抜かなきゃいけないことになる．
+
+\subsection{モーメント法について}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Karl Pearson 1894による．
+\end{tcolorbox}
+
+\subsection{一般化モーメント法について}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Generalized Method of Moments]
+    Lars Hansen 1984による．この手法の開発とファイナンスへの応用より，2013年にノーベル経済学賞が授与された．
+    このクラスの推定量は，一致性と漸近正規性を持ち，さらにモーメント条件以外の情報を使わずに構成される全ての推定量の中で漸近最適である．
+\end{tcolorbox}
+
+\begin{remarks}
+    母集団分布の積率について，一種の「直交条件」を仮定する．
+    標本分布に関してその条件を当てはめることで推定量を構成する手法をGMMという\cite{Lars Hansen}．
+\end{remarks}
+
+\begin{notation}
+    過程$(x_t)_{t\in\N}$の実現を観測するとする．
+    このような離散過程全体の空間$\L(\N)$上の確率分布の族を$\M$とする．$\Theta\subset\R^k$を局外母数の空間とする．
+    この過程は，$f:\L(\N)\times\Theta\to\R^r$を用いて
+    次のように表された積率条件：
+    \[\exists_{\beta_0\in\Theta}\;\forall_{x_t\in\L(\N)}\quad E[f(x_t,\beta_0)]=0.\]
+    と識別可能性条件$E[f(x_t,\beta)]=0\Leftrightarrow\beta\ne\beta_0\in\Theta$を満たすとする．
+    このとき，目標のパラメータ$\beta$は有限次元であるが，そのほかに分布について仮定を置いていないので，
+    モデルはセミパラメトリックになっている．
+
+    観測$(x_t)_{t\in\N}$のそれぞれについて，関数$g:\Theta\to\R^r$が，$\bP_n$が$\R$上のサイズ$N$の経験分布として，$g(\beta):=E_{\bP_n}[f(x_t,\beta)]$すなわち
+    \[g(\beta):=\frac{1}{N}\sum_{n=1}^Nf(x_t,\beta)\]
+\end{notation}
+
+\begin{definition}
+    次のような方法で構成される$\beta$の推定量$b_N:\R^N\to\Theta$を\textbf{一般化モーメント推定量}という．
+    \begin{enumerate}
+        \item 正定値な荷重行列$W\in M_r(\R)$に対して，$b_N:=\argmin_{\beta\in\Theta}g_N(\beta)^\top Wg_N(\beta)$．$N\to\infty$のとき，大数の法則より$g_N\to E[f]$であり，このとき$b_\infty=\beta_0$を満たすことが根拠となっている．実際，一致性と漸近正規性を持つ．
+        \item $A\in M_r(\R)$を選択行列(selection matrix)とし，$Ag_N(\beta)=0$の解とする．
+    \end{enumerate}
+\end{definition}
+
+\subsection{不完全データ＝因果推論の面}
 
 欠損データの扱い
 \begin{enumerate}
@@ -840,20 +951,70 @@ title=]
 \chapter{参考文献}
 
 \begin{thebibliography}{99}
-    \bibitem{Locally Robust Semiparametric Estimation}
-    \href{https://arxiv.org/abs/1608.00033}{Victor Chernozhukov, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney K. Newey, James M. Robins - Locally Robust Semiparametric Estimation}
-    \bibitem{Characterization of parameters with a mixed bias property}
-    \href{https://arxiv.org/abs/1904.03725}{Andrea Rotnitzky, Ezequiel Smucler, James M. Robins - Characterization of parameters with a mixed bias property}
-    生物統計分野の研究者が，二重ロバスト推定が有効ないままでにない関数クラスを発見した．
-    これの必要十分条件を特定できないだろうか？
-    \bibitem{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
-    \href{https://arxiv.org/abs/1802.08667}{De-Biased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers}
-    \bibitem{Double Debiased Machine Learning for Treatment and Structural Parameters}
-    \href{https://arxiv.org/abs/1608.00060}{Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, James Robins - Double Debiased Machine Learning for Treatment and Structural Parameters}
+    \bibitem{吉田}
+    吉田朋広．(2006)．\textit{数理統計学}．朝倉書店．
+    \bibitem{Fisher}
+    芝村良．(2004)．『R. A. フィッシャーの統計理論』．九州大学出版会．
+    \bibitem{van der Vaart}
+    van der Vaart, A. W. (1998) \textit{Asymptotic Statistics}. Cambridge Series in Statistical and Probabilistic Mathematics, Cambridge.
+    \bibitem{Bolthausen}
+    Bolthausen, E., Vaart, A., and Perkins, E. (2002). \textit{Lectures on Probability Theory and Statistics}. Springer Berlin, Heidelberg.
+    \bibitem{Kennedy}
+    Kennedy, E. H. (2022). Semiparametric Doubly Robust Targeted Double Machine Learning: A Review. arXiv: 2203.06469.
+    \bibitem{Kennedy et al}
+    Kennedy, E. H., Balakrishnan, S., and G’Sell, M. (2020). Sharp instruments for classifying compliers and generalizing causal effects. \textit{The Annals of Statistics}. 48(4): 2008–2030.
+    \bibitem{Bickel}
+    Bickel, P. J., Chris A.J. Klaassen, Ya'acov Ritov, Wellner, J. A. (1998) \textit{Efficient and Adaptive Estimation for Semiparametric Models}. Springer New York.
+    \bibitem{Bickel and Robins}
+    Bickel, P. J., Kwon, J. (2001). Inference for Semiparametric Models: Some Questions and an Answer. \textit{Statistica Sinica}. 11: 863-960.
+    \bibitem{Hampel68}
+    Hampel, F. R. (1968). \textit{Contributions to the theory of robust estimation}. Unpublished dissertation, Berkeley: University of California.
+    \bibitem{Hampel71}
+    Hampel, F. R. (1971). A General Qualitative Definition of Robustness. \textit{The Annals of Mathematical Statistics}. 42(6): 1887-1896.
+    \bibitem{Hampel74}
+    Hampel, F. R. (1974). The Influence Curve and its Role in Robust Estimation. \textit{Journal of the American Statistical Association}, 69(346): 383-393. DOI: 10.1080/01621459.1974.10482962.
+    \bibitem{A Note on Functions of Lines}
+    Bliss, G. A. (1915). A Note on Functions of Lines. \textit{Proceedings of the National Academy of Sciences of the United States of America}. 1(3): 173-177.
+    \bibitem{Vito Volterra}
+    Vito Volterra. (1913). \textit{Le\c{c}ons sur les fonctions de lignes}. Paris: Gauthier-Villars.
+    \bibitem{von Mises}
+    von Mises, R. (1947). On the Asymptotic Distribution of Differentiable Statistical Functions. \textit{The Annals of Mathematical Statistics}. 18(3): 309-348. DOI: 10.1214/aoms/1177730385.
+    \bibitem{Newey and McFadden}
+    Newey, W. K., and McFadden, D. (1994). Large Sample Estimation and Hypothesis Testing. \textit{Handbook of Econometrics}. Volume 4. North-Holland, an imprint of Elsevier, Amsterdam.
+    \bibitem{Ichimura and Newey}
+    Ichimura, H., and Newey, W. K. (2022). The Influence Function of Semiparametric Estimators. \textit{Quantitative Economics}. 13(1): 29-61. DOI: 10.3982/QE826.
+    \bibitem{Chernozhukov16}
+    Chernozhukov, V., Escanciano, J.C., Ichimura, H., Newey, W. K., and Robins, J. M. (2016). Locally Robust Semiparametric Estimation. arXiv:1608.00033.
+    \bibitem{Chernozhukov18}
+    Chernozhukov, J., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W. K., and Robins, M. J. (2018). Double/Debiased Machine Learning for Treatment and Structural Parameters. \textit{The Econometrics Journal}. 21(1): C1-C68.
+    \bibitem{Chernozhukob22}
+    Chernozhukov, V., Newey, W. K., and Singh, R. (2022). DeBiased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers. \textit{The Econometrics Journal}. utac002, 00: 1-26.
+    \bibitem{Rotnitzky}
+    Rotnitzky, A., Smucler, E., and Robins, J. M. (2020). Characterization of parameters with a mixed bias property. \textit{Biometrika}. 108(1): 231-238.
+    \bibitem{Seaman}
+    Seaman, S. R., and Vansteelandt, S. (2018). Introduction to Double Robust Methods for Incomplete Data. \textit{Statistical Science}. 33(2): 184-197.
+    \bibitem{Hines}
+    Hines, O., Dukes, O., Diaz-Ordaz, K., and Vansteelandt, S. (2022). Demystifying statistical learning based on efficient influence functions. \textit{The American Statistician}. DOI: 10.1080/00031305.2021.2021984.
+    \bibitem{Malliavin}
+    Malliavin, P., and Cruzeiro, A. B. (1996). Renormalized Differential Geometry on Path Space: Structural Equation, Curvature. \textit{Journal of Functional Analysis}. 139: 119-181.
+    \bibitem{Shinzo Watanabe}
+    Shinzo Watanabe. (1987). Analysis of Wiener Functionals (Malliavin Calculus) and its Applications to Heat Kernels. \textit{Annals of Probability}. 15(1): 1-39. DOI: 10.1214/aop/1176992255.
+    \bibitem{Pedersen}
+    Pedersen, G. K. (1989). \textit{Analysis Now}. Springer New York.
+    \bibitem{van der Laan}
+    van der Laan, M. J., Rose, S. (2011). \textit{Targeted Learning: Causal Inference for Observational and Experimental Data}. Springer New York.
+    \bibitem{Robins and Ritov}
+    Robins, J. M., and Ritov, Y. (1997). Toward a Curse of Dimensionality Appropriate (CODA) Asymptotic Theory For Semi-parametric Models. \textit{Statistics in Medicine}. 16: 285-319.
+    \bibitem{Higher Order-Robins}
+    Robins, J. M., Li, L., Tchetgen, E., and van der Vaart, A. W. (2008). Higher order influence functions and minimax estimation of nonlinear functionals. \textit{IMS Collections: Probability and Statistics: Essays in Honor of David A. Freedman}. 2: 335–421.
+    \bibitem{Higher Order-vanderVaart}
+    van der Vaart, A. W. (2014). Higher Order Tangent Spaces and Influence Functions. \textit{Statistical Science}. 29(4), Special Issue on Semiparametrics and Causal Inference: 679-686.
     \bibitem{ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
-    \href{https://arxiv.org/abs/2012.15678}{Masaaki Imaizumi, Taisuke Otsu - ON GAUSSIAN APPROXIMATION FOR M-ESTIMATOR}
-    \bibitem{GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
-    \href{https://arxiv.org/abs/1212.6885}{Victor Chernozhukov, Denis Chetverikov, Kengo Kato - GAUSSIAN APPROXIMATION OF SUPREMA OF EMPIRICAL PROCESSES}
+    Imaizumi, M., Otsu, T. (2020). On Gaussian Approximation for $M$-estimator. \href{https://arxiv.org/abs/2012.15678}{arXiv:2012.15678}.
+    \bibitem{Chernozhukov-Gaussian}
+    Chernozhukov, V., Chetverikov, D., Kato, K. (2014). \href{https://arxiv.org/abs/1212.6885}{Gaussian approximation of suprema of empirical processes}. \textit{The Annals of Statistics}. 42(4): 1564-1597.
+    \bibitem{Lars Hansen}
+    Hansen, L. P. (2007). Generalized Method of Moments Estimation. \url{http://home.uchicago.edu/~lhansen/palgrave.pdf}
 \end{thebibliography}
 
 \end{document}
