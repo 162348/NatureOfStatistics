@@ -2172,6 +2172,19 @@ title=]
 
     Brown運動$B_t$は微分可能ではないし，有界変動にもならないので，Stieltjes積分としては定義できる道はない．
     連鎖律は伊藤の公式と呼び，微分は出来ないから積分の言葉で定式化される．余分な右辺第3項が特徴である．
+    これを修正するのがStratonovich積分／対称確率積分であるが，$X$に対してより強い条件を必要とすることとなる．
+
+    伊藤清はKolmogov (1931,\cite{Kolmogorov31})から発想した．一般の連続Markov過程を，連続関数$a,b$を用いて
+    \[E[X_{t+\Delta}-X|X_t=x]=a(t,x)\Delta+o(\Delta),\quad \Var[X_{t+\Delta}-X_t|X_t=x]=b(t,x)\Delta+o(\Delta)\]
+    で定める，という出発点が前文に書いてあった．これはBrown運動の場合から次の変換
+    \[X_{t+\Delta}-X=a(t,X_t)\Delta+\sqrt{b(t,X_t)}(B_{t+\Delta}-B_t)+o(\Delta)\]
+    を経て得られる，ということでもあるが，この式は意味を持たない．基礎付けることができれば，Brown運動の見本路に関する知識を，Markov過程の見本路を調べることに応用できそうである．
+
+    ここでBrown運動と言っていたものは，一般のマルチンゲールで良い．
+    これはDoobが初めに指摘し，渡辺信三，国田寛 (67,\cite{KunitaWatanabe})が理論を作り，変数変換公式を得た．
+    さらにMeyer (67,\cite{Meyer})が精緻な理論を組み立てる．
+
+    確率微分方程式を解くには，例えば同値な確率積分方程式をPicardの逐次近似法によって解くことが考えられる．
 \end{quotation}
 
 \section{確率積分}
@@ -2520,6 +2533,13 @@ title=]
     舟木直久『確率微分方程式』
     \bibitem{Morters and Peres}
     Morters and Peres - Brownian Motion
+    \bibitem{Kolmogorov31}
+    Kolmogorov, A. N. (1933). Analytical methods in probability theory. 「私はKolmogorovのこの論文（「解析的方法」）の序文にあるアイデアからヒントを得て，マルコフ過程の軌道を表す確率微分方程式を導入したが，これが私のその後の研究の方向を決めることになった．」
+    \bibitem{KunitaWatanabe}
+    Kunita, H., and Watanabe, S. (1967). On Square Integrable Martingales. \textit{Nagoya Mathematics Journal}. 30: 209-245.
+    \bibitem{Meyer}
+    Meyer, P. A. (1967). Intégrales Stochastiques. \textit{Séminaire de Probabilités I}. Lecture Notes in Math., 39: 72-162. 劣martingaleのDoob-Meyer分解を用いて，確率積分が一般の半マルチンゲールについて定義された．
+    こうして確率解析の復権が起こった．
 \end{thebibliography}
 
 \end{document}
