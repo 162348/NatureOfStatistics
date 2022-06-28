@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1014,7 +1014,7 @@ title=測度の空間はBanach空間であるが，それ以上に具体的対�
         \item 任意の開集合$G\osub\R$について，$\liminf_{n\to\infty}\mu_n(G)\ge\mu(G)$．
         \item 任意の閉集合$C\subset\R$について，$\limsup_{n\to\infty}\mu_n(C)\le\mu(C)$．
         \item $A\in\B(\R)$について，$\mu(\partial A)=0\Rightarrow\lim_{n\to\infty}\mu_n(A)=\mu(A)$．この条件を満たす集合$A$を\textbf{$P$-連続集合}という．\footnote{このような集合は体／代数をなす．}
-        \item $\mu_n,\mu$が定める分布関数$F_n,F$について，$\forall_{x\in\R}\;\lim_{y\nearrow x}F(y)=x\Rightarrow\lim_{n\to\infty}F_n(x)=F(x)$．
+        \item $\mu_n,\mu$が定める分布関数$F_n,F$について，$\forall_{x\in\Cont(F)}\;\lim_{n\to\infty}F_n(x)=F(x)$．
     \end{enumerate}
     また，次とも同値．
     \begin{enumerate}\setcounter{enumi}{5}
@@ -1083,6 +1083,27 @@ title=]
 \begin{corollary}
     可測写像$T:S_1\to S_2$は，$\nu(C)=1$なる可測集合$C\in\B(S_1)$上各点連続であるとする．このとき，$\nu_n\to\nu$ならば$\nu^T\to\nu^T$．
 \end{corollary}
+
+\section{分布関数の収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Portmanteau定理\ref{thm-Portmanteau}の特徴づけに，分布関数の言葉がある．
+    むしろ，こちらを確率分布の弱収束として定義する事もありえる．
+\end{tcolorbox}
+
+\begin{definition}[weak convergence of CDF]
+    $F$の不連続点\ref{def-continuous-point-of-CDF}はたかだか有限個である．$F$の連続点$\Cont(F)$での値が与えられたら，その不連続点での値は右連続性から確定する．
+    単調右連続関数の列$(M_n)$と$M$について，$M_n\Rightarrow M$とは，
+    \[\forall_{x\in\Cont(M)}\quad M_n(x)\to M(x)\]
+    が成り立つことをいう．
+\end{definition}
+\begin{remark}
+    実は，確率測度のときと違って，分布関数の弱収束極限は分布関数になるとは限らない．
+    そこで，次の概念が必要となることもある：
+    \[M_n\Rightarrow M\quad(\proper)\qquad\Leftrightarrow\qquad M_n(\infty)-M_n(-\infty)\to M(\infty)-M(-\infty).\]
+\end{remark}
+
 
 \section{確率測度の空間}
 
@@ -1223,6 +1244,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    確率測度自体が凸結合の一般化のようなものである．そこで，確率測度も凸結合とその極限について閉じているのは当然のことである．
     経験過程は重要な意味を持つ．これを，極点の凸結合として幾何学的に説明できないか？
     経験過程の有限性は実用性に通じるが，これは組み合わせ論的な本質も備えているのではないか？
 
@@ -3616,7 +3638,7 @@ title=]
     特異な連続分布関数を持つような分布のみ，確率密度関数や確率質量関数に当たるものを持たない．
 \end{tcolorbox}
 
-\begin{definition}[singular continuous distribution]
+\begin{definition}[singular continuous distribution]\label{def-continuous-point-of-CDF}
     $F$を分布関数とし，
     $f(x):=F(x)-\lim_{y\nearrow x}F(y)\ge0$とする．
     \begin{enumerate}
