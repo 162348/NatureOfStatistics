@@ -3,7 +3,7 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/home/hirofumi/StatisticalNature/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
 %\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \renewcommand{\B}{\mathcal{B}}
@@ -703,10 +703,8 @@ title=]
 \section{その他の集合族}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $\sigma$-代数という中心的な対象を定めたが，他の代数系や順序構造が豊富に$P(X)$には入っている．
-    この後の議論でも頻繁に，$\B$の共通細分を取るなどの完備な構造を用いる．
-    その間の相互関係と特徴付けを定式化せずに，何が数学だというのだ．
+    title=]
+    乗法族には，Dynkin生成と$\sigma$-生成が等価になる(Dynkin族定理)ことと，一致の定理とが成り立つため，重要なクラスになる．
 \end{tcolorbox}
 
 \subsection{単調族}
@@ -831,15 +829,20 @@ title=]
 
 \subsection{乗法族}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    乗法族には，Dynkin生成と$\sigma$-生成が等価になる(Dynkin族定理)ことと，一致の定理とが成り立つため，重要なクラスになる．
+\end{tcolorbox}
+
 \begin{definition}[multiplicative class / $\pi$-system]
     集合族$\A$が$X\in\A$かつ有限共通部分について閉じているとき，これを\textbf{乗法族}または\textbf{$\pi$-系}という．
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}[Dynkin族定理]
     $\A$を乗法族とする．$\D(\A)=\sigma(\A)$である．
 \end{theorem}
 
-\begin{theorem}[一意延長定理]
+\begin{theorem}[一致の定理]
     $\P$を$\pi$-系とする．このとき，$\sigma(\P)$上の２つの確率測度$\mu_1,\mu_2$が$\P$上で一致するならば，$\sigma(\P)$上でも一致する．
 \end{theorem}
 

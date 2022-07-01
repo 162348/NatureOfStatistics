@@ -15,18 +15,262 @@
         \item Fisherの統計はRothamsted農業研究所におけるデータ解析問題に深く根ざしている．
         \item 1940sのNeyman-Pearsonの統計理論は統計的品質管理の問題があった．
     \end{enumerate}
+    それぞれの大家をまとめる．
+    \begin{enumerate}
+        \item Ronald Fisher 90-62：近視だったために夜は音で数学を学び，独自の数学への適性を身に着け，奨学金を得てCambridge大学で数学と物理学を学んだが，その後は第一次世界大戦もあってうやむやになる（修士はとっていないのでは？）．
+        Pearsonへの反感から大学教員ではなく農事試験場のしごとを選び，36歳にはそこで実験計画法を確立する．その後にGalton教授職へ戻り，そこでは溜まりに溜まっていた優生学への興味を爆発させる．
+        \item Karl Pearson 57-36：本当はCarl．菊池大麓とCambridgeで学び，ドイツ留学経験も積んで（ここでマルクスに傾倒）中世ドイツ文学や法学にも打ち込んだが，最終的には数学に戻った真のアカデミアの人．Galtonと仲良くなって優生学に親しみ，優生学部の初代教授となる．生物測定学という全く独立のDarwin以来の流れから，記述統計学を作る．
+        \item Egon Pearson 95-80：もともとはCambridgeで天体物理学を専攻してから転向．25年にNeymanと会い，31年にShewhartと会う（ここで，統計的品質管理の問題意識と出会う）．父の退官後，Fisherは優生学教授で，Egonは応用統計学部教授となる．
+        \item Jerzy Neyman 94-81：父がロシアで仕事をしていた法律家で，ウクライナの大学でBernsteinに数学を学び，祖国ポーランドへ還る．ワルシャワ大学で仕事を持ちながら，ピアソンの下で留学したときに，息子と意気投合．
+    \end{enumerate}
 \end{quotation}
 
-\chapter{Ronald Fisher}
+\chapter{Ronald Fisherと農事試験，Pearsonと生物測定学}
 
 \begin{quotation}
     Sir Ronald Aylmer Fisher 90-62は一時期ロザムステッド農事試験場 (Rothamsted Experimental Station) の統計研究員だったが，最終的にはUCLのPearsonの座（Galton教授職）を継いでいる．
 
     膨大かつ広範囲（数理統計学から遺伝学・優生学）．
     
+    
 \end{quotation}
 
+\section{概観}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Neyman-Pearson学派が巨視的で，Bayes学派が微視的であり，Fisher学派はその中間点で，あくまで物理学的実験計画法を主軸とする．
+    巨視的には確率は相対頻度であり，微視的には確からしさである．
+\end{tcolorbox}
+
+\subsection{３つの学派}
+
+\begin{history}
+    Pearsonが大標本論・記述統計学と説明され，Fisherの20sのしごとは精密標本論・推測統計学と説明される．
+    社会からの統計学への要請で最も大きなものは検定論である（この点がのちのちFisherが排撃したBayesを蘇らせることとなる）．
+    Fisherの有意性検定は農事試験のデータ解析であったが，これを1950sのNeyman-Pearsonの仕事は，大量生産を背景とした統計的品質管理が背景にあった．
+    ここからさらに，WaldやLehmannによって数学的に体系化されていく．
+    この「最適性」を指導原理とした数学的体系化，Neyman-PearsonやBayesなどの社会情勢に応えた派生は，原点であるFisherの理論とは違う色を帯びていくことになる．
+    この3派閥は，現在にもあとを引く．
+    \begin{enumerate}
+        \item Frequentistは頻度派ともいうが，Neyman-Pearson学派のことをいう．今日では数理統計学の本流となっている．
+        \item Bayesianはベイズ派と呼ばれる．産業応用派・意思決定理論への応用である．
+        \item FisherianはFisher学派のことをいう．実験家の統計学である．
+    \end{enumerate}
+\end{history}
+
+\begin{discussion}[Frequentist vs. Fisherian]
+    Fisherにとっては，統計的推測理論はあくまで物理学実験手法の延長であり，科学的な帰納的推論の一環である．
+    一方で，Frequentistは，現在の数理統計学同様，「最適性」を指導原理とする．
+\end{discussion}
+
+\begin{discussion}[Frequentist vs. Bayesian]
+    Bayesの「主観確率」の理論は一度はFisherによって排斥されたが，1950sに再構築された．
+\end{discussion}
+
+\subsection{Fisherの業績}
+
+\begin{enumerate}
+    \item 統計量の精密な標本分布について，Fisherが関わっていないものを見つける方が難しい．このとき母集団が正規分布に従うことを仮定していたが，これは主に生物データを扱っていたFisherにとっては現実的である．
+    \item さらにその間の関係まで整理し，$\chi^2$分布，$t$分布，正規分布，標本相関係数$r$の分布は，すべて$F$-分布の特別な場合であることを理解した．
+    \item 大標本理論に関する論文Fisher 22\cite{Fisher22}にて，逆確率法を排撃し，Pearsonのモーメント法に代わって最尤法を提示．\footnote{考え方自体は，Edgeworthの"genuine inverse"やPearsonの段階ですでにあった．}
+    十分性の概念もLaplaceがすでに用いていたが，有効性，一致性などの観点から検討し，一般的な方法として提示した．
+    母集団の母数と標本から得られる統計量を明確に区別．実際，農事試験データにBayesの方法はフィットしない，純粋な科学的帰納法のみが要請される現場であるからだ．また，この論文では，統計学の目的は，次の3ステップから成る「データの縮約(reduction of data)」であるとした．
+    \begin{enumerate}[(i)]
+        \item 特定化(specification)の問題：モデル選択．
+        \item 推定の問題：選択したモデルの母数を最適に推定する．
+        \item 分布の問題：構成した統計量の分布を求める．ここで漸近論を採用せず，精密な分布を求めたのがFisherの特徴である．
+    \end{enumerate}
+    \item あくまで関心は小標本にあり，情報量・十分性・尤度の概念をそちらに適用しようとした．
+    \item 実験計画法とは実験化のお家芸であったが，これが統計家の領域に引き込まれた．そして因果推論の基本となる分散分析(ANOVA)という検定法を開発．
+\end{enumerate}
+
+\begin{history}[日本での受容]
+    Pearsonまでの統計学で，母集団のパラメータと標本統計量が区別されなかったように，全数調査じゃなくてランダムサンプリングを使うという数学的トリックが生じたのがFisherからである．
+    そこで日本で受容する際も論争が起こり，数理統計学者が説得する形となった．
+\end{history}
+
+\section{Galtonまでの優生学}
+
+\subsection{Mendelの遺伝理論}
+
+\begin{history}[Gregor Johann Mendel 1822-84]
+    修道会に入会し，所属した修道院は学術研究・教育が盛んだった．
+    司祭になってから51年から2年間Dopplerの下で数学・物理学，ウンガーから植物生理学を学び，戻ってからえんどう豆の交配実験を行った．
+    論文\cite{Mendel66}は数学的で抽象的な議論が理解されず，「反生物的」とさえ評された．
+    後に井戸の水位や太陽の黒点などの気象との関係を研究し，没した時点ではむしろ気象学者としての評価のほうが高かった．
+\end{history}
+
+\begin{theory}[Hardy–Weinberg principle]
+    すべての生物の\textbf{因子型}は，2値変数$A,a$の非順序対$AA,Aa,aa\in[\{A,a\}]^2$によって表現される．
+    すると，3元状態空間$\{AA,Aa,aa\}$上の確率分布の世代毎の変化・発展が考え得る．
+    このとき，十分大きな集団においては，親の母集団の因子型の組成がどうであろうとも，ランダムな交配は１世代以内に，「近似的に安定な因子型分布」を持つ\cite{Hardy08}．
+\end{theory}
+
+\begin{theory}[性染色体]
+\end{theory}
+
+\section{実験計画法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    農場実験での実験計画法を確立するために，精密分布を計算するなどの仕事は必要であった．
+    なぜならば，まず暗黙知であった有意性検定をするためには，誤差のコントロールが必要になった（分散分析の開発）．
+    特に，肥沃土の不均一性が一番大きな系統的誤差原因となるので，必然的に実験の規模は限られ，必然的に小標本理論になる．
+\end{tcolorbox}
+
+\subsection{農事実験}
+
+\begin{history}[高度農業]
+    1846年の穀物法撤廃を契機に，英国で「高度農業」が始まり，ここから農事実験は「品種改良」「化学肥料の効果比較」が中心となった．
+    Rothamstedを設立するLawesm J. B.は1842年にはじめて化学肥料を開発した．
+    このとき農事試験を科学化しなければいけないという要請が高まり，その最初の研究がJohnston, J. F. W. (1849). Experimental Agriculture, Being the Results of Past and Practical Agricultureである．
+    これはすごく自然言語で書かれた実験計画法の萌芽でもある．
+\end{history}
+
+\begin{history}
+    Rothamstedでは1919年時点で75年ほどの実験データが溜まっており，この分析法を考えあぐねていた．
+\end{history}
+
+\subsection{分散分析と有意性検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    農事実験では統制すべき変量が多いので，そのそれぞれについて，変動への寄与を分離することが必要だった．
+    当時Fisherは変動分析(analysis of variation)と呼んでいた．
+    そしてその後，処置による変動に対して，有意性を判定することが必要．
+    特に，精密標本分布を用いると，標本の大きさに拘わらず，正確な有意性検定を構成できる．
+
+    \textbf{特に，肥沃土の不均一性が一番大きな系統的誤差原因となるので，必然的に実験の規模は限られ，必然的に小標本理論になる}．
+\end{tcolorbox}
+
+\begin{history}
+    Fisher 18 \cite{Fisher18}で分散(variance)を命名し，遺伝学研究のときに発明され，翌年から就職したRothamstedで精緻化される．
+    ここで$F$分布を，当時は$z$分布と命名した．
+    唯一の先行研究は，Gosset=Student 08 \cite{Gosset08}の$t$分布が，当時の大標本理論に頼ることなく，標本統計量のみに基づいて検定を構成したものである．
+\end{history}
+
+そしてブロックデザインが大事になる．
+当時の実践家は誤差を最小にしようとしていたが，
+Fisher以後は誤差が統計的にコントロール可能であればよい．
+
+次に，実践家のお家芸であった有意性判定を，有意性検定で置き換えた．
+
+\section{有意性検定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Fisherの有意性検定以前にも，Pearsonの$\chi^2$-適合度検定，Gossetの$t$検定（当時は$z$検定）があったが，普及したのはFisherのものが初である．
+    その理由は，小標本にも適用可能であること（これは$t$-検定もそう），社会的要請の2点がある．
+    Gossetは観測値の精度評価を主な目的とした誤差論的な発想であったのに対し，誤差が系統的に把握できている時点でOKであり，有意性の検定に使える，という
+    発想の転換がある．これはある意味で用途の制限であるが，これが爆発的な応用を生んだ．
+\end{tcolorbox}
+
+\subsection{Fisher以前の検定論}
+
+\begin{history}[確率誤差検定 (Wood and Stratton 1910)]
+    基本的な問題設定は，ある正規分布を観測しており，その母平均を推定する問題である．
+    そのために，誤差の発生要因を統制する必要がある（これと付随する分散分析の技法をあわせて実験計画という）．
+
+    標本$X_1,\cdots,X_n\sim N(\mu,\sigma^2)$から定まる\textbf{確率誤差(probable error)}とは，
+    $0.67\sigma/\sqrt{n}$とする．すると，$\mu\pm0.67\sigma/\sqrt{n}$は確率0.5でこの範囲に入る．
+    これを用いて検定していたので，「帰無仮説」という概念はない．
+    Fisherを待つ必要がある．
+\end{history}
+
+Edgeworth, F. Y.は経済学の文脈で，Pearson, K.は優生学の分野で検定を構成した．
+前者はEconomic Journalの創刊から編集者で，後者はBiometrikaを主宰．
+
+\begin{history}[Francis Ysidro Edgeworth 1845-1926 アイルランド と 数理心理学]
+    発明家の祖父を持つ名家の出身．父はユグノーの子孫で，ドイツに向かう途中，英国博物館の階段であったスペインの難民と駆け落ち中に生んだ子供．
+    基本的にあらゆる学問をやっていたが（弁護士資格もある），King's College Londonで経済学の職に就く．
+    新古典派の主要人物となり，数学的形式を個人の意思決定へと応用した最初の人物となった．
+    効用理論と無差別曲線(indifference curve)でミクロ経済学，Edgeworth展開で数理統計学に名前を残す．
+    81 \cite{Edgeworth81}は数学も，フランス語・ラテン語・古典ギリシャ語にまたがる文章も，アホみたいに読みにくいらしい．
+
+    マーシャルとはともに数学と倫理学を通じて経済学に達したという類似点がある。エッジワースは社会科学に数学の手法を適用した先駆者の一人である。彼自身はその手法を「数理心理学」と名づけていた。
+\end{history}
+
+\begin{history}[Karl Pearsonの適合度検定]
+    Galtonが確立した相関・回帰の概念から出発して，ピアソン系，モーメント法，確率誤差論，$\chi^2$-適合度検定
+    を開発した．これらは記述統計学と呼ばれたが，Fisherのように標本の大小に拘らない枠組みを作ることはなかった．
+
+    $X_1,\cdots,X_n$に関する理論値と観測値の間の乖離の尺度を
+    \[\chi^2:=\sum^k_{i=1}\frac{(m'_i-m_i)^2}{m_i}\]
+    とする．ただし，$k\le n$について$m_i\;(i\in[k])$はそれぞれの値に対する頻度である．
+    すると，$\chi^2$なる統計量の漸近分布は，自由度$k-1$の$\chi^2(k-1)$に従うことを示した\cite{Pearson00}．
+\end{history}
+
+\begin{history}[Wiliam Sealy Gosset 76-37 とギネスビール]
+    Oxfordで化学と数学を学び，学士のままギネスビール社のダブリン醸造所に就職した（農事試験同様，数年前から統計家を積極採用していた）．
+    その後あまりの統計的困難さに，30歳前後でPearsonの研究室に赴いて，\cite{Gosset08}を出した．ギネスビール社は機密保護の観点から社員が論文を出すことを禁止していたので，Studentというペンネームで発表していた．
+    もともと$z=\frac{t}{\sqrt{n-1}}$を用いていたが，Fisherが自身の自由度理論に併せるために$t$に変えた．
+    FisherとPearsonの仲を取り持つ立ち回りをした．
+
+    醸造過程の共変量は互いに独立でなく，データも少ない．誤差の正規性も仮定できないので，当時の誤差論は適用不可能であった．
+    \cite{Gosset08}のアブストでは
+    \begin{quote}
+        繰り返すことが困難な実験は少なくない．このような場合，データ数は少なく，いくつかの化学実験，多くの生物学的実験，そして殆どの農事試験・大規模実験が当てはまり，従来これらはほとんど統計学の範囲外であった．
+
+        また，正規曲線の方法は大標本のみで適用可能であるが，いつ適用不可能になるかの研究がない．
+    \end{quote}
+    そこで，標本平均を$x$，標本不偏標準偏差を$s$として
+    \[z=\frac{\o{x}-\mu}{s}\]
+    とし，この分布と確率積分表を作った．
+    モデルを正規$N(\mu,\sigma)$として$\mu$を推定する際，2つの平均値の統計的有意性を検定できる．
+
+    しかし，Gossetはこれを\textbf{小標本の場合の正規近似}に用いただけで，検定を構成はしなかった．
+    ここでも確率誤差検定同様，棄却域を設定せず，検定に2つ以上の役割を持たせており，Waldの意味で「検定」とは言えない．
+\end{history}
+
+\subsection{Fisherの有意性検定}
+
+有意性検定に用いるには，Gossetの研究はほとんどそのまま使えるが，唯一，有意性査定のために特殊化する必要があった．これは，
+Gossetは観測値の精度評価を主な目的とした誤差論的な発想であったのに対し，誤差が系統的に把握できている時点でOKであり，有意性の検定に使える，という
+発想の転換がある．これはある意味で用途の制限であるが，これが爆発的な応用を生んだ．
+
+また，Pearsonの適合度検定は，事前に設定した棄却域の下で棄却するのではなく，単純に$P[\chi^2\ge c]$を見て判断する．
+
+
+さらに，母集団と標本との確率論的な関係を厳密に扱うために自由度の概念を導入し，$t$検定として作り直した．
+
+\section{Pearsonの統計理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標本の理解と，特定の分布への当てはめ(fitting)を通じて，統計的手法を開発した．
+    もちろん推測への萌芽は含まれているが，あくまで，大数観察とそこから科学的な知見を引き出そうとすることが学問的興味であった．
+
+    Pearsonの検定は誤差が小さいことの確認であり（その上でマクロ生物理論を立てたいので），Fisherの検定は系統的な誤差の中に有意なものが混じっていないかの検出である．
+\end{tcolorbox}
+
+\subsection{記述統計学}
+
+標本が十分に大きいときに，これ自体を母集団とみなすならば，背後に分布を仮定することも，標本と母平均との確率的関係に頭を悩ませることもない．
+この特権を享受した下での統計的手法を，記述統計学という．
+これは，全体を見渡して知恵を得たい，複雑な大規模データを要約して理解したいという傾向のある学問（マクロ生物学など）で
+取られる手法となる．一方でGossetやFisherは推論が必要になり，Edgeworthは意思決定が必要であった．
+
+\subsection{モーメント法とピアソン系}
+
+しかし，Pearsonも非対称分布を持つ標本に出会い，これを正規分布の混合として説明しようと試みた．
+そのための方法としてモーメント法を開発した．
+4次までの積率に注目し，正規分布の歪度$\gamma_1=0$と尖度$\gamma_2=3$と比較することで
+近さを測れる．
+母モーメントを知っていれば，標本モーメントはそれに確率収束するだろうから，必要な次数までモーメント方程式を用意すれば，その解そして一致推定量が得られる，という手法である．
+このとき，母分布にパラメトリックな仮定をおくことになるが，これをピアソン系と呼ぶ．左右非対称性や尖り具合によって12に分類されている．
+
+こうして最後に，ピアソン系の適合度が知りたくなる．そこで適合度検定が要請された．
+
 \chapter{Pearson and Neyman}
+
+\begin{quotation}
+    統計的推測理論が次の発展をするのは，工業化が契機になる．
+    農事試験などの精密なものではなく，大量生産とその誤差管理が問題になる．
+    そこで，最適な有意性検定(optimal test of significance)の理論的枠組が生まれた．
+\end{quotation}
+
+\section{統計的品質管理の父}
 
 \begin{history}[Walter A. Shewhart 91-67 米]
     California Berkeleyで物理学博士を取ったのちに，AT\& Tの前身であるBell Telephoneで
@@ -45,11 +289,31 @@
     Shewhartから学んだ設計/製品品質/製品検査/販売などを強化する方法を伝授していった。彼が伝授した方法は、分散分析や仮説検定といった統計学的手法の応用などである。デミングは、日本の製造業やビジネスに最も影響を与えた外国人であった。このため、以前から英雄的な捉え方をされていたが、アメリカでの認知は彼が死去したころやっと広まり始めたところであった。
 \end{history}
 
+\section{Neyman-Pearsonの統計的仮説検定理論}
+
+
+
 \chapter{参考文献}
 
 \begin{thebibliography}{99}
+    \bibitem{Mendel66}
+    Mendel, G. J. (1866). “Versuche über Pflanzen-Hybriden” ("Experiments on Plant Hybridization"). \textit{Proceedings of the Natural History Society of Brünn}.
+    \bibitem{Hardy08}
+    Hardy, G. H. (1908). Mendelian Proportions in a Mixed Population, Letter to the Editor, \textit{Science}, N. S., 28: 49-50.
     \bibitem{Fisher}
     芝村良．(2004)．『R. A. フィッシャーの統計理論』．九州大学出版会．
+    \bibitem{Edgeworth81}
+    Edgeworth, F. Y. (1881). \textit{Mathematical Psychics: An Essay on the Application of Mathematics to the Moral Science}.
+    \bibitem{Pearson00}
+    Pearson, K. (1900). On the Criterion that a Given System of Deviations from the Probable in the Case of a Correlated System of Variables is Such that it can be Reasonably Supposed to Have Arisen from Random Sampling. \textit{Philosophical Magazine}. 5th Series, Vol. L, pp. 157–175.
+    \bibitem{Gosset08}
+    Gosset, W. S. (1908). The Probability Error of a Mean.
+    \bibitem{Fisher18}
+    Fisher, R. A. (1918). The Correlation between Relatives on the Supposition of Mendelian Inheritance.
+    \bibitem{Fisher22}
+    Fisher, R. A. (1922). On the Mathematical Foundations of Theoretical Statistics.
+    \bibitem{Fisher25}
+    Fisher, R. A. (1925). Theory of Statistical Estimation.
 \end{thebibliography}
 
 \end{document}

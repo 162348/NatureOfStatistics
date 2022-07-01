@@ -71,14 +71,17 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{definition}[probability]
+\begin{axiom}[probability]
     $\sigma$-代数$\mathcal{F}$に対して，次を満たす測度$P:\mathcal{F}\to[0,1]$を\textbf{確率測度}または\textbf{試行$T$の確率法則}という．
     \begin{enumerate}
         \item $P(A)\ge 0\;(\forall_{A\in\calF})$．
         \item $P(\Omega)=1$．
         \item ($\sigma$-加法性) $P(\cup_{i\in\N}A_i)=\sum_{i\in\N}P(A_i)$，ただし族$(A_i):\N\to\calF$は$\forall_{i\ne j}\;A_i\cap A_j=\emptyset$を満たす．
     \end{enumerate}
-\end{definition}
+\end{axiom}
+\begin{history}
+    確率論に測度論を導入することは，Borel (1909)の大数の強法則の証明，Wiener (1920-24)のBrown運動の研究で成功を収め，Kolmogorov (1933)が公理にまとめた．
+\end{history}
 
 \begin{definition}[random variable, probability distribution / law]
     確率空間を$(\Omega,\calF)$，$(\X,\B)$を可測空間とする．
@@ -225,7 +228,7 @@ Entropy is a measure of disorder, given by the amount of information necessary t
 \subsection{分割と情報}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=Kolmogorovと伊藤清の特徴：分割から説き起こす]
     ぼくが数学を始めるきっかけとなった写像の標準分解：
     写像が定める同値類と写像との関係と全くパラレルである．
     $X$が定める同値関係が$Y$より細かいこと(正確には$\exists_{N\in\N(\Om)}\;\forall_{\ep_1,\ep_2\in\Om\setminus N}\;X(\om_1)=X(\om_2)\Rightarrow Y(\om_1)=Y(\om_2)$)と，$\F[Y]\subset\F[X]$は同値である．
@@ -241,7 +244,9 @@ title=]
 
 \begin{definition}\mbox{}
     \begin{enumerate}
-        \item 可測関数$X:\Om\to S$について，$\F[X]:=X^{-1}(\D(P^X))\lor 2$を，$X$で生成される閉$\sigma$-代数という．
+        \item $\Om$の直和分割であって可測集合のみからなるものを，\textbf{可測同値類による直和分割}という．
+        
+        \item 可測関数$X:\Om\to S$について，$\F[X]:=X^{-1}(\D(P^X))\lor 2$を，\textbf{$X$で生成される閉$\sigma$-代数}という．
         これは，$X$を可測にする閉$\sigma$-代数の中で最小のものである．
         \item 確率変数の族$\{X_\lambda\}_{\lambda\in\Lambda}$については，$\F[X_\lambda,\lambda\in\Lambda]:=\bigvee_{\lambda\in\Lambda}\F[X_\lambda]$と表す．
     \end{enumerate}
@@ -606,6 +611,64 @@ title=]
     \end{enumerate}
 \end{definition}
 
+\subsection{標準確率空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $(\R,\mu)$の同型類が応用上重要になる．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 確率空間の\textbf{強同型}とは，測度空間として同型で($\sigma$-加法族を押し出す)，かつ，測度を押し出すことをいう．
+        \item 確率空間の\textbf{同型}とは，あるfull setが定める部分確率空間同士が強同型であることをいう．これも同値関係を定める．
+        \item 正則確率空間$(\R,\mu)$と同型な完備確率空間$(\Om,P)$を\textbf{標準確率空間}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[完備可分距離空間上の確率測度の正則性の特徴づけ]\label{lemma-K-regular}
+    完備可分距離空間上の正則確率測度$(S,P)$について，
+    \[\forall_{A\in\Dom(P)}\;\forall_{\ep>0}\;\exists_{K\compsub A}\;P(A\setminus K)<\ep.\]
+    この性質を$K$-正則という．一般に$K$-正則な確率測度は正則である．
+\end{lemma}
+
+\begin{lemma}[Lusin]
+    $(S,P)$を完備可分距離空間上の正則確率空間，$T$を可分距離空間，$f:S\to T$を関数とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $f$は可測．
+        \item $\forall_{A\in\Dom(P)}\;\forall_{\ep>0}\;\exists_{K\compsub A}\;P(A\setminus K)<\ep$かつ$f|_K$は連続．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}\label{lemma-regularity-of-pushout-measure}
+    $(S,P)$を完備可分距離空間上の正則確率空間，$T$を可分距離空間，$f:S\to T$を可測関数とする．
+    このとき，像測度$f_*P$は$T$上の$K$-正則確率測度である．
+\end{lemma}
+
+\begin{theorem}\label{thm-standard-probability-space}
+    完備可分距離空間$S$上の正則確率測度$P$は標準である．
+\end{theorem}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 可算集合$\Om$上の$\Dom(P)=P(\Om)$を満たす確率測度は標準である．
+        \item $\R^\infty$上の正則確率測度は標準である．
+    \end{enumerate}
+\end{example}
+
+\subsection{確率空間の構成}
+
+\begin{theorem}[正則確率空間の可算直積]\mbox{}
+    \begin{enumerate}
+        \item 完備可分距離空間の列$(S_n)$の直積$S:=\prod_{n\in\N}S_n$は完備可分である．
+        \item $S_n$上の正則確率測度の列$(P_n)$の直積の完備化$\o{\prod_{n\in\N}P_n}$は$S$上の正則確率測度である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    標準確率測度の列$(P_n)$も標準．
+\end{theorem}
+
 \section{確率変数の空間上の作用素}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -764,7 +827,7 @@ title=]
     が成り立つ．両辺の期待値を取れば良い．
 \end{proof}
 
-\begin{corollary}\mbox{}
+\begin{corollary}\mbox{}\label{cor-Chebyshev-inequality}
     \begin{enumerate}
         \item 特に$\psi(x)=\abs{x}^p\;(p>0),A:=\Brace{\abs{x}\ge\ep}$とすると，$P[\abs{X}\ge\ep]\le\frac{1}{\ep^p}E[\abs{X}^p]$．
         \item $\forall_{a>0}\;P\{\abs{X(\om)-EX}>a\sigma(X)\}\le\frac{1}{a^2}$．
@@ -808,7 +871,7 @@ title=]
 \end{theorem}
 
 
-\chapter{有界測度論}
+\chapter{有限測度論}
 
 \begin{quotation}
     確率分布を測度として定式化したが，まずは，有界な測度（を正規化したもの）としての純粋な性質を調べる．
@@ -990,10 +1053,17 @@ title=測度の空間はBanach空間であるが，それ以上に具体的対�
 \end{lemma}
 
 \begin{corollary}[Scheffe]
-    $\{X_n\},X\ll\mu$とする．$p_n\to p\;\mu\dae$が成り立つならば，$X_n$は$X$に全変動ノルムについて収束する：$\norm{X_n-X}\to0$．
+    $\{X_n\},X\ll\mu$とする．$p_n\to p\;\mu\dae$が成り立つならば，$X_n$は$X$に全変動ノルムについて収束する：$\norm{X_n-X}\to0$．すなわち，$\lim_{n\to\infty}F_n(x)=F(x)$が一様収束する．逆は成り立たない．
 \end{corollary}
 
-\subsection{弱収束の定義と特徴付け}
+\subsection{弱収束・漠収束の定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    弱収束と漠収束は同じ位相に関する収束である(一般に$X$がHausdorffのときこれが成り立つ)．
+    しかし，前者に対応する$\sigma(M(X),C_b(X))$-位相で$P(X)$は点列コンパクトだが，後者に対応する$\sigma(M(X),C_c(X))$-位相で$P(X)$とは点列コンパクトとは限らず，収束先が確率測度になるとは限らない．
+    距離化可能である．
+\end{tcolorbox}
 
 \begin{definition}[weak convergence of measure, vague convergence]
     一般の局所コンパクトハウスドルフ空間$X$について，Rieszの表現定理より$P(X)\subset M(X)\simeq C_0(X)^*$と同一視出来る．
@@ -1015,10 +1085,12 @@ title=測度の空間はBanach空間であるが，それ以上に具体的対�
         \item 任意の閉集合$C\subset\R$について，$\limsup_{n\to\infty}\mu_n(C)\le\mu(C)$．
         \item $A\in\B(\R)$について，$\mu(\partial A)=0\Rightarrow\lim_{n\to\infty}\mu_n(A)=\mu(A)$．この条件を満たす集合$A$を\textbf{$P$-連続集合}という．\footnote{このような集合は体／代数をなす．}
         \item $\mu_n,\mu$が定める分布関数$F_n,F$について，$\forall_{x\in\Cont(F)}\;\lim_{n\to\infty}F_n(x)=F(x)$．
+        \item  $\mu_n,\mu$が定める分布関数$F_n,F$と，$\R$上稠密な集合$C$上で，$\forall_{x\in C}\;\lim_{n\to\infty}F_n(x)=F(x)$．
     \end{enumerate}
     また，次とも同値．
-    \begin{enumerate}\setcounter{enumi}{5}
+    \begin{enumerate}\setcounter{enumi}{6}
         \item 任意の一様連続な有界関数$f$について，$P_nf\to Pf$．なお，有界性の仮定を外しても同値である．
+        \item 任意のコンパクト台を持つ連続関数$f\in C_c(\R)$について，$E_{\mu_n}[f]\to E_\mu[f]$\cite{伊藤清}．
         \item 任意の非負有界連続関数$f$に関して，$\liminf_{n\to\infty}P_nf\ge Pf$．
     \end{enumerate}
 \end{theorem}
@@ -1092,24 +1164,56 @@ title=]
     むしろ，こちらを確率分布の弱収束として定義する事もありえる．
 \end{tcolorbox}
 
+\subsection{弱収束の定義}
+
 \begin{definition}[weak convergence of CDF]
     $F$の不連続点\ref{def-continuous-point-of-CDF}はたかだか有限個である．$F$の連続点$\Cont(F)$での値が与えられたら，その不連続点での値は右連続性から確定する．
     単調右連続関数の列$(M_n)$と$M$について，$M_n\Rightarrow M$とは，
     \[\forall_{x\in\Cont(M)}\quad M_n(x)\to M(x)\]
     が成り立つことをいう．
 \end{definition}
-\begin{remark}
+\begin{remark}[緊密性に対応する概念]
     実は，確率測度のときと違って，分布関数の弱収束極限は分布関数になるとは限らない．
     そこで，次の概念が必要となることもある：
-    \[M_n\Rightarrow M\quad(\proper)\qquad\Leftrightarrow\qquad M_n(\infty)-M_n(-\infty)\to M(\infty)-M(-\infty).\]
+    \[M_n\Rightarrow M\;(\proper)\quad\Leftrightarrow\quad M_n(\infty)-M_n(-\infty)\to M(\infty)-M(-\infty).\]
+    真に弱収束するとき，その収束先の右連続化は分布関数になる．
 \end{remark}
 
+\subsection{相対コンパクト}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率測度の弱収束の相対コンパクト性に関するProkhorovの定理\ref{thm-Prokhorov}はこの定理から示される．
+    やはり関数論的に扱いやすいのは分布関数である．
+\end{tcolorbox}
+
+\begin{theorem}[Helly, E. sellection theorem]
+    分布関数$(F_n)$の列には，ある部分列$(F_{n_k})$と右連続な単調増加関数$F$とが存在して，$F_{n_k}\Rightarrow F$．
+    収束先$F$が分布関数になるとは限らないことに注意．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[部分列の構成] $\Q=\{a_j\}$と附番すると，$\{F_n(a_1)\}\subset\R$は有界だから，収束する部分列$\{F_{n_1}(a_1)\}$を持つ．さらにこの中から，$\{F_{n_1}(a_2)\}$が収束するような部分列$\{F_{n_2}\}$が取れる．
+        これを繰り返すことで，列の列$\{\{F_{n_j}(a_j)\}_{n_j\in\N}\}_{j\in\N}$が取れるから，この対角線を選んで関数列$\{F_{n_k}\}$を取ると，これは$\Q$上で収束する．
+        \item[収束先の構成] $G(x):=\lim_{n\to\infty}F_{n_k}(x)$によって$G:\Q\to[0,1]$が定まる．これに対して$F(x):=\inf_{x<r\in\Q}G(r)$とすると，これは単調かつ右連続な$\R$への延長である．
+        単調性は明らか．右連続性は，定義から$\forall_{x\in\R}\;\forall_{\ep>0}\;\exists_{x<r}\;G(r)<F(x)+\ep$ということだから，$\forall_{y\in[x,r)}\;F(y)\le G(r)<F(x)+\ep$と併せると，$F(y)-F(x)<\ep$を満たすような$\delta:=y-x\ge0$が取れたことになる．
+        \item[弱収束の証明]
+        任意の$x\in\Cont(F)$について，任意の$\ep>0$を取る．
+        このとき，$\exists_{y<x}\;F(x)-\ep<F(y)$かつ$\exists_{x<s\in\Q}\;G(s)<F(x)+\ep$だから，任意の$r\in\Q\cap(y,x)$について，
+        \[F(x)-\ep<G(r)\le G(s)<F(x)+\ep.\]
+        これと単調性$F_n(r)\le F_n(x)\le F_n(s)$を併せると，$n_k\to\infty$のとき，$F(x)-\ep<F_{n_k}(x)<F(x)+\ep$を満たす．
+    \end{description}
+\end{proof}
 
 \section{確率測度の空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $P(X)$の幾何学的性質が基礎的になってくるので，ここにまとめることとする．
+    $X=\R$のとき，次が成り立つ．
+    \begin{enumerate}
+        \item $P(X)$上の弱位相＝$\sigma(M(X),C_b(X))$-位相は第２可算で距離化可能である．
+    \end{enumerate}
 \end{tcolorbox}
 
 \begin{notation}
@@ -1139,6 +1243,13 @@ title=]
         \item 弱位相を備えた$P(X)$は距離付け可能で可分である．
     \end{enumerate}
 \end{theorem}
+
+\subsection{距離の例}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Levy距離$d_L$は$P(\R)$上に弱位相を定め，$(P(\R),d_L)$は完備可分距離空間となる．
+\end{tcolorbox}
 
 \begin{example}[Levy-Prokhorov距離]
     $B_\ep(E):=\{x\in X\mid\rho(x,E)<\ep\}$と表す．
@@ -1217,7 +1328,7 @@ title=]
     $\forall_{\ep>0}\;\exists_{K\overset{\text{cpt}}{\subset} X}\;\forall_{\mu\in\Gamma}\;\mu(K)\ge 1-\ep$．
 \end{definition}
 
-\begin{theorem}[Prokhorov：緊密性とは，相対コンパクト性の特徴付けである]
+\begin{theorem}[Prokhorov：緊密性とは，相対コンパクト性の特徴付けである]\label{thm-Prokhorov}
     $X$を距離空間とする．確率測度の族$\Gamma\subset P(X)$について，(1)$\Rightarrow$(2)が成り立つ．
     $X$が完備かつ可分であるとき，(2)$\Rightarrow$(1)も成り立つ．
     \begin{enumerate}
@@ -1282,21 +1393,7 @@ title=]
 \end{remarks}
 
 
-\section{積分の拡張}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    まずは，関数解析の力を借りて，積分を非可測な関数に対しても延長する，Hoffmann-Jorgensenの理論を展開する．
-    この議論は一般の局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$に関して展開できる．
-\end{tcolorbox}
-
-\begin{definition}[outer integral]
-    $(\Om,\A,P)$を確率空間，$T:\Om\to\o{\R}$を写像とする．
-    \begin{enumerate}
-        \item $E^*[T]:=\inf\Brace{E[U]\in\R\mid U\ge T,U\in\Meas(\Om,\o{\R}),E[U]\in\R}$を，押し出された測度$T_*P$に関する$\o{\R}$上のRadon上積分とする．
-        \item 写像列$(X_n:\Om_n\to\Om)$がBorel可測関数$X:\Om_\infty\to\Om$に弱収束するとは，$\forall_{f\in C_b(\Om)}\;E^*[f(X_n)]\to E[f(X)]$を満たすことをいう．
-    \end{enumerate}
-\end{definition}
 
 \section{確率変数列の収束}
 
@@ -1547,6 +1644,17 @@ title=]
     あくまで測度の$*$-弱収束が主軸である，とも捉えられる．
 \end{remarks}
 
+\section{期待値の収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    分布が弱収束するからと言って，モーメントも収束するとは限らない．
+\end{tcolorbox}
+
+\begin{example}
+    任意の実数列$\{\sigma^2_n\}\subset\R$であって$\sigma^2_n\ge1$を満たすものに対して，$(0,\sigma^2_n)$に従う分布の列で，$N(0,1)$に弱収束するものを作ることが可能である．
+\end{example}
+
 \subsection{一様可積分性の定義と特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1642,14 +1750,54 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\section{不等式}
-
-\subsection{確率不等式}
+\subsection{積率}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $E[X]=\frac{\int XdP}{\int 1dP}$とみなせば，一般の測度$P$について成り立つ．
+    $p\in[0,\infty]$が小さいほど$\L^p(X)$は大きく，ノルム$\norm{f}_p$は小さくなることを思い出す．
+    すなわち，絶対積率$\beta_r:\R_+\to\R$は$r\in\R_+$について$\beta_0=1$から始まる($\sqrt[p]{-}$を無視すれば)単調増加関数である．
+    Chebyshevの不等式\ref{cor-Chebyshev-inequality}で，$P[\abs{X}\ge\ep]\le\paren{\frac{\norm{X}_p}{\ep}}^p$
 \end{tcolorbox}
+
+\section{畳み込み}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lebesgue空間$L^1(\R)$は，畳み込みを積として非単位的なBanach代数をなす．単位元はDirac関数に相当する．
+    なお，局所コンパクトハウスドルフ位相群$G$に対して，$L^1(G)$が単位的であることと，$G$が離散群であることとが同値．
+    ノルム代数$L^1(\mu)$の公理に劣乗法性が入るが，この結果をYoungの不等式という．
+
+    そして，Fourier変換はBanach代数の射であり，畳み込みを関数積に移す．
+\end{tcolorbox}
+
+\subsection{畳み込みと不等式}
+
+\begin{notation}
+    一般に，局所コンパクトで単模である群$G$の両側不変Haar測度$\mu$に対して，$G$上の関数の畳み込みが考えられ，同じ結果が成り立つ．
+\end{notation}
+
+\begin{definition}
+    \[f*g(x):=\int_{\R^d}f(x-y)g(y)dy\]
+    によって，$\Meas(\R^d,\R)^2\nrightarrow\Meas(\R^d,\R)$を定める．
+    Youngの不等式より，$L^p(\R^d)\times L^q(\R^d)$上に制限すると，積を定める．
+\end{definition}
+
+\begin{proposition}[Young]
+    $p,q,r\in[1,\infty],p^{-1}+q^{-1}=r^{-1}+1$とする．$f\in L^p(\R^d),g\in L^q(\R^d)$のとき，$f^*g$は殆ど至るところ存在し，$f*g\in L^r(\R^d)$を満たし，
+    \[\norm{f*g}_r\le\norm{f}_p\norm{g}_q.\]
+\end{proposition}
+
+
+\section{不等式}
+
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    $E[X]=\frac{\int XdP}{\int 1dP}$とみなせば，一般の測度$P$について成り立つ．
+    これは場の理論である！
+\end{tcolorbox}
+
+\subsection{確率不等式}
 
 \begin{notation}
     $(\Om,\F,P)$を確率空間とする．
@@ -1709,52 +1857,15 @@ title=]
     \[\norm{X+Y}_p\le\norm{X}_p+\norm{X}_p\]
 \end{proposition}
 
-\subsection{畳み込みと不等式}
-
-\begin{notation}
-    一般に，局所コンパクトで単模である群$G$の両側不変Haar測度$\mu$に対して，$G$上の関数の畳み込みが考えられ，同じ結果が成り立つ．
-\end{notation}
-
-\begin{definition}
-    \[f*g(x):=\int_{\R^d}f(x-y)g(y)dy\]
-    によって，$\Meas(\R^d,\R)^2\nrightarrow\Meas(\R^d,\R)$を定める．
-    Youngの不等式より，$L^p(\R^d)\times L^q(\R^d)$上に制限すると，積を定める．
-\end{definition}
-
-\begin{proposition}[Young]
-    $p,q,r\in[1,\infty],p^{-1}+q^{-1}=r^{-1}+1$とする．$f\in L^p(\R^d),g\in L^q(\R^d)$のとき，$f^*g$は殆ど至るところ存在し，$f*g\in L^r(\R^d)$を満たし，
-    \[\norm{f*g}_r\le\norm{f}_p\norm{g}_q.\]
-\end{proposition}
-
-\section{一般の試行と確率測度}
-
-\begin{definition}[null set, complete]\mbox{}\label{def-complete-measure}
-    \begin{enumerate}
-        \item $P(N)=0$を満たす$P$-可測集合$N$を，$P$-零集合という．
-        \item 任意の$P$-零集合の，任意の部分集合も全て$P$-可測（したがって零）である時，$P$を完備確率測度という．
-    \end{enumerate}
-\end{definition}
-
-\begin{proposition}[Lebesgue expantion]
-    任意の確率測度$P$に対し，完備拡張は必ず存在し，最小のものが一意に定まる．これを$P$のLebesgue拡大という．
-\end{proposition}
-
-\section{確率測度の拡張定理}
-
-\begin{definition}[regular probability measure]\label{def-regular-measure}
-    位相空間上の確率測度を考える．
-    \begin{enumerate}
-        \item 定義域がBorel classと一致するものを，\textbf{Borel確率測度}という．
-        \item Borel確率測度のLebesgue拡大を\textbf{正則確率測度}という．
-    \end{enumerate}
-\end{definition}
-
-\section{確率測度の直積}
+\section{Kolmogorovの拡張定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    独立性は$P$の集合積に対する関手性だから，数学的には直積と関係が深い．
+    直積を取ることとその極限操作が確率論の数学的基礎づけの中で最も肝要である．
+    また，独立性は$P$の集合積に対する関手性だから，数学的には直積と関係が深い．
 \end{tcolorbox}
+
+\subsection{Kolmogorovの$\sigma$-加法族}
 
 \begin{definition}
     $(\Om_n,\F_n,P_n)$を確率空間の列とする．$\Om:=\prod_{n\in\N}\Om_n$とし，$\pr_n:\Om\to\Om_n$を射影とする．射影が$\Om$上に定める$\sigma$-加法族を，積$\sigma$-加法族という．
@@ -1779,25 +1890,36 @@ title=]
     $\Om_n$はいずれもPoland空間で，$\F_n$がBorel集合族であるとき，コルモゴロフの$\sigma$-加法族$\F$は，$\Om$の直積位相が生成するBorel集合族に一致する．
 \end{theorem}
 
-\section{標準確率空間}
+\subsection{Kolmogorovの拡張定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    多様体に対するEuclid空間のように，標準的な空間を用意するために，同型の理論を整備し，$(\R,\mu)$の同型類を特徴づける．
+    圏論的な精神を重んじて，押出の言葉で書く．
 \end{tcolorbox}
 
-\begin{definition}[canonical measure]\label{def-canonical-measure}
-    $P$を$\Omega$上の完備な確率測度とする．$(\Omega,P)$が，正則確率測度を備えた実数空間$(\R,\mu)$に同型である時，$(\Omega,P)$を\textbf{標準確率空間}と呼ぶ．
-\end{definition}
+\begin{theorem}
+    分布列$\{\mu_n\},\;\mu_n\in P(\R^n)$がKolmogorovの一貫性条件
+    \begin{quote}
+        (C) $\forall_{n<m}\;\mu_n=(\pr_n)_*\mu_m$．
+    \end{quote}
+    を満たすならば，唯一の分布$\mu\in P(\R^\N)$が存在して，$\mu_n=(\pr_n)_*\mu$を満たす．
+\end{theorem}
 
-\begin{definition}[pushforward measure]
-    $S$上の測度$P$の，可測関数$f:S\to T$による
-    像測度を，$Pf^{-1}$または$f_*P$で表す．
-\end{definition}
+\section{積分の拡張}
 
-\begin{lemma}
-    $P$が完備ならば$Q$も完備である．
-\end{lemma}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    まずは，関数解析の力を借りて，積分を非可測な関数に対しても延長する，Hoffmann-Jorgensenの理論を展開する．
+    この議論は一般の局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$に関して展開できる．
+\end{tcolorbox}
+
+\begin{definition}[outer integral]
+    $(\Om,\A,P)$を確率空間，$T:\Om\to\o{\R}$を写像とする．
+    \begin{enumerate}
+        \item $E^*[T]:=\inf\Brace{E[U]\in\R\mid U\ge T,U\in\Meas(\Om,\o{\R}),E[U]\in\R}$を，押し出された測度$T_*P$に関する$\o{\R}$上のRadon上積分とする．
+        \item 写像列$(X_n:\Om_n\to\Om)$がBorel可測関数$X:\Om_\infty\to\Om$に弱収束するとは，$\forall_{f\in C_b(\Om)}\;E^*[f(X_n)]\to E[f(X)]$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
 
 \chapter{確率論の基礎概念}
 
@@ -1814,6 +1936,66 @@ title=]
         \item 
     \end{enumerate}
 \end{quotation}
+
+\section{可分完全確率測度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    測度論なる形式は，構成上の困難を持つ．
+    多様体と同様（選択公理の下で第２可算ならば可分），可分性などの暗黙の仮定を置くことになる．
+
+    Kolmogorovは確率測度$\mu$にはじめ完備性(零集合の任意の部分集合は可測)のみを仮定していたが，晩年完全性を追加した．
+    伊藤清の教科書では可分性も追加した．
+    この2つが揃えば，$\R$の部分集合上の$K$-正則確率測度\ref{lemma-K-regular}のみに議論領域を絞ったことになる．
+    完全性は像測度に遺伝する．
+\end{tcolorbox}
+
+\begin{notation}[\cite{伊藤清}の用語のまとめ]\mbox{}
+    \begin{enumerate}
+        \item 任意の測度空間$(X,\B,\mu)$に対して存在する完備化$\o{\mu}$を，\textbf{Lebesgue拡大}と呼ぶ．
+        \item 確率空間に位相の情報を加えることを考える．定義域がBorel集合族と一致するとき，確率測度をBorelといい，さらに完備でもあるとき，\textbf{正則}という．正則確率測度を\textbf{分布}といい，$P(X)$で表すこととする．
+        \item 確率空間の\textbf{強同型}とは，測度空間として同型で($\sigma$-加法族を押し出す)，かつ，測度を押し出すことをいう．
+        \item 確率空間の\textbf{同型}とは，あるfull setが定める部分確率空間同士が強同型であることをいう．これも同値関係を定める．
+        \item 正則確率空間$(\R,\mu)$と同型な完備確率空間$(\Om,P)$を\textbf{標準確率空間}という．
+        \item 像測度を$Pf^{-1},fP$で表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{definition}[perfect (Kolmogorov)]\label{def-perfect-measure}
+    完備確率空間$(S,\mu)$の測度$\mu$が\textbf{完全}であるとは，任意の可測関数$f:S\to\R$に沿った押出が正則になることをいう：$f_*\mu\in P(S)$．
+    $\mu$が正則なら，完全である\ref{lemma-regularity-of-pushout-measure}．
+\end{definition}
+
+\begin{definition}[separating family, separable]\mbox{}
+    \begin{enumerate}
+        \item $S$上の集合族$\A$が分離族であるとは，$\forall_{s_1\ne s_2\in S}\;\exists_{A\in\A}\;1_A(s_1)\ne 1_A(s_2)$を満たすことをいう．
+        \item 完備確率測度$\mu$について，$\dom(\mu)$が可算分離族を含むとき，$\mu$を\textbf{可分}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    確率空間$(S,\mu)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $(S,\mu)$は可分完全である．
+        \item $\R^1$のある部分集合とその上の$K$-正則な確率測度が存在して，これと強同型である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[完全性の遺伝]
+    $\mu$を$S$上の完全確率測度，$f:S\to T$を可測関数とする．
+    像測度$\nu:=\mu f^{-1}$は完全である．
+\end{theorem}
+
+\begin{theorem}[完全性の公理化の由来]
+    $S$は位相空間で，Borel集合$\B(S)$は可算基を持つとする．
+    $S$上の完全確率測度$\mu$が$\B(S)\subset\Dom(\mu)$を満たすならば，正則かつ可分である．
+\end{theorem}
+\begin{remarks}
+    これより，$(S,\mu)$が完全ならば，その確率変数$X:S\to\R$による押し出しは$\R$上に分布を定める．
+    なお，位相空間$S$が可算開基を持つ（＝第２可算）ならば可分で，かつ，$\B(S)$も可算基を持つ．
+    距離空間に関して，第２可算性と可分性は同値．
+    すなわち，完備可分距離空間上の完全測度のみを考えれば，必ず$\R$上に押し出せる．
+\end{remarks}
 
 \section{確率測度の変換：条件付き確率とBayesの定理}
 
@@ -2228,33 +2410,6 @@ title=]
         &=P(X_1+X_2\in E)=P^X(E).
     \end{align*}
 \end{proof}
-
-\section{可分完全確率測度}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Kolmogorovは晩年完全性を追加した．
-    伊藤清の教科書では可分性も追加した．
-    完全性は像測度に遺伝する．
-    可分性はどこで効いてくるかはわからない．
-\end{tcolorbox}
-
-\begin{definition}[perfect (Kolmogorov)]\label{def-perfect-measure}
-    完備な確率空間$(S,\mu)$上の任意の$\mu$-可測関数$f:S\to\R$に対し，
-    像測度$\mu_*f$が正則になるとき，確率測度$\mu$を\textbf{完全}という．
-\end{definition}
-
-\begin{definition}[separating family, separable]\mbox{}
-    \begin{enumerate}
-        \item $S$上の集合族$\A$が分離族であるとは，$\forall_{s_1\ne s_2\in S}\;\exists_{A\in\A}\;1_A(s_1)\ne 1_A(s_2)$を満たすことをいう．
-        \item 完備確率測度$\mu$について，$\dom(\mu)$が可算分離族を含むとき，$\mu$を\textbf{可分}という．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}
-    $\mu$を$S$上の確率測度，$f:S\to T$を可測関数とする．
-    像測度$\nu:=\mu f^{-1}$は完全である．
-\end{theorem}
 
 \section{事象と確率変数}
 
@@ -3578,7 +3733,7 @@ title=]
 
 \subsection{定義と特徴付け}
 
-\begin{definition}[distribution function]\mbox{}
+\begin{definition}[distribution function]\mbox{}\label{def-distribution-function}
     \begin{enumerate}
         \item 次の3条件を満たす有界関数$F:\R\to[0,1]$を\textbf{分布関数}という．
         \begin{enumerate}[(i)]
@@ -3595,8 +3750,9 @@ title=]
     $F:\R\to\R$を有界関数とする．このとき，次は同値：
     \begin{enumerate}
         \item $F$は分布関数である．
-        \item ある確率測度$\nu\in P(\R)$が存在して，この累積分布関数である：$F=F_\nu$．
+        \item ある正則確率測度$\nu\in P(\R)$が存在して，この累積分布関数である：$F=F_\nu$．
     \end{enumerate}
+    このときの$\nu$を，$F$の\textbf{Lebesgue-Stieltjes測度}という．
 \end{lemma}
 \begin{proof}\mbox{}
     \begin{description}
@@ -3630,11 +3786,12 @@ title=]
     どうやら一様収束はしない．
 \end{remark}
 
-\subsection{分布の微分としての性質}
+\subsection{Lebesgue分解}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     一般に，定数でない連続関数$F:[a,b]\to\R$が，殆ど至る所で微分係数をもち，かつそれが消えているとき，\textbf{特異}であるという．
+    そう，「連続分布」といったときは$F$が連続であることをいい(すなわち任意の一点集合が零集合であることに同値)，「絶対連続分布」とは別概念である．
     特異な連続分布関数を持つような分布のみ，確率密度関数や確率質量関数に当たるものを持たない．
 \end{tcolorbox}
 
@@ -3642,9 +3799,10 @@ title=]
     $F$を分布関数とし，
     $f(x):=F(x)-\lim_{y\nearrow x}F(y)\ge0$とする．
     \begin{enumerate}
-        \item $f(x)\ne0$であるとき，$x\in\R$を$F$の\textbf{不連続点}といい，$f(x)$を\textbf{飛躍量}という．
+        \item $f(x)\ne0$であるとき，$x\in\R$を$F$の\textbf{不連続点}といい($\nu\{x\}\ne0$に同値)，$f(x)$を\textbf{飛躍量}という．
         \item $\forall_{\ep>0}\;F(x+\ep)>F(x-\ep)$が成り立つとき，点$x$は$F$の\textbf{増加点}であるという．不連続点ならば増加点である．
-        \item 連続な分布関数$F$の増加点全体の集合がLebesgue零集合であるとき，$F$を\textbf{連続な特異}であるという．
+        \item 連続な分布関数$F$の増加点全体の集合がLebesgue零集合であるとき，$F$を\textbf{連続特異分布関数}であるという．
+        \item 不連続点がfull set：$\nu(D_\nu)=1$であるとき，\textbf{純不連続分布／離散分布}という．不連続点はたかだか可算なので，そこでの値$\nu\{x\}$で定まる．これは離散分布$F$に対応する．逆に，すべての点が$F$の連続点であるとき(すべての一点集合が零集合であることに同値)，これを連続分布という．
     \end{enumerate}
 \end{definition}
 
@@ -3820,9 +3978,15 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\begin{lemma}[inversion formula]\label{lemma-反転公式}
-    確率測度$\nu$とその特性関数$\varphi$について，区間$(a,b)$で$\nu[\{a\}]=\nu[\{b\}]=0$ならば，すなわち，$a,b$が$F$の連続点ならば，
-    \[\nu[(a,b)]=F(b)-F(a)=\frac{1}{2\pi}\lim_{T\to\infty}\int^T_{-T}\frac{e^{-iua}-e^{-iub}}{iu}\varphi(u)du.\]
+\begin{lemma}[Levy's inversion formula]\label{lemma-反転公式}
+    確率測度$\nu$とその特性関数$\varphi$について，
+    \begin{enumerate}
+        \item 区間$(a,b)$で$\nu[\{a\}]=\nu[\{b\}]=0$ならば，すなわち，$a,b$が$F$の連続点ならば，
+        \[\nu[(a,b)]=F(b)-F(a)=\frac{1}{2\pi}\lim_{T\to\infty}\int^T_{-T}\frac{e^{-iua}-e^{-iub}}{iu}\varphi(u)du.\]
+        \item 一般の区間$(a,b)$と分布$\nu$については，左辺を
+        \[\nu((a,b))+\frac{\nu(\{a\})+\nu(\{b\})}{2}\]
+        とすればよい．
+    \end{enumerate}
 \end{lemma}
 
 \begin{theorem}[一意性定理]
@@ -3856,6 +4020,11 @@ title=]
 
 \subsection{特性関数の特徴付け}
 
+\begin{lemma}
+    $\varphi$を$\mu$の特性関数とする．
+    \[\abs{\varphi(z+h)-\varphi(z)}\le\sqrt{2\abs{\varphi(0)-\varphi(h)}}.\]
+\end{lemma}
+
 \begin{proposition}
     関数$\varphi:\R\to\C$が特性関数であるならば，次の３条件が成り立つ．
     \begin{enumerate}
@@ -3866,7 +4035,7 @@ title=]
 \end{proposition}
 
 \begin{theorem}[Bochner]\label{thm-Bochner}
-    関数$\varphi:\R\to\C$が次の３条件を満たすならば，ある一次元分布$\mu\in\P(\R)$の特性関数である．特に，命題の３条件を満たすならば，特性関数である．
+    複素関数$\varphi:\R\to\C$が次の３条件を満たすならば，ある一次元分布$\mu\in\P(\R)$の特性関数である．特に，命題の３条件を満たすならば，特性関数である．
     \begin{enumerate}
         \item $\xi=0$で連続．
         \item $\varphi(0)=1$．
@@ -3874,7 +4043,38 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\subsection{特性関数の構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    伊藤清\cite{伊藤清}による．
+\end{tcolorbox}
+
+\begin{definition}
+    確率空間$(A,\nu)$上の可積分関数族$\{F_a\}_{a\in A}\subset L^1(\Xi)$について，
+    \[F(\xi):=\int_AF_a(\xi)\nu(da)\]
+    を\textbf{積分的凸結合}という．
+\end{definition}
+
+\begin{theorem}
+    分布の積分的凸結合は分布であり，特性関数の積分的凸結合は特性関数である．
+\end{theorem}
+
+\begin{theorem}[Polya]
+    $\varphi:\R\to\R$が次を満たすならば，特性関数である．
+    \begin{enumerate}
+        \item 非負な偶関数である．
+        \item $z>0$上減少かつ凸である．
+        \item $\varphi(0)=1$かつ$0$は$\varphi$の連続点である．
+    \end{enumerate}
+\end{theorem}
+
 \subsection{特性関数と分布の収束の対応}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特性関数と分布関数の間の対応は，次の意味で各点収束位相-弱収束位相について「連続」である．
+\end{tcolorbox}
 
 \begin{example}
     \[\nu_n(A):=\sum^n_{j=1}\frac{1}{n}\delta_{\frac{j}{n}}(A)\quad(A\in\B(\R))\]
@@ -3883,34 +4083,26 @@ title=]
     \[\int_\R g(x)\nu_n(dx)=\sum^n_{j=1}\frac{1}{n}g\paren{\frac{j}{n}}\xrightarrow{n\to\infty}\int^1_0g(x)dx.\]
 \end{example}
 
-\begin{theorem}
-    確率測度$\nu_n$の特性関数を$\varphi_n$とする．(1)$\Rightarrow$(2)である．各点収束極限$\varphi$が原点で連続であるとき，(2)$\Rightarrow$(1)でもある．
+\begin{theorem}[Glivenkoの連続定理]
+    確率測度$\nu_n$の特性関数を$\varphi_n$とする．(1)$\Rightarrow$(2)である．各点収束極限$\varphi$が原点で連続であるとき（したがってある分布の特性関数であるとき），(2)$\Rightarrow$(1)でもある(Glivenko)．
     \begin{enumerate}
         \item ある確率測度$\nu$について，$\nu_n\Rightarrow\nu$である．
         \item $\varphi_n$が関数$\varphi$に各点収束する．
     \end{enumerate}
+    なお，このとき(2)の収束はコンパクト一様に起こる．
 \end{theorem}
 
-\begin{corollary}[Glivenko]
-    確率測度$\nu_n,\nu$の特性関数を$\varphi_n,\varphi$とする．
-    このとき，次の２条件は同値．
-    \begin{enumerate}
-        \item $\nu_n\to\nu$．
-        \item $\forall_{u\in\R}\;\varphi_n(u)\to\varphi(u)$．
-    \end{enumerate}
-\end{corollary}
-\begin{proof}\mbox{}
-    \begin{description}
-        \item[(1)$\Rightarrow$(2)] 定義より自明．
-        \item[(2)$\Rightarrow$(1)] 定理による．
-    \end{description}
-\end{proof}
+\begin{theorem}[Levyの収束定理]
+    $\varphi_n:=\F\mu_n$が各点で$\varphi$に収束し，かつ，ある$a>0$が存在して，$\abs{x}<a$上一様ならば，極限関数$\varphi$はある分布$\mu$の特性関数である．
+\end{theorem}
 
 \subsection{特性関数の滑らかさと積率の存在}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    特性関数は，分布の滑らかさに関する情報を次のような形で保持している．
+    絶対積率が$n$位まで存在するならば，
+    特性関数は$n$回微分可能である．
+    逆も部分的に成り立つ．
 \end{tcolorbox}
 
 \begin{proposition}[特性関数の導関数の表示]
@@ -3935,8 +4127,9 @@ title=]
 \end{proposition}
 
 \begin{proposition}[特性関数の滑らかさが示唆する絶対積率の存在]
-    分布$\nu$の特性関数$\varphi$が$u=0$において$2r$次までの微分を持つとする．
+    分布$\nu$の特性関数$\varphi$が$u=0$において$2r$階微分可能であるとする．
     このとき，$\abs{\beta_{2r}}<\infty$．
+    特に，$\beta_k=\frac{\phi^{(k)}(0)}{i^k}\;(k\in[2n])$．
 \end{proposition}
 
 \subsection{特性関数のTaylor展開}
