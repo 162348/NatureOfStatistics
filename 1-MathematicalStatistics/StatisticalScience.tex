@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -23,16 +23,47 @@
         \item Egon Pearson 95-80：もともとはCambridgeで天体物理学を専攻してから転向．25年にNeymanと会い，31年にShewhartと会う（ここで，統計的品質管理の問題意識と出会う）．父の退官後，Fisherは優生学教授で，Egonは応用統計学部教授となる．
         \item Jerzy Neyman 94-81：父がロシアで仕事をしていた法律家で，ウクライナの大学でBernsteinに数学を学び，祖国ポーランドへ還る．ワルシャワ大学で仕事を持ちながら，ピアソンの下で留学したときに，息子と意気投合．
     \end{enumerate}
+    \begin{enumerate}
+        \item FisherとGossetは大量生産できない農業・ビール醸造なる対象に対して，比較実験を通じて科学的結論を導く必要があった．このため，誤差の統制（分散分析）と精密分布の決定と有意性検定を作った．
+        \item Karl PearsonとGaltonは大量のデータから優生学的知見を引き出したかった，どちらかといえば社会科学的営みであった．このため，誤差を最小にするfittingの技法を開発した．
+        \item NeymanとEgon Pearsonは，企業の意思決定に必要なサンプリング問題から発展して，契約上の品質に関する合意形成手段としての統一検定方式を開発する必要があった．そこで，決定理論の枠組みと最適性が問題になった．\footnote{これはプログラムに関する法律などでも，採択されることになるだろう．}
+    \end{enumerate}
+    こう見ると，検定論は，最もコミュニケーションの道具，人類生態系を別の論理で飛び回るミームであり，言語の権化であるようだ．
+    品種・肥料の有効性について有意性を下す判定が有力者の権威から統計技法の権威へと移り，また品質管理についての権威が統計技法に移った．
+    デジタルかもその延長であるとみれる．
+
+    人々の行動指針を与えるようなミーム．
+    人生が模倣するような権威を帯びた形式として，芸術とは異なる作品．
+    このようなものを作るのが夢であった．
+    これはむしろ社会彫刻のようなものであって，統計技法だけではなく，周りの言論と社会実践が肝要になってくる．
+    端的にいえば，「立場が違う人を結ぶ形式」が好きなら，それはシミュレーションや統計の手法になるわけだ．
+    僕はコミュニケーションのプロでなくてはならない．
 \end{quotation}
+
+\chapter{誤差論}
+
+\begin{quotation}
+    人類が最初に直面した統計的問題は，同一観測を繰り返しても値がばらつくが，その中でどれを「最良値」「代表値」として採用すれば良いかの問題である．
+    答えは最小二乗法が与えるが，なぜこれが「良い」のか？
+    この問題設定は実は線形回帰問題と関連する．
+    ここまでの問題に対する理論を誤差論という．
+\end{quotation}
+
+\section{田口玄一}
+
+海軍水路部天文部から統計数理研究所へ．
+田口メソッドは品質管理手法を開発・設計工程に取り入れた．
 
 \chapter{Ronald Fisherと農事試験，Pearsonと生物測定学}
 
 \begin{quotation}
     Sir Ronald Aylmer Fisher 90-62は一時期ロザムステッド農事試験場 (Rothamsted Experimental Station) の統計研究員だったが，最終的にはUCLのPearsonの座（Galton教授職）を継いでいる．
+    Fisherが導入した精密標本論をまとめると，次のRaoの言葉になる．
+    \begin{quote}
+        特定の標本から一般化されて得た知識は不確実なものであるが，一度その不確実性を数量化できれば，種類は異なれど，それは確かな知識となる．
+    \end{quote}
 
-    膨大かつ広範囲（数理統計学から遺伝学・優生学）．
-    
-    
+    また，Fisher以降，確率モデルを想定した上でパラメータを推定する「理論モデル主導的」な枠組みが支配したが，計算資源が豊かになったことで，「データ主導的方法」が興隆した．
 \end{quotation}
 
 \section{概観}
@@ -118,6 +149,33 @@ title=]
     色盲などのような性に伴う遺伝因子の多くは劣性で，$a$の男性すべてと$aa$の女性すべてに現れる．
     したがって，起こる確率が男性で$\al$ならば，女性では$\al^2$になる．
 \end{theory}
+
+\section{最尤法}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Pearsonのモーメント法は静的な解析であったが，最尤法は攻撃で動的で推論的である！
+    22年\cite{Fisher22}に系統的に提示する．
+\end{tcolorbox}
+
+\begin{history}[赤池さんはFisherの超克を意識していた]
+    \cite{Akaike76}において，
+    \begin{quote}
+        MLEはFisherによって初めて詳細に論じられてから極めて広く用いられているが，その有効性の根拠が何にあるのかは明らかではなく，
+        その合理性の説明は通常直感に訴えてなされてきた．
+        前項で論じた因子分析法には最尤法が用いられている．
+        そこで，最尤法が何を最適化しようとしているのかが明らかになりさえすれば，先の問題は解決されることになる．
+    \end{quote}
+    この後すぐに，漸近論的な立場から，$M$-推定量のような発想「最尤法は$E[\log_ef(Y|\theta)]$を最大にする$\theta$の推定量である」さらに言い換えると，
+    「KL-情報量を規準として，真の分布を最もよく近似する$f(y|\theta)$を求めようとしている」と捉え直している．
+
+    AICの導入は，平均対数尤度$l(\theta)/N=\bP_n[\log f(Y|\theta)]$が，$E[\log_ef(Y|\theta)]$の推定値であるという着想の下に成立した．
+    この見方に従えば，$\{f(y|\theta)\}_{\theta\in\Theta}$の族が$Y$の真の分布を与える$g(y)$を含まない場合においても，最尤法が統計的モデルのパラメータ決定に有効なものでありうることが容易にわかる．
+    直交射影ではないが，集合$\{f(y|\theta)\}_{\theta\in\Theta}$の中で$g$に最もKL-距離の意味で近い点を選出する算譜なのだろう．
+    つまり，赤池さんの言葉で言えば，最尤推定量$\wh{\theta}$はエントロピーに関して$g$を最もよく近似する$f(y|\theta)$を与える$\theta$の，観測値$y_1,\cdots,y_N$に基づく推定値を与える．
+    ただし，適用条件は，平均対数尤度が$E[\log_ef(Y|\theta)]$の推定値として有効な限りであり，またモデル$\{f(Y|\theta)\}$も人間が勝手に自分の責任において取捨選択するものである．
+    「Fisherが明らかにし得なかった尤度の本質的に実験的帰納的な性格と，統計理論における尤度利用の必然性とが，ここに客観的に描き出されている」．
+\end{history}
 
 \section{実験計画法}
 
@@ -300,7 +358,47 @@ title=]
 
 \section{Neyman-Pearsonの統計的仮説検定理論}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    28, 33にて，対立仮説，第I,II種の過誤，検出力の枠組みからFisherの有意性検定を捉え直した．
+    そして検定の「最適性」の枠組みをこしらえた，このメタ視点が達成点である．意思決定理論的だね．
+    2種類の過誤はトレードオフの形になっていることに注目すると，過誤確率の最適制御の問題になる．
+    これについて，まず単純検定仮説・対立仮説なる対象に絞って，Neyman-Pearsonの補題を立てた．
+\end{tcolorbox}
 
+\begin{history}[Fisherの最尤法からアイデアを得て，検定論でも「最適性」を追求した．]
+    28\cite{NeymanPearson28}では，尤度比検定が導入された．
+    33\cite{NeymanPearson33}では，最強力検定(most efficient test)が定義された．
+    複合仮説の場合については一様最強力検定が最適だろうが，これが構成できる状況は稀である．
+    33年以降の研究は，次善策の提案が続き，38年まで共同研究を続ける．
+    不偏検定，一様不偏検定，相似検定(similar test)など．
+
+    Karl PearsonとFisherの一番の違いは，誤差への関心の高さと，最適性への関心の高さの別である．
+    このFisherの立場はNeyman-Pearsonに確かに受け継がれた．
+    \begin{quote}
+        統計的仮設検定の問題とは，棄却域を選択する問題である．
+    \end{quote}
+    しかし，この立場に対するFisherの反論としては，「有意性が棄却されるか」しかないのであって，その逆は「採択する」ではないはずである．
+    これは\textbf{帰納的推論}の枠組みであり，この立場からは「形式主義すぎる」ということになる．
+    一方でNeyman-Pearsonは\textbf{帰納的行動}の枠組みと言える．
+    いずれにしろ，検定の用途の違いである．
+\end{history}
+
+\begin{context}[sampling inspection]
+    1924年からBell研究所にて，Dodge, H. F. and Romig, H. G.が抜き取り検査の研究が始められた．
+    誤って合否を下すことは，producer's riskとconsumer's riskの狭間にある．
+    つまり，Neyman-Pearsonの応用先的には，どちらかに意思決定をする必要があったのだ！
+
+    最終的に，Stanfordで品質管理の集中講義が行われ，1945年夏の時点では各企業から派遣されて出席者は1万人を超えたという．
+    
+    ここにおいて，Neyman-Pearsonの検定技法は，\textbf{契約上の品質に関する合意形成手段として用いられた}のである！
+\end{context}
+
+\begin{tbox}{red}{}
+    このように，\cite{Fisher}の観点から見ると，統計手法に関する論争は全て応用先の
+    要請の違いから起因したものであり，その解決は，「立場の違い自体をモデル化し，決定理論を作る」ことでアルゴリズム的に解決されてきた．
+
+\end{tbox}
 
 \chapter{参考文献}
 
@@ -323,6 +421,12 @@ title=]
     Fisher, R. A. (1922). On the Mathematical Foundations of Theoretical Statistics.
     \bibitem{Fisher25}
     Fisher, R. A. (1925). Theory of Statistical Estimation.
+    \bibitem{NeymanPearson28}
+    Neyman, J., and Pearson, E. S. (1928). On the Use and Interpretation of Certain Test Criteria for Purposes of Statistical Inference. \textit{Biometrika}, 20A, 175-240.
+    \bibitem{NeymanPearson33}
+    Neyman, J., and Pearson, E.S. (1933). On the problem of the most efficient tests of statistical hypotheses. \textit{Phil. Trans. R. Soc.}, Ser. A, 231, 289–337.
+    \bibitem{Akaike76}
+    赤池広次 (1976) 「情報量規準AICとは何か」数理科学153号，5-11ページ．
 \end{thebibliography}
 
 \end{document}

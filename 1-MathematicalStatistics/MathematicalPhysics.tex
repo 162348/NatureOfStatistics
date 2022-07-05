@@ -16,7 +16,211 @@
     接空間は位置と速度の組の全体となる．
     最小作用の原理は，さらにRiemannとEinsteinを経由して，
     物体は測地線に沿って動くという幾何学が出来た．
+
+    力学は、幾何学→Euler的解析学とLagrange的代数学の洗練を受ける→Fermatの原理を主軸にしてHamiltonとJacobiによる最小作用の原理を中心にした展開→幾何学が拾う（Poincareの手による）、の旅程を辿った。
+    Hamilton-Jacobi理論以降は数学史的な先行研究もない．
 \end{quotation}
+
+\section{古典力学}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    当時は幾何学の対義語が「代数」「幾何」であった．
+    Euclidの原論から，力学を引き剥がす試みが「解析力学」(Lagrange)であった．
+    初めて，代数・幾何の離陸，という意味で，応用数学の故郷である．
+    Eulerの時点で変分法まで揃っていた．
+\end{tcolorbox}
+
+\begin{history}[幾何学の時代]
+    Issac Newton 1642-1727 は天体の運動を幾何学の言葉で書いた．
+\end{history}
+
+\begin{history}[Leonhard Euler 1707-1783]
+    Euler 1747 \cite{Euler1747}「天体の運動一般の研究」でNewtonの運動方程式を定式化した．
+    EulerはLeibnizの方法の方が数学的に発展性があると気づいて，多いに発展させた．これでNewtonの質点力学を剛体力学，弾性体力学，流体力学へと発展させた．
+
+    さらには，最速降下線や等周問題を統一的に扱う変分法という分野を創始したのもEulerであった．
+    1744年には，変分問題の極値
+    を与える曲線がみたす方程式を導いている．その
+    論文の付録では，質量と軌道要素上の速さの積を
+    軌道に沿って積分したものを作用量と定義し，そ
+    れを最小にする最小作用の原理によって運動が規
+    定されることも提唱している．
+\end{history}
+
+\begin{history}[Joseph Louis Lagrange 1736-1813]
+    まず，変分法を$\delta$の記法を用いて完全に脱幾何学し，
+    まず極値曲線の方程式を解いて，Eulerに招聘された．さらに，力学
+    解析・代数の言葉で書き直したのが『解析力学』1788,\cite{Lagrange1788}．
+    事実，運動方程式から，最小作用の原理などは定理として導かれる．
+    ポテンシャルなどの技法は既に多様体的な考え方を内包していた．なお，ポテンシャルが存在するとは，保存系であることに同値．
+    この考え方を用いて運動方程式を書き直したもの，すなわち
+    Lagrangeの方程式
+    \[\dd{}{t}\pp{t}{\dot{q}_i}-\pp{T}{q_i}+\pp{U}{q_i}=0\]
+    も導かれる．
+
+    Siméon Denis Poisson 1781-1840の1809の仕事を盛り込んだ第二版も，定理を増やした．
+\end{history}
+
+\section{Hamiltonの研究}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    イギリスで代数と論理学が出会い，Booleなどの結節点が，計算機を産んだ．Leibnizの夢である．
+    その中でHamiltonはたくましく当時の数理科学優等生であったフランスに学び，イギリスらしい進展を付け加えた．
+
+    実は，変分原理(今ではHamiltonの原理と呼ばれる)から，Lagrangeの方程式も導ける．2つは同値なのだ！
+    すると，連立1階常微分方程式系を解く問題が出現し，こちらの方が発展性があるのであった．
+
+    作用汎関数1つが系に関する情報を湛えている，というのが基本的手法であった．
+\end{tcolorbox}
+
+\begin{history}[William Rowan Hamilton 1805-1865]
+    本格的に数学を始めたのは15歳の頃で、当時最先端のラグランジュ、ラプラスの書物を学ぶ。この頃わずか16歳にしてラプラスの『天体力学』に誤りを発見し、専門家を驚かせた。
+    Hamiltonは実は詩人になりたかったのかもしれない．ワーズワースに憧れていたのだろうか．
+\end{history}
+
+『趣味の遺伝』(1906)で「ハミルトンのクオータニオンを発明したのもおおかたこんなものだろう」
+という表現があるが，これが受け入れられるはずがあろうか？
+そういえば線形変換を行列ではなく，四元数で書いていたのだっけか．
+
+\subsection{光学研究}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    「光線系の理論」と題する一連の考作が1828年から発表されている．
+    光学と力学が共進化したのは極めて興味深い事実である．
+    Fermatの原理をどの程度着想源としたかは不明である．
+\end{tcolorbox}
+
+\begin{history}
+    ハミルトンは反射・屈折の法則から，Fermatの原理を「証明」している．
+    そして，Fermatの原理の翻訳として得たのは，
+    \[\delta I=\delta\int\nu(x,y,z)d\rho=0.\]
+    である．ただし，$\nu$は屈折率，$\rho$は線分要素とした．
+    $I$を特性関数という．
+\end{history}
+
+\subsection{力学への応用}
+
+\begin{history}
+    1834年に発表した「動力学の一般的方法」\cite{Hamilton34}では，Newtonの原理から出発して，
+    \[S:=\int^t_0(T-U)dt\]
+    なる，「特性関数」にあたる量を定義した．
+    そして最小作用の原理を示した．
+\end{history}
+
+\begin{remarks}
+    つまり，"Hamiltonの原理"から他を導出する手法は，確かに持ち味であり，副産物として得たことは間違いないが，そこを出発点に据えた訳ではない．
+\end{remarks}
+
+\section{Jacobiの研究}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    王立協会の紀要に発表されたHamilton力学研究は大陸
+    の有力な研究者たちの注目を引いた。
+    1842-43年冬学期におこなった講義録『力学講義』が集大成になる．
+
+    ハミルトンが示したのは，運動方程式を直接解かず，偏微分芳程式を解いて主関数を求め，それを
+    使って運動方程式の解が得られることである．ヤコビは，この着想を常微分方程式系を偏微分方程式に帰着して解く方法として整備した．
+    すなわち，
+    あるクラスの連立1階常微分方程式系（正準方程式）を，非線形1階偏微分方程式に帰着して解く技法をつなげた(Hilbert\cite{Hilbert37})．
+    一般に，偏微分方程式のほうが常微分方程式を解くより難しい．
+    しかしヤコビは，適当な変数変換を施し，変数を完全に分離で
+    きれば，HJ方程式は求積法で容易に解けることを指摘した．
+    これは正準変換と呼ばれている．
+\end{tcolorbox}
+
+\begin{history}[Carl Gustav Jacob Jacobi 1804-1851]
+    1842-43のケーニヒスベルク大学講義録では，
+    JacobiもNewtonの原理から出発して，種々の結果を定理として導く．
+    しかし，Hamiltonの原理を出発点に据えて，等価に導出し直したりもした．
+
+    1836の論文\cite{Jacobi36}では，
+    2つの固定中心から引きつけられる質点の運動に対応するHJ方程式の変数を，
+    楕円座標を導入して完全に分離させ，オイラー以
+    来の難問を解いてみせた．
+    ヤコビの解法は時とし
+    て強力なのである．ヤコビが自覚するように，既
+    知の変数変換で変数が分離するような問題に対し
+    てしか適用できない方法だが，19世紀後半には近
+    似計算法が発展していくので，彼の着想は有効に
+    活用されていった．
+
+    1837の論文\cite{Jacobi37}「変分法と微分方程式の研究」と「偏微分方程式の解を常微分方程式系に帰着することについて」と「力学の微分方程式の積分について」で，
+    変分問題を偏微分方程式に帰着し，「正準性」を定義して解法を提示し「正準変換定理」を導き，
+\end{history}
+
+\begin{remarks}
+    しかし実は，正準方程式の解法理論を提示するにあたって，正準変換のピースを完成させていなかった．
+    つまり，母関数の原型$\psi$とH-Jの完全解との関係に気づいていない．
+\end{remarks}
+
+\begin{theorem}
+    
+\end{theorem}
+
+\section{正準変換への過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここまでの理論では「正準変換（正準形の射）」の考え方が入っていない．
+    以降，Hamilton-Jacobi理論は天体力学と呼ばれていた．
+\end{tcolorbox}
+
+\begin{history}
+    1892年,彼の
+    代表作『天体力学の新しい方法』で，
+    Newton方程式からHamilton方程式を導き，その後Jacobiの解法を紹介する．
+    しかしここでさらに一歩踏み込んで，Hamilton-Jacobi方程式の完全解が
+    正準変換の母関数になることを示唆した．
+    第3版で，正準変換の導入法の現代的なものが得られた．
+
+    解こう
+とするハミルトン方程式を単純にするよ
+変換の母関数を求めるためにHJ方程式の完全解を求めることにより，元の方程式の解を得る，という
+    こうした現代的な解法を"Jacobiの解法"と呼んだが，実際Poincaréの業績である．
+\end{history}
+
+\section{Poincaré}
+
+\section{20世紀前半}
+
+\begin{history}[エドマンド・T・ホイッテーカー(1873-1956)]
+    Lieの接触変換は，正準変換を引き起こすことに気づいた．
+\end{history}
+
+\section{天の力学から原子の力学へ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    原子模型の提案から，Hamilton光学が見直された．
+    ハミルトン光学ないしは光学のHJ理論という分野が，1920年代には確立していた．
+    そしてBornがHamilton-Jacobi理論を，天体力学と量子力学をつなげる数学的形式として見直し，『原子の力学』(1925)として刊行した．
+    「量子力学」と題する論文が刊行されたのも，同年のすぐ後の出来事であった．
+\end{tcolorbox}
+
+\begin{history}
+    当時の量子物
+理学者の間でよく読まれたのは，スウェーデンの
+天文学者力‐ル・シヤリニ(1862-1934)による
+『天の力学』であった.
+\end{history}
+
+\begin{history}[David Hilbert]
+    1922-23年，ダーフイト-ヒルベルト(1862-1943)はゲツチングン大学で，『量子論の数学的基
+    礎』17を講義した．ここで彼は，変分原理に基づい
+    て光学と力学のHJ理論を統一的に論じた．
+    これはHamiltonの仕事ではなく，Hilbertなのであった！
+\end{history}
+
+\begin{history}[Max Born]
+    ヒルベルトの定式化を押さえた上でボルンは，
+    1925年に『原子の力学』を刊行する．
+    Hilbertの講義録は2009まで世に出なかったので，
+    今日の前期量子論を理解するためのHamilton-Jacobiの理論の教科書としての流れを作った．
+\end{history}
 
 \chapter{場の量子論}
 
@@ -109,6 +313,31 @@ Wickの定理はあらゆるつなぎ方に対して和を取れ，というこ�
 縮約の場合の数は爆発しても，その位相的な同型類は少ないままである．
 その同型類に測度を考えれば，なんとか計算可能でないか？というのがFeynmanのアイデアであった．
 
+\chapter{参考文献}
 
+\begin{thebibliography}{99}
+    \bibitem{Euler1747}
+    Euler, L. (1747). Reserches sur le mouvement des corps céleste général. Omera Omnia, Ser.II, Vol.25.
+    \bibitem{Lagrange1788}
+    (1788) Méchanique analitique . Paris.
+    \bibitem{Lagrange1811}
+    Mécanique analytique. 2nd ed., Volume 1.(1811) Vol.2 (1813) Paris.
+    \bibitem{Hamilton34}
+    Hamilton, W. R. (1834). On a General Method in Dynamics; by which the Study of the Motions of all
+    free Systems of attracting or repelling Points is reduced to the Search and Differentiation
+    of one central Relation, or characteristic Function.
+    \bibitem{Hamilton35}
+    Hamilton, W. R. (1835). Second Essay on a General Method in Dynamics.
+    \bibitem{Jacobi36}
+    Jacobi, C. G. J. (1836).
+    “Sur le Mouvement d’un Point et sur un Cas particulier du Probl`em des trois Corps,” Lettre adress´ee
+`a l’Acad´emie des Sciences de Paris, Comptes Rendus, t.3, pp.59-61 = Werke 4, pp.37-38.
+    \bibitem{Jacobi37}
+    Jacobi, C. G. J. (1837). Note sur
+    \bibitem{Born25}
+    Max Born. (1925). Vorlesungen über Atommechanik. Berlin, Springer.
+    \bibitem{Hilbert37}
+    Courant, R., and Hilbert, D. (1937). Methoden der Mathematischen Physik. Berlin, Verlag von Julius Springer.
+\end{thebibliography}
 
 \end{document}
