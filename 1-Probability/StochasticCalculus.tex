@@ -2172,17 +2172,15 @@ title=]
 
     Brown運動$B_t$は微分可能ではないし，有界変動にもならないので，Stieltjes積分としては定義できる道はない．
     連鎖律は伊藤の公式と呼び，微分は出来ないから積分の言葉で定式化される．余分な右辺第3項が特徴である．
-    これを修正するのがStratonovich積分／対称確率積分であるが，$X$に対してより強い条件を必要とすることとなる．
+    この手法は，一般の$L^2$-有界なマルチンゲールに関して使える．これはDoobが初めに指摘し，渡辺信三，国田寛 (67,\cite{KunitaWatanabe})が理論を作り，変数変換公式を得た．
+    さらにMeyer (67,\cite{Meyer})が精緻な理論を組み立てる．
+    余分な右辺第3項を修正するのがStratonovich積分／対称確率積分であるが，$X$に対してより強い条件を必要とすることとなる．
 
     伊藤清はKolmogov (1931,\cite{Kolmogorov31})から発想した．一般の連続Markov過程を，連続関数$a,b$を用いて
     \[E[X_{t+\Delta}-X|X_t=x]=a(t,x)\Delta+o(\Delta),\quad \Var[X_{t+\Delta}-X_t|X_t=x]=b(t,x)\Delta+o(\Delta)\]
     で定める，という出発点が前文に書いてあった．これはBrown運動の場合から次の変換
     \[X_{t+\Delta}-X=a(t,X_t)\Delta+\sqrt{b(t,X_t)}(B_{t+\Delta}-B_t)+o(\Delta)\]
     を経て得られる，ということでもあるが，この式は意味を持たない．基礎付けることができれば，Brown運動の見本路に関する知識を，Markov過程の見本路を調べることに応用できそうである．
-
-    ここでBrown運動と言っていたものは，一般のマルチンゲールで良い．
-    これはDoobが初めに指摘し，渡辺信三，国田寛 (67,\cite{KunitaWatanabe})が理論を作り，変数変換公式を得た．
-    さらにMeyer (67,\cite{Meyer})が精緻な理論を組み立てる．
 
     確率微分方程式を解くには，例えば同値な確率積分方程式をPicardの逐次近似法によって解くことが考えられる．
 \end{quotation}
@@ -2191,35 +2189,45 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    博士論文\cite{Ito42}
+    博士論文\cite{Ito42}でLévy過程のLévy-伊藤分解定理を定め，\cite{Ito44}で確率積分を定義した．
 \end{tcolorbox}
 
 \subsection{発展的可測}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    過程が可測であることより弱い条件として，発展的可測性を定義する．
     発展的可測な確率変数に関しては，見本道毎の積分ではなくて，より大局的な視点で見れる．
     そしてこのクラスについては，$\int^t_0u_sds$が$\F_t$-可測となる．
 \end{tcolorbox}
 
 \begin{definition}[progressive measurable]
-    過程$(u_t)_{t\in\R_+}$が\textbf{発展的可測}であるとは，
-    \[\forall_{t\in\R_+}\;u|_{\Om\times[0,t]}\in\L(\Om\times[0,t],\F_t\times\B([0,t]))\]
-    を満たすことをいう．
+    過程$(u_t)_{t\in\R_+}$が\textbf{発展的可測}であるとは，各時点$t$までの過程$u|_{\Om\times[0,t]}$が積写像として可測であることをいう：
+    \[\forall_{t\in\R_+}\;u|_{\Om\times[0,t]}\in\L(\Om\times[0,t],\F_t\times\B([0,t])).\]
 \end{definition}
 
 \begin{lemma}[発展的可測性の十分条件]
-    適合的な可測過程$u$には，発展的可測なバージョンが存在する．
+    適合的な可測過程$u:\Om\times\R_+\to\R$には，発展的可測なバージョンが存在する(Meyer 1984, Th'm 4.6)．
 \end{lemma}
 
 \subsection{単過程上の定義}
 
-\begin{notation}
-    $\P$を$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする．
-    これが定める2乗可積分関数のHilbert空間を$L^2(\P):=L^2(\Om\times\R_+,\P,P\times l)$と表す，ただし$l$はLebesgue測度とした．
-    ノルムを
-    \[\norm{u}^2_{L^2(\P)}:=E\Square{\int^\infty_{0}u_s^2ds}=\int^\infty_0E[u^2_s]ds\]
-    で表す(最後の等式はFubiniの定理による)．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    「発展的可測な2乗可積分過程のなすHilbert空間」を$(L^2(\F\times\B^1(\R))\subset )L^2(\P)$で表す，これは過程を積空間上の関数と見ている．
+    単過程とは，時間軸を有限に分解して，それぞれの区間上で特定の2乗可積分確率変数とみなせる挙動をする過程をいう．
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $\P$を積空間$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする：
+        \[\P:=\Brace{A\in P(\Om\times\R_+)\mid A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])}\]
+        \item これが定める2乗可積分関数のHilbert空間を$L^2(\P):=L^2(\Om\times\R_+,\P,P\times l)$と表す，ただし$l$はLebesgue測度とした．
+        また，$L^2_T(\P):=L^2(\Om\times[0,T],\P|_{\Om\times[0,T]},P\times l)$なる略記も用いる．
+        \item ノルムを
+        \[\norm{u}^2_{L^2(\P)}:=E\Square{\int^\infty_{0}u_s^2ds}=\int^\infty_0E[u^2_s]ds\]
+        で表す($u^2_s$が非負値可測関数であることに注意すると，最後の等式はFubiniの定理による)．
+    \end{enumerate}
 \end{notation}
 
 \begin{definition}[simple process, stochastic integral]\mbox{}
@@ -2233,25 +2241,63 @@ title=]
         と定める．
     \end{enumerate}
 \end{definition}
+\begin{remarks}
+    すでにこの時点で，$\phi_j$を$1_{(t_j,t_{j+1}]}$に対して$\F_{t_j}$-可測としているため，$\phi_j\indep B_{t_{j+1}}-B_{t_j}$を含意することがトリックになる．
+\end{remarks}
 
-\begin{lemma}
+\begin{lemma}[単関数上の積分の性質]
     積分$I:\E\to\L^2(\Om)$は，$u,v\in\E,a,b\in\R$について次を満たす．
     \begin{enumerate}
         \item 線形性：$\int^\infty_0(au_t+bv_t)dB_t=a\int^\infty_0u_tdB_t+b\int^\infty_0v_tdB_t$．
-        \item 中心化：$E\Square{\int^\infty_0u_tdB_t}=0$．
-        \item 等長性：$E\Square{\paren{\int^\infty_0u_tdB_t}^2}=E\Square{\int^\infty_0u^2_tdt}$．
+        \item 中心化：$E[I(u)]=E\Square{\int^\infty_0u_tdB_t}=0$．
+        \item 等長性：$\norm{I(u)}^2_{\L^2(\Om)}=E\Square{\paren{\int^\infty_0u_tdB_t}^2}=E\Square{\int^\infty_0u^2_tdt}=\norm{u}^2_{\L^2(\P)}$．
     \end{enumerate}
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $u_t,v_t$が定める$\R_+$の分割の細分を取って考えると良い．
+        \item $\forall_{j\in n}\;\phi_j\indep B_{t_{j+1}}-B_{t_j}$より，
+        \[E\Square{\int^\infty_0u_tdB_t}=\sum^{n-1}_{j=0}E[\phi_j(B_{t_{j+1}}-B_{t_j})]=\sum^{n-1}_{j=0}E[\phi_j]E[B_{t_{j+1}}-B_{t_j}]=0.\]
+        \item 
+    \end{enumerate}
+\end{proof}
 
 \subsection{延長}
 
 \begin{proposition}
     $\E\subset L^2(\P)$は稠密．
 \end{proposition}
+\begin{proof}
+    $\E\subset L^2(\P)$の間に，$C$-過程のクラス
+    \[C:=\Brace{u\in L^2(\P)\mid u:\R_+\to L^2(\Om)\text{は連続}}\]
+    を考える．$C$-過程は可測過程であることに注意すると，たしかに$L^2(\P)$より小さい：$\E\subset C\subset L^2(\P)$．
+    \begin{description}
+        \item[$C$-過程による近似] 任意の$u\in L^2(\P)$を取る．
+        \[u^{(n)}_t:=n\int^t_{\paren{t-\frac{1}{n}}\lor0}u_sds\]
+        と定めると，$u^{(n)}:\R_+\to L^2(\Om)$は連続であり，したがって$\F\times\B^1(\R)$-可測．特に，$u^{(n)}\in L^2(\P)$．
+        このとき，$(u_t^{(n)})_{n\in\N}\to u_t$すなわち$\lim_{n\to\infty}E\Square{\int^\infty_0\abs{u_t-u_t^{(n)}}^2dt}=0$．
+
+    \end{description}
+\end{proof}
+
+\begin{corollary}
+    確率積分$I:\E\to L^2(\Om)$は，線型な等長同型$I:L^2(\P)\to L^2(\Om)$に延長できる．
+\end{corollary}
+\begin{proof}
+    任意の$u\in L^2(\P)$に対して，$\E$上の$L^2(\P)$-収束列$(u^{(n)})$が取れ，また$I:\E\to L^2(\Om)$の等長性より，極限
+    \[I(u):=\lim_{n\to\infty}\int^\infty_0u_t^{(n)}dB_t\]
+    が存在する．あとは，収束列$(u^{(n)})$の取り方に依らないことを示せば良い．
+\end{proof}
 
 \begin{proposition}
-    確率積分$I:\E\to L^2(\Om)$は，線型な等長同型$I:L^2(\P)\to L^2(\Om)$に延長できる．
+    任意の$u,v\in\L^2(\P)$について，
+    \begin{enumerate}
+        \item $E[I(u)]=0$．
+        \item $E[I(u)I(v)]=E\Square{\int^\infty_0u_sv_sds}=E[I(uv)]$．
+    \end{enumerate}
 \end{proposition}
+
+\subsection{不定積分}
 
 \begin{definition}
     任意の$[0,T]\;(T>0)$上の積分を
@@ -2266,27 +2312,44 @@ title=]
     が成り立つ．
 \end{example}
 
-\subsection{性質}
+\section{不定確率積分の過程}
+
+\begin{notation}
+    発展的可測な2乗可積分関数のうち，任意の不定積分も有限確定するクラス
+    \[L^2_\infty(\P):=\Brace{u\in L^2(\P)\;\middle|\;\forall_{t>0}\;E\Square{\int^t_0u_s^2ds}<\infty}\]
+    については，不定積分の過程$\paren{\int^t_0 u_sdB_s}_{t\in\R_+}:\R_+\to\L^2(\Om)$が確定する．
+\end{notation}
 
 \begin{proposition}
-    任意の$u,v\in L^2(\P)$について，
+    不定積分の過程$\paren{M_t:=\int^t_0 u_sdB_s}_{t\in\R_+}\;(u\in L^2_\infty(\P))$について，
     \begin{enumerate}
-        \item $E[I(u)]=0$．
-        \item $E[I(u)I(v)]=E\Square{\int^\infty_0u_sv_sds}$．
+        \item 加法性：$a\le b\le c\in\R_+$について，$\int^b_au_sdB_s+\int^c_bu_sdB_s=\int^c_au_sdB_s$．
+        \item 可換性：$a<b\in\R_+$と$\F_a$-可測有界関数$F:\Om\to\R$について，$\int^b_aFu_sdB_s=F\int^b_au_sdB_s$．
+        \item マルチンゲール性：$\{M_t\}_{t\in\R_+}\subset\subset L^2(\Om)$は$(\F_t)_{t\in\R_+}$-マルチンゲールであり，連続なバージョンが存在する．
+        \item 最大不等式：$\forall_{T,\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda^2}E\Square{\int^T_0u^2_tdt}$かつ$E\Square{\sup_{t\in[0,T]}\abs{M_t}^2}\le 4E\Square{\int^T_0u^2_tdt}$．これは$u\in L^2(\P)$に過ぎずとも，$T=\infty$の場合成立する．
+        \item 2次変分：$[0,t]$の分割$\pi:=\{0=t_0<t_1<\cdots<t_n=t\}$に関して，$S^2_\pi(u):=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{L^2(\Om)}\int^t_0u^2_sds$．
+        \item 停止時までの積分：$u\in L^2(\P),\tau:\Om\to\R_+$を停止時とする．このとき，$u1_{[0,\tau]}\in L^2(\P)$で，
+        \[\int^\infty_0u_t1_{[0,\tau]}(t)dB_t=\int^\tau_0u_tdB_t.\]
     \end{enumerate}
 \end{proposition}
 
-\section{不定確率積分}
-
-\begin{notation}
-    \[L^2_\infty(\P):=\Brace{u\in L(\P)\;\middle|\;\forall_{t>0}\;E\Square{\int^t_0u_s^2ds}<\infty}\]
-\end{notation}
-
-なんだこの空間は？$L^2(\P)$から何が落ちるのかわからない．
-
-\subsection{加法性}
+\begin{corollary}
+    \begin{description}
+        \item[(5)] $\forall_{p>0,T>0}$
+        \[c_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}\le E\Square{\sup_{t\in[0,T]}\Abs{\int^t_0u_sdB_s}^p}\le C_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}.\]
+    \end{description}
+\end{corollary}
 
 \section{一般の過程の積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^2_\infty(\P)$より広く，一般の局所自乗可積分な見本過程を持つ過程を積分できる．
+\end{tcolorbox}
+
+\begin{notation}
+    \[L^2_\loc(\P):=\Brace{u\in L(\P)\mid}\]
+\end{notation}
 
 \section{伊藤の公式}
 
@@ -2523,6 +2586,15 @@ title=]
     確率微分方程式はランダムなゆらぎを持つ常微分方程式であるから，同様にランダムなゆらぎを持つ偏微分方程式に当たる概念も自然に現れるはずである．
 \end{quotation}
 
+\chapter{汎関数解析}
+
+\begin{quotation}
+    厚地\cite{厚地}が近い研究をしている．
+    \begin{quote}
+        種々の多様体とその上の特徴的な関数族を訪ね歩きたいのだが，このように調べたい関数にその土地固有の確率過程を放り込んで展開すれば，何かしら見えてくると思われる．
+    \end{quote}
+\end{quotation}
+
 \begin{thebibliography}{99}
     \bibitem{Nualart}
     David Nualart and Eulalia Nualart "Introduction to Malliavin Calculus"
@@ -2536,6 +2608,8 @@ title=]
     Richard Bass - Stochastic Processes
     \bibitem{舟木}
     舟木直久『確率微分方程式』
+    \bibitem{厚地}
+    厚地淳『確率論と関数論』
     \bibitem{Morters and Peres}
     Morters and Peres - Brownian Motion
     \bibitem{Kolmogorov31}
