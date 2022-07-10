@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -2195,7 +2195,7 @@ title=]
 \subsection{発展的可測}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=発展的可測性とは$\P/\B(\R)$-可測性である]
     過程が可測であることより強い条件として，発展的可測性を定義する．
     発展的可測な確率変数に関しては，見本道毎の積分ではなくて，より大局的な視点で見れる．
     そしてこのクラスについては，$\int^t_0u_sds$が$\F_t$-可測となる．
@@ -2210,25 +2210,48 @@ title=]
     適合的な可測過程$u:\Om\times\R_+\to\R$には，発展的可測なバージョンが存在する(Meyer 1984, Th'm 4.6)．
 \end{lemma}
 
+\begin{lemma}[発展的可測性の特徴付け]
+    $\P$を積空間$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする：
+    \[\P:=\Brace{A\in P(\Om\times\R_+)\mid\forall_{t\in\R_+} A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])}\]
+    すると，確かに$\P$は$\sigma$-代数で，
+    $\P\subset\F\times\B(\R_+)$が成り立ち，
+    過程$u:\Om\times\R_+\to\R$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\P/\B(\R)$-可測：$u\in\L(\P)$．
+        \item $u$は発展的可測．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[$\P$のwell-definedness] 明らかに，$\forall_{t\in\R_+} A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])$という条件は，$A=\emptyset,\Om\times\R_+$はこれを満たし，これを満たす$(A_n)$が存在したとき，合併も満たす．
+        また，補集合については，$\F_t\times\B([0,t])$が$\Om\times[0,t]$上の$\sigma$-代数をなすことに注意すると，
+        $A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])$のとき，
+        $\o{A}\cap(\Om\times[0,t])=(\Om\times[0,t])\setminus (A\cap(\Om\times[0,t]))\in\F_t\times\B([0,t])$による．
+        \item[$\P\subset\F\times\B(\R_+)$] 
+        任意の$A\in\P$を取ると，特に$n\in\N$について，$A_n:=A\cap(\Om\times[0,n])\in\F_n\times\B([0,t])\subset\F\times\B(\R_+)$．
+        $A=\cup_{n\in\N}A_n\in\F\times\B(\R_+)$．
+        \item[(1)$\Leftrightarrow$(2)] $\P/\B(\R)$-可測過程$u:\Om\times\R_+\to\R$を取る．任意の$t\in\R_+$について，$u|_{\Om\times[0,t]}$によるBorel可測集合$B\in\B(\R)$の逆像は$u^{-1}(B)\cap(\Om\times[0,t])$であるが，$u^{-1}(B)\in\P$より，これは$\F_t\times\B([0,t])$の元である．
+    \end{description}
+\end{proof}
+
 \subsection{単過程上の定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    「発展的可測な2乗可積分過程のなすHilbert空間」を$(L^2(\F\times\B^1(\R))\subset )L^2(\P)$で表す，これは過程を積空間上の関数と見ている．
-    単過程とは，時間軸を有限に分解して，それぞれの区間上で特定の2乗可積分確率変数とみなせる挙動をする過程をいう．
+    「発展的可測な2乗可積分過程のなすHilbert空間」を$L^2(\P)(\subset L^2(\F\times\B^1(\R)))$で表し，
+    この上での$\R_+$上での確率積分を定義することを考える．
+    単過程とは，時間軸を有限に分解して，それぞれの区間上で特定の2乗可積分確率変数$\phi_j\in\L^2(\Om)$（ただし$(t_j,\infty)$の情報とは独立）とみなせる挙動をする過程をいう．
 \end{tcolorbox}
 
-\begin{notation}\mbox{}
+\begin{notation}[確率積分を定義する過程のクラス]\mbox{}
     \begin{enumerate}
-        \item $\P$を積空間$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする：
-        \[\P:=\Brace{A\in P(\Om\times\R_+)\mid A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])}\]
-        すると$\P\subset\F\times\B(\R)$が成り立ち
-        ，この$\sigma$-代数についての可測関数$f\in\L(\P)$であることと発展的可測とは同値になる．
-        \item これが定める2乗可積分関数のHilbert空間を$L^2(\P):=L^2(\Om\times\R_+,\P,P\times l)$と表す，ただし$l$はLebesgue測度とした．
+        \item 空間$(\Om\times\R_+,\P,P\times l)$上の
+        2乗可積分関数のHilbert空間を$L^2(\P):=L^2(\Om\times\R_+,\P,P\times l)$と表す，ただし$l$はLebesgue測度とした．
         また，$L^2_T(\P):=L^2(\Om\times[0,T],\P|_{\Om\times[0,T]},P\times l)$なる略記も用いる．
+        このような関数を積可測な確率過程といい，このクラスに対してまずは$\R_+$上での確率積分を定める．
         \item ノルムを
         \[\norm{u}^2_{L^2(\P)}:=E\Square{\int^\infty_{0}u_s^2ds}=\int^\infty_0E[u^2_s]ds\]
-        で表す($u^2_s$が非負値可測関数であることに注意すると，最後の等式はFubiniの定理による)．
+        で表す．最後の等式はFubiniの定理による．
     \end{enumerate}
 \end{notation}
 \begin{proof}
@@ -2241,7 +2264,7 @@ title=]
         $u=(u_t)_{t\in\R_+}\in L^2(\P)$が\textbf{単過程}であるとは，
         \[u_t=\sum_{j=0}^{n-1}\phi_j1_{(t_j,t_{j+1}]}(t),\qquad 0\le t_0<t_1<\cdots<t_n,\phi_j\in\L^2_{\F_{t_j}}(\Om)\]
         を満たすことをいう．単関数全体の集合を$\E\subset L^2(\P)$で表す．
-        \item 積分$I:\E\to\L^2(\Om)$を
+        \item 単過程に対する確率積分$I:\E\to\L^2(\Om)$を
         \[I(u)=\int^\infty_0 u_tdB_t:=\sum^{n-1}_{j=0}\phi_j(B_{t_{j+1}}-B_{t_j})\]
         と定める．
     \end{enumerate}
@@ -2250,7 +2273,7 @@ title=]
     すでにこの時点で，$\phi_j$を$1_{(t_j,t_{j+1}]}$に対して$\F_{t_j}$-可測としているため，$\phi_j\indep B_{t_{j+1}}-B_{t_j}$を含意することがトリックになる．
 \end{remarks}
 
-\begin{lemma}[単関数上の積分の性質]
+\begin{lemma}[単関数上の積分の性質]\label{lemma-property-of-SI-on-E}
     積分$I:\E\to\L^2(\Om)$は，$u,v\in\E,a,b\in\R$について次を満たす．
     \begin{enumerate}
         \item 線形性：$\int^\infty_0(au_t+bv_t)dB_t=a\int^\infty_0u_tdB_t+b\int^\infty_0v_tdB_t$．
@@ -2263,46 +2286,147 @@ title=]
         \item $u_t,v_t$が定める$\R_+$の分割の細分を取って考えると良い．
         \item $\forall_{j\in n}\;\phi_j\indep B_{t_{j+1}}-B_{t_j}$より，
         \[E\Square{\int^\infty_0u_tdB_t}=\sum^{n-1}_{j=0}E[\phi_j(B_{t_{j+1}}-B_{t_j})]=\sum^{n-1}_{j=0}E[\phi_j]E[B_{t_{j+1}}-B_{t_j}]=0.\]
-        \item 
+        \item $u_t=\sum^{n-1}_{j=0}\phi_j1_{(t_j,t_{j+t}]}(t)\;(\phi_j\in L^2_{\F_{t_j}}(\Om))$，$\Delta B_j:=B_{t_{j+1}}-B_{t_j}\in L^2(\Om)$とすると，
+        $(I(u))^2=\sum^{n-1}_{i,j=0}\phi_i\phi_j\Delta B_i\Delta B_j$．
+
+        まず，
+        \[E[\phi_i\phi_j\Delta B_i\Delta B_j]=\begin{cases}
+            0,&i\ne j,\\
+            E[\phi_j^2](t_{j+1}-t_j),&i=j.
+        \end{cases}\]
+        これは，$i<j$のとき，$\phi_i\indep\Delta B_j,\phi_j\indep\Delta B_j,\Delta B_i\indep\Delta B_j$であること\ref{lemma-Blumenthal}による．
+        $i=j$のとき，$\phi^2_i\indep(\Delta B_i)^2$．
+
+        これより，
+        \begin{align*}
+            \norm{I(u)}^2_{\L^2(\Om)}&=E[I(u)^2]\\
+            &=\sum^{n-1}_{j=0}E[\phi_j^2](t_{j+1}-t_j)\\
+            &=E[I(u^2)]=\norm{u}^2_{\L^2(\P)}.
+        \end{align*}
     \end{enumerate}
 \end{proof}
 
 \subsection{延長}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    被積分過程$u\in L^2(\P)$は，発展的可測な連続過程で，そしてそれは発展的可測な単過程で近似できる．
+    なお，Brown運動は発展的可測な連続過程に当てはまる．
+\end{tcolorbox}
 
 \begin{proposition}
     $\E\subset L^2(\P)$は稠密．
 \end{proposition}
 \begin{proof}
     $\E\subset L^2(\P)$の間に，$C$-過程のクラス
-    \[C:=\Brace{u\in L^2(\P)\mid u:\R_+\to L^2(\Om)\text{は連続}}\]
-    を考える．$C$-過程は可測過程であることに注意すると，たしかに$L^2(\P)$より小さい：$\E\subset C\subset L^2(\P)$．
+    \[C'(\R_+;L^2(\Om)):=\Brace{u\in L^2(\P)\mid u:\R_+\to L^2(\Om)\text{は連続}}\]
+    を考える．$C'(\R_+;L^2(\Om))=C(\R_+;L^2(\Om))$の如何は
+    発展的可測性についての更なる考察が必要であるから，記号を使い分けた．
+    同一視して，
+    $\E\subset C'(\R_+;L^2(\Om))\subset L^2(\P)$の順に稠密性を示す．
     \begin{description}
-        \item[$C$-過程による近似] 任意の$u\in L^2(\P)$を取る．
+        \item[1. $C'(\R_+;L^2(\Om))\subset L^2(\P)$] 任意の$u\in L^2(\P)$を取る．
         \[u^{(n)}_t:=n\int^t_{\paren{t-\frac{1}{n}}\lor0}u_sds\]
-        と定めると，$u^{(n)}:\R_+\to L^2(\Om)$は連続であり，したがって$\F\times\B^1(\R)$-可測．特に，$u^{(n)}\in L^2(\P)$．
-        このとき，$(u_t^{(n)})_{n\in\N}\to u_t$すなわち$\lim_{n\to\infty}E\Square{\int^\infty_0\abs{u_t-u_t^{(n)}}^2dt}=0$．
-
+        と定めると，$u^{(n)}:\R_+\to L^2(\Om)$は連続である：$u^{(n)}\in C(\R_+;L^2(\Om))$．
+        実際，Lebesgueの収束定理より，
+        \[\lim_{h\to0}u_{t+h}^{(n)}=\lim_{h\to0}n\int_{\R_+}1_{[(t+h-1/n\lor0),t+h]}(s)u_sds=u_t^{(n)}.\]
+        （したがって$\F\times\B^1(\R)$-可測）．
+        また，Cauchy-Schwartzの不等式とFubiniの定理より，
+        \begin{align*}
+            \int_{\R_+}\abs{u_t^{(n)}(\om)}^2dt&=\int_{\R_+}n^2\paren{\int_{\R_+}1_{[(t-1/n)\lor0,t]}(s)u_s(\om)ds}^2dt\\
+            &\le\int_{\R_+}n^2\int_{\R_+}1_{[(t-1/n)\lor0,t]}(s)ds\int_{\R_+}1_{[(t-1/n)\lor0,t]}(s)u_s^2(\om)dsdt\\
+            &\le n\iint_{\R_+\times\R_+}1_{[(t-1/n)\lor0,t]}(s)u_s^2(\om)dsdt\\
+            &\le n\iint_{\R_+\times\R_+}1_{[s,s+1/n]}(t)u_s^2(\om)dtds=\int_{\R_+}u_s^2(\om)ds<\infty
+        \end{align*}
+        であるから，確かに$u_t^{(n)}\in L^2(\P)$でもある．
+        よって，$u_t^{(n)}\in C'(\R_+;L^2(\Om))$．
+        
+        さらに，$u_t^{(n)}\to u_t$が成り立つ．
+        実際，$u_t\in L^2(\Om,\P,P\times l)$より，
+        \begin{align*}
+            u_t^{(n)}&=\frac{\int^t_0u_sds-\int^{(t-1/n)\lor0}_0u_sds}{1/n}\xrightarrow{n\to\infty}u_t.
+        \end{align*}
+        が，まず任意の$\om\in\Om$について成り立ち，Lebesgueの優収束定理より，
+        \[\int^\infty_0\abs{u_t(\om)-u^{(n)}_t(\om)}^2dt\xrightarrow{n\to\infty}0\]
+        でもある．
+        
+        $u_t,u_t^{(n)}\in L^2(\P)$より，再びLebesgueの優収束定理から，
+        \[E\Square{\int_{\R_+}\abs{u_t-u_t^{(n)}}^2dt}\xrightarrow{n\to\infty}0.\]
+        \item[2. $\E\subset C'(\R_+;L^2(\Om))$]
+        $u\in  C'(\R_+;L^2(\Om))$を任意に取る．
+        \[u^{(n,N)}_t:=\sum^{n-1}_{j=0}u_{t_j}1_{(t_j,t_{j+1}]}(t),\qquad\paren{t_j:=N\frac{j}{n},j\in n}\]
+        として，$\E$の二重列を定める．$u^{(n,N)}_t$は$t> N$については$0$であることに注意．
+        これに対して，
+        \[E\Square{\int^\infty_0\Abs{u_t-u_t^{(n,N)}}^2}\le E\Square{\int^\infty_Nu^2_tdt}+N\sup_{\abs{t-s}\le N/n}E[\abs{u_t-u_s}^2].\]
+        $n\to\infty,N\to\infty$の極限を考えると，右辺は$0$に収束する．
     \end{description}
 \end{proof}
+\begin{remarks}
+    Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．
+    また，$C_c(\R_+;L^2(\Om))$は$L^2(\R_+;L^2(\Om))$上稠密である，という結果は得られそうであるが，高度である．
+    そこで，$f\in L^1([a,b],\o{\R})$について$F(x):=\int^x_af(t)dt$は$(a,b)$上殆ど至る所微分可能であり，$F'(x)=f(x)$が成り立つというLebesgueの定理を用いた．
+\end{remarks}
 
-\begin{corollary}
+\begin{corollary}[確率積分の等距離延長]
     確率積分$I:\E\to L^2(\Om)$は，線型な等長同型$I:L^2(\P)\to L^2(\Om)$に延長できる．
 \end{corollary}
 \begin{proof}
-    任意の$u\in L^2(\P)$に対して，$\E$上の$L^2(\P)$-収束列$(u^{(n)})$が取れ，また$I:\E\to L^2(\Om)$の等長性より，極限
+    確率積分$I$は$\E$上の有界線型作用素であったから（等長なので特に有界），$L^2(\P)$上に作用素ノルムを変えずに一意に連続延長する．
+    連続延長であることより，等距離性は保たれる．
+
+    これも含めて証明すると，次のようになる：
+    任意の$u\in L^2(\P)$に対して，$\E$上の$L^2(\P)$-収束列$(u^{(n)})$が取れ，また$I:\E\to L^2(\Om)$の等長性より像はCauchy列を定めるから，極限
     \[I(u):=\lim_{n\to\infty}\int^\infty_0u_t^{(n)}dB_t\]
-    が存在する．あとは，収束列$(u^{(n)})$の取り方に依らないことを示せば良い．
+    が存在する．
+    実際，$2xy\le x^2+y^2$であることより，
+    \begin{align*}
+        E\Square{\paren{\int^\infty_0u_t^{(n)}dB_t-\int^\infty_0u_t^{(m)}dB_t}^2}\\
+        &\le E\Square{\int^\infty_0(u_t^{(n)}-u_t)^2dt}+2E\Square{\int^\infty_0(u_n^{(t)}-u_t)(u_t-t_t^{(m)})dt}+E\Square{\int^\infty_0(u_t-u_t^{(m)})^2dt}\\
+        &\le 1\paren{E\Square{\int^\infty_0(u_t^{(n)}-u_t)^2dt}+E\Square{\int^\infty_0(u_t^{(m)}-u_t)^2dt}}\xrightarrow{n,m\to\infty}0.
+    \end{align*}
+    あとは，収束列$(u^{(n)})$の取り方に依らないことを示せば良い．
 \end{proof}
 
-\begin{proposition}
+\subsection{確率積分の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $I:L^2(\Om\times\R_+,\P,P\times l)\to L^2(\Om,\F,P)$は，$t\in\R_+$の成分が消えて，純粋な確率変数のみが残ることとなる．
+    このとき，$\Im I\subset L^2_0(\Om,\F,P)$となる．
+\end{tcolorbox}
+
+\begin{proposition}[期待値との関係]
     任意の$u,v\in\L^2(\P)$について，
     \begin{enumerate}
         \item $E[I(u)]=0$．
         \item $E[I(u)I(v)]=E\Square{\int^\infty_0u_sv_sds}=E[I(uv)]$．
     \end{enumerate}
 \end{proposition}
+\begin{proof}
+    $(u^{(n)})$を$u$に$L^2(\Om)$-収束する単過程列
+    \[u^{(n)}_t=\sum^{N^{(n)}-1}_{j=0}\phi_j^{(n)}1_{(t_j^{(n)},t_{j+1}^{(n)}]}(t)\]
+    とする．
+    \begin{enumerate}
+        \item 単過程
+        \begin{align*}
+            E[I(u)]&=E\Square{\lim_{n\to\infty}I(u^{(n)})}\\
+            
+        \end{align*}
+        \begin{align*}
+            E[I(u)]&=E\Square{\lim_{n\to\infty}\sum^{N^{(n)}-1}_{j=0}\phi_j^{(n)}(B_{t_{j+1}^{(n)}-t_j^{(n)}})}\\
+            &=\lim_{n\to\infty}E\Square{\int^\infty_0u_t^{(n)}dB_t}=0.
+        \end{align*}
+    \end{enumerate}
+\end{proof}
 
 \subsection{不定積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $[0,T]$上の不定積分は，$\R_+$上の確率積分を通じて定める．
+    任意の$u\in L^2_T(\P)$に対して，$(T,\infty)$上では$0$として延長すれば，
+    不定積分は定められる．
+\end{tcolorbox}
 
 \begin{definition}
     任意の$[0,T]\;(T>0)$上の積分を
