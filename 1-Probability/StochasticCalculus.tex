@@ -2196,7 +2196,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    過程が可測であることより弱い条件として，発展的可測性を定義する．
+    過程が可測であることより強い条件として，発展的可測性を定義する．
     発展的可測な確率変数に関しては，見本道毎の積分ではなくて，より大局的な視点で見れる．
     そしてこのクラスについては，$\int^t_0u_sds$が$\F_t$-可測となる．
 \end{tcolorbox}
@@ -2222,6 +2222,8 @@ title=]
     \begin{enumerate}
         \item $\P$を積空間$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする：
         \[\P:=\Brace{A\in P(\Om\times\R_+)\mid A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])}\]
+        すると$\P\subset\F\times\B(\R)$が成り立ち
+        ，この$\sigma$-代数についての可測関数$f\in\L(\P)$であることと発展的可測とは同値になる．
         \item これが定める2乗可積分関数のHilbert空間を$L^2(\P):=L^2(\Om\times\R_+,\P,P\times l)$と表す，ただし$l$はLebesgue測度とした．
         また，$L^2_T(\P):=L^2(\Om\times[0,T],\P|_{\Om\times[0,T]},P\times l)$なる略記も用いる．
         \item ノルムを
@@ -2229,6 +2231,9 @@ title=]
         で表す($u^2_s$が非負値可測関数であることに注意すると，最後の等式はFubiniの定理による)．
     \end{enumerate}
 \end{notation}
+\begin{proof}
+    
+\end{proof}
 
 \begin{definition}[simple process, stochastic integral]\mbox{}
     \begin{enumerate}
