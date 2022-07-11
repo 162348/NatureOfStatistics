@@ -2164,7 +2164,7 @@ title=]
 
 
 
-\chapter{確率積分}
+\chapter{確率解析}
 
 \begin{quotation}
     確率論ははじめから偏微分方程式論と密接に関係していたことを思うと，確率論自体が測度論で基礎付けられることは自然であった．
@@ -2183,6 +2183,8 @@ title=]
     を経て得られる，ということでもあるが，この式は意味を持たない．基礎付けることができれば，Brown運動の見本路に関する知識を，Markov過程の見本路を調べることに応用できそうである．
 
     確率微分方程式を解くには，例えば同値な確率積分方程式をPicardの逐次近似法によって解くことが考えられる．
+
+    伊藤解析とは，等距離な有界線型作用素$I:L^2(\P)\to L^2(\Om)$とその代数法則をいう．
 \end{quotation}
 
 \section{確率積分}
@@ -2362,17 +2364,18 @@ title=]
     \end{description}
 \end{proof}
 \begin{remarks}
-    Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．
+    Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．\footnote{\url{https://terrytao.wordpress.com/2011/05/24/locally-compact-topological-vector-spaces/}}
     また，$C_c(\R_+;L^2(\Om))$は$L^2(\R_+;L^2(\Om))$上稠密である，という結果は得られそうであるが，高度である．
     そこで，$f\in L^1([a,b],\o{\R})$について$F(x):=\int^x_af(t)dt$は$(a,b)$上殆ど至る所微分可能であり，$F'(x)=f(x)$が成り立つというLebesgueの定理を用いた．
 \end{remarks}
 
-\begin{corollary}[確率積分の等距離延長]
+\begin{corollary}[確率積分の等距離延長]\label{cor-extention-of-SI}
     確率積分$I:\E\to L^2(\Om)$は，線型な等長同型$I:L^2(\P)\to L^2(\Om)$に延長できる．
 \end{corollary}
 \begin{proof}
     確率積分$I$は$\E$上の有界線型作用素であったから（等長なので特に有界），$L^2(\P)$上に作用素ノルムを変えずに一意に連続延長する．
-    連続延長であることより，等距離性は保たれる．
+    連続延長であることより，等距離性は保たれる：ノルムの連続性より，
+    \[\norm{I(u)}=\norm{I(\lim_{n\to\infty}u^{(n)})}=\lim_{n\to\infty}\norm{I(u^{(n)})}=\lim_{n\to\infty}\norm{u^{(n)}}=\norm{u}.\]
 
     これも含めて証明すると，次のようになる：
     任意の$u\in L^2(\P)$に対して，$\E$上の$L^2(\P)$-収束列$(u^{(n)})$が取れ，また$I:\E\to L^2(\Om)$の等長性より像はCauchy列を定めるから，極限
@@ -2404,18 +2407,21 @@ title=]
 \end{proposition}
 \begin{proof}
     $(u^{(n)})$を$u$に$L^2(\Om)$-収束する単過程列
-    \[u^{(n)}_t=\sum^{N^{(n)}-1}_{j=0}\phi_j^{(n)}1_{(t_j^{(n)},t_{j+1}^{(n)}]}(t)\]
+    %\[u^{(n)}_t=\sum^{N^{(n)}-1}_{j=0}\phi_j^{(n)}1_{(t_j^{(n)},t_{j+1}^{(n)}]}(t)\]
     とする．
     \begin{enumerate}
-        \item 単過程
+        \item $I(u)$は可積分で，単過程列$u^{(n)}$はこれを優関数とするように取れるから，
+        Lebesgueの優収束定理より，
         \begin{align*}
             E[I(u)]&=E\Square{\lim_{n\to\infty}I(u^{(n)})}\\
-            
+            &=\lim_{n\to\infty}E[I(u^{(n)})]=0.
         \end{align*}
+        \item $I$の線形性と等長性\ref{cor-extention-of-SI}より，$(I(u+v))^2$の確率積分は
         \begin{align*}
-            E[I(u)]&=E\Square{\lim_{n\to\infty}\sum^{N^{(n)}-1}_{j=0}\phi_j^{(n)}(B_{t_{j+1}^{(n)}-t_j^{(n)}})}\\
-            &=\lim_{n\to\infty}E\Square{\int^\infty_0u_t^{(n)}dB_t}=0.
+            E[I(u^2)]+E[I(v^2)]+2E[I(uv)]=E[(I(u+v))^2]= E[(I(u)+I(v))^2]=E[I(u^2)]+E[I(v^2)]+2E[I(u)I(v)].
         \end{align*}
+        と2通りに表せる．
+        ゆえに，$E[I(uv)]=E[I(u)I(v)]$．
     \end{enumerate}
 \end{proof}
 
@@ -2426,41 +2432,157 @@ title=]
     $[0,T]$上の不定積分は，$\R_+$上の確率積分を通じて定める．
     任意の$u\in L^2_T(\P)$に対して，$(T,\infty)$上では$0$として延長すれば，
     不定積分は定められる．
+
+    $\chi^2$-分布の普遍性は，Brown運動を確率積分したものであるから，という観点からも理解できる．
 \end{tcolorbox}
 
-\begin{definition}
-    任意の$[0,T]\;(T>0)$上の積分を
-    \[\int^T_0u_sdB_s:=\int^\infty_0u_s1_{[0,T]}(s)dB_s\]
-    と定める．これは任意の$u\in L^2_T(\P)$に対しても定義できる：
+\begin{definition}[有限区間上の不定積分]
+    任意の$[0,T]\;(T>0)$上の発展的可測な2乗可積分関数$u\in L^2_T(\P)$，ただし，
     \[L^2_T(\P):=L^2(\Om\times[0,T],\P|_{\Om\times[0,T]},P\times l).\]
+    の積分を
+    \[\int^T_0u_sdB_s:=\int^\infty_0\wt{u}_s1_{[0,T]}(s)dB_s\]
+    と定める．ただし，$\wt{u}$は$u$を$(T,\infty)$上で零として延長したものとした．
 \end{definition}
 
-\begin{example}
+\begin{example}[Brown運動の不定積分]
+    任意の$T>0$に関して，Brown運動$(B_t)_{t\in[0,T]}$は$\F_t\times\B([0,T])$-可測過程である（$[0,T]\to\L(\Om,\F_t,P)$が$C$-過程であるため）．よって，
     Brown運動自体は発展的可測である．
+    その上，連続過程でもある：$B\in C'(\R_+;L^2(\Om))$．
+    確かに，
+    \[u^{(n)}_t:=\sum^{n-1}_{j=0}B_{t_j}1_{(t_j,t_{j+1}]}(t),\quad t_j:=T\frac{j}{n}\]
+    と定めると，これは$B$にノルム収束する単過程の列である．よって，
+    \begin{align*}
+        I(1_{[0,T]}B)&=\lim_{n\to\infty}I(u^{(n)})\\
+        &=\lim_{n\to\infty}\sum^{n-1}_{j=0}B_{t_j}(B_{t_{j+1}}-B_{t_j})\\
+        &=\frac{1}{2}\lim_{n\to\infty}\paren{\sum^{n-1}_{j=0}(B_{t_{j+1}}^2-B^2_{t_j})-\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2}=\frac{1}{2}B_T^2-\frac{1}{2}T.
+    \end{align*}
+    すなわち，
     \[\int^T_0B_tdB_t=\frac{1}{2}B^2_T-\frac{1}{2}T\]
     が成り立つ．
+    従って，Brown運動$B$は，$\R_+$上積分可能ではないが，任意のコンパクト集合上では積分可能で，中心化された$\chi^2$-分布に従う確率変数になる．
 \end{example}
 
-\section{不定確率積分の過程}
+\section{不定確率積分の性質}
 
-\begin{notation}
-    発展的可測な2乗可積分関数のうち，任意の不定積分も有限確定するクラス
-    \[L^2_\infty(\P):=\Brace{u\in L^2(\P)\;\middle|\;\forall_{t>0}\;E\Square{\int^t_0u_s^2ds}<\infty}\]
-    については，不定積分の過程$\paren{\int^t_0 u_sdB_s}_{t\in\R_+}:\R_+\to\L^2(\Om)$が確定する．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^2(\P)\subset L^2_\infty(\P)\subset L^2_\loc(\P)$の関係がある．
+    まず，$L^2_\infty(\P)$の元の不定確率積分に対する性質を見て，$L^2_\loc(\P)$への拡張は次節で議論する．
+\end{tcolorbox}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item 
+        発展的可測で，任意の有界閉集合$[0,T]$上で2乗可積分な過程のなす空間を
+        \[L^2_\infty(\P):=\Brace{u\in\L(\P)\mid\forall_{t\in\R_+}\;E_{\Om\times\R_+}[1_{[0,t]}u^2]<\infty}\]
+        とすると，これは$L^2(\P)$よりも大きい．
+        標準的な埋め込み$L^2_T(\P)\mono L^2(\P)$と$L^2(\P)\epi L^2_T(\P)$とはいくつか考えられて，
+        $L^2_T(\P)\subset L^2(\P)$はいささか商空間に近いが，$L^2_\infty(\P)$はある種の極限対象である．
+        \item 本来は，発展的可測で，任意の有界閉集合$[0,T]$で，見本過程$u_s(\om)$が殆ど確実に2乗可積分になる過程のなす空間
+        \[L^2_\loc(\P):=\Brace{u\in\L(\P)\mid\forall_{t\in\R_+}\;E_{\R_+}[1_{[0,t]}u^2]<\infty\;\as}\]
+        で定義できる．
+        積空間上で可積分ならば，その切り口は殆ど至る所有限であるから，明らかに
+        $L^2_\infty(\P)\subset L^2_\loc(\P)$であるが，$L^2_\loc(\P)$の元が積空間上で可積分とは限らない．
+        
+        従って，全て併せると$L^2(\P)\subset L^2_\infty(\P)\subset L^2_\loc(\P)$の関係がある．
+    \end{enumerate}
 \end{notation}
 
+\subsection{不定積分のマルチンゲール}
+
+\begin{definition}[indefinite integral]
+    $u\in L^2_\infty(\P)$に対して，区間$[a,b]\subset\R_+$上での\textbf{不定積分}とは，
+    $1_{[a,b]}(s)u_s\in L^2(\P)$であるから，$I(1_{[a,b]}u_s)=:\int^b_au_sdB_s$とすれば良い．
+\end{definition}
+
 \begin{proposition}
-    不定積分の過程$\paren{M_t:=\int^t_0 u_sdB_s}_{t\in\R_+}\;(u\in L^2_\infty(\P))$について，
+    不定積分の過程$\paren{M_t:=\int^t_0 u_sdB_s}_{t\in\R_+}\;(u\in L^2_\infty(\P))$は
+    martingaleである．すなわち，次の3条件を満たす：
     \begin{enumerate}
-        \item 加法性：$a\le b\le c\in\R_+$について，$\int^b_au_sdB_s+\int^c_bu_sdB_s=\int^c_au_sdB_s$．
-        \item 可換性：$a<b\in\R_+$と$\F_a$-可測有界関数$F:\Om\to\R$について，$\int^b_aFu_sdB_s=F\int^b_au_sdB_s$．
-        \item マルチンゲール性：$\{M_t\}_{t\in\R_+}\subset\subset L^2(\Om)$は$(\F_t)_{t\in\R_+}$-マルチンゲールであり，連続なバージョンが存在する．
-        \item 最大不等式：$\forall_{T,\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda^2}E\Square{\int^T_0u^2_tdt}$かつ$E\Square{\sup_{t\in[0,T]}\abs{M_t}^2}\le 4E\Square{\int^T_0u^2_tdt}$．これは$u\in L^2(\P)$に過ぎずとも，$T=\infty$の場合成立する．
-        \item 2次変分：$[0,t]$の分割$\pi:=\{0=t_0<t_1<\cdots<t_n=t\}$に関して，$S^2_\pi(u):=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{L^2(\Om)}\int^t_0u^2_sds$．
-        \item 停止時までの積分：$u\in L^2(\P),\tau:\Om\to\R_+$を停止時とする．このとき，$u1_{[0,\tau]}\in L^2(\P)$で，
+        \item $(\F_t)$-適合的である．
+        \item 可積分である．
+        \item $\forall_{s\in[0,t]}\;E[M_t|\F_s]=M_s\;\as$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    任意に$t\in\R_+$を取る．
+    $1_{[0,t]}u_s\in L^2(\P)$に対して，単過程列を
+    \[u^{(n)}:=\sum_{j=0}^{n-1}u_{t_j}1_{(t_j,t_{j+1}]},\quad t_j:=t\frac{j}{n}\]
+    と定めるとこれは単調増加列で，$I(1_{[0,t]}u_s)=\lim_{n\to\infty}I(1_{[0,t]}u_s^{(n)})$と表せる．
+    ただし，収束はノルム収束である．
+    \begin{enumerate}
+        \item 
+        $M_t=I(1_{[0,t]}u)$が$\F_t$-可測であることを示すには，任意の$n\in\N$について$I(1_{[0,t]}u_s^{(n)})$が$\F_t$-可測であることを示せば良いが，これは
+        \[I(1_{[0,t]}u)=\sum_{j=0}^{n-1}u_{t_j}(B_{t_{j+1}}-B_{t_j})\]
+        というように，$\F_t$-可測な確率変数の連続な合成であることから明らか．
+        \item 中心化されているため，特に可測である．あるいは$I$の像が$L^2(\Om)$であることからも．
+        \item 任意の$s\le t$に対して，
+        \begin{align*}
+            E[I(1_{[0,t]}u^{(n)})|\F_s]&=\sum^{n-1}_{j=0}E[u_{t_j}(B_{t_{j+1}}-B_{t_j})|\F_s]\\
+            &=\sum^{n-1}_{j=0}E[E[u_{t_j}(B_{t_{j+1}}-B_{t_j})|\F_{t_j\lor s}]|\F_s]\\
+            &=\sum^{n-1}_{j=0}E[u_{t_{j}}E[B_{t_{j+1}}-B_{t_j}|\F_{t_j\lor s}]|\F_s]\\
+            &=\sum_{j=0}^{n-1}u_{t_j}(B_{t_{j+1}\land s}-B_{t_j\land s})=I(1_{[0,s]}u^{(n)}).
+        \end{align*}
+        というように，時刻$s$以降は$\F_s$と独立になるために$B_{t_{j+1}}-B_{t_j}$の項が零因子になり，ちょうど$s$までの和のみが残ることとなる．
+        さらに，$I$の連続性より，$I(1_{[0,t]}u^{(n)})\to I(1_{[0,t]}u)\;\on\;L^2(\Om)$であるから，両辺$n\to\infty$の極限を考えると，条件付き期待値に関する単調収束定理より，
+        \[E[I(1_{[0,t]}u)|\F_s]=I(1_{[0,s]}u).\]
+    \end{enumerate}
+\end{proof}
+
+\subsection{そのほかの性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^\infty(\F_a)$-斉次性は，条件付き期待値の性質$\forall_{Z\in L^\infty(\cG)}\;E[ZX|\cG]=ZE[X|\cG]$．
+\end{tcolorbox}
+
+\begin{proposition}
+    不定積分の$(\F_t)$-マルチンゲール$\Brace{M_t:=\int^t_0 u_sdB_s}_{t\in\R_+}\subset L^1(\Om)\;(u\in L^2_\infty(\P))$について，
+    \begin{enumerate}
+        \item 加法性：$\forall_{a\le b\le c\in\R_+}\;\int^b_au_sdB_s+\int^c_bu_sdB_s=\int^c_au_sdB_s$．
+        \item $L^\infty(\F_a)$-斉次性：$\forall_{a<b\in\R_+,F\in L^\infty(\F_a)}\;F:\Om\to\R$について，$\int^b_aFu_sdB_s=F\int^b_au_sdB_s$．
+        \item 連続性：$(M_t)$には連続なバージョンが存在する．
+        \item 最大不等式：$\forall_{T,\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda^2}E\Square{\int^T_0u^2_tdt}$かつ$E\Square{\sup_{t\in[0,T]}\abs{M_t}^2}\le 4E\Square{\int^T_0u^2_tdt}$．
+        
+        またこれは$u\in L^2(\P)$に過ぎずとも，$T=\infty$の場合は成立する．
+        \item 2次変分：$\forall_{n\in\N}\;\forall{\pi:=\{0=t_0<t_1<\cdots<t_n=t\}\subset[0,t]}\;S^2_\pi(u):=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{L^2(\Om)}\int^t_0u^2_sds$．
+        \item 停止時までの積分：$u\in L^2(\P)$で，$\tau:\Om\to\R_+$を停止時とする．このとき，$u1_{[0,\tau]}\in L^2(\P)$で，
         \[\int^\infty_0u_t1_{[0,\tau]}(t)dB_t=\int^\tau_0u_tdB_t.\]
     \end{enumerate}
 \end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 確率積分の線形性より，$I[1_{[a,b]}u_s]+I[1_{[b,c]}u_s]=I[1_{[a,c]}u_s]$．
+        \item $1_{[a,b]}Fu_s\in L^2(\P)$であるから，確率積分$\int^b_aFu_sdB_s$は確かに定まる．実際，
+        \[E\Square{\int^b_au_s^2(\om)dsd\om}<\infty,\quad F(\om)\in L^2(\Om)\]
+        に注意すると，
+        \begin{align*}
+            \int_\Om\int_{\R_+}1_{[a,b]}(s)F(\om)u_s(\om)dsd\om&=\int_\Om F(\om)\int^b_au_s(\om)dsd\om=\paren{F(\om)\;\middle|\;\int^b_au_s(\om)ds}_{L^2(\Om)}\\
+            &\le\norm{F}_{L^2(\Om)}\norm{u_s}_{L^2(\Om\times[0,T])}<\infty.
+        \end{align*}
+        ここで，$1_{[a,b]}u\in L^2(\P)$に対して，
+        単過程列$(u^{(n)})$を
+        \[u^{(n)}:=\sum^{n-1}_{j=0}u^{(n)}_{t_j}1_{(t_j,t_{j+1}]},\qquad t_j:=a+(b-a)\frac{j}{n}\]
+        と定めると，これは下から$1_{[a,b]}u$にノルム収束する．
+        よって，$I[1_{[a,b]}Fu_s]=\lim_{n\to\infty}I[1_{[a,b]}Fu_s^{(n)}]$と表せるから，
+        単過程$u$について，
+        $I[1_{[a,b]}Fu_s]=F\cdot I[1_{[a,b]}u_s]$を示せば良い．
+        改めて
+        \[u:=\sum^{n-1}_{j=0}u_{t_j}1_{(t_j,t_{j+1}]},\qquad t_j:=a+(b-a)\frac{j}{n}\]
+        とすると，$Fu_s$も，各係数$Fu_{t_j}$は2乗可積分で$\F_{t_j}$-可測な確率変数となるから，$Fu$も単過程である．
+        実際，$F$は仮定から$\F_a\subset\F_{t_j}$-可測で，$u_{t_j}$は$u$が発展的可測であることより$u|_{[0,t_j]}$が$\F_{t_j}\times\B([0,t_j])$-可測であり，$\forall_{I\in\B(\R)}\;u_{t_j}^{-1}(I)=(u|_{[0,t_j]}^{-1}(I))_{t_j}\in\F_{t_j}$という切り口で表されるから，やはり$\F_{t_j}$-可測(Fubiniの定理)．
+        したがって，単過程に対する確率積分の定義から，
+        \[I[1_{[a,b]}Fu_s]=\sum^{n-1}_{j=0}Fu_{t_j}(B_{t_{j+1}}-B_{t_j})=F\sum^{n-1}_{j=0}u_{t_j}(B_{t_{j+1}}-B_{t_j})=FI[1_{[a,b]}u_s].\]
+        を得る．
+        \item 任意の$T>0$を取る．
+        $1_{[0,T]}u$に収束する単過程列$(u^{(n)})$を取る．
+        $M^{(n)}_t:=I(1_{[0,t]}u^{(n)})$とすると，$\lim_{n\to\infty}M^{(n)}_t=M_t$であるが，これらは連続確率変数の和であるから連続，従って$(M^{(n)}_t)_{t\in\R_+}$は連続過程である．
+
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    おそらく，$I(1_{[a,b]}u)$は$\F_b$-可測である．
+\end{remarks}
 
 \begin{corollary}
     \begin{description}
@@ -2504,7 +2626,7 @@ title=]
     ドリフトを持ったBrown運動が通常のBrown運動に戻るような測度変換を与える．
 \end{tcolorbox}
 
-\chapter{微分作用素と発散作用素}
+\chapter{Malliavin解析}
 
 \begin{quotation}
     Malliavin (1976) はWiener空間またはGauss空間上での無限次元解析を創始した．
@@ -2587,6 +2709,18 @@ title=]
 \section{確率積分としての発散}
 
 \section{IsonormalなGauss過程}
+
+\chapter{Wiener Chaos}
+
+\chapter{Ornstein-Uhlenbeck半群}
+
+\chapter{確率積分の逆問題}
+
+\chapter{密度推定}
+
+\chapter{正規近似}
+
+\chapter{跳躍過程}
 
 \chapter{確率微分方程式}
 
