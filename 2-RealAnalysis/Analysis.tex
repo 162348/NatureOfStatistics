@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/StatisticalNature/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -76,7 +76,25 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\section{極限と積分の可換性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lebesgueの有界収束定理を，可測関数ではなく，連続関数について述べたのがArlezàの有界収束定理である．
+    これを用いて，Lebesgueの優収束定理を，可測関数ではなく，連続関数について述べることができる．
+\end{tcolorbox}
+
+\begin{theorem}[Arzelàの有界収束定理 (1885)]
+    有界閉区間上の連続関数列$\{f_n\}\subset C(I)$は一様ノルムについて一様に有界で，連続関数$f_0$に各点収束するとする：$\exists_{M\in\R}\;\sup_{n\in\N}\norm{f}_\infty\le M$．
+    このとき，
+    \[\lim_{n\to\infty}\int^b_af_n(x)dx=\int^b_af_0(x)dx.\]
+\end{theorem}
+
+\begin{corollary}
+    関数列$\{f_n\},f_0$はいずれも有限個の点を除いて連続であり，列$(f_n)$は区分的に連続な優関数$g$を持ちながら，$f_0$に有限個の点を除いて収束するとする：$\abs{f_n(x)}\le g(x)$．
+    このとき，
+    \[\lim_{n\to\infty}\int^\infty_{-\infty}f_n(x)dx=\int^\infty_{-\infty}f_0(x)dx.\]
+\end{corollary}
 
 \subsection{一様収束の性質}
 
