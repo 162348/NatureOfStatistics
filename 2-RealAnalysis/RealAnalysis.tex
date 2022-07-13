@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -305,16 +305,10 @@ title=]
 \section{Boole代数の構造}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    宇宙$P(X)$を調べる．順序については，包含射についてPoset category(2上の豊穣圏)をなし，特に完備な束である．
-    代数的には任意回数の交わりと結びを許し，数の和差より自由である．完備Boole代数であることを緩めて空間の情報を抽出するのが位相の理論であるが，さらに弱めて完備束としてみて，
-    完備束の射としてRiemannより代数的に積分を得るのがLebesgueの積分論である．
-    すると構成が代数的であるため（ほぼ極限構成をする），自然と種々の極限について良い振る舞いをする．
-
-    poset categoryとは2上の豊穣圏であるから，集合についての議論は最終的にはBoole代数$2$に還元される．
-    これが解析学が開発した集合論という着地である．
-    ここまで戻れば安心であるが，この議論はなかなか容易ではない．
-    したがって以下に普遍性で言い換えていくかの代数的な配慮が大事になる．
+title=解析学で最も大事な構造：完備Boole代数]
+    $P(X)$の結び半束としての対称な構造，特に$\lnot$の果たす役割は関数解析まで通底して重要である．
+    値域としては$[0,\infty]$を考えれば良いこと，$\BV[a,b]$としては単調増加関数を考えれば良いこと，単調収束定理，$\sigma$-代数はBoole代数の単調閉包を考えれば良いこと，
+    全ては，$\BV[a,b]_+$を2つ，上下逆に組み合わせることで全体を復元できることに因る．
 \end{tcolorbox}
 
 \subsection{束とHeyting代数とBoole代数}
@@ -2978,7 +2972,7 @@ title=]
     が成り立つ．
 \end{theorem}
 
-\subsection{Vitaliの収束定理}
+\subsection{Vitaliの収束定理}\label{subsec-Vitali-convergence-theorem}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=Lebesgueの優収束定理の描像と精緻化]
@@ -3355,14 +3349,25 @@ title=]
 
 \chapter{微分論}
 
-\section{$\R$上のLebesgue積分}
+\begin{quotation}
+    任意の各点可微分な$F$について，$F'$の不定積分が存在するわけではない．
+    すなわち，Lebesgue積分$m:L^1(\R)\to\L(\R)$に対して，「殆ど至る所の微分」は引き戻しではあるが，切断ではない．
+    同型を取るためには，$\L(\R)$を$\AC(\R)$に制限する必要がある（絶対連続でない関数は微分は出来てもLebesgue積分によって戻ってくることはできない）．
+
+    微分の定義が先行したRiemann積分論とは逆で，Lebesgue積分論は積分の定義が先にあり，微分はRadon-Nikodymの方法で定義されるので，
+    $L^1(\R)$への写像として適切な観念は同値類で割ったところの「殆ど至る所の微分」であり，適切な定義域は絶対連続な関数である．
+    そして定理として，$f\in L^1(\R)$は，ある絶対連続関数$F$が存在して，$F'=f\;\ae$が成り立つことが同値で，$F$は定数分の差を除いて一意に取れる．
+
+    これにより，微分の描像が明瞭になった．
+    Lebesgueの優収束定理に関する精緻化された描像\ref{subsec-Vitali-convergence-theorem}が極めて興味深い．
+    一般の空間上での微分論は，定積分の抽象化概念である$\sigma$-加法的集合関数論となる．
+\end{quotation}
+
+\section{$\R$上の微分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=積分の逆としての微分：絶対連続性]
-    積分は微分の逆演算となるような線形作用素である．
-    これがどの意味で達成されるかの段階が1つ上がる．
-    微分の定義が先行したRiemann積分論とは逆で，Lebesgue積分論は積分の定義が先にあり，微分はRadon-Nikodymの方法で定義されるので，
-    適切な観念は「殆ど至る所の微分」である．
+title=]
+    まず，導関数も$\o{\R}$値に拡張する．
 \end{tcolorbox}
 
 \begin{theorem}
@@ -3429,6 +3434,8 @@ title=]
     $[a,b)$でいたるところ$D^+f\ne-\infty$ならば，$f$は広義単調増加である．
 \end{corollary}
 
+\section{有界変動関数の微分}
+
 \subsection{Vitaliの被覆定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -3466,6 +3473,223 @@ title=]
 \end{history}
 
 \subsection{項別微分定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    単調増加関数の微分については，項別微分が可能である．
+\end{tcolorbox}
+
+\begin{theorem}[Fubiniの項別微分定理 (1915)]
+    $[a,b]$上の単調非減少関数列$\{f_n\}$が定める級数$s:=\sum_{n\in\N}f_n$は収束するとする．
+    このとき，$(a,b)$上の殆ど至る所で，
+    \[\sum_{n\in\N}f'_n=s'.\]
+\end{theorem}
+
+\begin{theorem}[Lebesgueの密度定理 (1904)]
+    有界集合$E\subset\R$について，ある$a<\inf E$を用いて，$f(x):=m^*(E\cap(a,x))$と定める．
+    このとき，次の2条件が成り立つ：
+    \begin{enumerate}
+        \item $E$上殆ど至る所で$f'(x)=1$．このような点を\textbf{密度点}(density point)という．
+        \item $E\in\o{\B(\R)}$ならば，$E^\comp$上殆ど至る所で$f'(x)=0$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{有界変動関数の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続とは限らない関数が，トータルでどれくらい上に動いたか，下に動いたかを追跡して，関数を研究することを考える．
+    するとLebesgue可積分関数同様，$\BV[a,b]_+$すなわち単調関数のみに注目すれば良い．
+\end{tcolorbox}
+
+\begin{definition}[function of bounded variation]
+    関数$f:[a,b]\to\R$について，
+    \begin{enumerate}
+        \item $P_f[a,b]:=\sup_{\Delta\subset[a,b],\abs{\Delta}<\infty}\sum_{x_i\in\Delta}(f(x_i)-f(x_{i-1}))^+$を\textbf{正変動}という．
+        \item $N_f[a,b]:=\sup_{\Delta\subset[a,b],\abs{\Delta}<\infty}\sum_{x_i\in\Delta}(f(x_i)-f(x_{i-1}))^-$を\textbf{負変動}という．
+        \item $T_f[a,b]:=\sup_{\Delta\subset[a,b],\abs{\Delta}<\infty}\sum_{x_i\in\Delta}\abs{f(x_i)-f(x_{i-1})}$を\textbf{全変動}という．
+        \item 全変動が有限な関数を，\textbf{有界変動}であるといい，その全体を$\BV[a,b]$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    $f\in\BV[a,b]$について，
+    \begin{enumerate}
+        \item $f(b)-f(a)=P_f[a,b]-N_f[a,b]$．
+        \item $T_f[a,b]=P_f[a,b]+N_f[a,b]$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    実数$a<c<b$について，
+    \begin{enumerate}
+        \item $P_f[a,b]=P_f[a,c]+P_f[c,b]$．
+        \item $N_f[a,b]=N_f[a,c]+N_f[c,b]$．
+        \item $T_f[a,b]=T_f[a,c]+T_f[c,b]$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}[有界変動関数の特徴付け]
+    $f\in\Map([a,b];\R)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $f\in\BV[a,b]$．
+        \item $f$は有界な広義単調増加関数の差として表せる．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}
+    $f\in\BV[a,b]$は，単調増加関数$g,h$を用いて$f=g-h$と表せるとする．このとき，
+    \[T_g[a,x]\ge P_f[a,x],\quad T_h[a,x]\ge N_f[a,b].\]
+\end{corollary}
+
+\subsection{有界変動関数の微分}
+
+\begin{theorem}[Lebesgue]
+    $f\in\BV[a,b]$ならば，$f$は$(a,b)$上殆ど至る所で有限な微分係数を持つ．
+\end{theorem}
+
+\begin{definition}[saltus]
+    $\delta f(x):=\inf_{h>0}f(x+h)-\sup_{h>0}f(x-h)$を，$x\in(a,b)$における\textbf{跳躍量}という，
+\end{definition}
+
+\begin{theorem}
+    $f\in\BV[a,b]$ならば，$[a,b]$上の不連続点は高々可算個である．
+\end{theorem}
+
+\subsection{変動関数の連続性}
+
+\begin{theorem}
+    $f\in\BV[a,b]$が連続ならば，$P_f[a,x],N_f[a,x],T_f[a,x]$も連続．
+\end{theorem}
+
+\section{微積分学の基本定理}
+
+\subsection{単調増加関数の微分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    まず，$D:\BV[a,b]\to L^1([a,b])$を示す．
+\end{tcolorbox}
+
+\begin{theorem}[Lebesgue]
+    単調増加関数$f:[a,b]\to\R$については，
+    \[\int^b_af'(x)dx\le f(b)-f(a)\]
+    が成り立つ．
+\end{theorem}
+
+\begin{example}[真の不等号が成り立つとき (Lebesgue 1904)]
+    Cantor集合$P_C$上だけで増加する関数を構成すると，等号は不成立．
+\end{example}
+
+\begin{corollary}
+    $f\in\BV[a,b]$の導関数$f'$は可積分．
+\end{corollary}
+
+\subsection{不定積分の微分}
+
+\begin{theorem}[Lebesgue (1904)]
+    可積分関数$f\in\L^1([a,b];\o{\R})$について，$F(x):=\int^x_af(t)dt$は殆ど至る所微分可能で，$F'(x)=f(x)$．
+\end{theorem}
+
+\subsection{全単射の構成}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    微分$\BV[a,b]\to L^1([a,b])$は，始域と終域を$C([a,b])$上に限れば全単射である．
+\end{tcolorbox}
+
+\begin{theorem}[Lebesgue (1902)]
+    連続関数$f\in C([a,b])$は，$(a,b)$上殆ど至る所で有限な微分係数を持つとする．
+    このとき，次の2条件は同値．
+    \begin{enumerate}
+        \item $f'\in\L^1([a,b])$．
+        \item $f\in\BV[a,b]$．
+    \end{enumerate}
+    このとき，次が成り立つ：
+    \[f(x)=f(a)+\int^x_af'(t)dt.\]
+\end{theorem}
+
+\section{絶対連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Vitali (1904)が導入した概念である．
+\end{tcolorbox}
+
+\subsection{一般の不定積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここでの絶対連続性は狭義絶対連続性といい，$\sigma$-加法的集合関数の間の2項関係に一般化されたものを広義と呼び分ける．
+\end{tcolorbox}
+
+\begin{theorem}
+    $f\in L^1(X,\M,\mu;\o{\R})$の不定積分$F:\M\to\o{\R};E\mapsto F(E):=\int_Efd\mu\;(E\in\M)$は，$\mu$-絶対連続である：
+    \[\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{E\in\M}\;\mu(E)<\delta\Rightarrow\abs{F(E)}<\ep.\]
+\end{theorem}
+
+\subsection{$\R$上の不定積分の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\R$上では逆が言える．一般に，任意の$\sigma$-有限な測度空間では逆が成り立ち，これをRadon-Nikodymの定理という．
+\end{tcolorbox}
+
+\begin{definition}
+    関数$F:[a,b]\to\R$が\textbf{絶対連続}であるとは，次を満たすことをいう：
+    \[\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{\{x_i\}_{i\in\N}\subset[a,b]}\;\sum^{\infty}_{i=1}(x_{i+1}-x_i)<\delta\Rightarrow\sum^\infty_{i=1}\abs{F(x_{i+1})-F(x_i)}<\ep.\]
+\end{definition}
+
+\begin{theorem}[$\R$上の不定積分の特徴付け Lebesgue (1904)]
+    関数$F:[a,b]\to\R$について，次の2条件は同値：
+    \begin{enumerate}
+        \item ある$f\in L^1([a,b])$が存在して，$F(x)=\int^x_af(t)dt$が成り立つ．
+        \item $F\in\AC[a,b]$．
+    \end{enumerate}
+    このとき，次が成り立つ：
+    \[F(x)=F(a)+\int^x_aF'(t)dt.\]
+\end{theorem}
+
+\begin{history}
+    不定積分の$x$の関数としての絶対連続性は，Lebesgue (1904)の脚注に述べられているが，同じ概念を独立に発見して「絶対連続性」という名称と共に導入したのがVitali (1904)であることが，Lebesgueの第二版(1928)に述べられている．
+\end{history}
+
+\section{Lebesgue分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般に不定積分は定数分の不定性がある．定数とは，絶対連続かつ特異な関数である．
+    この性質を，Lebesgue積分の観点で見ると「絶対連続部分と特異部分へのLebesgue分解は，定数分の不定性を除いて一意」という．
+\end{tcolorbox}
+
+\begin{definition}[singular function]
+    有界変動関数$s\in\BV[a,b]$が$(a,b)$上殆ど至る所で$s'(x)=0$を満たすとき，\textbf{特異関数}であるいう．
+    $[a,b]$上で絶対連続かつ特異な関数は恒等的に定数である．
+\end{definition}
+
+\begin{example}[Lebesgue (1928)]
+    
+\end{example}
+
+\begin{corollary}[Lebesgue decomposition]
+    $F\in\BV[a,b]$に対して，特異関数$s\in\BV[a,b]$が存在して，
+    \[F(x)=\int^x_aF'(t)dt+s(x)\]
+    が成り立つ．
+\end{corollary}
+
+\section{部分積分と置換積分}
+
+\section{曲線の長さ}
+
+\section{Denjoy積分}
+
+\section{完全加法的集合関数の値域}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    定積分を一般の測度空間上で考えることは，完全加法的集合関数を考えることに等しい．
+    微分論はここまで抽象化される．
+\end{tcolorbox}
 
 \chapter{完全加法的集合関数}
 
