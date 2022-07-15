@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -40,16 +40,164 @@
     僕はコミュニケーションのプロでなくてはならない．
 \end{quotation}
 
-\chapter{誤差論}
+\chapter{統計の誕生}
 
 \begin{quotation}
-    人類が最初に直面した統計的問題は，同一観測を繰り返しても値がばらつくが，その中でどれを「最良値」「代表値」として採用すれば良いかの問題である．
-    答えは最小二乗法が与えるが，なぜこれが「良い」のか？
-    この問題設定は実は線形回帰問題と関連する．
-    ここまでの問題に対する理論を誤差論という．
+    人類が最初に直面した統計的問題は，次の3つである：
+    \begin{description}
+        \item[観測の誤差と確率論的問題] 同一観測を繰り返しても値がばらつくが，その中でどれを「最良値」「代表値」として採用すれば良いかの問題である．
+        答えは最小二乗法が与えるが，なぜこれが「良い」のか？
+        この問題設定は実は線形回帰問題と関連し，誤差分布が正規性の仮定を満たすとき（根源誤差の集まりとみなせるとき），
+        最小二乗推定量が最尤推定量となる．
+        ここまでの問題に対する理論を誤差論という．
+        \item[政治算術] William Petty 1623-1687はpolitical arithmeticを著し，労働価値説を唱えて，古典派経済学と統計学の祖と呼ばれる．
+        \item[国状論] 
+    \end{description}
+    この3つを統合したのが，Queteletの社会物理学である．
+
+    20世紀のはじめに，英米の生物測定学と，ドイツの社会統計学とに分岐し，現代に至る．
+    英国統計学は特に数学との結びつきが強く，記述論から推測論・検定論を作り，数理統計学の系譜となる．
+    政治算術は，確率論の土壌を生かしたQuetletによって社会物理学となり，刺激を受けたドイツで国状論・社会統計学となり，
+    計量経済学の系譜となる．
+
+    Leonard Savage 1917-1971の『統計学の基礎』でBayes学派が復活し，そもそも母集団の前提がない際にも応用された．
+    現在実社会で最も中心的なのがBayes学派である．
 \end{quotation}
 
-\section{田口玄一}
+\section{オランダ：英国政治算術とフランス確率論の衝突}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    イギリス経験論と大陸合理主義との二項対立がある．
+
+    英国的な統計的経験的確率と，伊・仏的な合理的先験的確率との，認識論的方法論的対立は最初からあった．
+    「確率統計学」というときの両極端から歩み寄った．
+\end{tcolorbox}
+
+\subsection{英国政治算術}
+
+英国で互いに友人である2人，William Pettyの『政治算術』(1690)とJohn Graunt『死亡表に関する自然的および政治的諸観察』(1660)が人口統計学の源流となった．
+
+\subsection{伊・仏の確率論}
+
+ガリレイに源流を持ちつつ，PascalとFermatが完成させたのがこの確率論的な見方である．
+
+\section{オランダでの人口統計と確率論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ちょうど2つの接点に居たのがオランダで，ここで真に豊かな理論が生まれた．
+\end{tcolorbox}
+
+Huygensの『チャンスの価格』は，完全にPascalの「勝負の値」の系譜にある．
+実はデカルトの祖国以上にデカルト学の拠点であったのがオランダであり，
+チャンスの値の算出方法が体系化された．
+スピノザも，これに関して「確率書簡」などの記録がある．
+しかしHuygensは，Grauntの『諸観察』を読んで，人口統計との融合を試みた．
+
+Johan de Witt 1625-1672は数学と法律学を学び，28にしてホラント州法律顧問（事実上の最高指導者）になり，
+財政再建を進めた．特に「償還年金と比べた終身年金の価格」を国会に提出した．
+これは独自の生命表と，Huygensの『チャンスの価格』をもとにしていた．
+
+
+
+\section{フランスでの最小二乗法の誕生}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    母関数の方法(Lagrange)も，特性関数(Laplace)も，最小二乗法の発展(Legendre)も，フランスで起こった．
+    確率論と結びつけて最適性を初めて指摘したのがGauss，最尤法の意味論を読み取り，推定論を初めて展開したのがLaplace，数理統計学の応用先として推定論の道をより広くしたのがQueteletである．
+
+    最尤法や十分統計量の命名はFisherだが本質的にはLaplaceが開拓していた，Laplaceの数学史の講義を拓いたのがPearson．
+
+    19世紀に，最小二乗法が工学者の常識となった中で，
+    初めて根源誤差の仮定に辿り着いたのがYoung．
+\end{tcolorbox}
+
+\subsection{天文学の大衆化}
+
+Tycho Brahe 1546-1601は助手たちに反復同一観測させ，互いに吟味させた．
+Lippershey 1570-1619が望遠鏡を発明したことより，天体観測は大衆化された．
+ガリレオは『天文対話』で，自然言語により誤差の扱いを議論した．
+
+\subsection{Lagrangeと確率変数の和}
+
+Thomas Simpson 1710-1761 (英)はKepler則として発見されていて，暗黙知としてもよく使われていた公式を，定積分の近似式であるSimpson式として名を残す．
+\textit{A Letter to the Right Honourable George Earl of Macclesfield, President of the Royal Society, on the Advantage of taking the Mean of a Number of Observations, in practical Astronomy} (1775)．
+にて，知識人でも「注意深くなされた1回の測定」神話を信じていた．
+そこで，Lagrangeらと共に，算術平均の統計量としての分布を調べた．
+L'utilt\`{e} de la M\`{e} thode de Prendre le Milieu.
+\textit{Miscellanea Taurinensia}
+にて，母関数の方法を用いて後継した．
+
+\subsection{Bernoulliと最尤法}
+
+Lambert, J. H. 1728-1777 (独)は円周率の無理性を証明もした．
+それとBernolliは最尤推定の考え方を育てていた．
+
+一方で，誤差に正規性の仮定がおけるとき，その分布に対応した最尤推定法が最小二乗法であることを初めて発見したのがLaplaceである．
+
+\subsection{Legendreと最小二乗法}
+
+\textit{Nouvelles M\`{e} thodes: Pour la D\`{e}termination} (1805)にて，
+normal equationを導く．
+しかし，確率論的な発想がなかった．
+
+Robert Adrain 1775-1843が最初に証明をしようとする．
+まずは誤差の従う分布がなにかを直接考察した．
+
+Karl Gauss 1777-1855は『天体運動論』で，正規性の仮定をおくと，算術平均が最確値であることを導く．
+また，先取権を巡って筆を執っている．一方でフランス学会は極めて鷹揚な態度を取る．
+
+Laplaceは著書『確率の解析的理論』の「試論」の中で，LegendreとGaussを同等に扱っている．
+
+\section{Queteletによる数理科学}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=自然科学を回転させようとした試み]
+    応用統計学の祖と呼ばれるのがベルギーのQueteletである．
+    フランスには，Laplaceが統計的推論の手法を得ていた土壌があった．
+    結局コンドルセも，次のLaplaceの精神の体現であった．
+    \begin{quote}
+        政治的・道徳的科学に対しても，観察と計算とに基礎を置くこの方法を，すなわち自然科学で役に立ったこの方法を適用してみよう．
+    \end{quote}
+\end{tcolorbox}
+
+\subsection{道徳統計学}
+
+『人間について』(1835)では「平均人の理論と社会体制の組織に関する」思想を社会物理学と呼んだ．
+その内実は，肉体的・知的，並びに道徳的諸性質を支配する諸法則を統計的に研究する学問であった．
+したがって，事実を確定する手法である統計学から派生する理論である（ちょうど生物測定学と同じ）．
+そして，官庁統計・人口学とも違う．
+
+なお，Queteletによる「統計学」とは，
+Gottfried Achenwall(アッヘンヴァル) 1719-1772 独の言葉を借りて，
+「事実・状態を解明するものであって，政治社会に影響を与えるすべての要素を解明するものである」という．
+または歴史学者Schl\''{o}zer(シュレーツァー)の言葉を借りて「歴史は動く統計であり，統計は静止した歴史である」と論じる．
+
+\subsection{コントの社会学}
+
+なお，コントも社会物理学を提唱したが，統計的方法，特に数学的方法を信用していなかった．
+事実，Queteletは道徳統計学というべきもので，コントの現象論的な態度とは全く趣旨が違っていた．
+が，一般から特殊へ進むのがコントで，平均人から社会を経て人類へ進むのがケトレーである．
+大雑把に言えば，コントはいささかMarxの社会進化論的である．
+
+\subsection{コンドルセの偉大な綜合}
+
+コンドルセの社会数学は，コントのような「人間精神の進歩」理論を，ケトレーのような
+科学的手法で，新科学として提唱した．
+コンドルセの地盤には，ダランベールがいた．
+
+\section{ドイツでの社会統計学}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Adolf Wagner 1835-1917，Ernst Engel 1821-1896，Georg Mayrら．
+\end{tcolorbox}
+
+\section{現代誤差論}
+
+\subsection{田口玄一}
 
 海軍水路部天文部から統計数理研究所へ．
 田口メソッドは品質管理手法を開発・設計工程に取り入れた．
@@ -313,10 +461,28 @@ title=]
 
 \subsection{記述統計学}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ドイツに留学して，Karl Marxに心酔して，革命はいただけないが，社会を科学的に改善していく精神を汲み取った．
+\end{tcolorbox}
+
+\begin{quote}
+    記述の方法の発明―これは発見というより創造である．科学の進歩とはこういう記述の方法を創造することなのである」．
+\end{quote}
+
 標本が十分に大きいときに，これ自体を母集団とみなすならば，背後に分布を仮定することも，標本と母平均との確率的関係に頭を悩ませることもない．
 この特権を享受した下での統計的手法を，記述統計学という．
 これは，全体を見渡して知恵を得たい，複雑な大規模データを要約して理解したいという傾向のある学問（マクロ生物学など）で
 取られる手法となる．一方でGossetやFisherは推論が必要になり，Edgeworthは意思決定が必要であった．
+
+\subsection{生物測定学}
+
+Walter Weldon 1860-1906と創始した生物測定学は1890sから1920sまで唯一の
+統計学の高度の訓練をする組織であった．
+University Colledgeは世界の統計学の中心であった．
+
+メンデル遺伝学派との論争に明け暮れてから，生物測定学派は王立協会からも，
+生物学会からも締め出された．
 
 \subsection{モーメント法とピアソン系}
 
@@ -427,6 +593,10 @@ title=]
     Neyman, J., and Pearson, E.S. (1933). On the problem of the most efficient tests of statistical hypotheses. \textit{Phil. Trans. R. Soc.}, Ser. A, 231, 289–337.
     \bibitem{Akaike76}
     赤池広次 (1976) 「情報量規準AICとは何か」数理科学153号，5-11ページ．
+    \bibitem{Ando}
+    安藤洋美 (1995) 『最小二乗法の歴史』．現代数学社．
+    \bibitem{社会的形成}
+    長屋政勝，金子治平，上藤一郎 (1999) 『統計と統計理論の社会的形成』（北海道大学図書刊行会，統計と社会経済分析I）．
 \end{thebibliography}
 
 \end{document}

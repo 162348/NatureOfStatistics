@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -2363,10 +2363,13 @@ title=]
         $n\to\infty,N\to\infty$の極限を考えると，右辺は$0$に収束する．
     \end{description}
 \end{proof}
-\begin{remarks}
-    Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．\footnote{\url{https://terrytao.wordpress.com/2011/05/24/locally-compact-topological-vector-spaces/}}
-    また，$C_c(\R_+;L^2(\Om))$は$L^2(\R_+;L^2(\Om))$上稠密である，という結果は得られそうであるが，高度である．
-    そこで，$f\in L^1([a,b],\o{\R})$について$F(x):=\int^x_af(t)dt$は$(a,b)$上殆ど至る所微分可能であり，$F'(x)=f(x)$が成り立つというLebesgueの定理を用いた．
+\begin{remarks}\mbox{}
+    \begin{enumerate}
+        \item Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．\footnote{\url{https://terrytao.wordpress.com/2011/05/24/locally-compact-topological-vector-spaces/}}
+        また，$C_c(\R_+;L^2(\Om))$は$L^2(\R_+;L^2(\Om))$上稠密である，という結果は得られそうであるが，高度である．
+        そこで，$f\in L^1([a,b],\o{\R})$について$F(x):=\int^x_af(t)dt$は$(a,b)$上殆ど至る所微分可能であり，$F'(x)=f(x)$が成り立つというLebesgueの定理を用いた．
+        \item また，$C'(\R_+;L^2(\Om))$は，明らかな方法で単過程近似が出来ることを用いた．病的な関数については，Lebesgueの言葉で処理したのである．
+    \end{enumerate}
 \end{remarks}
 
 \begin{corollary}[確率積分の等距離延長]\label{cor-extention-of-SI}
