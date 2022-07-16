@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -525,6 +525,52 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
     \end{enumerate}
 \end{proposition}
 
+\subsection{付値}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    絶対値の概念を，ノルムに一般化するのではなく，一般の体に一般化する道もある．
+\end{tcolorbox}
+
+\begin{definition}[valuation]
+    体$K$上の写像$v:K\to\R$が\textbf{付値}であるとは，次の3条件を満たすことをいう：
+    \begin{enumerate}
+        \item $v\ge0$かつ$v^{-1}(0)=\{0\}$．
+        \item 積の分解：$\forall_{x,y\in K}\;v(xy)=v(x)v(y)$．
+        \item 三角不等式：$\forall_{x,y\in K}\;v(x+y)\le v(x)+v(y)$．
+    \end{enumerate}
+\end{definition}
+
+\section{次元論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    現代では殆ど廃れた問題意識であるが，コンパクト集合を考えるにあたって，開被覆がどれだけ自然な発想であるかがわかる．
+\end{tcolorbox}
+
+\begin{history}
+    Cantorの1870年以降の論文で，初めて$\R^n$の任意の集合の位相が考えられた．
+    そこで，内点，集積点，境界点，開・閉集合などのEuclid空間的な概念はすべてCantorが与えた．
+    Cantor (1878)は線分から正方形への全単射を構成し，Peano (1890)はそれが連続に取れることがわかった．
+    そこで，位相不変量としての次元の概念の精緻化が要請された．
+    次の定義のような次元の概念が位相不変量であることを示すためにBrouwerが用いた手法は，代数的位相幾何学において主流となった．
+
+    一方でFr\`{e}chetは，関数空間においても類似の位相的問題を考える仮定で，距離空間の概念を定義した(1905)．
+    そしてその様子から，「近傍」なる概念の持つべき性質を４公理にまとめあげて「位相空間」（今日のHausdorff空間に当たる）と呼んだのはHausdorff (1914)である．
+    こうして，位相幾何学の議論の対象は真に広がった．
+
+    位相空間の公理は，Kuratowski (1933)が「閉包の公理」を提案し，Bourbakiが開集合族，またはフィルターによるものがある．
+    
+\end{history}
+
+\begin{definition}[Poincar\`{e} 1912, Brouwer 1913, Lebesgue 1921]
+    コンパクト部分集合$K\subset\R^n$の\textbf{次元}とは，
+    次の条件を満たす自然数$m$のうち最小のものをいう：
+    \begin{quote}
+        任意の$\ep>0$に対して，$K$の各点が$m+1$回以上は覆われないような，直径が$\ep$を超えない開集合の族が取れる．
+    \end{quote}
+\end{definition}
+
 \chapter{位相空間とその射}
 
 \begin{quotation}
@@ -536,17 +582,47 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
 \chapter{距離空間}
 
 \begin{quotation}
-    
+    抽象位相空間論を展開したが，元々位相空間論の端緒は，Fr\`{e}chetが距離空間の概念を定義してCantorの概念を一般化したことに始まる．
+    その際のモチベーションは関数空間であった．
 \end{quotation}
 
 \chapter{位相的構造}
 
 \chapter{写像空間}
 
+\begin{quotation}
+    一般的な位相空間論を準備し，距離空間での例を見て，さらにこれを特徴づける位相的構造を見てきた．
+    これで，位相空間論の発展を促した源流である，関数空間に取り組める．
+\end{quotation}
+
+\chapter{参考文献}
+
+\begin{thebibliography}{99}
+    \bibitem{斎藤}
+    斎藤毅『集合と位相』（東京大学出版会．2016）
+    \bibitem{彌永}
+    彌永昌吉・彌永健一『集合と位相II』（岩波講座 基礎数学9，1977）．
+    \bibitem{森田}
+    森田紀一『位相空間論』（
+    \bibitem{Johnstone}
+        Peter Johnstone - The point of pointless topology (83)
+    \bibitem{Johnstone2}
+        Peter Johnstone, Stone Spaces, Cambridge Studies in Advanced Mathematics 3, Cambridge University Press 1982. xxi+370 pp. MR85f:54002, reprinted 1986.
+    \bibitem{nLab}
+        \url{https://ncatlab.org/nlab/show/Introduction+to+Topology}
+    \bibitem{Vickers}
+        Steven Vickers, Topology via Logic, Cambridge University Press (1989)
+    \bibitem{Hausdorff}
+    F. Hausdorff, Grundzüge der Mengenlehre, Veit \& Co., Leipzig, 1914.
+    \bibitem{Bourbaki}
+    Nicolas Bourbaki 位相I
+    \bibitem{Analysis Now}
+    Analysis Now
+\end{thebibliography}
 
 \end{document}
 
-
+\begin{hey}
 
 
 
@@ -6334,3 +6410,5 @@ title=]
     \bibitem{Analysis Now}
     Analysis Now
 \end{thebibliography}
+
+\end{hey}

@@ -1,0 +1,40 @@
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\title{2022年度数学講究XB\\（担当：小池祐太先生）}
+\author{05-210520 司馬博文}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    \item $M$の累積分布関数$F(x):=P[M\le x]$が絶対連続であることを示せば良い．
+    いま$\Sigma$は正定値行列としたから，$\det\Sigma>0$より，
+    $\zeta\sim N_d(0,\Sigma)$の確率密度関数は
+    \[\phi(x;0,\Sigma):=\frac{1}{(2\pi)^{d/2}(\det\Sigma)^{1/2}}\exp\paren{-\frac{1}{2}x^\top\Sigma^{-1}x}\]
+    と表せる．このとき，$M$の累積分布関数は，
+    \begin{align*}
+        F(x)&=P[M\le x]=P\Square{\forall_{j\in[d]}\;\frac{\zeta_j}{\sigma_j}\le x}
+        =\int_{(-\infty,x]^d}\phi(\xi;0,\Sigma')d\xi
+    \end{align*}
+    と定積分の形で表せる．
+    ただし，$\Sigma':=A^{-1}\Sigma A^{-1}\;(A:=\diag(\sigma_1,\cdots,\sigma_d))$とした．
+    定積分$\Psi:\B(\R^d)\to[0,1];E\mapsto\int_E\phi(\xi)d\xi$は集合関数として絶対連続であるから，
+    $F(x):=\Psi((-\infty,x]^d)$も絶対連続である．
+    \footnote{実際，任意の$x<y$について，
+    \[E_i:=\Brace{(x_1,\cdots,x_d)^\top\in\R^d\mid x_i\in[x,y],\;\forall_{j\ne i}\;x_j\in(-\infty,y]}\]
+    とすると，$(-\infty,y]^d\setminus(-\infty,x]^d\subset\cup_{i=1}^dE_i$であるから，
+    \[\abs{F(x)-F(y)}=\Psi((-\infty,y]^d\setminus(-\infty,x]^d)\le d\Phi(y)^{d-1}\abs{\Phi(x)-\Phi(y)}\le dM\abs{x-y}\quad(\exists_{M\in\R})\]
+    よりLipschitz連続である．なお，$M$の存在は，$\Phi'(x)=\frac{1}{\sqrt{2\pi}}\exp{-\frac{1}{2}x^2}$が有界であることと平均値の定理による．
+    よって，絶対連続でもある．}
+    \item $\Brace{M>\Phi^{-1}\paren{1-\frac{\al}{d}}}\subset\bigcup_{i=1}^d\Brace{\frac{\zeta_i}{\sigma_i}>\Phi^{-1}\paren{1-\frac{\al}{d}}}$より，
+    \[P\Square{M>\Phi^{-1}\paren{1-\frac{\al}{d}}}\le d\cdot P\Square{\frac{\zeta_i}{\sigma_i}>\Phi^{-1}\paren{1-\frac{\al}{d}}}\le\al.\]
+    \item $\Sigma$が対角行列のとき，$\frac{\zeta_i}{\sigma_i}$は互いに独立である．
+    よって，
+    \[P[M>C_\al]=1-\prod^d_{i=1}P\Square{\frac{\zeta_i}{\sigma_i}\le c_\al}=1-(\Phi(c_\al))^d.\]
+    これが$\al$に等しいとき，$c_\al=\Phi^{-1}((1-\al)^{1/d})$が成り立つ．
+\end{enumerate}
+
+\end{document}

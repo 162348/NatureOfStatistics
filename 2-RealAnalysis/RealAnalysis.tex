@@ -3613,29 +3613,40 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Vitali (1904)が導入した概念である．
+    Vitali (1904)が導入した概念である．集合関数$\Phi$の絶対連続性は，実数上の関数$F(x):=\Phi((-\infty,x])$を含意する．
+    こうして定まる，実数上の関数の絶対連続性には，
+    \[C^1([a,b])\subset\Lip[a,b]\subset\Lip^\al[a,b]\subset UC([a,b])\subset C([a,b])\]
+    なる関係と
+    \[\Lip[a,b]\subset\AC[a,b]\subset\BV[a,b]\subset\{f\text{は殆ど至る所微分可能}\}\]
+    なる関係がある．
 \end{tcolorbox}
 
-\subsection{一般の不定積分}
+\subsection{不定積分の絶対連続性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    ここでの絶対連続性は狭義絶対連続性といい，$\sigma$-加法的集合関数の間の2項関係に一般化されたものを広義と呼び分ける．
+    ここでの絶対連続性はLebesgue測度に対する絶対連続性である．
+    $\sigma$-加法的集合関数の間の2項関係に一般化されたものを広義と呼び分ける．
+    元々のLebesgue (1904)の仕事は，$F(x):=\Phi((-\infty,x])$の絶対連続性を定義したことになる．
 \end{tcolorbox}
 
-\begin{theorem}
-    $f\in L^1(X,\M,\mu;\o{\R})$の不定積分$F:\M\to\o{\R};E\mapsto F(E):=\int_Efd\mu\;(E\in\M)$は，$\mu$-絶対連続である：
+\begin{definition}[集合関数の絶対連続性]
+    $(X,\M,\mu)$上の\underline{実数値}集合関数$F:\M\to\R$が\textbf{$\mu$-絶対連続}であるとは，次が成り立つことをいう：
     \[\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{E\in\M}\;\mu(E)<\delta\Rightarrow\abs{F(E)}<\ep.\]
+\end{definition}
+
+\begin{theorem}
+    $f\in L^1(X,\M,\mu;\o{\R})$の不定積分$F:\M\to\o{\R};E\mapsto F(E):=\int_Efd\mu\;(E\in\M)$は，$\mu$-絶対連続である．
 \end{theorem}
 
 \subsection{$\R$上の不定積分の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $\R$上では逆が言える．一般に，任意の$\sigma$-有限な測度空間では逆が成り立ち，これをRadon-Nikodymの定理という．
+title=不定積分であるとは絶対連続であるということである]
+    $\R$上では逆に「絶対連続ならば殆ど至る所微分可能」が言える．一般に，任意の$\sigma$-有限な測度空間では逆が成り立ち，これをRadon-Nikodymの定理という．
 \end{tcolorbox}
 
-\begin{definition}
+\begin{definition}[実数上の関数の絶対連続性]
     関数$F:[a,b]\to\R$が\textbf{絶対連続}であるとは，次を満たすことをいう：
     \[\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{\{x_i\}_{i\in\N}\subset[a,b]}\;\sum^{\infty}_{i=1}(x_{i+1}-x_i)<\delta\Rightarrow\sum^\infty_{i=1}\abs{F(x_{i+1})-F(x_i)}<\ep.\]
 \end{definition}
@@ -3653,6 +3664,14 @@ title=]
 \begin{history}
     不定積分の$x$の関数としての絶対連続性は，Lebesgue (1904)の脚注に述べられているが，同じ概念を独立に発見して「絶対連続性」という名称と共に導入したのがVitali (1904)であることが，Lebesgueの第二版(1928)に述べられている．
 \end{history}
+
+\subsection{絶対連続性の十分条件}
+
+\begin{proposition}
+    Lipschitz連続ならば絶対連続である．
+\end{proposition}
+
+\subsection{絶対連続性の必要条件}
 
 \section{Lebesgue分解}
 
