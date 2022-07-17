@@ -539,7 +539,24 @@ title=]
         \item 積の分解：$\forall_{x,y\in K}\;v(xy)=v(x)v(y)$．
         \item 三角不等式：$\forall_{x,y\in K}\;v(x+y)\le v(x)+v(y)$．
     \end{enumerate}
+    また，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$なる関係が成り立つ付値を\textbf{非Archimedes的付値}という．
 \end{definition}
+
+\begin{example}[$p$-adic valuation]
+    $p$を素数とする．
+    \begin{enumerate}
+        \item $x\ne0$が整数のとき，$e\in\N$と$p$と互いに素な整数$r$を用いて$x=\pm p^er$と表せる．$e=:e_p(x)$を\textbf{$p$-指数}という．
+        \item $x\ne0$が一般の有理数であるとき，$\exists_{r,s\in\Z\setminus\{0\}}\;x=r/s$．このとき，$e_p(x):=e_p(r)-e_p(s)$とおく．
+        \item 最後に，$x\in\Q\setminus\{0\}$に対して，$v_p(x):=p^{-e_p(x)}$とする．
+    \end{enumerate}
+    このとき，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$が成り立ち，付値となる．
+    これを\textbf{$p$進付値}という．
+    $\Q$の絶対値による付値を\textbf{無限付値}または\textbf{Archimedes的付値}という．
+\end{example}
+
+\begin{theorem}[付値が定める距離空間]
+    
+\end{theorem}
 
 \section{次元論}
 
