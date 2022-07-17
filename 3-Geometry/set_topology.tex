@@ -2217,7 +2217,8 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
         \item $\O$が$X$の位相ならば，像位相$\O':=\{V\in P(Y)\mid  f^{-1}(V)\in\O\}=(f^*)^{-1}(\O)$は$Y$の位相である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}関手$f^*$が任意の$\cap,\cup$演算を保つこと
+\begin{proof}
+    関手$f^*$が任意の$\cap,\cup$演算を保つこと
     （命題\ref{prop-functoriality-of-image-and-inverse-image-mappings}）により成り立つ性質である．
     \begin{enumerate}
         \item 「像空間」$f^*\O\subset P(X)$の任意の合併は，$\O\subset P(Y)$の族$(U_i)_{i\in I}\;(U_i\subset Y)$（これは再び$\O$の元）を用いて$\cup_{i\in I}f^{-1}(U_i)$と表せるから，\[\cup_{i\in I}f^{-1}(U_i)=f^{-1}(\cup_{i\in I}U_i)\in f^*\O.\]同様に，$|J|<\infty$として，\[\cap_{i\in J}f^{-1}(U_i)=f^{-1}(\cap_{i\in J}U_i)\in f^*\O.\]
