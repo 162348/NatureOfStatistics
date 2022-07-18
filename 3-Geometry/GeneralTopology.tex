@@ -362,7 +362,7 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
 
 \subsection{商集合の普遍性}
 
-\begin{corollary}[商集合の普遍性]
+\begin{corollary}[商集合の普遍性]\label{cor-universality-of-quotient-set}
     $R$を集合$X$上の同値関係とし，$q:X\to X/R$を商写像とする．
     \begin{enumerate}
         \item 写像$f:X\to Y$について，次の２条件は同値である．
@@ -571,40 +571,24 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{付値}
+\section{関数の連続性}
+
+\subsection{連続性の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    絶対値の概念を，ノルムに一般化するのではなく，一般の体に一般化する道もある．
+    凸関数の特徴付けと似た消息が成り立つ．
 \end{tcolorbox}
 
-\begin{definition}[valuation]
-    体$K$上の写像$v:K\to\R$が\textbf{付値}であるとは，次の3条件を満たすことをいう：
+\begin{proposition}
+    一般の位相空間$X$上の
+    関数$f:X\to\R$について，次の2条件は同値：
     \begin{enumerate}
-        \item $v\ge0$かつ$v^{-1}(0)=\{0\}$．
-        \item 積の分解：$\forall_{x,y\in K}\;v(xy)=v(x)v(y)$．
-        \item 三角不等式：$\forall_{x,y\in K}\;v(x+y)\le v(x)+v(y)$．
+        \item $f$は連続．
+        \item $U:=\Brace{(x,y)\in X\times\R\mid f(x)<y}$と$V:=\Brace{(x,y)\in X\times\R\mid f(x)>y}$はいずれも$X\times\R$の開集合．
     \end{enumerate}
-    また，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$なる関係が成り立つ付値を\textbf{非Archimedes的付値}という．
-\end{definition}
+\end{proposition}
 
-<<<<<<< HEAD
-\begin{example}[$p$-adic valuation]
-    $p$を素数とする．
-    \begin{enumerate}
-        \item $x\ne0$が整数のとき，$e\in\N$と$p$と互いに素な整数$r$を用いて$x=\pm p^er$と表せる．$e=:e_p(x)$を\textbf{$p$-指数}という．
-        \item $x\ne0$が一般の有理数であるとき，$\exists_{r,s\in\Z\setminus\{0\}}\;x=r/s$．このとき，$e_p(x):=e_p(r)-e_p(s)$とおく．
-        \item 最後に，$x\in\Q\setminus\{0\}$に対して，$v_p(x):=p^{-e_p(x)}$とする．
-    \end{enumerate}
-    このとき，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$が成り立ち，付値となる．
-    これを\textbf{$p$進付値}という．
-    $\Q$の絶対値による付値を\textbf{無限付値}または\textbf{Archimedes的付値}という．
-\end{example}
-
-\begin{theorem}[付値が定める距離空間]
-    
-\end{theorem}
-=======
 \subsection{上・下半連続性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -667,7 +651,6 @@ title=]
         \item $C^{1/2}(X)$は一様収束位相について閉じている．
     \end{enumerate}
 \end{proposition}
->>>>>>> bb958d977a3986d4a39a829ff1e363d7d84da837
 
 \section{次元論}
 
@@ -742,9 +725,10 @@ title=]
     $\O_X:=\Op(X),\O(x):=\Brace{U\in\O_X\mid x\in U}$と表す．
     (2)の有限条件を落としても成り立つとき，$\O$を\textbf{Alexandroff位相}という．
 \end{definition}
-\begin{remarks}
-    $\Op(X)$や，$\O(x)\;(x\in X)$や，$X$のコンパクト集合の全体はフィルターをなす．
-\end{remarks}
+
+\begin{example}
+    $\Op(X)$や，一点$x\in X$の近傍系または開近傍系$\O(x)$や，$X$のコンパクト集合の全体はフィルターをなす．
+\end{example}
 
 \begin{proposition}[開集合の公理の特徴付け]\label{prop-characterization-of-open-sets}
     $X$を集合とし，$\O\subset P(X)$を集合とする．
@@ -927,6 +911,43 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\subsection{開・閉写像の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    議論の非対称性を補完する概念である．
+\end{tcolorbox}
+
+\begin{proposition}[演算子による開／閉写像の特徴付け]\mbox{}
+    \begin{enumerate}
+        \item $f$が開写像であることと，$\forall_{A\in P(X)}\;f(A^\circ)\subset f(A)^\circ$であることとは同値である．
+        \item $f$が閉写像であることと，$\forall_{A\in P(X)}\;f(\o{A})\subset \o{f(A)}$であることとは同値である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    $f:X\to Y$を開／閉な連続写像とする．
+    \begin{enumerate}
+        \item $f$が全射$\quad\Rightarrow\quad f$は商写像$\quad\Leftrightarrow\quad f$はsectionを持つ（final topology）．
+        \item $f$が単射$\quad\Rightarrow\quad f$は埋め込み$\quad\Leftrightarrow\quad f$はretractionを持つ（initial topology）．
+        \item $f$が全単射$\quad\Leftrightarrow\quad f$は同相写像．また，$f$が全単射の時，$f$が開写像であることと閉写像であることが同値で，$f$が全単射でない場合はそのどちらも一般的には成り立たない．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $f$が全射ならば，section $g:Y\to X$が存在して，$f\circ g=\id_Y$を満たす．
+        即ち，
+        ちなみに$\forall U\in P(X),\;g(U)=f^{-1}(U)$より，$f$の開閉に拘らず$g$は開写像になる．
+        \item 任意の部分集合$U\subset X$について\[f(X\setminus U)\overset{単射の時}{=}f(X)\setminus f(U)\overset{全射の時}{=}Y\setminus f(U)\]
+        が成り立つため，$f$が単射の時は，部分空間への同相写像となっている．
+        \item $f^*\O_Y=\O_X$が成り立つため．上の関係$f(X\setminus U)=Y\setminus f(U)$は全射性と単射性のどちらか１つでも欠けると通れない．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    いずれの場合も，起こっている現象は$f^*\O_Y=\O_X$である．それぞれに対する表現が違うだけである．足元に誘発される場合はfinal topology，頭上に誘発される場合はinitial topology，全単射である場合は同相写像．
+    この聖域は，コンパクト集合からHausdorff空間への射で起こる．
+\end{remarks}
+
 \subsection{位相同型の特徴付け}
 
 \begin{proposition}
@@ -961,6 +982,22 @@ title=]
         \item レトラクション$r:Y\to X$を持つならば，埋め込みである．
         \item 単射な開写像ならば，開な埋め込みである．
     \end{enumerate}
+\end{proposition}
+
+\subsection{像位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ある程度の双対命題が成り立つ．
+    そう，埋め込みの双対概念は商写像である．
+\end{tcolorbox}
+
+\begin{definition}
+    $f:X\to Y$を連続写像とする．$f$の右逆射$f\circ s=\id_Y$を(連続な)\textbf{セクション}という．
+\end{definition}
+
+\begin{proposition}
+    $f:X\to Y$を連続写像とする．$f$にセクションが存在すれば，$Y$の位相は$f$による像位相である．
 \end{proposition}
 
 \section{同値な公理}
@@ -1015,6 +1052,10 @@ title=]
 
 \subsection{近傍系の公理}
 
+\begin{notation}
+    ここでのみ，$\O(x)$を$x$の近傍のなすフィルターとする．開近傍に限らないことに注意．
+\end{notation}
+
 \begin{proposition}
     $x\in X$について，次の5条件が成り立つ．
     \begin{enumerate}
@@ -1039,7 +1080,229 @@ title=]
 
 \section{積空間と始位相}
 
+\subsection{積位相の特徴付け：2つの場合}
+
+\begin{definition}
+    $X\times Y$の位相のうち，$\U:=\Brace{U\times V\in P(X\times Y)\mid U\in\O_X,V\in\O_Y}$が生成する位相$\O_X\times\O_Y$を\textbf{積位相}という．
+    $\pr_1^*(\O_X)\cup\pr_2^*(\O_Y)$を準基として生成される位相と言っても良い．
+\end{definition}
+
+\begin{proposition}[積位相の特徴付け]
+    $X,Y$を位相空間とする．
+    \begin{enumerate}
+        \item $\U$は$\O_X\times\O_Y$の基底である．実際，次の2条件が同値：
+        \begin{enumerate}
+            \item $W\in\O_X\times\O_Y$．
+            \item $\forall_{(x,y)\in W}\;\exists_{U\in\O(x),V\in\O(y)}\;U\times V\subset W$．
+        \end{enumerate}
+        \item 射影$\pr_1:X\times Y\to X,\pr_2:X\times Y\to Y$はいずれも連続な開写像になり，$\O_X\times\O_Y$はこの性質を満たす最弱の位相である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item a
+        \item 連続であり，$\O_X\times\O_Y$がこれについての始位相に一致することは明らか．像は合併を保つから，$\U$の元を開に移すことを確かめれば良い．これは定め方から明らか．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[積写像の連続性の特徴付け]
+    任意の$T\in\Top$と写像$f:T\to X,g:T\to Y$について，次の2条件は同値；
+    \begin{enumerate}
+        \item 積$(f,g):T\to X\times Y$が連続．
+        \item $f,g$はそれぞれ連続．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[連続写像のグラフの埋め込み]
+    $f:X\to Y$が連続ならば，積$g:=(\id_X,f):X\to X\times Y$は埋め込みで，$\Im g=\Gamma_f\subset X\times Y$．
+\end{proposition}
+
+\begin{example}[距離空間の積]
+    2つの距離空間$(X,d_X),(Y,d_Y)$について，$L^1$-距離，$L^2$-距離，$L^\infty$-距離（正確にはManhattan距離，Euclid距離，一様距離）のいずれも同値で，$X\times Y$の積位相を定める．
+    また，距離関数$d:X\times X\to d$は連続になる．
+\end{example}
+
+\begin{example}[二項演算]
+    実数の加法$+:\R\times\R\to\R$と乗法$\times:\R\times\R\to\R$も連続である．
+    行列積も連続である．
+\end{example}
+
+\subsection{積位相の特徴付け：一般の場合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般の場合の積位相とは，写像の空間$\Map(I,X)$の各点収束位相である．
+\end{tcolorbox}
+
+\begin{definition}
+    位相空間の族$(X_i,\O_i)_{i\in I}$の積$\Map(I,X)=X:=\prod_{i\in I}X_i$に定まる位相のうち，
+    射影の族$(\pr_i)_{i\in I}$の定める始位相，すなわち，
+    射影の引き戻し$\bigcup_{i\in I}\pr_i^*(\O_i)$によって生成される位相を，$X$の\textbf{積位相}または\textbf{Tychonoff位相}という．
+\end{definition}
+
+\begin{proposition}[積位相の特徴付け]
+    \[ \U:=\left\{\prod_{i\in I}U_i\;\middle|\;\begin{array}{l}(U_i)_{i\in I}は開集合U_i\subset X_iの族であり，\\\{i\in I\mid U_i\subsetneq X_i\}は有限集合である\end{array}\right\} \]
+    とすると，これは$\prod_{i\in I}\O_i$の基底である．すなわち，
+    $U\subset X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $U\in\O_X$．
+        \item $\forall_{x\in U}\;\exists_{\{U_i\}_{i\in I}\;(U_i\in\O_i)}\;U_i=X_i\;\fe\land\prod_{i\in I}U_i\subset U$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[積写像の連続性の特徴付け]
+    任意の$T\in\Top$と写像の族$(g_i:T\to X_i)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $g:=\prod_{i\in I}g_i:T\to X$は連続．
+        \item $\forall_{i\in I}\;g_i\in C(T;X_i)$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}[$m$-進小数展開]
+    任意の自然数$m\ge 2$について，$m$-進小数展開$e_m:m^\N\to[0,1]$，すなわち
+    \[e_m((x_n)):=\frac{1}{m}\sum^\infty_{n=0}\frac{x_n}{m^n}\]
+    は連続．ただし，$2$は離散空間とした．Tychonoffの定理より$2^\N$はコンパクトだから，$e_m$は全射より$[0,1]$がコンパクトであること(Heine-Borel)もわかる．
+\end{example}
+
+\subsection{始位相の普遍性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    積位相を調べるにあたって，始位相の基底の探し方と，積写像の連続性の特徴付けは，一般の始位相について使える手法である．
+\end{tcolorbox}
+
+\begin{proposition}[誘導位相の普遍性]\label{prop-universality-of-final-topology}
+    $(X_i)_{i\in I}$を位相空間の族，$(f_i:X\to X_i)_{i\in I}$を写像の族とし，$X$を誘導位相により位相空間と考える．
+    \begin{enumerate}
+        \item $X$の部分集合$U$について，次の２条件は同値．
+        \begin{enumerate}[(1)]
+            \item $U$は$X$の開集合である．
+            \item $x\in U$ならば，有限部分集合$J\subset I$と$f_i(x)\in X_i$の開近傍の有限族$(U_i)_{i\in J}$で，$\cap_{i\in J}f^{-1}_i(U_i)\subset U$を満たすものが存在する．
+        \end{enumerate}
+        \item 任意の位相空間$T$と写像$g:T\to X$に対し，次の２条件は同値．
+        \begin{enumerate}[(1)]
+            \item $g$は連続である．
+            \item 任意の$i\in I$に対して，$f_i\circ g$が連続．
+        \end{enumerate}
+    \end{enumerate}
+\end{proposition}
+
 \section{商空間と像位相}
+
+\subsection{商空間の普遍性}
+
+\begin{proposition}[universality of quotient space]
+    写像$f:X\to Y$が写像$g:X/R\to Y$を引き起こすならば，$R_f\subset R$である\ref{cor-universality-of-quotient-set}．
+    このとき，$f$が連続なことと$g$が連続なことは同値．
+\end{proposition}
+\begin{proof}
+    $f$が連続であることと，像位相$f_*\O_X$について$\O_Y\subset f_*\O_X$が成り立つこととは同値．
+    $X/R$の位相は$p_*\O_X$であるから，$f=g\circ p$のとき，これは$\O_Y\subset g_*(p_*(\O_X))$に同値．
+\end{proof}
+
+\subsection{直和位相の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    射影による始位相が直和位相で，包含による終位相が直和位相である．いずれも連続な開写像になる．包含は埋め込みでもある．
+\end{tcolorbox}
+
+\begin{definition}[direct sum topology]
+    直和$\coprod_{i\in I}X_i$の，標準単射の族$j_i:X_i\to\coprod_{i\in I}X_i$による像位相を\textbf{直和位相}という．
+\end{definition}
+
+\begin{lemma}
+    任意の$i\in I$に対して標準単射$j_i:X_i\to\coprod_{i\in I}X_i$は開埋め込みであり，$(j_i(X_i))_{i\in I}$は$\coprod_{i\in I}X_i$の開被覆である．
+\end{lemma}
+
+\subsection{開被覆の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    非常に非自明な事実だが，開被覆がその空間の位相を殆ど規定してしまう．
+\end{tcolorbox}
+
+\begin{proposition}[開被覆の像位相としての見方]
+    $X$を位相空間とし，$(U_i)_{i\in I}$を$X$の開被覆とする．
+    \begin{enumerate}
+        \item $X$の位相は，包含写像の族$(j_i:U_i\to X)_{i\in I}$による像位相である．
+        \item $\U_i$を$U_i$の開集合系とすると，$X$の位相は$\U=\cup_{i\in I}\U_i$によって生成位される位相である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $\O$を$X$の位相とし，$\O_\U$を$\U$が生成する位相，$\O'$を像位相とする．
+    $\O_\U\subset\O\subset\O'\subset\O_\U$を示す．
+    最左辺は$\U\subset\O$による．中辺は$\O'$が包含写像を連続にする最も細かい位相であることによる．
+    最後に最右辺は，任意の$U\in\O$に対して，$U=\cup_{i\in I}(U\cap U_i)$と$\O_\U$の元の合併として表せるから，$U\in\O_\U$．
+\end{proof}
+
+
+\begin{proposition}
+    $f:X\to Y$を連続写像，$(V_i)_{i\in I}$を$Y$の開被覆とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $Y$の位相は$f$の像位相である．
+        \item 任意の$i\in I$に対して，$V_i$の位相は，制限$f_i:f^{-1}(V_i)\to V_i$による像位相である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{貼り合わせ}
+
+\begin{theorem}[位相の族の貼り合わせの条件]
+    $X$を集合，$(X_i)$を$X$の被覆とする．$(X_i,\O_i)$は位相空間であるとする．
+    次の2条件は同値．
+    \begin{enumerate}
+        \item 包含の族$(j_i:X_i\to X)$による像位相によって$(X_i)$は$X$の開被覆となり，$j_i$は開埋め込みになる．
+        \item 任意の$X_i\cap X_j$は$X_i,X_j$の開部分空間となり，$X_i$からの相対位相と$X_j$からの相対位相とは等しい．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{終位相の普遍性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続全射な開・閉写像が存在するならば，終域の位相は像位相である．
+\end{tcolorbox}
+
+\begin{proposition}[像位相の特徴付け]
+    $(X_i)_{i\in I}$を位相空間の族，$(f_i:X_i\to X)_{i\in I}$を写像の族とする．
+    \[ \O=\{U\in P(X)\mid \forall_{i\in I}\; f^{-1}_i(U)\in\O_{X_i}\} \]
+    は$X$の位相である．この位相を，写像の族$(f_i)_{i\in I}$による\textbf{像位相}という．
+\end{proposition}
+\begin{proof}
+    開集合の公理を満たすことを示す．$(U_j)_{j\in J}$を$\O$の族とする．
+    \begin{enumerate}
+        \item 任意の$i\in I$について$f^{-1}_i(\cup_{j\in J}U_j)=\cup_{j\in J}f^{-1}_i(U_j)\in\O_{X_i}$が成り立つから，$\cup_{j\in J}U_j\in\O$．
+        \item $\abs{J}<\infty$とする．任意の$i\in I$について$f^{-1}_i(\cap_{j\in J}U_j)=\cap_{j\in J}f^{-1}_i(U_j)\in\O_{X_i}$が成り立つから，$\cap_{j\in J}U_j\in\O$．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[終位相の普遍性]
+    $X$を写像の族$(f_i:X_i\to X)_{i\in I}$による像位相によって位相空間と見做す．
+    任意の位相空間$Y$と任意の写像$g:X\to Y$に対し，次の２条件は同値．
+    \begin{enumerate}
+        \item $g:X\to Y$は$\O$に関して連続である．
+        \item 任意の$i\in I$に対し，$g\circ f_i:X_i\to Y$が連続である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 像位相は各$f_i$を連続にする最も細かい位相であるから，$f_i$は連続．(1)より$g$も連続であるから，$g\circ f_i$は連続．
+        \item[(2)$\Rightarrow$(1)] 任意の$U\in\O_Y$に対して，$g^{-1}(U)\in\O$を示せば良い．
+        \begin{align*}
+            &(g\circ f_i)^{-1}(U)\in\O_{X_i}\\
+            \Leftrightarrow\quad&f^{-1}_i(g^{-1}(U))\in\O_{X_i}\\
+            \Leftrightarrow\quad&g^{-1}(U)\in\O.
+        \end{align*}
+    \end{description}
+\end{proof}
+
+\begin{proposition}
+    $f:X\to Y$を全射な連続写像とする．
+    \begin{enumerate}
+        \item $f$が開写像ならば，$\O_Y=f^*(\O_X)=\Brace{f(U)\in P(Y)\mid U\in\O_X}$であり，$f$による像位相である．
+        \item $f_!(A):=\Brace{y\in Y\mid f^{-1}(y)\subset A}$として$f_i:P(X)\to P(Y)$を定める．$f$が閉写像ならば，$\O_Y=\Brace{f_!(U)\in P(Y)\mid U\in\O_X}$であり，$f$による像位相である．
+    \end{enumerate}
+\end{proposition}
 
 \section{ネット}
 
@@ -1136,6 +1399,22 @@ title=]
 
 \section{距離関数の扱い}
 
+\subsection{開集合の特徴付け}
+
+\begin{proposition}
+    $X$を距離空間，$U\subset X$とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $U$は開集合．
+        \item $\exists_{f\in C(X)}\;U=\Brace{x\in X\mid f(x)\ne0}$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{距離空間は正規}
+
+\begin{proposition}
+    $A,B\subset X$を互いに素な閉集合とする．このとき，$\exists_{f\in C(X)}\;A=f^{-1}(0)\land B=f^{-1}(1)$．
+\end{proposition}
+
 \subsection{閉包の特徴付け}
 
 \begin{proposition}[閉包の距離関数による特徴付け]\label{prop-characterization-of-closure-in-terms-of-metric-function}
@@ -1188,6 +1467,60 @@ title=]
         \item 包含写像$i:A\to X$は等長写像だから，埋め込みである．よって，$i:A\to X$は部分距離空間の$A$と部分空間$A$は同相である．
     \end{enumerate}
 \end{proof}
+
+\subsection{ノルム空間の等長写像}
+
+\begin{definition}[strictly convex]
+    ノルム空間$F$が\textbf{厳密に凸}であるとは，$\forall_{u,v\in\partial B}\;\forall_{t\in(0,1)}\;tu+(1-t)v\in B^\circ$が成り立つことをいう．
+    $L^p\;(1<p<\infty)$空間は厳密に凸である．
+\end{definition}
+
+\begin{theorem}
+    ノルム空間の等長写像$f:E\to F$は，$F$が厳密に凸のとき，affineである．
+\end{theorem}
+\begin{proof}
+    連続性より，
+    \[f\paren{\frac{1}{2}(x+y)}=\frac{1}{2}(f(x)+f(y))\]
+    を示せば十分．
+\end{proof}
+
+\begin{theorem}[Mazur-Ulam]
+    $E,F$を実ノルム空間，$f:E\to F$を等長な線形写像とする．このとき，$f$はaffineである．
+\end{theorem}
+
+\subsection{距離空間の例：付値}
+
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+        絶対値の概念を，ノルムに一般化するのではなく，一般の体に一般化する道もある．
+\end{tcolorbox}
+
+\begin{definition}[valuation]
+    体$K$上の写像$v:K\to\R$が\textbf{付値}であるとは，次の3条件を満たすことをいう：
+    \begin{enumerate}
+        \item $v\ge0$かつ$v^{-1}(0)=\{0\}$．
+        \item 積の分解：$\forall_{x,y\in K}\;v(xy)=v(x)v(y)$．
+        \item 三角不等式：$\forall_{x,y\in K}\;v(x+y)\le v(x)+v(y)$．
+    \end{enumerate}
+    また，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$なる関係が成り立つ付値を\textbf{非Archimedes的付値}という．
+\end{definition}
+
+\begin{example}[$p$-adic valuation]
+    $p$を素数とする．
+    \begin{enumerate}
+        \item $x\ne0$が整数のとき，$e\in\N$と$p$と互いに素な整数$r$を用いて$x=\pm p^er$と表せる．$e=:e_p(x)$を\textbf{$p$-指数}という．
+        \item $x\ne0$が一般の有理数であるとき，$\exists_{r,s\in\Z\setminus\{0\}}\;x=r/s$．このとき，$e_p(x):=e_p(r)-e_p(s)$とおく．
+        \item 最後に，$x\in\Q\setminus\{0\}$に対して，$v_p(x):=p^{-e_p(x)}$とする．
+    \end{enumerate}
+    このとき，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$が成り立ち，付値となる．
+    これを\textbf{$p$進付値}という．
+    $\Q$の絶対値による付値を\textbf{無限付値}または\textbf{Archimedes的付値}という．
+\end{example}
+
+\begin{theorem}[付値が定める距離空間]
+    
+\end{theorem}
 
 \subsection{距離概念の一般化}
 
@@ -1305,6 +1638,146 @@ title=]
 \end{lemma}
 
 \subsection{位相群}
+
+\section{コンパクト距離空間}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクト性も，連結性と同様，全体空間$X$に依らずに定義出来る概念であるとわかる．
+\end{tcolorbox}
+
+\begin{definition}
+    部分空間$A\subset X$が\textbf{コンパクト}であるとは，$X$の任意の開集合族が$A$の開被覆となっているならば，$A$の有限な部分被覆が選び出せることをいう．
+\end{definition}
+
+\subsection{閉集合による特徴付け}
+
+\begin{proposition}[コンパクト性の特徴付け：閉集合の言葉による双対命題]\label{prop-characterization-of-compactness-as-space}
+    位相空間$X$の部分集合$A$に対して，次の３つの条件は同値である．
+    \begin{enumerate}
+        \item $A$はコンパクトである．
+        \item $X$の閉集合の任意の族$(F_i)_{i\in I}$について，次の条件(C')が成り立つ．\begin{quote}
+            (C') $I$の任意の有限部分集合$\{i_1,\cdots,i_n\}$に対して，$A\cap F_{i_1}\cap\cdots\cap F_{i_n}\ne\emptyset$ならば，$A\cap\bigcap_{i\in I}F_i\ne\emptyset$である．
+        \end{quote}
+        \item $X$の部分位相空間としての$A$はコンパクトである．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{description}
+        \item[(1)$\Leftrightarrow$(2)] 条件(C)の対偶「有限部分被覆が存在しないならば，それはそもそも開被覆ではない」は
+        \begin{quote}
+            (C'') 任意の$I$の有限部分集合$\{i_1,\cdots,i_n\}$について$A\not\subset U_{i_1}\cup\cdots\cup U_{i_n}$ならば，$A\not\subset \cup_{i\in I}U_i$である．
+        \end{quote}
+        となる．$F_i:=X\setminus U_i$と定めるとこれは閉集合で，
+        \begin{align*}
+            A\not\subset U_{i_1}\cup\cdots\cup U_{i_n}&\Leftrightarrow A\cap F_{i_1}\cap\cdots\cap F_{i_n}\ne\emptyset,\\
+            A\not\subset \cup_{i\in I}U_i&\Leftrightarrow A\cap\bigcap_{i\in I}F_i.
+        \end{align*}
+        \item[(1)$\Leftrightarrow$(3)]
+        \begin{align*}
+            A\subset\bigcup_{i\in I}U_i&\Leftrightarrow A=A\cap\bigcup_{i\in I}U_i\Leftrightarrow \bigcup_{i\in I}(A\cap U_i)
+        \end{align*}
+        より．
+    \end{description}
+\end{proof}
+
+\subsection{最大値の定理による特徴付け}
+
+\begin{proposition}[maximum value theorem]\label{prop-maximum-value-theorem}
+    $X$を位相空間とし，$f:X\to\R$を連続関数とする．$A$が$X$のコンパクト集合であり空でないならば，$f$の$A$への制限には最大値が存在する．
+\end{proposition}
+\begin{proof}
+    $\forall x\in A,\;\exists y\in A,\; f(x)<f(y)$と仮定して，矛盾を導く．
+    これは，$A$の元$y\in A$に対して$U_y:=f^{-1}((-\infty,f(y)))$と定めると，$A=\cup_{y\in A}U_y$となる，と翻訳できる．
+    任意の$x\in A$に対して，$y$が存在して$x\in U_y$を満たす，ということである．
+
+    こうして$A$の開被覆$(U_y)_{y\in A}$を得たが，$A$はコンパクトであるから，有限個の元$y_1,\cdots,y_n\in A$で$A\subset U_{y_1}\cup\cdots\cup U_{y_n}$を満たすものが存在する．
+    すると，このうちで$f(y_i)$を最大にする$y_i$が定まるから，$y\in A\subset U_{y_1}\cup\cdots\cup U_{y_n}=U_{y_i}$となってしまうが，これは$y_i\in f^{-1}(-\infty,f(y_i))=f(y_i)\in(-\infty,f(y_i))$を意味し，矛盾．
+\end{proof}
+
+\begin{proposition}
+    $X$を距離空間とする．次の4条件は同値である：
+    \begin{enumerate}
+        \item $X$はコンパクト．
+        \item $X$は点列コンパクト．
+        \item $X$の離散な閉部分集合は有限である．
+        \item $X=\emptyset$または$\forall_{f\in C(X)}$は最大値を持つ．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{実数のコンパクト部分集合}
+
+\begin{corollary}[距離空間のコンパクト集合]\label{cor-compact-sets-in-metric-space-is-bounded}\mbox{}
+    \begin{enumerate}
+        \item $X$を距離空間とする．$A$が$X$のコンパクト部分集合ならば，$A$は有界である．
+        \item $A$が$\R$の空でないコンパクト集合ならば，$A$は最大元を持つ．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $A$が空でない場合について示せば良い．勝手に$a\in A$を取り，連続関数$d(-,a):A\to\R$について最大値の定理\ref{prop-maximum-value-theorem}を適用すれば，最大値$M$を得る．三角不等式より，任意の$x,y\in A$について，$d(x,y)\le d(x,a)+d(y,a)\le 2M$．
+        \item 恒等写像$A\to A\subset\R$は連続だから，これに最大値の定理\ref{prop-maximum-value-theorem}を適用すれば良い．
+    \end{enumerate}
+\end{proof}
+\begin{theorem}[Heine-Borel / Borel-Lebesgue]\label{thm-Heine-Borel}
+    $a\le b$を実数とする．閉区間$[a,b]$は$\R$のコンパクト集合である．
+\end{theorem}
+
+\begin{corollary}
+    $f:[a,b]\to\R$を連続関数とする．$f$の最大値$M$と最小値$m$が存在し，$f([a,b])=[m,M]$である．
+\end{corollary}
+\begin{proof}
+    最大値の定理より，$f$の最大値$M$が存在する．関数$-f$も最大値$M'$をもち，$m:=-M'$が$f$の最小値である．
+    よって，$f([a,b])\subset[m,M]$．一方で，系\ref{cor-monotone-map-over-intervals}より，$[m,M]\subset f([a,b])$でもある．
+\end{proof}
+
+\subsection{全有界性による特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の大きさの開球によって有限被覆ができ，それらを十分小さく取ったときに任意の開被覆を細分出来る(Lebesgue数を持つ)ならば，コンパクトである．
+\end{tcolorbox}
+
+\begin{definition}[totally bounded, Lebesgue number]\label{def-Lebesgue-number}
+    $X$を距離空間とする．
+    \begin{enumerate}
+        \item $X$が\textbf{全有界}であるとは，任意の実数$r>0$に対して，$X=U_r(a_1)\cup\cdots\cup U_r(a_n)$を満たす有限個の点$a_1,\cdots,a_n\in X$が存在することをいう．全有界ならば有界である．
+        \item $(U_i)_{i\in I}$を$X$の開被覆とする．実数$r>0$が次の条件(L)を満たす時，$r$は$(U_i)_{i\in I}$の\textbf{ルベーグ数}であるという．
+        \begin{quote}
+            (L) 任意の空でない部分集合$A\subset X$に対して，$A$の直径が$r$以下ならば，$A\subset U_i$を満たす$i\in I$が存在する．
+        \end{quote}
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[距離空間がコンパクトであることの特徴付け]\label{prop-距離空間がコンパクトであることの特徴付け}
+    $X$を距離空間とする．次の２条件は同値である．
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item $X$は全有界であり，$X$の任意の開被覆$(U_i)_{i\in I}$に対し，$(U_i)_{i\in I}$のルベーグ数が存在する．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] $X$をコンパクトとする．
+        \begin{enumerate}
+            \item 任意の$r>0$に対して，$r$-開球$(U_r(x))_{x\in X}$は$X$の開被覆だから，$X=U_r(a_1)\cup\cdots\cup U_r(a_n)$を満たす$a_1,\cdots,a_n\in X$が存在する．
+            \item $(U_i)_{i\in I}$を$X$の任意の開被覆とし，そのLebesgue数が存在することを示す．$X=\emptyset$ならば，$r\in\R$は任意に取ればいい．$X\ne\emptyset$とする．
+            これに対して，\[B:=\{(x,r)\in X\times(0,\infty)\mid \exists i\in I,\;U_{2r}(x)\subset U_i\}\]
+            とすると，$(U_i)_{i\in I}$が開被覆であることから，$(U_r(x))_{(x,r)\in B}$も開被覆である．従って$X$がコンパクトであることより，$(x_1,r_1),\cdots,(x_n,r_n)\in B\;(n\ge 1)$が存在して，$X\subset U_{r_1}(x_1)\cup\cdots\cup U_{r_n}(x_n)$が成り立つ．
+            \item $r:=\min(r_1,\cdots,r_n)>0$とすれば，これが開被覆$(U_i)_{i\in I}$のLebesgue数であること，即ち条件(L)を満たすことを示す．
+            $A\subset X$を，任意の，直径$r$以下の空でない部分集合とする．勝手な$a\in A$に対して，$a\in U_{r_j}(x_j)$を満たす$j\in[n]$が存在するから，$\exists i\in I,\;A\subset\overline{U_r(a)}\subset U_{2r}(x_j)\subset U_i$．
+        \end{enumerate}
+        \item[(2)$\Rightarrow$(1)]
+        $(U_i)_{i\in I}$を任意の開被覆とし，$r>0$をそのLebesgue数とする．これの有限被覆を構成すれば良い．
+        \begin{enumerate}
+            \item まず，全有界より，$X=U_{\frac{r}{2}}(a_1)\cup\cdots\cup U_{\frac{r}{2}}(a_n)$を満たす$a_1,\cdots,a_n\in X$が存在する．
+            \item 各開球の直径は$r$以下だから，$U_{\frac{r}{2}}(a_1)\subset U_{i_1},\cdots,U_{\frac{r}{2}}(a_n)\subset U_{i_n}$を満たす部分族$i_1,\cdots,i_n\in I$が存在する．
+            \item この時，$X=U_{i_1}\cup\cdots\cup U_{i_n}$である．
+        \end{enumerate}
+    \end{description}
+\end{proof}
 
 \section{写像の極限}
 
@@ -1927,7 +2400,696 @@ title=]
 
 \section{Hausdorff空間}
 
+\subsection{定義}
+
+\begin{definition}
+    位相空間$X$が，$\forall_{x,y\in X}\;x\ne y\Rightarrow\exists_{U\in\O(x),V\in\O(y)}\;U\cap V=\emptyset$を満たすとき，\textbf{Hausdorff}または\textbf{分離空間}であるという．
+\end{definition}
+
+\subsection{積位相による特徴付け}
+
+\begin{proposition}[Hausdorff空間の特徴付け：対角集合が閉集合となる空間]\label{prop-characterization-Hausdorff}
+    $X$を位相空間とする．
+    \begin{enumerate}
+        \item 次の２条件は同値である．
+        \begin{enumerate}[(1)]
+            \item $X$はHausdorffである．
+            \item 対角集合$\Delta_X$が積空間$X\times X$の閉集合である．
+        \end{enumerate}
+        \item $X$がHausdorffならば，任意の$x\in X$について$\{x\}$は$X$の閉集合である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 次の条件は全て同値である．
+        \begin{description}
+            \item[(2)] $\Delta_X$が閉集合である．
+            \item[(1.75)] $(X\times X)\setminus\Delta_X$が開集合である．
+            \item[(1.5)] 任意の点$(x,y)\in(X\times X)\setminus\Delta_X$に対して，$x$の開近傍$U$と$y$の開近傍$V$が存在して，$((x,y)\in )U\times V\subset (X\times X)\setminus\Delta_X$を満たすものが存在する（積位相の特徴付け\ref{prop-characterization-product-topology}より）．
+            \item[(1.25)] 任意の点$(x,y)\in(X\times X)\setminus\Delta_X$に対して，$x$の開近傍$U$と$y$の開近傍$V$が存在して，$U\times V\cap\Delta_X=\emptyset$を満たすものが存在する．
+            \item[(1)] 任意の点$(x,y)\in(X\times X)\setminus\Delta_X$に対して，$x$の開近傍$U$と$y$の開近傍$V$が存在して，$U\cap V=\emptyset$を満たすものが存在する．
+        \end{description}
+        \item 任意の元$x\in X$に対して，写像$i_x:X\to X\times X$を$i_x(y):=(x,y)$と定めると，これは連続である．\footnote{例えば，$\pr_2:X\times X\to X$が開写像であるため（積位相の特徴付け\ref{prop-characterization-product-topology}）．}$\{x\}$はこれによる閉集合$\Delta_X$の逆像$\{x\}=i^{-1}_x(\Delta_X)$である．
+    \end{enumerate}
+\end{proof}
+
+\subsection{連続単射の逆像への遺伝}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    部分空間にHausdorff性は引き継がれる．
+\end{tcolorbox}
+
+\begin{proposition}\label{prop-Hausdorff性は連続単射によって足に感染る}
+    $f:X\to Y$を連続単射とする．$Y$がHausdorffならば，$X$もHausdorffである．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $f$が連続ならば，$f\times f$は連続である（積位相の特徴付け\ref{prop-characterization-product-topology}.2）．
+        \item $f$が単射ならば，$(f\times f)^{-1}(\Delta_Y)=\Delta_X$である．
+        \item 連続写像$f\times f$による逆像$(f\times f)^{-1}(\Delta_Y)=\Delta_X$は閉集合である．
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}\label{cor-subspace-of-Hausdorff-is-Hausdorff}
+    $X$をHausdorff空間とする．$X$の部分空間$A$はHausdorffである．
+\end{corollary}
+\begin{proof}
+    包含写像$i:A\to X$は連続単射である．
+\end{proof}
+
+\begin{proposition}[直積へのHausdorff性の伝播]\mbox{}
+    \begin{enumerate}
+        \item $(X_i)_{i\in I}$をHausdorff空間の族とすると，積空間$\prod_{i\in I}X_i$もHausdorffである．
+        \item $X$と$Y$を位相空間とし，$X\times Y$がHausdorffであるとする．$Y$が空でなければ$X$はHausdorffである．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\Delta_X=\cap_{i\in I}(\pr_i\times\pr_i)^{-1}(\Delta_{X_i})$．仮定より，$\Delta_{X_i}$は閉集合である．$\pr_i$は$\prod_{i\in I}X_i$の積位相について連続写像であるから，$\pr_i\times\pr_i$も連続である（積位相の特徴付け\ref{prop-characterization-product-topology}）．
+        \item 各$b\in Y$に対して，写像$f:X\to X\times Y$を$f(x):=(x,b)$と定めると，これは連続で単射である．よって，命題\ref{prop-Hausdorff性は連続単射によって足に感染る}より．
+    \end{enumerate}
+\end{proof}
+
+\subsection{等化子による特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    非常に閉グラフ定理に繋がる見方である．
+\end{tcolorbox}
+
+\begin{proposition}[Hausdorff性の特徴付け：等化子]\label{prop-characterization-of-Hausdorff-in-terms-of-equalizer}
+    位相空間$X$について，次の３条件は同値である．
+    \begin{enumerate}
+        \item $X$はHausdorffである．
+        \item 任意の位相空間$T$と任意の連続写像$f,g:T\to X$に対して，$\Ker(f,g)=\{t\in T\mid f(t)=g(t)\}$は$T$の閉集合である．
+        \item 任意の位相空間$T$と任意の連続写像$f:T\to X$に対し，$f$のグラフ$\Gamma=\{(t,x)\in T\times X\mid f(t)=x\}$は$T\times X$の閉集合である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $\Ker(f,g)=(f,g)^{-1}(\Delta_X)$である．$f,g$が連続であることと$(f,g)$が連続であることは同値（積位相の特徴付け\ref{prop-characterization-product-topology}）．よって，$\Delta_X$が閉集合ならば，$\Ker(f,g)$は閉集合である．
+        \item[(2)$\Rightarrow$(3)] 
+        $\Gamma=\Ker(f\circ\pr_1,\pr_2)$である．
+        \item[(3)$\Rightarrow$(1)] 
+        対角集合$\Delta_X$とは，$\id_X:X\to X$のグラフである．
+    \end{description}
+\end{proof}
+
+\subsection{Hausdorff空間値写像は連続延長する}
+
+\begin{corollary}[Hausdorff空間への連続写像は，稠密な部分集合への制限で一意的に定まる]\label{cor-Hausdorff空間への連続写像は，稠密な部分集合への制限で一意的に定まる}
+    $X$を位相空間とし，$Y$をHausdorff空間とする．
+    $A$が$X$の稠密な部分集合ならば，制限写像$i^*:C(X,Y)\to C(A,Y)$は単射である．
+\end{corollary}
+\begin{proof}
+    任意の$f,g\in C(X,Y)$について，$f|_A=g|_A\Rightarrow f=g$を示す．
+    仮定は即ち$A\subset\Ker(f,g)$と同値であるが，$Y$がHausdorffならば，$\Ker(f,g)$は閉集合である．よって，$\Ker(f,g)=X$．
+    即ち，$f=g$．
+\end{proof}
+
 \section{連結空間}
+
+\subsection{定義と特徴付け}
+
+\begin{definition}[connected]\label{def-連結性}
+    $X$を位相空間とし，$\emptyset\subsetneq A\subset X$について，
+    \begin{enumerate}
+        \item $A$が\textbf{連結}であるとは，$X$の開集合$U,V$であって$A\subset U\cup V,A\cap U\cap V=\varnothing, A\cap U\ne\varnothing, A\cap V\ne\varnothing$を満たすものは存在しないことをいう．すなわち，部分空間としての$A$が2つの開集合の非交和として表せないことをいう．
+        \item $A$が\textbf{弧状連結}であるとは，任意の２点$x,y\in A$に対して，これらを結ぶ$[0,1]$からの連続写像$f:[0,1]\to A, f(0)=x, f(1)=y$が存在することをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[連結性の特徴付けとintermediate value theorem]\label{prop-charactorization-of-connectedness}
+    空でない位相空間$X$に対し，次の５条件は同値である．
+    \begin{enumerate}
+        \item $X$は連結である．
+        \item \textbf{中間値の定理}：$\forall_{f\in C(X)}\;\forall_{u,v\in X}\;\forall_{c\in\R}\;f(u)\le c\le f(v)\Rightarrow[\exists t\in X\;(c=f(t))]$．
+        \item $f:X\to 2$が離散位相空間$2=\{0,1\}$への連続写像ならば，$f$は定数関数である．
+        \item $U$が$X$の開集合であり閉集合でもあるならば，$U=X\lor U=\varnothing$．
+        \item $p:X\to 1$を定値写像とすると，任意の離散位相空間$Y$に対して，$p^*:C(1,Y)\to C(X,Y)$が可逆である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $f\in C(X,\R)$を任意の連続関数とする．任意の$f(u)<c<f(v)$を満たす$u,v,c$について$f(t)=c$を満たす$c\in X$を構成すれば良い．
+        いまこの$c\in\R$について，
+        \begin{align*}
+            U&=\{x\in X\mid f(x)<c\},&V&=\{x\in X\mid f(x)>c\},
+        \end{align*}
+        と定めるといずれも開区間の連続写像による逆像であるから，開集合である．
+        また，$U\cap V=\emptyset$で，少なくとも$u\in U,v\in V$であるからいずれも空でない．
+        $X$が連続ならば，$X\subset U\cup V$も満たす開集合$U,V$は存在しないから，$X\not\subset U\cup V$即ち$X\setminus(U\cup V)\ne\emptyset$である．
+        この任意の元$t\in X\setminus(U\cup V)$を取ると，$f(t)\in\R\setminus((-\infty,c)\cup(c,\infty))$なので，
+        $c=f(t)$である．
+        \item[(2)$\Rightarrow$(3)]
+        $f\in C(X,2)$を連続写像とする．$2$を離散位相空間と見ているので，$\R$への関数$f:X\to\R$と考えたものも連続である（離散位相空間$2$は$\R$の部分空間とみなせるので，$i:2\to\R$とすると連続で，$f'=i\circ f$と考えれば良い）．
+        従って，(2)より，$f(X)=2$ならば，$f(t)=1/2$を満たす$t\in X$が存在するはずだが，これは矛盾．従って，$f(X)\subsetneq 2$即ち$f$は定数関数である．
+        \item[(3)$\Rightarrow$(4)]
+        $U\subset X$は開かつ閉とする．すると，特性関数$\chi_U:X\to 2$は，$2$の離散位相に対しても連続になる（通常はSierpiński位相についてのみ連続）．
+        従って，$U=\emptyset\lor X$．
+        \item[(4)$\Rightarrow$(1)]
+        $X$の開集合$U$が最初の２条件$X\subset U\cup V,X\cap U\cap V=\emptyset$を満たすとは，無縁和$X=U\coprod V$を意味する．すると，$U,V$はいずれも開かつ閉であり，(4)より，$U=\emptyset\lor V=\emptyset$．
+        よって，条件を満たす分割はなく，$X$は連結である．
+        \item[(5)$\Leftrightarrow$(2)]
+        任意の離散空間$Y$への連続写像$f\in C(X,Y)$は，$y\in Y$が存在して定値写像$f=y$に限る，ということである．これは，埋め込み$i:Y\to\R$が取れる場合については(2)$\Rightarrow$(3)の時と同様に示せる．
+    \end{description}
+\end{proof}
+
+\subsection{閉包と交叉和への遺伝}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連結な稠密部分集合を持つならば，連結である．
+    Hausdorff性とは違って，部分集合への遺伝は難しい．
+\end{tcolorbox}
+
+\begin{corollary}[連結性の伝播]\label{cor-connectedness-over-union}
+    $X$を位相空間とする．$A,B\subset X$とする．
+    \begin{enumerate}
+        \item $A$が連結とする．このとき，$B$が$A\subset B\subset\overline{A}$を満たすならば，$B$も連結である．特に，$\overline{A}$も連結である．
+        \item $A,B$が連結とする．$A\cap B\ne\varnothing$ならば，$A\cup B$も連結である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意に$f\in C(B,2)$を取り，これが定数関数であることを示す．
+        勝手に$a\in A$を取って$c:=f(a)$と置くと，$f|_A=c$である．
+        離散位相空間$2$はHausdorff（$0,1$が近傍によって分離可能）で，$A$は$B$上稠密だから，系\ref{cor-Hausdorff空間への連続写像は，稠密な部分集合への制限で一意的に定まる}より，
+        $f=c$を得る．
+        \item 任意に$f\in C(A\cup B,2)$を取り，これが定数関数であることを示す．
+        $A\cap B\ne\emptyset$なので，勝手に$a\in A\cap B$を取って$c:=f(a)$と置くと，$f|_A=f|_B=c$である．よって，$f=c$を得る．
+    \end{enumerate}
+\end{proof}
+
+\subsection{弧状連結性}
+
+\begin{corollary}[弧状連結ならば連結]
+    位相空間$X$が弧状連結ならば，$X$は連結である．
+\end{corollary}
+\begin{proof}
+    任意に連続関数$f\in C(X,2)$を取り，これが定数関数であることを示す．
+    $a\in X$を勝手に取る．
+    $X$は弧状連結だから，任意の$x\in X$に対して，連続写像$g:[0,1]\to X$であって$g(0)=a,g(1)=x$を満たすものが存在する．
+    すると，$f\circ g:[0,1]\to 2$は連続であるが，$[0,1]$は連結であるから（命題\ref{prop-closed-interval-is-connected}），
+    命題\ref{prop-charactorization-of-connectedness}より，定値写像$f\circ g=f(a)$である．よって，$f(x)=f(a)$．
+    以上より，$f=f(a)$である．
+\end{proof}
+
+\begin{definition}[path component]
+    $\PConn_x(X):=\Brace{y\in X\mid y,x\text{は道で結べる}}$を\textbf{弧状連結成分}という．
+    この二項関係は$X$上に同値関係を定める．弧状連結成分の全体を$\pi_0(X)$で表す．
+\end{definition}
+
+\begin{lemma}
+    弧状連結成分の全体は，連結成分の全体よりも細かい．
+\end{lemma}
+
+\begin{remark}
+    位相幾何学者の正弦曲線の，$y=\sin(1/x)$上の点の弧状連結成分は，$\Brace{(x,y)\in\R^2\mid y=\sin(1/x),0<x\le 1}$となり，開集合である．
+    連結成分はただ1つである．
+\end{remark}
+
+\subsection{実数の連結性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実数の連結部分集合を区間という．
+\end{tcolorbox}
+
+\begin{proposition}\label{prop-closed-interval-is-connected}
+    $a<b$を実数とする．閉区間$[a,b]$は連結である．
+\end{proposition}
+\begin{proof}
+    連続関数$f\in C([a,b],2)$を任意に取り，これが定数関数$f(a)$となることを背理法で示す．
+    $f(c)\ne f(a)$となる$c\in[a,b]$が存在したと仮定する．
+
+    いま，$A:=f^{-1}(f(a))\cap[a,c]$とすると，$\{f(a)\}$が閉より，$A$は少なくとも$a\in A$を持つ閉集合となるから，$s:=\sup A\in A$が存在する．$s\in A$は命題\ref{prop-characterization-of-supremum}による．
+    これについて，$f(s)=f(a)\ne f(c)$より，$s<c$．よって，$(s,c]\cap A=\emptyset$より，勝手に取った$t\in(s,c]$に対し，$f(t)=f(c)$（$f$は二値写像であることに注意）．
+    しかし$f$は連続だから，$[s,c]$上で$f=f(c)$．よって，$f(s)$の値について矛盾．
+    従って，$f$は定数関数である．
+\end{proof}
+
+\begin{corollary}[区間上の単調写像は開埋め込み]\label{cor-monotone-map-over-intervals}
+    $a<b$を実数とする．
+    \begin{enumerate}
+        \item $f:[a,b]\to\R$を連続関数とする．$f(a)\le f(b)$ならば，$[f(a),f(b)]\subset f([a,b])$である．
+        \item $f:(a,b)\to\R$を連続関数とする．任意の$a<s<t<b$に対し，$f(s)<f(t)$ならば，$f:(a,b)\to\R$は開埋め込みである．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 閉区間$[a,b]$は連結であるから，$f(a)<c<f(b)$を満たす$c\in[f(a),f(b)]$について，$t\in[a,b]$が存在して$c=f(t)\in f([a,b])$である（命題\ref{prop-charactorization-of-connectedness}）．
+        \item 連続写像$f$はこのとき単射だから，あとは開写像であることを示せば良い．
+        $U\subset(a,b)$を開集合としたとき，$f(U)$が$\R$の開集合であることを示す．
+        任意に$y\in f(U)$を取ると，$\exists x\in U,\; f(x)=y$である．
+        よって，$x\in(s,t)\subset U$を満たす実数$a<s<x<t<b$が存在する（$\epsilon$-近傍などを取れば良い，$\epsilon$-近傍は$(a,b)$の位相の基底であるため）．
+        $f$は単射だから$f((s,t))=f([s,t])\setminus\{f(s),f(t)\}$で，単調性と1.より，$[f(s),f(t)]=f([s,t])$から，右辺は$(f(s),f(t))$とわかる．
+        こうして，$f(y)\in(f(s),f(t))\subset U$と開近傍が取れたことになる．
+        以上より，$f(U)$は開集合である．
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[$\R$の連結集合の分類]
+    $\R$の部分集合$A$に対し，次の３条件は同値である．
+    \begin{enumerate}
+        \item $A$は連結である．
+        \item $A$は弧状連結である．
+        \item 次の条件のどれか１つが成り立つ．
+        \begin{enumerate}[(i)]
+            \item $A=\R$である．
+            \item $a\in R$であって，$A$が$[a,\infty),(a,\infty),(-\infty,a),(-\infty,a]$のどれかと等しくなるようなものが存在する．
+            \item 実数$a<b$であって，$A$が$(a,b),(a,b],[a,b),[a,b]$のどれかと等しくなるものが存在する．
+            \item $a\in R$であって，$A=\{a\}$となるものが存在する．
+        \end{enumerate}
+    \end{enumerate}
+\end{proposition}
+
+\subsection{連結性の連続像への伝播}
+
+\begin{proposition}[連続写像は連結性を保存する]\label{prop-connectedness-over-morphism}
+    $f:X\to Y$を連続写像とする．$A$が$X$の連結部分集合ならば，$f(A)$は$Y$の連結部分集合である．
+\end{proposition}
+\begin{proof}
+    $A$が連結ならば$A\ne\emptyset$としたから，$f(A)\ne\emptyset$より，$g\in C(f(A),2)$が取れる．これが定数関数であることを示す．
+    すると，$g\circ f|_A\in C(A,2)$であるから，$g\circ f|_A$は定数関数．
+    $f|_A$は全射だから$g$も定数関数と判る．
+    \[\xymatrix{
+        X\ar[r]^-f\ar@{.>}[dr]&Y\ar[d]^-g\\
+        &2
+    }\]
+\end{proof}
+
+\begin{corollary}[積への伝播]
+    $X,Y$を位相空間とする．次の２条件は同値である．
+    \begin{enumerate}
+        \item $X,Y$はそれぞれ連結である．
+        \item $X\times Y$は連結である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        任意に取った$(a,b)\in X\times Y$に対して，任意の$f\in C(X\times Y,2)$が$f=f(a,b)$を満たす定数関数だと示せば良い．
+        任意の$(x,y)\in X\times Y$に対して，$X\simeq X\times\{y\},Y\simeq\{a\}\times Y$なので，命題\ref{prop-connectedness-over-morphism}より，これらも連結．
+        よって，$f|_{X\times\{y\}},f|_{\{a\}\times Y}$は定数関数．よって，$f(x,y)=f(a,y)=f(a,b)$．$(x,y)\in X\times Y$は任意に定めたから，$f=f(a,b)$．
+        \item[(2)$\Rightarrow$(1)]
+        連続写像$\pr_1:X\times Y\to X,\pr_2:X\times Y\to Y$の像である（命題\ref{prop-connectedness-over-morphism}）．
+    \end{description}
+\end{proof}
+
+\begin{proposition}[AC]
+    一般に，連結空間の族$(X_i)$に対して，積空間$\prod_{i\in I}X_i$も連結である．
+\end{proposition}
+
+\subsection{連結成分}
+
+\begin{proposition}[連結成分は閉集合]\label{prop-connected-component}
+    $X$を位相空間とする．
+    \begin{enumerate}
+        \item $x,y\in X$に対し，$x$と$y$を元として含む連結な部分集合$A\subset X$が存在するという条件は，$X$上の同値関係$R$を定める．
+        \item $A$をこの同値関係$R$に関する同値類の1つ（すなわち連結成分）とすると，$A$は連結な閉集合である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 各$x\in X$に対して$\{x\}$は連結だから，反射律は成り立つ．対象律は明らか．連結部分集合$A,B$が存在して$x,y\in A,y,z\in B$の時，$A\cap B\ne\emptyset$より，$x,y,z\in A\cup B$も連結（系\ref{cor-connectedness-over-union}）で，推移律も成り立つ．
+        \item $a\in A$を任意に取る．$f\in C(A,2)$を任意に取り，$c:=f(a)$を置く．
+        任意の$x\in A$に対して，$\{x,a\}\subset B$を満たす連結部分集合$B\subset A$が存在するが，これについて$f|_B=c$．よって，$f(x)=c$を得るが，$x\in A$は任意に取ったから$f=c$．
+        よって，$A$は連結．系\ref{cor-connectedness-over-union}より$\overline{A}$も連結であるが，$A$の極大性より$\overline{A}\subset A$．よって，$A$は閉．
+    \end{enumerate}
+\end{proof}
+
+\subsection{連結成分と開かつ閉集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連結成分は閉集合だから，連結成分が高々有限個であるとき，連結成分は開かつ閉である．
+    連結成分が無限個であるときもこの性質が成り立つためには，空間に局所連結性を課せば良い．
+\end{tcolorbox}
+
+\begin{definition}[quasi-component]
+    同値関係$x\sim_qy:\Leftrightarrow \forall_{f\in C(X;2)}\;f(x)=f(y)$による同値類を，\textbf{擬成分}という．
+    これは，$x$を含む全ての開かつ閉集合の共通部分として特徴付けられる．
+\end{definition}
+
+\begin{lemma}[極大性：quasi-component]
+    $\Gamma_x$を$x$の連結成分，$\Gamma'_x$を$x$の擬成分含むとする．
+    \begin{enumerate}
+        \item $\Gamma_x\subset\Gamma'_x$である．
+        \item $X$がcompact Hausdorffまたは局所連結ならば，$\Gamma'_x\subset\Gamma_x$でもある．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 任意の$X$のclopen set $U$について，$U\subsetneq\Gamma_x$ならば，$\Gamma_x=(U\cap\Gamma_x)\coprod(\Gamma_x\setminus U)$と２つの開集合で分割できてしまい，矛盾．
+    \end{enumerate}
+\end{proof}
+
+\section{局所連結空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一般に，任意の位相空間$X$が，その連結成分$(U_i)$の直和$\coprod_{i\in I}U_i$に等しいとは限らない．
+    任意の開部分空間がこの性質を満たす空間を，\textbf{局所連結}であるという．
+\end{tcolorbox}
+
+\subsection{定義と特徴付け}
+
+\begin{definition}
+    位相空間$X$が\textbf{局所連結}であるとは，任意の点$x\in X$の（開）近傍系$\O(x)$が，連結な開集合のみからなる基本系を持つことをいう．
+\end{definition}
+\begin{remark}
+    連結空間は局所連結とは限らない！
+    位相幾何学者の正弦曲線は，連結であるが局所連結ではない．
+\end{remark}
+
+\begin{example}
+    任意の連結成分が一点集合であるとき，\textbf{完全不連結空間}という．
+    完全不連結空間が局所連結であるとは，連結集合が一点集合しかないのだからこれが基底になるしかない，すなわち，離散であることは同値である．$\Q$は離散ではなく，局所連結ではない，完全不連結空間である．
+\end{example}
+
+\begin{proposition}
+    $X$を位相空間とする．次の3条件は同値：
+    \begin{enumerate}
+        \item $X$は局所連結である．
+        \item 任意の$X$の開部分空間$U$の任意の連結成分は$U$-開である．
+        \item 任意の開部分空間は，その連結成分の直和空間に等しい．
+    \end{enumerate}
+    特に，局所連結空間の任意の連結成分は開かつ閉である．
+\end{proposition}
+
+\subsection{伝播}
+
+\begin{proposition}
+    局所連結空間の商空間は再び局所連結である．
+\end{proposition}
+
+
+
+\section{一般のコンパクト性}
+
+\subsection{積位相による特徴付け}
+
+\begin{proposition}[コンパクト性の積位相の言葉による特徴付け]\label{prop-characterization-of-compactness-in-terms-of-product-topology}
+    $X$を位相空間とし，$A$を$X$の部分集合とする．次の３条件は同値である．
+    \begin{enumerate}
+        \item $A$はコンパクトである．
+        \item $Y$を任意の位相空間とし，$y\in Y$を任意の点とする．$A\times\{y\}$の任意の開近傍$W\subset X\times Y$に対し，$A$の開近傍$U\subset X$と$y$の開近傍$V\subset Y$で，$U\times V\subset W$を満たすものが存在する．
+        \item $Y$を任意の位相空間とし，$y\in Y$を任意の点とする．$A\times\{y\}$の任意の開近傍$W\subset X\times Y$に対し，$y$の開近傍$V\subset Y$で，$A\times V\subset W$を満たすものが存在する．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        \begin{enumerate}
+        \item 
+        $W\subset X\times Y$を$A\times\{y\}$の任意の開近傍として，$U\times V\subset W$を満たす$A$の開近傍$U$と$y$の開近傍$V$を構成すれば良い．
+        積位相の特徴付けより，任意の$x\in A$に対して，$(x,y)\in U_x\times V_x\subset W$を満たす$x$の開近傍$U_x$と$y$の開近傍$V_y$が存在するから，これらの族$(U_x,V_x)_{x\in A}$を取ると，
+        $A\times\{y\}\subset\cup_{x\in A}(U_x\times V_x)\subset W$を満たす．が，$\cup_{x\in A}(U_x\times V_x)\subset (\cup_{x\in A}U_x)\times(\cup_{x\in A}V_x)$であって，等号は成り立たないので，
+        まだ$U,V$は構成できない．\textbf{ここで$A$がコンパクトであることが効いてくる}のである．
+        \item
+        いま，族の定め方より$A\subset\cup_{x\in A}U_x$で，$A$はコンパクトであるために，族$(U_x,V_x)_{x\in A}$のうち$(U_1,V_1),\cdots,(U_n,V_n)$が存在して，$A\subset\cup_{i\in[n]}U_i$を満たす．
+        この時，$U:=\cup_{i\in[n]}U_i,V:=\cap_{i\in[n]}V_i$とすれば，いずれも開集合で，
+        \[A\times\{y\}\subset U\times V=\cup_{i\in[n]}U_i\times V\subset\cup_{i\in[n]}(U_i\times V_i)\subset W\]
+        を満たす．
+        \end{enumerate}
+        \item[(2)$\Rightarrow$(3)]
+        $U\times V\subset W$を満たす$A$の開近傍$U$が存在するならば，$A\times V\subset U\times V\subset W$である．
+        \item[(3)$\Rightarrow$(1)] $(U_i)_{i\in I}$を$X$の開集合の族で，$A\subset\cup_{i\in I}U_i$を満たすものとする．このうちの有限部分被覆を構成する算譜を与えれば良い．
+        \begin{description}
+            \item[場面設定して(3)を使う] 
+            位相空間$Y$を積空間$Y:=\S^I$とし，点$y:=(1)_{i\in I}\in Y$を定数関数$1:I\to 2$とする．
+            族$(V_i)_{i\in I}$を逆像$V_i:=\pr_i^{-1}(1)$と定めるとこれは開集合の族で，
+            $W:=\cup_{i\in I}(U_i\times V_i)$とすると$X\times Y$の開集合の族が定まる．
+            これについて，
+            \begin{align*}
+                (X\times\{y\})\cap W&=\cup_{i\in I}(U_i\times(\{y\}\cap V_i))&(\forall i\in I,\;X\cap U_i=U_i)\\
+                &=\cup_{i\in I}U_i\times\{y\}&(\forall i\in I,\;\{y\}\cap V_i=\{y\})
+            \end{align*}
+            が成り立つから，
+            \[A\times\{y\}\subset\cup_{i\in I}U_i\times\{y\}=(X\times\{y\})\cap W\subset W\]
+            がわかり，$W$は$A\times\{y\}$の開近傍である．よって，(3)より，$A\times V\subset W$を満たす開近傍$1\in V\subset Y$が存在する．
+            \item[構成]
+            $I$の有限部分集合$J$に対して，$V_J:=\{1\}^J\times\S^{I\setminus J}$と書くこととする．
+            すると，族の積位相の特徴付け（命題\ref{prop-universality-of-product-space}）より，
+            開集合$V$に対して，$y\in V_J\subset V$となる$J$が存在する．
+            \textbf{ここで，空間$Y$の決め方が効いてくる}．
+            $\chi_J\in V_J$が成り立つ．これより，
+            \[A\times\{\chi_J\}\subset A\times V_J\subset A\times V\subset W\]
+            である．これと$(X\times\{\chi_J\})\cap W=\cup_{i\in J}U_i\times\{\chi_J\}$と併せて，$A\subset\cup_{i\in J}U_i$を得る．
+        \end{description}
+    \end{description}
+\end{proof}
+
+\subsection{閉集合との交叉と有限合併への遺伝}
+
+\begin{corollary}[有限個の合併，閉集合との共通部分はコンパクトである]\label{cor-union-intersection-of-compact-sets-is-compact}
+    $X$を位相空間とする．
+    \begin{enumerate}
+        \item $A\subset X$をコンパクト集合とする．$B$が$X$の閉集合ならば，$A\cap B$もコンパクト集合である．特に$X$がコンパクト空間ならば，$X$の閉集合$B=X\cap B$はコンパクト集合である．
+        \item $A_1,\cdots,A_n$が$X$の有限個のコンパクト集合ならば，合併$A_1\cup\cdots\cup A_n$もコンパクト集合である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    任意の位相空間$Y$とその点$y\in Y$を用意する．
+    \begin{enumerate}
+        \item $(A\cap B)\times\{y\}$の開近傍$W\subset X\times Y$を取り，$(A\cap B)\times\{y\}\subset (A\cap B)\times V\subset W$を満たす$y$の開近傍$V$が構成できることを示せば良い．
+        いま$W\cup((X\setminus B)\times Y)$を考えれば，$B$は$X$-閉集合だから，これは$A\times\{y\}$を含む開集合，即ち開近傍で，$A$はコンパクトだから，$y$の開近傍$V\subset Y$が存在して，$A\times\{y\}\subset A\times V\subset W\cup((X\setminus B)\times Y)$を満たす．これについて，
+        $(A\cap B)\times\{y\}\subset(A\cap B)\times V\subset W$である．
+        \item 
+        $(A_1\cup\cdots\cup A_n)\times\{y\}$の開近傍$W\subset X\times Y$を取り，
+        \[(A_1\cup\cdots\cup A_n)\times\{y\}\subset (A_1\cup\cdots\cup A_n)\times V\subset W\]
+        を満たす$y$の開近傍$V$を構成すれば良い．
+        各$A_i\;(i\in[n])$はコンパクトで，$W$は$A_i\times\{y\}$の開近傍でもあるから，$A_i\times\{y\}\subset A_i\times V_i\subset W$を満たす$y$の開近傍の族$(V_i)_{i\in[n]}$が見つかる．これに対して，$V:=\cap_{i\in[n]}V_i$と定めれば良い．
+        実際，これは再び$y$の開近傍で，
+        \[(A_1\cup\cdots\cup A_n)\times\{y\}\subset (A_1\cup\cdots\cup A_n)\times V\subset\cup_{i\in[n]}(A_i\times V_i)\subset W\]
+        を満たす．
+    \end{enumerate}
+\end{proof}
+
+\subsection{連続像への伝播}
+
+\begin{corollary}[連続写像はコンパクト性を保存する]\label{cor-image-of-compact-set-is-compact}
+    $f:X\to Y$を連続写像とする．$A\subset X$をコンパクト集合とすると，$f(A)\subset Y$もコンパクト集合である．
+\end{corollary}
+\begin{proof}
+    任意の位相空間$Z$とその点$z\in Z$を用意する．
+    $f(A)\times\{z\}$の開近傍$W\subset Y\times Z$を任意に取り，$f(A)\times\{z\}\subset f(A)\times V\subset W$を満たす$z$の開近傍$V\subset Z$を構成すれば良い．
+
+    $f\times 1:X\times Z\to Y\times Z$は連続写像より，$W':=(f\times 1)^{-1}(W)\subset X\times Z$は$A\times\{z\}$の開近傍である．$A$はコンパクトであるから，
+    $A\times\{z\}\subset A\times V\subset W'$を満たす$z$の開近傍$V\subset Z$が存在する．これについて，
+    \begin{align*}
+        (f\times 1)(A\times\{z\})\subset(f\times 1)(A\times V)\subset(f\times 1)(W')\\
+        \Leftrightarrow\quad&f(A)\times\{z\}\subset f(A)\times V\subset W
+    \end{align*}
+    である．
+\end{proof}
+
+\subsection{射影による特徴付け}
+
+\begin{proposition}[コンパクト性の射影の言葉による特徴付け]\label{prop-characterization-of-compactness-in-terms-of-projection}
+    位相空間$X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item 任意の位相空間$Y$に対して，$\pr_2:X\times Y\to Y$は閉写像である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)を積位相の言葉に翻訳] 
+        $Y$を任意の位相空間，$y\in Y$を任意の点とすると，$X$がコンパクトであることは，任意の$X\times\{y\}$の開近傍$W\subset X\times Y$に対して，$X\times\{y\}\subset X\times V\subset W$を満たす$y$の開近傍$V\subset Y$が存在することに同値．
+        \item[さらに閉集合の言葉に翻訳]
+        $F:=(X\times Y)\setminus W$と置いて，$X\times Y$の開集合$W$を考える代わりに，閉集合$F$を考える．
+        すると，$X\times\{y\}=\pr_2^{-1}(y)$より，射影の言葉を使うと，
+        \begin{enumerate}
+            \item $X\times\{y\}\subset W\Leftrightarrow\pr_2^{-1}(y)\cap F=\emptyset\Leftrightarrow y\in Y\setminus\pr_2(F)$．
+            \item $X\times V\subset W\Leftrightarrow\pr_2^{-1}(V)\cap F=\emptyset\Leftrightarrow V\subset Y\setminus\pr_2(F)$．
+        \end{enumerate}
+        と書き換えられる．以上をまとめると，(1)は
+        \begin{quote}
+            (3') 任意の位相空間$Y$に対して，$X\times Y$の任意の閉集合$F$と任意の点$y\in Y\setminus\pr_2(F)$に対し，$y$の開近傍$V\subset Y$で，$V\subset Y\setminus\pr_2(F)$を満たすものが存在する．
+        \end{quote}
+        と同値．
+        \item[さらに点$y\in Y$を抽象化する]
+        (3')の任意にとった$Y,F$に対する条件は，$\pr_2(F)$が$Y$の閉集合であるということと同値．よって(2)と同値．
+    \end{description}
+\end{proof}
+
+\subsection{積への遺伝}
+
+\begin{corollary}[積もコンパクト]\label{cor-product-of-compact-sets-is-compact}
+    $X,Y$を位相空間とする．$A\subset X,B\subset Y$がコンパクト集合ならば，$A\times B\subset X\times Y$もコンパクト集合である．
+\end{corollary}
+\begin{proof}
+    命題\ref{prop-characterization-of-compactness-as-space}より，$A=X,B=Y$の場合について示せば十分である．
+    $Z$を任意の位相空間とする．
+    $X$がコンパクトという仮定より，射影$\pr_{23}:X\times(Y\times Z)\to Y\times Z$は閉写像で，$Y$がコンパクトより，射影$\pr_2:Y\times Z\to Z$は閉写像である．
+    合成$\pr_3=\pr_2\circ\pr_{23}$も閉写像であるから，$X\times Y$はコンパクトである．
+\end{proof}
+
+\begin{theorem}[Tychonoff (AC)]\label{thm-Tychonoff}
+    $(X_i)_{i\in I}$をコンパクト空間の族とする．この時，積空間$\prod_{i\in I}X_i$はコンパクトである．
+\end{theorem}
+
+\section{コンパクトハウスドルフ空間}
+
+\subsection{連続写像の標準分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white, breakable ,colbacktitle=ForestGreen!40!white, coltitle=black,fonttitle=\bfseries\sffamily
+    ,title=コンパクト空間とハウスドルフ空間との間のHom集合]
+    コンパクト空間とハウスドルフ空間との間の射は，閉写像で，かつproperである．また，従って，全単射であることと同相であることが一致する．
+\end{tcolorbox}
+
+\begin{proposition}\label{prop-continuous-map-from-compact-to-Hausdorff}
+    $X$を位相空間，$Y$をHausdorff空間とし，$f:X\to Y$を連続写像とする．
+    \begin{enumerate}
+        \item $X$がコンパクトならば，$f$は閉写像である．
+        \item $A$が$X$のコンパクト集合ならば，$f(A)$は$Y$の閉集合である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[場面設定] 任意の閉集合$A\subset X$について，像$f(A)\subset Y$が閉であることを示せば良い．$f$のグラフ$\Gamma\subset X\times Y$を考えると，$f(A)=\pr_2(\pr_1^{-1}(A)\cap\Gamma)$である．
+            \item[終域Hausdorff性] $Y$がHausdorffであるため，$\Gamma$は閉である（Hausdorff性の特徴付け\ref{prop-characterization-of-Hausdorff-in-terms-of-equalizer}）．
+            \item[挿入曲] $\pr_1^{-1}(A)$が閉集合であるため，$\pr_1^{-1}(A)\cap\Gamma$も閉集合である（積位相の特徴付け\ref{prop-characterization-product-topology}より，射影は連続）．
+            \item[始域compact性] $X$がcompactであるため，$\pr_2:X\times Y\to Y$は閉写像である．よって，$f(A)=\pr_2(\pr_1^{-1}(A)\cap\Gamma)$は閉（コンパクト性の特徴付け\ref{prop-characterization-of-compactness-in-terms-of-projection}）．
+        \end{description}
+        \item 
+        1.より，制限$f|_A:A\to Y$は閉写像である．その閉集合$A$の像$f(A)$は閉である．
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}\label{cor-Compact-Hausdorff}
+    $X$をコンパクト空間，$Y$をハウスドルフ空間とし，$f:X\to Y$を連続写像とする．
+    \begin{enumerate}
+        \item $f$が全単射ならば，$f$は同相写像である．
+        \item $f$が単射ならば，$f:X\to Y$は閉埋め込みである．
+        \item 像$f(X)$は$Y$の閉集合であり，$f$が引き起こす可逆写像$\overline{f}:X/R_f\to f(X)$は商空間から部分空間への同相写像である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 逆写像$g:Y\to X$が連続だと示せば良い．任意の開集合$U\subset X$について，$F:=X\setminus U$は閉より，$g^{-1}(U)=g^{-1}(X\setminus F)=Y\setminus g^{-1}(F)=Y\setminus f(F)$は$Y$の開集合である．
+        \item $f:X\to Y$は閉写像でもあるから，閉埋め込みになる．
+        \item 命題\ref{prop-continuous-map-from-compact-to-Hausdorff}より，$f(X)$は閉集合になる．
+        系\ref{cor-image-of-compact-set-is-compact}より，商空間$X/R_f=p(X)$はコンパクトである．
+        系\ref{cor-subspace-of-Hausdorff-is-Hausdorff}より，Hausdorff空間$Y$の部分空間$f(X)$はHausdorffである．よって，1.より，全単射$\overline{f}$は同型である．
+    \end{enumerate}
+\end{proof}
+
+\subsection{コンパクトハウスドルフ空間の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクト集合の閉部分集合はコンパクトであり，Euclid空間のコンパクト集合は有界閉集合と等価である．
+\end{tcolorbox}
+
+\begin{proposition}[Hausdorff空間内でのコンパクト集合]\label{prop-compact-set-in-Hausdorff-spaces}
+    $X$をハウスドルフ空間とする．
+    \begin{enumerate}
+        \item $X$の部分集合$A$についての２条件
+        \begin{enumerate}[(1)]
+            \item $A$はコンパクト集合である．
+            \item $A$は閉集合である．
+        \end{enumerate}
+        は，(1)$\Rightarrow$(2)が成り立つ，$X$がコンパクト空間である時に逆も成り立つ．
+        \item $A,B$が$X$のコンパクト集合ならば，$A\cap B$も$X$のコンパクト集合である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\Rightarrow$は包含写像$i:A\to X$の像$i(A)=A$は閉であることから従う．$\Leftarrow$は系\ref{cor-union-intersection-of-compact-sets-is-compact}より，$X$がコンパクト空間であるとき，閉集合$A(=X\cap A)$はコンパクトである．
+        \item 系\ref{cor-product-of-compact-sets-is-compact}より，コンパクト集合の積$A\times B$は積空間$X\times X$のコンパクト集合である．
+        $X$はHausdorff空間であるから，特徴付け\ref{prop-characterization-Hausdorff}より，$\Delta_X\subset X\times X$は閉集合である．よって，$(A\times B)\cap\Delta_X=(A\cap B)\times(A\cap B)$は$X\times X$のコンパクト集合である．
+        連続写像$\pr_2:X\times X\to X$の像$\pr_2((A\cap B)\times (A\cap B))=A\cap B$もコンパクトである．
+        なお，この事実は，積位相の特徴付け\ref{prop-characterization-product-topology}により，
+        対角写像$X\to X\times X$が埋め込みであり，その制限により定まる同型$A\cap B\to(A\times B)\cap\Delta_X$からも分かる．
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}[コンパクトではない空間でのコンパクト集合]
+    $X$を距離空間とし，$X$の部分集合$A$について，次の２条件
+    \begin{enumerate}[(1)]
+        \item $A$はコンパクトである．
+        \item $A$は有界閉集合である．
+    \end{enumerate}
+    は，(1)$\Rightarrow$(2)が成り立つ，$X=\R^n$の時に逆も成り立つ．
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        \begin{enumerate}
+            \item 距離空間内のコンパクト集合は有界である（系\ref{cor-compact-sets-in-metric-space-is-bounded}）．距離函数に最大値の定理を適用することからえる．
+            \item 距離空間はハウスドルフである（命題\ref{prop-metric-space-is-Hausdorff}）．距離函数は実数に値をとっているために，自由に点を近傍によって分離できるのである．
+            \item ハウスドルフ空間のコンパクト集合は閉集合である（命題\ref{prop-compact-set-in-Hausdorff-spaces}）．
+        \end{enumerate}
+        \item[(2)$\Rightarrow$(1)]
+        命題\ref{prop-compact-sets-in-R^n}．$\R^n$では有界閉集合は，Heine-Borelの定理の帰結だが，コンパクト空間の閉集合となる．
+    \end{description}
+\end{proof}
+
+\subsection{商空間への遺伝}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクトハウスドルフ空間のコンパクト部分集合を一点に潰して得られる空間は再びコンパクトハウスドルフ空間である．
+\end{tcolorbox}
+
+\begin{proposition}[ハウスドルフはコンパクト集合を一点に潰してもハウスドルフである]\label{prop-compact-Hausdorff-after-one-point-quotient-map}
+    $X$をハウスドルフ空間とし，$A\subset X$を空でないコンパクト集合とする．
+    $A$を一点に潰して得られる空間$Y$はハウスドルフである．
+    さらに，$X$がコンパクトなら，$Y$もコンパクトである．
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[商空間の復習] 
+        $R_A:=(A\times A)\cup\Delta_X$とする．$q:X\to X/R_A=Y$を商写像とし，$q(A)=:\{c\}$とする．
+        この一点集合は像位相について閉だから，$Y\setminus\{c\}$は開である．
+        実際，Hausdorff空間内のコンパクト集合$A\subset X$は閉より，$X\setminus A$は開であり，$q^{-1}(Y\setminus\{c\})=X\setminus q^{-1}(c)=X\setminus A$を満たす集合$Y\setminus\{c\}$は開である．
+        従って，制限$q|_{X\setminus A}:X\setminus A\to Y\setminus\{c\}$は同相写像である．
+        \item[命題の言い換え]
+        この値域$Y\setminus\{c\}$は，Hausdorff空間$X$の部分空間（これもまたHausdorff）と同相だから，Hausdorffである．
+        証明としては，逆写像について命題\ref{prop-Hausdorff性は連続単射によって足に感染る}による．
+        以下，任意の点$x\in X\setminus A$に対して，$c$の開近傍$U\subset Y$と$q(x)$の開近傍$V\subset Y$で互いに素なものを構成すれば良い．
+        \item[$A$がcompactだと$q(A)=c$が近傍によって分離できる理由] \mbox{}\\
+        コンパクト性の特徴付け\ref{prop-characterization-of-compactness-in-terms-of-product-topology}を用いる．
+        $W:=(X\times X)\setminus\Delta_X$を考えると，$X$がHausdorffより，これは開で，$x\notin A$より，これは$A\times\{x\}$の開近傍である．
+        $A$はコンパクトだから，
+        \[A\times\{x\}\subset\tilde{U}\times\tilde{V}\subset W\]
+        を満たす$A$の開近傍$\tilde{U}\subset X$と$x$の開近傍$\tilde{V}\subset X$が存在する．$\tilde{U}\times\tilde{V}\subset W$とは，任意の$u\in\tilde{U}$と$v\in\tilde{V}$について$u\ne v$ということだから，
+        $\tilde{U}\cap\tilde{V}=\emptyset$である．
+
+        この像を$U:=q(\tilde{U}),V:=q(\tilde{V})$と置けば，$q$は$A$を潰す商写像だから，$q^{-1}(\tilde{U})=U,q^{-1}(\tilde{V})=V$が成り立つ．
+        よって$q^{-1}(\tilde{U}\cap\tilde{V})=U\cap V=\emptyset$で，また，$U\subset Y$は$q(A)=c$の開近傍で，$V\subset Y$は$q(x)$の開近傍である．
+        よって，$Y$はHausdorffである．
+        \item[コンパクト性] $X$がコンパクトなら，その$q$による像である$Y$もコンパクトである．
+    \end{description}
+\end{proof}
+
+\subsection{コンパクトハウスドルフならば正規}
+
+\begin{corollary}[コンパクト・ハウスドルフ空間の互いに交わらない閉集合は，開集合で分離できる]\label{cor-compact-Hausdorff-space-is-normal}
+    $X$がコンパクト・ハウスドルフ空間ならば，$X$は正規である．
+\end{corollary}
+\begin{proof}
+    $A,B\subset X$を互いに素な空でない閉集合とする．
+    $A$の開近傍$U\subset X$と，$B$の開近傍$V\subset X$で，$U\cap V=\emptyset$を満たすものを構成すれば良い．
+    \begin{description}
+        \item[空間$Z$の構成] 
+        compact-Hausdorff空間の閉集合とはcompact集合であるから（命題\ref{prop-compact-set-in-Hausdorff-spaces}），
+        これを１点に潰して得られる空間$Y:=X\setminus(A\times A)\cup\Delta_X$はcompact-Hausdorffである（命題\ref{prop-compact-Hausdorff-after-one-point-quotient-map}）．この商写像を$q:X\to Y$とすると，これは連続だから，$B':=q(B)$もcompactである（系\ref{cor-image-of-compact-set-is-compact}）．
+        こうして，$Y$を１点に潰して得られる空間$Z:=Y\setminus(B'\times B')\cup\Delta_Y$もcompact-Hausdorffである．
+        この商写像を$q':Y\to Z$とする．
+        \item[Hausdorff性から結論を得る]
+        $p:=q'\circ q:X\to Z$とし，$a,b\in Z$を$p^{-1}(a)=A,p^{-1}(b)=B$で定まる１点の名前とする（$A\cap B=\emptyset$よりwell-definedである）．
+        $a\ne b$だから，$a$の開近傍$U'\subset Z$と$b$の開近傍$V'\subset Z$で$U'\cap V'=\emptyset$を満たすものが存在する．
+        $U:=p^{-1}(U'),V:=p^{-1}(V')$と置けば良い．
+    \end{description}
+\end{proof}
 
 \section{正規空間}
 
@@ -1936,6 +3098,44 @@ title=]
     Hahn-Banachの定理のように，$C(X;[0,1])$が$X$上に分離族を定める空間の一つの十分条件が正規性である．
     第２可算な正規空間が距離付け可能で，可分距離空間を定める．
 \end{tcolorbox}
+
+\subsection{定義}
+
+\begin{definition}[regular, normal]
+    Hausdorff空間$X$について，
+    \begin{enumerate}
+        \item 任意の非空閉集合$A$と$x\notin A$とが開近傍によって分離出来るとき，\textbf{正則}であるという．
+        \item 任意の非空閉集合$A,B$が互いに素ならば，近傍によって分離出来るとき，\textbf{正規}であるという．
+    \end{enumerate}
+\end{definition}
+
+\subsection{特徴付け}
+
+\begin{proposition}[正則性の特徴付け]
+    $X$をHausdorff空間とする．次の3条件は同値：
+    \begin{enumerate}
+        \item 閉集合$A$と一点$x\notin A$が開近傍によって分離できる．
+        \item 任意の点$x\in X$の近傍$x\in V$について，$x$の開近傍$x\in U$が存在して$\overline{U}\subset V$を満たす．
+        \item 空でない任意の閉集合$A$について，これを一点に潰して得られる空間$X/(\Delta_X\cup(A\times A))$もHausdorffである（正規性の命題\ref{prop-one-point-compactification}に当たる見方）．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[正規性の特徴付け]\label{prop-characterizatioin-of-normality}
+    $X$をHausdorff空間とする．次の3条件は同値：
+    \begin{enumerate}
+        \item 互いに交わらない任意の閉集合$A,B$について，開近傍によって分離できる．
+        \item 任意の閉集合$A$の近傍$A\subset V$について，$A$の開近傍$A\subset U$が存在して$\overline{U}\subset V$を満たす．
+        \item 互いに交わらない任意の閉集合$A,B$について，Urysohnの距離関数によって分離できる（補題\ref{lemma-Urysohn's-lemma}）．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 
+        $B:=X\setminus V$と定めると，$A\cap B\ne\emptyset$より，$U\cap W=\emptyset$を満たす開近傍$A\subset U,B\subset W$が存在する．再び$C:=X\setminus W$と置くと，$A\subset U\subset C\subset V$が成り立つが，$C$は閉集合より，$\o{U}\subset C$を得る．２つ併せて，$A\subset\o{U}\subset V$である．
+        \item[(1)$\Rightarrow$(3)] Urysohnの補題\ref{lemma-Urysohn's-lemma}
+
+    \end{description}
+\end{proof}
 
 \subsection{正規であるための十分条件}
 
@@ -1984,9 +3184,169 @@ title=]
     正規空間の任意の局所有限な開被覆について，これに従属する1の分割が存在する．
 \end{theorem}
 
-\section{局所コンパクト空間}
+\section{局所コンパクトハウスドルフ空間空間}
 
-\subsection{$\sigma$-コンパクト性}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hausdorff空間が局所コンパクトであることと，一点コンパクト化可能であることとは同値．
+    すなわち，コンパクトハウスドルフ空間の開部分空間として得られる空間にほかならない．
+    また，コンパクトハウスドルフ空間では連続全単射は位相同型であったが，局所コンパクトハウスドルフ空間に限ると，空間はcurryingを許すようになる(コンパクト開位相)．
+    したがって，このクラスの位相空間が最終的に良い指標になり，Gelfand双対もこのクラスで成り立つ．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    次のような理由で，局所コンパクトハウスドルフ空間というとき，暗黙にHausdorff性を仮定する．
+\end{tcolorbox}
+
+\begin{definition}
+    位相空間$X$が\textbf{局所コンパクト}であるとは，任意の点$x\in X$の（開）近傍系$\O(x)$がコンパクト集合からなる近傍系を持つことを言う．
+\end{definition}
+
+\begin{proposition}
+    位相空間$X$について，(1)$\Rightarrow$(2)が成り立つ．$X$がHausdorffのとき，(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item 任意の点$x\in X$の任意の開近傍$U\in\O(x)$に対して，より小さな開近傍$V\in\O(x),V\subset U$で相対コンパクトなものが存在し，$\o{V}\subset U$が成り立つ．
+        \item 任意の点$x\in X$の（開）近傍系$\O(x)$がコンパクト集合からなる近傍系を持つ．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    コンパクトハウスドルフ空間の任意の部分集合は局所コンパクトハウスドルフである．
+    そして，任意の局所コンパクトハウスドルフ空間はこのように構成される．
+\end{example}
+
+\begin{example}
+    局所コンパクト空間の閉部分空間は局所コンパクト．
+\end{example}
+
+\subsection{1点コンパクト化による特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクトハウスドルフ空間の開部分空間への同相写像を\textbf{コンパクト化}という．
+\end{tcolorbox}
+
+\begin{definition}[relatively compact, locally compact, compactification, (Alexandroff) one-point compactification]
+    $X$をハウスドルフ空間，$Y$をコンパクトハウスドルフ空間とする．
+    \begin{enumerate}
+        \item 開埋め込み$f:X\to Y$が存在するとき，$Y$は$X$の\textbf{コンパクト化}であるという．
+        \item さらに，$Y\setminus f(X)$が一点集合である時，$Y$は$X$の\textbf{一点コンパクト化}または\textbf{アレクサンドロフのコンパクト化}であるといい，この点を\textbf{無限遠点}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[局所コンパクトなハウスドルフ空間ならば，１点コンパクト化可能である]\label{prop-one-point-compactification}
+    $X$をハウスドルフ空間とする．次の３条件は同値である．
+    \begin{enumerate}
+        \item $X$は局所コンパクトである．
+        \item $X$のコンパクト化が存在する．
+        \item $X$の１点コンパクト化が存在する．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(3)$\Rightarrow$(2)] １点コンパクト化は，コンパクト化の特別な場合である．
+        \item[(2)$\Rightarrow$(1)] \mbox{}\\
+        \begin{description}
+            \item[証明方針] 
+            コンパクト化$f:X\to Y$が存在する時，$Y$がcompact Hausdorff，$f$が開埋め込みだから，閉集合$A\subset Y$が存在して$f(X)=Y\setminus A$と同相．よって，$X\simeq Y\setminus A$として，$X$が局所コンパクトであると示せば良い．
+            
+            任意に$x\in X$を取る．$x\notin A$であるから，$Y$が正規より（系\ref{cor-compact-Hausdorff-space-is-normal}），$x$の開近傍$U$と$A$の開近傍$V$が存在して$U\cap V=\emptyset$を満たす．
+            この時，
+            \[U\subset K:=Y\setminus V\subset X=Y\setminus A\]
+            であるが，$K\subset Y$は閉集合であるから，compactである（命題\ref{prop-compact-set-in-Hausdorff-spaces}）．よって，$U$は相対コンパクトである．
+        \end{description}
+        \item[(1)$\Rightarrow$(3)] $X$を局所コンパクト空間として，その１点コンパクト化$i:X\to Y:=X\coprod\{c\}$を構成する．
+        \begin{description}
+            \item[証明方針] $\O_X\subset P(X)$を$X$の開集合系とし，新たに開集合とすべき集合を$\mathcal{V}:=\{V\in\O_X\mid X\setminus VはXのコンパクト集合\}$とする．
+            $\O\subset P(Y)$を，$\O:=\O_X\cup\{V\coprod\{c\}\mid V\in\mathcal{V}\}$とおくと，$\mathcal{V}$がfilterの公理を満たすため，$\O$は$Y$の位相であり（問題\ref{problem-construction-of-topology-in-terms-of-filter-on-onepoint-compactification}.4），$i:X\to Y$が開埋め込みであることを示す．続いて，こうして得た$(Y,\O)$がcompact Hausdorffであることを示す．
+            \item[$i,\O$の定義]
+            \begin{enumerate}[(1)]
+                \item $U\in\O_X,V\in\mathcal{V}$について，$V\subset U$とする．このとき$X\setminus U\subset X\setminus V$はcompact集合の閉部分集合だからコンパクトであり（命題\ref{cor-union-intersection-of-compact-sets-is-compact}），$U\in\mathcal{V}$である．
+                \item $(V_i)_{i\in I}$を$\mathcal{V}$の有限族とすると，$X\setminus\cap_{i\in I}V_i=\cup_{i\in I}(X\setminus V_i)$は系\ref{cor-union-intersection-of-compact-sets-is-compact}よりコンパクトである．よって，$\cap_{i\in I}V_i\in\mathcal{V}$．
+            \end{enumerate}
+            以上より，問題\ref{problem-construction-of-topology-in-terms-of-filter-on-onepoint-compactification}.4より，$\O$は$Y$の位相であり，$i:X\to Y$は開埋め込みである．
+            \item[Hausdorff性]
+            $X$はHausdorffであるから，あとは任意の$x\in X$に対して$c$と近傍によって分離できることを示せば良い．
+            $X$は局所コンパクトであるから，$x$の開近傍$U$とコンパクト集合$K$であって，$x\in U\subset K\subset X$を満たすものが存在する．$V:=Y\setminus K\in\O$とすると，これは$c$の開近傍であり，$U\cap V=\emptyset$である．
+            \item[compact性]
+            $Z$を任意の位相空間とし，$z\in Z$を任意の点とする．任意の$Y\times\{z\}$の開近傍$W\subset Y\times Z$を取る．
+
+            今，積位相の特徴付け\ref{prop-characterization-product-topology}への，$c\in Y$の開近傍$U\subset Y$と$z\in Z$の開近傍$V\subset Z$であって，$U\times V\subset W$を満たすものが存在する．
+            $U\cap X\in\mathcal{V}$より，補集合$A:=Y\setminus U=i(X\setminus(U\cap X))$はcompactである．$W$は$A\times\{z\}$の開近傍でもあるから，$A\times\{z\}\subset A\times V'\subset W$を満たす$z$の開近傍$V'\subset Z$が存在する．
+            すると，$z$の開近傍$V\cap V'$について，
+            \begin{align*}
+                Y\times\{z\}&\subset Y\times(V\cap V')\\
+                &\subset (U\times V)\cup(A\times V')&\because Y=U\cap A,V\cap V'\subset V,V'\\
+                &\subset W
+            \end{align*}
+            が成り立つ．よって，コンパクト性の特徴付け\ref{prop-characterization-of-compactness-in-terms-of-product-topology}より，$Y$はコンパクトである．
+        \end{description}
+    \end{description}
+\end{proof}
+
+
+
+\subsection{1点コンパクト化の位相}
+
+\begin{lemma}[１点コンパクト化の位相の定め方のwell-definedness]
+    $X$を局所コンパクト空間，$Y$をコンパクトハウスドルフ空間とし，$f:X\to Y$を$X$の一点コンパクト化とする．
+    $\{c\}=Y\setminus f(X)$と置くと，次が成り立つ．
+    \begin{enumerate}
+        \item $\{U\in P(Y)\mid UはYの開集合でc\notin U\}=\{f(V)\mid VはXの開集合\}$，
+        \item $\{U\in P(Y)\mid UはYの開集合でc\in U\}=\{Y\setminus f(A)\mid AはXのコンパクト集合\}$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $f$は開埋め込みだから，$\overline{f}:X\to Y\setminus\{c\}$は同相写像．$c\notin U$を満たす部分集合$U\subset f(X)$が開集合であることは，$U$がある$X$の開集合の像であることに同値である．
+        \item $Y$はcompact Hausdorffだから，命題\ref{prop-compact-set-in-Hausdorff-spaces}より，$U$が開集合であることと，$Y\setminus U$がcompactであることは同値．特に$c\in U$の時は補集合$Y\setminus U$が$f^{-1}(Y\setminus U)=X\setminus f^{-1}(U)$と同相だから，これは$U$があるcompact集合$A:=f^{-1}(U)$の像の補集合であることと同値．
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}[一点コンパクト化の位相の構成（フィルターの言葉で）]\label{problem-construction-of-topology-in-terms-of-filter-on-onepoint-compactification}
+    $Y$を位相空間，$X\subset Y$を部分空間とし，補集合は一点集合：$Y\setminus X=\{c\}$とする．$i:X\to Y$を包含写像とし，$Y$の開集合系を$\O_Y$，$X$の開集合系を$\O_X$とする．
+    $\mathcal{V}:=\{i^*(U)=U\cap X\mid U\in\O_Yはcの開近傍\}$とする．
+    \begin{enumerate}
+        \item $\mathcal{V}$は次の２条件を満たす．
+        \begin{enumerate}[(1)]
+            \item (upward-closed) $U\in\O_X,V\in\mathcal{V}$について，$V\subset U\Rightarrow U\in\mathcal{V}$．
+            \item (downward-directed) $(V_i)_{i\in I}$が$\mathcal{V}$の有限族ならば，$\cap_{i\in I}V_i\in\mathcal{V}$．
+        \end{enumerate}
+        \item 次の条件は，$c$が$Y$の孤立点でないことに同値．
+        \begin{enumerate}[(1)]\setcounter{enumii}{2}
+            \item (proper) $\emptyset\notin\mathcal{V}$．
+        \end{enumerate}
+        \item $X$が$Y$の開部分空間であることと，$Y$の開集合系が$\O_Y=\O_X\coprod\{V\coprod\{c\}\mid V\in\mathcal{V}\}$であることとが同値である．
+        \item $X$を位相空間とし，$\O_X$を$X$の開集合系，$\mathcal{V}\subset\O_X$を(1),(2)を満たす部分集合とする．無縁和$Y=X\coprod\{c\}$に対して，$\O\subset P(Y)$を$\O=\O_X\coprod\{V\coprod\{c\}\mid V\in\mathcal{V}\}$と定めるとこれは$Y$の位相であることを示せ．
+    \end{enumerate}
+\end{problem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item (1)は，$V\in\mathcal{V}$ならば，$V\cup\{c\}\in\O_Y$は$c$の開近傍．$V\subset U$の時，$U\cup\{c\}=(U\cup V)\cup\{c\}$も$c$の開近傍だから，$U\in\mathcal{V}$．(2)は，各$V_i\cup\{c\}$が$c$の開近傍だから，$\cap_{i\in I}(V_i\cup\{c\})=\paren{\cap_{i\in I}V_i}\cup\{c\}$も$c$の開近傍である．よって，$\cap_{i\in I}V_i\in\mathcal{V}$．
+        \item $c$が$Y$の孤立点であることは，$\{c\}\in\O_Y$が$c$の開近傍であることだから，これは$\{\}\in\mathcal{V}$であることに同値．
+        \item $X\in\O_Y$であるとき，$X$は開部分空間である．$X$が開部分空間であるとき，$i:X\to Y$が開埋め込みであるから，$\O_X=i^*\O_Y$であるが，$\O_Y\setminus\O_X$は全て$c$の開近傍であるから，$\O_Y\setminus\O_X=\{V\coprod\{c\}\mid V\in\mathcal{V}\}$である．
+        \item $(U_i)_{i\in I}$を$\O_X$の族，$(V_j)_{j\in J}$を$\{V\coprod\{c\}\mid V\in\mathcal{V}\}$の族として，族$(W_i)_{i\in I\coprod J}:=(U_i)_{i\in I}\coprod(V_j)_{j\in J}$を考えても一般性は失われない．$\cup_{i\in I\coprod J}W_i=(\cup_{i\in I}U_i)\cup(\cup_{j\in J}V_j)$は$\mathcal{V}$の条件(1)より，$\O$の元である．同様にして有限族の共通部分についても$\O$の元であることがわかる．
+    \end{enumerate}
+\end{proof}
+
+\subsection{直積への遺伝}
+
+\begin{proposition}
+    局所コンパクト空間の有限直積は局所コンパクト．
+\end{proposition}
+
+
+
+\subsection{$\sigma$-コンパクトならばパラコンパクト}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    局所コンパクト空間が$\sigma$-コンパクトになると，パラコンパクトである．
+    また，局所コンパクト空間が$\sigma$-コンパクトになる条件が，第２可算である．
+\end{tcolorbox}
 
 \begin{lemma}
     $X$を局所コンパクト空間，
@@ -2003,7 +3363,13 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{距離付け可能性}
+\begin{proposition}
+    $X$を局所コンパクト空間とする．
+    $\sigma$-コンパクトならば，パラコンパクトである．
+    $X$が連結ならば，逆も言える．
+\end{proposition}
+
+\subsection{距離付け可能である十分条件}
 
 \begin{theorem}
     次の5条件は同値：
@@ -2013,7 +3379,6 @@ title=]
         \item $X$は$\sigma$-コンパクトかつ距離付け可能．
         \item $X$は$\sigma$-コンパクトかつ，任意の$x\in X$について第２可算な開近傍$U\in\O(x)$が存在する．
         \item $X$の一点コンパクト化が第２可算である．
-        \item 
     \end{enumerate}
 \end{theorem}
 
@@ -2061,6 +3426,10 @@ title=]
 
 \subsection{第2可算ならパラコンパクト}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    第２可算ならば$\sigma$-コンパクトで，$\sigma$-コンパクトならパラコンパクトであるが，連結性の仮定を置くとすべてが同値になる．
+\end{tcolorbox}
 
 \begin{corollary}
     連結かつ局所コンパクトな空間$M$について，次の２条件は同値．
@@ -2106,7 +3475,7 @@ title=]
 
 \begin{theorem}
     第２可算な
-    $C^r\;(r\in[1,\infty])$-多様体$M$の局所有限かつ相対コンパクトな開被覆$(O_\al)_{\al\in A}$について，これに属する１の分解$\{f_\al)_{\al\in A\}\subset C^r(M)$で，各$f_\al$が$M$上$C^r$級であるものが存在する．
+    $C^r\;(r\in[1,\infty])$-多様体$M$の局所有限かつ相対コンパクトな開被覆$(O_\al)_{\al\in A}$について，これに属する１の分解$\{f_\al\}_{\al\in A}\subset C^r(M)$で，各$f_\al$が$M$上$C^r$級であるものが存在する．
     \begin{enumerate}
         \item $\{f_\al\}_{\al\in A}\subset C^r(M)$．
         \item $0\le f_\al\le 1$．
@@ -2272,6 +3641,24 @@ title=]
     一般的な位相空間論を準備し，距離空間での例を見て，さらにこれを特徴づける位相的構造を見てきた．
     これで，位相空間論の発展を促した源流である，関数空間に取り組める．
 \end{quotation}
+
+\section{有界連続関数の空間}
+
+\begin{proposition}
+    $X$を位相空間，$Y$を距離空間とする．
+    \begin{enumerate}
+        \item 写像$D:\Map(X,Y)\to\Map(X\times Y;\R)$を，$D(f):=D_f(x,y)=d(f(x),y)$で定める．するとこれは単射であり，$\norm{D_f-D_g}_\infty=\sup_{x\in X}d(f(x),g(x))$は$l^\infty(X;Y)$に距離を定める．$f\in C_b(X;Y)$と$D_f$が連続であることとは同値．
+        \item $C_b(X;Y)$は$l^\infty(X;Y)$の閉部分空間となる．
+        \item $e:C_b(X;Y)\times X\to Y$は$C_b$の一様位相と積位相について連続になる．
+    \end{enumerate}
+\end{proposition}
+
+\section{コンパクト開位相}
+
+\begin{definition}
+    $(M_{A,U})_{A\in\cC(X),U\in\O(Y)}$を準基として生成される$C(X;Y)$の位相$\O_{Y^X}$を\textbf{コンパクト開位相}という：
+    \[M_{A,U}:=\Brace{f\in C(X;Y)\mid f(A)\subset U}\quad(A\in\cC(X),U\in\O_Y)\]
+\end{definition}
 
 \chapter{参考文献}
 
