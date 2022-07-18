@@ -1134,6 +1134,178 @@ title=]
     \end{enumerate}
 \end{quotation}
 
+\section{距離関数の扱い}
+
+\subsection{閉包の特徴付け}
+
+\begin{proposition}[閉包の距離関数による特徴付け]\label{prop-characterization-of-closure-in-terms-of-metric-function}
+    $d(-,A):X\to\R$を$\emptyset\ne A\subset X$からの距離とする．
+    \begin{enumerate}
+        \item $|d(x,A)-d(y,A)|\le d(x,y)$が成り立つ．また関数$d(-,A):X\to\R$は連続である．
+        \item $\overline{A}=\{x\in X\mid d(x,A)=0\}$である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 三角不等式より，\[\forall x,y\in X,\forall a\in A,\;d(x,a)\le d(x,y)+d(y,a)\]
+        である．両辺の下限をとって，$d(x,A)\le d(x,y)+d(y,A)\Rightarrow d(x,A)-d(y,A)\le d(x,y)$．同様に$d(y,A)-d(x,A)\le d(x,y)$も成り立つから，$|d(x,A)-d(y,A)|=\max\{d(x,A)-d(y,A),d(y,A)-d(x,A)\}\le d(x,y)$．
+        すると，$d_\R=|xーy|$に注意して，系\ref{cor-characterization-distance-function}.1より，$d(-,A):X\to\R$は連続．
+        \item $\overline{A}=\{x\in X\mid \forall r>0,\;U_r(x)\cap A\ne 0\}$より．
+    \end{enumerate}
+\end{proof}
+
+\subsection{等距離写像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    距離空間の射は等長写像という．
+\end{tcolorbox}
+
+\begin{definition}[isometry, global isometry]\mbox{}
+    \begin{enumerate}
+        \item $(X,d_X),(Y,d_Y)$を距離空間とする．写像$f:X\to Y$が$d_X=f^*d_Y$，すなわち，
+        $\forall x,x'\in X,\; d_Y(f(x),f(x'))=d_X(x,x')$を満たす時，これを\textbf{等長写像}という．
+        \item 等長写像が全単射であり，逆写像も等長写像であるとき，\textbf{大域的等長写像}という．
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    距離空間の等長写像は，全単射ならば大域的であるが，
+    Riemann多様体では，全単射な等長写像と大域的等長写像とは違う概念になる．
+\end{remark}
+
+\begin{proposition}[部分距離空間のwell-definedness]\label{prop-部分距離空間のwell-definedness}\mbox{}
+    \begin{enumerate}
+        \item $f:X\to Y$が等長写像ならば，$f$は埋め込みである．
+        \item 部分距離空間$A\subset X$の定める位相は，$X$の部分位相としての$A$の位相と等しい．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item 系\ref{cor-characterization-distance-function}より，$f$は特に連続である．
+        また，$f(x)=f(x')$とすると，$d_X(x,x')=d_Y(f(x),f(x'))=0$だから，$x=x'$が従うので$f$は単射である．
+        あとは$f^*\O_Y=\O_X$を示す．連続性より，$f^*\O_Y\supset\O_X$を示せば良い．
+        $f$の連続性より，$\U_X\subset f^*\U_Y\subset f^*\O_Y$．命題\ref{prop-generated-topology}より$\O_X\subset f^*\O_Y$が従う．
+        \item 包含写像$i:A\to X$は等長写像だから，埋め込みである．よって，$i:A\to X$は部分距離空間の$A$と部分空間$A$は同相である．
+    \end{enumerate}
+\end{proof}
+
+\subsection{距離概念の一般化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+        Lawvere距離空間の観点からすると，short mapが正確にenriched functorとなる．
+        これが，Metの射は連続写像でも，一様連続写像でもなくて，short mapが圏論的には良さそうだという指針になる．
+\end{tcolorbox}
+
+\begin{definition}[extended, pseudo-, quasi-, Lawvere]\mbox{}
+    \begin{enumerate}
+        \item 距離関数$d$の終域を$d:X\to[0,\infty]$としたものを，\textbf{拡大距離空間}という．終域を一般の有向集合とすると，一様空間の概念を得る．
+        \item 公理(1) Separationを除いたものを，\textbf{擬距離}（または半距離）という．関数空間上の半ノルムが生成する．擬距離が距離であることと，生成する位相が$T_0$であることは同値．
+        \item 公理(3) Symmetryを除いたものを，\textbf{準距離}という．\footnote{一方通行や坂道の概念など，日常にはありふれている距離概念である．}
+        \item 擬距離であり，準距離でもある拡張距離空間を，\textbf{Lawvere距離空間}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    Lewvere距離空間$M$は，順序集合$([0,\infty],\le)$を加法$+$によってモノイド圏とみなして，この上の豊穣圏とみなせる．
+    順序集合自体が$2$を積$\cdot$によってモノイド圏とみなした上の豊穣圏とみなせるから，$M$での射の合成は三角不等式と一致する．\footnote{Thus generalized, many constructions and results on metric spaces turn out to be special cases of yet more general constructions and results of enriched category theory. }
+\end{lemma}
+
+\subsection{一様空間の2つの定義}
+
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=一様収束の概念による距離空間の一般化である]
+    entourageによる定義はBourbaki流であり，いまだに一番一般的に見られる．FinSetsから開集合系の圏Opへの反変関手を記述しているとみなせる．
+    一様空間の概念はAndré Weilが提案したもので，一様連続写像に自然に言及できる空間である．これは距離空間と位相群の概念の拡張とみなせる．\footnote{\url{https://ncatlab.org/nlab/show/uniform+space}}
+\end{tcolorbox}
+
+\begin{definition}[entourage / vicinities, uniform structure / uniformity, uniform space (Bourbaki)]
+    $X$を集合とする．次の６公理を満たすような$X$上の\textbf{近縁}と呼ばれる二項関係$U\subset X\times X$のフィルター$\U\subset P(X\times X)$を\textbf{一様構造}と呼び，この組$(X,\U)$を\textbf{一様空間}という．
+    \begin{enumerate}
+        \item (reflexive) $\forall_{U\in\U}\;\Delta_X\subset U$．
+        \item (transitive) $\forall_{U\in\U}\;\exists_{V\in\U}\;V\circ V\subset U$．即ち，$\forall_{U\in\U}\;\exists_{V\in\U}\;\forall_{x,y,z\in X}\;x\approx_V y\approx_V z\Rightarrow x\approx_U z$．
+        \item (symmetric) $\forall_{U\in\U}\;\exists_{V\in\U}\;V^\op\subset U$．即ち，$\forall_{U\in\U}\;\exists_{V\in\U}\;\forall_{x,y\in X}\;y\approx_V x\Rightarrow x\approx_Uy$（6と合わせると，$V\subset U^\op\in\U$が必要）．
+        \item (inhabited) $\U\ne\emptyset$．6と合わせると，$X\times X\in\U$が必要．
+        \item (downward-directed) $\forall_{U,V\in\U}\;\exists_{W\in\U}\;W\subset U\cap V$．6の下では$W=U\cap V\in\U$が必要．
+        \item (upward-closed) $\forall_{U\in\U}\;U\subset V\subset X\times X\rightarrow V\in\U$．
+    \end{enumerate}
+    関係$(x,x')\in U$を，\textbf{$x\in X$と$x'\in X$とは$U$の程度に近い}という．
+    (1)から(5)を満たす関係の族を，近縁の基と呼ぶ．
+\end{definition}
+\begin{remarks}
+    (4)から(6)は$\U$がフィルターになる条件である．
+\end{remarks}
+
+\begin{example}[加法構造]\mbox{}
+    \begin{enumerate}
+        \item $\R$上の族$V_\al:=\Brace{(x,y)\in\R\times\R\mid\abs{x-y}<\al}_{\al>0}$は一様構造となる．これを\textbf{加法一様構造}という．
+        \item 集合$X$上の同値関係$R$は一様構造の近縁の基本系となる．$R$が自明であるとき$R=\Delta_X$，これは一様構造を定め，\textbf{離散一様構造}という．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[被覆]\mbox{}
+    \begin{enumerate}
+        \item 位相空間$X$の被覆$C\subset P(X)$とは，$\cup C=X$を満たす$P(X)$の族をいう．
+        \item $C_1$は$C_2$の細分である$C_1<C_2$とは，次が成り立つことをいう：$\forall_{A\in C_1}\;\exists_{B\in C_2}\;A\subset B$．
+        \item $C_1,C_2$の結びとは，$C_1\land C_2:=\Brace{A\cap B\in P(X)\mid A\in C_1,B\in C_2}$のことを指す．これは再び被覆となる．
+        \item $A\in P(X)$について，$C[A]:=\bigcup\Brace{B\in C\mid A\cap B\ne\emptyset}$と定める．
+        \item $C^*:=\Brace{C[A]\subset P(X)\mid A\in C}$と定める．
+        \item 近縁$U$について，$U[x]:=\Brace{y\in X\mid x\approx_U y}$と定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Covering uniformities]
+    位相空間$X$の一様被覆$\cC$とは，次を満たす被覆の族$\cC$のことをいう：
+    \begin{enumerate}
+        \item $\forall_{C\in\cC}\;\exists_{C'\in\cC}\;(C')^*<C$．
+        \item (inhabited) $\U\ne\emptyset$．(4)の下では，$\{X\}\in\cC$．
+        \item (downward-directed) $\forall_{C_1,C_2\in\cC}\;\exists_{C_3\in\cC}\;C_3<C_1\land C_2$．
+        \item (upward-closed) $\forall_{C\in\cC}\;C<C'\Rightarrow C'\in\cC$．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    公理(2)から(4)が$\cC$がフィルターであるための条件である．
+    (1)だけが本質的で，これを満たすものを準基，(4)以外を満たすものを基という．
+\end{remarks}
+
+\begin{lemma}[２つの定義の同値性]\mbox{}
+    \begin{enumerate}
+        \item 近縁系$\U$に対して，族$C\subset P(X)$が，ある近縁$U\in\U$について$\{U[x]\in P(X)\mid x\in X\}<C$を満たすとき$C\in\cC$とすると，$\cC$は一様構造を定める．
+        \item 一様被覆系$\cC$に対して，$C\in\cC$を一様被覆として$\bigcup\Brace{A\times A\mid A\in C}$が生成する近縁系$\U$は一様構造を定める．
+        \item (1),(2)の対応は全単射を定める．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{一様構造の定める位相}
+
+
+\begin{definition}[uniform topology]
+    近縁系$\U$について，$U[x]=\Brace{y\in X\mid x\approx_Uy}$を$x\in X$の近傍のフィルターとする位相はただ一つ存在し，これを\textbf{一様構造$\U$が定める位相}という．
+\end{definition}
+
+\begin{proposition}
+    一様空間$(X,\U)$を一様位相によって位相空間とみなす．$X$は正規かつ完備正規(completely regular)である．
+\end{proposition}
+
+\begin{definition}[uniformly continous function]
+    $(X,\U_X),(Y,\U_Y)$を一様空間とする．
+    \begin{enumerate}
+        \item 関数$f:X\to Y$が一様連続であるとは，$\forall_{U\in\U_Y}\;(f\times f)^{-1}(V)\in\U_X$すなわち$(f\times f)^*\U_Y\subset\U_X$が成り立つことをいう．
+        \item 一様空間と一様連続写像は具体圏をなし，これをUnifと書く．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $(X,\U_X),(Y,\U_Y)$を一様空間とする．
+    \begin{enumerate}
+        \item 一様連続関数$f:X\to Y$は，対応する一様位相について連続である．
+        \item 一様位相について連続だが，一様連続ではない関数$f:X\to Y$が存在する．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{位相群}
+
 \section{写像の極限}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1751,10 +1923,11 @@ title=]
     \end{enumerate}
 \end{corollary}
 
-
 \chapter{位相的構造}
 
 \section{Hausdorff空間}
+
+\section{連結空間}
 
 \section{正規空間}
 
@@ -1763,6 +1936,15 @@ title=]
     Hahn-Banachの定理のように，$C(X;[0,1])$が$X$上に分離族を定める空間の一つの十分条件が正規性である．
     第２可算な正規空間が距離付け可能で，可分距離空間を定める．
 \end{tcolorbox}
+
+\subsection{正規であるための十分条件}
+
+\begin{proposition}
+    コンパクトハウスドルフ空間は正規であるが，パラコンパクトなHausdorff空間も正規である．
+    一方で，局所コンパクトな空間は正規とは限らない．
+\end{proposition}
+
+\subsection{Urysohnの補題}
 
 \begin{lemma}[Urysohn's lemma]\label{lemma-Urysohn's-lemma}
     $X$を正規空間とする．$A$を$X$の閉集合，$U$を$X$の開集合で，$A\subset U$を満たすものとする．
@@ -1795,6 +1977,12 @@ title=]
         \item $C_b(X)$は一様位相について可分である．
     \end{enumerate}
 \end{corollary}
+
+\subsection{1の分解定理}
+
+\begin{theorem}
+    正規空間の任意の局所有限な開被覆について，これに従属する1の分割が存在する．
+\end{theorem}
 
 \section{局所コンパクト空間}
 
@@ -1829,9 +2017,251 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\section{局所コンパクト空間の精緻化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    位相多様体($C^0$-多様体)は明らかに局所コンパクトである．
+    局所コンパクトな空間に第２可算性を与えると，パラコンパクト性を持つ．
+    これで，可微分多様体の定義には第２可算性が入るのである．
+    パラコンパクトな多様体は，任意の開被覆に関して1の分割を持つ．
+\end{tcolorbox}
+
+\begin{definition}[manifold]
+    Hausdorff空間$M$と$C^r$-局所座標系$\{U_\al,\varphi_\al\}_{\al\in A}$との組を\textbf{$C^r$-多様体}という．
+    $C^0$-多様体は局所的にEuclid空間と同相な空間のことであり，明らかに局所コンパクトかつ局所（弧状）連結である．
+\end{definition}
+
+\begin{definition}[paracompact, Lindelöf]
+    位相空間$M$について，
+    \begin{enumerate}
+        \item 開被覆$(U_\al)_{\al\in A}$が\textbf{局所有限}であるとは，$\forall_{x\in M}\;\exists_{U\in\O(x)}\;\Abs{\Brace{\al\in A\mid U_\al\cap U\ne\emptyset}}\in\N$．
+        \item 被覆$(U_\al)_{\al\in A}$の\textbf{細分}とは，被覆$(V_\beta)_{\beta\in B}$であって，$\forall_{\beta\in B}\;\exists_{\al\in A}\;V_\beta\subset U\al$を満たすものをいう．全ての元$U_\al$を縮めて作った被覆をいう．
+        \item 任意の開被覆が，局所有限な開細分\footnote{元すべて開集合であるような被覆を開被覆ということと同様．}を持つとき，$M$を\textbf{パラコンパクト}であるという．
+        \item 位相空間が\textbf{Lindelöf}または\textbf{可算被覆性}を持つとは，任意の開被覆が可算部分被覆を持つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\subsection{パラコンパクト性}
+
+\begin{theorem}[局所コンパクト空間のパラコンパクト性の特徴付け]
+    $M$を連結な局所コンパクト空間とする．次の４条件は同値．
+    \begin{enumerate}
+        \item $M$はパラコンパクト．
+        \item $M$には局所有限で局所コンパクトな開被覆$(U_\al)_{\al\in A}$を持つ：各$\o{U_\al}$はコンパクト．
+        \item $M$は$\sigma$-コンパクト：$M$は高々可算個のコンパクト集合$(S_i)_{i\in\N}$の和集合として表せる．
+        \item $M$は高々可算個の開集合$(U_i)_{i\in\N}$の和で表せ，かつ，各$U_i$は相対コンパクトで$\forall_{i\in\N}\;\o{U_i}\subset U_{i+1}$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[パラコンパクト多様体の開被覆]\label{thm-open-cover-of-paracompact-locally-Euclidean-space}
+    $M^n$をパラコンパクトな位相多様体とし，$\U=(\wt{U}_i)$を$M^n$の局所有限な開被覆とする．このとき，$\U$の局所有限な細分$\V=(V_j)$であって，次の条件を満たすものが存在する：
+    $\V$を$M$上の開集合の族と考えたとき，$\V=\V_0\cup\V_1\cup\cdots\V_n$と分解でき，各$\V_k$の元は互いに素な開集合族となっている．
+\end{theorem}
+
+\subsection{第2可算ならパラコンパクト}
+
+
+\begin{corollary}
+    連結かつ局所コンパクトな空間$M$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $M$は可算基を持つ（第２可算である）．
+        \item $M$はパラコンパクトかつ連結成分が高々可算個である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] まず，連結成分が非可算個であった場合は，全ての連結成分からなる開被覆については可算な部分被覆を持たないので矛盾．よって連結成分は高々可算個である．
+        あとは，それぞれの連結成分がパラコンパクトであることを示せば良い．任意の開被覆に対して，可算な部分被覆が存在する．
+    \end{description}
+\end{proof}
+
+\subsection{第2可算ならばLindelöf}
+
+\begin{lemma}[second-countable then Lindelöf]
+    第２可算な位相空間は，可算被覆性を持つ．すなわち，任意の開被覆に対して，可算な部分被覆が存在する．
+\end{lemma}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[私の案] 可算な開基$\U:=(U_i)_{i\in\N}$を１つ取る．
+        $(V_\al)_{\al\in A}$を任意の開被覆とする．
+        任意の$x\in M$について，$\exists_{\al}\;x\in V_\al$であるが，$\U$は$M$の開基だから，ある$i\in\N$が存在して，$x\in U_i\subset V_\al$を満たす．
+        こうして$i$と結びつけられる$V_\al$を集めれば，可算な部分被覆となっている． 
+        \item[stackexchange] ある種の背理法と言える論理マジック
+    \footnote{\url{
+        https://math.stackexchange.com/questions/2257690/if-x-is-second-countable-then-x-is-lindel%C3%B6f
+    }}
+    \end{description}
+\end{proof}
+
+\subsection{1の分割}
+
+\begin{proposition}[パラコンパクトならば，任意の開被覆は1の分割を持つ (AC)]
+    $(X,\O_X)$を位相空間とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $X$はパラコンパクトなHausdorff空間である．
+        \item 任意の開被覆は従属する1の分割を持つ．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    第２可算な
+    $C^r\;(r\in[1,\infty])$-多様体$M$の局所有限かつ相対コンパクトな開被覆$(O_\al)_{\al\in A}$について，これに属する１の分解$\{f_\al)_{\al\in A\}\subset C^r(M)$で，各$f_\al$が$M$上$C^r$級であるものが存在する．
+    \begin{enumerate}
+        \item $\{f_\al\}_{\al\in A}\subset C^r(M)$．
+        \item $0\le f_\al\le 1$．
+        \item $\supp f_\al=\o{x\in M\mid f_\al(x)\ne 0}\subset\O_\al$．
+        \item $\sum_{\al\in A}f_\al=1$．
+    \end{enumerate}
+\end{theorem}
+
 \chapter{写像空間}
 
-\section{陰関数定理}
+\section{逆写像定理}
+
+\subsection{Jacobi行列}
+
+\begin{definition}[Jacobi行列]\mbox{}
+    \begin{enumerate}
+        \item $C^r$級同相写像は，行列を定める：$J:C^r(U,V)\times U\to M_{np}(\R);(f,x)\mapsto J(f)(x)$．
+        \item 各点$x\in U$に対し，$J:\Diff^r(U)\to\GL_n(\R)$は群準同型を定める．
+        \item $\rank_xf:=\rank(J(f)(x))$と定める．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    自然な写像$\Phi(\varphi,\psi):C^r(U,V)\to C^r(U_1,V_1)$について，
+    \[\forall_{x\in U}\;\rank_{\varphi(x)}\Phi(\varphi,\psi)f=\rank_xf.\]
+\end{lemma}
+
+\subsection{逆写像定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Euclid空間の射には，局所的には，奇妙な可逆性の特徴付けがある．
+    この局所性が多様体の発想となる．
+    可微分写像は線型写像の空間に写される事実を使えば，ランクの半連続性から直ちに従う消息である．
+
+    逆写像定理も陰関数定理も，証明には縮小写像の原理を用いてみる．
+    距離空間のこの構造が情報の根源であると信じる．
+
+    複素関数論の論理展開がその特殊化であるという見方が肝要．
+    それぞれの可逆性の特徴付けがある．
+\end{tcolorbox}
+
+\begin{definition}[局所同相]
+    次の２条件を満たす写像$\varphi:\R^n\to\R^n$を，\textbf{原点の周りの$C^r$級の局所同相写像}という．
+    \begin{enumerate}
+        \item $\exists_{U\in\O(0)}\;\varphi\in C^r(U,\R^n),\varphi(0)=0$．
+        \item $\exists_{W\in\O(0)}\;W\subset U\land \varphi|_W\in\Diff^r(W,\varphi(W))$．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[逆写像定理]
+    $f$を$\R^n$の原点の近傍で定義された$C^r\;(r\in[1,\infty])$級写像$f:U\to\R^n$で，$f(0)=0$とする．
+    この時，次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は原点の周りで$C^r$級局所同相．
+        \item $\rank_0f=n$．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] 
+        (2)$\Rightarrow$(1)を示せば良い．
+        $A:=J(f)(0)\in M_n(\R)$とおくと，$\rank A=n$である．
+        この時，$A\times$は線型な可微分同相写像$\R^n\iso\R^n$を定めるから，$\o{f}:=A^{-1}\circ f$も$\o{f}(0)=0$を満たす$C^r$級の写像$U\to\R^n$となり，追加で$J(\o{f})(0)=I_n$を満たす．
+        これについて(1)を導けば，一般の$f=A\circ\o{f}$についても，原点の周りの$C^r$級の局所同相写像となる．
+        \item[可逆射の構成] \mbox{}\\
+        \begin{enumerate}
+            \item まず，原点の近傍で定まる$C^r$級の写像$g:U\to\R^n,g(x):=f(x)-x$を考える．
+            これは$f$による移動の変位ベクトルを表す．
+            以下，$\R^n$の距離$d$をノルム$\abs{x}:=\max_{1\le i\le n}\abs{x_i}$が定めるものとする．
+
+            $g$は特に$C^1$級で（$g'$が距離$d$に関して連続で），仮定より$g'(0)=1-1=0$であるから，$\ep>0$が存在して，任意の$i,j\in[n]$に対し，$\o{U_\ep(0)}\subset (Dg)^{-1}(U_{1/2n}(0))$，すなわち
+            \[\Abs{\pp{g_i}{x_j}}<\frac{1}{2n}\quad\on\o{U_\ep(0)}.\]
+            するとこの範囲では，
+            \begin{align*}
+                \forall_{x,x'\in U_\ep(0)}\;\exists_{\theta\in(0,1)}\quad\abs{g_i(x)-g_i(x')}&=\Abs{\sum^n_{i=1}\pp{g_i}{x_j}(x+\theta(x'-x))(x_j-x'_j)}&\because 多変数の平均値の定理\\
+                &\le n\max_{x\in U_\ep(0),i,j\in[n]}\Abs{\pp{g_i}{x_j}(x)}\abs{x-x'}\le\frac{1}{2}\abs{x-x'}.
+            \end{align*}
+            と評価できる．
+            $i\in[n]$は任意だったから，$\abs{g(x)-g(x')}\le\frac{1}{2}\abs{x-x'}$．
+            特に，$g(x)\le\frac{\abs{x}}{2}$．
+            ここで，$g:U_\ep(0)\to\R^n$は，Lipschitz係数$\frac{1}{2}$の縮小写像であると言いたいが，値域についてはまだよくわからない．
+            同様に，$x,f(x),f(f(x)),\cdots$という点列の挙動も不明である．そこで，$g(x)\le\frac{\abs{x}}{2}$を用いて，値域mの方を先に制限することを考える．
+            \item そこで，$U_{\ep/2}(0)$内の点$y$に至る点$\o{x}$を逆算する．
+            \[\xymatrix@R-2pc{
+                h:U_{\ep/2}(0)\ar[r]&C^r(U,\R^n)\\
+                \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+                y\ar@{|->}[r]&h_y(x):=y-g(x)=y+x-f(x)
+            }\]
+            を考えると，$h_y$は実は$h_y:U_\ep(0)\to U_\ep(0)$（また$\o{U_\ep(0)}\to U_\ep(0)$）を定める．
+            実際，
+            \begin{align*}
+                \forall_{x\in U_\ep(0)}\quad\abs{h_y(x)}&\le\abs{y}+\abs{g(x)}\\
+                &\le\abs{y}+\frac{\abs{x}}{2}<\ep.
+            \end{align*}
+            そして，$h_y$は完備距離空間$(\o{U_{\ep}(0)},d)$上の縮小写像である：
+            \begin{align*}
+                \forall_{x,x'\in U_\ep(0)}\quad\abs{h_y(x)-h_y(x')}=\abs{g(x)-g(x')}\le\frac{1}{2}\abs{x-x'}.
+            \end{align*}
+            したがって，不動点$\o{x}=h_y(\o{x})\in\o{U}_\ep(0)$がただ一つ存在する．
+
+            さらに，$y\in U_{\ep/2}(0)$だから，$\o{x}\in U_\ep(0)$である．
+            実際，$x=\o{x},x'=0$を考えると，$\abs{h_y(\o{x})-y}=\abs{\o{x}-y}\le\frac{\abs{\o{x}}}{2}$より，$\o{x}\le 2\abs{y}<\ep$が従う．
+            \item 以上より，$W:=f^{-1}(U_{\ep/2}(0))\cap U_\ep(0)$とおくと，$f|_W:W\to U_{\ep/2}(0)$は全単射となる．
+            全射性は構成より，単射性は不動点の一意性から従う．$W$は確かに$0$の開近傍となっている．
+        \end{enumerate}
+    \end{description}
+\end{proof}
+\begin{remarks}\mbox{}
+    \begin{description}
+        \item[方針] $A\times$という同型については，hom関手の消息で局所同相性は簡単に伝播するので，これについては無視してよく，仮定$J(f)(0)=I_n$も追加して良い．つまり，原点では微分が$0$でほぼ変化しないことを仮定して示せば良い．
+        \item[] 
+    \end{description}
+\end{remarks}
+
+\subsection{系としての陰関数定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=逆関数定理の系としての陰関数定理]
+    逆写像定理は同じ次元の間のEuclid空間の射の局所的可逆性を言った．
+    これの系としての陰関数定理は，次元が違えど，低い方の次元に揃えれば局所的に「可逆」であることを言っていると捉えられる．
+\end{tcolorbox}
+
+\begin{corollary}
+    $f\in C^r(U,V)\;(U,V\subset\R^n)$とする．このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $f$は可逆である：$f\in\Diff^r(U,V)$．
+        \item $f$は全単射で，$U$の各点$x\in U$で$J(f)(x)$が正則．
+    \end{enumerate}
+\end{corollary}
+\begin{remarks}
+    層でやったような，局所的な可逆写像を貼り合わせた感覚．
+    しかし複素関数論では，正則性と複素微分可能性が同値であるから，(2)の後半の条件が退化して見えなくなる．
+\end{remarks}
+
+\begin{corollary}[陰関数定理]\label{cor-implicit-function}
+    $r\in[1,\infty],n\le p$について，$f:U\osub\R^n\to\R^p$を$\R^n$の原点の周りで定義された$C^r$級写像で，$f(0)=0$を満たすものとする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $\R^p$の原点の周りの$C^r$級局所同相写像$\varphi$が存在して，$\varphi\circ f(x_1,\cdots,x_n)=(x_1,\cdots,x_n,0,\cdots,0)$が成り立つ．
+        \item $\rank_0f=n$．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}[低次元への写像の場合]\label{cor-implicit-function-2}
+    $r\in[1,\infty],n\ge p$について，$f:U\osub\R^n\to\R^p$を$\R^n$の原点の周りで定義された$C^r$級写像で，$f(0)=0$を満たすものとする．
+    このとき，次の２条件は同値．
+    \begin{enumerate}
+        \item $\R^n$の原点の周りの$C^r$級局所同相写像$\psi$が存在して，$f\circ\psi(x_1,\cdots,x_n)=(x_1,\cdots,x_p)$が成り立つ．
+        \item $\rank_0f=p$．
+    \end{enumerate}
+\end{corollary}
+
+
+\subsection{陰関数定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
