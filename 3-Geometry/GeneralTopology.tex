@@ -3655,10 +3655,34 @@ title=]
 
 \section{コンパクト開位相}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hausdorffでなくとも，局所コンパクトならば，指数対象を持つ．
+\end{tcolorbox}
+
+\subsection{定義}
+
 \begin{definition}
     $(M_{A,U})_{A\in\cC(X),U\in\O(Y)}$を準基として生成される$C(X;Y)$の位相$\O_{Y^X}$を\textbf{コンパクト開位相}という：
     \[M_{A,U}:=\Brace{f\in C(X;Y)\mid f(A)\subset U}\quad(A\in\cC(X),U\in\O_Y)\]
 \end{definition}
+
+\subsection{値写像の連続性}
+
+\begin{proposition}
+    $X$を局所コンパクト，$Y$を一般の位相空間とする．
+    $\ev:X\times C(X;Y)\to Y$は連続．
+\end{proposition}
+
+\subsection{随伴が連続}
+
+\begin{proposition}
+    $X,Y,Z$を位相空間とする．(1)$\Rightarrow$(2)が成り立つ．$Y$が局所コンパクトならば(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item $f:X\times Y\to Z$は連続である．
+        \item $\al_f:X\to Z^Y$は連続である．
+    \end{enumerate}
+\end{proposition}
 
 \chapter{参考文献}
 
