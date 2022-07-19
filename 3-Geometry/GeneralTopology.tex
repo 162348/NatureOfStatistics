@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1024,11 +1024,17 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    議論の非対称性を補完する概念である．
+    写像の連続性の閉包作用素による特徴付け$\forall_{A\in P(X)}\;f(\o{A})\subset\o{f(A)}$には，逆向きも考え得る．
+    このように，
+    議論の非対称性を補完する概念が開写像と閉写像である．
+    また，$\o{f(A)}\subset f(\o{A})$はFubiniの定理と同じ向きとも思える．
 \end{tcolorbox}
 
-\begin{lemma}
-    開写像・閉写像は合成しても保たれる．2つの開写像の積は開だが，閉写像では成り立たない．
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item 開写像・閉写像は合成しても保たれる．
+        \item 2つの開写像の積写像は開だが，閉写像では成り立たない．
+    \end{enumerate}
 \end{lemma}
 
 \begin{proposition}[演算子による開写像の特徴付け]
@@ -1038,6 +1044,7 @@ title=]
         \item $\forall_{A\in P(X)}\;f(A^\circ)\subset f(A)^\circ$．
         \item $\forall_{B\in P(Y)}\;f^{-1}(\o{B})\subset\o{f^{-1}(B)}$．
         \item $\forall_{F\csub X}\;\Brace{y\in Y\mid f^{-1}(y)\subset F}\csub Y$．
+        \item $\forall_{x\in X}\;\forall_{N\in\O(x)}\;\exists_{V\in\O(f(x))}\;V\subset f(N)$．
     \end{enumerate}
 \end{proposition}
 
@@ -1048,6 +1055,14 @@ title=]
         \item $\forall_{A\in P(X)}\;\o{f(A)}\subset f(\o{A})$
         \item $\forall_{F\csub X}\;\o{f(F)}\subset f(F)$．なお，$=$でも良い．
         \item $\forall_{U\in\O_X}\;\Brace{y\in Y\mid f^{-1}(y)\subset U}\in\O_Y$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[全単射な開写像]
+    $f:X\to Y$を全単射とする．
+    \begin{enumerate}
+        \item 開であることと閉であることとは同値．このとき，逆写像は連続である．
+        \item $f$は連続でもあるとする．逆写像$f^{-1}$は開かつ閉であるが，連続とは限らない．
     \end{enumerate}
 \end{proposition}
 
@@ -1063,24 +1078,22 @@ title=]
     連続な閉写像を\textbf{完全写像}という．
 \end{definition}
 
-\begin{proposition}[連続写像が閉であることの特徴付け]
-    $f:X\to Y$が連続であるとする．
-\end{proposition}
-
 \begin{proposition}[連続開写像の性質]
     $f:X\to Y$を連続な開写像とする．
     \begin{enumerate}
-        \item $\forall_{B\in P(Y)}\;(f^{-1}(B))^\circ=f^{-1}(U^\circ)$．
+        \item $f$が全射ならば，$\forall_{B\in P(Y)}\;(f^{-1}(B))^\circ=f^{-1}(U^\circ)$．
         \item $\forall_{B\in P(Y)}\;\o{f^{-1}(B)}=f^{-1}(\o{B})$．
+        \item $\forall_{B\in P(Y)}\;f^{-1}(\partial B)=\partial f^{-1}(B)$．
+        \item $X$が第１可算・第２可算ならば，$f(X)$も第１可算・第２可算である．
     \end{enumerate}
 \end{proposition}
 
 \begin{theorem}
     $f:X\to Y$を開／閉な連続写像とする．
     \begin{enumerate}
-        \item $f$が全射$\quad\Rightarrow\quad f$は商写像$\quad\Leftrightarrow\quad f$はsectionを持つ（final topology）．
-        \item $f$が単射$\quad\Rightarrow\quad f$は埋め込み$\quad\Leftrightarrow\quad f$はretractionを持つ（initial topology）．
-        \item $f$が全単射$\quad\Leftrightarrow\quad f$は同相写像．また，$f$が全単射の時，$f$が開写像であることと閉写像であることが同値で，$f$が全単射でない場合はそのどちらも一般的には成り立たない．
+        \item $f$が全射ならば，商写像である\ref{cor-open-continuous-surjection-is-quotient-map}．
+        \item $f$が単射ならば，埋め込み$\quad\Leftrightarrow\quad f$である．
+        \item $f$が全単射であることと，同相写像であることとは同値である．また，$f$が全単射の時，$f$が開写像であることと閉写像であることが同値で，$f$が全単射でない場合はそのどちらも一般的には成り立たない．
     \end{enumerate}
 \end{theorem}
 \begin{proof}\mbox{}
@@ -1125,8 +1138,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    全単射な連続関数は，開・閉写像ならば位相同型である．なお，一般の全単射が開であることと閉であることとは同値．
-    また，全単射な連続写像の逆写像は，開かつ閉写像であるが，連続であるとは限らない．
+    全単射な連続関数は，開・閉写像ならば位相同型である．
 \end{tcolorbox}
 
 \begin{proposition}
@@ -1134,7 +1146,7 @@ title=]
     \begin{enumerate}
         \item $f$は位相同型である．
         \item $f$が全単射であり，位相を引き戻す：$f^*(\O_Y)=\O_X$．
-        \item $f$は全単射な開写像である．
+        \item $f$は全単射な開写像である．または，全単射な閉写像である．
         \item 任意の$T\in\Top$について，$f_*:C(T;X)\to C(T;Y)$は全単射を定める．
     \end{enumerate}
 \end{proposition}
@@ -1143,6 +1155,11 @@ title=]
 \end{remarks}
 
 \subsection{局所同相写像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    多様体の座標近傍や，被覆写像などは局所同相写像である．
+\end{tcolorbox}
 
 \begin{definition}
     連続写像$p:E\to B$が\textbf{局所同相写像}であるとは，
@@ -1200,13 +1217,20 @@ title=]
     いずれの命題も，開集合の公理と同値になる．
 \end{tcolorbox}
 
-\subsection{閉包の定義}
+\subsection{触点と閉包の定義}
 
-\begin{definition}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    極限点(limit point)とは，集積点を指すのか触点を指すのか不明瞭であるから避けようと思う．
+    集積点は，触点であって，さらに近傍によって$A$の他の点と分離不可能な点をいう．
+\end{tcolorbox}
+
+\begin{definition}[isolated point, adherent point, accumulated point, closure, dense]
     $X$を位相空間，$x\in X,A\subset X$とする．
     \begin{enumerate}
         \item $\{x\}\in\O(x)$のとき，\textbf{孤立点}という．これは全空間$X$の集積点でないことに同値．
-        \item $\forall_{U\in\O(x)}\;U\cap A\ne\emptyset$のとき，\textbf{触点}という．
+        \item $\forall_{U\in\O(x)}\;U\cap A\ne\emptyset$のとき，$A$の\textbf{触点}という．
+        \item $\forall_{U\in\O(x)}\;(U\cap A)\setminus\{x\}\ne\emptyset$のとき，$A$の\textbf{集積点}という．
         \item $A$の触点全体の集合を\textbf{閉包}$\o{A}$という．
         \item $\o{A}=X$のとき，\textbf{$X$上稠密}であるという．
     \end{enumerate}
@@ -1221,26 +1245,54 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\subsection{閉包による閉集合の特徴付け}
+
+\begin{proposition}[集積点の特徴付け]
+    次の3条件は同値．
+    \begin{enumerate}
+        \item $x$は$A$の集積点である．
+        \item $x\in X$が部分空間$A\cup\{x\}$の孤立点ではない．
+        \item $x\in\overline{A\setminus\{x\}}$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    $A\subset X$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $A$は閉集合．
+        \item $\o{A}\subset A$．
+        \item $A'\subset A$．
+    \end{enumerate}
+\end{proposition}
+
 \subsection{集積点と導来集合}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     集積点なる概念は，孤立点と併せれば触点となる．
     そこで，導来演算子$'$は，閉包演算子より弱い概念になる．
-    しかし導来演算子は原初Cantor (1872)が$\R$の研究に用いた．
+    しかし導来演算子は原初Cantor (1872)が$\R$の研究に用い，集合論を展開した．
+    Cantorの観点からは完全集合こそが振る舞いのよい集合であったが，さらにexoticな例が見つかっていくのであった．
 \end{tcolorbox}
 
 \begin{definition}[perfect set, derived set]
-    集合$S\subset X$が
+    部分集合$S\subset X$が
     \begin{enumerate}
         \item \textbf{完全}であるとは，閉集合であり，かつ孤立点を持たないことをいう．これは$S=S'$と同値．
         \item $S$の集積点全体の集合を\textbf{導来集合}といい，$S'$で表す．
     \end{enumerate}
 \end{definition}
 
-\begin{lemma}
-    $\o{A}=A\cup A'$．
-\end{lemma}
+\begin{example}
+    Cantor集合$2^\N$は完全であり，完全集合の中で唯一の全不連結でコンパクトで距離化可能な空間である．
+\end{example}
+
+\begin{proposition}[導来作用素の性質]\mbox{}
+    \begin{enumerate}
+        \item 閉包の特徴付け：$\o{A}=A\cup A'$．
+        \item $\o{A}\setminus A'$は$A$の孤立点のみからなる．
+    \end{enumerate}
+\end{proposition}
 
 \begin{proposition}
     $X$が距離空間ならば，任意の導来集合$A'$は閉集合である．
@@ -1466,6 +1518,36 @@ title=]
     $f$が連続であることと，像位相$f_*\O_X$について$\O_Y\subset f_*\O_X$が成り立つこととは同値．
     $X/R$の位相は$p_*\O_X$であるから，$f=g\circ p$のとき，これは$\O_Y\subset g_*(p_*(\O_X))$に同値．
 \end{proof}
+
+\subsection{商写像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続写像が終位相を定めているとき，これを商写像という．
+\end{tcolorbox}
+
+\begin{definition}[quotient map, saturated]
+    $p:X\to Y$を全射とする．
+    \begin{enumerate}
+        \item 全射$p$が\textbf{商写像}であるとは，$U\in\O_Y\Leftrightarrow p^{-1}(U)\in\O_X$が成り立つことをいう．
+        \item 集合$C\subset X$が全射$p$に関して\textbf{飽和集合}であるとは，$\forall_{y\in f(C)}\;f^{-1}(y)\subset C$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    全射$p$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $p$は商写像である．
+        \item $p$は連続で，かつ飽和開集合を開集合に移す．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}\mbox{}\label{cor-open-continuous-surjection-is-quotient-map}
+    \begin{enumerate}
+        \item 連続全射が開写像または閉写像ならば，商写像である．
+        \item 開でも閉でもない商写像が存在する．
+    \end{enumerate}
+\end{corollary}
 
 \subsection{直和位相の特徴付け}
 
@@ -2083,35 +2165,11 @@ title=]
     ネットはその特別で理解しやすい例であり，また距離空間におけるコンパクト性は点列で十分である．
 \end{tcolorbox}
 
-\subsection{集積点の定義}
+\subsection{連続延長による定義}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    任意の集積点は触点である．
-    集積点は，触点の中でも特に，近傍によって$A$の他の点と分離不可能な点をいう．
-    全空間$X$の集積点でない点を孤立点という．
-\end{tcolorbox}
-
-\begin{definition}[accumulation point]\label{def-accumulation-point}
-    $X$を位相空間とし，$A\subset X,x\in X$とする．
-    \begin{enumerate}
-        \item $x$が$A$の\textbf{集積点}であるとは，$x$が$A\cup\{x\}$の孤立点でないことをいう：$\forall_{U\in\O(x)}\;(U\setminus x)\cap S\ne\emptyset$．$x\in X\setminus A$のとき，$x$が境界点であることに同値．
-        \item 写像$f:A\to Y$の延長$\o{f}:A\cup\{a\}\to Y$が$a$で連続であるとき，$f(a)$を\textbf{極限}であるといい，$f(a)=\lim_{x\to a}f(x)$と表す．
-    \end{enumerate}
+\begin{definition}[accumulation point]
+    $A\subset X$を部分空間，$a\in X$を$A$の集積点とする．写像$f:A\to Y$の延長$\o{f}:A\cup\{a\}\to Y$が$a$で連続であるとき，$f(a)$を\textbf{極限}であるといい，$f(a)=\lim_{x\to a}f(x)$と表す．
 \end{definition}
-\begin{remarks}[触点との違い]
-    $A$の触点の集合$\o{A}$は，$A$と$A$の集積点との合併になる．
-    そして，性質$x\in\o{A\setminus\{x\}}$は$x$が集積点であることを特徴づける(Kuratowskiの精神,\ref{thm-Kuratowski})．
-    集積点でない触点とは，孤立点のみである．
-\end{remarks}
-
-\begin{lemma}[集積点の特徴付け]\mbox{}
-    \begin{enumerate}
-        \item $x$は$A$の集積点である（$x\in X$が部分空間$A\cup\{x\}$の孤立点ではない）．
-        \item $x$の任意の開近傍$U(x)$について，$U(x)\cap A\ne\emptyset$．
-        \item $x\in\overline{A\setminus\{x\}}$．
-    \end{enumerate}
-\end{lemma}
 
 \subsection{極限の一意性}
 
@@ -3492,20 +3550,25 @@ title=]
     次のような理由で，局所コンパクトハウスドルフ空間というとき，暗黙にHausdorff性を仮定する．
 \end{tcolorbox}
 
-\begin{definition}
-    位相空間$X$が\textbf{局所コンパクト}であるとは，任意の点$x\in X$の（開）近傍系$\O(x)$がコンパクト集合からなる近傍系を持つことを言う．
+\begin{definition}[locally compact]
+    位相空間$X$が\textbf{局所コンパクト}であるとは，任意の点$x\in X$の近傍系$\O(x)$がコンパクト集合からなる基本系を持つことを言う．
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}[Hausdorffな場合の特徴付け]
     位相空間$X$について，(1)$\Rightarrow$(2)が成り立つ．$X$がHausdorffのとき，(2)$\Rightarrow$(1)も成り立つ．
     \begin{enumerate}
         \item 任意の点$x\in X$の任意の開近傍$U\in\O(x)$に対して，より小さな開近傍$V\in\O(x),V\subset U$で相対コンパクトなものが存在し，$\o{V}\subset U$が成り立つ．
         \item 任意の点$x\in X$の（開）近傍系$\O(x)$がコンパクト集合からなる近傍系を持つ．
     \end{enumerate}
+    また，$X$がHausdorffのとき，次の2条件も同値になる．
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item 任意の点$x\in X$に，相対コンパクトな開近傍が存在する．
+        \item 任意の点$x\in X$に，コンパクトな近傍が存在する．
+    \end{enumerate}
 \end{proposition}
 
-\begin{example}
-    コンパクトハウスドルフ空間の任意の部分集合は局所コンパクトハウスドルフである．
+\begin{example}[コンパクトハウスドルフ空間の開部分集合は局所コンパクト]
+    コンパクトハウスドルフ空間の任意の開部分集合は局所コンパクトハウスドルフである．
     そして，任意の局所コンパクトハウスドルフ空間はこのように構成される．
 \end{example}
 
