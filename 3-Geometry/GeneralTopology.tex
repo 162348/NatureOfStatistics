@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -588,6 +588,10 @@ title=]
         \item $U:=\Brace{(x,y)\in X\times\R\mid f(x)<y}$と$V:=\Brace{(x,y)\in X\times\R\mid f(x)>y}$はいずれも$X\times\R$の開集合．
     \end{enumerate}
 \end{proposition}
+\begin{proof}
+    $\{(-\infty,c)\}_{c\in\R}\cup\{(c,\infty)\}_{c\in\R}$は$\R$の位相の準基であるためである．
+    Borel可測性が成り立つには，さらに$\{(-\infty,c)\}_{c\in\R}$で十分である．
+\end{proof}
 
 \subsection{上・下半連続性}
 
@@ -682,10 +686,73 @@ title=]
     \end{quote}
 \end{definition}
 
+\section{整列集合論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の集合にどこまで性質の良い順序が定められるか，の問題を考える．
+    全順序は可能である．さらに条件を強めて，整列順序を考える．
+    Zermeloが選択公理と同値であることを示し，Zornがさらに使いやすい同値命題を付け加えた．
+\end{tcolorbox}
+
+\begin{definition}[well-ordered set]
+    順序集合$(X,\le)$が\textbf{整列集合}であるとは，任意の空でない部分集合が最小元を持つことをいう．
+    \begin{enumerate}
+        \item 任意の二元集合を取れば，整列集合は明らかに全順序であることが判る．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    次の3条件は同値．
+    \begin{enumerate}
+        \item 任意の非空集合の族$(A_\lambda)_{\lambda\in\Lambda}$について，$\prod_{\lambda\in\Lambda}A_\lambda\ne\emptyset$．
+        \item 任意の集合$A$に，順序関係$\le$が存在して，$(A,\le)$は整列集合である．
+        \item 帰納的な順序集合には極大元が存在する．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    いずれも，可算集合については明らかであるが，非可算無限集合について，それぞれの事実を直接示す方法は知られていない．
+\end{remarks}
+
+\begin{theorem}[超限帰納法]
+    $W$を整列集合，$a_0$をその最小元とする．命題$P:W\to2$は
+    \begin{enumerate}
+        \item $P(a_0)=1$．
+        \item $\forall_{a_0\ne a\in W}\;\forall_{x\in W}\;x<a\Rightarrow [P(x)=1\Rightarrow P(a)=1]$．
+    \end{enumerate}
+    を満たすならば，$P=1$．
+\end{theorem}
+
+\begin{example}
+    $L:=\R\cup\{\infty\}$n次のように$<\subset L\times L$を定めると，$(L,<)$は整列集合である：
+    \begin{enumerate}
+        \item $K:=\R\setminus\N$には，任意に整列順序$(K,<)$を入れる．
+        \item $(\N,<)$には，通常の順序を入れると，これは整列順序．
+        \item $\forall_{n\in\N}\;\forall_{a\in K}\;n<a$とする．
+        \item $\forall_{\al\in\R}\;\al<\infty$とする．
+    \end{enumerate}
+    このとき，$L_1:=\Brace{\al\in L\mid\Brace{\beta<\al}\text{は非可算}}\ne\emptyset$より，最小元$\om_1\in L_1$が取れる．これについて，
+    \[W:=\Brace{\al\in L\mid\al<\om_1}\]
+    とすると，これは非可算な整列集合になる．
+\end{example}
+
+\begin{proposition}
+    $(W,<)$は次を満たす：
+    \begin{enumerate}
+        \item $\forall_{\al\in W}\;\Brace{\beta<\al}$は可算．
+        \item 任意の$W$の列は上に有界である．
+        \item $\Brace{\beta\in W\mid\al<\beta}$も空でない．最小元を$\al+1$で表す．
+    \end{enumerate}
+\end{proposition}
+
 \chapter{位相空間とその射}
 
 \begin{quotation}
     また位相空間は普遍構成ができる．
+    が，連続全単射が位相同型になるにはコンパクトハウスドルフ性，指数対象が存在するためには局所コンパクト性，さらに$\Hom(X\times Y,Z)\simeq\Hom(X,Z^Y)$が成り立つには局所コンパクトハウスドルフ性が必要にいなる．
+
+    「位」「相」の名前は，Alexandorff, P. (1928). \textit{Gestalt und Lage}(形態と位置) からである．
+    phaseの方が位相らしい．
 \end{quotation}
 
 \section{開集合系による定義}
@@ -752,7 +819,7 @@ title=]
     \end{description}
 \end{proof}
 
-\subsection{射の性質}
+\subsection{射が引き起こす位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -825,6 +892,42 @@ title=]
     \end{enumerate}
 \end{proof}
 
+\subsection{相対位相の性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    閉包演算子が良い振る舞いを続けるが，開集合では対称性が崩れる．
+\end{tcolorbox}
+
+\begin{proposition}[閉集合の特徴付け]
+    $Y\subset X$を位相空間とする．任意の$A\subset Y$について$A$内での閉包は$Y\cap\o{A}$に等しく，さらに，次の2条件は同値：
+    \begin{enumerate}
+        \item $A$は$Y$-閉である．
+        \item ある$X$-閉集合$F$が存在して，$A=F\cap Y$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}[開集合についてはどちらの方向も成り立たない]
+    一方で，$A$の$Y$内での開核は，$Y\cap A^\circ$とは限らず，境界演算子もこのようになる．
+    $X=\R^2,Y=\R\times\{0\}$とし，$A:=(a,b)\times\{0\}$を考えると，
+    $A,Y$はいずれも開集合でないが，$A$は$Y$-開である．
+\end{example}
+
+\begin{proposition}[開埋め込み・閉埋め込みの重要性]\mbox{}
+    \begin{enumerate}
+        \item $Y$が開集合ならば，$A\osub Y\Leftrightarrow A\osub X$．
+        \item $Y$が閉集合ならば，$A\csub Y\Leftrightarrow A\csub X$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    位相空間の部分集合$A\subset X$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $\o{A}\setminus A$は閉集合．
+        \item ある開集合$G$と閉集合$F$とが存在して，$A=G\cap F$と表せる．
+    \end{enumerate}
+\end{proposition}
+
 \subsection{位相の生成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -875,7 +978,7 @@ title=]
 
 \section{位相空間の射}
 
-\subsection{連続写像の特徴付け}
+\subsection{連続写像の特徴付け：圏論と閉包作用素によるもの}
 
 \begin{proposition}
     $f:X\to Y$を写像とする．
@@ -909,6 +1012,12 @@ title=]
         \item 任意の閉集合$B\subset Y$に対して，$f^{-1}(B)$は閉．
         \item $\forall_{A\in P(X)}\;f(\o{A})\subset\o{f(A)}$．
     \end{enumerate}
+    また，次も同値になる．
+    \begin{enumerate}\setcounter{enumi}{3}
+        \item $\forall_{B\in P(Y)}\;f^{-1}(\Int B)\subset\Int f^{-1}(B)$．
+        \item $\forall_{B\in P(Y)}\;f^{-1}(\o{B})\supset\o{f^{-1}(B)}$．
+        \item $\forall_{B\in P(Y)}\;\partial f^{-1}(B)\subset f^{-1}(\partial B)$．
+    \end{enumerate}
 \end{proposition}
 
 \subsection{開・閉写像の特徴付け}
@@ -918,10 +1027,51 @@ title=]
     議論の非対称性を補完する概念である．
 \end{tcolorbox}
 
-\begin{proposition}[演算子による開／閉写像の特徴付け]\mbox{}
+\begin{lemma}
+    開写像・閉写像は合成しても保たれる．2つの開写像の積は開だが，閉写像では成り立たない．
+\end{lemma}
+
+\begin{proposition}[演算子による開写像の特徴付け]
+    $f:X\to Y$について，次の3条件は同値：
     \begin{enumerate}
-        \item $f$が開写像であることと，$\forall_{A\in P(X)}\;f(A^\circ)\subset f(A)^\circ$であることとは同値である．
-        \item $f$が閉写像であることと，$\forall_{A\in P(X)}\;f(\o{A})\subset \o{f(A)}$であることとは同値である．
+        \item $f$が開写像である．
+        \item $\forall_{A\in P(X)}\;f(A^\circ)\subset f(A)^\circ$．
+        \item $\forall_{B\in P(Y)}\;f^{-1}(\o{B})\subset\o{f^{-1}(B)}$．
+        \item $\forall_{F\csub X}\;\Brace{y\in Y\mid f^{-1}(y)\subset F}\csub Y$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[演算子による閉写像の特徴付け]
+    $f:X\to Y$について，次の3条件は同値：
+    \begin{enumerate}
+        \item $f$は閉写像である．
+        \item $\forall_{A\in P(X)}\;\o{f(A)}\subset f(\o{A})$
+        \item $\forall_{F\csub X}\;\o{f(F)}\subset f(F)$．なお，$=$でも良い．
+        \item $\forall_{U\in\O_X}\;\Brace{y\in Y\mid f^{-1}(y)\subset U}\in\O_Y$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{連続な開・閉写像}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    このクラスの連続写像の逆像関手は，開核作用素・閉包作用素と可換になる．
+    例えば連続な閉写像は，$\forall_{A\in P(X)}\;f(\o{A})=\o{f(A)}$を満たす．
+\end{tcolorbox}
+
+\begin{definition}[perfect mapping]
+    連続な閉写像を\textbf{完全写像}という．
+\end{definition}
+
+\begin{proposition}[連続写像が閉であることの特徴付け]
+    $f:X\to Y$が連続であるとする．
+\end{proposition}
+
+\begin{proposition}[連続開写像の性質]
+    $f:X\to Y$を連続な開写像とする．
+    \begin{enumerate}
+        \item $\forall_{B\in P(Y)}\;(f^{-1}(B))^\circ=f^{-1}(U^\circ)$．
+        \item $\forall_{B\in P(Y)}\;\o{f^{-1}(B)}=f^{-1}(\o{B})$．
     \end{enumerate}
 \end{proposition}
 
@@ -948,7 +1098,36 @@ title=]
     この聖域は，コンパクト集合からHausdorff空間への射で起こる．
 \end{remarks}
 
+\subsection{連続写像の構成}
+
+\begin{proposition}
+    $f:X\to Y$を連続写像とし，$A,B\subset X$は$A\cup B=X$を満たす開集合，または共に閉集合とする．このとき，$f|_A,f|_B$がいずれも連続ならば，$X$上でも連続．
+\end{proposition}
+
+\begin{proposition}
+    $f,g\in C(X;Y)$に対して，$f+g,f\cdot g,\abs{f},1/f,\sup(f,g)$は連続である．
+\end{proposition}
+
+\begin{proposition}
+    $f,g\in C(X)$が稠密部分集合$D$上で一致するなら，$f=g$である．
+    すなわち，制限$i^*:C(X)\to C(D)$は単射である．
+\end{proposition}
+
+\begin{corollary}
+    $C(\R)$は連続体濃度である．
+\end{corollary}
+\begin{proof}
+    命題より，単射$i^*:C(\R)\to C(D)$が取れる．
+    一方で，$\ev:\R\to C(\R)$を値写像とすると，これも単射である．
+\end{proof}
+
 \subsection{位相同型の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    全単射な連続関数は，開・閉写像ならば位相同型である．なお，一般の全単射が開であることと閉であることとは同値．
+    また，全単射な連続写像の逆写像は，開かつ閉写像であるが，連続であるとは限らない．
+\end{tcolorbox}
 
 \begin{proposition}
     $f:X\to Y$を連続写像とする．次の4条件は同値．
@@ -958,6 +1137,20 @@ title=]
         \item $f$は全単射な開写像である．
         \item 任意の$T\in\Top$について，$f_*:C(T;X)\to C(T;Y)$は全単射を定める．
     \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    これより，位相空間の性質で，開集合のみを用いて表される性質は，全て位相不変量となる．
+\end{remarks}
+
+\subsection{局所同相写像}
+
+\begin{definition}
+    連続写像$p:E\to B$が\textbf{局所同相写像}であるとは，
+    $\forall_{e\in E}\;\exists_{U\in\O(e)}\;p_*(U)\in\O_B\land p|_U:U\simeq p_*(U)$を満たすことをいう．
+\end{definition}
+
+\begin{proposition}
+    局所同相写像は開写像である．
 \end{proposition}
 
 \subsection{埋め込み}
@@ -980,7 +1173,7 @@ title=]
     連続写像$f:X\to Y$について，
     \begin{enumerate}
         \item レトラクション$r:Y\to X$を持つならば，埋め込みである．
-        \item 単射な開写像ならば，開な埋め込みである．
+        \item 単射な開／閉写像ならば，開／閉な埋め込みである．
     \end{enumerate}
 \end{proposition}
 
@@ -1012,7 +1205,7 @@ title=]
 \begin{definition}
     $X$を位相空間，$x\in X,A\subset X$とする．
     \begin{enumerate}
-        \item $\{x\}\in\O(x)$のとき，\textbf{孤立点}という．
+        \item $\{x\}\in\O(x)$のとき，\textbf{孤立点}という．これは全空間$X$の集積点でないことに同値．
         \item $\forall_{U\in\O(x)}\;U\cap A\ne\emptyset$のとき，\textbf{触点}という．
         \item $A$の触点全体の集合を\textbf{閉包}$\o{A}$という．
         \item $\o{A}=X$のとき，\textbf{$X$上稠密}であるという．
@@ -1028,7 +1221,37 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\subsection{集積点と導来集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    集積点なる概念は，孤立点と併せれば触点となる．
+    そこで，導来演算子$'$は，閉包演算子より弱い概念になる．
+    しかし導来演算子は原初Cantor (1872)が$\R$の研究に用いた．
+\end{tcolorbox}
+
+\begin{definition}[perfect set, derived set]
+    集合$S\subset X$が
+    \begin{enumerate}
+        \item \textbf{完全}であるとは，閉集合であり，かつ孤立点を持たないことをいう．これは$S=S'$と同値．
+        \item $S$の集積点全体の集合を\textbf{導来集合}といい，$S'$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $\o{A}=A\cup A'$．
+\end{lemma}
+
+\begin{proposition}
+    $X$が距離空間ならば，任意の導来集合$A'$は閉集合である．
+\end{proposition}
+
 \subsection{基底の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の$\A\subset P(X)$について，有限共通部分についての閉包を取ると，これは基底になる．
+\end{tcolorbox}
 
 \begin{definition}
     $\U\subset\O_X$について，
@@ -1040,6 +1263,16 @@ title=]
 
 \subsection{閉包の公理}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Kuratowski, C.による．
+    位相の概念は，閉包演算子だけで表すこともできることが分かる．
+\end{tcolorbox}
+
+\begin{proposition}[閉包による閉集合の特徴付け]
+    $A\in P(X)$が閉集合であることと，$\o{A}=A$が成り立つこととは同値．
+\end{proposition}
+
 \begin{proposition}
     $A,B\subset X$とする．次の4条件が成り立つ：
     \begin{enumerate}
@@ -1050,14 +1283,44 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\begin{theorem}\label{thm-Kuratowski}
+    $u:P(X)\to P(X)$が上述の4条件を満たすとする．このとき，
+    \[\Brace{X\setminus A\in P(X)\mid u(A)=A}\]
+    は位相を定める．
+\end{theorem}
+
+\subsection{正則な集合}
+
+\begin{definition}[regular open / closed set]\mbox{}
+    \begin{enumerate}
+        \item 集合$G\subset X$が\textbf{正則開集合}であるとは，$\Int(\Cl(G))=G$を満たすことをいう．
+        \item 集合$F\subset X$が\textbf{正則閉集合}であるとは，$\Cl(\Int(F))=F$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 正則開集合は開集合で，正則閉集合は閉集合である．
+        \item $A$が閉集合ならば，$A^\circ$は正則開集合である．$B$が開集合ならば，$\o{B}$は正則閉集合である．
+        \item $U,V$が正則開集合ならば，$U\cap V$もそうである．$F,G$が正則閉集合ならば，$F\cup G$もそうである．
+    \end{enumerate}
+\end{proposition}
+
 \subsection{近傍系の公理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hilbert, D. (1902)はHilbert幾何学に続いて，平面の位相的定義を与えた．
+    この定義に現れた「近傍」の概念を発展させて，Hausdorff, F. (1914)は近傍の概念を確立し，現在ではHausdorff空間にあたる位相空間概念を公理化した．
+\end{tcolorbox}
 
 \begin{notation}
     ここでのみ，$\O(x)$を$x$の近傍のなすフィルターとする．開近傍に限らないことに注意．
 \end{notation}
 
 \begin{proposition}
-    $x\in X$について，次の5条件が成り立つ．
+    任意の$x\in X$について，
+    次の5条件を満たす．
     \begin{enumerate}
         \item $X\in\O(x)$．
         \item $\forall_{V\in\O(x)}\;\forall_{W\in P(X)}\;V\subset W\Rightarrow W\in\O(x)$．
@@ -1066,6 +1329,10 @@ title=]
         \item $\forall_{V\in\O(x)}\;\exists_{W\in\O(x)}\;\forall_{y\in W}\;V\in\O(y)$．
     \end{enumerate}
     前の3条件は，$\O(x)$がフィルターであることを主張している．
+\end{proposition}
+
+\begin{proposition}[近傍系の定める位相]
+    $A\in\Op(X):\Leftrightarrow\forall_{x\in A}\;\exists_{U\in\O(x)}U\subset A$とすれば良い．
 \end{proposition}
 
 \subsection{基底の公理}
@@ -1388,7 +1655,8 @@ title=]
 \chapter{距離空間}
 
 \begin{quotation}
-    抽象位相空間論を展開したが，元々位相空間論の端緒は，Fr\`{e}chetが距離空間の概念を定義してCantorの概念を一般化したことに始まる．
+    抽象位相空間論を展開したが，元々位相空間論の端緒は，Fr\`{e}chet (1906)が距離空間の概念を定義してCantorの概念を一般化したことに始まる．
+    これがそもそも，Euclid空間から離れて抽象的に空間を把握した最初である．
     その際のモチベーションは関数空間であった．
     そこで，関数空間の例を意識しながら，距離空間の扱い方を考える．
     \begin{enumerate}
@@ -1398,6 +1666,17 @@ title=]
 \end{quotation}
 
 \section{距離関数の扱い}
+
+\subsection{同値な距離}
+
+\begin{proposition}
+    $(X,\rho)$を距離空間とする．
+    \begin{enumerate}
+        \item $\wt(\rho)(x,y):=\min(\rho(x,y),1)$．
+        \item $\wt(\rho)(x,y):=\frac{\rho(x,y)}{1+\rho(x,y)}$
+    \end{enumerate}
+    とすると，$\wt{\rho}$も距離空間で，$(X,\rho)$と$(X,\wt{\rho})$の開集合系は一致する．
+\end{proposition}
 
 \subsection{開集合の特徴付け}
 
@@ -1488,7 +1767,7 @@ title=]
     $E,F$を実ノルム空間，$f:E\to F$を等長な線形写像とする．このとき，$f$はaffineである．
 \end{theorem}
 
-\subsection{距離空間の例：付値}
+\subsection{非Archimedesな距離空間の例}
 
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1521,6 +1800,17 @@ title=]
 \begin{theorem}[付値が定める距離空間]
     
 \end{theorem}
+
+\begin{example}[Baireの(0次元)空間]
+    集合$\Om$上の点列の空間$\Om^\N$を距離関数$\rho(x,y)=\sum_{n\in\N}\frac{1}{n}1_{\forall_{i\in n}x_i=y_i\land x_n\ne x_n}$によって距離空間と見ると，
+    $\rho(x,z)\le\max(\rho(x,y),\rho(y,z))$が成り立つ．
+    これを$B(\Om)$とも表す．
+\end{example}
+
+\begin{proposition}[非Archimedesな距離空間の開球は閉]
+    $\rho$が$X$上の非Archimedes的距離関数とする．このとき，開球$U(x;\ep)$は閉集合でもある．
+    すなわち，$(X,\rho)$は開かつ閉な集合からなる開基を持つ．このような位相空間を\textbf{$0$次元}であるという．
+\end{proposition}
 
 \subsection{距離概念の一般化}
 
@@ -1640,6 +1930,11 @@ title=]
 \subsection{位相群}
 
 \section{コンパクト距離空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクトの概念は，Frechét, M.が距離空間について初めて導入した．
+\end{tcolorbox}
 
 \subsection{定義}
 
@@ -1794,6 +2089,7 @@ title=]
 title=]
     任意の集積点は触点である．
     集積点は，触点の中でも特に，近傍によって$A$の他の点と分離不可能な点をいう．
+    全空間$X$の集積点でない点を孤立点という．
 \end{tcolorbox}
 
 \begin{definition}[accumulation point]\label{def-accumulation-point}
@@ -1805,19 +2101,9 @@ title=]
 \end{definition}
 \begin{remarks}[触点との違い]
     $A$の触点の集合$\o{A}$は，$A$と$A$の集積点との合併になる．
-    そして，性質$x\in\o{A\setminus\{x\}}$は$x$が集積点であることを特徴づける．
+    そして，性質$x\in\o{A\setminus\{x\}}$は$x$が集積点であることを特徴づける(Kuratowskiの精神,\ref{thm-Kuratowski})．
+    集積点でない触点とは，孤立点のみである．
 \end{remarks}
-\begin{remark}[まさかこんな捉え方があるとは]\mbox{}
-    \begin{enumerate}
-        \item 集積点は「その点の任意の近傍が$A$と共通部分を持ってしまう」という意味で，
-        「$A$上の点で任意精度で近似可能」な点である．\textbf{$A$とは近傍によっては分離不可能な点}である．
-        これは開閉の概念以前に定義可能な概念であり，また極限の概念の一般化でもあり，
-        $x\in X\setminus A$の時は，$x$が$A$の集積点であることと$x\in\overline{A}\setminus A$であることとは同値である．
-        これによって，閉集合を集積点の言葉によって特徴付けることができる．
-        $A$の内点が集積点であるかどうかはまた別の議論である．境界点の方が収束の議論がしやすいのは不思議である．
-        \item 極限とは，\textbf{連続性を保った延長}と定義できる．Topでの順極限ということか？
-    \end{enumerate}
-\end{remark}
 
 \begin{lemma}[集積点の特徴付け]\mbox{}
     \begin{enumerate}
@@ -2511,6 +2797,11 @@ title=]
 
 \section{連結空間}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hausdorff-Lenneによる概念である．
+\end{tcolorbox}
+
 \subsection{定義と特徴付け}
 
 \begin{definition}[connected]\label{def-連結性}
@@ -2943,7 +3234,7 @@ title=]
     コンパクト空間とハウスドルフ空間との間の射は，閉写像で，かつproperである．また，従って，全単射であることと同相であることが一致する．
 \end{tcolorbox}
 
-\begin{proposition}\label{prop-continuous-map-from-compact-to-Hausdorff}
+\begin{proposition}[閉写像補題]\label{prop-continuous-map-from-compact-to-Hausdorff}
     $X$を位相空間，$Y$をHausdorff空間とし，$f:X\to Y$を連続写像とする．
     \begin{enumerate}
         \item $X$がコンパクトならば，$f$は閉写像である．
@@ -3184,7 +3475,7 @@ title=]
     正規空間の任意の局所有限な開被覆について，これに従属する1の分割が存在する．
 \end{theorem}
 
-\section{局所コンパクトハウスドルフ空間空間}
+\section{局所コンパクトハウスドルフ空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3218,9 +3509,15 @@ title=]
     そして，任意の局所コンパクトハウスドルフ空間はこのように構成される．
 \end{example}
 
-\begin{example}
+\begin{example}[局所コンパクト性は弱遺伝的である]
     局所コンパクト空間の閉部分空間は局所コンパクト．
 \end{example}
+
+\subsection{一般化された閉写像補題}
+
+\begin{proposition}[一般化された閉写像補題]
+    $X$が位相空間，$Y$が局所コンパクトハウスドルフ空間ならば，連続写像$f:X\to Y$がproperならば閉である．
+\end{proposition}
 
 \subsection{1点コンパクト化による特徴付け}
 
@@ -3395,6 +3692,18 @@ title=]
         \item 位相空間が\textbf{Lindelöf}または\textbf{可算被覆性}を持つとは，任意の開被覆が可算部分被覆を持つことをいう．
     \end{enumerate}
 \end{definition}
+
+\begin{example}[Sorgenfrey line]
+    \[\U(x):=\Brace{[x,y)\in P(\R)\mid x<y\in\R}\]
+    とし，$\U:=\cup_{x\in\R}\U(x)$とすると，これは$\R$の近傍系の公理を満たす．
+    換言すれば，半開区間$[a,b)$の全体は基底をなし，これが生成する位相を\textbf{右半開区間位相}といい，この位相空間を\textbf{Sorgenfrey直線}といい，$\R_l$で表す．
+    これはEuclid位相よりも強い位相になる．
+    積空間$\R_l\times\R_l$はSorgenfrey平面という．
+    \begin{enumerate}
+        \item 正規・パラコンパクト性の積への伝播の反例：$\R_l$は$T_1$かつ正規でパラコンパクトでもあるが，$\R_l\times\R_l$は正規でなく，従ってパラコンパクトでもない．
+        \item 可分性の部分集合への遺伝の反例：$\R_l\times\R_l$は可分であるが，非可算な離散部分集合（したがって可分でない部分集合）を持つ．
+    \end{enumerate}
+\end{example}
 
 \subsection{パラコンパクト性}
 
@@ -3725,15 +4034,25 @@ title=]
     これで，位相空間論の発展を促した源流である，関数空間に取り組める．
 \end{quotation}
 
-\section{有界連続関数の空間}
+\section{各点収束位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    各点収束位相とは，積位相である．
+\end{tcolorbox}
+
+\subsection{準基の表示}
 
 \begin{proposition}
-    $X$を位相空間，$Y$を距離空間とする．
-    \begin{enumerate}
-        \item 写像$D:\Map(X,Y)\to\Map(X\times Y;\R)$を，$D(f):=D_f(x,y)=d(f(x),y)$で定める．するとこれは単射であり，$\norm{D_f-D_g}_\infty=\sup_{x\in X}d(f(x),g(x))$は$l^\infty(X;Y)$に距離を定める．$f\in C_b(X;Y)$と$D_f$が連続であることとは同値．
-        \item $C_b(X;Y)$は$l^\infty(X;Y)$の閉部分空間となる．
-        \item $e:C_b(X;Y)\times X\to Y$は$C_b$の一様位相と積位相について連続になる．
-    \end{enumerate}
+    $\Map([0,1],\R)$上に，
+    \[U(f;x_1,\cdots,x_n;\ep):=\Brace{g\in\Map([0,1];\R)\mid\forall_{i\in[n]}\;\abs{g(x_i)-f(x_i)}<\ep}\quad(n\in\N,x_1,\cdots,x_n\in[0,1],\ep>0)\]
+    で定まる集合族が生成する位相は，$\R^{[0,1]}$の積位相である．
+\end{proposition}
+
+\subsection{稠密部分集合}
+
+\begin{proposition}
+    $\Map([0,1],\R)$上で$C([0,1])$は稠密である．
 \end{proposition}
 
 \section{コンパクト開位相}
@@ -3788,6 +4107,45 @@ title=]
 
 \begin{proposition}
     $X,Y$は第２可算な$T_3$-空間で，$X$が局所コンパクトならば，$Y^X$は第２可算である．
+\end{proposition}
+
+\subsection{有界連続関数の空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C_b(X)$に限ると，一様収束位相にも一致する．
+\end{tcolorbox}
+
+\begin{proposition}
+    $X$を位相空間，$Y$を距離空間とする．
+    \begin{enumerate}
+        \item 写像$D:\Map(X,Y)\to\Map(X\times Y;\R)$を，$D(f):=D_f(x,y)=d(f(x),y)$で定める．するとこれは単射であり，$\norm{D_f-D_g}_\infty=\sup_{x\in X}d(f(x),g(x))$は$l^\infty(X;Y)$に距離を定める．$f\in C_b(X;Y)$と$D_f$が連続であることとは同値．
+        \item $C_b(X;Y)$は$l^\infty(X;Y)$の閉部分空間となる．
+        \item $e:C_b(X;Y)\times X\to Y$は$C_b$の一様位相と積位相について連続になる．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{一様収束の性質}
+
+\begin{proposition}
+    位相空間$X$上の連続関数列$\{g_n\}\subset C(X)$は一様収束極限$g$を持つならば，$g\in C(X)$である．
+\end{proposition}
+
+\subsection{一様収束の判定法}
+
+\begin{proposition}[一様収束の判定法]
+    $(f_n)$を位相空間$X$上の関数の列で，各点収束極限
+    $f$を持つとする．
+    \begin{enumerate}
+        \item $(f_n)$は一様収束する．
+        \item (Cauchy criterion) $\forall_{\ep>0}\;\exists_{n_0\in\N}\;\forall_{m,n\ge n_0}\;\forall_{x\in E}\;\abs{f_n(x)-f_m(x)}<\ep$．
+        \item $\norm{f_n-f}_\infty\to0$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Weierstrass $M$-test]
+    位相空間$X$上の連続関数列$\{f_n\}\subset C(X)$は収束する優級数を定める列$\{M_n\}\subset\R$を持つとする：$\forall_{n\in\N}\;\norm{f_n}_\infty\le M_n,\sum_{n\in\N}M_n\in\R$．
+    このとき，級数列$\sum{i=1}^nf_i$は一様収束する．
 \end{proposition}
 
 \chapter{参考文献}
