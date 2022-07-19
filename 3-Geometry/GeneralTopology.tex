@@ -2403,7 +2403,7 @@ title=]
 \subsection{定義}
 
 \begin{definition}
-    位相空間$X$が，$\forall_{x,y\in X}\;x\ne y\Rightarrow\exists_{U\in\O(x),V\in\O(y)}\;U\cap V=\emptyset$を満たすとき，\textbf{Hausdorff}または\textbf{分離空間}であるという．
+    位相空間$X$が，$\forall_{x,y\in X}\;x\ne y\Rightarrow\exists_{U\in\O(x),V\in\O(y)}\;U\cap V=\emptyset$を満たすとき，\textbf{Hausdorff}または\textbf{分離空間}または\textbf{$T_2$-空間}であるという．
 \end{definition}
 
 \subsection{積位相による特徴付け}
@@ -3339,6 +3339,128 @@ title=]
 \end{proposition}
 
 
+\subsection{距離付け可能である十分条件}
+
+\begin{theorem}
+    $X$を局所コンパクト空間とする．
+    次の5条件は同値：
+    \begin{enumerate}
+        \item $X$は第２可算である．
+        \item $X$は可分かつ距離付け可能．
+        \item $X$は$\sigma$-コンパクトかつ距離付け可能．
+        \item $X$は$\sigma$-コンパクトかつ，任意の$x\in X$について第２可算な開近傍$U\in\O(x)$が存在する．
+        \item $X$の一点コンパクト化が第２可算である．
+    \end{enumerate}
+\end{theorem}
+
+\section{開被覆による局所コンパクト空間の精緻化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    距離付け可能性の議論で，$\sigma$-コンパクト性が出現した．これが何を意味するかを考える．
+    \textbf{局所コンパクト空間について}，次の関係が成り立つ：
+    \[\xymatrix{
+        \text{局所連続}\ar[ddrr]&\text{距離化可能}\ar[ddr]&\text{第２可算}\ar[d]\\
+        &&\sigma\text{-コンパクト}\ar[d]&\text{Lindelöf}\ar@/^3pt/@{.>}[dl]^-{\text{正規}}\\
+        &&\text{パラコンパクト}\ar@/^3pt/@{.>}[ur]^-{\text{Hausdorff}}
+    }\]
+    パラコンパクト性が第２可算性を含意して，真ん中の3概念Lindelöf性とが縮退するのは，局所コンパクト空間がさらに，Hausdorffかつ局所Euclidかつ連結成分が高々可算個であるときである．
+    これらを全て湛えた概念が，位相多様体である．
+    実はこのとき，局所連続であり，距離化可能でもある．
+    また全ての可微分多様体はRiemann計量を持つ．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    位相多様体($C^0$-多様体)は明らかに局所コンパクトである．
+    局所コンパクトな空間に第２可算性を与えると，パラコンパクト性を持つ．
+    この2条件が同値になるのは，連結成分が高々可算個であるときである．
+    これで，可微分多様体の定義には第２可算性が入るのである．
+    パラコンパクトな多様体は，任意の開被覆に関して1の分割を持つ．
+\end{tcolorbox}
+
+\begin{definition}[manifold]
+    Hausdorff空間$M$と$C^r$-局所座標系$\{U_\al,\varphi_\al\}_{\al\in A}$との組を\textbf{$C^r$-多様体}という．
+    $C^0$-多様体は局所的にEuclid空間と同相な空間のことであり，明らかに局所コンパクトかつ局所（弧状）連結である．
+\end{definition}
+
+\begin{definition}[paracompact, Lindelöf]
+    位相空間$M$について，
+    \begin{enumerate}
+        \item 開被覆$(U_\al)_{\al\in A}$が\textbf{局所有限}であるとは，$\forall_{x\in M}\;\exists_{U\in\O(x)}\;\Abs{\Brace{\al\in A\mid U_\al\cap U\ne\emptyset}}\in\N$．
+        \item 被覆$(U_\al)_{\al\in A}$の\textbf{細分}とは，被覆$(V_\beta)_{\beta\in B}$であって，$\forall_{\beta\in B}\;\exists_{\al\in A}\;V_\beta\subset U\al$を満たすものをいう．全ての元$U_\al$を縮めて作った被覆をいう．
+        \item 任意の開被覆が，局所有限な開細分\footnote{元すべて開集合であるような被覆を開被覆ということと同様．}を持つとき，$M$を\textbf{パラコンパクト}であるという．
+        \item 位相空間が\textbf{Lindelöf}または\textbf{可算被覆性}を持つとは，任意の開被覆が可算部分被覆を持つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\subsection{パラコンパクト性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連結性の仮定を落としたとき，(3)$\Rightarrow$(4),(3)$\Rightarrow$(1)は残る．
+\end{tcolorbox}
+
+\begin{theorem}[局所コンパクト空間のパラコンパクト性の特徴付け]
+    $M$を連結な局所コンパクト空間とする．次の４条件は同値．
+    \begin{enumerate}
+        \item $M$はパラコンパクト．
+        \item $M$には局所有限で局所コンパクトな開被覆$(U_\al)_{\al\in A}$を持つ：各$\o{U_\al}$はコンパクト．
+        \item $M$は$\sigma$-コンパクト：$M$は高々可算個のコンパクト集合$(S_i)_{i\in\N}$の和集合として表せる．
+        \item $M$は高々可算個の開集合$(U_i)_{i\in\N}$の和で表せ，かつ，各$U_i$は相対コンパクトで$\forall_{i\in\N}\;\o{U_i}\subset U_{i+1}$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[パラコンパクト多様体の開被覆]\label{thm-open-cover-of-paracompact-locally-Euclidean-space}
+    $M^n$をパラコンパクトな位相多様体とし，$\U=(\wt{U}_i)$を$M^n$の局所有限な開被覆とする．このとき，$\U$の局所有限な細分$\V=(V_j)$であって，次の条件を満たすものが存在する：
+    $\V$を$M$上の開集合の族と考えたとき，$\V=\V_0\cup\V_1\cup\cdots\V_n$と分解でき，各$\V_k$の元は互いに素な開集合族となっている．
+\end{theorem}
+
+\subsection{第2可算ならパラコンパクト}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    第2可算な空間が，局所コンパクトであるか，または，正規ならば，パラコンパクトである．
+\end{tcolorbox}
+
+\begin{corollary}
+    局所コンパクトハウスドルフな局所Euclid的な空間$M$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $M$は第２可算である．
+        \item $M$はパラコンパクトかつ連結成分が高々可算個である．
+    \end{enumerate}
+    この同値な条件を満たすとき位相多様体という．
+\end{corollary}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] まず，連結成分が非可算個であった場合は，全ての連結成分からなる開被覆については可算な部分被覆を持たないので矛盾．よって連結成分は高々可算個である．
+        あとは，それぞれの連結成分がパラコンパクトであることを示せば良い．任意の開被覆に対して，可算な部分被覆が存在する．
+    \end{description}
+\end{proof}
+
+また，正規な第２可算空間がパラコンパクトであることは，次の補題からすぐに従う．
+
+\begin{lemma}[Michael's theorem (53)]
+    $X$が次を満たす正規空間ならば，パラコンパクトである．
+    \begin{quote}
+        every open cover of $X$ has a refinement by a union of a countable set of locally finite sets of open subsets (not necessarily covering).
+    \end{quote}
+\end{lemma}
+
+\subsection{パラコンパクト空間が第２可算になるとき}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    先程の局所Euclid性はどのように外せるか？
+    プレコンパクト性という，位相空間論的ではなく，どちらかというと一様空間的な概念が出現してしまう．
+\end{tcolorbox}
+
+\begin{proposition}
+    $X$を局所コンパクトでパラコンパクトな空間とする．
+    プレコンパクトで弧状連結な開集合による開被覆を持つとき，第２可算である．
+\end{proposition}
 
 \subsection{$\sigma$-コンパクトならばパラコンパクト}
 
@@ -3369,82 +3491,6 @@ title=]
     $X$が連結ならば，逆も言える．
 \end{proposition}
 
-\subsection{距離付け可能である十分条件}
-
-\begin{theorem}
-    次の5条件は同値：
-    \begin{enumerate}
-        \item $X$は第２可算である．
-        \item $X$は可分かつ距離付け可能．
-        \item $X$は$\sigma$-コンパクトかつ距離付け可能．
-        \item $X$は$\sigma$-コンパクトかつ，任意の$x\in X$について第２可算な開近傍$U\in\O(x)$が存在する．
-        \item $X$の一点コンパクト化が第２可算である．
-    \end{enumerate}
-\end{theorem}
-
-\section{局所コンパクト空間の精緻化}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    位相多様体($C^0$-多様体)は明らかに局所コンパクトである．
-    局所コンパクトな空間に第２可算性を与えると，パラコンパクト性を持つ．
-    これで，可微分多様体の定義には第２可算性が入るのである．
-    パラコンパクトな多様体は，任意の開被覆に関して1の分割を持つ．
-\end{tcolorbox}
-
-\begin{definition}[manifold]
-    Hausdorff空間$M$と$C^r$-局所座標系$\{U_\al,\varphi_\al\}_{\al\in A}$との組を\textbf{$C^r$-多様体}という．
-    $C^0$-多様体は局所的にEuclid空間と同相な空間のことであり，明らかに局所コンパクトかつ局所（弧状）連結である．
-\end{definition}
-
-\begin{definition}[paracompact, Lindelöf]
-    位相空間$M$について，
-    \begin{enumerate}
-        \item 開被覆$(U_\al)_{\al\in A}$が\textbf{局所有限}であるとは，$\forall_{x\in M}\;\exists_{U\in\O(x)}\;\Abs{\Brace{\al\in A\mid U_\al\cap U\ne\emptyset}}\in\N$．
-        \item 被覆$(U_\al)_{\al\in A}$の\textbf{細分}とは，被覆$(V_\beta)_{\beta\in B}$であって，$\forall_{\beta\in B}\;\exists_{\al\in A}\;V_\beta\subset U\al$を満たすものをいう．全ての元$U_\al$を縮めて作った被覆をいう．
-        \item 任意の開被覆が，局所有限な開細分\footnote{元すべて開集合であるような被覆を開被覆ということと同様．}を持つとき，$M$を\textbf{パラコンパクト}であるという．
-        \item 位相空間が\textbf{Lindelöf}または\textbf{可算被覆性}を持つとは，任意の開被覆が可算部分被覆を持つことをいう．
-    \end{enumerate}
-\end{definition}
-
-\subsection{パラコンパクト性}
-
-\begin{theorem}[局所コンパクト空間のパラコンパクト性の特徴付け]
-    $M$を連結な局所コンパクト空間とする．次の４条件は同値．
-    \begin{enumerate}
-        \item $M$はパラコンパクト．
-        \item $M$には局所有限で局所コンパクトな開被覆$(U_\al)_{\al\in A}$を持つ：各$\o{U_\al}$はコンパクト．
-        \item $M$は$\sigma$-コンパクト：$M$は高々可算個のコンパクト集合$(S_i)_{i\in\N}$の和集合として表せる．
-        \item $M$は高々可算個の開集合$(U_i)_{i\in\N}$の和で表せ，かつ，各$U_i$は相対コンパクトで$\forall_{i\in\N}\;\o{U_i}\subset U_{i+1}$を満たす．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}[パラコンパクト多様体の開被覆]\label{thm-open-cover-of-paracompact-locally-Euclidean-space}
-    $M^n$をパラコンパクトな位相多様体とし，$\U=(\wt{U}_i)$を$M^n$の局所有限な開被覆とする．このとき，$\U$の局所有限な細分$\V=(V_j)$であって，次の条件を満たすものが存在する：
-    $\V$を$M$上の開集合の族と考えたとき，$\V=\V_0\cup\V_1\cup\cdots\V_n$と分解でき，各$\V_k$の元は互いに素な開集合族となっている．
-\end{theorem}
-
-\subsection{第2可算ならパラコンパクト}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    第２可算ならば$\sigma$-コンパクトで，$\sigma$-コンパクトならパラコンパクトであるが，連結性の仮定を置くとすべてが同値になる．
-\end{tcolorbox}
-
-\begin{corollary}
-    連結かつ局所コンパクトな空間$M$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $M$は可算基を持つ（第２可算である）．
-        \item $M$はパラコンパクトかつ連結成分が高々可算個である．
-    \end{enumerate}
-\end{corollary}
-\begin{proof}\mbox{}
-    \begin{description}
-        \item[(1)$\Rightarrow$(2)] まず，連結成分が非可算個であった場合は，全ての連結成分からなる開被覆については可算な部分被覆を持たないので矛盾．よって連結成分は高々可算個である．
-        あとは，それぞれの連結成分がパラコンパクトであることを示せば良い．任意の開被覆に対して，可算な部分被覆が存在する．
-    \end{description}
-\end{proof}
-
 \subsection{第2可算ならばLindelöf}
 
 \begin{lemma}[second-countable then Lindelöf]
@@ -3463,7 +3509,44 @@ title=]
     \end{description}
 \end{proof}
 
-\subsection{1の分割}
+\subsection{Lindelöf性とパラコンパクト性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lindelöf空間が正規ならばパラコンパクトで，パラコンパクト空間がHausdorffならばLindelöf空間である．
+    またパラコンパクト空間が可算鎖条件を満たしても，Lindelöfである．
+\end{tcolorbox}
+
+\begin{definition}
+    $P$を$\bot$を持つ順序集合とする．
+    \begin{enumerate}
+        \item $P$の\textbf{反鎖}とは，部分集合$A\subset P$であって，$\forall_{a,b\in A}\;a=b\lor0=a\land b$を満たすものをいう．
+        \item $P$が$\bot$を持たない場合は，人工的に最小元を付け足して，同様に定義する．
+        \item $P$の任意の反鎖が可算であるとき，$P$は可算鎖条件を満たすという．
+    \end{enumerate}
+\end{definition}
+
+\subsection{局所連結ならばパラコンパクト}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    結局，局所コンパクト空間の問題は，その大きさと連結成分の数である．
+\end{tcolorbox}
+
+\begin{proposition}
+    局所コンパクト空間$X$が
+    \begin{enumerate}
+        \item 連結ならば$\sigma$-コンパクトである．
+        \item 局所連結ならばパラコンパクトである．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{パラコンパクトハウスドルフ空間は従属する1の分割を持つ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    CW-複体はパラコンパクトハウスドルフ空間である．
+\end{tcolorbox}
 
 \begin{proposition}[パラコンパクトならば，任意の開被覆は1の分割を持つ (AC)]
     $(X,\O_X)$を位相空間とする．次の2条件は同値．
@@ -3657,14 +3740,19 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Hausdorffでなくとも，局所コンパクトならば，指数対象を持つ．
+    $X$がHausdorffでなくとも，局所コンパクトならば，$C(X,Y)$はTopの指数対象となる．
+    $X$が更にHausdorffならば，位相同型$\Map(X,\Map(Y,Z))\simeq\Map(X\times Y,Z)$が得られる．
 \end{tcolorbox}
 
 \subsection{定義}
 
-\begin{definition}
+\begin{definition}[compact-open topology]
     $(M_{A,U})_{A\in\cC(X),U\in\O(Y)}$を準基として生成される$C(X;Y)$の位相$\O_{Y^X}$を\textbf{コンパクト開位相}という：
     \[M_{A,U}:=\Brace{f\in C(X;Y)\mid f(A)\subset U}\quad(A\in\cC(X),U\in\O_Y)\]
+\end{definition}
+
+\begin{definition}[exponential opject]
+    有限積を持つ圏$C$において，\textbf{指数対象}とは，組$(X^Y,\ev:X^Y\times Y\to X)$であって，次の普遍性を満たすものをいう：任意の$Z\in C$と$e:Z\times Y\to X$について，唯一の射$u:Z\to X^Y$が存在して，$e=\ev\circ (u\times\id_Y)$．
 \end{definition}
 
 \subsection{値写像の連続性}
@@ -3682,6 +3770,24 @@ title=]
         \item $f:X\times Y\to Z$は連続である．
         \item $\al_f:X\to Z^Y$は連続である．
     \end{enumerate}
+\end{proposition}
+
+\subsection{距離空間では広義一様収束位相と一致}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Wiener空間で見られた減少である．
+\end{tcolorbox}
+
+\begin{proposition}
+    $Y$を距離空間とすると，局所コンパクトハウスドルフである．
+    このとき，$\Map(X,Y)$上のコンパクト開位相とは，広義一様収束の位相に等しい．
+\end{proposition}
+
+\subsection{コンパクトになるとき}
+
+\begin{proposition}
+    $X,Y$は第２可算な$T_3$-空間で，$X$が局所コンパクトならば，$Y^X$は第２可算である．
 \end{proposition}
 
 \chapter{参考文献}
