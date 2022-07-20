@@ -656,6 +656,170 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\section{実数上の関数の連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実数上の関数には，$\al\in(0,1)$について，
+    \[C^1([a,b])\subset\Lip[a,b]\subset\Lip^\al[a,b]\subset UC([a,b])\subset C([a,b])\]
+    なる関係と
+    \[\Lip[a,b]\subset\AC[a,b]\subset\BV[a,b]\subset\{f\text{は殆ど至る所微分可能}\}\]
+    なる関係がある．
+\end{tcolorbox}
+
+\begin{definition}
+    $f:X\to Y$を実数の部分集合の間の関数とする．
+    $\om_f(t):=\sup_{d(x,y)<t}d(f(x),f(y))$によって
+    定まる関数$\om_f:[0,\infty]\to[0,\infty]$を
+    \textbf{連続度}という．
+\end{definition}
+\begin{remarks}\mbox{}
+    \begin{enumerate}
+        \item $\om_f(0)=0$が常に成り立つが，この点において連続であることが，関数$f$が一様連続であることに同値．
+        \item 連続度が線型に抑えられるとき，$f$をLipschitz連続関数という．
+        \item さらに弱く，$F(x)=x^\al\;(\al\in(0,1))$で抑えられるとき，$f$を$\al$-Holder連続関数という．
+    \end{enumerate}
+\end{remarks}
+
+\subsection{右・左連続性}
+
+\subsection{Lipschitz連続関数の$C$上稠密性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これは，一般の距離空間の間の写像について定義される連続性概念である．
+\end{tcolorbox}
+
+\begin{definition}[Lipschitz continuous function]
+    $0<\al\le1,f:[a,b]\to\C$とする．
+    \begin{enumerate}
+        \item 一様連続度を$\om_\delta(f):=\sup\Brace{\abs{f(x)-f(y)}\in\R_+\mid\forall_{x,y\in I}\;\abs{x-y}\le\delta}$と定める．
+        \item $L(f):=\sup_{s\ne t\in[a,b]}\frac{\abs{f(s)-f(t)}}{\abs{s-t}^\al}=\sup_{\delta>0}\frac{\om_\delta(f)}{\delta^\al}<\infty$が成り立つとき，$f$は\textbf{$\al$-Holder連続}であるといい，$L(f)$を$\al$-次のLipschitz定数という．その関数全体の空間を$\Lip^\al([a,b])$で表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Lipschitz norm]
+    次のノルムは互いに同値で，$\Lip^\al([a,b])$はBanach空間をなす．
+    \begin{enumerate}
+        \item $\norm{f}:=L(f)+\sup_{x\in[a,b]}\abs{f(x)}$．
+        \item $\nnorm{f}:=L(f)+\abs{f(a)}$．
+    \end{enumerate}
+    また，次は$\Lip^\al([a,b])$の閉部分空間となる．
+    \[\lip^\al([a,b]):=\Brace{f\in\Lip^\al\mid\lim_{\delta\to0}\frac{\om_\al(f)}{\delta^\al}=0}.\]
+\end{proposition}
+
+\begin{proposition}
+    $f_n:S\to T$を距離空間の間のLipschitz連続写像の列で，$\exists_{M\in\R}\;\forall_{n\in\N}\;L(f_n)\le K$が成り立つとする．
+    \begin{enumerate}
+        \item $(f_n)$がある$f$に一様収束するならば，$f$もまた$L(f)<M$を満たすLipschitz写像である．
+        \item $S$がコンパクトならば，$\Brace{f\in\Lip^1(S;T)\mid L(f)\le M}$なる集合は，Banach空間$C(S;T)$の閉凸で局所コンパクトな部分集合となる．
+        \item また，$S$がコンパクトならば，$\Lip^1(S;T)$は$C(S;T)$上稠密である．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    この命題の条件は，族$\{f_n\}$が一様に同程度連続であるための十分条件を与えるためである．
+\end{remarks}
+
+
+\begin{corollary}
+    $(f_a)$は共通のLipschitz定数を持つLipschitz連続関数の族とする．
+    $\sup_a f_a,\inf_af_a$は$\{\infty,-\infty\}$に値を取る定値関数でない限り，やはり同じLipschitz定数を持つLipschitz連続関数となる．
+\end{corollary}
+
+\subsection{Lipschitz連続関数は本質的に有界な導関数を持つ}
+
+\begin{proposition}[至る所微分可能な関数がLipschitz連続であることの特徴付け]
+    $f:\R\to\R$は至る所微分可能とする．このとき，次の2条件は同値：
+    \begin{enumerate}
+        \item $f$はLipschitz連続である．
+        \item $f$の導関数は有界である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Lipschitz連続関数の導関数はLipschitz定数をノルムとして本質的有界]
+    $f:\R\to\R$をLipschitz連続とする．
+    \begin{enumerate}
+        \item $f$は絶対連続であり，したがって殆ど至る所微分可能である．
+        \item $f'\in L^\infty(\R)$で，$\norm{f'}_{L^\infty(\R)}=L(f)$である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{絶対連続関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    絶対連続関数は殆ど至る所微分可能であり，さらにLipschitz連続であるためにはその導関数が有界であることが必要十分．
+    なお，絶対連続な関数は，不定積分として表現される関数のクラスにほかならない．
+\end{tcolorbox}
+
+\begin{definition}
+    $f:[a,b]\to\R$が\textbf{絶対連続}であるとは，
+    \[\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{n\in\N}\;\forall_{\{x_i\}_{i\in[2n]}\subset [a,b]}\;\sum_{i=1}^n(x_{2i}-x_{2i-1})<\delta\Rightarrow\sum_{i=1}^n\abs{f(x_{2i})-f(x_{2i-1})}<\ep\]
+    が成り立つことをいう．
+\end{definition}
+
+\begin{theorem}
+    $f:[a,b]\to\R$について，次の4条件は同値．
+    \begin{enumerate}
+        \item $f$は絶対連続である．
+        \item $\exists_{g\in L^1([a.b])}\forall_{x\in[a,b]}\;f(x)=f(a)+\int_a^xg(t)dt$．
+        \item $f$は一様連続かつ有界変動で，$[a,b]$の零集合を零集合に写す．
+        \item Stieltjes測度$df$はLebesgue測度$l$に関して絶対連続：$df\ll l$．
+    \end{enumerate}
+    また，この同値な条件が成り立つとき，Lebesgue (1904)より$\paren{\int^x_ag(t)dt}'=g(x)$だから，$f$は殆ど至る所微分可能であることが従う．
+\end{theorem}
+
+\begin{example}
+    Cantor関数は連続で殆ど至る所微分可能で可積分な導関数を持つが，絶対連続ではない．
+\end{example}
+
+\subsection{一様連続関数と連続度}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    連続度が線型に抑えられるとき，$f$をLipschitz連続関数という．
+    さらに弱く，$F(x)=x^\al\;(\al\in(0,1))$で抑えられるとき，$f$を$\al$-Holder連続関数という．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 関数$f:I\to\R$が一様連続であるとは，$\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{x,y\in I}\;\abs{x-y}<\delta\Rightarrow\abs{f(x)-f(y)}<\ep$が成り立つことをいう．
+        \item $\om_f(t):=\sup_{d(x,y)<t}d(f(x),f(y))$によって
+        定まる単調増加関数$\om_f:[0,\infty]\to[0,\infty]$を
+        \textbf{連続度}という．
+        \item これによると，一様連続であるとは，$\om_f$は$0$にて連続であることに同値：$\lim_{\delta\to0}\om_f(\delta)=0$．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    $\forall_{x,y\in I}\;\abs{f(x)-f(y)}\le CF(\abs{x-y})$と，ある単調な関数$F$で一様に評価出来ているとき，$\delta:=F^{-1}\paren{\frac{\ep}{C}}$と定めれば良い．
+    $F(x)=x^\al$は，$0<\al<1$のときは，$0$に十分近い$x$では接線の傾きが$1$より大きいから，線型の場合よりも収束が遅い．
+    よって，Lipschitz連続ならば，$\al$-Holder連続$(0<\al<1)$である．
+\end{remarks}
+
+
+
+\section{空間上の関数}
+
+
+\subsection{全微分可能性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C^1$-級関数は全微分可能であった．この十分条件は弱められる．
+    Lipschitz連続ならば，導関数は存在すれば有界になる．
+\end{tcolorbox}
+
+\begin{definition}[totally differentiable, gradient]
+    $f:\R^d\to\R$が$x_0\in\R^d$において\textbf{全微分可能}とは，
+    \[\exists_{\nabla f(x_0)\in\R^d}\;\lim_{0\ne h\to 0}\frac{f(x_0+h)-f(x_0)-h\cdot\nabla f(x_0)}{\norm{h}}=0\]
+    が成り立つことをいう．$\nabla f(x_0)$は\textbf{勾配}という．
+\end{definition}
+
+\begin{theorem}[Rademacher differentiation theorem]
+    Lipschitz連続関数$f:\R^d\to\R$は殆ど至る所全微分可能である．
+\end{theorem}
+
+
 \section{次元論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1066,17 +1230,13 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{連続な開・閉写像}
+\subsection{連続な開写像}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     このクラスの連続写像の逆像関手は，開核作用素・閉包作用素と可換になる．
     例えば連続な閉写像は，$\forall_{A\in P(X)}\;f(\o{A})=\o{f(A)}$を満たす．
 \end{tcolorbox}
-
-\begin{definition}[perfect mapping]
-    連続な閉写像を\textbf{完全写像}という．
-\end{definition}
 
 \begin{proposition}[連続開写像の性質]
     $f:X\to Y$を連続な開写像とする．
@@ -1110,6 +1270,68 @@ title=]
     いずれの場合も，起こっている現象は$f^*\O_Y=\O_X$である．それぞれに対する表現が違うだけである．足元に誘発される場合はfinal topology，頭上に誘発される場合はinitial topology，全単射である場合は同相写像．
     この聖域は，コンパクト集合からHausdorff空間への射で起こる．
 \end{remarks}
+
+\subsection{完全写像}
+
+\begin{definition}[perfect map]
+    連続写像$p:X\to Y$が全射かつ閉で，さらに任意のファイバー$p^{-1}(y)$がコンパクトならば，\textbf{完全写像}であるという．
+    完全写像は商写像である\ref{cor-open-continuous-surjection-is-quotient-map}ことに注意．
+\end{definition}
+
+\begin{proposition}
+    $p:X\to Y$を連続かつ全射な閉写像とする．
+    このとき，$X$が正規ならば，$Y$も正規である．
+\end{proposition}
+
+\begin{proposition}
+    $p:X\to Y$が完全であるとする．
+    \begin{enumerate}
+        \item $Y$がコンパクトならば，$X$はコンパクトである．
+        \item $Y$がパラコンパクトならば，$X$もパラコンパクトである．
+        \item $X$がHausdorffならば，$Y$もHausdorffである．
+        \item $X$がパラコンパクトハウスドルフならば，$Y$もパラコンパクトハウスドルフである．
+        \item $X$が正則ならば，$Y$も正則である．
+        \item $X$が局所コンパクトならば，$Y$も局所コンパクトである．
+        \item $X$が第２可算ならば，$Y$も第２可算である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    $X$に作用するコンパクト位相群$G$について，商写像$X\epi X/G$は完全写像である．
+\end{example}
+
+\subsection{固有写像}
+
+\begin{definition}[proper map]\mbox{}
+    \begin{enumerate}
+        \item 写像$f:X\to Y$が\textbf{固有写像}であるとは，任意のコンパクト集合の逆像がコンパクトになることをいう．
+        \item 位相空間$X$の点列$(x_n)$が無限遠へ消失するとは，任意のコンパクト集合$C\subset X$について，$\abs{n\in\N\mid x_n\in S}<\infty$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[終域が局所コンパクトハウスドルフであるとき，本質的に完全写像に同値]
+    $Y$を局所コンパクトハウスドルフ空間とする．このとき，写像$f:X\to Y$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $f$は固有写像である．
+        \item $f$は連続な閉写像で，任意のファイバーはコンパクトになる．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    $X,Y$を距離空間，$f:X\to Y$を連続写像とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $f$は固有写像である．
+        \item $X$上の無限遠へ消失する点列は，$Y$上の無限遠へ消失する点列へと写される．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    位相空間$X$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item 写像$X\to\{*\}$は固有である．
+    \end{enumerate}
+\end{proposition}
 
 \subsection{連続写像の構成}
 
@@ -1221,7 +1443,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    極限点(limit point)とは，集積点を指すのか触点を指すのか不明瞭であるから避けようと思う．
+    極限点(limit point)とは，集積点を指すのか触点を指すのか不明瞭である：$A$の触点は$A$のあるネットの極限であることと同値であり，$A$の集積点は$A$が連続延長し得る定義域でもある．
     集積点は，触点であって，さらに近傍によって$A$の他の点と分離不可能な点をいう．
 \end{tcolorbox}
 
@@ -1246,6 +1468,12 @@ title=]
 \end{proposition}
 
 \subsection{閉包による閉集合の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    触点と集積点とは，孤立点の分しか相違がない．
+    集積点は$T_1$空間でさらに直感的な特徴付け\ref{prop-property-of-T1-spaces}を持つ．
+\end{tcolorbox}
 
 \begin{proposition}[集積点の特徴付け]
     次の3条件は同値．
@@ -1320,10 +1548,6 @@ title=]
     Kuratowski, C.による．
     位相の概念は，閉包演算子だけで表すこともできることが分かる．
 \end{tcolorbox}
-
-\begin{proposition}[閉包による閉集合の特徴付け]
-    $A\in P(X)$が閉集合であることと，$\o{A}=A$が成り立つこととは同値．
-\end{proposition}
 
 \begin{proposition}
     $A,B\subset X$とする．次の4条件が成り立つ：
@@ -2155,6 +2379,23 @@ title=]
         \end{enumerate}
     \end{description}
 \end{proof}
+
+\subsection{完備距離空間での消息}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクト性と全有界性が同値になるのは，距離空間が完備なときに限る．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X$を完備距離空間，$K\subset X$を閉部分集合とする．このとき，次の3条件は同値．
+    \begin{enumerate}
+        \item $K$はコンパクト．
+        \item $K$の任意の無限部分集合は，$K$内に集積点を持つ．
+        \item $K$は全有界である．
+    \end{enumerate}
+    (3)$\Rightarrow$(1)のみ$X$の完備性が必要で，(1)$\Leftrightarrow$(2)は任意の距離空間で成り立つ．
+\end{theorem}
 
 \section{写像の極限}
 
@@ -3460,11 +3701,16 @@ title=]
 
 \subsection{特徴付け}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正規性の特徴付けに，Lebesgue測度の性質の萌芽を見ることが出来る．
+\end{tcolorbox}
+
 \begin{proposition}[正則性の特徴付け]
     $X$をHausdorff空間とする．次の3条件は同値：
     \begin{enumerate}
         \item 閉集合$A$と一点$x\notin A$が開近傍によって分離できる．
-        \item 任意の点$x\in X$の近傍$x\in V$について，$x$の開近傍$x\in U$が存在して$\overline{U}\subset V$を満たす．
+        \item 任意の点$x\in X$の近傍$x\in V$について，$x$の近傍$x\in U$が存在して$\overline{U}\subset V$を満たす．
         \item 空でない任意の閉集合$A$について，これを一点に潰して得られる空間$X/(\Delta_X\cup(A\times A))$もHausdorffである（正規性の命題\ref{prop-one-point-compactification}に当たる見方）．
     \end{enumerate}
 \end{proposition}
@@ -3473,8 +3719,10 @@ title=]
     $X$をHausdorff空間とする．次の3条件は同値：
     \begin{enumerate}
         \item 互いに交わらない任意の閉集合$A,B$について，開近傍によって分離できる．
+        \item $F\subset G$を満たす任意の閉集合$F$と開集合$G$に付いて，$F\subset H\land \o{H}\subset G$を満たす開集合$H$が存在する．
         \item 任意の閉集合$A$の近傍$A\subset V$について，$A$の開近傍$A\subset U$が存在して$\overline{U}\subset V$を満たす．
         \item 互いに交わらない任意の閉集合$A,B$について，Urysohnの距離関数によって分離できる（補題\ref{lemma-Urysohn's-lemma}）．
+        \item 任意の閉集合$F\subset X$上の任意の連続写像$f:F\to I$は$X$上に延長する．
     \end{enumerate}
 \end{proposition}
 \begin{proof}\mbox{}
@@ -3491,6 +3739,12 @@ title=]
 \begin{proposition}
     コンパクトハウスドルフ空間は正規であるが，パラコンパクトなHausdorff空間も正規である．
     一方で，局所コンパクトな空間は正規とは限らない．
+\end{proposition}
+
+\subsection{正規性の弱遺伝性}
+
+\begin{proposition}
+    正規性は弱遺伝的である．すなわち，任意の正規空間の閉部分空間は正規である．
 \end{proposition}
 
 \subsection{Urysohnの補題}
@@ -3939,6 +4193,115 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\section{分離公理}
+
+\subsection{Kolmogorov}
+
+\begin{definition}
+    空間$X$が$T_0$または\textbf{Kolmogorov}であるとは，$\forall_{x_0\ne x_1\in X}\;\exists_{i\in2}\;\exists_{U\in\O(x_i)}\;x_{1-i}\notin U$を満たすことをいう．
+\end{definition}
+
+\subsection{Frechet}
+
+\begin{definition}
+    空間$X$が$T_1$または\textbf{Frechet}であるとは，任意の異なる2点に対して，お互いが互いを含まないような開近傍を持つことをいう．
+\end{definition}
+
+\begin{proposition}[$T_1$-性の特徴付け]
+    位相空間$X$において，次の2条件は同値．
+    \begin{enumerate}
+        \item $X$は$T_1$である．
+        \item $X$の任意の一点集合は閉である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}\label{prop-property-of-T1-spaces}
+    $T_1$空間において，次の2条件は同値．
+    \begin{enumerate}
+        \item $x$は$A$の集積点である．
+        \item $x$の任意の近傍は，$A$の点を無限個含む．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{相互関係}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    次のような理由から，
+    Munkres\cite{Munkres}とnLabでは$T_3,T_4$の定義に$T_1$を仮定している．
+    が，これは結局Hausdorff性を仮定しているに等しい．
+    以降，ここでもこれに従う：$T_3$とは正則Hausdorff空間で，$T_4$とは正規Hausdorff空間である．
+\end{tcolorbox}
+
+\begin{proposition}
+    正規な$T_1$空間($T_4$とする)ならば正則な$T_1$空間ならば$T_2$である．
+\end{proposition}
+
+\subsection{完全正則}
+
+\begin{definition}[perfectly regular (Tychonoff)]
+    空間$X$が$T_{3\frac{1}{2}}$または\textbf{完全正則}とは，
+    \begin{enumerate}
+        \item 距離化可能な空間は完全正規である．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 局所コンパクトハウスドルフ空間は完全正則である．
+        \item $T_4$ならば完全正則である．
+        \item 完全正則ならば正則である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{分離性の遺伝}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item Frechet, Hausdorff, Vietoris (正則), Tychonoff (完全正則)の公理は，いずれも遺伝的である（部分空間に遺伝する）．
+        \item 同様の4公理は，任意の積空間に伝播する．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{全正規}
+
+\begin{definition}
+    空間$X$が
+    \begin{enumerate}
+        \item \textbf{全正規}とは，任意の分離された集合は，開近傍で分離されることをいう．
+        \item 全正規かつHausdorffな空間を$T_5$という．
+    \end{enumerate}
+\end{definition}
+
+
+
+\subsection{完全正規}
+
+\begin{definition}[perfectly normal, perfectly normal Hausdorff]
+    空間$X$が
+    \begin{enumerate}
+        \item \textbf{完全正規}とは，
+        任意の互いに素な閉集合が，関数でちょうど分離されることをいう．
+        \item 完全正規かつHausdorffな空間を$T_6$という．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    完全正規ならば，全正規である．
+\end{proposition}
+
+\begin{proposition}
+    正規空間$X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $T_6$である．
+        \item 任意の閉集合は$G_\delta$集合である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    距離化可能な空間は$T_6$である．
+\end{proposition}
+
 \chapter{写像空間}
 
 \section{逆写像定理}
@@ -4097,11 +4460,12 @@ title=]
     これで，位相空間論の発展を促した源流である，関数空間に取り組める．
 \end{quotation}
 
-\section{各点収束位相}
+\section{$C$の各点収束位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     各点収束位相とは，積位相である．
+    これはノルム化どころか，距離化可能でない．
 \end{tcolorbox}
 
 \subsection{準基の表示}
@@ -4112,13 +4476,81 @@ title=]
     で定まる集合族が生成する位相は，$\R^{[0,1]}$の積位相である．
 \end{proposition}
 
-\subsection{稠密部分集合}
+\subsection{一般の関数に対して稠密}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の関数は，連続関数の各点収束極限として表せる．
+\end{tcolorbox}
 
 \begin{proposition}
     $\Map([0,1],\R)$上で$C([0,1])$は稠密である．
 \end{proposition}
 
-\section{コンパクト開位相}
+\section{$C$の一様ノルム位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    結局はコンパクト開位相であるが，コンパクト空間$X$上の$C(X)$の一様ノルムを調べる．
+\end{tcolorbox}
+
+\subsection{全有界集合：Ascoliの定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    完備距離空間の閉部分集合が，全有界であることとコンパクトであることは同値であることに注意．
+
+    Heine-Borelの定理は$\R^n$のコンパクト集合は有界閉集合だと確定した．
+    $C(\R^n)$のコンパクト集合は，各点有界同程度連続閉集合である．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X$をコンパクト集合，$C(X;\C)$を一様ノルムによるBanach空間とする．
+    部分集合$\Phi\subset C(X)$が次の2条件を満たすならば，全有界である：
+    \begin{enumerate}
+        \item 各点有界：$\forall_{x\in X}\;\sup_{f\in\Phi}\abs{f(x)}<\infty$．すなわち，任意の$x\in X$について$\{f(x)\}_{f\in\Phi}\subset\R$は相対コンパクト．
+        \item 同程度連続：$\forall_{\ep>0}\;\forall_{x\in X}\;\exists_{V\in\O(x)}\;\forall_{y\in V}\;\forall_{f\in\Phi}\abs{f(y)-f(x)}<\ep$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $\Phi$が上の条件を満たすならば，特に相対コンパクトであるから，任意の$\Phi$の列は一様収束する部分列を持つ．
+\end{corollary}
+
+\subsection{同程度連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    同程度連続な関数族の集積点は$C(X)$に入る．
+\end{tcolorbox}
+
+\begin{definition}
+    族$\Phi\subset\Map(X,\R)$について，
+    \begin{enumerate}
+        \item \textbf{同程度連続}であるとは，$\forall_{\ep>0}\;\forall_{x\in X}\;\exists_{V\in\O(x)}\;\forall_{y\in V}\;\forall_{f\in\Phi}\abs{f(y)-f(x)}<\ep$を満たすことをいう．
+        \item \textbf{一様に同程度連続}であるとは，$\forall_{\ep>0}\;\exists_{V\in\O(x)}\;\forall_{x,y\in V}\;\forall_{f\in\Phi}\abs{f(y)-f(x)}<\ep$を満たすことをいう．
+        \item 連続であるとは，$\forall_{\ep>0}\;\forall_{x\in X}\;\forall_{f\in\Phi}\;\exists_{V\in\O(x)}\;\forall_{y\in V}\;\abs{f(y)-f(x)}<\ep$．
+    \end{enumerate}
+    $X$がコンパクトであるとき，同程度連続性と一様同程度連続性とは一致する．
+\end{definition}
+\begin{remarks}
+    $\Phi$が一点集合であえるとき，同程度連続性と連続性は一致する．
+\end{remarks}
+
+\begin{theorem}[Cauchy sum theorem]
+    $\{f_n\}\subset\Map(\R,\R)$は同程度連続であるとする．
+    $X$の稠密部分集合上で$(f_n)$が各点収束するならば，$X$上で収束し，極限関数は連続である．
+\end{theorem}
+\begin{history}
+    Cauchy, A. (1821). \textit{Cours d'Analyse}は，連続関数の各点収束極限は連続なる間違った（表現をした）命題を載せていた．
+\end{history}
+
+\begin{proposition}
+    $X$をコンパクト空間とする．
+    この上の同程度連続な関数列が各点収束するならば，一様収束する．
+\end{proposition}
+
+\section{$C$のコンパクト開位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -4211,6 +4643,37 @@ title=]
     このとき，級数列$\sum{i=1}^nf_i$は一様収束する．
 \end{proposition}
 
+\section{連続線型写像の空間}
+
+\subsection{Banach-Steinhausの定理}
+
+\begin{proposition}[同程度連続性の特徴付け]
+    $X,Y$を位相線形空間，
+    $\Gamma\subset\Hom_\R(X,Y)$を線形写像の集合とする．
+    \begin{enumerate}
+        \item $\Gamma$は同程度連続である．
+        \item $\forall_{W\in\O_Y(0)}\;\exists_{V\in\O_X(0)}\;\forall_{\Lambda\in\Gamma}\;\Lambda(V)\subset W$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    $\Gamma\subset\Hom_\R(X,Y)$を同程度連続，$E\subset X$を有界集合とする．
+    このとき，ある有界集合$F\subset Y$が存在して，$\forall_{\Lambda\in\Gamma}\;\Lambda(E)\subset F$．
+\end{theorem}
+
+\begin{theorem}[Banach-Steinhaus]
+    $\Gamma\subset B(X,Y)$を集合，$B:=\Brace{x\in X\mid\Gamma(x):=\Brace{\Lambda x\mid\Lambda\in\Gamma}\subset Y\text{は有界}}$とする．
+    $B$は$X$上第２類ならば，$B=X$かつ$\Gamma$は同程度連続である．
+\end{theorem}
+
+\begin{proposition}
+    $E\subset B(X,Y)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $E$は同程度連続である．
+        \item $\exists_{M<\infty}\;\forall_{\Lambda\in E}\;\norm{\Lambda}\le M$．
+    \end{enumerate}
+\end{proposition}
+
 \chapter{参考文献}
 
 \begin{thebibliography}{99}
@@ -4220,6 +4683,8 @@ title=]
     彌永昌吉・彌永健一『集合と位相II』（岩波講座 基礎数学9，1977）．
     \bibitem{森田}
     森田紀一『位相空間論』（
+    \bibitem{Munkers}
+    Munkres, James. (1999). \textit{Topology}.
     \bibitem{Johnstone}
         Peter Johnstone - The point of pointless topology (83)
     \bibitem{Johnstone2}

@@ -1005,6 +1005,11 @@ title=]
 
 \section{緩増加分布空間}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \cite{Rudin-FA}の7章．
+\end{tcolorbox}
+
 \subsection{定義と例}
 
 \begin{theorem}\mbox{}
@@ -1096,6 +1101,18 @@ title=]
     \end{enumerate}
 \end{theorem}
 
+\section{複素Borel測度のFourier変換}
+
+\begin{theorem}
+    $\mu:\B(\R^n)\to\C$を複素Borel測度とすると，特に緩増加分布でもある．このFourier変換
+    \[\wh{\mu}(x):=\int_{\R^n}e^{-ix\cdot t}d\mu(t)\quad(x\in\R^n)\]
+    について，
+    \begin{enumerate}
+        \item たしかに，緩増加分布としてのFourier変換に一致する．
+        \item $\wh{\mu}$は有界かつ一様連続である．
+    \end{enumerate}
+\end{theorem}
+
 \section{Paley-Wienerの定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1176,7 +1193,8 @@ title=]
     高橋陽一郎『実関数とFourier解析』
     \bibitem{Rudin}
     Rudin "Real and Complex Analysis" 3rd
-    \bibitem{級数}
+    \bibitem{Rudin-FA}
+    Rudin \textit{Functional Analysis}
 \end{thebibliography}
 
 \end{document}
