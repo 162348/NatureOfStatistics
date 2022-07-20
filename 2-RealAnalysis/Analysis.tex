@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -40,7 +40,10 @@
         \[M_i(P):=\sup_{x\in[x_{i-1},x_i]}f(x),\qquad\qquad m_i(P):=\inf_{x\in[x_{i-1},x_i]}f(x)\;(i\in[n])\]
         とし，
         \[U(P,f,\al):=\sum^n_{i=1}M_i(P)\Delta\al_i,\qquad\qquad L(P,f,\al):=\sum^n_{i=1}m_i(P)\Delta\al_i\]
-        とする．これを用いて，
+        とする．
+        \item 分割の全体$\P:=\Brace{P\in P([a,b])\mid\abs{P}<\infty}$は有向集合をなす．包含関係$\subset$について分割は順序をなし，任意の2つの分割$P,Q$について$P\cup Q$は上界である．
+        このとき，２つのネット$(U(P,f,\al))_{P\in\P},(L(P,f,\al))_{P\in\P}$は収束する．
+        すなわち，
         \[\o{\int^b_a}fd\al:=\inf_{P\in P([a,b]),\abs{P}<\infty}U(P,f,\al),\qquad\qquad\underline{\int^b_a}fd\al=\sup_{P\in P([a,b]),\abs{P}<\infty}L(P,f,\al).\]
         として得る実数を，\textbf{上／下Stieltjes積分}と呼ぶ．
         \item 上積分と下積分が一致するとき，\textbf{Stieltjes可積分}であるといい，$f\in\cR([a,b],\al)$と表す．

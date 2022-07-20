@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1883,9 +1883,15 @@ title=]
 title=]
     点列の収束を，開近傍のフィルター$\O(x)$について，$\forall_{U\in\O(x)}\;x_n\in U\;\fe$と特徴付けられることに注目すると，
     一般の上に有向な集合からの写像について，収束の概念を定義できる．
+    そして，収束するフィルターを指定することで，位相を指定することが出来るという同値な構成を得る．
 \end{tcolorbox}
 
 \subsection{ネットの収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    点列$(x_n):\N\to X$が収束することは，終局フィルター$F_{(x_n)}:=\Brace{A\in P(X)\mid x_n\in A\;\fe}$が$\O(x)$を含むことに同値．
+\end{tcolorbox}
 
 \begin{definition}[direction, directed set, net / generalized sequences]
     $(D,\le)$を前順序集合とする．すなわち，$\le$は反射的で，推移的である．
@@ -1913,19 +1919,20 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\subsection{部分ネット}
+\subsection{部分ネットと普遍ネット}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     ネットについては，任意の空間のコンパクト集合が「ネットコンパクト」になる．
 \end{tcolorbox}
 
-\begin{definition}[Kelley 1955]\label{def-subnet-Kelley}
-    $(y_\beta)_{\beta\in B}$が$(x_\al)_{\al\in A}$の部分ネットであるとは，次の２条件を満たす写像$f:B\to A$が存在することをいう：
+\begin{definition}[subnet (Kelley 1955)]\label{def-subnet-Kelley}
+    $y:=(y_\beta)_{\beta\in B}$が$x:=(x_\al)_{\al\in A}$の部分ネットであるとは，次の２条件を満たす写像$f:B\to A$が存在することをいう：
     \begin{enumerate}
-        \item $\forall_{\beta\in B}\;x_{f(\beta)}=y_\beta$．
+        \item $y=x\circ f$，すなわち，$\forall_{\beta\in B}\;x_{f(\beta)}=y_\beta$．
         \item strongly cofinal：$\forall_{\alpha\in A}\;\exists_{\beta\in B}\;\forall_{\beta_1\ge\beta}\;f(\beta_1)\ge\alpha$．
     \end{enumerate}
+    $f:B\to A$を単調に取ったならば，あとは$\forall_{\alpha\in A}\;\exists_{\beta\in B}\;\alpha\le f(\beta)$を示せば，(2)を満たす．
 \end{definition}
 
 \begin{remark}
@@ -1933,30 +1940,97 @@ title=]
 \end{remark}
 
 \begin{lemma}[集積点の特徴付け]
-    $\B\subset P(X)$は任意合併について閉じているとする．ネット$(x_\lambda)_{\lambda\in\Lambda}$について，次の２条件は同値．
-    \begin{enumerate}
-        \item 任意の$B\in\B$に集積する．
-        \item 部分ネット$(x_{h(\mu)})_{\mu\in M}$が存在して，任意の$B\in\B$に終局する．
-    \end{enumerate}
+    $\B\subset P(X)$は包含順序について下に有向とする：$\forall_{A,B\in\B}\;\exists_{C\in\B}\;C\subset A\cap B$とする．
+    ネット$(x_\lambda)$は$\B$の各元$A\in\B$に集積するとする：
+    $\forall_{A\in\B}\;\forall_{\lambda\in\Lambda}\;\exists_{\lambda\le\nu\in\Lambda}\;x_\nu\in A$．
+    このとき，ある部分ネット$(x_{h(\mu)})_{\mu\in M}$が存在して，$\B$の任意の元に収束する：$\B\subset F_{(x_{h(\mu)})}$．
 \end{lemma}
+\begin{proof}\mbox{}
+    \begin{enumerate}[(a)]
+        \item $M:=\Brace{(\lambda,A)\in\Lambda\times\B\mid x_\lambda\in A}$は積順序に関して，上に有向である．
+        任意の$(\lambda,A),(\mu,B)\in M$に関して，$\exists_{C\in\B}\;C\subset A\cap B$で，$\exists_{\nu\in\Lambda}\;\lambda\le\nu\land\mu\le\nu$．
+        $C\in\B$に集積することより，$\exists_{\nu'\ge\nu}\;x_{\nu'}\in C$だから，$(\nu',C)$が取れて，$(\lambda,A)\le(\nu',C)$かつ$(\mu,B)\le(\nu',C)$．
+        \item $h:M\to\Lambda$を第一射影によって定めると，$(x_{h(\mu)})_{\mu\in M}$は部分ネットであり，$\B$の任意の元に終局する．
+    \end{enumerate}
+\end{proof}
 
 \begin{corollary}
     位相空間$X$上のネットの任意の集積点$x$について，ある部分ネットが存在して$x$に終局する．
 \end{corollary}
+\begin{proof}
+    $\B$を$\O(x)$と取れば良い．
+\end{proof}
 
 \begin{theorem}[existence of universal nets (AC)]
     任意のネットは，部分ネットとして普遍ネットを持つ．
 \end{theorem}
 
+\subsection{ネットによる閉包演算子の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    これにより，どのようなネットが収束するかを指定することは，位相を指定することに等価であることが分かる．
+    またこの手法は，空間が第１可算のとき，数列のみによって殆ど同様に展開できる．
+    これは，任意の数列の集積点に対して，これに収束する部分列が取れるためである．
+\end{tcolorbox}
+
 \begin{proposition}[(AC)]
     任意の位相空間$Y\subset X$と点$x\in X$について，次の２条件は同値．
     \begin{enumerate}
         \item $x\in\o{Y}$．
+        \item $\forall_{A\in\O(x)}\;A\cap Y\ne\emptyset$．
         \item $x$に収束する$Y$のネットが存在する．
     \end{enumerate}
 \end{proposition}
+\begin{proof}
+    (1)$\Leftrightarrow$(2)は良い．
+    \begin{description}
+        \item[(1),(2)$\Rightarrow$(3)] 選択公理より，$(x_A)_{A\in\O(x)}\in\prod_{A\in\O(x)}A\cap Y$が得られる．
+        これは$x$に収束するネットである．実際，任意の開近傍$U\in\O(x)$に対して，任意の$U\subset V\in\O(x)$は$x_V\in V$を満たす．
+        \item[(2)$\Rightarrow$(1)] $(x_\lambda)_{\lambda\in\Lambda}$を$x$に収束するネットとすると，$\forall_{A\in\O(x)}\;\exists_{\lambda\in\Lambda}\;\forall_{\lambda'}\;\forall_{\lambda'\ge\lambda}\;x_{\lambda'}\in A$．すなわち，$x_{\lambda'}\in A\cap Y\ne\emptyset$．
+    \end{description}
+\end{proof}
 
+\subsection{フィルターの収束}
 
+\begin{definition}
+    フィルター$F\subset P(X)$が$x\in X$に収束するとは，$\O(x)\subset F$を満たすことをいう．
+    このとき，ネット$n:D\to X$が収束することと，その終局フィルター$F_n$が収束することとは同値．
+\end{definition}
+
+\begin{proposition}[開集合の特徴付け]
+    部分集合$Y\subset X$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $Y$は開集合である．
+        \item 任意の$\exists_{x\in Y}\;\O(x)\subset F$を満たすフィルター$F\subset P(X)$について，$Y\in F$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{極大フィルターの特徴付け}
+
+\begin{theorem}
+    $\F\subset P(X)$が\textbf{超フィルター}であるとは，次の同値な条件を満たすもののことをいう：
+    \begin{enumerate}
+        \item 真のフィルターのうち，極大なものである．
+        \item $\forall_{A\in P(X)}\;A\in\F\lor X\setminus A\in\F$．
+        \item 真のフィルターであって，次を満たす：$\forall_{B\in\F}\;A\cap B\ne\emptyset\Rightarrow A\in\F$．
+        \item $A\in\F\Leftrightarrow\forall_{B_1,\cdots,B_n\in\F}\;A\cap B_1\cap\cdots\cap B_n\ne\emptyset$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}[(AC)]
+    任意のフィルターに対して，これを含む極大フィルターが存在する．
+\end{proposition}
+
+\subsection{ネットによる連続写像の特徴付け}
+
+\begin{proposition}
+    写像$f:X\to Y$と点$x\in X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $f$は$x$で連続である：$f^*(\O(f(x)))\subset\O(x)$．
+        \item 
+    \end{enumerate}
+\end{proposition}
 
 \chapter{距離空間}
 
@@ -2447,15 +2521,6 @@ title=]
 \end{proof}
 
 \subsection{超フィルターによるコンパクト性の特徴付け}
-
-\begin{theorem}
-    $\F\subset P(X)$が\textbf{超フィルター}であるとは，次の同値な条件を満たすもののことをいう：
-    \begin{enumerate}
-        \item 真のフィルターのうち，極大なものである．
-        \item 真のフィルターであって，次を満たす：$\forall_{B\in\F}\;A\cap B\ne\emptyset\Rightarrow A\in\F$．
-        \item $A\in\F\Leftrightarrow\forall_{B_1,\cdots,B_n\in\F}\;A\cap B_1\cap\cdots\cap B_n\ne\emptyset$．
-    \end{enumerate}
-\end{theorem}
 
 \begin{notation}
     集合$A$に対して$\widetilde{A}:=A\sqcup\{\infty\}$とし，
@@ -4460,7 +4525,7 @@ title=]
     これで，位相空間論の発展を促した源流である，関数空間に取り組める．
 \end{quotation}
 
-\section{$C$の各点収束位相}
+\section{写像空間の各点収束位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
