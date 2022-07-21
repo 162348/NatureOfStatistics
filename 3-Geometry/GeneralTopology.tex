@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -597,6 +597,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    ハイパーグラフが凸集合な関数が凸関数，閉集合な関数が下半連続関数である．
     すでにFatouの補題のような消息が現れている．
 \end{tcolorbox}
 
@@ -623,7 +624,7 @@ title=]
 \end{proposition}
 
 \begin{proposition}[上半連続性の特徴付け]
-    関数$f:X\to\R$について，次の2条件は同値：
+    関数$f:X\to\R$について，次の３条件は同値：
     \begin{enumerate}
         \item $f$は上半連続である．
         \item $\forall_{a\in X}\;\forall_{r>0}\;\exists_{U\in\O(a)}\;U\subset\Brace{x\in X\mid f(x)<f(a)+r}$．
@@ -634,6 +635,19 @@ title=]
         \item $f$はある連続関数の族の下限である．
     \end{enumerate}
 \end{proposition}
+
+\begin{theorem}[下半連続性の特徴付け]
+    関数$f:X\to\R$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $f$は下半連続である．
+        \item ハイパーグラフ$G^+:=\Brace{(x,t)\in X\times\R\mid f(x)\le t}$は閉集合である．
+        \item $X$の収束ネット$(x_\lambda)$について，$\limsup_\lambda f(x_\lambda)\le f(\lim x_\lambda)$．
+    \end{enumerate}
+    $X$は$C(X;[0,1])$によって分離されるとき（例えば正規空間のとき），次も同値：
+    \begin{enumerate}\setcounter{enumi}{2}
+        \item $f$はある連続関数の族の下限である．
+    \end{enumerate}
+\end{theorem}
 
 \begin{proposition}[上半連続性の保存]
     $(f_i:X\to\R)_{i\in I}$は上半連続な関数の族とする．
@@ -650,8 +664,8 @@ title=]
 
 \begin{proposition}\mbox{}
     \begin{enumerate}
-        \item $\paren{C^{1/2}(X),\bigvee,\land}$はframeである．
-        \item $C^{1/2}(X)$は和と積について閉じている．
+        \item $\paren{C^{1/2}(X),\bigvee,\land}$はframeである：任意の各点上限と，有限個の各点下限について閉じている．
+        \item $C^{1/2}(X)$は和と$\R$-倍について閉じている．
         \item $C^{1/2}(X)$は一様収束位相について閉じている．
     \end{enumerate}
 \end{proposition}
@@ -855,8 +869,9 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     任意の集合にどこまで性質の良い順序が定められるか，の問題を考える．
+    「帰納法」を用いるためには，全ての集合に整列順序を入れる必要があった(Cantor)．
     全順序は可能である．さらに条件を強めて，整列順序を考える．
-    Zermeloが選択公理と同値であることを示し，Zornがさらに使いやすい同値命題を付け加えた．
+    Zermelo (1904)が選択公理と同値であることを示し，Zorn (1935)がさらに使いやすい同値命題を付け加えた．なお，実際はKuratowski (1922)で出現する．
 \end{tcolorbox}
 
 \begin{definition}[well-ordered set]
@@ -876,6 +891,7 @@ title=]
 \end{theorem}
 \begin{remarks}
     いずれも，可算集合については明らかであるが，非可算無限集合について，それぞれの事実を直接示す方法は知られていない．
+    どの条件も，「帰納法の適用限界」というような認識論的限界を提起していて，ネットも同じ構造に注目する．
 \end{remarks}
 
 \begin{theorem}[超限帰納法]
@@ -907,6 +923,29 @@ title=]
         \item 任意の$W$の列は上に有界である．
         \item $\Brace{\beta\in W\mid\al<\beta}$も空でない．最小元を$\al+1$で表す．
     \end{enumerate}
+\end{proposition}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item 順序同型$f:X\to Y$とは，$x_1\le x_2\Leftrightarrow f(x_1)\le f(x_2)$を満たす全単射をいう．
+        \item 整列集合の順序同型類を\textbf{順序数}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    順序数，基数のクラスは整列的(well-ordered)である．
+\end{proposition}
+
+\section{濃度論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    集合には必ず整列順序が入り，順序数を持つことを見た．
+    これをせずとも，集合に同型類が得られ，これを基数という．
+\end{tcolorbox}
+
+\begin{proposition}[Bernstein, 1897]
+    $f:X\to Y,g:Y\to X$を単射とする．このとき，全単射$h:X\to Y$が存在する．
 \end{proposition}
 
 \chapter{位相空間とその射}
@@ -957,7 +996,7 @@ title=]
     (2)の有限条件を落としても成り立つとき，$\O$を\textbf{Alexandroff位相}という．
 \end{definition}
 
-\begin{example}
+\begin{example}[近傍フィルター]
     $\Op(X)$や，一点$x\in X$の近傍系または開近傍系$\O(x)$や，$X$のコンパクト集合の全体はフィルターをなす．
 \end{example}
 
@@ -1100,10 +1139,15 @@ title=]
     このうち，両端に位置する病的な位相を脱落させていくのが分離公理である．
 \end{tcolorbox}
 
-\begin{example}[trait / Sierpi\'{n}ski space, cofinite topology]\mbox{}
+\begin{example}[trait / Sierpi\'{n}ski space, cofinite topology, Zariski topology]\mbox{}
     \begin{enumerate}
         \item $\bS:=(2,\{\emptyset,\{1\},2\})$を\textbf{線}または\textbf{Sierpi\'{n}ski空間}という．
         \item $\O=\Brace{X\setminus S\in P(X)\mid \abs{S}<\infty}\cup\{\emptyset\}$を\textbf{余有限位相}という．$T_1$位相のうち最も粗いものとして特徴付けられる．
+        \item $K$を可換体，$R:=K[X_1,\cdots,X_n]$とし，$I(R)$を$R$のイデアル全体からなる集合とする．
+        \begin{align*}
+            \cR(A)&:=\Brace{x\in K^n\mid\forall_{f\in A}\;f(x)=0}\;(A\in I(R)),&\cC&:=\Brace{S\in P(K^n)\mid\exists_{A\in I(R)}\;S=\cR(A)}
+        \end{align*}
+        とすると，$\cC$は閉集合系としての公理を満たす．これを$K^n$の\textbf{Zariski位相}といい，$n$次元Affine $K$空間という．
     \end{enumerate}
 \end{example}
 
@@ -1701,11 +1745,29 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\begin{proposition}
+    $X,Y,Z$を位相空間とする．(1)$\Rightarrow$(2)は成り立つが，逆は必ずしも成り立たない．
+    \begin{enumerate}
+        \item $f:X\times Y\to Z$は連続．
+        \item それぞれの成分が連続．
+    \end{enumerate}
+\end{proposition}
+
 \begin{example}[$m$-進小数展開]
     任意の自然数$m\ge 2$について，$m$-進小数展開$e_m:m^\N\to[0,1]$，すなわち
     \[e_m((x_n)):=\frac{1}{m}\sum^\infty_{n=0}\frac{x_n}{m^n}\]
     は連続．ただし，$2$は離散空間とした．Tychonoffの定理より$2^\N$はコンパクトだから，$e_m$は全射より$[0,1]$がコンパクトであること(Heine-Borel)もわかる．
 \end{example}
+
+\subsection{積空間の閉包作用素}
+
+\begin{proposition}
+    $X,Y$を位相空間とし，$A\subset X,B\subset Y$とする．
+    \begin{enumerate}
+        \item $\o{A\times B}=\o{A}\times\o{B}$．
+        \item $(A\times B)^\circ=A^\circ\times B^\circ$．
+    \end{enumerate}
+\end{proposition}
 
 \subsection{始位相の普遍性}
 
@@ -1729,6 +1791,31 @@ title=]
         \end{enumerate}
     \end{enumerate}
 \end{proposition}
+
+\subsection{始位相のネット}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相は収束するフィルターを指定することでも定まる．
+    始位相は，収束ネットを$\F$によって指定しているとみなせる．
+    積空間とは，各点収束の位相であることがよく分かる．
+\end{tcolorbox}
+
+\begin{proposition}
+    $X$には$\F:=\{f:X\to Y_f\}_{f\in\F}$による始位相が入っているとする．このとき，ネット$(x_\lambda)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $(x_\lambda)\to x\in X$．
+        \item $\forall_{f\in\F}\;(f(x_\lambda))\to f(x)$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $g:Z\to X$を写像，$X$を$\F$が定める始位相によって位相空間とみると，次の2条件は同値：
+    \begin{enumerate}
+        \item $g$は連続である．
+        \item $\forall_{f\in\F}\;f\circ g:Z\to Y_f$は連続である．
+    \end{enumerate}
+\end{corollary}
 
 \section{商空間と像位相}
 
@@ -1758,7 +1845,7 @@ title=]
     \end{enumerate}
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}[全射が商写像になるための条件]
     全射$p$について，次の2条件は同値．
     \begin{enumerate}
         \item $p$は商写像である．
@@ -1772,6 +1859,25 @@ title=]
         \item 開でも閉でもない商写像が存在する．
     \end{enumerate}
 \end{corollary}
+
+\subsection{商空間}
+
+\begin{proposition}
+    $Q:X\to\wt{X}$を商写像とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $\wt{X}$は$T_1$である：任意の一点集合が閉．
+        \item $X$の同値類のそれぞれが閉集合である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    $Q:X\to\wt{X}$を商写像とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $\wt{X}$は$T_2$である．
+        \item $\Delta\subset X\times X$が閉集合．
+    \end{enumerate}
+\end{proposition}
+
 
 \subsection{直和位相の特徴付け}
 
@@ -1877,6 +1983,35 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\subsection{終位相のネット}
+
+\begin{proposition}
+    $Y$に，写像の族$\F:=\{f:X_f\to Y\}_{f\in\F}$によって終位相を入れる．このとき，次の2条件は同値：
+    \begin{enumerate}
+        \item $g:Y\to Z$は連続．
+        \item $\forall_{f\in\F}\;g\circ f:X_f\to Z$は連続．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{帰納極限}
+
+\begin{definition}
+    位相空間の列$(X_n)$は，埋め込み$f_n:X_n\mono X_{n+1}$で結ばれているとする．
+    空間$X:=\cup_{n\in\N}X_n$に$(f_n)$による終位相を入れた空間を\textbf{帰納的極限}と呼び，$\varinjlim X_n$と表す．
+    一般の図式$\{X_\lambda\}_{\lambda\in\Lambda}$についても同様に定義できる．
+\end{definition}
+
+\begin{theorem}[帰納極限の普遍性]
+    帰納系$(X_n)$と位相空間$Y$と連続写像の列$\varphi_n:X_n\to Y$が存在し，図式が可換になるとする．
+    このとき，唯一つの連続写像$F:\varinjlim\to Y$が存在し，図式を可換にする．
+\end{theorem}
+
+\begin{example}
+    $(\R^n)$を通常の包含によって帰納系と見る．
+    \[X:=\Brace{x\in\R^n\mid x_n=0\;\fe}\]
+    となるが，これは$\R^N$の積位相が定める相対位相よりも強い．
+\end{example}
+
 \section{ネット}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1909,21 +2044,28 @@ title=]
         $D=\N$のとき，$\nu\in A\;\fe$と同値．
 \end{definition}
 
-\begin{definition}[convergence of net, limit point, cluster / accumulation point, universal]
+\begin{definition}[convergence of net, limit point, cluster / accumulation point, universal / ultranet]
     $X$を位相空間，$F$を$S$上のフィルターとする．
     \begin{enumerate}
         \item ネット$n:D\to X$が$x\in X$に\textbf{収束}するとは，任意の$x$の開近傍（従って近傍）$A\in\O(x)$に，$n$が終局する$A\in F_n$ことをいう．このとき，$x$を\textbf{極限点}という．$X$がHausdorffのとき，一意に定まる．
         \item ネット$n:D\to X$が$x\in X$に\textbf{集積}するとは，任意の$x$の開近傍（従って近傍）$A\in\O(x)$に，$n$が無限回入ることをいう：$\forall_{i\in D}\;\exists_{j\ge i}\;n_j\in A$．このとき，$x$を集積点という．実は，任意の集積点は必ず部分ネットの極限点になる．
         \footnote{これは英語でclusterと\url{https://ncatlab.org/nlab/show/filter}に乗っているが，filterについてはclusterとaccumulateは同じ定義になるのだろうか？}
-        \item ネット$n:D\to X$が\textbf{普遍的}であるとは，任意の集積点が極限点であることをいう．同値だが，任意の$Y\in P(X)$について，$Y\in F_\nu\lor X\setminus Y\in F_\nu$が成り立つ．
+        \item ネット$n:D\to X$が\textbf{普遍的}であるとは，任意の集積点が極限点であることをいう．
+        同値だが，任意の$Y\in P(X)$について，$Y\in F_\nu\lor X\setminus Y\in F_\nu$が成り立つ．
+        これは，終局フィルターが極大であることに同値．
     \end{enumerate}
 \end{definition}
+
+\begin{proposition}
+    $(x_\lambda)$を普遍ネットとする．任意の写像$f:X\to Y$に関して，$f(x_\lambda)$も普遍ネットである．
+\end{proposition}
 
 \subsection{部分ネットと普遍ネット}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     ネットについては，任意の空間のコンパクト集合が「ネットコンパクト」になる．
+    $A$-集積点であることと$A$-ネットの極限点であることとが同値になる．
 \end{tcolorbox}
 
 \begin{definition}[subnet (Kelley 1955)]\label{def-subnet-Kelley}
@@ -1953,6 +2095,9 @@ title=]
         \item $h:M\to\Lambda$を第一射影によって定めると，$(x_{h(\mu)})_{\mu\in M}$は部分ネットであり，$\B$の任意の元に終局する．
     \end{enumerate}
 \end{proof}
+\begin{remarks}
+    フィルターは$\B$たる要件を満たす．
+\end{remarks}
 
 \begin{corollary}
     位相空間$X$上のネットの任意の集積点$x$について，ある部分ネットが存在して$x$に終局する．
@@ -1964,6 +2109,19 @@ title=]
 \begin{theorem}[existence of universal nets (AC)]
     任意のネットは，部分ネットとして普遍ネットを持つ．
 \end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}[(a)]
+        \item Zornの補題より，ネット$(x_\lambda)$の終局フィルターのうち，極大なものが取れる．
+        \item 任意の$A\in P(X)$について，
+        \[\forall_{\lambda\in\Lambda}\;\forall_{E,F\in\F}\;\exists_{\mu\ge\lambda}\;x_\mu\in E\cap A\lor x_\mu\in F\setminus A.\]
+        が示せる．
+        \item これは，$\forall_{A\in P(X)}\;A\in\F\lor X\setminus A\in\F$を意味する．
+        \item 補題を$\B=\F$として適用すると，$\F$を終局フィルターとするネットが取れ，このネットは普遍的である．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    本質的には，任意のフィルターに，それを含む超フィルターが存在することによる．
+\end{remarks}
 
 \subsection{ネットによる閉包演算子の特徴付け}
 
@@ -2028,9 +2186,15 @@ title=]
     写像$f:X\to Y$と点$x\in X$について，次の2条件は同値．
     \begin{enumerate}
         \item $f$は$x$で連続である：$f^*(\O(f(x)))\subset\O(x)$．
-        \item 
+        \item 任意の$x$に収束するネット$(x_\lambda)$について，$f(x_\lambda)\to f(x)$．
     \end{enumerate}
 \end{proposition}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] 任意の$x$に収束するネット$(x_\lambda)$を取る．$\forall_{A\in\O(f(x))}\;\exists_{B\in\O(x)}\;f(B)=A$だから，このネットは$f^{-1}(A)$に終局する．よって，ネット$(f(x_\lamdba))$は$A$に終局する．
+        \item[(2)$\Rightarrow$(1)] $\exists_{A\in\O(f(x))}\;f^{-1}(A)\notin\O(x)$とすると，$x\in X\setminus f^{-1}(A)$となり，ネットによる閉包の特徴付けより，ある$x$に収束する$X\setminus f^{-1}(A)$のネットが存在してしまう．これは$\forall_{\lambda\in\Lambda}\;f(x_\lambda)\notin A$を満たすネットだから，$f(x)$に収束せず，矛盾．
+    \end{description}
+\end{proof}
 
 \chapter{距離空間}
 
@@ -2175,6 +2339,9 @@ title=]
     このとき，$v_p(x+y)\le\max\Brace{v_p(x),v_p(y)}$が成り立ち，付値となる．
     これを\textbf{$p$進付値}という．
     $\Q$の絶対値による付値を\textbf{無限付値}または\textbf{Archimedes的付値}という．
+    $\Q_p$はこの距離について完備で，\textbf{$p$-進体}という．
+    \[\Z_p:=\Brace{a\in\Q_p\mid v_p(a)\le1}\]
+    は$\Q_p$の部分環となる．
 \end{example}
 
 \begin{theorem}[付値が定める距離空間]
@@ -2990,6 +3157,12 @@ title=]
 
 \subsection{Frechet空間$\R^\infty$の距離付け可能性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $[0,1]^\N$に通常の積位相を入れたものは，コンパクトハウスドルフ空間になる（いずれも任意の積空間に伝播する性質である）．
+    これを\textbf{Tychonoff cube}といい，実は距離化可能でもある．
+\end{tcolorbox}
+
 \begin{proposition}[モデル空間での例]\mbox{}
     \begin{enumerate}
         \item 積空間$\R^\N$は距離付け可能である．
@@ -3108,12 +3281,17 @@ title=]
     包含写像$i:A\to X$は連続単射である．
 \end{proof}
 
-\begin{proposition}[直積へのHausdorff性の伝播]\mbox{}
+\begin{proposition}
+    $X$は$\F$により始位相が定まっており，$\F$は$X$の点を分離するとする．
+    各$Y_f\;(f\in\F)$がHausdorffならば，$X$もHausdorffである．
+\end{proposition}
+
+\begin{corollary}[直積へのHausdorff性の伝播]\mbox{}
     \begin{enumerate}
         \item $(X_i)_{i\in I}$をHausdorff空間の族とすると，積空間$\prod_{i\in I}X_i$もHausdorffである．
         \item $X$と$Y$を位相空間とし，$X\times Y$がHausdorffであるとする．$Y$が空でなければ$X$はHausdorffである．
     \end{enumerate}
-\end{proposition}
+\end{corollary}
 \begin{proof}\mbox{}
     \begin{enumerate}
         \item $\Delta_X=\cap_{i\in I}(\pr_i\times\pr_i)^{-1}(\Delta_{X_i})$．仮定より，$\Delta_{X_i}$は閉集合である．$\pr_i$は$\prod_{i\in I}X_i$の積位相について連続写像であるから，$\pr_i\times\pr_i$も連続である（積位相の特徴付け\ref{prop-characterization-product-topology}）．
@@ -3158,6 +3336,16 @@ title=]
     仮定は即ち$A\subset\Ker(f,g)$と同値であるが，$Y$がHausdorffならば，$\Ker(f,g)$は閉集合である．よって，$\Ker(f,g)=X$．
     即ち，$f=g$．
 \end{proof}
+
+\subsection{ネットによる特徴付け}
+
+\begin{proposition}
+    位相空間$X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $X$はHausdorffである．
+        \item $X$の任意のネットは高々1つの収束点を持つ．
+    \end{enumerate}
+\end{proposition}
 
 \section{連結空間}
 
@@ -3575,6 +3763,11 @@ title=]
 
 \subsection{積への遺伝}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Kelleyは，Tychonoffの定理が選択公理と同値であることを示した．
+\end{tcolorbox}
+
 \begin{corollary}[積もコンパクト]\label{cor-product-of-compact-sets-is-compact}
     $X,Y$を位相空間とする．$A\subset X,B\subset Y$がコンパクト集合ならば，$A\times B\subset X\times Y$もコンパクト集合である．
 \end{corollary}
@@ -3586,10 +3779,35 @@ title=]
 \end{proof}
 
 \begin{theorem}[Tychonoff (AC)]\label{thm-Tychonoff}
-    $(X_i)_{i\in I}$をコンパクト空間の族とする．この時，積空間$\prod_{i\in I}X_i$はコンパクトである．
+    $(X_i)_{i\in I}$をコンパクト空間の族とする．この時，積空間$X:=\prod_{i\in I}X_i$はコンパクトである．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}[(a)]
+        \item $(x_\lambda)$を$X$の普遍ネットとする．
+        \item 普遍ネットの任意の写像による像は普遍だから，$(\pr_i(x_\lambda))$は$X_i$の普遍ネットである．$X_i$のコンパクト性より，収束点$x_i$を持つ．
+        \item $x\in X$であって$\pr_i(x)=x_i$を満たす点について，$x_\lambda\to x$が成り立つ．
+    \end{enumerate}
+\end{proof}
+
+\subsection{ネットによる特徴付け}
+
+\begin{theorem}[(AC)]
+    位相空間$X$について，次の5条件は同値．
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item $X$の任意の閉集合系$\Delta$が，任意の有限部分集合の共通部分が非空ならば，$\Delta$全体の共通部分は非空である．
+        \item $X$の任意のネットは集積点を持つ．
+        \item $X$の任意の普遍ネットは収束する．
+        \item $X$の任意のネットは収束する部分ネットを持つ．
+    \end{enumerate}
 \end{theorem}
 
 \section{コンパクトハウスドルフ空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    コンパクトハウスドルフ空間の位相は，これ以上弱くなるとハウスドルフではなくなり，これ以上強くなるとコンパクトではなくなる．
+\end{tcolorbox}
 
 \subsection{連続写像の標準分解}
 
@@ -3636,22 +3854,29 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsection{コンパクトハウスドルフ空間の特徴付け}
+\begin{proposition}[閉グラフ定理]
+    $f:X\to Y$をコンパクトハウスドルフ空間の間の写像とする．グラフが閉であるとき，$f$は連続である．
+\end{proposition}
+
+\subsection{Hausdorff空間のコンパクト集合}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     コンパクト集合の閉部分集合はコンパクトであり，Euclid空間のコンパクト集合は有界閉集合と等価である．
 \end{tcolorbox}
 
+\begin{lemma}
+    $X$をHausdorff空間，$C\subset X$をコンパクト集合とする．任意の$x\notin C$について，互いに素な開集合$A,B$を用いて$C\subset A,x\in B$と出来る．
+\end{lemma}
+
 \begin{proposition}[Hausdorff空間内でのコンパクト集合]\label{prop-compact-set-in-Hausdorff-spaces}
     $X$をハウスドルフ空間とする．
     \begin{enumerate}
-        \item $X$の部分集合$A$についての２条件
+        \item $X$の部分集合$A$について，(1)$\Rightarrow$(2)が成り立つ，$X$がコンパクト空間である時に逆も成り立つ．
         \begin{enumerate}[(1)]
             \item $A$はコンパクト集合である．
             \item $A$は閉集合である．
         \end{enumerate}
-        は，(1)$\Rightarrow$(2)が成り立つ，$X$がコンパクト空間である時に逆も成り立つ．
         \item $A,B$が$X$のコンパクト集合ならば，$A\cap B$も$X$のコンパクト集合である．
     \end{enumerate}
 \end{proposition}
@@ -3746,7 +3971,7 @@ title=]
     \end{description}
 \end{proof}
 
-\section{正規空間}
+\section{正則空間と正規空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -3802,8 +4027,16 @@ title=]
 \subsection{正規であるための十分条件}
 
 \begin{proposition}
-    コンパクトハウスドルフ空間は正規であるが，パラコンパクトなHausdorff空間も正規である．
+    コンパクトハウスドルフ空間($T_3$)は正規であるが，パラコンパクトなHausdorff空間も正規である．
     一方で，局所コンパクトな空間は正規とは限らない．
+\end{proposition}
+
+\begin{proposition}
+    距離空間は$T_4$である．
+\end{proposition}
+
+\begin{proposition}
+    Lindelofな正則空間は正規である．
 \end{proposition}
 
 \subsection{正規性の弱遺伝性}
@@ -3818,7 +4051,7 @@ title=]
     $X$を正規空間とする．$A$を$X$の閉集合，$U$を$X$の開集合で，$A\subset U$を満たすものとする．
     \begin{enumerate}
         \item $X$の閉集合$B$と，$X$の開集合$V$で，$A\subset V\subset B\subset U$を満たすものが存在する．
-        \item (Urysohn's lemma) 連続関数$f:X\to[0,1]$で，$A\subset f^{-1}(0)\subset f^{-1}([0,1)\subset U$を満たすものが存在する．
+        \item (Urysohn's lemma) 連続関数$f:X\to[0,1]$で，$A\subset f^{-1}(0)\subset f^{-1}([0,1))\subset U$を満たすものが存在する．
     \end{enumerate}
 \end{lemma}
 \begin{proof}\mbox{}
@@ -3829,6 +4062,11 @@ title=]
 \end{proof}
 
 \subsection{正規空間上の有界連続関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    正規空間内の閉集合上に定義された有界連続関数は，一様ノルムを変えないような全空間への延長が存在する．
+\end{tcolorbox}
 
 \begin{theorem}[Tietzeの延長定理 (AC)]
     $X$を正規空間，$A\subset X$を閉とする．
@@ -4079,11 +4317,16 @@ title=]
     \[\U(x):=\Brace{[x,y)\in P(\R)\mid x<y\in\R}\]
     とし，$\U:=\cup_{x\in\R}\U(x)$とすると，これは$\R$の近傍系の公理を満たす．
     換言すれば，半開区間$[a,b)$の全体は基底をなし，これが生成する位相を\textbf{右半開区間位相}といい，この位相空間を\textbf{Sorgenfrey直線}といい，$\R_l$で表す．
-    これはEuclid位相よりも強い位相になる．
+    これはEuclid位相よりも強い位相になる（第２可算でない）．
     積空間$\R_l\times\R_l$はSorgenfrey平面という．
     \begin{enumerate}
+        \item $\R_l$の基底$[a,b)$は閉集合でもある．
+        \item $\R_l$は可分かつ第１可算だが，第２可算ではない．
+        \item $\R_l$はLindelofである．実は，$\sigma$を$[x,y)$の形をした半開区間の族とすると，$\cup_{A\in\sigma}A=\cup_{A\in\sigma'}A$を満たす可算部分集合$\sigma'\subset\sigma$が存在する．
         \item 正規・パラコンパクト性の積への伝播の反例：$\R_l$は$T_1$かつ正規でパラコンパクトでもあるが，$\R_l\times\R_l$は正規でなく，従ってパラコンパクトでもない．
         \item 可分性の部分集合への遺伝の反例：$\R_l\times\R_l$は可分であるが，非可算な離散部分集合（したがって可分でない部分集合）を持つ．
+        すなわち，部分集合$\Brace{(x,y)\in\R^2\mid x+y=0}$は相対位相について離散であり，可分でないが，$\R^2$-閉である．
+        \item $\R_l\times\R_l$はLindelofでない．
     \end{enumerate}
 \end{example}
 
@@ -4330,7 +4573,7 @@ title=]
 
 \subsection{全正規}
 
-\begin{definition}
+\begin{definition}[completely normal]
     空間$X$が
     \begin{enumerate}
         \item \textbf{全正規}とは，任意の分離された集合は，開近傍で分離されることをいう．
@@ -4338,7 +4581,15 @@ title=]
     \end{enumerate}
 \end{definition}
 
-
+\begin{proposition}
+    次の3条件は同値．
+    \begin{enumerate}
+        \item $X$は全正規である．
+        \item $X$の任意の部分集合は正規である．
+        \item $X$の任意の開集合は正規である．
+        \item $Y,Z\subset X$が$\o{Y}\cap Z=Y\cap\o{Z}=\emptyset$ならば，互いに素な開近傍で分離できる．
+    \end{enumerate}
+\end{proposition}
 
 \subsection{完全正規}
 
@@ -4614,6 +4865,13 @@ title=]
     $X$をコンパクト空間とする．
     この上の同程度連続な関数列が各点収束するならば，一様収束する．
 \end{proposition}
+
+\subsection{Dini}
+
+\begin{lemma}
+    コンパクト空間$X$上の連続関数$C(X)$のネット$(f_\lambda)$は，単調であるとする：$\lambda\le\mu\Rightarrow f_\lambda\le f_\mu$．
+    このネットがある連続関数に各点収束するならば，一様収束する．
+\end{lemma}
 
 \section{$C$のコンパクト開位相}
 
