@@ -73,6 +73,9 @@
 \newtcolorbox{tbox}[3][]{%
 colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 
+% 証明内の文字が小さくなる環境．
+\newenvironment{Proof}[1][\bf\footnotesize\underline{［証明］}]{\proof[#1]\footnotesize}{\endproof}
+
 %%%%%%%%%%%%%%% フォント %%%%%%%%%%%%%%%
 
 \usepackage{textcomp, mathcomp} %Text Companionとは，T1 encodingに入らなかった文字群．これを使うためのパッケージ．\textsectionでブルバキに！
@@ -541,7 +544,7 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 %%%%%%%%%%%%%%% 定理環境（足助先生ありがとうございます） %%%%%%%%%%%%%%%
 
 \everymath{\displaystyle}
-\renewcommand{\proofname}{\bf ［証明］}
+\renewcommand{\proofname}{\bf\underline{［証明］}}
 \renewcommand{\thefootnote}{\dag\arabic{footnote}} %足助さんからもらった．どうなるんだ？
 \renewcommand{\qedsymbol}{$\blacksquare$}
 

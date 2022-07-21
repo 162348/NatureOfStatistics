@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -2191,7 +2191,7 @@ title=]
 \end{proposition}
 \begin{proof}\mbox{}
     \begin{description}
-        \item[(1)$\Rightarrow$(2)] 任意の$x$に収束するネット$(x_\lambda)$を取る．$\forall_{A\in\O(f(x))}\;\exists_{B\in\O(x)}\;f(B)=A$だから，このネットは$f^{-1}(A)$に終局する．よって，ネット$(f(x_\lamdba))$は$A$に終局する．
+        \item[(1)$\Rightarrow$(2)] 任意の$x$に収束するネット$(x_\lambda)$を取る．$\forall_{A\in\O(f(x))}\;\exists_{B\in\O(x)}\;f(B)=A$だから，このネットは$f^{-1}(A)$に終局する．よって，ネット$(f(x_\lambda))$は$A$に終局する．
         \item[(2)$\Rightarrow$(1)] $\exists_{A\in\O(f(x))}\;f^{-1}(A)\notin\O(x)$とすると，$x\in X\setminus f^{-1}(A)$となり，ネットによる閉包の特徴付けより，ある$x$に収束する$X\setminus f^{-1}(A)$のネットが存在してしまう．これは$\forall_{\lambda\in\Lambda}\;f(x_\lambda)\notin A$を満たすネットだから，$f(x)$に収束せず，矛盾．
     \end{description}
 \end{proof}
@@ -4086,9 +4086,21 @@ title=]
 
 \subsection{1の分解定理}
 
+\begin{definition}
+    被覆$(A_n)$が局所有限であるとは，$\forall_{x\in X}\;\exists_{A\in\O(x)}\;A_n\cap A=\emptyset\;\fe$を満たすことをいう．
+\end{definition}
+
 \begin{theorem}
-    正規空間の任意の局所有限な開被覆について，これに従属する1の分割が存在する．
+    正規空間の任意の局所有限な開被覆$(A_n)$について，これに従属する1の分割が存在する．
+    すなわち，連続関数の列$\{f_n\}\subset C(X;[0,1])$であって，次を満たす：
+    \begin{enumerate}
+        \item $f|_{X\setminus A_n}=0$．
+        \item $\sum_{n\in\N}f_n=1$．
+    \end{enumerate}
 \end{theorem}
+\begin{remark}
+    Zornの補題によれば，任意の開被覆に関して，これに従属する1の分割が取れる．
+\end{remark}
 
 \section{局所コンパクトハウスドルフ空間}
 
@@ -4108,14 +4120,15 @@ title=]
 \end{tcolorbox}
 
 \begin{definition}[locally compact]
-    位相空間$X$が\textbf{局所コンパクト}であるとは，任意の点$x\in X$の近傍系$\O(x)$がコンパクト集合からなる基本系を持つことを言う．
+    位相空間$X$が\textbf{局所コンパクト}であるとは，任意の点$x\in X$が相対コンパクトな近傍を持つことをいう．
+    これは，位相$\O$が相対コンパクト集合からなる開基を持つことに同値．
 \end{definition}
 
 \begin{proposition}[Hausdorffな場合の特徴付け]
     位相空間$X$について，(1)$\Rightarrow$(2)が成り立つ．$X$がHausdorffのとき，(2)$\Rightarrow$(1)も成り立つ．
     \begin{enumerate}
         \item 任意の点$x\in X$の任意の開近傍$U\in\O(x)$に対して，より小さな開近傍$V\in\O(x),V\subset U$で相対コンパクトなものが存在し，$\o{V}\subset U$が成り立つ．
-        \item 任意の点$x\in X$の（開）近傍系$\O(x)$がコンパクト集合からなる近傍系を持つ．
+        \item 任意の点$x\in X$の（開）近傍系$\O(x)$がコンパクト集合からなる基本系を持つ．
     \end{enumerate}
     また，$X$がHausdorffのとき，次の2条件も同値になる．
     \begin{enumerate}\setcounter{enumi}{2}
@@ -4130,7 +4143,7 @@ title=]
 \end{example}
 
 \begin{example}[局所コンパクト性は弱遺伝的である]
-    局所コンパクト空間の閉部分空間は局所コンパクト．
+    局所コンパクト空間の任意の閉部分空間と開部分空間は局所コンパクト．
 \end{example}
 
 \subsection{一般化された閉写像補題}
@@ -4139,10 +4152,11 @@ title=]
     $X$が位相空間，$Y$が局所コンパクトハウスドルフ空間ならば，連続写像$f:X\to Y$がproperならば閉である．
 \end{proposition}
 
-\subsection{1点コンパクト化による特徴付け}
+\subsection{Hausdorff空間からの1点コンパクト化による特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    まずは，Hausdorff空間が局所コンパクトであることを特徴付ける．
     コンパクトハウスドルフ空間の開部分空間への同相写像を\textbf{コンパクト化}という．
 \end{tcolorbox}
 
@@ -4204,9 +4218,12 @@ title=]
     \end{description}
 \end{proof}
 
-
-
 \subsection{1点コンパクト化の位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    このとき，$\infty$上に$f(\infty)=0$として延長する連続関数を$f\in C_0(X)$とすると，$\o{C_c(X)}=C_0(X)$となるのであった．
+\end{tcolorbox}
 
 \begin{lemma}[１点コンパクト化の位相の定め方のwell-definedness]
     $X$を局所コンパクト空間，$Y$をコンパクトハウスドルフ空間とし，$f:X\to Y$を$X$の一点コンパクト化とする．
@@ -4249,7 +4266,45 @@ title=]
     \end{enumerate}
 \end{proof}
 
-\subsection{直積への遺伝}
+\subsection{一般理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+Hausdorffに(1点)コンパクト化が可能な空間が局所コンパクトハウスドルフ空間である．
+コンパクト化の概念を一般化し，Hausdorffにコンパクト化が可能な空間とは，全正規空間であり，これは正規空間を含む．
+\end{tcolorbox}
+
+\begin{definition}
+    一般の位相空間$X$のコンパクト化とは，コンパクト集合$\wt{X}$と像が$\wt{X}$上稠密な埋め込み$i:X\mono\wt{X}$の組をいう．
+\end{definition}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item 任意の位相空間$X$は一点コンパクト化を持つ．
+        \item 一点コンパクト化$\wt{X}=X\cup\{\infty\}$がHausdorffであることと，$X$が局所コンパクトHausdorffであることとは同値．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{隆起関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    局所コンパクトハウスドルフ空間は正規空間とは限らないが，正規空間で成り立つところのUrysohnの補題と似た消息が，一歩引いて成り立つ．
+    これは，関数族$C_c(X)$は，任意の互いに素なコンパクト集合と開集合とを分離できるくらいに内容が濃いことを言っている．
+\end{tcolorbox}
+
+\begin{proposition}
+    局所コンパクトハウスドルフ空間$X$の任意のコンパクト部分集合$C\subset X$と開集合$C\subset A\osub X$とについて，コンパクト台を持つ連続関数$f:X\to[0,1]$であって，
+    $f|_C=1$かつ$\supp f\subset A$を満たすものが存在する．
+\end{proposition}
+
+\subsection{弱遺伝性}
+
+\begin{proposition}[局所コンパクト性は弱遺伝的である]
+    局所コンパクト空間の任意の閉部分空間と開部分空間は局所コンパクト．
+\end{proposition}
+
+\subsection{直積への伝播}
 
 \begin{proposition}
     局所コンパクト空間の有限直積は局所コンパクト．
@@ -4473,6 +4528,21 @@ title=]
         \item 連結ならば$\sigma$-コンパクトである．
         \item 局所連結ならばパラコンパクトである．
     \end{enumerate}
+\end{proposition}
+
+\subsection{$\sigma$-コンパクトならば正規}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\sigma$-コンパクトな局所コンパクトハウスドルフ空間というのが，なんとも$\sigma$-有限性に似ている．
+\end{tcolorbox}
+
+\begin{proposition}
+    局所コンパクト空間$X$が$\sigma$-コンパクトでもあるならば，正規である．
+\end{proposition}
+
+\begin{proposition}
+    局所コンパクト空間$X$が$\sigma$-コンパクトでもあるならば，相対コンパクトな開集合の増大列$(U_n)$であって，$\o{U_n}\subset U_{n+1}$かつ$\cup_{n\in\N}U_n=X$を満たすものが存在する．
 \end{proposition}
 
 \subsection{パラコンパクトハウスドルフ空間は従属する1の分割を持つ}

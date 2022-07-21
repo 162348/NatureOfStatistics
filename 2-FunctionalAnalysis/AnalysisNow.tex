@@ -2,487 +2,13 @@
 \title{Analysis Now}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
 
-\chapter{General Topology}
-
-\section{順序集合}
-
-\section{位相}
-
-\section{収束}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    収束性を議論するにあたって，
-    第１可算な空間は数列の概念で十分だが，
-    弱位相を備えたHilbert空間などは足りない．
-\end{tcolorbox}
-
-\subsection{ネットの収束}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Kellyは"A topologist is a person who cannot tell the difference between a doughnut and a coffee cup".と言った人でもある．
-\end{tcolorbox}
-
-\begin{definition}[direction, directed set / filtered set, net / generalized sequences, eventuality filter]\mbox{}
-    \begin{enumerate}
-        \item 空でない集合$D$上の，任意の２元について上界を持つ(upward-filtering / upward-directed)ような前順序$\le$を\textbf{方向}といい，組$(D,\le)$を\textbf{有向集合}または\textbf{フィルター付き集合}という．
-        \item 有向集合$D$からの写像$i:D\to X$を\textbf{$X$上のネット}または\textbf{有向系}という．ネットも$(x_n)_{n\in D}$と表し，$x_n=i(n)$とする．
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}[Kelley 1955]\label{def-subnet-Kelley}
-    $(y_\beta)_{\beta\in B}$が$(x_\al)_{\al\in A}$の部分ネットであるとは，次の２条件を満たす写像$f:B\to A$が存在することをいう：
-    \begin{enumerate}
-        \item $\forall_{\beta\in B}\;x_{f(\beta)}=y_\beta$．
-        \item strongly cofinal：$\forall_{\alpha\in A}\;\exists_{\beta\in B}\;\forall_{\beta_1\ge\beta}\;f(\beta_1)\ge\alpha$．
-    \end{enumerate}
-\end{definition}
-
-\begin{remark}
-    WillardもKelley \ref{def-subnet-Kelley}も，（ネット$n:D\to X$同様）$f$に単射性を要求していない点に注意．したがって，$A=\N$としても，通常の部分列の定義よりは一般的である．
-\end{remark}
-
-\begin{definition}[eventuality filter / cofinitely often]\mbox{}
-    \begin{enumerate}
-        \item $\nu:D\to X$を集合$X$上のネットとする．\textbf{ネット$\nu$が定めるフィルター}$F_\nu$とは，
-        \[F_\nu:=\Brace{A\in P(X)\mid \exists_{i\in D}\;\forall_{j\ge i}\;\nu_j\in A}\]
-        のことである．\footnote{この条件を「$\nu$は結局(eventually) $A$に収まる」と表現する．$D=\N$のとき，$\fe$の条件と同値．}
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}[convergence of net, limit point, cluster / accumulation point, Cauchy, universal]
-    $X$を位相空間，$F$を$S$上のフィルターとする．
-    \begin{enumerate}
-        \item ネット$n:D\to X$が$x\in X$に\textbf{収束}するとは，任意の$x$の開近傍（従って近傍）$A\in\O(x)$に，$n$が終局する$A\in F_n$ことをいう．このとき，$x$を極限点という．$X$がHausdorffのとき，一意に定まる．
-        \item ネット$n:D\to X$が$x\in X$に\textbf{集積}するとは，任意の$x$の開近傍（従って近傍）$A\in\O(x)$に，$n$が無限回入ることをいう：$\forall_{i\in D}\;\exists_{j\ge i}\;n_j\in A$．このとき，$x$を集積点という．実は，任意の集積点は必ず部分ネットの極限点になる．
-        \footnote{これは英語でclusterと\url{https://ncatlab.org/nlab/show/filter}に乗っているが，filterについてはclusterとaccumulateは同じ定義になるのだろうか？}
-        \item $X$を距離空間とする．ネット$n:D\to X$が\textbf{コーシー}であるとは，終局フィルター$F_n$について，$\forall_{r>0}\;\exists_{A\in F_n}\;\diam(A)<r$を満たすことをいう．
-        \item ネット$n:D\to X$が普遍的であるとは，任意の集積点が極限点であることをいう．同値だが，任意の$Y\in P(X)$について，$Y\in F_\nu\lor X\setminus Y\in F_\nu$が成り立つ．
-    \end{enumerate}
-\end{definition}
-
-\begin{example}
-    自明なフィルター(the improper filter)$P(X)$は全ての一点集合を含むので，全ての点に収束し，どの点にも密集しない．
-\end{example}
-
-\begin{lemma}[集積点の特徴付け]
-    $B$をupward-filtering\footnote{$\cup$について上に閉じていること}な$X$の部分集合系とする．ネット$(x_\lambda)_{\lambda\in\Lambda}$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $B$の任意の元に無限回入る．
-        \item 部分ネット$(x_{h(\mu)})_{\mu\in M}$が存在して，$B$に終局する．
-    \end{enumerate}
-\end{lemma}
-
-\begin{corollary}
-    位相空間$X$上のネットの任意の集積点$x$について，ある部分ネットが存在して$x$に終局する．
-\end{corollary}
-
-\begin{theorem}[existence of universal nets (AC)]
-    任意のネットは，部分ネットとして普遍ネットを持つ．
-\end{theorem}
-
-\subsection{ネットによる完備性の定義}
-
-局所凸空間$(X,\F)$において，Cauchyネットの定義は$\forall_{r>0}\;\forall_{m\in\F}\;\forall_{j,k\in D}\;\exists_{j_0\in D}\;j,k\ge j_0\Rightarrow m(x_j-x_k)<r$に同値．
-これが必ず極限を持つことは通常の意味でのノルム空間の完備性と同値．
-こうして完備性の概念は一般の位相空間に拡張できる．
-
-また，ネットの考え方により，位相線型空間で無限和が考えられる．
-局所凸空間$X$の無限族$(x_i)_{i\in I}$の和は，添字集合$I$の全ての有限部分集合のなす有向集合$D$について，
-$x_J:=\sum_{j\in J}x_j\;(J\in D)$が（ただの有限和なので）それぞれ定まり，ネット$(x_J)_{J\in D}$を得る．
-これが収束する時，これを$(x_i)_{i\in I}$の無限和とすれば良い．
-$X$が完備である時，$\sum_{i\in I}\norm{x_i}<\infty$である場合を除いて，無限和が存在する．
-
-\subsection{ネットによる位相空間論}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $P(X)$のうち，どのフィルターが終局フィルターであるか，すなわち，どのネットが収束するかを指定することと，空間に位相を指定することは同値になる．
-\end{tcolorbox}
-
-\begin{proposition}[(AC)]
-    部分空間$Y\subset X$と点$x\in X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $x\in\o{Y}$．
-        \item $x$に収束する$Y$のネットが存在する．
-    \end{enumerate}
-\end{proposition}
-
-\section{連続性}
-
-\subsection{ネットによる議論}
-
-\begin{proposition}[連続性の特徴付け]\label{prop-characterization-of-continuousness}
-    $f:X\to Y$を位相空間$(X,\sigma),(Y,\tau)$の射とする．$x\in X$について，次の３条件は同値．
-    \begin{enumerate}
-        \item $f$は$x$で連続：$\forall_{A\in\O(f(x))}\;f^{-1}(A)\in\O(x)$．
-        \item $\forall_{A\in\O(f(x))}\;\exists_{B\in\O(x)}\;f(B)\subset A$．
-        \item $x$に収束する任意のネット$(x_\lambda)_{\lambda\in\Lambda}$について，$f(x_\lambda)\to f(x)$．すなわち，$\O(f(x))\subset F_{f(x_\lambda)}$．
-    \end{enumerate}
-\end{proposition}
-
-\begin{proposition}[位相同型の特徴付け]
-    全単射な連続写像$f:X\to Y$について，次の２条件は同値．
-    \begin{enumerate}
-        \item 逆写像$f^{-1}$も連続である．
-        \item $f$は開写像である．
-    \end{enumerate}
-\end{proposition}
-
-\subsection{誘導される位相}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    無限積に入る積位相は，代数的な有限項制限が入るから，直感よりはよっぽど弱い位相になる．
-\end{tcolorbox}
-
-\begin{definition}[initial topology]
-    集合$X$と写像の族$(f:X\to Y_f)_{f\in\F}$を考える．$Y_f$の位相$\tau_f$に対して，$X$に$\F$を連続にする最弱の位相が定まる．
-    すなわち，$\Brace{f^{-1}(A)\in P(X)\mid A\in\tau_f,f\in\F}$が生成する位相である．
-\end{definition}
-
-\begin{proposition}\label{prop-net-in-initial-topology}
-    集合$X$に写像の族$\F$が定める始位相を入れる．
-    このとき，次の２条件は同値．
-    \begin{enumerate}
-        \item ネット$(x_\lambda)_{\lambda\in\Lambda}$は$x$に収束する．
-        \item 任意の$f\in\F$について，ネット$(f(x_\lambda))_{\lambda\in\Lambda}$は$f(x)$に収束する．
-    \end{enumerate}
-\end{proposition}
-
-\begin{corollary}\label{cor-continuous-function-to-initial-topology}
-    集合$X$に写像の族$\F$が定める始位相を入れる．このとき，位相空間$Z$からの写像$g:Z\to X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $g$は連続．
-        \item 任意の$f\in\F$について，$f\circ g:Z\to Y_f$は連続．
-    \end{enumerate}
-\end{corollary}
-
-\begin{definition}[final topology]
-    集合$Y$への写像の族$(f:X_f\to Y)_{f\in\F}$を考える．$Y$には$\F$を連続にする最強の位相が考えられる．
-    すなわち，$\Brace{A\in P(Y)\mid\forall_{f\in\F}\;f^{-1}(A)\in\tau_f}$が生成する位相である．
-\end{definition}
-
-\begin{proposition}
-    集合$Y$に写像の族$\F$が定める終位相を入れる．このとき，位相空間$Z$への写像$g:Y\to Z$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $g$は連続．
-        \item 任意の$f\in\F$について，$g\circ f:X_f\to Z$は連続．
-    \end{enumerate}
-\end{proposition}
-
-\begin{corollary}\label{cor-for-quotient-space}
-    $Q:X\to X/\sim$が定める商位相について，
-    \begin{enumerate}
-        \item 任意の同値類が$X$-閉であることと，対応する$X/\sim$の点が閉であることは同値．
-        \item $Q$が開写像であることと，任意の開集合$A\osub X$の飽和$f^{-1}(f(A))$が開であること，すなわち，$\wt{A}:=\Brace{x\in X\mid x\sim y,y\in A}$が開であることに同値．
-    \end{enumerate}
-\end{corollary}
-
-\section{分離}
-
-\begin{definition}[separating family]
-    $X$上の写像の族$\F$が$X$の点を分離するとは，$\forall_{x,y\in X}\;x\ne y\Rightarrow[\exists_{f\in\F}\;f(x)\ne f(y)]$を満たすことをいう．
-\end{definition}
-
-\subsection{Hausdorff性}
-
-\begin{proposition}
-    位相空間$(X,\tau)$について，
-    \begin{enumerate}
-        \item $X$はHausdorffである．
-        \item $X$の任意のネットの極限点は高々１つである．
-    \end{enumerate}
-\end{proposition}
-
-\begin{proposition}\label{prop-for-initial-topology-begin-Hausdorff}
-    $X$上に，$X$の点を分離する写像の族$\F$が定める始位相を考える．このとき，$Y_f$が全てHausdorffであるなら，$X$もHausdorffである．
-\end{proposition}
-
-\begin{corollary}\label{cor-product-of-Hausdorff-spaces}
-    Hausdorff空間の積はHausdorffである．
-\end{corollary}
-
-\subsection{正規空間とUrysohnの補題}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    To ascertaion the existence of an ample supply of continuous real functions on the space, we need a more severe separation condition.
-    $T_4$くらい位相が強ければ，隆起関数のような，真に変化のある連続関数の存在が保証される．
-\end{tcolorbox}
-
-\begin{definition}[normal]
-    Hausdorff空間$X$が\textbf{正規}であるとは，任意の互いに素な閉集合$E,F$が，互いに素な開集合$A,B$で分離できることをいう：$E\subset A,F\subset B$．
-    Hausdorff性を課さないこともある．
-\end{definition}
-
-\begin{proposition}
-    次の２条件は同値．
-    \begin{enumerate}
-        \item $X$は正規である．
-        \item 任意の$F\subset B$を満たす閉集合$F$と開集合$B$に対して，開集合$A$であって$F\subset A\subset\o{A}\subset B$を満たすものが存在する．
-    \end{enumerate}
-\end{proposition}
-\begin{proof}
-    $B=X\setminus E$として閉集合$E$と$F$の分離を考えれば良い．
-\end{proof}
-
-\begin{theorem}[Urysohn's lemma]
-    $(X,\tau)$を正規空間とする．互いに素な閉集合の組$E,F$に対して，連続関数$f:X\to [0,1]$であって，$f(E)=\{0\},f(F)=\{1\}$を満たすものが存在する．
-\end{theorem}
-\begin{remarks}
-    距離空間は正規であるが，この場合は$f(x):=\frac{d(E,x)}{d(E,x)+d(F,x)}$を考えれば良い．
-\end{remarks}
-
-\begin{proposition}[Tietze's theorem]
-    $(X,\tau)$を正規空間とする．任意の閉集合$F$上の任意の有界連続関数$f:F\to\R$は，$X$上に有界連続に延長する．
-\end{proposition}
-\begin{remarks}
-    $\R$は絶対引き戻し(absolute retract / extensor)であることを主張している．
-    $K$が絶対引き戻しであるとは，$X$が正規で$A\overset{\mathrm{closed}}{\subset}X$を閉部分集合，$f:A\to K$をその上の連続関数としたとき，必ず連続延長$\o{f}:X\to K$が存在することをいう．
-\end{remarks}
-
-\subsection{完備距離空間の内部hom}
-
-\begin{proposition}
-    $Y$を完備距離空間とする．位相空間$X$からの連続関数の空間$C(X,Y)$は，一様距離
-    \[d_\infty(f,g):=\sup\Brace{d(f(x),g(x))\land 1\in\R\mid x\in X}\]
-    について完備距離空間となる．
-\end{proposition}
-
-\subsection{下半連続性}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    下半連続な関数全体の集合$C^{1/2}(X)$は，位相$\tau$の情報を湛えている．
-\end{tcolorbox}
-
-\begin{definition}
-    写像$f:X\to\R$について，
-    \begin{enumerate}
-        \item $f$が下半連続であるとは，$\forall_{t\in\R}\;f^{-1}((t,\infty))\in\tau$を満たすことをいう．
-        \item $f$が上半連続であるとは，$\forall_{t\in\R}\;f^{-1}((-\infty,t))\in\tau$を満たすことをいう．
-        \item $X$上の下半連続な関数全体の集合を$C^{1/2}(X)$で表す．
-    \end{enumerate}
-\end{definition}
-
-\begin{lemma}[位相の特徴付け]
-    位相空間$(X,\tau)$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $\chi_A\in C^{1/2}(X)$．
-        \item $A\in\tau$．
-    \end{enumerate}
-\end{lemma}
-
-\begin{proposition}[下半連続性の特徴付け]\label{prop-characterization-of-lsc}
-    関数$f:X\to\R$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $f$は下半連続．
-        \item 極限点を持つネット$(x_\lambda)_{\lambda\in\Lambda}$について，$f(\lim x_\lambda)\le\liminf f(x_\lambda)$が成り立つ．
-    \end{enumerate}
-\end{proposition}
-
-\begin{proposition}[下半連続関数の空間は凸錐である]\mbox{}\label{prop-subalgebra-of-lsc-function}
-    \begin{enumerate}
-        \item $C^{1/2}(X)$の任意個の上限は再び$C^{1/2}(X)$の元．
-        \item $C^{1/2}(X)$の有限個の下限は再び$C^{1/2}(X)$の元．
-        \item $C^{1/2}(X)$は和と積について閉じている．
-        \item $C^{1/2}(X)$は一様収束について閉じている．
-    \end{enumerate}
-\end{proposition}
-
-\begin{proposition}[下半連続関数の描像]\label{prop-lower-semicontinuous-functions}
-    位相空間$X$は，連続関数の族$C(X,[0,1])$が点と閉集合を分離するとする（$X$が正規であるときこれを満たす）．
-    任意の下半連続関数$f:X\to\R_+$はある連続関数の族の上限である．
-\end{proposition}
-
-\section{コンパクト性}
-
-\subsection{ネットによる議論}
-
-\begin{theorem}[コンパクト性の特徴付け]\label{thm-characterization-of-compactness}
-    位相空間$(X,\tau)$について，次の５条件は同値．
-    \begin{enumerate}
-        \item 任意の開被覆は有限な部分被覆を持つ．
-        \item 閉集合系$\Delta$はどの有限交叉も空で無いとすると，$\Delta$の共通部分は非空である．
-        \item $X$上のネットは集積点を持つ．
-        \item $X$上の普遍ネットは収束する．
-        \item $X$上のネットは収束する部分ネットを持つ．
-    \end{enumerate}
-\end{theorem}
-\begin{remark}
-    Jacobson位相を備えた環のprimitive ideal spaceはコンパクトだがHausdorffでない．
-\end{remark}
-
-\begin{lemma}[コンパクト集合の分離]
-    $C$をHausdorff空間$X$のコンパクト集合とする．任意の$x\in X\setminus C$について，互いに素な部分集合$A,B$が存在して$C\subset A,x\in B$を満たす．
-\end{lemma}
-
-\begin{proposition}
-    Hausdorff空間のコンパクト集合は閉集合である．
-\end{proposition}
-
-\subsection{コンパクトハウスドルフ空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    コンパクトハウスドルフ空間はrigidである：これより弱い位相はHausdorffではなくなる．
-    実際，コンパクトハウスドルフ空間$(X,\tau)$からそれより弱い位相$\sigma$を入れた$(X,\sigma)$への恒等写像$\id_X:X\to X$は，$\sigma$がHausdorffなら同型を定める．
-\end{tcolorbox}
-
-\begin{proposition}
-    任意のコンパクトHausdorff空間は正規である．
-\end{proposition}
-
-\subsection{古典的結果}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    KelleyはTychonoffの定理と選択公理が同値であることを示した．
-\end{tcolorbox}
-
-\begin{theorem}[Tychonoff]
-    コンパクト空間の族$(X_i)$に対して，積空間$\prod_{i\in I}X_i$はコンパクトである．
-\end{theorem}
-\begin{proof}
-    $X:=\prod_{i\in I}X_i$の任意の普遍ネット$(x_\lambda)$を取る．
-    射影$\pr_i:X\epi X_i$は連続だから，ネット$(\pr_i(x_\lambda))$も普遍的である（任意の$Y\subset X_i$について$Y$または$X_i\setminus Y$に収束するという条件は保たれる\ref{prop-characterization-of-continuousness}）．
-    $X_i$はコンパクトだから，これは極限点$x_i\in X_i$を持つ．全射性より，$x\in\pr_i^{-1}(x_i)$が取れる．
-    このとき，$\forall_{i\in I}\;\pr_i(x)=x_i$を満たすように取れる．
-    始位相の性質\ref{prop-net-in-initial-topology}より，$\forall_{i\in I}\;\pi_i(x_\lambda)\to\pi_i(x_i)$は$x_\lambda\to x$に同値．よって，$X$もコンパクト（コンパクト性の特徴付け\ref{thm-characterization-of-compactness}）．
-\end{proof}
-
-\begin{theorem}[covering theorem of E. Borel]
-    $\R^n$の有界閉集合はコンパクトである．
-\end{theorem}
-
-\begin{definition}[Tychonoff cube]
-    積空間$T:=[0,1]^\N$をTychonoff cubeという．Tychonoffの定理と\ref{cor-product-of-Hausdorff-spaces}より，これはコンパクトハウスドルフ空間である．
-\end{definition}
-
-\begin{lemma}
-    $d(x,y):=\sum\frac{\abs{x_n-y_n}}{2^n}$は$T$に距離を定める．
-\end{lemma}
-
-\begin{theorem}[Urysohnの距離付け定理]\label{thm-Urysohn-metrization}
-    第２可算な正規空間は，Tychonoff cubeに埋め込める．特に，距離化可能である．
-\end{theorem}
-
-\section{局所コンパクト性}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Euclid空間，離散空間，そのほか多くの解析的・幾何学的対象は局所コンパクトである．
-    コンパクト化の技法が重要になる．
-\end{tcolorbox}
-
-\begin{definition}
-    位相空間$X$が\textbf{局所コンパクト}であるとは，任意の点がコンパクトな近傍を持つことをいう．これは，$X$が相対コンパクトな集合からなる開基を持つことに同値．
-\end{definition}
-
-\subsection{一点コンパクト化}
-
-\begin{definition}[compactification]
-    位相空間$(X,\tau)$について，
-    \begin{enumerate}
-        \item コンパクト化とは，コンパクト空間$(\wt{X},\wt{\tau})$とその稠密な部分集合への同型$i:X\mono\wt{X}$との組$(\wt{X},\wt{\tau},i)$をいう．
-        \item 特に$\wt{X}\setminus X$が一点集合となる場合を一点コンパクト化という．
-    \end{enumerate}
-\end{definition}
-\begin{remarks}
-    Hausdorff空間のコンパクト化はHausdorffとは限らない．
-    が，completely regular空間はHausdorffなコンパクト化を許す．
-    なお，正規空間はcompletely regularである．
-\end{remarks}
-
-\begin{proposition}
-    任意のコンパクトでない位相空間$(X,\tau)$について，
-    \begin{enumerate}
-        \item 一点コンパクト化$(\wt{X},\wt{\tau})$が存在する．
-        \item $\wt{X}$がHausdorffであることと，$X$が局所コンパクトなHausdorff空間であることは同値．
-    \end{enumerate}
-\end{proposition}
-
-\subsection{局所コンパクトハウスドルフ空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    局所コンパクトハウスドルフ空間はほぼ多様体であることに注意．隆起関数はこのクラスに対して定義される．
-    関数族$C_c(X)$は$X$のコンパクト集合と閉集合を分離するには十分大きいクラスである．
-    $\o{C_c(X)}=C_0(X)$である．
-\end{tcolorbox}
-
-\begin{proposition}
-    局所コンパクトハウスドルフ空間の任意の開集合と閉集合は，相対位相に関して再び局所コンパクトハウスドルフである．
-\end{proposition}
-
-\begin{proposition}[隆起関数の存在]
-    局所コンパクトハウスドルフ空間$(X,\tau)$の任意のコンパクト集合$C$とこれを含む開集合$C\subset A\osub X$について，$A$に含まれるコンパクト台を持つ連続関数$f:X\to[0,1]$が存在して，$f(C)=\{1\}$を満たす．
-\end{proposition}
-
-\begin{definition}[functions vanish at infinity]\label{def-functions-vanish-at-infinity}
-    連続関数$f:X\to\R$が，任意の$\ep>0$に対して$\Brace{x\in X\mid\abs{f(x)}\ge 0}$がコンパクトであることは，$X$の一点コンパクト化への連続延長が$\wt{f}(\infty)=0$を満たすことに同値．
-    これを，無限遠点で消える関数という．
-    そのような関数全体からなる集合を$C_0(X)$で表す．
-\end{definition}
-
-
-\subsection{パラコンパクト性}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    局所コンパクトハウスドルフ空間は正規とは限らない．正規になるためには，$\sigma$-コンパクト性，または局所コンパクト性の下では同値だが，パラコンパクト性が必要である．
-    多様体論も，１の分割を使うために，正規性を達成する対象のみを多様体とした．
-\end{tcolorbox}
-
-
-\begin{lemma}\label{lemma-characterization-of-paracompactness}
-    局所コンパクトで連結な空間$X$について，次の３条件は同値．
-    \begin{enumerate}
-        \item パラコンパクトである．
-        \item $\sigma$-コンパクトである．
-        \item $\cup E_n=X$を満たす相対コンパクトな開集合の増大列$(E_n)$で，$\o{E_n}\subset E_{n+1}$を満たすものが取れる．
-    \end{enumerate}
-\end{lemma}
-
-\begin{proposition}[正規性の十分条件]\mbox{}
-    \begin{enumerate}
-        \item パラコンパクトなHausdorff空間は正規である．
-        \item $\sigma$-コンパクトは局所コンパクトHausdorff空間は正規である．
-    \end{enumerate}
-\end{proposition}
-
-\begin{corollary}
-    任意の第２可算な局所コンパクトHausdorff空間は距離化可能である．
-\end{corollary}
-\begin{proof}
-    Urysohnの距離付け定理\ref{thm-Urysohn-metrization}より．
-\end{proof}
-
-\begin{proposition}[１の分割]
-    正規空間$X$の局所有限な開被覆$(A_n)$について，
-    これに従属する１の分割が存在する．
-\end{proposition}
-\begin{remark}
-    Zornの補題に依れば，任意の局所有限な開被覆$(A_n)$についても取れる．
-\end{remark}
-
-\begin{proposition}\mbox{}
-    \begin{enumerate}
-        \item 位相多様体について，第２可算であることと，パラコンパクトかつ連結部分が可算個であることは同値．
-        \item 第２可算ならば，Lindelöfである．すなわち，可算被覆性を持つ．
-        \item 局所コンパクトで$\sigma$-コンパクトはHausdorff空間は可算被覆性を持つ．
-    \end{enumerate}
-\end{proposition}
-
-\chapter{Banach Space}
+\chapter{Banach空間}
 
 \begin{quotation}
     Banach空間とは，CompMetの中の線型空間である．
@@ -557,7 +83,7 @@ title=]
         \item $T$は\textbf{有界}である：$\exists_{\al\ge 0}\;\forall_{x\in X}\;\norm{Tx}\le\al\norm{x}$．これは作用素ノルムが有限であることを意味する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 自明．
         \item[(2)$\Rightarrow$(3)] $x\in X$で連続であるから，$\exists_{\delta>0}\;\forall_{y\in X}\;\norm{x-y}<\delta\Rightarrow\norm{Tx-Ty}\le 1$．
@@ -566,7 +92,7 @@ title=]
         \item[(3)$\Rightarrow$(1)]
         $\forall_{x,y\in X}\;\norm{Ty-Tx}=\norm{T(y-x)}\le\al\norm{y-x}$より．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remark}
     なおさらに，
     \begin{enumerate}
@@ -606,7 +132,7 @@ title=Banには内部homを持つ閉圏としての構造がある]
     $X,Y$をノルム空間，$Y$を完備とする．このとき，$B(X,Y)$はBanach空間である．
     特に$B(X)$はBanach代数である．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $B(X,Y)$の任意のCauchy列$(T_n)$が収束することを示せば良い．
     任意の$x\in X$について，$(T_nx)$も$Y$のCauchy列であり，$Y$は完備であるから，極限$\lim_{n\to\infty}T_nx$が定まる．これを$Tx$として，対応$T:X\to Y$を定め，これが$T\in B(X,Y)$で$\lim_{n\to\infty}T_n=T$であることを示す．
     \begin{description}
@@ -620,7 +146,7 @@ title=Banには内部homを持つ閉圏としての構造がある]
         が成り立つ．
         $(T_n)$はCauchy列としたから，$n\to\infty$のとき，$T_nx\xrightarrow{n\to\infty}Tx$．また，$n$を十分大きくとれば，$T$が有界であることもわかる．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{完備性の特徴づけ}
 
@@ -639,7 +165,7 @@ title=]
         \item $X$は完備である．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(2)$\Rightarrow$(1)] 絶対収束級数はCauchy列を定めるため．
         \item[(1)$\Rightarrow$(2)] Cauchy列$(x_n)$を任意に取る．
@@ -648,7 +174,7 @@ title=]
         \[\sum_{n=1}^\infty\norm{x'_n}\le\norm{x'_1}+\sum_{n=1}^\infty\norm{x'_{n+1}-x'_n}<\infty\]
         より，部分列$(x'_n)$は収束する．よって，元のCauchy列$(x_n)$も収束する．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}
     $X$をBanach空間，$Y$をその閉部分空間とする．自己写像$f:Y\to Y$が縮小写像ならば（$1$より小さいLipschitz定数を持つならば），$Y$内に不動点が一意的に存在する．
@@ -754,7 +280,7 @@ title=]
         \item $X$がBanach空間で$Y$がその閉部分空間であるとき，$X/Y$もBanach空間である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item まず，次が成り立つ：
         \begin{align*}
@@ -771,7 +297,7 @@ title=]
         これに対して，$\norm{x_{n+1}-x_n}<2^{-n}$を満たす$x_n\in Q^{-1}(z'_n)$が存在する．実際，ある$x'_n\in X$について$Qx'_n=z'_n$であるが，ある$y\in Y$が存在して$\norm{x'_n-x_{n-1}-y}<2^{-n}$であるから，$x_n:=x'_n-y$と定めれば良いことと，帰納法により従う．
         よって$(x_n)$はCauchy列だから収束し，$Q$は連続だから$(z'_n)$も収束する．$(z_n)$はCauchy列だから，これも$Qx$に収束する．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remark}[商ノルムのwell-definedness]
     (3)の証明内の議論の通り，
     $\norm{Qx}\le\norm{x}$であるから，商写像は連続である．
@@ -1156,13 +682,13 @@ title=]
         \item そうでない集合，すなわち，任意の稠密開集合の可算共通部分は稠密であるような位相空間を\textbf{第二類}または\textbf{Baire空間}という．
     \end{enumerate}
 \end{definition}
-\begin{proof}
+\begin{Proof}
     任意の半径$r>0$の閉球$B_0$を取り，これと$\cap_{n=1}^\infty A_n$との共通部分が空でないことを示せば，$\cap_{n=1}^\infty A_n$の稠密性が示せる．
 
     いま，$A_1\cap B_0^\circ$は空でない開集合だから，ある半径$2^{-1}r$より小さい閉球$B_1$が取れる．
     これを繰り返すことで，$B_n\subset A_n\cap B^\circ_{n-1},r(B_n)<2^{-n}r$を満たす閉球の列$(B_n)$が取れる．
     $X$は完備だから，$\exists_{x\in X}\;\{x\}=\cap_{n=1}^\infty B_n\subset B_0\cap\paren{\cap_{n=1}^\infty A_n}$が成り立ち，共通部分が空でないことがわかった．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[Baire category theorem 1]
     任意の完備距離空間$X$はBaire空間である．
@@ -1193,7 +719,7 @@ title=]
     $X,Y$をBanach空間とする．
     $T\in B(X,Y)$による単位閉球$B(0,1)$の像が，$Y$のある球$B(0,r)\;(r>0)$の中で稠密であるとする．この時，$\forall_{\ep\in(0,1)}\; B(0,(1-\ep)r)\subset T(B(0,1))$．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] $A:=T(B(0,1))$と表すと，これは$B(0,r)$上稠密である．任意の$y\in B(0,r)$と$\ep\in(0,1)$を取り，$y\in(1-\ep)^{-1}A$が従うことを示せば良い．
         \item[構成] まず，$y$に収束する$A$の列$(y_n)$を構成する．$A$は$B(0,r)$上稠密だから，$\exists_{y_1\in A}\;\norm{y-y_1}<\ep r$を満たす．
@@ -1201,12 +727,12 @@ title=]
         これを繰り返すことで，$y_n\in\ep^{n-1}A,\Norm{y-\sum^n_{k=1}y_k}<\ep^nr$を満たす$A$の列$(y_n)$が取れ，対応する$X$の列$(x_n)$が$\norm{x_n}\le\ep^{n-1},Tx_n=y_n$を満たすように取れる．
         \item[証明] するとこの列$(x_n)$は絶対収束級数$x:=\sum_{n\in\N}x_n$を定めるが，$Tx=y$であり，また$\norm{x}\le\sum_{n\in\N}\ep^{n-1}=(1-\ep)^{-1}$を満たすから，$y\in(1-\ep)^{-1}A$．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[開写像定理]\label{thm-open-mapping-theorem}
     $X,Y$をBanach空間とし，有界線型作用素$T\in B(X,Y)$を全射とする．このとき，$T$は開写像である．
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] $T$の線形性と，$X$の位相は開球を基として生成されることより，$T(B(0,1))$が$0$を内点に持つことを示せれば十分である．
         実際このとき，任意の開集合の基底$U(x,r)$について，$B(x,\delta)\subset T(B(x,r))\subset\oo{T(U(x,r))}$より，$U(x,\delta)\subset T(U(x,r))$が取れることがわかる．
@@ -1218,7 +744,7 @@ title=]
         $2B(0,\ep/n)\subset B(y/n,\ep/n)-B(y/n,\ep/n)$と，像$T(B(0,1))$が対称凸であることより，$B(0,\ep/n)$上稠密でもある．
         よって補題より，$\forall_{\delta\in(0,\ep/n)}\;B(0,\delta)\subset T(B(0,1))$．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[逆写像定理]\label{cor-inverse-mapping-theorem}
     Banach空間の間の任意の全単射な有界線型作用素は，有界な逆射を持つ．
@@ -1242,11 +768,11 @@ title=全空間で定義された閉作用素は有界である]
 \begin{theorem}[closed graph theorem]\label{thm-closed-graph-theorem}
     作用素$T:X\to Y$のグラフ$G(T):=\Brace{(x,y)\in X\times Y\mid Tx=y}$が直積空間$X\times Y$の閉集合ならば，$T$は有界である．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     仮定より，$G(T)$は$X\times Y$内の閉部分空間をなす，特にBanachである．
     このとき，$\pr_1,\pr_2$はいずれもノルム減少的であるから，特に有界である．また$\pr_1$は全単射を定めるから，逆写像定理より，有界な逆$\pr_1^{-1}\in B(X,G(T))$を持つ．
     $T=\pr_2\circ\pr_1^{-1}$より，$T$も有界．
-\end{proof}
+\end{Proof}
 
 \subsection{一様有界性の原理}
 
@@ -1262,14 +788,14 @@ title=]
     各点有界（全ての$x\in X$について列$(T_\lambda x)$が$Y$で有界）ならば，
     作用素ノルム$\{\norm{T_\lambda}\in\R\mid\lambda\in\Lambda\}$も有界である．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     $Y_\Lambda:=\prod_{\lambda\in\Lambda}Y$を直積空間，$T:=\prod_{\lambda\in\Lambda}T_\lambda:X\to Y_\Lambda$を積作用素とすると，
     仮定より$\forall_{x\in X}\;\norm{T_\lambda x}<\infty$だから，$T$はたしかにwell-definedである．
     この$T$が有界であることを示せば，積作用素の普遍性$\forall_{\lambda\in\Lambda}\;T_\lambda=\pr_\lambda\circ T$より，$\forall_{\lambda\in\Lambda}\;\norm{T_\lambda}\le\norm{T}<\infty$が従う．
 
     $(x,y)\in X\times Y_\Lambda$に収束する列$(x_n,Tx_n)$を任意にとり，$Tx=y$を示せば良い．
     各$\lambda\in\Lambda$について$T_\lambda$は連続であるから，$T_\lambda x=\pr_\lambda(y)$．これは$y=Tx$を意味する．
-\end{proof}
+\end{Proof}
 \begin{remark}[Banach-Steinhaus]
     $Y$は一般のノルム空間とできる．
     基本的には，積作用素のノルムが上界として見つかるのが原理である．
@@ -1287,11 +813,11 @@ title=]
     $(T_\lambda)_{\lambda\in\Lambda}$を，$B(X,Y)$のネットであって，任意の$x\in X$について$Y$のネット$(T_\lambda x)_{\lambda\in\Lambda}$は有界で収束するとする．
     このとき，$T\in B(X,Y)$が存在して，これに各点収束する$\forall_{x\in X}\;T_\lambda x\to Tx$．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $Tx:=\lim_{\lambda\in\Lambda}T_\lambda x$によって定まる作用素$T:X\to Y$が有界であることを示せば良い．
     この$\{T_\lambda\}$は各点有界族だったから一様有界でもある：$\exists_{\alpha\in\R}\;\forall_{\lambda\in\Lambda}\;\norm{T_\lambda}\le\al$．
     したがって，$\forall_{x\in X}\;\norm{Tx}\le\al\norm{x}$．すなわち，$T$は有界である．
-\end{proof}
+\end{Proof}
 \begin{remark}
     命題\ref{prop-extension-of-operator-on-dense-subset}より，$X$の稠密な部分集合上で任意のネットが有界で収束することを示せば十分．
 
@@ -1337,7 +863,7 @@ title=双対空間の元の存在]
     $m:X\to\R$を実線型空間上のMinkowski汎関数とし，$\varphi:Y\to\R$を部分空間上の汎関数で$m$で抑えられるものとする：$\forall_{y\in Y}\;\varphi(y)\le m(y)$．
     このとき，$X$上の汎関数$\wt{\varphi}:X\to\R$であって$m$によって抑えられる延長$\wt{\varphi}|_Y=\varphi$が存在する．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[$m$以下の延長の存在] いま$Y$を任意の部分空間，$\varphi$をその上の線型汎関数とする．
         このとき，任意の$x\in X\setminus Y$に対して，延長$\wt{\varphi}:Y+\R x\to\R$であって$m$によって抑えられるものが存在することを示す．
@@ -1357,16 +883,16 @@ title=双対空間の元の存在]
         $N=\Brace{(Z_\mu,\psi_\mu)}_{\mu\in M}\subset\Lambda$を全順序部分集合としたとき，$Z:=\cup_{\mu\in M}Z_\mu,\psi(z):=\psi_\mu(z)\;(z\in Z_\mu)$と定めると，$(Z,\psi)\in\Lambda$で，$N$の上界である．
         よってZornの補題より，$\Lambda$の極大元$(Z,\wt{\varphi})$が存在するが，仮に$Z\ne X$としたら，$Z+\R x\;(x\in X\setminus Z)$上の延長を考えることで$Z$の極大性に矛盾する．よって，$Z=X$．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[Hahn-Banach extension theorem]
     $m:X\to\R$を線型空間上のセミノルム，$\varphi$を部分空間$Y\subset X$上の汎関数であり$\abs{\varphi}\le m$を満たすとする．
     このとき，汎関数$\wt{\varphi}$であって，$\abs{\wt{\varphi}}\le m$を満たし，$\wt{\varphi}|_Y=\varphi$を満たす延長が存在する．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     $\bF=\R$の場合，セミノルムはMinkowski汎関数で，$\abs{\varphi}\le m\Rightarrow\varphi\le m$だから，これは補題の特別な場合である．
     よって，$\bF=\C$の場合を考える．
-\end{proof}
+\end{Proof}
 \begin{remarks}
     もちろん，$X$がノルム空間で，$f:Y\to\C$がその上の有界な線型汎関数であるときにも適用可能で，この場合，$\norm{F}=\norm{f}$を満たす延長が可能．
 \end{remarks}
@@ -1397,10 +923,10 @@ title=]
     任意の元$x\in X\setminus\{0\}$に対して，
     汎関数$\varphi\in X^*$が存在して，$\norm{\varphi}=1$かつ$\varphi(x)=\norm{x}$を満たす．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $\varphi:\bF x\to\bF$を，$\varphi(\al x)=\al\norm{x}$で定めると，$\norm{\varphi}=1$である．
     これはノルム$\norm{-}$より大きくないままの$X$上への延長が存在するが，$\norm{\al x}=1$を満たす$\al x\in\bF x$について$\varphi(\al x)=1$であるから，$\norm{\varphi}=1$のままである．
-\end{proof}
+\end{Proof}
 \begin{remarks}[state]
     汎関数による点の分離能力は十分に高い．定理\ref{thm-Spectrum-is-compact}などに使う．
     また，ノルム空間$X$が単位的$C^*$-代数であるとき，この条件を満たす汎関数を\textbf{状態}という．\footnote{\url{https://ncatlab.org/nlab/show/state on a star-algebra}}
@@ -1426,9 +952,9 @@ title=]
     \[\norm{x}=\sup\Brace{\abs{f(x)}\in\bF\mid f\in B^*}.\]
     特に，$x\in X$に関する評価写像は$\ev_x\in X^*$で，$\norm{\ev_x}=\norm{x}$．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     系\ref{cor-Hahn-Banach}による．
-\end{proof}
+\end{Proof}
 
 \subsection{零化空間と再双対空間}
 
@@ -1464,12 +990,12 @@ title=]
         \item $A$が$X$上線形稠密である（$\o{Y}=X$）ことと，$A^{\perp\perp}=X$は同値．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item a
         \item 系\ref{cor-dense-subspace}と同様に証明できるはず．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{definition}[bidual space, double-dual embedding, reflexive]
     $X$をノルム空間とすると，$X^*,X^{**}$はBanach空間である．
@@ -1480,9 +1006,9 @@ title=]
         \item $i$が全射でもある（したがって$i$はBanの同型である）とき，Banach空間$X$を\textbf{回帰的}という．
     \end{enumerate}
 \end{definition}
-\begin{proof}
+\begin{Proof}
     $i$が単射であるのは明らか．任意の$x\in X$について，$\norm{i(x)}=\sup_{\varphi\in B^*}\varphi(x)\le\norm{x}$であるが，系\ref{cor-Hahn-Banach}より，$\varphi(x)=x$を満たす$\varphi\in B^*$が取れるから，実際$\norm{i(x)}=\norm{x}$とわかる．
-\end{proof}
+\end{Proof}
 \begin{example}\mbox{}
     \begin{enumerate}
         \item 有限次元線型空間は回帰的である．
@@ -1626,11 +1152,11 @@ title=]
         \item $X$が局所凸とする．$f$が連続であることと，$\Ker f$が閉部分空間であることとは同値．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f\ne 0$のとき，$f$は全射だから，$x\in f^{-1}(1)$が取れる．すると任意の$y\in X$について，$y=(y-f(y)x)+f(y)x\in\Ker f+\C x$である．実際，$f(y-f(y)x)=f(y)-f(y)f(x)=0$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{転置}
 
@@ -1694,14 +1220,14 @@ title=]
         \item $f:Y\to X$が連続であることは，任意の$Y$の収束ネット$(y_\lambda)$に対して，$\forall_{m\in\F}\;m(f(y_\lambda)-f(y))\to 0$が成り立つことに同値．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 特に$z=x$の場合を考えると，$\{y\in X\mid m(y-x)<\ep\}$は準基である．しかし，$m$の劣加法性（三角不等式）より，$m(y-x)<\ep$ならば$\abs{m(y-z)-m(x-z)}<\ep$が従う．
         よって準基としてはこの形のもののみを考えれば良いから，これらの有限交叉の全体は基底をなす．
         \item \ref{prop-net-in-initial-topology}より．
         \item \ref{cor-continuous-function-to-initial-topology}より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[局所凸性の特徴付け]\label{prop-characterization-of-locally-convex-spaces}
     位相線型空間$X$について，次の２条件は同値．
@@ -1710,11 +1236,11 @@ title=]
         \item $X$の位相はセミノルム位相である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(2)$\Rightarrow$(1)] 任意の$X$の収束ネット$x_\lambda\to x,y_\lambda\to y$について，$x_\lambda+y_\lambda\to x+y$を示せば良い．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     この命題より，ノルム空間の理論の延長として局所凸空間を考えることができる．
     以降，線型空間$X$とその上の半ノルムの族$\F$との組$(X,\F)$を\textbf{局所凸空間}といい，混用する．
@@ -1775,14 +1301,14 @@ title=]
         \item 弱閉である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     (1)$\Rightarrow$(2)は明らかだから，(2)$\Rightarrow$(1)を示す．
     $x\in X\setminus C$を任意に取る．
     すると，$C$と互いに素な$x$中心の開球$B$が取れる．
     Hahn-Banachの分離定理\ref{thm-Hahn-Banach-separation-theorem}より，
     $U:=\Brace{y\in X\mid\Re\varphi(y)\ge t}$なる$C$の弱位相における閉近傍が見つかる．
     この補集合は，$x\in C$の開近傍である．よって，$X\setminus C$は弱位相について開いている．
-\end{proof}
+\end{Proof}
 \begin{remarks}
     弱位相はノルム位相よりも開集合の数は同じか少ない．
     閉集合の数も同様であるが，凸集合については保たれる．
@@ -1823,12 +1349,12 @@ title=]
         \item $C$が定める計量関数$m_C$について，$\forall_{\lambda\in\R}\;m_C(\lambda x)=\abs{\lambda}m_C(x)$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $-C\subset C$．$a\ne0$のとき$ax\in C\Leftrightarrow x\in a^{-1}C$だから，$x\in C\Rightarrow -x\in C\Rightarrow x\in -C$より，$C\subset-C$も得る．
         \item (1)より，$\lambda x\in rC\Leftrightarrow\abs{\lambda}x\in rC\Leftrightarrow\frac{r}{\abs{\lambda}}C$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{計測関数とHahn-Banachの分離定理}\label{sub-Hahn-Banach-separation}
 
@@ -1845,7 +1371,7 @@ title=]
     \[m(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
     と定めると，これはMinkowski汎関数で，$C=\Brace{x\in X\mid m(x)<1}$と表せる．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[well-definedness] $C$は$0$の開近傍としたから，ある$N\in\N$が存在して，$\forall_{x\in X}\;\forall_{n\ge N}\;n^{-1}x\in C$．よって，$\forall_{x\in X}\;m(x)<\infty$であり，たしかに関数が定まる．なお，このことから，任意の$0$の近傍は併呑集合であることがわかる．
         \item[正斉次性] $\forall_{t\ge 0}\;m(tx)=\inf_{tx\in sC,s>0}s=\inf_{x\in t^{-1}sC,s<0}s=tm(x)$．
@@ -1857,7 +1383,7 @@ title=]
         逆に，$x\in X$は$m(x)<1$を満たすならば，ある$s<1$について$s^{-1}x\in C$ということだから，$C$が$0$の近傍であることと凸性より，
         \[x=(1-s)0+s(s^{-1}x)\in C.\]
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}[absolutely convex]\label{remarks-seminorm-and-absolutely-convex-sets}
     このように定義された関数を，しばしば$C$の計測関数(gauge)という．
     $C$の凸性は$m$の劣加法性に対応している．
@@ -1939,10 +1465,10 @@ title=]
         \item $Y$は$X^*$上$w^*$-稠密である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $X^*$上$w^*$-稠密でないと仮定すると，$Y$上で$0$だが，恒等的に$0$ではないような$w^*$-連続な線型汎関数が存在することになるが，
     $w^*$-位相を備えた空間$X^*$上で連続な汎関数は$(\ev_x)_{x\in X^*}$に限る．
-\end{proof}
+\end{Proof}
 
 \subsection{随伴と$w^*$-位相}
 
@@ -2082,13 +1608,13 @@ title=]
         \item $P(X)$の極点はDirac測度$\delta_x\;(x\in X),\forall_{f\in C(X)}\;\delta_x(f)=f(x)$である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\mu_1,\mu_2\in P(X)$と$\lambda\in(0,1)$を任意に取ると，$\lambda\mu_1+(1-\lambda)\mu_2\in P(X)$がわかる．
         \item 線型汎函数$\ev_1:M(X)\to\bF;\mu\mapsto\mu(1)$は$w^*$-位相について連続である
         $M(X)=(C(X))^*$の閉単位球$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     コンパクトハウスドルフ空間$X$上の確率測度は，
     $(C(X))^*$上において，
@@ -2114,7 +1640,7 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
         \item $C$は$w^*$-閉である．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] (2)$\Rightarrow$(1)は明らかだから，(1)$\Rightarrow$(2)を示す．
         $\forall_{r>0}\;rB^*\cap C$が$w^*$-閉であるとき，$C$はノルム閉でもある．\footnote{実際，$C$の任意のノルム収束列$(x_n)$を取ると，これは有界列だから，$\exists_{r>0}\;\{x_n\}\subset rB^*\cap C$．$rB^*\cap C$は$w^*$-閉という仮定よりノルム閉でもあるから，$(x_n)$は$C$上でノルム収束する．}
@@ -2158,7 +1684,7 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
         \[\Re\brac{x,\varphi}=\sum_{n\in\N}\Re\brac{\lambda_nx_n,\varphi}=\Re\brac{T\varphi,\lambda}\ge t\ge1\footnote{$X$と$X^*$上の双線型形式から，$l^1$上の内積に写している．}\]
         が成り立つ．特に，$0\notin C$で，$C$の$w^*$-閉包にも含まれないことがわかる．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     Banach空間$X$のノルム位相と弱位相について，凸集合$A\subset X$が弱閉であることと$\forall_{r>0}\;A\cap rB$が弱閉であることは同値．なぜならば，$\Rightarrow$：凸集合$rB$はノルム閉であるから弱閉でもある\ref{prop-closedness-of-convex-sets}．$\Leftarrow$：$A$がノルム閉であることを示せば十分だが，$A$のノルム収束列は有界で，あるノルム閉集合$\exists_{r>0}\;A\cap rB$に含まれるから，結局$A$はノルム閉．
     $X$が回帰的である場合は，弱$*$-位相は弱位相と同じ強さだから，全く同様の事実が成り立つ．しかし，弱$*$-位相が弱い場合は？
@@ -2172,11 +1698,11 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
     \end{enumerate}
     特に，$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}だから，$Z\cap B^*$も$w^*$-閉ならば$w^*$-コンパクトである．\footnote{コンパクト集合と閉集合との共通部分はコンパクト．コンパクト性の特徴付けから示す．}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     (1)$\Rightarrow$(2)は明らか．(2)$\Rightarrow$(1)を考える．
     部分空間$Z$は凸集合である．
     $Z\cap B^*$が$w^*$-閉ならば，$rB^*\;(r>0)$も$w^*$-閉だから，$Z\cap rB^*$も$w^*$-閉．よってKrein-Smulianの定理より$Z$は$w^*$-閉．
-\end{proof}
+\end{Proof}
 
 \begin{corollary}\label{cor-characterization-of-weak-star-continuousness}
     $X^*$上の汎関数$x\in X^{**}$について，次の２条件は同値．
@@ -2185,11 +1711,11 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
         \item 閉単位球への制限$x|_{B^*}$が$w^*$-連続である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     (1)$\Rightarrow$(2)は明らかだから(2)$\Rightarrow$(1)を示す．
     $x:X^*\to\bF$が零であるとき，(2)$\Rightarrow$(1)は成り立つ．
     任意の凸な閉集合$E\subset\bF$に対して，$(x|_{B^*})^{-1}(E)=x^{-1}(E)\cap B^*$は$w^*$-閉集合だから，$x^{-1}(E)$も$w^*$-閉集合である．
-\end{proof}
+\end{Proof}
 
 \subsection{可分性と距離化可能性}
 
@@ -2551,9 +2077,9 @@ title=]
 \begin{proposition}
     $(S,\A,\mu)$を測度空間，$X$は$c_0$と同型な閉部分空間を持たないとする．このとき，$f:S\to X$が$\mu$-強可測で弱可積ならば，$f$はPettis可測である．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     \ref{thm-Bessaga-and-Pelczynski}による．
-\end{proof}
+\end{Proof}
 
 \subsubsection{Analysis Now}
 
@@ -2583,7 +2109,7 @@ title=]
         を満たす．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\fY_f$の列$(\varphi_n)$であって，$\varphi\in X^*$に$w^*$-収束するものを任意に取る．
         すると，任意の$x\in X$について，$\fX^*\ni\varphi_n\mapsto\brac{f(x),\varphi_n}\in\bF$は連続だから，
@@ -2599,7 +2125,7 @@ title=]
         $X^*$上への一意的な延長を持つ\ref{prop-extension-of-operator-on-dense-subset}．
         よって一意に定まる．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     $\fY$をBanach空間で，$f:X\to\fY^*$は$w^*$-可測で，ノルム$\norm{f(-)}$は可積分であるとする．
@@ -2607,14 +2133,14 @@ title=]
     \[\forall_{y\in\fY}\;\Bracket{y,\int f}=\int\brac{y,f(-)}\]
     を満たす．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\fX:=\fY^*$とすると，$f$は$w^*$-可測で，任意の$y\in\fY$に対して$\brac{y,-}:\fY^*\to\bF$も$w^*$-連続より$w^*$-可測だから，$\brac{y,f(-)}:X\to\bF$も可測．よって，$\fY\subset\fY_f$．
     したがって補題より，任意の$y\in\fY$について$\brac{f(-),y}\in\L^1(X)$だから，$\int\brac{y,f(-)}\in\bF$．
     この対応$\fY\to\R;y\mapsto\int\brac{y,f(-)}$は明らかに$\fY$上で線型である．この対応を$\int f$と表すと，一意性は補題より従うから，連続性すなわち$\int f\in\fY^*$を示せば良い．
 
     \[\Abs{\Bracket{y,\int f}}=\Abs{\int\brac{y,f(-)}}=\norm{y}\int\Bracket{\frac{y}{\norm{y}},f(-)}\le\norm{y}\int\norm{f(-)}\]
     より，線型汎函数$\int f$は有界である．よって，$\int f\in\fY^*$．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     $f:X\to\fX$を弱可測関数で，$\fX$を可分とする．$\norm{f(-)}\in\L^1(X)$とする．
@@ -2622,7 +2148,7 @@ title=]
     \[\forall_{\varphi\in\fX^*}\;\Bracket{\int f,\varphi}=\int\brac{f(-),\varphi}\]
     を満たす．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] $f:X\to\fX$は弱可測としたから，$\brac{-,\varphi}:X\to\bF$は弱連続より弱可測であることと併せると，$\fY_f=\fX^*$．
         よって，$f:X\to\fX\mono\fX^{**}$も弱可測で特に$w^*$-可測だから，命題より，$\int f\in\fX^{**}$が存在して，
@@ -2633,11 +2159,11 @@ title=]
         よって，$B^*$の列$(\varphi_n)$が$\varphi$に$w^*$-収束する，すなわち，$\L^1(X)$の列$(\brac{f(-),\varphi_n})$が$\brac{f(-),\varphi}$に各点収束する（$\forall_{x\in\fX}\;\brac{f(x),-}:\fX^*\to\bF$は$w^*$-連続）と仮定して，$\paren{\int\brac{f(-),\varphi_n}}$も$\bF$上で$\int\brac{f(-),\varphi}$に収束することを示せば良い\ref{cor-characterization-of-weak-star-continuousness}．
         が，これは$\norm{f(-)}$という可積分な非負値の優関数が見つかるから，Lebesgueの優収束定理より従う．
     \end{description}
-\end{proof}
+\end{Proof}
 
 
 
-\chapter{Hilbert Space}
+\chapter{Hilbert空間}
 
 \begin{quotation}
     完備な距離を内積が誘導する場合をHilbert空間という．
@@ -2688,7 +2214,7 @@ title=]
         \item $(-|-)$が自己共役であることは，$\forall_{x\in X}\;(x|x)\in\R$に同値．特に，$(-|-)$が正定値ならば自己共役である．\footnote{実数値の正定値双線型形式が対称とは限らない．}
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{align*}
             &(x+y|x+y)+i(x+iy|x+iy)+(-1)(x-y|x-y)+(-i)(x-iy|x-iy)\\
@@ -2709,7 +2235,7 @@ title=]
         \end{align*}
         となるが，それぞれの虚部について$(2iy|2x)=i(2y|ix),(2y|2ix)=-i(2y|2x)$だから，たしかに$(x|y)=\o{(y|x)}$を満たす．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     一変数じゃないが，鏡像の原理を奥に感じる．
 \end{remarks}
@@ -2731,7 +2257,7 @@ title=]
         \item ノルム$\norm{-}$が中線定理を満たすとき，(2)の極化恒等式によって定まる半双線型形式は内積を定める．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 半内積$(-|-):X\times X\to\bF$は特に半正定値だから，特に$\forall_{x\in X}\;(x|x)\ge 0$．よって確かに$\norm{-}:X\to\R_+$はwell-defined．
         $\forall_{a\in\bF}\;\norm{ax}=(\abs{a}^2(x|x))^{1/2}=\abs{a}\norm{x}$．
@@ -2760,7 +2286,7 @@ title=]
         \item 省略．
         \item 
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     一般に（共役）対称形式は二次形式を定めるが，二次形式から対称性を復元する際に必要なノルムと内積を結ぶ条件を極化恒等式という．
 \end{remarks}
@@ -2782,10 +2308,10 @@ title=]
         \item $\norm{x+y}^2=\norm{x}^2+\norm{y}^2$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     (1)$\Rightarrow$(2)は極化恒等式(c)より．
     (2)$\Rightarrow$(1)は，極化恒等式(c)より$\Re(x|y)=0$と，$(x|iy)=0$より$\Im(x|y)=0$を，別々に得る．
-\end{proof}
+\end{Proof}
 
 \subsection{二次形式と極化恒等式}
 
@@ -2863,7 +2389,7 @@ title=]
 \begin{lemma}
     $C$をHilbert空間$H$の非空な閉凸集合とする．このとき，任意の$y\in H$に対して，距離$d(y,C)$を最小にするときの点$x=\argmin_{x\in C}d(y,x)\in C$が唯一つ存在する．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $C$を$C-y$と取り直すことで，$d(0,C)$を最小にする$x\in C$を考えても，一般性は失われない．
     \begin{description}
         \item[存在] $\al:=\inf\Brace{\norm{x}\ge0\int x\in C}$とおき，$\norm{x_n}\to\al$を満たす$C$の点列$(x_n)$を任意に取る．
@@ -2872,7 +2398,7 @@ title=]
         特に$y=x_n,z=x_m$の場合を考えることで，$(x_n)$はCauchy列であることが分かる．よって，$C$は閉集合だから，ある$x\in C$が存在して，$\lim_{n\to\infty}x_n=x,\norm{x}=\al$を満たす．
         \item[一意性] $z\in C$も$\norm{z}=\al$を満たすとする．すると，中線定理より，$4\al^2\ge4\al^2+\norm{x-z}^2$だから，$x=z$を得る．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}
     任意の閉部分空間$X\subset H$について，
@@ -2883,7 +2409,7 @@ title=]
         \item $(X^\perp)^\perp=X$が成り立つ．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)] 
         任意に$y\in H$をとり，$x:=\argmin_{x\in X}d(y,X)$とおく．
@@ -2907,18 +2433,18 @@ title=]
         $x^\perp=0$が従い，$X=(X^\perp)^\perp$が分かる．
         \item[(2)] $(X^\perp)^\perp=X$より，(1)の証明を$X$を$X^\perp$として行うことより，$x^\perp=\argmin_{x^\perp\in X^\perp}d(y,x^\perp)$も分かる．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[closed linear span]\label{cor-expression-of-closed-linear-span}
     任意の部分集合$X\subset H$について，$X$を含む最小の閉部分空間は$(X^\perp)^\perp$である．
     特に，$X$が$H$の部分空間ならば，$\dbloverline{X}=(X^\perp)^\perp$．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $X^\perp$は閉部分空間であるから，定理より$(X^\perp)^\perp$も閉部分空間である．これが$X$を含む最小の閉部分空間であることを示す．
     $X\subset Y$を$H$の閉部分空間とすると，$Y^\perp\subset X^\perp$で，$(X^\perp)^\perp\subset (Y^\perp)^\perp=Y$が従う．
 
     $H$の部分空間$X$を含む最小の閉集合が$\dbloverline{X}$で，$\dbloverline{X}$自身も部分空間であるから，これは最初の閉部分空間でもある．
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[部分空間の稠密性の特徴付け]\label{cor-dense-subspace}
     $X$を$H$の部分空間とする．次の２条件は同値．
@@ -2927,9 +2453,9 @@ title=]
         \item $X^\perp=0$．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     部分空間$X$について，$X^\perp$は$H$の閉部分空間だから，$X^\perp\oplus(X^\perp)^\perp=H$．系より$(X^\perp)^\perp=\dbloverline{X}$であるから，$\dbloverline{X}=H$は$X^\perp=0$と同値．
-\end{proof}
+\end{Proof}
 
 \subsection{Rieszの表現定理}
 
@@ -2945,7 +2471,7 @@ title=]
 \begin{proposition}[Riesz representation theorem]\label{prop-isometry-of-Hilbert-dual}
     写像$\Phi:H\to H^*;x\mapsto(-|x)$は，共役線型な等長同型である．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[共役線形性] $\Phi(ax)=(-|ax)=\o{a}(-|x)=\o{a}\Phi(x)$．
         \item[等長写像] Cauchy-Schwarzの不等式\ref{prop-polarization-identity}より，
@@ -2960,7 +2486,7 @@ title=]
         \[(y|x)=(y-\varphi(y)x+\varphi(y)x|x)=\varphi(y)\norm{y}^2\]
         が任意の$y\in H$について成り立つから，$\Phi^{-1}(\varphi)\ni\frac{x}{\norm{x}^2}$．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[$L^2$上の有界線形関数の積分表現]
     $(X,\Om,\mu)$を測度空間とする．任意の有界線型汎函数$F:L^2(\mu)\to\bF$に対して，ただ一つの元$h_0\in L^2(\mu)$が存在して，
@@ -2984,7 +2510,7 @@ title=]
         \item $T$はノルム-弱連続である(norm-weak continuous)．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 任意の$y\in H$を取れば，随伴作用素\ref{thm-existence-of-adjoint-operator}を考えることにより，$T^*y\in H$が存在して，次の図式は可換．
         \[\xymatrix{
@@ -3001,7 +2527,7 @@ title=]
         \item[(2)$\Rightarrow$(3)] ノルム位相は弱位相よりも強いため．
         \item[(3)$\Rightarrow$(1)] (2)$\Rightarrow$(1)と同様の議論によって示せる．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{remarks}
     weak-norm連続な作用素は，有限なランクを持つ．この議論は，コンパクト作用素の特徴付けにつながる．
@@ -3024,14 +2550,14 @@ title=]
         \item (Parseval identity) $\norm{x}^2=\sum_{j\in J}\abs{\al_j}^2\;\paren{x=\sum_{j\in J}\al_jx_j}$が成り立つ．
     \end{enumerate}
 \end{definition}
-\begin{proof}
+\begin{Proof}
     (3)は，$(x|x)=\sum_{j\in J}\abs{\al_j}^2$であるが，内積$(-|-):H\times H\to\bF$が連続であることより，右辺は収束する．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     Hilbert空間$H$の任意の正規直交系は，正規直交基底へと拡大できる．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] $\{e_j\}_{j\in J_0}\subset H$を正規直交系とする．
         $\{e_j\}_{j\in J_0}$を含む$H$の正規直交系全体からなる集合は，包含関係について帰納的順序集合を定めるから，Zornの補題より極大元$\{e_j\}_{j\in J}\;J_0\subset J$が存在する．
@@ -3040,7 +2566,7 @@ title=]
         $X\ne H$のとき，$X^\perp\ne 0$だから，ある$e\in X^\perp$が存在して，$\forall_{j\in J}\;(e_j|e)=0,(e|e)=1$を満たす．
         これは$\{e_j\}_{j\in J}$の極大性に矛盾する．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{example}\mbox{}
     \begin{enumerate}
@@ -3060,7 +2586,7 @@ title=]
     $H,K$をHilbert空間とし，$\{e_i\}_{i\in I},\{f_j\}_{j\in J}$をそれぞれの正規直交基底とし，$I$と$J$は集合として同型であるとする．
     この時，等長同型$U:H\to K$が存在して，$\forall_{x,y\in H}\;(Ux|Uy)=(x|y)$を満たすものが存在する．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[稠密部分集合上の作用素] 全単射$\gamma:I\to J$をとる．これを用いて，
         作用素$U_0:\sum_{i\in I}\bF_ie_i\to\sum_{j\in J}\bF_jf_j$を
@@ -3072,7 +2598,7 @@ title=]
             &=\sum_{k=0}^3i^k\norm{x+i^ky}^2=4(x|y).
         \end{align*}
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     無限次元の可分なHilbert空間は，全て可算な正規直交基底を持つため，全て同型である．
     標準的に$l^2$を考えると良い．これはEuclid空間の非常に自然な一般化となっている．
@@ -3221,7 +2747,7 @@ title=]
     }\]
     ただし，終域となっている空間のノルムは作用素ノルム$\norm{B_T}:=\sup\Brace{\abs{B_T(x,y)}\in\R_+\mid\norm{x}\le 1,\norm{y}\le1}$とする．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[$\to$がwell-definedな等長写像] 
         $T\in B(H)$ならば，$B_T:=(-,T-)$は明らかに半双線型形式である．
@@ -3247,7 +2773,7 @@ title=]
         よって，$T\in B(H)$．
         また，この有界作用素$T$が定める半双線型形式は$B_T=B$に他ならない．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[随伴作用素の存在]\mbox{}\label{thm-existence-of-adjoint-operator}
     \begin{enumerate}
@@ -3262,7 +2788,7 @@ title=]
         \end{enumerate}
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 任意の$T\in B(H)$に対して，$(T-|-):H^2\to\bF$は有界な半双線型形式であるから，ただ一つの$T^*\in B(H)$が存在して$(T-|-)=(-|T^*-)$を満たす．
         \item \begin{enumerate}[(a)]
@@ -3289,7 +2815,7 @@ title=]
             $\sup_{y\in K}\abs{T^*y}=\sup_{y\in K}\abs{Ty}$と見ると明らか．
         \end{enumerate}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{自己共役作用素}
 
@@ -3341,12 +2867,12 @@ title=]
     $A$を自己共役作用素とする．このとき，$\forall_{x\in H}\;(Ax|x)=0\Rightarrow A=0$．
     なお，$H$が複素Hilbert空間ならば，一般の$A$について成り立つ．
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 自己共役作用素の作用素ノルムの性質\ref{prop-operator-norm-of-self-adjoint-operator}により，$\forall_{x\in H}\;(Ax|x)=0\Rightarrow\norm{A}=0\Rightarrow A=0$が従うことによる．
         \item ？？
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{TVSの同型}
 
@@ -3359,11 +2885,11 @@ title=]
 \begin{proposition}\label{prop-Ker-of-adjoint-operator}
     任意の$T\in B(H)$に対して，$\Ker T^*=(\Im T)^\perp$．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\forall_{x,y\in H}\;(x|T^*y)=(Tx|y)$の下で，
     $y\in\Ker T^*\Rightarrow (T(H)|y)=0$より，$y\in(T(H))^\perp$．
     逆に$y\in(T(H))^\perp\Rightarrow (H|T^*y)=0\Rightarrow T^*y\in H^\perp=\{0\}$．
-\end{proof}
+\end{Proof}
 \begin{remark}
     双対的な関係は$(\Ker A)^\perp=\oo{\Im A^*}$までしか成り立たない．
 \end{remark}
@@ -3379,7 +2905,7 @@ title=]
         \item $T,T^*$は全射．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Leftrightarrow$(2)] $(T^{-1}T)=(TT^{-1})=I$であるとき，${}^*:B(H)\to B(H)$の劣乗法性より$(T^{-1})^*$が$T^*$の逆射である．また$T^*T^{*-1}=T^{*-1}T^*=I$のときも同様に$*$を作用させれば良い．
         \item[(1)$\Rightarrow$(3)] 任意の$x\in H$について$\norm{x}=\norm{T^{-1}Tx}\le\norm{T^{-1}}\norm{Tx}$より，$\ep:=\norm{T^{-1}}^{-1}$と取れば良い．
@@ -3389,7 +2915,7 @@ title=]
         \item[(6)$\Rightarrow$(5)] $\Ker T=(T^*(H))^\perp=0$より．
         \item[(1)$\Rightarrow$(6)] 明らか．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{Hilbの射}
 
@@ -3408,7 +2934,7 @@ title=]
         \item $\forall_{h,g\in H}\;(Vh|Vg)=(h|g)$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(2)$\Rightarrow$(1)] $\forall_{h\in H}\;\norm{Vh}^2=(Vh|Vh)=(h|h)=\norm{h}^2$より，$V$は等長である．
         \item[(1)$\Rightarrow$(2)] $\forall_{\lambda\in\bF}\;\norm{h+\lambda g}^2=\norm{Vh+\lambda Vg}^2$について，極化恒等式を用いると，
@@ -3416,7 +2942,7 @@ title=]
         より，$\forall_{\lambda\in\bF}\;\Re\o{\lambda}(h|g)=\Re\o{\lambda}(Vh|Vg)$．
         $\bF=\R$のとき，$\lambda=1$とすると結論を得る．$\bF=\C$のとき，$\lambda=1,i$とすると結論を得る．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     内積とノルムをつなぐものが極化恒等式である．
 \end{remarks}
@@ -3439,7 +2965,7 @@ title=]
     \end{enumerate}
     この同値な条件を満たすとき，$T$を\textbf{正規作用素}という．
 \end{definition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] $\norm{Tx}=(T^*Tx|x)^{1/2}=(TT^*x|x)^{1/2}=\norm{T^*x}$．
         \item[(2)$\Rightarrow$(1)] 極化恒等式から$\forall_{x,y\in H}\;(T^*Tx|y)=(TT^*x|y)$を得る．具体的には，
@@ -3452,7 +2978,7 @@ title=]
         \end{align*}
         より，$A^*A=AA^*\Leftrightarrow BC=CB$．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{example}
     自己共役作用素とユニタリ作用素は正規である．多くの書籍はスペクトル分解をこのクラスに限る．
@@ -3467,12 +2993,12 @@ title=]
         \item $\forall_{h,g\in H}\;(Ah|Ag)=(h|g)$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Leftrightarrow$(3)] 等長写像の特徴付け\ref{prop-characterization-of-isometry}に他ならない．
         \item[(2)$\Leftrightarrow$(3)] $\forall_{h,g\in H}\;(A^*Ah|g)=(Ah,Ag)$より，$A^*A=I$と同値．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[同型の特徴付け]
     $A\in B(H)$について，次の３条件は同値．
@@ -3482,13 +3008,13 @@ title=]
         \item $A$は正規な等長写像である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 等長写像の特徴付け\ref{prop-characterization-of-isometry-2}より$A$は等長で，また可逆であるから特に全写．
         \item[(2)$\Rightarrow$(3)] $A$について，ユニタリならば等長だから，$A^*A=I$．また一般に，全写な等長写像$A$の逆写像$A^{-1}$も全写な等長写像である．よって，$(A^{-1})^*A^{-1}=I\Leftrightarrow(AA^*)^{-1}=I$．
         \item[(3)$\Rightarrow$(1)] 等長写像の特徴付け\ref{prop-characterization-of-isometry-2}より，$A^*A=I$．$A$は正規だから，$AA^*=I$も成り立つ．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}
     $A$が自己共役ならば，$\forall_{h\in H}\;(Ah|h)=0\Rightarrow A=0$．
@@ -3501,9 +3027,9 @@ title=]
         \item $T$ is bounded away from zero．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     作用素の可逆性の特徴付け\ref{prop-characterization-of-invertibleness-of-operator}と，正規性の特徴付け$\norm{Tx}=\norm{T^*x}$より．
-\end{proof}
+\end{Proof}
 
 \subsection{半正定値作用素}
 
@@ -3527,7 +3053,7 @@ title=]
         \item $T_1T_2$は一般には半正定値とも自己共役とも限らないが，この積が自己共役であるとき，正である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\forall_{x\in H}\;(T_1x+T_2x|x)=(T_1x|x)+(T_2x|x)\ge0$．
         \item 閉性は，Cauchy列$(T_n)$を取ることによる．極限$T:=\lim_{n\to\infty}T_n$は正ではないと仮定する：$\exists_{x\in H}\;(Tx|x)<0$．$\ep:=-(Tx|x)>0$とおくと，$\exists_{N\in\N}\;\forall_{n\ge N}\;\norm{T_n-T}\le\ep/\norm{x}^2$だから，これについて，
@@ -3536,15 +3062,15 @@ title=]
         \item 二乗根補題\ref{prop-square-root-lemma}より，$ST=(S^{1/2})^2T=S^{1/2}TS^{1/2}\ge S^{1/2}0S^{1/2}=0$．
         $\forall_{x\in H}\;(ABx|x)=(\sqrt{A}\sqrt{A}Bx|x)=(B\sqrt{A}x|\sqrt{A})\ge0$と言ってもよい．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[半正定値作用素の自己共役性]
     半正定値作用素は，$\bF=\C$のとき自己共役であるが，$\bF=\R$のときそうとは限らない．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $\bF=\C$の場合は特徴付け\ref{cor-characterization-of-self-adjointness}より明らか．
     $\bF=\R$の場合は$A:\R^2\to\R^2$を$\varphi\in(-\pi/2,\pi/2)$回転とすると，$A^*=A^{-1}\ne A$となる．
-\end{proof}
+\end{Proof}
 
 \subsection{自己共役作用素の順序}
 
@@ -3560,7 +3086,7 @@ title=]
         \item $B(H)_\sa$は，順序$S\le T:\Leftrightarrow T-S\ge 0$を備える．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $0\in B(H)$．$*:B(H)\to B(H)$は共役線型であるから，実数倍は関係$T=T^*$を変えず，和についても閉じている．
         また，ノルム閉性については，$(T_n)$を$B(H)_\sa$のCauchy列とすると，収束先$T:=\lim_{n\to\infty}T_n$を持つ．$*:B(H)\to B(H)$は等長写像だから，像$(T_n^*)$もCauchy列で，収束先$T^*$を持ち，$*:B(H)\to B(H)$は特に連続だから，$T=\lim_{n\to\infty}T_n=\lim_{n\to\infty}T_n^*=T^*$．
@@ -3570,7 +3096,7 @@ title=]
             \item 推移律は明らか．
         \end{enumerate}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[数域：自己共役作用素に特徴的な対象]\label{lemma-numerical-range}
     写像
@@ -3585,12 +3111,12 @@ title=]
         \item 単射である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     等長同型であることを示せば，特に有界であること，すなわちこの写像のwell-definednessが従う．
 
     まず，$\forall_{x\in B}\;\norm{(Tx|x)}\le\norm{Tx}\norm{x}\le\norm{x}^2\norm{T}\le\norm{T}$より，$\norm{(T-|-)}\le\norm{T}$．
     逆は，任意の$x\in H$について，$(Tx|Tx)$を合成$x\mapsto Tx\mapsto (Tx|Tx)$と見ると，
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[自己共役作用素の順序]\label{prop-order-of-self-adjoint-operator}
     $S,T\in B(H)_\sa$について，
@@ -3600,7 +3126,7 @@ title=]
         \item $-I\le T\le I$と$\norm{T}\le 1$は同値．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\bF=\R,\C$のいずれの場合も，自己共役作用素$T$について，$\forall_{x\in H}\;(Tx|x)\in\R$を満たすことに注意．
     \begin{enumerate}
         \item \begin{align*}
@@ -3630,7 +3156,7 @@ title=]
     \end{enumerate}
     $x,y\in\partial B$は任意に取ったから，等長同型対応\ref{lemma-correspondence-between-sesquilinearform-and-operator}を通じて，
     $\norm{T}\le 1$を得る．
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[有界単調収束定理\cite{Eidelman}]
     $A_0\le A_1\le\cdots\le A_n\le\cdots\le A$を$B(H)_\sa$の有界な単調増加列とする．
@@ -3666,7 +3192,7 @@ title=]
         \item $A\in B(H)$が$T$と可換ならば，$T^{1/2}$と可換である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 
         \begin{description}
@@ -3682,14 +3208,14 @@ title=]
         \end{description}
         \item $T^{1/2}$は，$I,T$からなる多項式の一様収束極限として構成したから，$T$と可換ならば$T^{1/2}$とも可換である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}
     $A\ge 0$かつ$(Ax,x)=0$ならば，$Ax=0$．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $A$の二乗根$X:=\sqrt{A}$を取ると，$(Ax|x)=(Xx|Xx)=0$．内積の非退化性より，$Xx=0$．よって，$Ax=0$．
-\end{proof}
+\end{Proof}
 \begin{remark}
     一般の場合は\ref{cor-nondegeneratedness-of-semi-inner-product}に示してあるが，正作用素については二乗根補題より直接従う．
 \end{remark}
@@ -3702,7 +3228,7 @@ title=]
         \item 可逆な$T$に対して$T\le S$ならば$S$も可逆で，$S^{-1}\le T^{-1}$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{description}
             \item[$\Leftarrow$] $T\ge\ep I$と仮定する．すると，２つの作用素$T-\ep I,T+\ep I$はいずれも正で，互いに可換であるから，積$T^2-\ep^2I$も正である：$T^2\ge\ep^2I$．
@@ -3726,7 +3252,7 @@ title=]
         よって，$T^{1/2}S^{-1}T^{1/2}\le I$を得る．
         再び自己共役作用素の順序の性質\ref{prop-order-of-self-adjoint-operator}(1)より，$S^{-1}\le T^{-1/2}IT^{-1/2}=T^{-1}$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     正規作用素の可逆性はbounded away from zeroのみであった\ref{prop-characterization-of-invertibleness-of-normal-operator}．
     正作用素については，これをさらに緩めることができる．
@@ -3802,19 +3328,19 @@ title=対角化とは，直交射影への標準分解をいう．]
         \item $T$が半正定値であることと，固有値が全て非負実数であることは同値．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $T^*x=\sum\o{\lambda_j}(x|e_j)e_j$より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[有限次元線型空間論]
     $H$が有限次元であるとき，任意の正規な作用素は対角化可能である．
     また，互いに可換な正規な作用素は，同時対角化可能である．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     有限次元線型空間論による．
-\end{proof}
+\end{Proof}
 
 \subsection{Hilbの（自己）同型}
 
@@ -3845,14 +3371,14 @@ title=ユニタリ作用素]
         \item 一般の作用素$V\in B(H)$が可逆でかつ$V^{-1}=V^*$を満たすなら，$V$はユニタリである．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 極化恒等式\ref{prop-polarization-identity}より，等長写像ならば内積を保つこと\ref{prop-characterization-of-isometry}に注意．
         \item $(Ux|Uy)=(x|U^*Uy)=(x|y)$より，補題\ref{lemma-correspondence-between-sesquilinearform-and-operator}の全単射から，$U^*U=I$．
         \item 明らか．
         \item $\norm{Ux}^2=(U^*Ux|x)=\norm{x}^2$より等長．可逆なら全写．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{definition}[unitary equivalent]\label{def-unitary-equivalent}
     ２つの作用素$S,T\in B(H)$について$\exists_{U\in U(H)}\;S=UTU^*$を満たすとき，これらは\textbf{ユニタリー同値}であるという．
@@ -3893,7 +3419,7 @@ title=]
         \item $U^*UU^*=U^*$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $x^\perp\in X^\perp=\Ker U$に対して，$U^*Ux=U^*0=0$は明らか．
         等長写像の特徴付け\ref{lemma-characterization-of-unitary-operator}より，$X$上で$U^*U=I$である．
@@ -3903,7 +3429,7 @@ title=]
         $U(I-P)=0$である．よって，$(UU^*)^2=UU^*UU^*=UPU^*=UU^*$から，$UU^*$も直交射影である．
         よって，前述の議論を繰り返せば良い．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     部分等長写像は，$0$と等長写像とに分解できる作用素をいう．
     等長写像はepi：$U^*U=I$として特徴付けられるから，射影の言葉で部分等長写像が特徴付けられることは自然である．
@@ -3925,7 +3451,7 @@ title=]
         \item $U^*U\abs{T}=U^*T=\abs{T},\;UU^*T=T$が成り立つ．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 一意性を示せば良い．
         ある正作用素$S\ge0$が$\forall_{x\in H}\;\norm{Tx}=\norm{Sxx}$を満たすならば，$(S^2x|x)=\norm{Sx}^2=\norm{Tx}^2=(T^*Tx|x)$である．これより，$T^*T$も正だから，$S^2=T^*T$が従う\ref{cor-nondegeneratedness-of-semi-inner-product}．
@@ -3943,7 +3469,7 @@ title=]
         $T=U\abs{T}$より，$U^*T=\abs{T}$．
         この両辺に$U$を乗じると$UU^*T=U\abs{T}=T$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[随伴作用素の極分解]
     $T=U\abs{T}$を極分解とすると，$T^*=\abs{T}U^*=U^*(U\abs{T}U^*)$より，符号は$U^*$で，絶対値は$U\abs{T}U^*$である．
@@ -3963,12 +3489,12 @@ title=]
 \begin{corollary}\label{cor-polar-decomposition-of-invertible-operators}
     $T\in B(H)$が可逆であるとき，極分解に含まれる部分等長写像$U$はユニタリである．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     ここでは定理に依らず，単独で証明する．
 
     $T=U\abs{T}$を極分解とすると，$\Ker U=\Ker T$で，$\Im U=\oo{\Im T}$．
     $T$が可逆のとき$\Ker U=0,\Im U=H$が従うから，部分等長写像$U$はユニタリである．
-\end{proof}
+\end{Proof}
 
 \begin{corollary}
     $T\in B(H)$を正規とする．
@@ -3987,17 +3513,17 @@ title=ユニタリ作用素への分解]
 \begin{lemma}[単位球内の自己共役作用素の表示]
     $T=T^*$かつ$\norm{T}\le 1$ならば，作用素$U:=T+i(I-T^2)^{1/2}$はユニタリであり，$T=\frac{1}{2}(U+U^*)$と表せる．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $I-T\ge0$かつ$I+T\ge0$で互いに可換であるから，$I-T^2\ge0$である\ref{lemma-positive-closed-cone-of-positive-operator}(2),\ref{prop-order-of-self-adjoint-operator}(3)．
     よってたしかに二乗根を持つ．
     $UU^*=U^*U=I$がわかるから，$U$はユニタリである．
     正作用素は自己共役であることに注意すれば，$T=\frac{1}{2}(U+U^*)$は明らか．
-\end{proof}
+\end{Proof}
 
 \begin{lemma}
     $S\in B(H)$かつ$\norm{S}<1$ならば，任意のユニタリ作用素$U$に対して，ユニタリ作用素$U_1,V_1$が存在して，$S+U=U_1+V_1$を満たす．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $U=I$の場合について示せば，両辺に$U^*$を左から乗ずることで一般の結論を得る．
 
     $\norm{S}=\norm{S^*}<1$の仮定より，三角不等式$\norm{x}-\norm{y}\le\norm{x-y}$から，
@@ -4008,13 +3534,13 @@ title=ユニタリ作用素への分解]
     $\norm{I+S}\le\norm{I}+\norm{S}<2$より，補題から，正作用素$\abs{I+S}$はあるユニタリ作用素$W$を用いて$\abs{I+S}=W+W^*$と表せる．
     以上より，
     \[S+I=V(W+W^*)=VW+VW^*.\]
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[Russo-Dye-Gardner theorem (66)]
     $T\in B(H)$かつ$\exists_{n>2}\norm{T}<1-\frac{2}{n}$ならば，ユニタリ作用素$U_1,\cdots,U_n$が存在して，
     \[T=\frac{1}{n}(U_1+U_2+\cdots+U_n).\]
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $S:=\frac{1}{n-1}(nT-I)$とおくと，$nT=(n-1)S+IT$で，
     \[\norm{S}\le\frac{1}{n-1}(n\norm{T}-1)<\frac{1}{n-1}(n-3)<1\]
     を満たすから，補題を$n-1$回繰り返し適用すると，
@@ -4025,7 +3551,7 @@ title=ユニタリ作用素への分解]
         &=(n-4)S+(V_3+U_3)+U_2+U_1=\cdots\\
         &=(S+V_{n-2})+U_{n-2}+\cdots+U_1=U_n+U_{n-1}+U_{n-2}+\cdots+U_1.
     \end{align*}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     $B(H)$の開球の元は，ユニタリ作用素の凸結合（特に平均）で表せる．
     球面上の元はこの限りではなく，シフト作用素が反例である．
@@ -4067,7 +3593,7 @@ title=]
 \begin{proposition}[数域半径は同値なノルムを定める]
     $\nnorm{\cdot}$は$B(H)$上のノルムで，$\forall_{T\in B(H)}\;\frac{1}{2}\norm{T}\le\nnorm{T}\le\norm{T}$を満たす．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\nnorm{T}$の斉次性と劣加法性は明らかで，非退化性は後半の主張から従う．また，Cauchy-Schwartzの不等式より$\nnorm{T}\le\norm{T}$もわかる．
     よって，$\norm{T}\le 2\nnorm{T}$を示せば良い．
     任意の単位ベクトル$x,y\in H$について，極化恒等式と中線定理より
@@ -4077,7 +3603,7 @@ title=]
         &=\nnorm{T}2(\norm{x}^2+\norm{y}^2+\norm{x}^2+\norm{iy}^2)=8\nnorm{T}
     \end{align*}
     これで，半双線型形式のノルムについて$\norm{(T-|-)}\le2\nnorm{T}$を得たが，等長同型\ref{lemma-correspondence-between-sesquilinearform-and-operator}より結論を得る．
-\end{proof}
+\end{Proof}
 \begin{remarks}
     また，一般の線型写像について，有界であることと$\nnorm{T}<\infty$になることは同値になる．
 \end{remarks}
@@ -4233,23 +3759,23 @@ title=]
         \item $B_f(H)$はイデアルとして自己共役である：$(B_f(H))^*=B_f(H)$．
     \end{enumerate}
 \end{definition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}\setcounter{enumi}{1}
         \item 任意の$S,T\in B_f(H),U\in B(H),a\in\bF$について，$aS,S+T,ST\in B_f(H)$である：$\Im aS=\Im S,\Im(S+T)\subset\Im S\oplus\Im T,\Im(SU)\subset\Im S,\dim\Im(US)\le\dim\Im(S)$．
         \item $T\in B_f(H)\Leftrightarrow T^*\in B_f(H)$を示す．直交分解$H=\Im T\oplus\Im T^\perp$を随伴によって表現することより，$H=\Im T\oplus\Ker T^*$の関係がある．よって，$\Im T^*=T^*(\Im T)$より，$T^*$も有限ランクである．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[近似的単位元の構成]
     $B_f(H)$には射影からなるネット$(P_\lambda)_{\lambda\in\Lambda}$が存在し，$\forall_{x\in H}\;\norm{P_\lambda x-x}\to 0$を満たす．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $H$の正規直交基底${(e_j)}_{j\in J}$を取り，$\Lambda:=\Brace{\lambda\in P(J)\mid \abs{\lambda}<\infty}$からのネット$(P_\lambda:=\pr\{\brac{e_j}_{j\in J})$を考える．
     すると，$\forall_{\lambda\in\Lambda}\;\dim(\Im(P_\lambda))<\infty$より確かに$B_f(H)$上のネットなっている．
     任意の$x=\sum_{j\in J}\al_je_j\in H$について，
     系\ref{cor-well-definedness-of-Bessel's-identity}より，任意の$0\in[0,\infty)$の開近傍の基本系の元$[0,\ep)$に対して，ある有限集合$J$が存在して，$\norm{P_\lambda x-x}^2=\sum_{j\in\Lmd}\abs{\al_j}^2<\ep$(Parseval's identity)が成り立つ．
     よって，ネットとして，$\norm{P_\lmd x-x}$は$0$に収束する．
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[stability of compact operator]
     $T\in B(H)$について，次の５条件は同値．
@@ -4262,7 +3788,7 @@ title=]
         \item (Hilbert) 双線型形式$\Phi(f,g):=(Tf,g)$は弱連続である．\footnote{すなわち，弱収束列を保存する．}
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         $x$に弱収束する$B$のネット$(x_\lambda)_{\lambda\in\Lambda}$を任意に取る．任意の$\ep>0$に対して，仮定より，$S\in B_f(H)$が存在して$\norm{S-T}<\ep/3$を満たすから，
@@ -4294,7 +3820,7 @@ title=]
         \end{align*}
         よって矛盾．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     $B_f(H)$の元の像は有限次元であるから，そこではノルム位相と弱位相が一致する．
     これが(1)の消息となる．
@@ -4325,12 +3851,12 @@ title=]
         \item $H$が可分であるとき，$B_f(H)$は$B_0(H)$の中で稠密である．\footnote{これは$C_c(X)$と$C_0(X)$のアナロジーが完成する．}
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 自己共役性が保たれる．
         \item 
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     任意のBanach空間$X,Y$について，
@@ -4707,7 +4233,7 @@ title=]
         \[f=\sum_{j\in J}\frac{(g|e_j)}{\lambda_j-\lambda}e_j\]
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $T_k$は自己共役なコンパクト作用素(Hilbert-Schmidt作用素)になるから，
         ある直交基底$(e_i)_{i\in J}$に対して，
@@ -4719,7 +4245,7 @@ title=]
         \[\sum_{j\in J}(\lambda_j-\lambda)(f|e_j)e_j=g.\]
         \item 明らか．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{Strum-Liouville問題への応用}
 
@@ -4770,7 +4296,7 @@ title=]
     \[T_g=\sum\lambda_ne_n\odot e_n,\quad\{\lambda_n\}\subset\R\setminus\{0\},\sum\abs{\lambda_n}^2=\norm{g}^2_2.\]
 \end{discussion}
 
-\chapter{Spectral Theory}
+\chapter{スペクトル理論}
 
 \begin{quotation}
     解析学の理論であるが，幾何学と代数学の双対性であるIsbell双対性の一つの例・Gelfand dualityに到達する．
@@ -4865,12 +4391,12 @@ title=]
         \item 単位的なノルム代数$\A$について，$\norm{I}=1$ならば，写像$\bF\ni\al\mapsto\al I\in\A$は単射な準同型を定め，さらに等長写像である：$\norm{\al I}=\abs{\al}$．\footnote{これをBanach代数の指標の自動連続性という．Frechet代数の基礎体への準同型も自動的に連続であるかは未解決．}
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item ノルムの劣乗法性より，$\forall_{A\in\A}\;\norm{A}\le\norm{A}\norm{I}$．$\A$が零でないとき，$A\ne 0$に取れるから，$1\le\norm{I}$．
         \item 略．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     (2)は行列で言えばスカラー行列への埋め込みであるが，これが同型になる場合は限られることがGelfand-Mazur定理\ref{cor-Gelfand-Mazur-thm}となる．
 \end{remarks}
@@ -4883,7 +4409,7 @@ title=]
         \item 劣乗法性を満たすノルムであって元のノルムと同値なものが存在する．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] ノルム位相に関して収束する$\A\times\A$の点列$((A_n,B_n))_{n\in\N}\xrightarrow{n\to\infty}(A,B)\in\A\times\A$を取り，積もノルム収束すること：$\norm{AB-A_nB_n}\xrightarrow{n\to\infty}0$を示せば良い．
         \begin{align*}
@@ -4914,7 +4440,7 @@ title=]
         \end{align*}
         とより判る．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}[作用素ノルムの立ち位置]
     後に議論する単位化によって$\norm{I}=1$として良いように，ノルムの劣乗法性は作用素ノルムが模範となっている．
 \end{remarks}
@@ -5003,7 +4529,7 @@ title=]
         $(A,\al)(B,\beta):=(AB+\al B+\beta A,\al\beta)$．
     \end{quote}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\A_I$が代数になること，$i:\A\to\A_I$が代数の埋め込みであり，等長写像になることは認める．
     \begin{description}
         \item[劣乗法性] \begin{align*}
@@ -5025,7 +4551,7 @@ title=]
         \item[像はノルム閉である]
         明らか．また像は極大イデアルだから，極大イデアルは閉であること\ref{cor-maximal-ideal-is-closed}からもわかる．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}[一点コンパクト化との対応]
     一点コンパクト化に次の図式を可換にするという意味で「対応」する操作である．
     \[\xymatrix{
@@ -5196,7 +4722,7 @@ title=]
         \end{enumerate}
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\I$が閉集合であるとき，商$\A/\I$は商ノルムについて再びBanach空間である\ref{prop-quotient-Banach-space}．
         また，環$\A/\I$は積$(A+\I)(B+\I)=AB+\I$によって再び代数となる．よって，商ノルムの劣乗法性を示せば良い．
@@ -5206,7 +4732,7 @@ title=]
         \end{align*}
         \item 明らか．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[Banach代数の極大イデアルは閉]\label{cor-maximal-ideal-is-closed}
     $\A$を単位的なBanach代数とする．
@@ -5217,7 +4743,7 @@ title=]
         \item $\A$を可換とする．任意の非可逆元$A\in\A\setminus\GL(\A)$に対して，ある極大イデアル$\I$が存在して，$A\in\I$が成り立つ．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $\GL(\A)$が開集合であること\ref{prop-GA-is-open-in-Banach-algebra}の系として従う．
     \begin{enumerate}
         \item 任意の$x,y\in\oo{I}$に対して，$I$のノルム収束列$(x_n),(y_n)$が取れる．Banach代数の積と和が連続であることから，$x+y=\lim_{n\to\infty}(x_n+y_n)\in\oo{I},ax=\lim_{n\to\infty}ax_n\in\oo{I}$．
@@ -5230,7 +4756,7 @@ title=]
         \item 任意に$A\in\A\setminus\GL(\A)$を取ると，$I\notin\A\cdot A$．よって，$A$はある真のイデアルの元である（例えば$\A A$）．
         $A$を元に持つ真のイデアルの全体は空でない帰納的順序集合をなすから，Zornの補題より極大元が取れるが，これは極大イデアルになる．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsubsection{単模性の消息}
 
@@ -5248,9 +4774,9 @@ Banach代数$A$の可換性条件をおとし，より一般的に述べよう�
     $A$は単位的で可換なBanach代数，
     $I$が単模で極大なイデアルとする．このとき，$A/I$は体である．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     極大スペクトルと指標との対応\ref{prop-correspondence-between-maximal-spectrum-and-characters}において示している．
-\end{proof}
+\end{Proof}
 
 \subsection{正則表現}
 
@@ -5271,7 +4797,7 @@ title=]
     $\rho:\A\mono B(\A)$はノルム減少的な代数の準同型である．
     また，$\A$が単位的ならば，$\rho$は位相の埋め込みでもある．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $\rho$が単射な代数準同型を定めることは明らか．
     \begin{description}
         \item[ノルム減少性] $\norm{\rho(A)}\le\norm{A}$は，作用素ノルムの定義
@@ -5283,7 +4809,7 @@ title=]
         $\norm{A}=\norm{\rho(A)(I)}\le\norm{\rho(A)}\norm{I}\le\norm{A}\norm{I}$は$\rho:\A\to B(\A)$とその逆$\Im\rho\to\A$のLipschitz連続性を表していると読めるから，
         $\rho$は部分空間への位相同型である．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remark}[adjointing identity from the regular representation]
     Banach代数の埋め込み$\rho:\A\mono B(\A)$を用いて，$\A$に$B(\A)$の作用素ノルムと同値なノルムを入れることで，$\A$が零でないとき$\norm{I}=1$と仮定して良い．
     以降，これを暗黙の仮定とする．
@@ -5304,9 +4830,9 @@ title=]
 \begin{lemma}
     Banach代数に近似的単位元が存在するとき，左正則表現$\rho$は等長同型である．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     評価$\norm{AE_\lambda}\le\norm{\rho(A)}\norm{E_\lambda}\le\norm{A}\norm{E_\lambda}\le\norm{A}$の極限を考えることより従う．
-\end{proof}
+\end{Proof}
 \begin{example}
     局所コンパクトハウスドルフ空間上の無限遠点で消失する連続関数全体の空間$C_0(X)$，
     Hilbert空間上のコンパクト作用素の空間$B_0(H)$，局所コンパクトな群$G$上の可積分関数全体のなす空間$L^1(G)$は近似的単位元を持つ．
@@ -5332,11 +4858,11 @@ title=]
         \item $(I-A)^{-1}=\sum^\infty_{n=0}A^n$と表せる．
     \end{enumerate}
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     ノルムの劣乗法性より$\norm{A^n}\le\norm{A}^n$より，$\sum_{n=0}^\infty\norm{A^n}<\infty$．よって，Banach代数$\A$の完備性より，$\sum_{n=0}^{\infty}A^n$も，ある元$B\in\A$に収束する．
     $B_n:=\sum_{i=0}^nA^i$とおくと，$AB_n=B_{n+1}-I$より，$AB=\lim_{n\to\infty}AB_n=\limn B_{n+1}-I=B-I$．同様に$BA=B-I$．
     よって，$I-A$は可逆で，$(I-A)^{-1}=B$．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}\label{prop-GA-is-open-in-Banach-algebra}
     単位的Banach代数$\A$において，乗法群$\GL(\A)$について次が成り立つ．
@@ -5346,7 +4872,7 @@ title=]
         \item また，この写像は可微分でもある．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 任意に$A\in\GL(\A)$を取る．
         \[\forall_{B\in\A}\quad B=A-(A-B)=A(I-A^{-1}(A-B))\]
@@ -5358,7 +4884,7 @@ title=]
         よって，${}^{-1}:\GL(\A)\to\GL(\A)$は連続写像．これが対合であることより，同相写像でもある．
         \item \cite{Murphy}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{スペクトル}
 
@@ -5425,7 +4951,7 @@ title=]
     $\bigcup_{A\in\A}B(0,\norm{A})$を含む領域上で定義された正則関数$f:\C\supset U\to\C;z\mapsto\sum_{n=0}^\infty\al_nz^n$が定める
     単位的Banach代数の自己写像$f:\A\to\A$について，$\lambda\in B(0,\norm{A})\cap\Sp(A)\Rightarrow f(\lambda)\in\Sp(f(A))$：$f(\Sp(A)\cap \Delta(0,r))\subset\Sp(f(A))$．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\sum_{n=0}^\infty\abs{\al_n}\norm{A^n}<\infty$と$\A$の完備性より，写像$f$はwell-definedである．
         \item 対偶を示す．任意の$\lambda\in\C$について，
@@ -5436,7 +4962,7 @@ title=]
         \[f(\lambda)I-f(A)=\sum^\infty_{n=1}\al_n(\lambda^nI-A^n)=(\lambda I-A)\sum^\infty_{n=1}\al_nP_{n-1}(\lambda,A)=(\lambda I-A)B.\]
         よって，$f(\lambda)I-f(A)\in\GL(\A)$で逆元$C$を持つならば，$BC$は$\lambda I-A$の逆元となる．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     この形は，実は単位的$C^*$-代数の正則元$a$と連続写像$f\in C(\sigma(a))$に関する性質$\sigma(f(a))=f(\sigma(a))$の前身であるとみれる．
 \end{remarks}
@@ -5454,7 +4980,7 @@ title=]
     任意の単位的Banach代数の元$A\in\A$に関して，$r(A)\le\inf_{n\in\N}\norm{A^n}^{1/n}$．
     特に，$\Sp(A)$は有界である．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}[(a)]
         \item 補題\ref{lemma-Neumann-series}より，
         \[\forall_{\lambda\in\C}\quad\abs{\lambda}>\norm{A}\Rightarrow(\lambda I-A)^{-1}=\lambda^{-1}(I-\lambda^{-1}A)^{-1}=\sum^\infty_{n=0}\lambda^{-n-1}A^n\]
@@ -5463,7 +4989,7 @@ title=]
         \item 任意の$\lambda\in\Sp(A)$を取る．$x\mapsto x^n$は整関数だから，補題より，$\lambda^n\in\Sp(A^n)$．(a)での議論より，$\abs{\lambda}^n\le\norm{A^n}\Leftrightarrow\abs{\lambda}\le\norm{A^n}^{1/n}$．
         実際，$\abs{\lambda^n}>\norm{A^n}$ならば，$\lambda^nI-A^n\notin\GL(\A)$に矛盾．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{example}
     $A$を$C^1([0,1])$にノルム$\norm{f}:=\norm{f}_\infty+\norm{f'}_\infty$を定めて得るBanach代数とする．
     包含$x:[0,1]\mono\C$は$A$の元であり，明らかに$r(x)=1$である．
@@ -5477,7 +5003,7 @@ title=]
         \item $A$のスペクトル半径は$r(A)=\lim_{n\to\infty}\norm{A^n}^{1/n}$と表せる．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 
         \begin{description}
@@ -5531,7 +5057,7 @@ title=]
             $\norm{A^n}^{1/n}$は収束して，$\lim_{n\to\infty}\norm{A^n}^{1/n}=r(A)$．
         \end{enumerate}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     乗法群$\GL(\A)$が開集合となるような単位的位相代数$\A$を$Q$-代数といい，一般に$Q$-代数の任意の元のスペクトルは非空でコンパクトになる．
     なお，非空なコンパクト集合$K\subset\C$について，補集合$\C\setminus K$の非有界な連結成分はただ一つである．
@@ -5541,10 +5067,10 @@ title=]
 \begin{corollary}[Gelfand-Mazur theorem (41)]\label{cor-Gelfand-Mazur-thm}
     $\A$が斜体であるとき，すなわち，$\GL(\A)=\A\setminus\{0\}$を満たすとき，$\A=\C$である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     定理より，任意の$A\in\A$について，$\lambda\in\Sp(A)\ne\emptyset$．
     すなわち，$\lambda I-A\notin\GL(\A)$であるが，$\A$が可除環であるとき，これは$A=\lambda I$を意味する．
-\end{proof}
+\end{Proof}
 \begin{remarks}
     $\C$以外の複素Banach代数については，開集合$\GL(\A)$は$\A$より真に小さい．
 \end{remarks}
@@ -5635,7 +5161,7 @@ title=]
         \item 任意の$A\in\A$について，$\Sp(A)=\Brace{\lambda\in\C\mid\lambda I-A\notin\GL(\A)}=\Brace{\brac{A,\gamma}=\gamma(A)\in\C\mid\gamma\in\wh{\A}}$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 任意に$\I\in M(\A)$を取り，商Banach代数$\A/\I$を考えると，これは体になる．単位的Banach代数が可除ならば$\C$である(Gelfand-Mazur\ref{cor-Gelfand-Mazur-thm})から，$\A/\I=\C$．
         よって，この商写像$\gamma:\A\to\A/\I$を対応させれば，これは指標である．また，商写像は連続であることに注意．
@@ -5649,7 +5175,7 @@ title=]
 
         逆に，任意の$\gamma\in\wh{\A}$について，$\lambda:=\brac{A,\gamma}$とすると，$\gamma(\lambda I-A)=\lambda-\gamma(A)=0$より，$\lambda I-A\in\Ker\gamma$．すなわち，$\lambda I-A\notin\GL(\A)$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{Gelfand変換}
 
@@ -5950,9 +5476,9 @@ title=]
         \item $\forall_{f\in C(\Sp(T))}\;\Sp(f)=f(\Sp(T))$．
     \end{enumerate}
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     \ref{prop-seminal-spectral-theorem}に同値．
-\end{proof}
+\end{Proof}
 
 \begin{history}
     スペクトル定理は，「無限個の変数を持った有界な二次形式」という形で表現された「自己共役作用素」について，Hilbertによって1906年に初めて証明された．
@@ -6542,7 +6068,7 @@ title=]
     特に，スペクトル写像は$L^\infty(\Sp(T))$の有界集合上において，$w^*$-位相と弱位相について位相同型になる．
 \end{proposition}
 
-\chapter{Unbounded Operators}
+\chapter{非有界作用素}
 
 \begin{quotation}
     非有界作用素については，稠密部分集合上で一致しても，大域的に一致するとは限らない．
@@ -6629,9 +6155,9 @@ title=]
 \begin{lemma}
     任意の作用素の共役作用素は閉作用素である．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     \ref{thm-closable-and-ajoint-operator}(1)．
-\end{proof}
+\end{Proof}
 
 \subsection{対称作用素}
 
@@ -6747,13 +6273,13 @@ title=]
         \item $T$が可閉であることと，$T^*$が稠密に定義されていることとは同値．このとき，$\o{T}=T^{**}$すなわち$\oo{\Graph(T)}=\Graph(T^{**})$が成り立つ．特に，閉作用素$T$について，$T^{**}=T$．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $T^*$のグラフから分かる．
         \item $U(\cG(T^*))=\cG(A)^\perp$の関係が成り立つが，$T^*$は閉だからこれらは互いに直交補空間である．
         \item $T^*$が稠密に定義されているとき，さらに共役作用素を取れて，$T\subset T^{**}$だから，$T$は前閉である．逆に，
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{definition}[essentially self-adjoint]
     対称作用素$S$は$S\subset S^*$を満たすから，$S^*$も稠密に定義されていて，したがって$S$は可閉である．
@@ -7381,7 +6907,7 @@ title=]
     \[U(t,x,y)=\sum_{n\in\N}\int_{-c}^\infty e^{-\lambda t}\varphi_n(x;\lambda)\o{\varphi_n(y;\lambda)}d\rho_n(\lambda).\]
 \end{theorem}
 
-\chapter{Integration Theory}
+\chapter{積分論}
 
 \begin{quotation}
     積分とは，コンパクト台を持つ連続関数の空間上の，正な線型汎関数である．
@@ -7473,13 +6999,13 @@ title=]
         \item $X$が局所コンパクトな距離空間であるとき，任意のコンパクト集合$K\subset X$について，$\chi_K\in C_c(X)_m$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item a
         \item a
         \item \ref{prop-lower-semicontinuous-functions}より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{definition}[Borel meaesure, inner regular, Radon measure, outer regular, essential measure]\mbox{}
     \begin{enumerate}
@@ -7657,12 +7183,12 @@ title=]
         \item $f\in C_c(X)^m,g\in C_c(X)_m$に対して，$g\le f$ならば，$\int_*g\le\int^*f$である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f_\lambda$は上半連続だから，$\forall_{\ep>0}\;\{f_\lambda\ge\ep\}$は閉．仮定より台$\o{\Brace{f_\lambda>0}}$はコンパクトだから，$\{f_\lambda\ge\ep\}$はコンパクトでもある．$(f_\lambda)$は$0$に各点収束するから，$\cap_{\lambda\in\Lambda}\{f_\lambda\ge\ep\}=\emptyset$．
         コンパクト性の特徴付け\ref{thm-characterization-of-compactness}より，ある有限個を選び出せばやはり共通部分は空である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{可積分関数上への延長}
 
@@ -7957,9 +7483,9 @@ title=]
     \end{enumerate}
     さらにこのとき，$\norm{F}=V(\rho)$となる．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     Hahn-Banachの定理による．
-\end{proof}
+\end{Proof}
 
 \subsection{Orlicz空間}
 
@@ -8133,9 +7659,9 @@ title=単関数各点近似が出来るクラスが可測関数である]
         \item $\forall_{f\in\L(X)}\;\abs{f}^p\in\L(X)$を満たす．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     補題\ref{lemma-function-space-defined-by-measurable-sets}(2)の具体例である．
-\end{proof}
+\end{Proof}
 
 \begin{lemma}\label{lemma-regularity-of-Radon-integral}
     任意の部分集合$B\subset X$について，
@@ -8530,9 +8056,9 @@ title=]
 \begin{lemma}[Radon電荷の抽象的特徴付け]
     $\tau$を弱位相，すなわちセミノルム$f\mapsto\Abs{\int f}$の誘導する位相として，位相線型空間$(C_c(X),\tau)$の双対空間が，Radon電荷全体のなす空間である．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     命題\ref{prop-separating-space-of-functionals}より．
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[Radon電荷の極分解]
     $X$を$\sigma$-コンパクトな局所コンパクトハウスドルフ空間，$\Phi:C_c(X)\to\R$をRadon電荷とする．
@@ -9525,14 +9051,14 @@ title=局所凸な$F$-空間]
         \item 逆に，平行移動不変な距離$d:V\times V\to \R$について，$\norm{x-y}:=d(x-y,0)$と定めると，これは$F$-ノルムである．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 明らか：$d(x+a,y+a)=\norm{(x+a)-(y+a)}=d(x,y)$．
         \item 正であることは明らか．$-1$による作用について，$\norm{-x}=d(-x,0)=d(0,x)=d(x,0)=\norm{x}$．
         三角不等式は
         \[\norm{x+y}=d(x,-y)\le d(x,0)+d(0,-y)=\norm{x}+\norm{y}.\]
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}[距離の言葉による特徴付け]
     $F$-空間を距離の言葉で定義すると，平行移動不変距離$d:V\times V\to \R$について完備な位相線形空間を定めること（$d$が定める位相についてスカラー乗法と加法が連続であること）をいう．
     さらにこれが局所凸であるとき，Frechet空間という．
@@ -9582,7 +9108,7 @@ title=局所凸な$F$-空間]
         \item $d(x,y):=\sup_{n\in\N}\norm{x-y}_n=0$とすると，これはこのセミノルム位相$\O$を定める距離であり，平行移動について不変である．すなわち，$(V,\O)$はFrechet空間である．
     \end{enumerate}
 \end{definition}
-\begin{proof}
+\begin{Proof}
     (3)を示す．
     \begin{enumerate}[(a)]
         \item $d$は非負関数であり，$d(x,y)=0$のとき$\forall_{n\in\N}\;\norm{x-y}=0$である．$\F$は$V$の点を分離することから，これは$x=y$を意味する．
@@ -9593,7 +9119,7 @@ title=局所凸な$F$-空間]
         \end{align*}
         \item 平行移動不変性も明らか．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[Banach空間との関係]
     Fréchet空間$X$について，次の２条件は同値．
@@ -9687,12 +9213,12 @@ title=]
 \begin{proposition}
     任意のFrechet空間$E$はbarrelledである．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $M$を絶対凸な吸収的閉集合とする：$E=\cup_{t>0}tM$．このとき，均衡性より$E=\cup_{n\in\N}nM$も成り立つ．
     すると，各$nM$も閉であるから，
     Baireのカテゴリー定理より，ある$n_0$が存在して$n_0M$は内点を持つ．すると均衡性より$M$も内点を持つ．
     $E=\cup_{t>0}tM$と併せると，$0$は$M$の内点である．
-\end{proof}
+\end{Proof}
 
 \subsection{双対空間}
 
@@ -9887,13 +9413,13 @@ title=]
         \item 連続とは限らない$P$について，$f\in F$においてFrechet微分可能ならば，$f\in F$において連続．なお，Gateaux微分可能性のみでは連続とは限らない．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 
         $\forall_{\ep>0}\;\exists_{\delta>0}\;\norm{h}<\delta\Rightarrow\norm{P(f+h)-P(f)-DP(f)h}\le\ep\norm{h}$がGateaux微分可能性の同値な条件である．これは明らかに$DP(f)$の連続性を含意する．
         また，$L_1,L_2$を２つのGateaux微分とすると，$\norm{L_1h-L_2h}=o(h)$であるが，これは$L_1=L_2$を含意する．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[$C^1$級]
     写像$f:E\to F$は$x_0$の近傍でGateaux微分可能かつ，Gateaux導関数$Df(x)$は$x_0$にて連続とする：$\lim_{x\to x_0}\norm{Df(x)-Df(x_0)}=0$．このとき，$f$は$x_0$にてFrechet微分可能である．
@@ -10148,9 +9674,9 @@ title=]
         \item $C$が凸のとき，$C^{\circ\circ}=\Cl\;C$．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     双極定理\ref{thm-polar-theorem}の錐に関する特殊化である．錐は必ず$0$を含むことに注意．
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[Krein-Milman]
     有界閉な凸集合$C\subset\R^n$に対して，$C$の極点全体がなす集合の凸包は$C$に等しい：$C=\Conv(\Ex(C))$．
@@ -10438,9 +9964,9 @@ title=]
 \begin{lemma}
     極関数は$F^*\in\Gamma(V^*)$を満たす．特に，$F^*$は凸な下半連続関数である．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     $F^*$は連続affine関数族$(\brac{u,-}-F(u))_{u\in\Dom F}$の上限であるため．
-\end{proof}
+\end{Proof}
 
 \begin{corollary}\mbox{}
     \begin{enumerate}
@@ -10669,9 +10195,9 @@ title=]
 \begin{proposition}
     開集合は$C$の閉凸集合である（空集合含む）．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     開集合はある$\al\in\R$を用いて$\Brace{u\in V\mid\wh{F}(u)\le\al}$という等位集合の形で表せるので\ref{def-level-set}．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     次の(1)または(2)を満たすとき，解は存在する．(3)も満たすとき，解は一意である．
