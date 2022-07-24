@@ -1251,7 +1251,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    命題\ref{prop-separating-space-of-functionals}は，$\sigma(X,Y)$-位相に関する一般理論を主張する．
+    命題\ref{prop-dual-space-of-TVS-with-weak-topology}は，$\sigma(X,Y)$-位相に関する一般理論を主張する．
     線型汎関数の空間$Y$を連続にする最弱な位相は，正確に$Y$のみの線型汎関数を連続にする．
     $Y$として評価写像を取れば，これは収束に関する言葉で特徴づけられることになる（弱位相の収束の特徴付け\ref{prop-characterization-of-convergence-in-wtopology}，$w^*$-位相の収束の特徴付け\ref{lemma-characterization-of-convergence-in-w*topology}）．
 \end{tcolorbox}
@@ -1265,7 +1265,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{proposition}[$\sigma(X,Y)$-位相の一般理論]\label{prop-separating-space-of-functionals}
+\begin{proposition}[$\sigma(X,Y)$-位相の一般理論]\label{prop-dual-space-of-TVS-with-weak-topology}
     線型空間$X$と，$X$の点を分離する線型汎関数のなす線型空間$Y$を考える．
     $X$に$Y$定める弱位相$\sigma(X,Y)$を入れて考える．
     このとき，線型汎関数$\varphi$がこの弱位相について連続ならば，$\varphi\in Y$である．
@@ -1279,7 +1279,7 @@ title=]
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
-    これは，命題\ref{prop-separating-space-of-functionals}に始まる$\sigma(X,Y)$-位相の一般理論の一部であるが，弱位相の得意な点は，ノルム位相とは有限次元の場合を除いて一般的には異なるが，双対空間は等しく$X^*$になることである．
+    これは，命題\ref{prop-dual-space-of-TVS-with-weak-topology}に始まる$\sigma(X,Y)$-位相の一般理論の一部であるが，弱位相の得意な点は，ノルム位相とは有限次元の場合を除いて一般的には異なるが，双対空間は等しく$X^*$になることである．
     凸集合について，閉性は同値になる．
 \end{tcolorbox}
 
@@ -1420,7 +1420,7 @@ title=]
     ノルム空間$X$は，\ref{exp-dual-pair}(2)の埋め込み$i:X\mono X^{**}$により，線型汎函数の空間$X^*$上の分離族とみれる．
     こうして$X^*$に引き起こされる$\sigma(X^*,X)$位相を，\textbf{$*$-弱位相}という．
     \footnote{すなわち，二重共役空間の部分空間$X\mono X^{**}$に属する写像を全て連続にする最弱の位相．}
-    こうして，$X^*$は局所凸な位相線型空間となり，$X$を双対空間と同一視できる（命題\ref{prop-separating-space-of-functionals}）．
+    こうして，$X^*$は局所凸な位相線型空間となり，$X$を双対空間と同一視できる（命題\ref{prop-dual-space-of-TVS-with-weak-topology}）．
 \end{definition}
 \begin{remarks}
     $*$-弱位相の始位相としての定義より，$X^*$にノルムが定める位相よりも，弱位相$\sigma(X^*,X^{**})$よりも弱い．
@@ -1707,7 +1707,7 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
 \begin{corollary}\label{cor-characterization-of-weak-star-continuousness}
     $X^*$上の汎関数$x\in X^{**}$について，次の２条件は同値．
     \begin{enumerate}
-        \item $w^*$-連続である．すなわち，$x\in X$．\footnote{$w^*$位相の定義\ref{def-weak-star-topology}と命題\ref{prop-separating-space-of-functionals}より．}
+        \item $w^*$-連続である．すなわち，$x\in X$．\footnote{$w^*$位相の定義\ref{def-weak-star-topology}と命題\ref{prop-dual-space-of-TVS-with-weak-topology}より．}
         \item 閉単位球への制限$x|_{B^*}$が$w^*$-連続である．
     \end{enumerate}
 \end{corollary}
@@ -8057,7 +8057,7 @@ title=]
     $\tau$を弱位相，すなわちセミノルム$f\mapsto\Abs{\int f}$の誘導する位相として，位相線型空間$(C_c(X),\tau)$の双対空間が，Radon電荷全体のなす空間である．
 \end{lemma}
 \begin{Proof}
-    命題\ref{prop-separating-space-of-functionals}より．
+    命題\ref{prop-dual-space-of-TVS-with-weak-topology}より．
 \end{Proof}
 
 \begin{theorem}[Radon電荷の極分解]

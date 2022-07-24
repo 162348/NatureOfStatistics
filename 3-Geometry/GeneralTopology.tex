@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -54,9 +54,9 @@ title=]
         \item $f$が全射のとき(b)は等号成立．特に，$f(f^{-1}(B))=f(X)\cap B$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     どちらも，$x\in A\Rightarrow f(x)\in B$という論理式の表現である．
-\end{proof}
+\end{Proof}
 
 \begin{remarks}[随伴の向きについて]
     なお，向きは，包含写像$i:f(A)\to B$の向きで左右が決まっている．
@@ -80,9 +80,9 @@ title=]
         \item $\forall_{S\subset X,T\subset Y}\;f(S)\cap T=f(S\cap f^{-1}(T))$．
     \end{enumerate}
 \end{problem}
-\begin{proof}
+\begin{Proof}
     略．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[像は和のみを保つ]\label{prop-image-preserve-unions}
     $f:X\to Y$を写像，$\{S_i\}_{i\in I}\subset P(X)$を族とする．像$f_*:P(X)\to P(Y)$は次を満たす：
@@ -93,12 +93,12 @@ title=]
     $I\ne\emptyset$かつ$f$が単射のとき，(2)の等号は成立する．
     また，任意の$\{S_i\}_{i\in I}\subset P(X)$について(2)の等号が成立するならば，$f$は単射である．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item a
         \item $\forall_{i\in I}\;\cap_{i\in I}S_i\subset S_i$だから，$\forall_{i\in I}\;f_*(\cap_{i\in I}S_i)\subset f_*(S_i)$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{逆像の関手性}
 
@@ -144,9 +144,9 @@ title=]
         \item 任意の集合$Z$に対して，写像$f^*:\Map(Y,Z)\to\Map(X,Z)$は可逆である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     略．
-\end{proof}
+\end{Proof}
 
 \begin{remarks}
     圏$P(X)$での米田の補題は，$(A=B)\Leftrightarrow(\forall_{T\in P(X)}\;A\le T\Leftrightarrow B\le T)$という主張になる．
@@ -167,7 +167,7 @@ title=]
         \item $f$が全射であることと，$f_*$が全射であることと，$f^*$が単射であることは同値である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     まず，$f^*$について示す．$f_*$についても同様．
     集合$S$に対して，全単射
     \[\xymatrix@R-2pc{
@@ -181,7 +181,7 @@ title=]
     $f$の単射性・全射性は$\varphi_f$の単射性・全射性と同値である．
     また，双対写像$\varphi_f:\paren{\bF_2^{\oplus B}}^\vee\to\paren{\bF_2^{\oplus A}}^\vee$は上記の全単射により$f^*:P(B)\to P(A)$に対応する．
     よって主張は次の補題から従う．
-\end{proof}
+\end{Proof}
 
 \begin{lemma}
     $k$を体とする．$\varphi:V\to W$を$k$-線型空間の間の線型写像とし，$\varphi^*:W^\vee\to V^\vee$をその双対写像とする．
@@ -191,13 +191,13 @@ title=]
         \item $\varphi$が全射であることは，$\varphi^*$が単射であることと同値である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $0\to\Ker\varphi\to V\to W\to\Coker\varphi\to 0$は完全列である．
         \item $k$は$k$加群として入射的．即ち，関手$\Hom(-,k)$は完全となる．
         \item $0\to(\Coker\varphi)^\vee\to W^\vee\to V^\vee\to(\Ker\varphi)^\vee\to 0$は完全列である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{2つの関手の関係}
 
@@ -257,7 +257,7 @@ title=]
         \item $f:X\to Y$が全射である$\quad\Leftrightarrow\quad f_*$が全射である．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{align*}
             fが単射&\quad\Leftrightarrow\quad fが左簡約可能&(定理\ref{thm-mono})\\
@@ -270,7 +270,7 @@ title=]
         \item すでに述べた．
         \item 
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     おそらくこういうことであろう．しかし，epimorphismの定義は，任意の対象$Z$と平行な射の組$g_1,g_2:Y\to Z$について，$(g_1\circ f=g_2\circ f)\Rightarrow(g_1=g_2)$であり，これはhom-functor $\Hom(-,Z)$が単射であることの定義に他ならない．
     Sets上では単射とepimorphismが同値なので，上の定理が成り立つ．
@@ -327,7 +327,7 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
         \end{enumerate}
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     \begin{description}
         \item[1. ] $(1)\Rightarrow (2)$は\[ \forall x,x'\in X ,\; p(x)=p(x')\Rightarrow f(x)=f(x') \]を示せば良い．いま，実際$p(x)=p(x')$を満たす$x,x'\in X$について，$q(p(x))=q(p(x'))$であるから，$f(x)=f(x')$が従う．
 
@@ -358,7 +358,7 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
         \end{eqnarray*}
         より，$R_f=R_p$である．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{商集合の普遍性}
 
@@ -384,11 +384,11 @@ de Morgan dualityが開集合の閉集合の双対を引き起こしていて，
         \end{enumerate}
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     1. 全射$p$について命題\ref{prop-induced-mapping}を適用して得る主張である．なお，$q$が定める同値関係$R_q$とは$R$に他ならない．
     
     2. 全射$q'\circ f$について命題\ref{prop-induced-mapping}を適用して得る主張である．
-\end{proof}
+\end{Proof}
 
 \subsection{貼り合わせ}
 
@@ -588,10 +588,10 @@ title=]
         \item $U:=\Brace{(x,y)\in X\times\R\mid f(x)<y}$と$V:=\Brace{(x,y)\in X\times\R\mid f(x)>y}$はいずれも$X\times\R$の開集合．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\{(-\infty,c)\}_{c\in\R}\cup\{(c,\infty)\}_{c\in\R}$は$\R$の位相の準基であるためである．
     Borel可測性が成り立つには，さらに$\{(-\infty,c)\}_{c\in\R}$で十分である．
-\end{proof}
+\end{Proof}
 
 \subsection{上・下半連続性}
 
@@ -641,7 +641,7 @@ title=]
     \begin{enumerate}
         \item $f$は下半連続である．
         \item ハイパーグラフ$G^+:=\Brace{(x,t)\in X\times\R\mid f(x)\le t}$は閉集合である．
-        \item $X$の収束ネット$(x_\lambda)$について，$\limsup_\lambda f(x_\lambda)\le f(\lim x_\lambda)$．
+        \item $X$の収束ネット$(x_\lambda)$について，$\liminf_\lambda f(x_\lambda)\ge f(\lim x_\lambda)$．$X$が距離空間のときは点列を考えれば良い．
     \end{enumerate}
     $X$は$C(X;[0,1])$によって分離されるとき（例えば正規空間のとき），次も同値：
     \begin{enumerate}\setcounter{enumi}{2}
@@ -936,6 +936,10 @@ title=]
     順序数，基数のクラスは整列的(well-ordered)である．
 \end{proposition}
 
+\begin{proposition}
+    順序数は順序位相について局所コンパクトハウスドルフ空間になる．
+\end{proposition}
+
 \section{濃度論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1013,14 +1017,14 @@ title=]
         \end{description}
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(1')] (1')の論理式は，\textbf{$U$内部の開集合全体の集合$\U_U:=\{V\in\O\mid V\subset U\}$の和が$U$自身になる$\cup_{V\in\U_U}V=U$という条件}を表しており，(1')全体ではこれを満たすならば$U\in\O$という主張と同値である．従って，$\U_U$は$\O$の開集合の族だから，(1)$\Rightarrow$(1')．
         \item[(1')$\Rightarrow$(1)] $\O$の族$(U_i)_{i\in I}$を取る．$\cup_{i\in I}U_i=:U$と置くと，任意の元$x\in U$に対して$i\in I$が存在して$x\in U_i\subset U$が成り立つから，$U\in\O$．
         \item[(2)$\Rightarrow$(2')] $I=\emptyset$とすれば，$(U_i)_{i\in I}=X\in\O$．$I=2$とすれば，$U,V\in\O\Rightarrow U\cap V\in\O$．
         \item[(2')$\Rightarrow$(2)] $I$の濃度についての数学的帰納法より．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{射が引き起こす位相}
 
@@ -1038,14 +1042,14 @@ title=]
         \item $\O$が$X$の位相ならば，像位相$\O':=\{V\in P(Y)\mid  f^{-1}(V)\in\O\}=(f^*)^{-1}(\O)$は$Y$の位相である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     関手$f^*$が任意の$\cap,\cup$演算を保つこと
     （命題\ref{prop-functoriality-of-image-and-inverse-image-mappings}）により成り立つ性質である．
     \begin{enumerate}
         \item 「像空間」$f^*\O\subset P(X)$の任意の合併は，$\O\subset P(Y)$の族$(U_i)_{i\in I}\;(U_i\subset Y)$（これは再び$\O$の元）を用いて$\cup_{i\in I}f^{-1}(U_i)$と表せるから，\[\cup_{i\in I}f^{-1}(U_i)=f^{-1}(\cup_{i\in I}U_i)\in f^*\O.\]同様に，$|J|<\infty$として，\[\cap_{i\in J}f^{-1}(U_i)=f^{-1}(\cap_{i\in J}U_i)\in f^*\O.\]
         \item 「逆像空間」$\O'=f^{*-1}(\O)\subset P(Y)$の任意の合併$\cup_{i\in I}V_i$は，$V_i\in\O\subset P(X)$であって$\cup_{i\in I}f^{-1}(V_i)\in \O$従って$f^{-1}(\cup_{i\in I}V_i)\in\O$が成り立つから，$\cup_{i\in I}V_i\in\O'=f^{*-1}(\O)$が従う．有限共通部分についても同様だから，$\O'=f^{*-1}(\O)$は任意の合併と任意の有限共通部分について閉じている．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{definition}[initial topology, relative topology / subspace topology, final topology]
     $f:X\to Y$を写像とする．
@@ -1064,7 +1068,7 @@ title=]
         \item $f$が全単射の時，$f^*$も全単射で，$(f^*)^{-1}=(f^{-1})^*=f_*$である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f_*(\O_X)\subsetneq (f^*)^{-1}(\O_X)$は$f$が全射でないときに起こる．$a\in Y\setminus f(X)$を取る．$U\in f_*(\O_X)$とすると，$U\cup\{a\}$は$(f^*)^{-1}(\O_X)$の元であるが，像にはなり得ないので$f_*(\O_X)$の元ではない．
         これを単純化すると次の例のようになる．$1:\S\to 2$を定値写像とする．$f_*(\Op(\S))=\Op(\S)$となるが，$(f^*)^{-1}(\S)=P(2)$となるので後者は離散位相を定める．
@@ -1074,7 +1078,7 @@ title=]
         \item 1の例を引き合いに出せば，そこ$\O_X\in P(X)$において恒等性は崩れる．
         \item 命題\ref{prop-dual-of-mono}，\ref{prop-dual-of-epi}より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     命題\ref{prop-functoriality-of-image-and-inverse-image-mappings}を見るとおり，一般の$f$について$A\subset f^{-1}(f(A)),f(f^{-1}(B))\subset B$が成り立つ．
     前者は非単射性から生じ，後者は非全射性から生じる．反例構成ではこれしか使っていない．
@@ -1087,13 +1091,13 @@ title=]
         \item $f:X\to Y$が全射であっても，$f_*\O$は$Y$の位相であるとは限らない．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f$が全射でない限り$Y\in f_*\O$を満たさないので．
         \item 集合演算の$f(\cap_{i\in I}U_i)\subset \cap_{i\in I}f(U_i)$（命題\ref{prop-functoriality-of-image-and-inverse-image-mappings}）をhackする．$f:4\to 3$を，$\Op(4)=\{0,4,\{0,1\},\{2,3\}\}$とし，$f(0)=0,f(1)=f(2)=1,f(3)=2$とすると，$f_*(\Op(4))=\{0,3,\{0,1\},\{1,2\}\}$より，これは位相にはならない．
         この原理は，$f(\{0,1\}\cap\{2,3\})=f(\emptyset)=\emptyset\ne\{1\}=\{0,1\}\cap\{1,2\}=f(\{0,1\})\cap f(\{2,3\})$ということである．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{相対位相の性質}
 
@@ -1155,12 +1159,12 @@ title=]
     $(\tau_j)_{j\in J}$を$X$上の位相の族とする．
     包含関係$\subset$に関する上限$\lor\tau_j$と下限$\land\tau_j$が存在する．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\land\tau_j:=\Brace{A\in P(X)\mid \forall_{j\in J}\;A\in\tau_j}$と定めると，これは位相である．
         \item $T$を$X$上の位相であって任意の$\tau_j$より強いものとすると，$\CoDisc(X)\in T$より，$T\ne\emptyset$．これについて，$\lor\tau_j:=\land_{\tau\in T}\tau$と定めれば良い．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[生成される位相の具体的構成]
     $\U\subset P(X)$とする．
@@ -1300,7 +1304,7 @@ title=]
         \item $f$が全単射であることと，同相写像であることとは同値である．また，$f$が全単射の時，$f$が開写像であることと閉写像であることが同値で，$f$が全単射でない場合はそのどちらも一般的には成り立たない．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f$が全射ならば，section $g:Y\to X$が存在して，$f\circ g=\id_Y$を満たす．
         即ち，
@@ -1309,7 +1313,7 @@ title=]
         が成り立つため，$f$が単射の時は，部分空間への同相写像となっている．
         \item $f^*\O_Y=\O_X$が成り立つため．上の関係$f(X\setminus U)=Y\setminus f(U)$は全射性と単射性のどちらか１つでも欠けると通れない．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     いずれの場合も，起こっている現象は$f^*\O_Y=\O_X$である．それぞれに対する表現が違うだけである．足元に誘発される場合はfinal topology，頭上に誘発される場合はinitial topology，全単射である場合は同相写像．
     この聖域は，コンパクト集合からHausdorff空間への射で起こる．
@@ -1395,10 +1399,10 @@ title=]
 \begin{corollary}
     $C(\R)$は連続体濃度である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     命題より，単射$i^*:C(\R)\to C(D)$が取れる．
     一方で，$\ev:\R\to C(\R)$を値写像とすると，これも単射である．
-\end{proof}
+\end{Proof}
 
 \subsection{位相同型の特徴付け}
 
@@ -1611,6 +1615,11 @@ title=]
 
 \subsection{正則な集合}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相線型空間の凸集合は正則である．
+\end{tcolorbox}
+
 \begin{definition}[regular open / closed set]\mbox{}
     \begin{enumerate}
         \item 集合$G\subset X$が\textbf{正則開集合}であるとは，$\Int(\Cl(G))=G$を満たすことをいう．
@@ -1685,12 +1694,12 @@ title=]
         \item 射影$\pr_1:X\times Y\to X,\pr_2:X\times Y\to Y$はいずれも連続な開写像になり，$\O_X\times\O_Y$はこの性質を満たす最弱の位相である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item a
         \item 連続であり，$\O_X\times\O_Y$がこれについての始位相に一致することは明らか．像は合併を保つから，$\U$の元を開に移すことを確かめれば良い．これは定め方から明らか．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[積写像の連続性の特徴付け]
     任意の$T\in\Top$と写像$f:T\to X,g:T\to Y$について，次の2条件は同値；
@@ -1825,10 +1834,10 @@ title=]
     写像$f:X\to Y$が写像$g:X/R\to Y$を引き起こすならば，$R_f\subset R$である\ref{cor-universality-of-quotient-set}．
     このとき，$f$が連続なことと$g$が連続なことは同値．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $f$が連続であることと，像位相$f_*\O_X$について$\O_Y\subset f_*\O_X$が成り立つこととは同値．
     $X/R$の位相は$p_*\O_X$であるから，$f=g\circ p$のとき，これは$\O_Y\subset g_*(p_*(\O_X))$に同値．
-\end{proof}
+\end{Proof}
 
 \subsection{商写像}
 
@@ -1908,12 +1917,12 @@ title=]
         \item $\U_i$を$U_i$の開集合系とすると，$X$の位相は$\U=\cup_{i\in I}\U_i$によって生成位される位相である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\O$を$X$の位相とし，$\O_\U$を$\U$が生成する位相，$\O'$を像位相とする．
     $\O_\U\subset\O\subset\O'\subset\O_\U$を示す．
     最左辺は$\U\subset\O$による．中辺は$\O'$が包含写像を連続にする最も細かい位相であることによる．
     最後に最右辺は，任意の$U\in\O$に対して，$U=\cup_{i\in I}(U\cap U_i)$と$\O_\U$の元の合併として表せるから，$U\in\O_\U$．
-\end{proof}
+\end{Proof}
 
 
 \begin{proposition}
@@ -1947,13 +1956,13 @@ title=]
     \[ \O=\{U\in P(X)\mid \forall_{i\in I}\; f^{-1}_i(U)\in\O_{X_i}\} \]
     は$X$の位相である．この位相を，写像の族$(f_i)_{i\in I}$による\textbf{像位相}という．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     開集合の公理を満たすことを示す．$(U_j)_{j\in J}$を$\O$の族とする．
     \begin{enumerate}
         \item 任意の$i\in I$について$f^{-1}_i(\cup_{j\in J}U_j)=\cup_{j\in J}f^{-1}_i(U_j)\in\O_{X_i}$が成り立つから，$\cup_{j\in J}U_j\in\O$．
         \item $\abs{J}<\infty$とする．任意の$i\in I$について$f^{-1}_i(\cap_{j\in J}U_j)=\cap_{j\in J}f^{-1}_i(U_j)\in\O_{X_i}$が成り立つから，$\cap_{j\in J}U_j\in\O$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[終位相の普遍性]
     $X$を写像の族$(f_i:X_i\to X)_{i\in I}$による像位相によって位相空間と見做す．
@@ -1963,7 +1972,7 @@ title=]
         \item 任意の$i\in I$に対し，$g\circ f_i:X_i\to Y$が連続である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 像位相は各$f_i$を連続にする最も細かい位相であるから，$f_i$は連続．(1)より$g$も連続であるから，$g\circ f_i$は連続．
         \item[(2)$\Rightarrow$(1)] 任意の$U\in\O_Y$に対して，$g^{-1}(U)\in\O$を示せば良い．
@@ -1973,7 +1982,7 @@ title=]
             \Leftrightarrow\quad&g^{-1}(U)\in\O.
         \end{align*}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     $f:X\to Y$を全射な連続写像とする．
@@ -2010,6 +2019,20 @@ title=]
     $(\R^n)$を通常の包含によって帰納系と見る．
     \[X:=\Brace{x\in\R^n\mid x_n=0\;\fe}\]
     となるが，これは$\R^N$の積位相が定める相対位相よりも強い．
+\end{example}
+
+\begin{example}[stalk, germ, sheaf]
+    任意の位相空間$X$と点$x\in X$について，
+    $\O(x)$は包含の逆によって有向集合とみる．
+    $S:=\Map(-,\R)$
+    の値$S(U)=U^\R$は離散な線形空間と見る．
+    すると$S$は関手かつ図式であり，帰納系を定める：$S_x:=\varinjlim_{U\in\O(x)}S(U)$．
+    \begin{enumerate}
+        \item 位相空間$S_x$を\textbf{茎}といい，その元を\textbf{関数の芽}という．
+        \item 直和$S:=\coprod_{x\in X}S_x$またはベクトル束$\pr_1:S\epi X$を\textbf{関数の芽の層}という．
+        \item 層$S$には，束$\pr_1$が連続になるような位相を与える．特に，$S$の開集合と$\R$の開集合が同相になるようにする．
+    \end{enumerate}
+    $S:=C(-,\R)$や$S:=\O(-;\C)$などの変種が定義できる．
 \end{example}
 
 \section{ネット}
@@ -2072,7 +2095,7 @@ title=]
     $y:=(y_\beta)_{\beta\in B}$が$x:=(x_\al)_{\al\in A}$の部分ネットであるとは，次の２条件を満たす写像$f:B\to A$が存在することをいう：
     \begin{enumerate}
         \item $y=x\circ f$，すなわち，$\forall_{\beta\in B}\;x_{f(\beta)}=y_\beta$．
-        \item strongly cofinal：$\forall_{\alpha\in A}\;\exists_{\beta\in B}\;\forall_{\beta_1\ge\beta}\;f(\beta_1)\ge\alpha$．
+        \item strongly cofinal\footnote{\cite{彌永}では共終と訳されている}：$\forall_{\alpha\in A}\;\exists_{\beta\in B}\;\forall_{\beta_1\ge\beta}\;f(\beta_1)\ge\alpha$．
     \end{enumerate}
     $f:B\to A$を単調に取ったならば，あとは$\forall_{\alpha\in A}\;\exists_{\beta\in B}\;\alpha\le f(\beta)$を示せば，(2)を満たす．
 \end{definition}
@@ -2087,14 +2110,14 @@ title=]
     $\forall_{A\in\B}\;\forall_{\lambda\in\Lambda}\;\exists_{\lambda\le\nu\in\Lambda}\;x_\nu\in A$．
     このとき，ある部分ネット$(x_{h(\mu)})_{\mu\in M}$が存在して，$\B$の任意の元に収束する：$\B\subset F_{(x_{h(\mu)})}$．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}[(a)]
         \item $M:=\Brace{(\lambda,A)\in\Lambda\times\B\mid x_\lambda\in A}$は積順序に関して，上に有向である．
         任意の$(\lambda,A),(\mu,B)\in M$に関して，$\exists_{C\in\B}\;C\subset A\cap B$で，$\exists_{\nu\in\Lambda}\;\lambda\le\nu\land\mu\le\nu$．
         $C\in\B$に集積することより，$\exists_{\nu'\ge\nu}\;x_{\nu'}\in C$だから，$(\nu',C)$が取れて，$(\lambda,A)\le(\nu',C)$かつ$(\mu,B)\le(\nu',C)$．
         \item $h:M\to\Lambda$を第一射影によって定めると，$(x_{h(\mu)})_{\mu\in M}$は部分ネットであり，$\B$の任意の元に終局する．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     フィルターは$\B$たる要件を満たす．
 \end{remarks}
@@ -2102,14 +2125,14 @@ title=]
 \begin{corollary}
     位相空間$X$上のネットの任意の集積点$x$について，ある部分ネットが存在して$x$に終局する．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $\B$を$\O(x)$と取れば良い．
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[existence of universal nets (AC)]
     任意のネットは，部分ネットとして普遍ネットを持つ．
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}[(a)]
         \item Zornの補題より，ネット$(x_\lambda)$の終局フィルターのうち，極大なものが取れる．
         \item 任意の$A\in P(X)$について，
@@ -2118,7 +2141,7 @@ title=]
         \item これは，$\forall_{A\in P(X)}\;A\in\F\lor X\setminus A\in\F$を意味する．
         \item 補題を$\B=\F$として適用すると，$\F$を終局フィルターとするネットが取れ，このネットは普遍的である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     本質的には，任意のフィルターに，それを含む超フィルターが存在することによる．
 \end{remarks}
@@ -2140,14 +2163,14 @@ title=]
         \item $x$に収束する$Y$のネットが存在する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     (1)$\Leftrightarrow$(2)は良い．
     \begin{description}
         \item[(1),(2)$\Rightarrow$(3)] 選択公理より，$(x_A)_{A\in\O(x)}\in\prod_{A\in\O(x)}A\cap Y$が得られる．
         これは$x$に収束するネットである．実際，任意の開近傍$U\in\O(x)$に対して，任意の$U\subset V\in\O(x)$は$x_V\in V$を満たす．
         \item[(2)$\Rightarrow$(1)] $(x_\lambda)_{\lambda\in\Lambda}$を$x$に収束するネットとすると，$\forall_{A\in\O(x)}\;\exists_{\lambda\in\Lambda}\;\forall_{\lambda'}\;\forall_{\lambda'\ge\lambda}\;x_{\lambda'}\in A$．すなわち，$x_{\lambda'}\in A\cap Y\ne\emptyset$．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{フィルターの収束}
 
@@ -2189,12 +2212,12 @@ title=]
         \item 任意の$x$に収束するネット$(x_\lambda)$について，$f(x_\lambda)\to f(x)$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 任意の$x$に収束するネット$(x_\lambda)$を取る．$\forall_{A\in\O(f(x))}\;\exists_{B\in\O(x)}\;f(B)=A$だから，このネットは$f^{-1}(A)$に終局する．よって，ネット$(f(x_\lambda))$は$A$に終局する．
         \item[(2)$\Rightarrow$(1)] $\exists_{A\in\O(f(x))}\;f^{-1}(A)\notin\O(x)$とすると，$x\in X\setminus f^{-1}(A)$となり，ネットによる閉包の特徴付けより，ある$x$に収束する$X\setminus f^{-1}(A)$のネットが存在してしまう．これは$\forall_{\lambda\in\Lambda}\;f(x_\lambda)\notin A$を満たすネットだから，$f(x)$に収束せず，矛盾．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \chapter{距離空間}
 
@@ -2247,14 +2270,14 @@ title=]
         \item $\overline{A}=\{x\in X\mid d(x,A)=0\}$である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 三角不等式より，\[\forall x,y\in X,\forall a\in A,\;d(x,a)\le d(x,y)+d(y,a)\]
         である．両辺の下限をとって，$d(x,A)\le d(x,y)+d(y,A)\Rightarrow d(x,A)-d(y,A)\le d(x,y)$．同様に$d(y,A)-d(x,A)\le d(x,y)$も成り立つから，$|d(x,A)-d(y,A)|=\max\{d(x,A)-d(y,A),d(y,A)-d(x,A)\}\le d(x,y)$．
         すると，$d_\R=|xーy|$に注意して，系\ref{cor-characterization-distance-function}.1より，$d(-,A):X\to\R$は連続．
         \item $\overline{A}=\{x\in X\mid \forall r>0,\;U_r(x)\cap A\ne 0\}$より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{等距離写像}
 
@@ -2281,7 +2304,7 @@ title=]
         \item 部分距離空間$A\subset X$の定める位相は，$X$の部分位相としての$A$の位相と等しい．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 系\ref{cor-characterization-distance-function}より，$f$は特に連続である．
         また，$f(x)=f(x')$とすると，$d_X(x,x')=d_Y(f(x),f(x'))=0$だから，$x=x'$が従うので$f$は単射である．
@@ -2289,7 +2312,7 @@ title=]
         $f$の連続性より，$\U_X\subset f^*\U_Y\subset f^*\O_Y$．命題\ref{prop-generated-topology}より$\O_X\subset f^*\O_Y$が従う．
         \item 包含写像$i:A\to X$は等長写像だから，埋め込みである．よって，$i:A\to X$は部分距離空間の$A$と部分空間$A$は同相である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{ノルム空間の等長写像}
 
@@ -2301,11 +2324,11 @@ title=]
 \begin{theorem}
     ノルム空間の等長写像$f:E\to F$は，$F$が厳密に凸のとき，affineである．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     連続性より，
     \[f\paren{\frac{1}{2}(x+y)}=\frac{1}{2}(f(x)+f(y))\]
     を示せば十分．
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[Mazur-Ulam]
     $E,F$を実ノルム空間，$f:E\to F$を等長な線形写像とする．このとき，$f$はaffineである．
@@ -2506,7 +2529,7 @@ title=]
         \item $X$の部分位相空間としての$A$はコンパクトである．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     \begin{description}
         \item[(1)$\Leftrightarrow$(2)] 条件(C)の対偶「有限部分被覆が存在しないならば，それはそもそも開被覆ではない」は
         \begin{quote}
@@ -2523,21 +2546,21 @@ title=]
         \end{align*}
         より．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{最大値の定理による特徴付け}
 
 \begin{proposition}[maximum value theorem]\label{prop-maximum-value-theorem}
     $X$を位相空間とし，$f:X\to\R$を連続関数とする．$A$が$X$のコンパクト集合であり空でないならば，$f$の$A$への制限には最大値が存在する．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\forall x\in A,\;\exists y\in A,\; f(x)<f(y)$と仮定して，矛盾を導く．
     これは，$A$の元$y\in A$に対して$U_y:=f^{-1}((-\infty,f(y)))$と定めると，$A=\cup_{y\in A}U_y$となる，と翻訳できる．
     任意の$x\in A$に対して，$y$が存在して$x\in U_y$を満たす，ということである．
 
     こうして$A$の開被覆$(U_y)_{y\in A}$を得たが，$A$はコンパクトであるから，有限個の元$y_1,\cdots,y_n\in A$で$A\subset U_{y_1}\cup\cdots\cup U_{y_n}$を満たすものが存在する．
     すると，このうちで$f(y_i)$を最大にする$y_i$が定まるから，$y\in A\subset U_{y_1}\cup\cdots\cup U_{y_n}=U_{y_i}$となってしまうが，これは$y_i\in f^{-1}(-\infty,f(y_i))=f(y_i)\in(-\infty,f(y_i))$を意味し，矛盾．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     $X$を距離空間とする．次の4条件は同値である：
@@ -2557,12 +2580,12 @@ title=]
         \item $A$が$\R$の空でないコンパクト集合ならば，$A$は最大元を持つ．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $A$が空でない場合について示せば良い．勝手に$a\in A$を取り，連続関数$d(-,a):A\to\R$について最大値の定理\ref{prop-maximum-value-theorem}を適用すれば，最大値$M$を得る．三角不等式より，任意の$x,y\in A$について，$d(x,y)\le d(x,a)+d(y,a)\le 2M$．
         \item 恒等写像$A\to A\subset\R$は連続だから，これに最大値の定理\ref{prop-maximum-value-theorem}を適用すれば良い．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{theorem}[Heine-Borel / Borel-Lebesgue]\label{thm-Heine-Borel}
     $a\le b$を実数とする．閉区間$[a,b]$は$\R$のコンパクト集合である．
 \end{theorem}
@@ -2570,10 +2593,10 @@ title=]
 \begin{corollary}
     $f:[a,b]\to\R$を連続関数とする．$f$の最大値$M$と最小値$m$が存在し，$f([a,b])=[m,M]$である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     最大値の定理より，$f$の最大値$M$が存在する．関数$-f$も最大値$M'$をもち，$m:=-M'$が$f$の最小値である．
     よって，$f([a,b])\subset[m,M]$．一方で，系\ref{cor-monotone-map-over-intervals}より，$[m,M]\subset f([a,b])$でもある．
-\end{proof}
+\end{Proof}
 
 \subsection{全有界性による特徴付け}
 
@@ -2600,7 +2623,7 @@ title=]
         \item $X$は全有界であり，$X$の任意の開被覆$(U_i)_{i\in I}$に対し，$(U_i)_{i\in I}$のルベーグ数が存在する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] $X$をコンパクトとする．
         \begin{enumerate}
@@ -2619,7 +2642,7 @@ title=]
             \item この時，$X=U_{i_1}\cup\cdots\cup U_{i_n}$である．
         \end{enumerate}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{完備距離空間での消息}
 
@@ -2671,7 +2694,7 @@ title=]
         \item $Y$をハウスドルフ空間とし，$f:A\to Y$を写像とする．$x\in A$が$a$に限りなく近づく時$f(x)$が$b,c\in Y$の両方に収束するならば，$b=c$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f$の延長$\widetilde{f}:\widetilde{A}:=A\sqcup\{a\}\to Y$を$\widetilde{f}(a)=b$で定めると，(1)は，$\widetilde{f}$が$a\in\widetilde{A}$にて連続であることと同値だから，任意の$b$の開近傍$V$に対して，$a\in\widetilde{A}$の開近傍$U$であって
         \[U\subset\widetilde{f}^{-1}(V)\Leftrightarrow \widetilde{f}(U)\subset V\]
@@ -2685,7 +2708,7 @@ title=]
         このとき，$f(U\cap A)\subset V\cap W=\emptyset$より，$U\cap A=\emptyset$である．
         $U$は$a$の開近傍であったから，この条件を満たす$U$が存在することは，$a$が$A$の集積点であることに矛盾する．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{超フィルターによるコンパクト性の特徴付け}
 
@@ -2759,14 +2782,14 @@ title=完備性の発見]
         \item $X$が距離空間であるとする．$(x_n)$が収束するならば，$(x_n)$は有界である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 各$n\in\N\widetilde{\N}$は孤立点だから，$\tilde{x}|_{\N}$は連続．従って，(2)は$\tilde{x}$が$\tilde{x}(\infty)=a$にて連続であることに同値．
         いま，一般に$X$の部分集合$a\in U$に対し，$\infty\in V\subset\tilde{x}^{-1}(U)$を満たす$\infty$の開近傍$V\subset\widetilde{\N}$即ち余有限集合$V$が存在するとは，$\tilde{x}^{-1}(U)\subset\widetilde{\N}$自体も余有限であることに同値．これは(1)の定義である．
         \item 命題\ref{prop-characterization-of-convergence-in-metric-spaces}と同様．
         \item $(x_n)$が収束するならば，これが定める写像$\tilde{x}:\widetilde{\N}\to X$は連続である．よって，像$\tilde{x}(\widetilde{\N})$はコンパクトである．距離空間のコンパクト集合は有界である（系\ref{cor-compact-sets-in-metric-space-is-bounded}）．従ってその部分集合$\{x_n\}_{n\in\N}\subset\tilde{x}(\widetilde{\N})$も有界である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{写像の連続性の特徴付け}
 
@@ -2777,12 +2800,12 @@ title=完備性の発見]
         \item $X$が距離空間であるとき，逆も成り立つ．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 点列$(x_n)$が収束するので，点列$(x_n)$の定める写像$\tilde{x}:\widetilde{N}\to X$は連続である．従って，合成$f\circ\tilde{x}:\w{\N}\to Y$も連続であるから，特に$\infty$でも連続．よって，点列$(f(x_n))$は$f(a)\in Y$に収束する．
         \item 点列$x:\N\to X$の，$\w{\N}$への延長は，$\N$は$\w{\N}$の稠密な部分集合だから，$X$がHausdorffであるとき一意的である（系\ref{cor-Hausdorff空間への連続写像は，稠密な部分集合への制限で一意的に定まる}）．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{閉包の点列による特徴付け}
 
@@ -2795,7 +2818,7 @@ title=完備性の発見]
         \item (AC) $X$が距離空間ならば，$\overline{A}=B$．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $A$の点列$(x_n)$が存在して$a\in X$に収束するならば，$a\in\overline{A}$であることを示せば良い．
         収束列$(x_n)$が定める連続写像$\tilde{x}:\w{\N}\to X$は，命題\ref{prop-continuous-map-and-closure}(3)より，$\tilde{x}(\w{\N})\subset\o{A}$を満たすので，$\x(\infty)=a\in\o{A}$を満たす．
@@ -2806,7 +2829,7 @@ title=完備性の発見]
         従って，選択公理を認めれば，点列$(x_n)\in\prod_{n\ge 1}(U_{\frac{1}{n}}(a)\cap A)$が取れる．
         これについて，$\lim_{n\to\infty}d(x,a)=0$より，$a=\lim_{n\to\infty}x_n\in B$である（定義\ref{def-convergence}）．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{コンパクト距離空間の点列による特徴付け}
 
@@ -2823,7 +2846,7 @@ title=]
         \item 任意の自然数$m$に対し，$\inf_{n\ge m}d(x_n,a)=0$である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         部分列$(x_{m_n})$が$a$に収束するならば，$\w{\N}$の点列である$(m_n)_{n\in\N}$は$\infty$に収束するから，
@@ -2843,7 +2866,7 @@ title=]
             \item $n\ge 1$について，$\inf_{m\ge m_{n-1}+1}d(x_m,a)=0$が成り立つから，特に$d(x_m,a)<\frac{1}{n}$を満たす自然数$m>m_{n-1}$が存在する．そのような$m$のうち最小のものを$m_n:=m$とする．
         \end{enumerate}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[コンパクト距離空間は点列コンパクトである]\mbox{}\label{prop-Bolzano-Weierstrass}
     \begin{enumerate}
@@ -2851,7 +2874,7 @@ title=]
         \item (Bolzano-Weierstrass) $(x_n)$を$\R^m$の有界な点列とすると，収束する部分列$(x_{m_n})$が存在する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 任意に$X$の点列$(x_n)$をとり，この収束する部分列が存在することを示せば良い．
         $A:=\{(x_n,n)\mid n\in\N\}\subset X\times\w{\N}$の閉包を$\o{A}$とし，$\exists a\in X,\;(a,\infty)\in\o{A}$を示せれば，補題\ref{lemma-部分列が収束することの特徴付け}より収束する部分列が存在する．
@@ -2860,7 +2883,7 @@ title=]
         \item 
         $(x_n)$が$\R^m$の有界な点列ならば，実数$M>0$であって，$\{x_n\}\subset[-M,M]^m$を満たすものが存在する．命題\ref{prop-compact-sets-in-R^n}より，有界閉集合$[-M,M]^m$はコンパクトだから，1.より，$(x_n)$には収束する部分列が存在する．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[AC]\label{thm-characterization-of-compact-metric-space}
     距離空間$X$について，次の３条件は同値である．
@@ -2870,7 +2893,7 @@ title=]
         \item $X$は完備かつ全有界．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         命題\ref{prop-Bolzano-Weierstrass}.1．
@@ -2930,11 +2953,11 @@ title=]
             $C$はコンパクトだから，\ref{cor-image-of-compact-set-is-compact}より，$X$もコンパクトである．
         \end{description}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \section{完備距離空間}
 
-\subsection{閉集合との関係}
+\subsection{完備性の弱遺伝性}
 
 \begin{proposition}[距離空間内の閉集合]\label{prop-complete-sets-in-metric-space}
     $X$を距離空間，$A$を部分空間とする．次の２条件を考える．
@@ -2944,14 +2967,37 @@ title=]
     \end{enumerate}
     1$\Rightarrow$2である．$X$が完備ならば逆も成り立つ．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2),AC] $A\supset\o{A}$を示せば良い．任意に$a\in\o{A}$を取る．系\ref{cor-characterization-of-closure-in-terms-of-limits}.2(AC)より，
         $a$に収束する$A$の点列$(x_n)$が存在する．収束する列$(x_n)$はCauchy列で（補題\ref{lemma-Cauchy-sequence}.1），$A$は完備だから，$(x_n)$は収束する．系\ref{cor-characterization-of-closure-in-terms-of-limits}.2より，それは$a$で，よって$a\in A$．
         \item[(2)$\Rightarrow$(1)]
         $(x_n)$を$A$のCauchy列とし，これが収束することを示せば良い．$X$が完備ならば，極限を持つ：$\lim_{n\to\infty}x_n=:a\in X$．系\ref{cor-characterization-of-closure-in-terms-of-limits}より，$a\in\o{A}=A$．従って，$A$は完備．
     \end{description}
-\end{proof}
+\end{Proof}
+
+\subsection{完備性の伝播}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    こういう理由で，Banの射とは計量写像となるのである．
+\end{tcolorbox}
+
+\begin{lemma}
+    距離空間の間の
+    一様連続写像$f:X\to Y$は，Cauchy列をCauchy列に写す．
+\end{lemma}
+
+\begin{theorem}
+    2つの距離空間が一様同相とする（逆写像も一様連続な全単射一様連続写像が存在する）．片方が完備なら，もう一方も完備である．
+\end{theorem}
+
+\subsection{一様連続写像の延長}
+
+\begin{theorem}
+    $X,Y$を完備距離空間，$A\subset X$を稠密部分集合とする．
+    一様連続写像$f:A\to Y$は一様連続性を保ったまま，一意な延長$\o{f}:X\to Y$を持つ．
+\end{theorem}
 
 \subsection{完備化}
 
@@ -2984,7 +3030,7 @@ title=]
         }\]
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{enumerate}[(a)]
             \item 命題\ref{prop-characterization-of-closure-in-terms-of-metric-function}より，
@@ -3004,7 +3050,7 @@ title=]
         \item 
 
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{不動点定理}
 
@@ -3020,7 +3066,7 @@ title=]
         \item $X$が完備であり空でなければ，$f(a)=a$を満たす$a\in X$が存在する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $f$は縮小写像だから，条件を満たす$r\in(0,1)$が存在する．
     \begin{enumerate}
         \item $a,b\in X$が$f(a)=a,f(b)=b$を満たすとする．$d(a,b)\le rd(a,b)$より，$r\in(0,1)$だから，$d(a,b)=0\Leftrightarrow a=b$．
@@ -3034,52 +3080,77 @@ title=]
         \end{align*}
         より，これはCauchy列である．$X$は完備だから，極限$\lim_{n\to\infty}x_n=:a\in X$が存在する．これについて，$f(a)=\lim_{n\to\infty}f(x_n)=\lim_{x\to\infty}x_{n+1}=a$である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
-\subsection{可算共通部分}
+\subsection{稠密性の遺伝}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=Baireの定理]
+    一般の位相空間では，有限個の開集合の共通部分しか稠密にならない．
+    完備距離空間では，稠密開集合の可算共通部分は稠密．
+\end{tcolorbox}
 
 \begin{proposition}[AC, 完備距離異空間の稠密開集合の可算共通部分は稠密]
     $X$を完備距離空間とする．$(U_n)_{n\in\N}$が$X$の稠密な開集合の列ならば，共通部分$\cap_{n=0}^\infty U_n$も稠密である．
 \end{proposition}
 
-\begin{corollary}[Baire, AC]
+\begin{corollary}[AC]
     $X$を空でない完備距離空間とし，$(A_n)_{n\in\N}$を$X$の閉集合の列とする．$X=\cup_{n=0}^\infty A_n$ならば，内部$A^\circ_n$が空でない$n$が存在する．
 \end{corollary}
+
+\begin{example}
+    $\R$上で$\Q$は$G_\delta$-集合ではない．もし$\Q=\cap_{i\in\N}G_i$ならば，各$G_i$は$\R$上稠密である．
+    $\Q$に附番$\{q_j\}_{j\in\N}$して，
+    $H_j:=\R\setminus\{q_j\}$とすると，$(\cap G_i)\cap(\cap H_i)=\emptyset$も稠密である必要がある．
+\end{example}
 
 \subsection{Baire空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
     title=]
-        ３つのBanach空間上の作用素の基本結果は，全てBaireの範疇定理の上に拠って立つ．
-        これは，完備距離空間の稠密開集合の可算交叉は再び稠密である（くらいに「濃い」）ことを主張している．
+    こうなると，同様の性質が成り立つ空間(第二類空間)は，完備距離空間の他にどのようなものがあるのか気になる．
+    このとき，補集合となる空間を第一類空間と呼ぶ．
+    ３つのBanach空間上の作用素の基本結果は，全てBaireの範疇定理の上に拠って立つ．
 \end{tcolorbox}
 
-\begin{definition}[Baire space, nowhere dense]\mbox{}
+\begin{definition}[nowhere dense, first category, Baire space]\mbox{}
     \begin{enumerate}
-        \item 閉包が内点を持たない集合を\textbf{疎集合}という．集合が疎であることと，その補集合が稠密であることは同値．
+        \item 閉包が内点を持たない集合$A$を\textbf{疎集合}という：$\o{X\setminus\o{A}}=X$．
+        集合$A$が疎であることと，その補集合$X\setminus A$が稠密であることは同値．
         \item 可算個の疎集合の合併として表せる集合を\textbf{第一類}という．
-        \item そうでない集合，すなわち，任意の稠密開集合の可算共通部分は稠密であるような位相空間を\textbf{第二類}または\textbf{Baire空間}という．
+        \item そうでない集合を\textbf{第二類}という．
+        これは，任意の稠密開集合の可算共通部分は稠密であることに同値．これが成り立つことを\textbf{Baire空間}であるという．
     \end{enumerate}
 \end{definition}
-\begin{proof}
-    任意の半径$r>0$の閉球$B_0$を取り，これと$\cap_{n=1}^\infty A_n$との共通部分が空でないことを示せば，$\cap_{n=1}^\infty A_n$の稠密性が示せる．
 
-    いま，$A_1\cap B_0^\circ$は空でない開集合だから，ある半径$2^{-1}r$より小さい閉球$B_1$が取れる．
-    これを繰り返すことで，$B_n\subset A_n\cap B^\circ_{n-1},r(B_n)<2^{-n}r$を満たす閉球の列$(B_n)$が取れる．
-    $X$は完備だから，$\exists_{x\in X}\;\{x\}=\cap_{n=1}^\infty B_n\subset B_0\cap\paren{\cap_{n=1}^\infty A_n}$が成り立ち，共通部分が空でないことがわかった．
-\end{proof}
+
+
+\begin{theorem}[Baire空間の特徴付け]
+    位相空間$X$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $X$はBaire空間である：任意の稠密開集合の可算共通部分は稠密である．
+        \item $X$の任意の非空開集合は第二類である：可算個の疎集合の合併としては表せない．
+        \item $X$の閉集合列$(F_i)_{i\in\N}$が$\paren{\cup_{i\in\N}F_i}^\circ\ne\emptyset$ならば，$\exists_{i\in\N}\;F_i^\circ\ne\emptyset$．
+    \end{enumerate}
+\end{theorem}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] $X$の任意の非空開集合$H\in\O_X$が，$X$の疎集合の合併$H=\cup_{n\in\N}N_n$で表せると仮定して矛盾を示す．
+        各$N_n$は疎だから，$X\setminus\o{N_n}$は$X$上稠密である．
+        すると，$\cap_{n\in\N}X\setminus\o{N_n}\subset X\setminus H$も稠密である必要があるから，$X=X\setminus H$．これは$H\ne\emptyset$に矛盾．
+        \item[(2)$\Rightarrow$(3)] $\paren{\cup_{i\in\N}F_i}^\circ=:H\in\O_X$とおき，$\forall_{i\in\N}F_i^\circ=\emptyset$と仮定して矛盾を示す．すると，各$F_i$は疎だから，$H=\cup_{i\in\N}H\cap F_i$も素．よって，$H=\emptyset$となり，矛盾．
+        \item[(3)$\Rightarrow$(1)] $(G_i)$を$X$の稠密開集合の列とする．$F_i:=X\setminus G_i$とすると，$(\cup_{i\in\N}F_i)^\circ=\emptyset$だから，結論が従う．
+    \end{description}
+\end{Proof}
 
 \begin{proposition}[Baire category theorem 1]
     任意の完備距離空間$X$はBaire空間である．
-    
-    すなわち，$(A_n)$を$X$の稠密開集合の列とすると，この共通部分$\cap_{n\in\N}A_n$は$X$で稠密である．
-    また双対命題は，閉集合列を用いて$X=\cup_{n=1}^\infty F_n$と表せたとき，少なくとも一つの$F_n$は疎でない（内点を持つ）．
 \end{proposition}
 \begin{remark}
     実はZFの下で従属選択公理と呼ばれる弱い選択公理と同値になる．
 \end{remark}
 
-\begin{proposition}[BCT2]
+\begin{proposition}[Baire category theorem 2]
     任意の局所コンパクトハウスドルフ空間はBaire空間である．
 \end{proposition}
 \begin{remarks}
@@ -3130,7 +3201,7 @@ title=]
         \item (AC) $X$が全有界ならば，$X$は可分である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 命題\ref{prop-open-balls-is-basis}と実数のArchimedes性より，任意の$x\in X$に対し，$\{U_{\frac{1}{n}}(a)\}_{n\in\N_{>0}}$は開近傍の基本系であり，可算である．
         \item $X$の開集合$U$とその点$x\in U$を任意に取り，この間に挟まる$\U_A$の元を構成すれば良い．
@@ -3139,7 +3210,7 @@ title=]
         \item 
         任意の自然数$n\ge 1$に対して，$\forall x\in X,\;\exists a\in A_n,\;d(x,a)\le 1/n$を満たす有限集合$A_n\subset X$が存在するから，選択公理より列$(A_n)$を得る．$A=\cup_{n\in\N}A_n$とするとこれは可算集合であり，$X$上稠密である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}\label{cor-separability-and-second-countability}
     $X$を距離空間とすると，次の２条件は同値．
@@ -3148,12 +3219,12 @@ title=]
         \item $X$は第２可算である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] $X$の稠密な可算部分集合を$A$とする．命題\ref{prop-sep-metric-space}の通りに$\U_A$を定めると，これは可算である．
         \item[(2)$\Rightarrow$(1),AC] 命題\ref{prop-sep-general-space}.3より．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{Frechet空間$\R^\infty$の距離付け可能性}
 
@@ -3169,7 +3240,7 @@ title=]
         \item 積空間$\R^\N$は可分であり，第２可算である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{description}
             \item[証明方針] $\R$は空でない開区間と同相だから，積空間$A:=\prod_{n\in\N}\paren{0,\frac{1}{n}}$が距離付け可能であることを示せば良い．
@@ -3191,7 +3262,7 @@ title=]
         \[\Q^{(\N)}:=\left\{x=(x_n)\in\R^\N\;\middle|\;x_n\ne 0を満たすnは高々有限個\right\}\]
         が稠密であるため．系\ref{cor-separability-and-second-countability}より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{一般の距離付け可能性}
 
@@ -3242,7 +3313,7 @@ title=]
         \item $X$がHausdorffならば，任意の$x\in X$について$\{x\}$は$X$の閉集合である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 次の条件は全て同値である．
         \begin{description}
@@ -3254,7 +3325,7 @@ title=]
         \end{description}
         \item 任意の元$x\in X$に対して，写像$i_x:X\to X\times X$を$i_x(y):=(x,y)$と定めると，これは連続である．\footnote{例えば，$\pr_2:X\times X\to X$が開写像であるため（積位相の特徴付け\ref{prop-characterization-product-topology}）．}$\{x\}$はこれによる閉集合$\Delta_X$の逆像$\{x\}=i^{-1}_x(\Delta_X)$である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{連続単射の逆像への遺伝}
 
@@ -3266,20 +3337,20 @@ title=]
 \begin{proposition}\label{prop-Hausdorff性は連続単射によって足に感染る}
     $f:X\to Y$を連続単射とする．$Y$がHausdorffならば，$X$もHausdorffである．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f$が連続ならば，$f\times f$は連続である（積位相の特徴付け\ref{prop-characterization-product-topology}.2）．
         \item $f$が単射ならば，$(f\times f)^{-1}(\Delta_Y)=\Delta_X$である．
         \item 連続写像$f\times f$による逆像$(f\times f)^{-1}(\Delta_Y)=\Delta_X$は閉集合である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}\label{cor-subspace-of-Hausdorff-is-Hausdorff}
     $X$をHausdorff空間とする．$X$の部分空間$A$はHausdorffである．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     包含写像$i:A\to X$は連続単射である．
-\end{proof}
+\end{Proof}
 
 \begin{proposition}
     $X$は$\F$により始位相が定まっており，$\F$は$X$の点を分離するとする．
@@ -3292,12 +3363,12 @@ title=]
         \item $X$と$Y$を位相空間とし，$X\times Y$がHausdorffであるとする．$Y$が空でなければ$X$はHausdorffである．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\Delta_X=\cap_{i\in I}(\pr_i\times\pr_i)^{-1}(\Delta_{X_i})$．仮定より，$\Delta_{X_i}$は閉集合である．$\pr_i$は$\prod_{i\in I}X_i$の積位相について連続写像であるから，$\pr_i\times\pr_i$も連続である（積位相の特徴付け\ref{prop-characterization-product-topology}）．
         \item 各$b\in Y$に対して，写像$f:X\to X\times Y$を$f(x):=(x,b)$と定めると，これは連続で単射である．よって，命題\ref{prop-Hausdorff性は連続単射によって足に感染る}より．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{等化子による特徴付け}
 
@@ -3314,7 +3385,7 @@ title=]
         \item 任意の位相空間$T$と任意の連続写像$f:T\to X$に対し，$f$のグラフ$\Gamma=\{(t,x)\in T\times X\mid f(t)=x\}$は$T\times X$の閉集合である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         $\Ker(f,g)=(f,g)^{-1}(\Delta_X)$である．$f,g$が連続であることと$(f,g)$が連続であることは同値（積位相の特徴付け\ref{prop-characterization-product-topology}）．よって，$\Delta_X$が閉集合ならば，$\Ker(f,g)$は閉集合である．
@@ -3323,7 +3394,7 @@ title=]
         \item[(3)$\Rightarrow$(1)] 
         対角集合$\Delta_X$とは，$\id_X:X\to X$のグラフである．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{Hausdorff空間値写像は連続延長する}
 
@@ -3331,11 +3402,11 @@ title=]
     $X$を位相空間とし，$Y$をHausdorff空間とする．
     $A$が$X$の稠密な部分集合ならば，制限写像$i^*:C(X,Y)\to C(A,Y)$は単射である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     任意の$f,g\in C(X,Y)$について，$f|_A=g|_A\Rightarrow f=g$を示す．
     仮定は即ち$A\subset\Ker(f,g)$と同値であるが，$Y$がHausdorffならば，$\Ker(f,g)$は閉集合である．よって，$\Ker(f,g)=X$．
     即ち，$f=g$．
-\end{proof}
+\end{Proof}
 
 \subsection{ネットによる特徴付け}
 
@@ -3374,7 +3445,7 @@ title=]
         \item $p:X\to 1$を定値写像とすると，任意の離散位相空間$Y$に対して，$p^*:C(1,Y)\to C(X,Y)$が可逆である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         $f\in C(X,\R)$を任意の連続関数とする．任意の$f(u)<c<f(v)$を満たす$u,v,c$について$f(t)=c$を満たす$c\in X$を構成すれば良い．
@@ -3399,7 +3470,7 @@ title=]
         \item[(5)$\Leftrightarrow$(2)]
         任意の離散空間$Y$への連続写像$f\in C(X,Y)$は，$y\in Y$が存在して定値写像$f=y$に限る，ということである．これは，埋め込み$i:Y\to\R$が取れる場合については(2)$\Rightarrow$(3)の時と同様に示せる．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{閉包と交叉和への遺伝}
 
@@ -3416,7 +3487,7 @@ title=]
         \item $A,B$が連結とする．$A\cap B\ne\varnothing$ならば，$A\cup B$も連結である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 任意に$f\in C(B,2)$を取り，これが定数関数であることを示す．
         勝手に$a\in A$を取って$c:=f(a)$と置くと，$f|_A=c$である．
@@ -3425,21 +3496,21 @@ title=]
         \item 任意に$f\in C(A\cup B,2)$を取り，これが定数関数であることを示す．
         $A\cap B\ne\emptyset$なので，勝手に$a\in A\cap B$を取って$c:=f(a)$と置くと，$f|_A=f|_B=c$である．よって，$f=c$を得る．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{弧状連結性}
 
 \begin{corollary}[弧状連結ならば連結]
     位相空間$X$が弧状連結ならば，$X$は連結である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     任意に連続関数$f\in C(X,2)$を取り，これが定数関数であることを示す．
     $a\in X$を勝手に取る．
     $X$は弧状連結だから，任意の$x\in X$に対して，連続写像$g:[0,1]\to X$であって$g(0)=a,g(1)=x$を満たすものが存在する．
     すると，$f\circ g:[0,1]\to 2$は連続であるが，$[0,1]$は連結であるから（命題\ref{prop-closed-interval-is-connected}），
     命題\ref{prop-charactorization-of-connectedness}より，定値写像$f\circ g=f(a)$である．よって，$f(x)=f(a)$．
     以上より，$f=f(a)$である．
-\end{proof}
+\end{Proof}
 
 \begin{definition}[path component]
     $\PConn_x(X):=\Brace{y\in X\mid y,x\text{は道で結べる}}$を\textbf{弧状連結成分}という．
@@ -3465,7 +3536,7 @@ title=]
 \begin{proposition}\label{prop-closed-interval-is-connected}
     $a<b$を実数とする．閉区間$[a,b]$は連結である．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     連続関数$f\in C([a,b],2)$を任意に取り，これが定数関数$f(a)$となることを背理法で示す．
     $f(c)\ne f(a)$となる$c\in[a,b]$が存在したと仮定する．
 
@@ -3473,7 +3544,7 @@ title=]
     これについて，$f(s)=f(a)\ne f(c)$より，$s<c$．よって，$(s,c]\cap A=\emptyset$より，勝手に取った$t\in(s,c]$に対し，$f(t)=f(c)$（$f$は二値写像であることに注意）．
     しかし$f$は連続だから，$[s,c]$上で$f=f(c)$．よって，$f(s)$の値について矛盾．
     従って，$f$は定数関数である．
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[区間上の単調写像は開埋め込み]\label{cor-monotone-map-over-intervals}
     $a<b$を実数とする．
@@ -3482,7 +3553,7 @@ title=]
         \item $f:(a,b)\to\R$を連続関数とする．任意の$a<s<t<b$に対し，$f(s)<f(t)$ならば，$f:(a,b)\to\R$は開埋め込みである．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 閉区間$[a,b]$は連結であるから，$f(a)<c<f(b)$を満たす$c\in[f(a),f(b)]$について，$t\in[a,b]$が存在して$c=f(t)\in f([a,b])$である（命題\ref{prop-charactorization-of-connectedness}）．
         \item 連続写像$f$はこのとき単射だから，あとは開写像であることを示せば良い．
@@ -3493,7 +3564,7 @@ title=]
         こうして，$f(y)\in(f(s),f(t))\subset U$と開近傍が取れたことになる．
         以上より，$f(U)$は開集合である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[$\R$の連結集合の分類]
     $\R$の部分集合$A$に対し，次の３条件は同値である．
@@ -3515,7 +3586,7 @@ title=]
 \begin{proposition}[連続写像は連結性を保存する]\label{prop-connectedness-over-morphism}
     $f:X\to Y$を連続写像とする．$A$が$X$の連結部分集合ならば，$f(A)$は$Y$の連結部分集合である．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $A$が連結ならば$A\ne\emptyset$としたから，$f(A)\ne\emptyset$より，$g\in C(f(A),2)$が取れる．これが定数関数であることを示す．
     すると，$g\circ f|_A\in C(A,2)$であるから，$g\circ f|_A$は定数関数．
     $f|_A$は全射だから$g$も定数関数と判る．
@@ -3523,7 +3594,7 @@ title=]
         X\ar[r]^-f\ar@{.>}[dr]&Y\ar[d]^-g\\
         &2
     }\]
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[積への伝播]
     $X,Y$を位相空間とする．次の２条件は同値である．
@@ -3532,7 +3603,7 @@ title=]
         \item $X\times Y$は連結である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         任意に取った$(a,b)\in X\times Y$に対して，任意の$f\in C(X\times Y,2)$が$f=f(a,b)$を満たす定数関数だと示せば良い．
@@ -3541,7 +3612,7 @@ title=]
         \item[(2)$\Rightarrow$(1)]
         連続写像$\pr_1:X\times Y\to X,\pr_2:X\times Y\to Y$の像である（命題\ref{prop-connectedness-over-morphism}）．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[AC]
     一般に，連結空間の族$(X_i)$に対して，積空間$\prod_{i\in I}X_i$も連結である．
@@ -3556,14 +3627,14 @@ title=]
         \item $A$をこの同値関係$R$に関する同値類の1つ（すなわち連結成分）とすると，$A$は連結な閉集合である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 各$x\in X$に対して$\{x\}$は連結だから，反射律は成り立つ．対象律は明らか．連結部分集合$A,B$が存在して$x,y\in A,y,z\in B$の時，$A\cap B\ne\emptyset$より，$x,y,z\in A\cup B$も連結（系\ref{cor-connectedness-over-union}）で，推移律も成り立つ．
         \item $a\in A$を任意に取る．$f\in C(A,2)$を任意に取り，$c:=f(a)$を置く．
         任意の$x\in A$に対して，$\{x,a\}\subset B$を満たす連結部分集合$B\subset A$が存在するが，これについて$f|_B=c$．よって，$f(x)=c$を得るが，$x\in A$は任意に取ったから$f=c$．
         よって，$A$は連結．系\ref{cor-connectedness-over-union}より$\overline{A}$も連結であるが，$A$の極大性より$\overline{A}\subset A$．よって，$A$は閉．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{連結成分と開かつ閉集合}
 
@@ -3585,11 +3656,11 @@ title=]
         \item $X$がcompact Hausdorffまたは局所連結ならば，$\Gamma'_x\subset\Gamma_x$でもある．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 任意の$X$のclopen set $U$について，$U\subsetneq\Gamma_x$ならば，$\Gamma_x=(U\cap\Gamma_x)\coprod(\Gamma_x\setminus U)$と２つの開集合で分割できてしまい，矛盾．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \section{局所連結空間}
 
@@ -3644,7 +3715,7 @@ title=]
         \item $Y$を任意の位相空間とし，$y\in Y$を任意の点とする．$A\times\{y\}$の任意の開近傍$W\subset X\times Y$に対し，$y$の開近傍$V\subset Y$で，$A\times V\subset W$を満たすものが存在する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         \begin{enumerate}
@@ -3685,9 +3756,9 @@ title=]
             である．これと$(X\times\{\chi_J\})\cap W=\cup_{i\in J}U_i\times\{\chi_J\}$と併せて，$A\subset\cup_{i\in J}U_i$を得る．
         \end{description}
     \end{description}
-\end{proof}
+\end{Proof}
 
-\subsection{閉集合との交叉と有限合併への遺伝}
+\subsection{弱遺伝性と有限合併への遺伝}
 
 \begin{corollary}[有限個の合併，閉集合との共通部分はコンパクトである]\label{cor-union-intersection-of-compact-sets-is-compact}
     $X$を位相空間とする．
@@ -3696,7 +3767,7 @@ title=]
         \item $A_1,\cdots,A_n$が$X$の有限個のコンパクト集合ならば，合併$A_1\cup\cdots\cup A_n$もコンパクト集合である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     任意の位相空間$Y$とその点$y\in Y$を用意する．
     \begin{enumerate}
         \item $(A\cap B)\times\{y\}$の開近傍$W\subset X\times Y$を取り，$(A\cap B)\times\{y\}\subset (A\cap B)\times V\subset W$を満たす$y$の開近傍$V$が構成できることを示せば良い．
@@ -3711,14 +3782,14 @@ title=]
         \[(A_1\cup\cdots\cup A_n)\times\{y\}\subset (A_1\cup\cdots\cup A_n)\times V\subset\cup_{i\in[n]}(A_i\times V_i)\subset W\]
         を満たす．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{連続像への伝播}
 
 \begin{corollary}[連続写像はコンパクト性を保存する]\label{cor-image-of-compact-set-is-compact}
     $f:X\to Y$を連続写像とする．$A\subset X$をコンパクト集合とすると，$f(A)\subset Y$もコンパクト集合である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     任意の位相空間$Z$とその点$z\in Z$を用意する．
     $f(A)\times\{z\}$の開近傍$W\subset Y\times Z$を任意に取り，$f(A)\times\{z\}\subset f(A)\times V\subset W$を満たす$z$の開近傍$V\subset Z$を構成すれば良い．
 
@@ -3729,7 +3800,7 @@ title=]
         \Leftrightarrow\quad&f(A)\times\{z\}\subset f(A)\times V\subset W
     \end{align*}
     である．
-\end{proof}
+\end{Proof}
 
 \subsection{射影による特徴付け}
 
@@ -3740,7 +3811,7 @@ title=]
         \item 任意の位相空間$Y$に対して，$\pr_2:X\times Y\to Y$は閉写像である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)を積位相の言葉に翻訳] 
         $Y$を任意の位相空間，$y\in Y$を任意の点とすると，$X$がコンパクトであることは，任意の$X\times\{y\}$の開近傍$W\subset X\times Y$に対して，$X\times\{y\}\subset X\times V\subset W$を満たす$y$の開近傍$V\subset Y$が存在することに同値．
@@ -3759,7 +3830,7 @@ title=]
         \item[さらに点$y\in Y$を抽象化する]
         (3')の任意にとった$Y,F$に対する条件は，$\pr_2(F)$が$Y$の閉集合であるということと同値．よって(2)と同値．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{積への遺伝}
 
@@ -3771,25 +3842,30 @@ title=]
 \begin{corollary}[積もコンパクト]\label{cor-product-of-compact-sets-is-compact}
     $X,Y$を位相空間とする．$A\subset X,B\subset Y$がコンパクト集合ならば，$A\times B\subset X\times Y$もコンパクト集合である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     命題\ref{prop-characterization-of-compactness-as-space}より，$A=X,B=Y$の場合について示せば十分である．
     $Z$を任意の位相空間とする．
     $X$がコンパクトという仮定より，射影$\pr_{23}:X\times(Y\times Z)\to Y\times Z$は閉写像で，$Y$がコンパクトより，射影$\pr_2:Y\times Z\to Z$は閉写像である．
     合成$\pr_3=\pr_2\circ\pr_{23}$も閉写像であるから，$X\times Y$はコンパクトである．
-\end{proof}
+\end{Proof}
 
 \begin{theorem}[Tychonoff (AC)]\label{thm-Tychonoff}
     $(X_i)_{i\in I}$をコンパクト空間の族とする．この時，積空間$X:=\prod_{i\in I}X_i$はコンパクトである．
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}[(a)]
         \item $(x_\lambda)$を$X$の普遍ネットとする．
         \item 普遍ネットの任意の写像による像は普遍だから，$(\pr_i(x_\lambda))$は$X_i$の普遍ネットである．$X_i$のコンパクト性より，収束点$x_i$を持つ．
         \item $x\in X$であって$\pr_i(x)=x_i$を満たす点について，$x_\lambda\to x$が成り立つ．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{ネットによる特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    (2)による特徴付けは，Alexanderの定理と呼ばれる．
+\end{tcolorbox}
 
 \begin{theorem}[(AC)]
     位相空間$X$について，次の5条件は同値．
@@ -3823,7 +3899,7 @@ title=]
         \item $A$が$X$のコンパクト集合ならば，$f(A)$は$Y$の閉集合である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{description}
             \item[場面設定] 任意の閉集合$A\subset X$について，像$f(A)\subset Y$が閉であることを示せば良い．$f$のグラフ$\Gamma\subset X\times Y$を考えると，$f(A)=\pr_2(\pr_1^{-1}(A)\cap\Gamma)$である．
@@ -3834,7 +3910,7 @@ title=]
         \item 
         1.より，制限$f|_A:A\to Y$は閉写像である．その閉集合$A$の像$f(A)$は閉である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}\label{cor-Compact-Hausdorff}
     $X$をコンパクト空間，$Y$をハウスドルフ空間とし，$f:X\to Y$を連続写像とする．
@@ -3844,7 +3920,7 @@ title=]
         \item 像$f(X)$は$Y$の閉集合であり，$f$が引き起こす可逆写像$\overline{f}:X/R_f\to f(X)$は商空間から部分空間への同相写像である．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 逆写像$g:Y\to X$が連続だと示せば良い．任意の開集合$U\subset X$について，$F:=X\setminus U$は閉より，$g^{-1}(U)=g^{-1}(X\setminus F)=Y\setminus g^{-1}(F)=Y\setminus f(F)$は$Y$の開集合である．
         \item $f:X\to Y$は閉写像でもあるから，閉埋め込みになる．
@@ -3852,7 +3928,7 @@ title=]
         系\ref{cor-image-of-compact-set-is-compact}より，商空間$X/R_f=p(X)$はコンパクトである．
         系\ref{cor-subspace-of-Hausdorff-is-Hausdorff}より，Hausdorff空間$Y$の部分空間$f(X)$はHausdorffである．よって，1.より，全単射$\overline{f}$は同型である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[閉グラフ定理]
     $f:X\to Y$をコンパクトハウスドルフ空間の間の写像とする．グラフが閉であるとき，$f$は連続である．
@@ -3880,7 +3956,7 @@ title=]
         \item $A,B$が$X$のコンパクト集合ならば，$A\cap B$も$X$のコンパクト集合である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\Rightarrow$は包含写像$i:A\to X$の像$i(A)=A$は閉であることから従う．$\Leftarrow$は系\ref{cor-union-intersection-of-compact-sets-is-compact}より，$X$がコンパクト空間であるとき，閉集合$A(=X\cap A)$はコンパクトである．
         \item 系\ref{cor-product-of-compact-sets-is-compact}より，コンパクト集合の積$A\times B$は積空間$X\times X$のコンパクト集合である．
@@ -3889,7 +3965,7 @@ title=]
         なお，この事実は，積位相の特徴付け\ref{prop-characterization-product-topology}により，
         対角写像$X\to X\times X$が埋め込みであり，その制限により定まる同型$A\cap B\to(A\times B)\cap\Delta_X$からも分かる．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[コンパクトではない空間でのコンパクト集合]
     $X$を距離空間とし，$X$の部分集合$A$について，次の２条件
@@ -3899,7 +3975,7 @@ title=]
     \end{enumerate}
     は，(1)$\Rightarrow$(2)が成り立つ，$X=\R^n$の時に逆も成り立つ．
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         \begin{enumerate}
@@ -3910,7 +3986,7 @@ title=]
         \item[(2)$\Rightarrow$(1)]
         命題\ref{prop-compact-sets-in-R^n}．$\R^n$では有界閉集合は，Heine-Borelの定理の帰結だが，コンパクト空間の閉集合となる．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{商空間への遺伝}
 
@@ -3924,7 +4000,7 @@ title=]
     $A$を一点に潰して得られる空間$Y$はハウスドルフである．
     さらに，$X$がコンパクトなら，$Y$もコンパクトである．
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[商空間の復習] 
         $R_A:=(A\times A)\cup\Delta_X$とする．$q:X\to X/R_A=Y$を商写像とし，$q(A)=:\{c\}$とする．
@@ -3948,14 +4024,14 @@ title=]
         よって，$Y$はHausdorffである．
         \item[コンパクト性] $X$がコンパクトなら，その$q$による像である$Y$もコンパクトである．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{コンパクトハウスドルフならば正規}
 
 \begin{corollary}[コンパクト・ハウスドルフ空間の互いに交わらない閉集合は，開集合で分離できる]\label{cor-compact-Hausdorff-space-is-normal}
     $X$がコンパクト・ハウスドルフ空間ならば，$X$は正規である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     $A,B\subset X$を互いに素な空でない閉集合とする．
     $A$の開近傍$U\subset X$と，$B$の開近傍$V\subset X$で，$U\cap V=\emptyset$を満たすものを構成すれば良い．
     \begin{description}
@@ -3969,7 +4045,7 @@ title=]
         $a\ne b$だから，$a$の開近傍$U'\subset Z$と$b$の開近傍$V'\subset Z$で$U'\cap V'=\emptyset$を満たすものが存在する．
         $U:=p^{-1}(U'),V:=p^{-1}(V')$と置けば良い．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \section{正則空間と正規空間}
 
@@ -4015,14 +4091,14 @@ title=]
         \item 任意の閉集合$F\subset X$上の任意の連続写像$f:F\to I$は$X$上に延長する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         $B:=X\setminus V$と定めると，$A\cap B\ne\emptyset$より，$U\cap W=\emptyset$を満たす開近傍$A\subset U,B\subset W$が存在する．再び$C:=X\setminus W$と置くと，$A\subset U\subset C\subset V$が成り立つが，$C$は閉集合より，$\o{U}\subset C$を得る．２つ併せて，$A\subset\o{U}\subset V$である．
         \item[(1)$\Rightarrow$(3)] Urysohnの補題\ref{lemma-Urysohn's-lemma}
 
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{正規であるための十分条件}
 
@@ -4054,12 +4130,12 @@ title=]
         \item (Urysohn's lemma) 連続関数$f:X\to[0,1]$で，$A\subset f^{-1}(0)\subset f^{-1}([0,1))\subset U$を満たすものが存在する．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 正規性の特徴付け\ref{prop-characterizatioin-of-normality}より．
         \item 
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \subsection{正規空間上の有界連続関数}
 
@@ -4176,7 +4252,7 @@ title=]
         \item $X$の１点コンパクト化が存在する．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(3)$\Rightarrow$(2)] １点コンパクト化は，コンパクト化の特別な場合である．
         \item[(2)$\Rightarrow$(1)] \mbox{}\\
@@ -4216,7 +4292,7 @@ title=]
             が成り立つ．よって，コンパクト性の特徴付け\ref{prop-characterization-of-compactness-in-terms-of-product-topology}より，$Y$はコンパクトである．
         \end{description}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{1点コンパクト化の位相}
 
@@ -4233,12 +4309,12 @@ title=]
         \item $\{U\in P(Y)\mid UはYの開集合でc\in U\}=\{Y\setminus f(A)\mid AはXのコンパクト集合\}$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $f$は開埋め込みだから，$\overline{f}:X\to Y\setminus\{c\}$は同相写像．$c\notin U$を満たす部分集合$U\subset f(X)$が開集合であることは，$U$がある$X$の開集合の像であることに同値である．
         \item $Y$はcompact Hausdorffだから，命題\ref{prop-compact-set-in-Hausdorff-spaces}より，$U$が開集合であることと，$Y\setminus U$がcompactであることは同値．特に$c\in U$の時は補集合$Y\setminus U$が$f^{-1}(Y\setminus U)=X\setminus f^{-1}(U)$と同相だから，これは$U$があるcompact集合$A:=f^{-1}(U)$の像の補集合であることと同値．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{problem}[一点コンパクト化の位相の構成（フィルターの言葉で）]\label{problem-construction-of-topology-in-terms-of-filter-on-onepoint-compactification}
     $Y$を位相空間，$X\subset Y$を部分空間とし，補集合は一点集合：$Y\setminus X=\{c\}$とする．$i:X\to Y$を包含写像とし，$Y$の開集合系を$\O_Y$，$X$の開集合系を$\O_X$とする．
@@ -4257,19 +4333,28 @@ title=]
         \item $X$を位相空間とし，$\O_X$を$X$の開集合系，$\mathcal{V}\subset\O_X$を(1),(2)を満たす部分集合とする．無縁和$Y=X\coprod\{c\}$に対して，$\O\subset P(Y)$を$\O=\O_X\coprod\{V\coprod\{c\}\mid V\in\mathcal{V}\}$と定めるとこれは$Y$の位相であることを示せ．
     \end{enumerate}
 \end{problem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item (1)は，$V\in\mathcal{V}$ならば，$V\cup\{c\}\in\O_Y$は$c$の開近傍．$V\subset U$の時，$U\cup\{c\}=(U\cup V)\cup\{c\}$も$c$の開近傍だから，$U\in\mathcal{V}$．(2)は，各$V_i\cup\{c\}$が$c$の開近傍だから，$\cap_{i\in I}(V_i\cup\{c\})=\paren{\cap_{i\in I}V_i}\cup\{c\}$も$c$の開近傍である．よって，$\cap_{i\in I}V_i\in\mathcal{V}$．
         \item $c$が$Y$の孤立点であることは，$\{c\}\in\O_Y$が$c$の開近傍であることだから，これは$\{\}\in\mathcal{V}$であることに同値．
         \item $X\in\O_Y$であるとき，$X$は開部分空間である．$X$が開部分空間であるとき，$i:X\to Y$が開埋め込みであるから，$\O_X=i^*\O_Y$であるが，$\O_Y\setminus\O_X$は全て$c$の開近傍であるから，$\O_Y\setminus\O_X=\{V\coprod\{c\}\mid V\in\mathcal{V}\}$である．
         \item $(U_i)_{i\in I}$を$\O_X$の族，$(V_j)_{j\in J}$を$\{V\coprod\{c\}\mid V\in\mathcal{V}\}$の族として，族$(W_i)_{i\in I\coprod J}:=(U_i)_{i\in I}\coprod(V_j)_{j\in J}$を考えても一般性は失われない．$\cup_{i\in I\coprod J}W_i=(\cup_{i\in I}U_i)\cup(\cup_{j\in J}V_j)$は$\mathcal{V}$の条件(1)より，$\O$の元である．同様にして有限族の共通部分についても$\O$の元であることがわかる．
     \end{enumerate}
-\end{proof}
+\end{Proof}
+
+\begin{theorem}
+    上述の問題で，空間$(Y,\O)$を$X^*$と表す．次が成り立つ．
+    \begin{enumerate}
+        \item $X^*$はコンパクトである．
+        \item $X$がコンパクトでないなら，$X$は$X^*$上稠密．
+    \end{enumerate}
+\end{theorem}
 
 \subsection{一般理論}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+前小節の議論をまとめる．
 Hausdorffに(1点)コンパクト化が可能な空間が局所コンパクトハウスドルフ空間である．
 コンパクト化の概念を一般化し，Hausdorffにコンパクト化が可能な空間とは，全正規空間であり，これは正規空間を含む．
 \end{tcolorbox}
@@ -4390,6 +4475,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     連結性の仮定を落としたとき，(3)$\Rightarrow$(4),(3)$\Rightarrow$(1)は残る．
+    距離空間はパラコンパクトである(Stone, 1948)．
 \end{tcolorbox}
 
 \begin{theorem}[局所コンパクト空間のパラコンパクト性の特徴付け]
@@ -4422,12 +4508,12 @@ title=]
     \end{enumerate}
     この同値な条件を満たすとき位相多様体という．
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] まず，連結成分が非可算個であった場合は，全ての連結成分からなる開被覆については可算な部分被覆を持たないので矛盾．よって連結成分は高々可算個である．
         あとは，それぞれの連結成分がパラコンパクトであることを示せば良い．任意の開被覆に対して，可算な部分被覆が存在する．
     \end{description}
-\end{proof}
+\end{Proof}
 
 また，正規な第２可算空間がパラコンパクトであることは，次の補題からすぐに従う．
 
@@ -4485,7 +4571,7 @@ title=]
 \begin{lemma}[second-countable then Lindelöf]
     第２可算な位相空間は，可算被覆性を持つ．すなわち，任意の開被覆に対して，可算な部分被覆が存在する．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[私の案] 可算な開基$\U:=(U_i)_{i\in\N}$を１つ取る．
         $(V_\al)_{\al\in A}$を任意の開被覆とする．
@@ -4496,7 +4582,7 @@ title=]
         https://math.stackexchange.com/questions/2257690/if-x-is-second-countable-then-x-is-lindel%C3%B6f
     }}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \subsection{Lindelöf性とパラコンパクト性}
 
@@ -4514,6 +4600,16 @@ title=]
         \item $P$の任意の反鎖が可算であるとき，$P$は可算鎖条件を満たすという．
     \end{enumerate}
 \end{definition}
+
+\subsection{Lindelöf性とコンパクト性}
+
+\begin{proposition}
+    Lindelöf空間$X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item $X$の任意の点列は集積点を持つ．
+    \end{enumerate}
+\end{proposition}
 
 \subsection{局所連結ならばパラコンパクト}
 
@@ -4570,6 +4666,21 @@ title=]
         \item $\sum_{\al\in A}f_\al=1$．
     \end{enumerate}
 \end{theorem}
+
+\section{局所コンパクト性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    前節は局所コンパクト性を仮定した下で，種々の性質を比較検討した．
+    この仮定を外したら魔境である．
+\end{tcolorbox}
+
+位相線型空間が局所コンパクトであることと有限次元であることとは同値である．
+距離空間は正規だが，局所コンパクトとは限らない．
+
+感覚的には，局所コンパクトでない空間は「大きすぎて位相も濃すぎる」空間である．
+局所コンパクトハウスドルフ空間は$\sigma$-コンパクトなら正規である．
+コンパクトハウスドルフ空間が正規であるように．
 
 \section{分離公理}
 
@@ -4738,7 +4849,7 @@ title=]
         \item $\rank_0f=n$．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] 
         (2)$\Rightarrow$(1)を示せば良い．
@@ -4787,7 +4898,7 @@ title=]
             全射性は構成より，単射性は不動点の一意性から従う．$W$は確かに$0$の開近傍となっている．
         \end{enumerate}
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}\mbox{}
     \begin{description}
         \item[方針] $A\times$という同型については，hom関手の消息で局所同相性は簡単に伝播するので，これについては無視してよく，仮定$J(f)(0)=I_n$も追加して良い．つまり，原点では微分が$0$でほぼ変化しないことを仮定して示せば良い．
@@ -4862,6 +4973,14 @@ title=]
     で定まる集合族が生成する位相は，$\R^{[0,1]}$の積位相である．
 \end{proposition}
 
+\begin{proposition}
+    $X$をコンパクト空間とする．$\Map(X,\R)$上に，$(M_{\{x\},U})_{x\in X,U\in\O_Y}$を準基として生成される位相は各点収束位相である．
+\end{proposition}
+\begin{remarks}
+    そこで，各点収束位相は有限開位相とも呼ばれる．
+    明らかにコンパクト開位相より弱い．
+\end{remarks}
+
 \subsection{一般の関数に対して稠密}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -4891,7 +5010,7 @@ title=]
 \end{tcolorbox}
 
 \begin{theorem}
-    $X$をコンパクト集合，$C(X;\C)$を一様ノルムによるBanach空間とする．
+    $X$をコンパクト空間，$C(X;\C)$を一様ノルムによるBanach空間とする．
     部分集合$\Phi\subset C(X)$が次の2条件を満たすならば，全有界である：
     \begin{enumerate}
         \item 各点有界：$\forall_{x\in X}\;\sup_{f\in\Phi}\abs{f(x)}<\infty$．すなわち，任意の$x\in X$について$\{f(x)\}_{f\in\Phi}\subset\R$は相対コンパクト．
@@ -4949,6 +5068,7 @@ title=]
 title=]
     $X$がHausdorffでなくとも，局所コンパクトならば，$C(X,Y)$はTopの指数対象となる．
     $X$が更にHausdorffならば，位相同型$\Map(X,\Map(Y,Z))\simeq\Map(X\times Y,Z)$が得られる．
+    コンパクト開位相は距離化可能だが，ノルム付け可能ではないFrechet空間となる．
 \end{tcolorbox}
 
 \subsection{定義}
@@ -4957,6 +5077,9 @@ title=]
     $(M_{A,U})_{A\in\cC(X),U\in\O(Y)}$を準基として生成される$C(X;Y)$の位相$\O_{Y^X}$を\textbf{コンパクト開位相}という：
     \[M_{A,U}:=\Brace{f\in C(X;Y)\mid f(A)\subset U}\quad(A\in\cC(X),U\in\O_Y)\]
 \end{definition}
+\begin{example}
+    $X$を離散空間としたとき，コンパクト開位相は積位相に一致する：$C(X,Y)\simeq Y^{\abs{X}}$．
+\end{example}
 
 \begin{definition}[exponential opject]
     有限積を持つ圏$C$において，\textbf{指数対象}とは，組$(X^Y,\ev:X^Y\times Y\to X)$であって，次の普遍性を満たすものをいう：任意の$Z\in C$と$e:Z\times Y\to X$について，唯一の射$u:Z\to X^Y$が存在して，$e=\ev\circ (u\times\id_Y)$．
@@ -4964,10 +5087,29 @@ title=]
 
 \subsection{値写像の連続性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    このように，値写像が連続になるような$C(X,Y)$上の位相を\textbf{admissible}という．
+\end{tcolorbox}
+
 \begin{proposition}
     $X$を局所コンパクト，$Y$を一般の位相空間とする．
     $\ev:X\times C(X;Y)\to Y$は連続．
 \end{proposition}
+
+\begin{proposition}
+    コンパクト開位相は，上の値写像$e$を連続にするものの中で最弱である．
+\end{proposition}
+
+\subsection{合成作用素の連続性}
+
+\begin{proposition}
+    $Y$が局所コンパクトならば，合成$\circ:C(X,Y)\times C(Y,Z)\to C(X,Z)$は連続．
+\end{proposition}
+\begin{remarks}
+    $C(X,X)$にコンパクト開位相を与えたときのモノイドの演算は連続になる．
+    こうして位相群の概念に出会う．
+\end{remarks}
 
 \subsection{随伴が連続}
 
@@ -4977,6 +5119,7 @@ title=]
         \item $f:X\times Y\to Z$は連続である．
         \item $\al_f:X\to Z^Y$は連続である．
     \end{enumerate}
+    $X$も局所コンパクトハウスドルフでもあるとき，位相同型$C(X,C(Y,Z))\simeq_\Top C(X\times Y,Z)$が存在する．
 \end{proposition}
 
 \subsection{距離空間では広義一様収束位相と一致}
@@ -4996,6 +5139,45 @@ title=]
 \begin{proposition}
     $X,Y$は第２可算な$T_3$-空間で，$X$が局所コンパクトならば，$Y^X$は第２可算である．
 \end{proposition}
+
+\section{連続関数の代数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Gelfandの理論のように，コンパクト空間$X$とその上の連続関数の環とは深い関係がある．
+\end{tcolorbox}
+
+\subsection{代数の圏への関手}
+
+\begin{theorem}
+    $X,Y,Z$をコンパクト空間，$f:X\to Y,g:Y\to Z$を連続写像とする．
+    \begin{enumerate}
+        \item $f^*:C(Y)\to C(X)$は多元環の準同型である．
+        \item $(g\circ f)^*=f^*\circ g^*$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $X,Y$をコンパクトハウスドルフ空間とする．
+    \begin{enumerate}
+        \item $f$が全射であることと$f^*$が単射であることは同値．
+        \item $f$が単射であることと$f^*$が全射であることとは同値．
+        \item $f:X\to Y$が位相同型ならば，$(f^{-1})^*=(f^*)^{-1}$．
+        \item $f:X\to Y$が位相同型であることと，$f^*$が代数の同型であることとは同値．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{微分方程式の解}
+
+\begin{theorem}
+    $D\subset\R^2$を開集合，$(x_0,y_0)\in D$をその中の点，$f\in C(D)$とする．
+    \[\exists_{M\in\R_+}\;\forall_{(x,y_1),(x,y_2)\in D}\quad\abs{f(x,y_1)-f(x,y_2)}\le M\abs{y_1-y_2}\]
+    が成り立つならば，初期値問題
+    \[\dd{y}{x}=f(x,y),\quad y(x_0)=y_0\]
+    は一意的な解$\exists_{c>0}\;y:[x_0-c,x_0+c]\to\R\in C([x_0-c,x_0+c])$を持つ．
+\end{theorem}
+
+\section{一様収束の精査}
 
 \subsection{有界連続関数の空間}
 

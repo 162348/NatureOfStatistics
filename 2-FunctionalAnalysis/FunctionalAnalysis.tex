@@ -2,8 +2,8 @@
 \title{函数解析}
 \author{}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -12,17 +12,19 @@
 
 \begin{quotation}
     Banach空間とは，CompMetの中の線型空間である．
-    Banach空間の射は，有界な線型写像と，short linear mapとの２つの取り方がある．
-    nLabでは前者をBant，後者をBanと表すようだ．
-
+    この圏Banの射はLipschitz定数が1以下の有界線形写像であるが，
+    距離構造を忘れ，位相線型空間の構造を特に重要視して，$i:\Ban\mono\TVS$の像の充満部分圏$\Ban_\TVS$に注目することも多い．
+    
+    $\TVS$の射は有界線形写像である．
     位相線型空間とは，連続群のように，Topの中の線型空間である．
+    任意の位相線形空間は自然に有界型空間の構造が入り，線型作用素が連続であることと有界であることとLipschitz連続写像であることとが同値になる．
 \end{quotation}
 
 \begin{notation}\mbox{}
     \begin{enumerate}
-        \item $B(0,r)$を閉球とする．$B$を閉単位球とする．$rB:=\Brace{rx\mid x\in B}$と表す．
+        \item $B(0,r)$を閉球とする．$B$を単位閉球とする．$B^*$を双対空間の単位閉球とする．$rB:=\Brace{rx\mid x\in B}$と表す．
         \item 具体的に$\bF=\R,\C$とするが，ほとんどの結果は離散的でない付値体一般，または局所体(local field)，すなわち，局所コンパクトHausdorffな体一般に拡張できる．
-        \item ノルム位相についての閉包を$\dbloverline{Y}$で表す．
+        \item ノルム位相についての閉包を$\oo{Y}$で表す．
         \item $X$を局所コンパクトハウスドルフ空間とし，その上のコンパクト台を持つ実数値連続関数のなすノルム代数$C_c(X)$を考える．
         \item $X$のコンパクト部分集合の全体を$\cC\subset P(X)$で表す．
         \item $X$の可測集合全体を$\M$で表し，体積確定集合の全体を$\M^1$で表す\ref{def-measurable-sets}．
@@ -38,18 +40,21 @@
     \end{enumerate}
 \end{notation}
 
-\section{ノルム空間}
+\section{ノルム空間の定義と例}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     連続と線型が出会うと有界と変化すること，内部homを持つことなど，とにかく美しい描像がある．
+    
+    ノルム空間の例は一般化すると，位相空間上の体値関数に，適切なノルムを入れることで構成する．
+    ほとんどの例はその退化と見れる．
 \end{tcolorbox}
 
-\subsection{定義と射}
+\subsection{ノルム空間の定義と射}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    ノルム空間が定める位相（$(\lambda B+x)_{\lambda>0,x\in X}$が生成する位相）は，ノルムを連続にする最弱位相になる．
+    ノルム空間が定める位相，すなわち$\{\lambda B+x\}_{\lambda>0,x\in X}$が生成する位相は，ノルムを連続にする最弱位相になる．
     この位相について完備なノルム空間をBanach空間という．
     するとノルム空間の間の線型写像が連続であることと有界であることは同値で，これが射となる．
     なお，作用素論では，作用素の語は部分関数，線型写像の語は写像として，定義を使い分ける．
@@ -57,32 +62,37 @@ title=]
 \end{tcolorbox}
 
 \begin{definition}[norm, seminorm, equivalence, Banach space]
-    $X$を$k$-線型空間とし，体$k$には絶対値$\abs{\;}:X\to\R_{\ge 0}$が備わっているとする．
+    $X$を$k$-線型空間とし，体$k$には絶対値$\abs{\;}:X\to\R_+$が備わっているとする．
     \begin{enumerate}
-        \item 実数値関数$\norm{\;}:X\to\R$が\textbf{ノルム}であるとは，次の３条件を満たすことをいう．
+        \item 実数値関数$\norm{\;}:X\to\R_+$が\textbf{ノルム}であるとは，次の３条件を満たすことをいう．
         \begin{enumerate}[(a)]
             \item (positivity / faithfulness) $\forall_{u\in X}\;\norm{u}=0\Rightarrow u=0$．\footnote{これは通常$\forall_{u\in X}\;\norm{u}\ge 0$と等号成立条件が$u=0$と分けて書かれる．この主張だけで十分である理由は，(2)より$\norm{-u}=\norm{u}$であり，(3),(1)より$\norm{0}\le 2\norm{u}$が従うので，非負値であることが３条件から従う．}
             \item (linearity / homogeneity) $\forall_{\alpha\in k}\;\forall_{u\in X}\;\norm{\alpha u}=\abs{\alpha}\norm{u}$．
             \item (triangle inequality / subadditivity) $\forall_{u,v\in X}\;\norm{u+v}\le\norm{u}+\norm{v}$．
         \end{enumerate}
         \item 条件(1)が成り立たない場合，\textbf{セミノルム}または\textbf{半ノルム}という．
-        \item ノルムが同値であるとは，$\exists_{C_1,C_2\in\R_{>0}}\;\forall_{u\in X}\;C_1\norm{u}_1\le\norm{u}_2\le C_2\norm{u}_1$．これはノルムが定める距離が同値であることに同値．\footnote{これは，$\id$についてのLipschitz連続性の条件と見れば良い．}
-        よって，ノルムが生成する位相が同相であることに同値．\footnote{距離空間の定める位相については，開球が近傍のフィルターの基底となるから，位相については簡単である．}
+        \item ノルムが同値であるとは，$\exists_{C_1,C_2\in\R_{>0}}\;\forall_{u\in X}\;C_1\norm{u}_1\le\norm{u}_2\le C_2\norm{u}_1$．\footnote{これはノルムが定める距離が同値であることに同値．これは，$\id$についてのLipschitz連続性の条件と見れば良い．}
         \item ノルム空間が，ノルムが定める距離について完備であるとき，\textbf{Banach空間}という．\footnote{局所凸空間$(X,\F)$において，Cauchyネットの定義は$\forall_{r>0}\;\forall_{m\in\F}\;\forall_{j,k\in D}\;\exists_{j_0\in D}\;j,k\ge j_0\Rightarrow m(x_j-x_k)<r$に同値．これが必ず極限を持つことは通常の意味でのノルム空間の完備性と同値．}
         \item ノルム空間の間の線型写像を（線型）\textbf{作用素}という．
     \end{enumerate}
 \end{definition}
-\begin{remark}
-    $\norm{x}-\norm{y}\le\norm{x-y}$より，
+\begin{remarks}[ノルム位相とは，ノルムが定める始位相であり，弱位相はセミノルム族が定める始位相である]
+    $\norm{x}-\norm{y}\le\norm{x-y}=\norm{y-x}\ge\norm{y}-\norm{x}$より，
     $\abs{\norm{x}-\norm{y}}\le\norm{x-y}$であるため，ノルムは(Lipschitz)連続である．
-\end{remark}
+    また，ノルムが定める位相とは，$\R_+$の開球の引き戻し，すなわち$\norm{x-y}<\ep$なる集合が生成する位相にほかならないから，ノルム$X\to\R_+$定める始位相にほかならない．
+    これが弱位相の発想を導く．
+\end{remarks}
 
 \begin{proposition}[有界性：連続性の特徴付け]
-    $T:X\to Y$を線型写像とする．次の３条件は同値．
+    $X,Y$をノルム空間，
+    $T:X\to Y$を線型作用素とする．次の6条件は同値．
     \begin{enumerate}
         \item $T$は連続である．
         \item ある$x\in X$において$T$は連続である．
-        \item $T$は\textbf{有界}である：$\exists_{\al\ge 0}\;\forall_{x\in X}\;\norm{Tx}\le\al\norm{x}$．これは作用素ノルムが有限であることを意味する．
+        \item $T$は\textbf{有界}である：$\exists_{\al\ge 0}\;\forall_{x\in X}\;\norm{Tx}\le\al\norm{x}$．
+        \item $T$はLipschitz連続．
+        \item $T$は一様連続．
+        \item 作用素ノルム$\norm{T}$が有限．
     \end{enumerate}
 \end{proposition}
 \begin{Proof}\mbox{}
@@ -91,44 +101,79 @@ title=]
         \item[(2)$\Rightarrow$(3)] $x\in X$で連続であるから，$\exists_{\delta>0}\;\forall_{y\in X}\;\norm{x-y}<\delta\Rightarrow\norm{Tx-Ty}\le 1$．
         いま，$\forall_{z\in X\setminus 0}\;\Norm{\paren{\delta\frac{z}{\norm{z}}+x}-x}=\delta\le\delta$より，
         \[\Norm{T\delta\frac{z}{\norm{z}}+Tx-Tx}\le 1\Lrarrow\norm{Tz}\le\delta^{-1}\norm{z}.\]
-        \item[(3)$\Rightarrow$(1)]
-        $\forall_{x,y\in X}\;\norm{Ty-Tx}=\norm{T(y-x)}\le\al\norm{y-x}$より．
+        \item[(3)$\Rightarrow$(4)]
+        $\forall_{x,y\in X}\;\norm{Ty-Tx}=\norm{T(y-x)}\le\al\norm{y-x}$より，Lipschitz連続である．
+        \item[(4)$\Rightarrow$(5)$\Rightarrow$(1)] 明らか．
+        \item[(3)$\Leftrightarrow$(6)] 明らか．
     \end{description}
 \end{Proof}
 \begin{remark}
-    なおさらに，
-    \begin{enumerate}
-        \item $f$は一様連続．
-        \item $f$はLipschitz連続．
-        \item $\norm{f}$が有限．
-    \end{enumerate}
-    も同値になる．\footnote{\url{https://ncatlab.org/nlab/show/Banach+space}}
+    ここで，線形写像は零でない限り，有界には決してならない．
+    作用素が「有界」であるとは，bornologyについて言う\ref{def-bounded-function}．
+    実際，有界作用素は，有界集合を有界集合に写す．
 \end{remark}
 
-\subsection{作用素の空間}
+\subsection{射の指定}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有限次元線形空間では，基底の行き先を指定する毎に線形写像が構成出来た．
+    ノルム空間でも，稠密部分空間の中で，任意の有限次元部分空間上に有界作用素を定めるならば，同様の構成が出来る．
+\end{tcolorbox}
+
+\begin{theorem}[線型作用素の「基底」による構成]
+    $X,Y$をノルム空間，$\{x_j\}_{j\in J}\subset X,\{y_j\}_{j\in J}\subset Y$を元の族とし，生成する空間$\brac{x_j}_{j\in J}$は$X$上稠密とする．
+    このとき，次の2条件は同値：
+    \begin{enumerate}
+        \item $\exists_{T\in B(X,Y)}\;\forall_{j\in J}Tx_j=y_j$．
+        \item $\exists_{\al}\;\forall_{\lambda\subset J}\;\forall_{\al_j\in\bF}\;\abs{\lambda}<\infty\Rightarrow\Norm{\sum_{j\in\lambda}\al_jy_j}\le\al\Norm{\sum_{j\in\lambda}\al_jx_j}$．
+    \end{enumerate}
+    なお，このとき$T$は一意的である．
+\end{theorem}
+
+\begin{proposition}[線型汎関数の連続性の特徴付け]
+    線型空間$X$上の
+    線型汎函数$f:X\to\bF$について，
+    \begin{enumerate}
+        \item $f\ne 0$ならば，$X\simeq\Ker f\oplus\bF$．
+        \item $X$が局所凸とする．$f$が連続であることと，$\Ker f$が閉部分空間であることとは同値．
+    \end{enumerate}
+\end{proposition}
+\begin{Proof}\mbox{}
+    \begin{enumerate}
+        \item $f\ne 0$のとき，$f$は全射だから，$x\in f^{-1}(1)$が取れる．すると任意の$y\in X$について，$y=(y-f(y)x)+f(y)x\in\Ker f+\C x$である．実際，$f(y-f(y)x)=f(y)-f(y)f(x)=0$．
+    \end{enumerate}
+\end{Proof}
+
+\subsection{作用素のノルム空間の完備性の十分条件}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=Banには内部homを持つ閉圏としての構造がある]
-    Banach空間の射の集合とは有界線型作用素の空間としたから，「閉単位球をどれくらい飛ばすか」という作用素ノルムが定まり，これについてBanach空間となる．
-    これは射集合であるからもちろん代数の構造をもち（乗法は合成に一致），Banach代数と呼ばれる．
-    Banは$\R$を単位として閉圏をなす．\footnote{\url{https://ncatlab.org/nlab/show/Banach+space}}
+    Banach空間の射は有界線型作用素とした，
+    「閉単位球をどれくらい飛ばすか」という目安が考え得る．
+    実際これによってノルムが定まり，
+    これについて$\Hom_{\Ban_\TVS}(X,Y)$はBanach空間となる．
+    この射集合は乗法を合成として代数の構造をもち，Banach代数と呼ばれる．
+    Banは$\R$を単位として閉圏をなす：$\Hom_\Ban(\R,V)\simeq B:=\Brace{v\in V\mid\norm{v}\le 1}$．\footnote{\url{https://ncatlab.org/nlab/show/Banach+space}}
 \end{tcolorbox}
 
-\begin{definition}[operator norm]
-    ノルム空間$X,Y$の間の有界作用素の集合を$B(X,Y)$で表す．
-    これは作用素ノルム\[\norm{T}:=\sup\Brace{\norm{Tx}\in\R_{\ge 0}\mid x\in X,\norm{x}\le 1}\]によって再びノルム空間になる．
-    作用素の合成を乗法として，\footnote{合成$S\circ T$を乗法とするのは行列を念頭におくと違和感がない．}
-    劣乗法性$\norm{ST}\le\norm{S}\norm{T}$が成り立つ\footnote{$\norm{T}$が１以上か１以下かで場合分けすれば良い}．
-    この劣乗法性により，乗法はノルムの定める位相について（両側）連続になるので，$B(X)$はノルム空間で，かつ，結合的多元環の構造も持つ．
-    これをノルム代数という．
-\end{definition}
-
-\begin{definition}[normed algebra, Banach algebra]\mbox{}
+\begin{definition}[operator norm, normed algebra]\mbox{}
     \begin{enumerate}
+        \item ノルム空間$X,Y$の間の有界作用素の集合を$B(X,Y):=\Hom_{\TVS}(X,Y)$で表す．
+        \item $B(X,Y)$は\textbf{作用素ノルム}
+        \[\norm{T}:=\sup\Brace{\norm{Tx}\in\R_{\ge 0}\mid x\in X,\norm{x}\le 1}=\inf_{x\in X}\frac{\norm{Tx}}{\norm{x}}=\inf_{x\in X}\Norm{T\frac{x}{\norm{x}}}\]によってノルム空間になる．
         \item \textbf{ノルム代数}または\textbf{ノルム環}とは，連続な双線型写像$\cdot :A\times A\to A$によって結合代数の構造も持つノルム空間$A$のことをいう．\footnote{積が連続とは，$\exists_{C\in\R_{>0}}\;\norm{ST}\le C\norm{S}\norm{T}$を含意する．}
         \item ノルム空間としての$A$が完備である場合，これを\textbf{Banach代数}という．
+        \item $B(X)$は作用素の合成を乗法として，
+        劣乗法性$\norm{ST}\le\norm{S}\norm{T}$が成り立つ\footnote{$\norm{T}$が１以上か１以下かで場合分けすれば良い}．
+        この劣乗法性により，乗法はノルムの定める位相について（両側）連続になるので，
+        $B(X)$はノルム空間でありながら，かつ，ノルム代数の構造も持つ．
     \end{enumerate}
 \end{definition}
+\begin{remarks}
+    作用素ノルムは達成されないことも十分にある．この場合，$B$は非閉集合に写される．
+    なお，双対空間の作用素ノルムが達成され得るかは，$X$の回帰性に同値\ref{thm-James}．
+\end{remarks}
 
 \begin{proposition}\label{prop-internal-hom}
     $X,Y$をノルム空間，$Y$を完備とする．このとき，$B(X,Y)$はBanach空間である．
@@ -136,9 +181,9 @@ title=Banには内部homを持つ閉圏としての構造がある]
 \end{proposition}
 \begin{Proof}
     $B(X,Y)$の任意のCauchy列$(T_n)$が収束することを示せば良い．
-    任意の$x\in X$について，$(T_nx)$も$Y$のCauchy列であり，$Y$は完備であるから，極限$\lim_{n\to\infty}T_nx$が定まる．これを$Tx$として，対応$T:X\to Y$を定め，これが$T\in B(X,Y)$で$\lim_{n\to\infty}T_n=T$であることを示す．
+    任意の$x\in X$について，$(T_nx)$も$Y$のCauchy列であり，$Y$は完備であるから，極限$\lim_{n\to\infty}T_nx$が定まる．これを$Tx:=\lim_{n\to\infty}T_nx$として，対応$T:X\to Y$を定め，これが$T\in B(X,Y)$で$\lim_{n\to\infty}T_n=T$であることを示す．
     \begin{description}
-        \item[線形性] $T(x+y)=\lim_{n\to\infty}T_n(x+y)=\lim_{n\to\infty}(T_nx+T_ny)=Tx+Ty$．
+        \item[線形性] $T_n$と極限の線形性による：$T(x+y)=\lim_{n\to\infty}T_n(x+y)=\lim_{n\to\infty}(T_nx+T_ny)=Tx+Ty$．
         \item[有界性と$T_n\to\ T$] 
         任意の$n\in\N$と$x\in X$について，
         \begin{align*}
@@ -146,11 +191,316 @@ title=Banには内部homを持つ閉圏としての構造がある]
             &\le\limsup_{m\to\infty}\norm{T_m-T_n}\cdot\norm{x}
         \end{align*}
         が成り立つ．
-        $(T_n)$はCauchy列としたから，$n\to\infty$のとき，$T_nx\xrightarrow{n\to\infty}Tx$．また，$n$を十分大きくとれば，$T$が有界であることもわかる．
+        $(T_n)$はCauchy列としたから，$\limsup_{n,m\to\infty}\norm{T_m-T_n}=0$．
+        また，$(\norm{T-T_n})_{n\in\N}$は$0$に収束する列より有界列だから，$T$が有界であることもわかる：
+        \[\norm{Tx}\le\norm{Tx-T_nx}+\norm{T_nx}\le(C_1+C_2)\norm{x}.\quad(\exists_{C_1,C_2\in\R}).\]
     \end{description}
 \end{Proof}
 
-\subsection{完備性の特徴づけ}
+
+
+\subsection{体の積と数列空間}
+
+\begin{example}[体の積]\mbox{}
+    \begin{enumerate}
+        \item $\bF^n$には$p\in[1,\infty]$について，$\norm{x}_p:=\paren{\sum\abs{x_k}^p}^{1/p}\;(p<\infty)$，$\norm{x}_\infty=\max\abs{x_k}$などのノルムが入り，いずれも同値である．
+        これは特殊な例で，普通Banach空間には自然なノルムが一意に定まる．距離空間に同値な距離が大量にあるのと対照的である．
+        \item 体$\bF$の添字集合$J$に関する直積（$l^\infty$-直和）を$l^\infty(J)$で表す．
+        \item 体$\bF$の添字集合$J$に関する直和（$l^1$-直和）を$l^1(J)$または$c_0(J)$で表す．
+        \begin{enumerate}[(i)]
+            \item $J=\N$のとき，これを省略して書く．$l^\infty$は有界列の空間，$l^1$は絶対収束列の空間である．$l^1\subsetneq(l^\infty)^*$が成り立ち，$l^\infty$は可分でない．
+            \item $c_0$は絶対収束する級数を定める数列，すなわち$0$に収束する数列の空間である．
+            収束列は有界列であるから，上限ノルムについて$l^\infty$の可分な閉部分空間となる．したがって$c_0$もBanachであり，その双対空間を考えると，$\N$上の有界な符号付き測度であるから，$(c_0)^*=l^1$となる\ref{exp-Riesz-Markov-theorem-to-sequence-spaces}．また，$c_0$はいかなるBanach空間のpredualにもならない\ref{cor-predual-of-c0}．
+            \item 収束列の空間$c$は$l^\infty$の可分な閉部分空間となる．$\forall_{n\in\N}\;e_n=1$を満たす元を$e\in l^\infty$とすると，$c=\bF e+c_0$と表せる．
+            \item $a_k=0\;\fe$を満たす数列全体の空間を$c_c$または$c_{00}$で表す．これはコンパクト収束位相\footnote{任意の有限集合上で収束する}について局所凸空間である．
+        \end{enumerate}
+        \item 体$\bF$の添字集合$J$に関する$l^p$-直和（$l^1$-直和）を$l^p(J)$と表すが，これは$J$の数え上げ測度に関する$L^p(J)$にほかならない．
+    \end{enumerate}
+\end{example}
+
+\subsection{位相空間上の有界連続関数の空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    局所コンパクトハウスドルフ空間$X$について，
+    $C_c(X)\subset C_0(X)\subset C_b(X)$が成り立ち，後2つが一様ノルムについて完備になる．
+    $C_c(X)$の一様ノルムに関する完備化は$C_0(X)$で，$p$-ノルムに関する完備化が$L^p(X)$である．
+
+    一方で$C(X),H(X),C^\infty(X),D_K$はノルム付け可能でないが，いずれもFrechet空間となる．
+\end{tcolorbox}
+
+\begin{example}[位相空間上の体値関数]\label{exp-Banach-spaces}
+    $X$を位相空間として，$C_c(X),L^p(\Om),C_b(X),C_0(X)$を定める．
+    \begin{enumerate}
+        \item 局所コンパクトハウスドルフ空間$X$について，$C_c(X):=\Brace{f\in C(X)\mid\supp f\text{ is compact}}$は，
+        一様ノルムについて，
+        完備でないノルム空間．
+        \begin{enumerate}[(i)]
+            \item $X$がコンパクトのとき，
+            $C_b(X,\C)=C_c(X,\C)$で，これは$C^*$-環である．
+            これを\textbf{連続関数環}という．
+            \item 連続関数環の閉部分環であって，定数を含み，$X$の点を分離するものを\textbf{一様環}という．
+            これは再び単位的なBanachとなる．
+            \item Euclid空間の局所コンパクトハウスドルフな部分空間$\Om\subset\R^n$\footnote{局所コンパクトハウスドルフ性は弱遺伝的で，開集合と閉集合とはこれを満たす}の場合，$C_c(\Om)$には
+            Riemann積分を通じて$p\in[1,\infty)$-ノルムも入る．
+            この完備化は，\textbf{Lebesgue空間}$L^p(\Om)$となり，Banach空間である．
+        \end{enumerate}
+        \item 位相空間$X$について，$C_b(X)$は
+        一様ノルムについてBanach空間となり，各点ごとの乗法についてBanach代数になる．
+        \begin{enumerate}[(i)]
+            \item 離散空間$X$は局所コンパクトである．このとき，$X$上の任意の関数は連続になる：$C(X)=\Map(X,\bF)$．この場合，$C_b(X)$を$l^\infty(X)$と表す．
+        \end{enumerate}
+        \item 局所コンパクトハウスドルフ空間$X$について，
+        $C_0(X):=\Brace{f\in C(X)\mid\forall_{\ep>0}\;\Brace{x\in X\mid\abs{f(x)}\ge\ep}\text{ is compact}}$
+        は可換な$C^*$-環で，一様ノルムについて$\o{C_c(X)}=C_0(X)\subset C_b(X)$が成り立つ．
+        \begin{enumerate}[(i)]
+            \item $X$がコンパクトであることとBanach環$C_0(X)$が単位的であることは同値．
+        \end{enumerate}
+        \item $X$がコンパクトであるとき，$C_c(X)=C_0(X)=C_b(X)=C(X)$が成り立つ．
+    \end{enumerate}
+\end{example}
+
+\subsection{位相空間上の連続関数の空間}
+
+\begin{example}[コンパクト開位相は距離化可能だがノルム付け可能でない]
+    $\Om\osub\R^m$を非空な開集合とし，$C(\Om), H(\Om)$の位相を考える．
+    \begin{enumerate}
+        \item $\Om$は$\sigma$-コンパクトだから，$\Om$に至るコンパクト集合の増大列$(K_n)$が存在する．
+        これが定める半ノルムの族$(p_n(f):=\sup_{x\in K_n}\abs{f(x)})_{n\in\N}$が誘導する局所凸位相を入れたものは完備で，したがってFrechet空間となる．
+        \begin{enumerate}[(i)]
+            \item 距離は
+            \[d(f,g)=\max_{n\in\N}\frac{2^{-n}p_n(f-g)}{1+p_n(f-g)}\]
+            が与える．$\max_{n\in\N}$の代わりに$\sum_{n\in\N}$としても良いことに注意．
+            \item この距離についてのCauchy列は，任意の半ノルム$\rho_n$について$0$に収束するから，すなわち任意の$K_n$上で一様収束する．
+            よってこの位相はコンパクト開位相にほかならない．
+            \item しかし局所有界でないため，ノルム付け可能ではない\ref{thm-character-of-TVS}．
+        \end{enumerate}
+        \item 正則関数のなす部分空間$H(\Om)\subset C(\Om)$は閉部分空間だから，やはりFrechet空間である．この空間はHeine-Borel性を持つため，局所有界でなく，したがってノルム付け可能でない．
+    \end{enumerate}
+\end{example}
+
+\subsection{位相空間上の試験関数の空間と分布論}
+
+\begin{example}[滑らかな関数の空間と試験関数の空間]
+    $K\subset\R^n$をコンパクト集合とし，$K\subset\Om\osub\R^n$を開集合として，$C^\infty(\Om),D_K(\Om),D(\Om)$を定める．
+    $D_K(\Om),D(\Om)$は現代的には$C_c^\infty(K),C_c^\infty(\Om)$とも書く．\footnote{$D$の記法はSchwartz以来伝統的である．}
+    \begin{enumerate}
+        \item  $C^\infty(\Om)$は$\Om$に届くコンパクト集合の増大列$(K_i)$について，
+        \[p_N(f):=\max\Brace{\abs{D^\al f(x)}\in\R_+\mid x\in K_N,\abs{\al}\le N}\]
+        として得る半ノルム列$(p_N)_{N\in\N}$に関して，完備になる．よって，Frechet空間である．
+        \begin{enumerate}[(i)]
+            \item これはHeine-Borel性を持つため，局所有界でなく，ノルム付け可能でない．
+            \item $\ev_x:C^\infty(\Om)\to\R$は連続．
+            \item このことからわかるように，この位相は，任意の多重指数$\al\in\N^n$に関する導関数$D^\al f$が一様収束する位相である．
+            \item この空間の上に，任意の多重指数$\al$について，$D^\al:C^\infty(\Om)\to C^\infty(\Om)$は連続単射になる．
+        \end{enumerate}
+        \item $K$に台を持つ$\Om$上の滑らかな関数の全体を
+        \[D_K(\Om):=\Brace{f\in C^\infty(\Om)\mid \supp f\subset K}\]
+        とすると，これは$C^\infty(\Om)$の閉部分空間となり，再びFrechet空間である．
+        \begin{enumerate}[(i)]
+            \item $D_K(\Om):=\bigcap_{y\in\Om\setminus K}\Ker\ev_y$だから，たしかに閉部分空間である．
+        \end{enumerate}
+        \item $D(\Om):=\bigcup_{K\in\cC(\Om)}D_K(\Om)=C_c^\infty(\Om)$(帰納極限になっている)は局所凸で完備であり，$F$-空間でもあるが，Frechet空間ではない．この空間を\textbf{コンパクト台を持つ試験関数の空間}という．
+        \begin{enumerate}[(i)]
+            \item $\norm{\phi}_N:=\max_{\abs{\al}\le N,x\in\Om}\abs{D^\al\phi(x)}$はノルムを定める．このノルムの$D_K$への制限はセミノルムであり，$D_K$の位相を定める．
+            \item このノルムについて，$D(\Om)$は局所凸な距離化可能空間になるが，完備ではない．
+            \item 一方で，局所凸で完備であるが，距離化可能ではない位相$\tau$も取れる．
+            \item いずれにしろ，$D(\Om)$の位相からみて，$D_K(\Om):=\bigcap_{x\in\Om\setminus K}\Ker\delta_x$はいずれも閉疎集合で，$\Om$の$\sigma$-コンパクト性よりこの部分空間の可算合併で表せるから，$D(\Om)$もBaire空間ではなく，完備距離空間たり得ない．
+            つまり，位相$\tau$は完備な時点で距離化可能ではない．
+        \end{enumerate}
+    \end{enumerate}
+\end{example}
+
+
+\begin{lemma}
+    次の位相$\tau$は$D(\Om)$を完備にするが，距離化可能でない．
+    \begin{enumerate}
+        \item $\tau_K\subset P(D_K)$をFrechet空間$D_K$の位相とする．
+        \item $\beta:=\Brace{W\subset D(\Om)\mid W\text{は絶対凸集合で}\forall_{K\compsub\Om}\;D_K\cap W\in\tau_K}$．
+        \item $W\in\beta$の$\varphi\in D(\Om)$-平行移動$\varphi+W$で表せる集合の合併で表せる集合の全体を$\tau$とする．
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\tau$は$D(\Om)$に位相を定め，$\beta$は局所基底となる．
+        \item $(D(\Om),\tau)$は局所凸空間である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item 絶対凸集合$V\subset D(\Om)$について，開であることと$V\in\beta$であることとは同値．
+        \item $\tau_K$は$\tau$の相対位相に等しい．
+        \item $D(\Om)$の有界集合$E$について，あるコンパクト集合$K\subset\Om$が存在して$E\subset D_K$を満たし，また，正整数列$(M_N)_{N\in\N}$が存在して$\forall_{\varphi\in E}\;\forall_{N\in\N}\;\norm{\varphi}_N\le M_N$が成り立つ．
+        \item $D(\Om)$はHeine-Borel性を持つ．
+        \item $\{\varphi_i\}\subset D(\Om)$がCauchy列ならば，あるコンパクト集合$K\subset\Om$が存在して$\{\varphi_i\}\subset D_K$でもあり，$\forall_{N\in\N}\;\lim_{i,j\to\infty}\norm{\varphi_i-\varphi_j}_N=0$．
+        \item $\varphi_i\to0$ならば，あるコンパクト集合$K\subset\Om$が存在して$\cup_{i\in\N}\supp\varphi_i\subset K$を満たし，$\forall_{\al\in\N^n}\;D^\al\varphi_i\to0$は一様収束する．
+        \item $D(\Om)$は完備である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[試験関数の空間上の線形作用素の連続性の特徴付け]
+    $Y$を局所凸空間，$\Lambda:D(\Om)\to Y$を線型作用素とする．次の4条件は同値：
+    \begin{enumerate}
+        \item $\Lambda$は連続．
+        \item $\Lambda$は有界．
+        \item $\varphi_i\to0$ならば，$\Lambda\varphi_i\to0$．
+        \item 任意の$K\compsub\Om$について，制限$\Lambda|_{D_K}$は連続．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[distribution]
+    $D(\Om)$上の連続な線型汎関数を\textbf{$\Om$上の分布}という．
+    分布の全体を$\D'(\Om):=\Hom_\TVS(\Om,\R)$で表す．
+\end{definition}
+
+\begin{theorem}[連続性の特徴付け]
+    $\Lambda:D(\Om)\to\C$を線型汎関数とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\Lambda\in\D'(\Om)$．
+        \item 任意のコンパクト集合$K\subset\Om$に対して自然数$N\in\N$と定数$C\in\R$が存在して，$\forall_{\varphi\in D_K}\;\abs{\Lambda\varphi}\le C\norm{\varphi}_N$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{急減少・緩増加関数の空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $D(\R^n)\subset\S_n$である．
+\end{tcolorbox}
+
+\begin{definition}[rapidly decreasing function, the Schwartz space]
+    $f\in C^\infty(\R^n)$が\textbf{急減少偏導関数を持つ滑らかな関数}であるとは，次の同値な2条件を満たすことをいう：
+    \begin{enumerate}
+        \item $\forall_{N\in\N}\;\sup_{\abs{\al}\le N}\sup_{x\in\R^n}(1+\abs{x}^2)N\abs{(D_\al f)(x)}<\infty$．
+        \item $\forall_{n\in\N,\al\in\N^n}\;\forall_{P\in\R[x]}\;P\cdot D_\al f\in l^\infty(\R^n)$．
+    \end{enumerate}
+    ノルムの列$\sup_{\abs{\al}\le N}\sup_{x\in\R^n}(1+\abs{x}^2)N\abs{(D_\al f)(x)}\;(N\in\N)$は，$\S_n$上に局所凸な位相を定める
+    関数の全体がなす位相線形空間を\textbf{Schwartz空間}といい，$\S_n=\S(\R^n)$で表す．
+\end{definition}
+
+\begin{theorem}\mbox{}
+    \begin{enumerate}
+        \item $\D(\R^n)\subset\S_n$は稠密である．
+        \item 包含$i:\D(\R^n)\to\S_n$は連続である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[tempered distribution]
+    連続線型汎関数$L\in\S_n'$に対して，定理より$u_L:=L\circ i\in\D'(\R^n)$も連続線型汎関数となる．
+    また，$\D(\R^n)$の稠密性より，$L\mapsto u_L$の対応は単射である．こうして埋め込み$\S'_n\ni L\mapsto u_L\in\D'(\R^n)$が定まる．
+    この像をなす$\D'(\R^n)$の元を\textbf{緩増加分布}という．
+    同一視により$\S'_n\subset\D'(\R^n)$とする．
+    すなわち，$u\in\D'(\R^n)$であって，$\S_n$上への連続な延長を持つものをいう．
+\end{definition}
+
+\begin{theorem}
+    Fourier変換$\S_n'\to\S_n'$を緩増加分布に適切に定めると，周期4のTVSの同型となる．
+\end{theorem}
+
+\subsection{連続性・可微分性の階層}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\Lip^\al([a,b])$は特殊な$l^1$-ノルムについてBanach空間になる．
+    同様な発想で，有界微分可能な関数の空間$C_b^m(\Om)$もBanach空間となる．
+    連続微分可能な関数の空間$C^{m,\al}(X)$も局所凸になり，$\Om$がコンパクトなときBanach空間となる．
+\end{tcolorbox}
+
+\begin{example}[Lipschitz連続な関数の空間]
+    $I:=[a,b]$上の$\al$-Holder連続な関数の全体
+    \[\Lip^\al(I):=\Brace{f\in C(I)\mid L(f)<\infty},\quad L(f):=\sup_{x\ne y}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}=\sup_{\delta>0}\frac{\om(\delta;f)}{\delta^\al}.\]
+    は，2つの同値なノルム
+    \[\norm{f}:=L(f)+\abs{f(a)}\]
+    \[\nnorm{f}:=L(f)+\norm{f}_\infty\]
+    についてBanach空間となる．
+    $L(f)$を$\al$-次Holder定数という．
+    \begin{enumerate}[(i)]
+        \item さらに，連続度が$\om(\delta;f)=o(\delta^\al)\;(\delta\to0)$を満たすものからなる部分集合$\lip^\al(I):=\Brace{f\in\Lip^\al(I)\mid\lim_{\delta\to0}\frac{\om(\delta;f)}{\delta^\al}=0}$は閉部分空間をなす．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[導関数ノルムを備えたBanach空間]\label{exp-Banach-space-with-derivative-norm}
+    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階以下の導関数がすべて$\Om$上有界である関数の全体を$B^m(\Om)$または$C_b^m(\Om)$で表す．
+    これはある種の1-ノルム$\norm{u}_{C^1}=\sum_{\abs{\al}\le m}\norm{D^\al u}_\infty$について，Banach空間となる．
+    \begin{enumerate}
+        \item $C_b^0(\Om)$は$C_b(\Om)$に一致する．
+        \item $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
+    \end{enumerate}
+\end{example}
+
+\begin{example}[Holder空間]
+    局所コンパクトハウスドルフ空間$X$上の，$k$階$\al$-Holder連続微分可能な関数の空間を
+    \[C^{k,\al}(X):=\Brace{f\in C^k\mid\forall_{n\in[k]}\abs{f^{(k)}}_{C^{0,k}}<\infty}\quad\abs{f}_{C^{0,\al}}:=\sup_{x\ne y\in\Om}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}\]
+    と定めると，これは半ノルムの族$\norm{f}_{C^{k,\al}}:=\norm{f}_{C^k}+\sup_{\abs{\beta}=k}\abs{D^\beta f}_{C^{0,\al}}$，ただし$\norm{f}_{C^k}:=\sup_{\abs{\beta}\le k}\sup_{x\in\Om}\abs{D^\beta f(x)}$について局所凸位相線形空間となり，$X$がコンパクトであるときさらにBanach空間となる．
+    \begin{enumerate}[(i)]
+        \item 包含$C^{0,\beta}(X)\mono C^{0,\al}(X)\;(0<\al<\beta\le 1)$が存在する．
+        \item Ascoli-Arzelaの定理より，$\norm{-}_{0,\beta}$ノルムにおける有界集合は，$\norm{-}_{-\al}$ノルムにおける相対コンパクト集合に送られる．
+        \item これは，$C^k(X)$空間の，$k$に分数を許したバージョンだとみなせる．
+    \end{enumerate}
+\end{example}
+
+\subsection{測度空間上の関数と積分}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Radon積分論によれば，
+    一般の局所コンパクトハウスドルフ空間上に
+    $L^p(X)$が定まる．$(L^\infty(X))^*$のみが，$L^p$と同型な双対空間を持たない．
+    $p\in(0,1)$のとき，$X$が可算でない限り，Frechet空間でさえない$F$-空間となる．
+\end{tcolorbox}
+
+\begin{example}[測度空間上の体値関数の同値類]\label{exp-Banach-space-of-Radon-integrable-functions}
+    $\Om\subset\R^n$を一般の集合，$X$を一般の位相空間とし，$L^p(\Om),L^p(X)$を定める．
+    \begin{enumerate}
+        \item Lebesgue積分により，$L^p(\Om)\;p\in[1,\infty]$はBanach空間となる．
+        \item 局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$について，
+        \begin{align*}
+            \L^p(X)=\left\{f\in\L(X)\;\middle|\;\int\abs{f}^p<\infty\quad(p\in[1,\infty))\right\},\quad\L^\infty(X)=\Brace{f\in\L(X)\;\middle|\;\esssup\abs{f}<\infty}
+        \end{align*}
+        は，セミノルム
+        \[\norm{f}_p:=\paren{\int\abs{f}^p}^{1/p}\;(1\le p<\infty),\quad\norm{f}_\infty:=\esssup\abs{f}=\inf\left\{s\in\R\;\middle|\;\int(\abs{f}-\abs{f}\land s)=0\right\}\]
+        を持つ．
+        $\cN(X)$を零関数$\int\abs{f}=0$のなす部分空間とすると，$L^p(X):=\L^p(X)/\cN(X)$はノルム空間となり，さらにBanach空間となる(Riesz-Fischerの定理\ref{thm-Riesz-Fischer})．
+    \end{enumerate}
+    なお，固定された$f$について，ノルム$\norm{f}_p$は$p>1$について連続．
+    このとき，$\norm{f}_p\xrightarrow{p\to\infty}\norm{f}_\infty$と，本質的上限に収束する．
+\end{example}
+    
+\begin{theorem}[$L^p$空間の描像]\label{thm-Lp-of-dual-spaces}
+    $(X,\Om,\mu)$を測度空間とし，$1\le p<\infty,1/p+1/q=1$を共役指数とする．
+    $g\in L^q(\mu)$に対して，$F_g:L^p(\mu)\to\bF$を$F_g(f):=\int fgd\mu$で定める．
+    \begin{enumerate}
+        \item $1<p<\infty$のとき，$F:L^q(\mu)\iso L^p(\mu)^*$は等長同型を定める．特に回帰的である．
+        \item $p=1$で$(X,\Om,\mu)$が$\sigma$-有限のとき，$F:L^\infty(\mu)\iso L^1(\mu)^*$は等長同型を定める．
+        \item ただし，$L^1(\mu)\subsetneq (L^\infty(\mu))^*$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    $I:=[0,1].p\in(0,1)$について，
+    \[L^p(I):=\Brace{f\in\Meas(I,\R)\;\middle|\;\Delta(f):=\int^1_0\abs{f(t)}^pdt<\infty}\]
+    上に，平行移動不変な距離$d(f,g):=\Delta(f-g)$が定まる．$I$でなく可算集合である場合$l^p$などは，これはFrechet空間になるが，
+    $[0,1]$上では局所有界な$F$-空間であるが，局所凸ではないため，Frechet空間とはならない．
+    すなわち，次が成り立つ：$\emptyset,L^p$を除いて凸開集合は存在しない．
+\end{example}
+
+\subsection{群上の関数}
+
+\begin{example}[群上のBanach algebra]
+    特別なクラスである．
+    \begin{enumerate}
+        \item 局所コンパクト群$G$上のRadon測度$(C(G))^*$はBanach環をなす．積は測度の畳み込みとする．
+        \item Lebesgue空間$L^1(\R)$は畳み込みを積として非単位的なBanach代数をなす．単位元はDirac関数に相当する．
+        $\R$は一般の局所コンパクトハウスドルフな位相群$G$，Lebesgue測度はHaar測度に一般化出来る．
+        $L^1(G)$が単位的であることは，$G$が離散群であることに同値．
+    \end{enumerate}
+\end{example}
+
+\section{ノルム空間の性質と構成}
+
+\subsection{ノルム空間の完備性の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -178,54 +528,33 @@ title=]
     \end{description}
 \end{Proof}
 
-\begin{theorem}
+\begin{theorem}[不動点定理]
     $X$をBanach空間，$Y$をその閉部分空間とする．自己写像$f:Y\to Y$が縮小写像ならば（$1$より小さいLipschitz定数を持つならば），$Y$内に不動点が一意的に存在する．
 \end{theorem}
 
-\subsection{圏Banとテンソル積}
+\subsection{ノルム空間のテンソル積}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    距離空間の圏と同様，Banach空間の圏の射には選択の余地がある．
-    Banach空間の同型は通常（位相線型空間の延長と見て）可逆な有界線型写像とするから，
-    射を有界線型写像として得る圏をBantと書き，"isomorphic category"という．
-    一方で，Banach空間を特に距離的に見て，同型を線型な等長同型とするとき，射はshort mapであり，得る圏をBanと書く．
-    これを"isometric category"という．
-
     Banach空間の台となる線型空間のテンソル積にノルムを入れる方法はいくつかある．
     projectiveとinjectiveの２つが代表的である．
-    一般に代数は，一般のモノイダル圏について定義される．\footnote{\url{http://nlab-pages.s3.us-east-2.amazonaws.com/nlab/show/associative+unital+algebra}}
-    このことが示唆するように，我々の数学的対称についても，テンソル構造が肝要となる．
+    $\wh{\otimes}_\pi$によってBanは閉な対称モノイダル圏となる．
+    Hilbの場合はさらに複数のノルムによって，対称モノイダル圏になる．
 \end{tcolorbox}
 
-\subsubsection{圏Ban}
+\begin{definition}
+    $V\otimes W$上のクロスノルム$\chi$とは，次の２条件を満たすものを言う：
+    \begin{enumerate}
+        \item $\forall_{v\in V,w\in W}\;\norm{v\otimes w}_\chi=\norm{v}_V\norm{w}_W$．
+        \item $\forall_{\lambda\in V^*,\mu\in W^*}\;\norm{\lambda\otimes\mu}_{\chi^*}=\norm{\lambda}_{V^*}\norm{\mu}_{W^*}$．
+    \end{enumerate}
+\end{definition}
 
 \begin{definition}[projective tensor product of Banach space]
-    ２つのBanach空間$X,Y$について，$X\times Y$上で自由生成された線型空間$F(X\times Y)$上のノルム
-    \[\Norm{\sum_{1\le i\le n}a_i(x_i\otimes y_i)}=\sum_{1\le i\le n}\abs{a_i}\norm{x_i}\cdot\norm{y_i}\]
-    に関する完備化$\o{F}(X\times Y)$を，双線型関係が生成する部分空間の閉包で割った商空間を$X\otimes_\Ban Y$で表す．
+    ２つのBanach空間$X,Y$について，線型空間としてのテンソル積$V\otimes W$上に\textbf{射影的クロスノルム}
+    \[\Norm{x}_\pi:=\inf\Brace{\sum_i\abs{\al_i}\norm{v_i}_V\norm{w_i}_W\in\R_{\ge 0}\;\middle|\; x=\sum_i\al_iv_iw_i}.\]
+    を入れて完備化して得たものを$V\hat{\otimes}_\pi W$といい，\textbf{射影的テンソル積}という．
 \end{definition}
-\begin{remarks}
-    これは，線型空間としてのテンソル積$V\otimes W$上にノルム
-    \[\Norm{\sum_i\al_iv_iw_i}_\pi:=\inf\Brace{\sum_i\abs{\al_i}\norm{v_i}_V\norm{w_i}_W\in\R_{\ge 0}\;\middle|\; x=\sum_i\al_iv_iw_i}.\]
-    を入れて完備化して得たもの$V\hat{\otimes}_\pi W$とみなせる．これをprojective cross normという．
-\end{remarks}
-
-\begin{lemma}
-    圏Banは射影テンソル積について対称なモノイダル閉圏となる．すなわち，テンソル積を備え，通常のinternal homについて閉じている．極めてCCCに近い振る舞いの良い圏である！
-    すると，Banach代数とは，Banにおけるモノイド対象である（半群対象として定義して考察する手法も大事になってくる）．
-\end{lemma}
-\begin{remark}
-    したがって圏論者はこちらの圏を重視し，Bantは包含関手$\Ban\mono\TVS$の像が生成する充満部分圏であると見る．
-    実際，BantはBanの構造のうち距離の構造を忘れている．
-\end{remark}
-
-\begin{lemma}
-    圏BanでのBanach空間の「台集合」は，単位閉球となる：
-    $\Hom_\Ban(\R,X)\simeq_\Set B=\Brace{x\in X\mid\norm{x}\le 1}$．
-\end{lemma}
-
-\subsubsection{その他のテンソル積}
 
 \begin{definition}[injective tensor product]
     $\lambda,\mu$をそれぞれ$V,W$上の線型汎関数とする．
@@ -239,94 +568,167 @@ title=]
     $\brac{v_1w_1,v_2w_2}:=\brac{v_1,v_2}\brac{w_1,w_2}$によって定まる内積が定めるノルム$\norm{x}_\sigma$に関する内積空間$V\otimes W$の完備化を，テンソル積$V\hat{\otimes}_\sigma W$という．
 \end{definition}
 
-\subsubsection{クロスノルム}
+\begin{proposition}[入射的・射影的クロスノルムの特徴付け (2002)]
+    $V,W$をBanach空間，$\chi$を$V\otimes W$上のノルムとする．次の2条件は同値．
+    \begin{enumerate}
+        \item $\chi$はクロスノルムである．
+        \item $\forall_{x\in V\otimes W}\;\norm{x}_\ep\le\norm{x}_\chi\le\norm{x}_\pi$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{双線型写像}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    見てきたように，テンソル積の空間には積によってノルムを入れるのがreasonableに思える．
+    積位相の普遍性から，双線型写像が連続ならば，各成分毎にも連続である．
+    この逆は次の場合に成り立つ．
 \end{tcolorbox}
 
-\begin{definition}
-    $V\otimes W$上のクロスノルム$\chi$とは，次の２条件を満たすものを言う：
-    \begin{enumerate}
-        \item $\forall_{v\in V,w\in W}\;\norm{v\otimes w}_\chi=\norm{v}_V\norm{w}_W$．
-        \item $\forall_{\lambda\in V^*,\mu\in W^*}\;\norm{\lambda\otimes\mu}_{\chi^*}=\norm{\lambda}_{V^*}\norm{\mu}_{W^*}$．
-    \end{enumerate}
+\begin{theorem}
+    $X,Y,Z\in\TVS$について，
+    $B:X\times Y\to Z$は双線型で，それぞれの引数について連続であるとする．
+    $X$が$F$-空間ならば，任意の積空間$X\times Y$の収束列$((x_n,y_n))$について，$B$による像も$Z$上の収束列を定める．
+    特に，$Y$も距離化可能ならば，$B$は連続である．
+\end{theorem}
+
+\subsection{射影的テンソル積の普遍性}
+
+\begin{definition}[bounded linear operator]
+    Banach空間の間の写像$B:X\times Y\to Z$が\textbf{有界双線型作用素}であるとは，$\forall_{y\in Y}\;B(-,y)\in B(X,Z)\land\forall_{x\in X}\;B(x,-)\in B(Y,Z)$が成り立つことをいう．
+    この全体を$\BIL(X\times Y,Z)$で表す．$Z=\bF$のとき，$\BIL(X\times Y)$と表す．
 \end{definition}
 
-\subsubsection{Metについて}
+\begin{proposition}[有界双線型作用素の空間]\mbox{}
+    \begin{enumerate}
+        \item $\sup_{x\in B_X,y\in B_Y}\norm{B(x,y)}<\infty$が成り立つ．
+        \item これをノルムにして，$\BIL(X\times Y,Z)$はBanach空間となる．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    $B\in\BIL(X\times Y)$に対して，$S_B\in B(Y,X^*),T_B\in B(X,Y^*)$を
+    \[\brac{x,S_B(y)}=B(x,y)=\brac{y,T_B(x)}\]
+    で定める．
+    \begin{enumerate}
+        \item $S_-:\BIL(X\times Y)\to B(Y,X^*)$はBanの同型である．
+        \item $T_-:\BIL(X\times Y)\to B(X,Y^*)$はBanの同型である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[tensor product of elements]\mbox{}
+    \begin{enumerate}
+        \item ある$\otimes\in\BIL(X\times Y,\BIL(X\times Y)^*)$が存在して，$\forall_{B\in\BIL(X\times Y)}\;\forall_{x\in X,y\in Y}\;\brac{B,x\otimes y}=B(x,y)$を満たす．
+        \item ある$\otimes\in\BIL(X^*\times Y^*,\BIL(X\times Y))$が存在して，$\forall_{(\varphi,\psi)\in X^*\times Y^*}\;\forall_{x\in X,y\in Y}\;\varphi\otimes\psi(x,y)=\varphi(x)\psi(y)$を満たす．
+        \item さらに，$\norm{x\otimes y}=\norm{x}\norm{y}$かつ$\norm{\varphi\otimes\psi}=\norm{\varphi}\norm{\psi}$が成り立つ．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[projective tensor product]
+    $X\otimes Y\subset(\BIL(X\times Y))^*$をノルム閉な部分空間であって，$\{x\times y\}_{(x,y)\in X\times Y}$によって生成されるものとする．
+    $\varphi\in(X\otimes Y)^*,B\in\BIL(X\times Y)$に対して，$B_\varphi(x,y):=\varphi(x\otimes y),\varphi_B(a):=\brac{a,B}$と定める．
+\end{definition}
+
+\begin{proposition}[射影的テンソル積の普遍性]\mbox{}
+    \begin{enumerate}
+        \item $\varphi\mapsto B_\varphi,B\mapsto\varphi_B$は互いに逆であり，$(X\otimes Y)^*\simeq_\Ban\BIL(X\times Y)$を導く．
+        \item $\forall_{Z\in\Ban}\;\forall_{B\in\BIL(X\times Y,Z)}\;\exists!_{\wt{B}\in B(X\otimes Y,Z)}\forall_{x\in X,y\in Y}\;\wt{B}(x\otimes y)=B(x,y)$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{商ノルム空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    射は計量写像で，これは特にLipshitz連続，特に一様連続である．
-    モノ射は単射な計量写像(short map)，エピ射は像が稠密な計量写像である．
-    等長写像は非縮小な計量写像で必然的にモノ射である．
-    等長写像はCauchy列をCauchy列に写すから，完備性を保つ．
-    全写な等長写像が同型である．
-    Metはbalancedではない，$\Q\mono\R$が反例である．\footnote{\url{https://ja.wikipedia.org/wiki/距離空間の圏}}
-\end{tcolorbox}
-
-\subsection{商}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    商空間では，新しい原点$Y$への最短距離をノルムとする．
+    ノルム空間での商は，閉部分空間に対してのみ達成される．その
+    商ノルム空間では，新しい原点$Y$への最短距離をノルムとする．
+    すると，そのままBanの商空間の定義にもなる（商写像は計量写像(short map)である）．
     完備性の遺伝については，環論で見た完全列を通じた議論だ，双対性を感じる．
 \end{tcolorbox}
 
 \begin{proposition}[商空間]\label{prop-quotient-Banach-space}
-    $Y\subset X$をノルム空間の部分空間とし，$Q:X\epi X/Y$を商空間への線形商写像とする．
+    $Y\subset X$をノルム空間の部分空間とし，$Q:X\epi X/Y$を商空間への商写像とする．
     \begin{enumerate}
-        \item $\norm{Qx}:=\inf\Brace{\norm{x-y}\in\R\mid y\in Y}$は代表元$x+Y$の取り方に依らず，$X/Y$上にセミノルムを定める．
+        \item 商ノルム$\norm{Qx}:=\inf\Brace{\norm{x-y}\in\R\mid y\in Y}$は代表元$x+Y$の取り方に依らず，$X/Y$上にセミノルムを定める．
         \item $Y$が$X$のノルム閉集合であることと，これがノルムとなることは同値．\footnote{定める位相がHausdorffであるかの議論と全くパラレルだ．}
+        \item $Q$はノルム減少的である：$\norm{Qx}\le\norm{x}$．
         \item $X$がBanach空間で$Y$がその閉部分空間であるとき，$X/Y$もBanach空間である．
+        \item $X$がBanach空間で$Y$がその閉部分空間であるとき，$Q$は開写像である．
+        \item この商ノルムが定める位相は，$Q$が定める終位相に一致する．
     \end{enumerate}
 \end{proposition}
 \begin{Proof}\mbox{}
     \begin{enumerate}
-        \item まず，次が成り立つ：
+        \item まず，商ノルムの定義から次が成り立つ：
         \begin{align*}
             \forall_{x_1,x_2\in X}\;\forall_{\ep>0}\;\exists_{y_1,y_2\in Y}\quad\norm{Qx_1}+\norm{Qx_2}+\ep&\ge\norm{x_1-y_1}+\norm{x_2-y_2}\\
             &\ge\norm{(x_1+x_2)-(y_1+y_2)}\ge\norm{Q(x_1+x_2)}.
         \end{align*}
         よって，$\norm{Qx_1+Qx_2}\le\norm{Qx_1}+\norm{Qx_2}$からノルムの劣加法性，斉次性は商写像$Q$の線形性から従う．
-        \item $\norm{Qx}=0\Rrightarrow x+Y=0+Y$の必要十分条件を導けば良い．
-        $\norm{Qx}=0$のとき，商ノルムの定義より，列$(y_n)$が存在して，$\norm{y_n-x}\xrightarrow{n\to\infty}0$．
-        すなわち，$\lim_{n\to\infty}y_n=x$．
-        これはつまり，$\norm{Qx}=0\Rrightarrow x+Y=0+Y$は$x\in\oo{Y}$に同値．
-        よって，商ノルムが実際にノルムであることと，$\oo{Y}=Y$は同値．
+        \item $\forall_{x\in X}\;\norm{Qx}=0\Leftrightarrow x\in\oo{Y}$であるが，これが$Qx=0+Y$すなわち$x\in Y$と同値になるための必要十分条件を導けば良い．
+        これはあきらかに$Y=\oo{Y}$となることである．
+        \item 明らか．
         \item $X/Y$のCauchy列$(z_n)$を取る．すると，$\norm{z'_{n+1}-z'_n}<2^{-n}$を満たす部分列が取れる．
         これに対して，$\norm{x_{n+1}-x_n}<2^{-n}$を満たす$x_n\in Q^{-1}(z'_n)$が存在する．実際，ある$x'_n\in X$について$Qx'_n=z'_n$であるが，ある$y\in Y$が存在して$\norm{x'_n-x_{n-1}-y}<2^{-n}$であるから，$x_n:=x'_n-y$と定めれば良いことと，帰納法により従う．
         よって$(x_n)$はCauchy列だから収束し，$Q$は連続だから$(z'_n)$も収束する．$(z_n)$はCauchy列だから，これも$Qx$に収束する．
+        \item 開写像定理より．
+        \item 連続全射が開写像ならば商写像である．というのも，実際，
+        (3)より$\O_{X/Y}\subset Q_*\O_X$．逆に$\O_*\O_X\subset\O_{X/Y}$を示せば良いが，これは(5)からわかる．
     \end{enumerate}
 \end{Proof}
-\begin{remark}[商ノルムのwell-definedness]
-    (3)の証明内の議論の通り，
-    $\norm{Qx}\le\norm{x}$であるから，商写像は連続である．
-    よって，この商空間のノルムが定める位相は商位相より強くないことは分かるが，実は\textbf{関係$x_1-x_2\in Y$の定める商位相に一致}する（系\ref{cor-for-quotient-space}）．
-    $Y$が閉で$X$がBanachであるとき，商写像は開写像であることは，系\ref{cor-for-quotient-space}からもわかれば，開写像定理からもわかる．
-\end{remark}
-\begin{remark}[連続延長の失敗]
-    商写像$Q$は$X$の単位開球を$X/Y$の単位開球に全射に写すが，単位閉球は一般にはそうとは限らない．
+\begin{remark}[連続延長の失敗と単位閉球のコンパクト性]
+    商写像$Q$は$X$の単位開球$B_X^\circ$を$X/Y$の単位開球$B_{X/Y}^\circ$に全射に写すが，
+    単位閉球$B$は一般にはそうとは限らない．
     実際，$z\in X/Y$が$\norm{z}=r$とは，$x\in Q^{-1}(z)$について$r=\inf\Brace{\norm{x-y}\ge 0\mid y\in Y}$ということだから，$r<1$ならば，ある$y'\in Y$について$\norm{x-y'}<1$と逆像を見つけることができるが，
     $r=1$の場合は逆像が単位閉球内にみつかるとは限らない．
     実際，一般の作用素について\ref{lemma-image-of-ball}のような描像がある．境界上で特異的な振る舞いをする．
 \end{remark}
 
 \begin{proposition}[商空間の普遍性]
-    $T\in B(X,Y)$について，閉部分空間$Z\subset X$について$Z\subset\Ker T$が成り立つならば，下図
-    を可換にする$\o{T}$であって$\norm{\o{T}}=\norm{T}$を満たすものがただ一つ存在する．
-    \[\xymatrix{
-        X\ar[r]^-T\ar[d]_-Q&Y\\
-        X/Z\ar@{.>}[ur]_-{\o{T}}
-    }\]
+    $T\in B(X,Y)$と閉部分空間$Z\subset X$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $Z\subset\Ker T$．
+        \item 下図
+        を可換にする$\o{T}$がただ一つ存在し，$\norm{\o{T}}=\norm{T}$を満たす．
+        \[\xymatrix{
+            X\ar[r]^-T\ar[d]_-Q&Y\\
+            X/Z\ar@{.>}[ur]_-{\o{T}}
+        }\]
+    \end{enumerate}
 \end{proposition}
+\begin{Proof}
+    $\o{T}$が$\norm{\o{T}}=\norm{T}$を満たすことを除いて，(1)$\Leftrightarrow$(2)の部分は位相空間の商空間の普遍性から従う．
+    \begin{description}
+        \item[$\norm{\o{T}}\le\norm{T}$] 任意の$z\in Z$について，
+        \[\norm{\o{T}Qx}=\norm{T}=\norm{T(x-z)}\le\norm{T}\norm{x-z}\]
+        より，$\norm{\o{T}Qx}\le\norm{T}\norm{Qx}$．
+        \item[$\norm{\o{T}}\ge\norm{T}$] $Q$がノルム減少的であるため．
+    \end{description}
+\end{Proof}
+
+\begin{proposition}
+    上の命題の(1)が成り立つとする．
+    このとき，次の2条件は同値．
+    \begin{enumerate}
+        \item $\o{T}$は開写像である．
+        \item $T$は開写像である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{ノルム空間の完全列}
 
 \begin{proposition}[Banach空間の標準分解]
     ノルム空間$X$とその部分空間$Y$について，$Y$と$X/Y$がBanach空間ならば，$X$もBanach空間である．
 \end{proposition}
+\begin{Proof}
+    $X$の任意のCauchy列$(x_n)$を取る．
+    \begin{enumerate}[(a)]
+        \item $Q$はノルム減少的だから，$(Qx_n)$は$X/Y$のCauchy列を定め，完備性より極限$\exists_{x\in X}\;Qx$を持つ．
+        \item 商ノルムの定義から，$\forall_{n\in\N}\;\exists_{y_n\in Y}\;\norm{x_n-x-y_n}<1/n+\norm{Q(x_n-x)}$が成り立つから，こうして$Y$の列$(y_n)$が取れた．これはCauchy列である．よって，収束先$y\in Y$を持つ．
+        \item $x_n\to x+y$となる．
+    \end{enumerate}
+\end{Proof}
 
-\subsection{包含}
+\subsection{部分ノルム空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=連続線形延長の算譜]
@@ -334,207 +736,70 @@ title=連続線形延長の算譜]
     この消息を正しく捉えるには「稠密」がキーワードになる．
 \end{tcolorbox}
 
-\begin{proposition}[部分空間]
+\begin{proposition}[完備性の弱遺伝性]
     Banach空間$X$の部分空間$M$について，次の2条件は同値．
     \begin{enumerate}
         \item $M$は$X$のノルムについてBanach空間である．
         \item $M$は閉である．
     \end{enumerate}
-\end{proposition}
-\begin{remark}
     同様のことはHilbert空間とFrechet空間にも成り立つ．
-\end{remark}
+\end{proposition}
+\begin{Proof}
+    完備な距離空間の完備な部分集合は，閉部分集合と同値であるため．
+\end{Proof}
+
+\subsection{有限次元性の特徴付け}
 
 \begin{proposition}[自明なBanach部分空間]\label{prop-finite-subspaces}
-    ノルム空間$X$の任意の有限次元部分空間$Y$はBanach空間であり，特に閉である．
+    位相線形空間$X$の任意の有限次元部分空間$Y$はBanach空間であり，特に閉である．
     また，$\dim Y=n$ならば，任意の線型同型$k^n\iso Y$は位相同型でもある．
 \end{proposition}
-\begin{remark}
-    有限次元ノルム空間は必ず完備で，その上のノルムはすべて同値である．
-\end{remark}
+
+\begin{corollary}
+    $X,Y$をノルム空間，$Y$は有限次元とする．次の2条件は同値；
+    \begin{enumerate}
+        \item 作用素$T:X\to Y$は連続．
+        \item $\Ker T$は閉部分空間である．
+    \end{enumerate}
+\end{corollary}
+
+\begin{proposition}
+    ノルム空間$X$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $X$は有限次元である．
+        \item $B$はノルム位相についてコンパクトである．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{線形作用素の有界延長定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    距離空間は正規であるから，任意の閉集合上に定められた有界連続関数は，一様ノルムを保ったまま延長する(Tietze)．
+    実はこれは$C_b$上の一様ノルムに限らず，任意のBanach空間上でも成り立つが，稠密部分空間に限る．
+\end{tcolorbox}
 
 \begin{proposition}[Bounded Linear Transformation theorem]\label{prop-extension-of-operator-on-dense-subset}
-    $X,Y$をBanach空間，$X_0$を$X$の稠密な部分空間とする．このとき，任意の作用素$T_0\in B(X_0,Y)$は一意的な延長$T\in B(X,Y)$をもち，$\norm{T}=\norm{T_0}$を満たす．
+    $X,Y$をBanach空間，$X_0$を$X$の稠密な部分空間とする．このとき，任意の作用素$T_0\in B(X_0,Y)$は一意的な延長$T\in B(X,Y)$をもち，さらにこれは$\norm{T}=\norm{T_0}$を満たす．
 \end{proposition}
+\begin{Proof}\mbox{}
+    \begin{enumerate}[(a)]
+        \item 任意の$x\in X$に対して，これに収束する$X_0$の列$(x_n)$が取れる．$(T_0x_n)$も収束列だから，極限$y\in Y$を持つ．これに対して，$Tx:=y$と定める．収束先の一意性より，$(x_n)$の取り方に依らない．
+        \item すると，$T$は$T_0$の延長になっている．$T$は$X$上線型であることは，極限の線形性と$T_0$の線形性から従う．
+        \item さらに有界性は，$\norm{T_0}\le\norm{T}$は明らかだが，逆$\norm{T}=\sup_{x\in B}\norm{Tx}\le\norm{T_0}$も，$X_0$の稠密性からわかる．
+    \end{enumerate}
+\end{Proof}
 
 \begin{proposition}
     任意のノルム空間$X$について，Banaxh空間$\o{X}$であって，$X$を稠密な部分空間として含むものが同型を除いて一意的に存在する．
 \end{proposition}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[一意性] 
+        \item[存在] 再双対空間\ref{def-bidual}への包含$X\mono X^{**}$の像の閉包を取れば良い．
+    \end{description}
+\end{Proof}
 
-\subsection{ノルム空間の例}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    一般化すると，位相空間上の体値関数に，適切なノルムを入れることで構成する．
-    ほとんどの例はその退化と見れる．
-\end{tcolorbox}
-
-\subsubsection{集合上の関数}
-
-\begin{example}[体の積]\mbox{}
-    \begin{enumerate}
-        \item $\bF^n$には$p\in[1,\infty]$について，$\norm{x}_p:=\paren{\sum\abs{x_k}^p}^{1/p}\;(p<\infty)$，$\norm{x}_\infty=\max\abs{x_k}$などのノルムが入り，いずれも同値である．
-        これは特殊な例で，普通Banach空間には自然なノルムが一意に定まる．距離空間に同値な距離が大量にあるのと対照的である．
-        \item 体$\bF$の添字集合$J$に関する直積（$l^\infty$-直和）を$l^\infty(J)$で表す．
-        \item 体$\bF$の添字集合$J$に関する直和（$l^1$-直和）を$l^1(J)$で表す．
-        \item $J=\N$のとき，これを省略して書く．$l^\infty$は有界列の空間，$l^1$は絶対収束列の空間である．$\sup_{k\in\N}\abs{a_k}<\infty$を満たす数列の空間$c_b$について，$c_b=l^\infty$である．$l^1\subsetneq(l^\infty)^*$である．$l^\infty$は可分でない．
-        \item $0$に収束する数列全体の空間を$c_0$で表すと，収束列は有界列であるから，上限ノルムについて$l^\infty$の可分な閉部分空間となる．したがって$c_0$もBanachであり，その双対空間を考えると，$\N$上の有限符号付き測度であるから，$(c_0)^*=l^1$となる\ref{exp-Riesz-Markov-theorem-to-sequence-spaces}．また，$c_0$はいかなるBanach空間のpredualにもならない\ref{cor-predual-of-c0}．
-        \item 収束列の空間$c$は$l^\infty$の可分な閉部分空間となる．$\forall_{n\in\N}\;e_n=1$を満たす元を$e\in l^\infty$とすると，$c=\bF e+c_0$と表せる．
-        \item こうしてノルムが大事になってくる，$L^p(J)$の入り口である．$l^p$空間は$p\ge 1$についてBanach空間，$0<p<1$について$F$-空間である．
-        \item $a_k=0\;\fe$を満たす数列全体の空間を$c_c$または$c_{00}$で表す．これはコンパクト収束位相\footnote{任意の有限集合上で収束する}について局所凸空間である．
-    \end{enumerate}
-\end{example}
-
-\subsubsection{位相空間上の関数と微分}
-
-\begin{example}[位相空間上の体値関数]\label{exp-Banach-spaces}
-    $X$を局所コンパクトハウスドルフ空間とする．
-    \begin{enumerate}
-        \item $C_c(X):=\Brace{f\in C(X)\mid\supp f\text{ is compact}}$は，
-        一様ノルム$\norm{f}_\infty:=\sup_{x\in X}\abs{f(x)}$について，
-        完備でないノルム空間となる．
-        \begin{enumerate}[(i)]
-            \item $X$がコンパクトのとき，
-            $C_b(X,\C)=C_c(X,\C)$で，これは$C^*$-環である．
-            これを\textbf{連続関数環}という．
-            この閉部分環であって，定数を含み，$X$の点を分離するものを\textbf{一様環}という．
-            これは再び単位的なBanachとなる．
-            \item $X\subset\R^n$が開または閉集合の場合，これは局所コンパクトハウスドルフで，
-            さらにRiemann積分を通じて種々の$p\in[1,\infty]$-ノルムも入る．
-            この完備化は，\textbf{Lebesgue空間}$L^p(X)$となり，Banach空間である．
-        \end{enumerate}
-        \item 一般の位相空間$X$について，$C_b(X):=\Brace{f\in C(X)\mid\Im f\text{ is bounded}}$は，
-        一様ノルムについてBanach空間となり，各点ごとの乗法について\underline{Banach代数}になる．
-        \begin{enumerate}[(i)]
-            \item 離散空間$X$は局所コンパクトである．このとき，$X$上の任意の関数は連続になる：$C(X)=\Map(X,\bF)$．この場合，$C_b(I)$を$l^\infty(I)$と表す．
-        \end{enumerate}
-        \item 
-        $C_0(X):=\Brace{f\in C(X)\mid\forall_{\ep>0}\;\Brace{x\in X\mid\abs{f(x)}\ge\ep}\text{ is compact}}$
-        は\underline{可換な$C^*$-環}で\ref{def-functions-vanish-at-infinity}，$\o{C_c(X)}=C_0(X)\subset C_b(X)$が成り立つ．
-            $X$がコンパクトであることとBanach環$C_0(X)$が単位的であることは同値．
-    \end{enumerate}
-    $X$がコンパクトのとき，$(C(X))^*$は符号付Radon測度の空間で，$(C_0(X))^*$は正則なBorel測度全体のなす空間となる．
-\end{example}
-
-\begin{example}[コンパクト開位相は距離化可能だがノルム付け可能でない]
-    $\Om\osub\R^m$を非空な開集合とする．
-    \begin{enumerate}
-        \item $\Om$は$\sigma$-コンパクトだから，$\Om$に至るコンパクト集合の増大列$(K_n)$が存在する．
-        $C(\Om)$に，半ノルムの族$(p_n(f):=\sup_{x\in K_n}\abs{f(x)})_{n\in\N}$が誘導する局所凸位相を入れたものは完備で，したがってこれはFrechet空間となる．
-        距離は
-        \[d(f,g)=\max_{n\in\N}\frac{2^{-n}p_n(f-g)}{1+p_n(f-g)}\]
-        が与える．$\max_{n\in\N}$の代わりに$\sum_{n\in\N}$としても良いことに注意．
-        この距離についてのCauchy列は，任意の半ノルム$\rho_n$について$0$に収束するから，すなわち任意の$K_n$上で一様収束する．
-        この距離について完備になる．
-        しかし局所有界でないため，ノルム付け可能ではない\ref{thm-character-of-TVS}．
-        \item 正則関数のなす部分空間$H(\Om)\subset C(\Om)$は閉部分空間だから，やはりFrechet空間である．この空間はHeine-Borel性を持つため，局所有界でなく，したがってノルム付け可能でない．
-    \end{enumerate}
-    コンパクト開位相はホモトピー理論でも使われる位相である．その理由は，局所コンパクト空間が指数化可能になるなど，圏論的に良い性質を持つためである．
-    \begin{enumerate}
-        \item $X$を局所コンパクト，$Y$を任意の位相空間とする．写像$\ev:X\times C(X,Y)\to Y$は連続である．$X$がハウスドルフでもあるとき，位相同型$C(X,C(Y,Z))\simeq_\Top C(X\times Y,Z)$が存在する．
-        \item 任意の位相空間$X,Y,Z$について，$f:X\times Y\to Z$が連続ならば$X\to C(Y,Z)$も連続で，$Y$が局所コンパクトならば逆も成り立つ．
-        \item $Y$が局所コンパクトならば，合成$\circ:C(X,Y)\times C(Y,Z)\to C(X,Z)$は連続．
-        \item 任意の位相空間$X$について，$C(*,X)\simeq_\Top X$．さらに，$X$を離散空間としたとき，コンパクト開位相は積位相に一致する：$C(X,Y)\simeq Y^{\abs{X}}$．
-    \end{enumerate}
-\end{example}
-
-\begin{example}[滑らかな関数の空間と試験関数の空間]
-    $K\subset\R^n$をコンパクト集合とし，$K\subset\Om\osub\R^n$を開集合とする．
-    \begin{enumerate}
-        \item  $C^\infty(\Om)$は$\Om$に届くコンパクト集合の増大列$(K_i)$について，
-        \[p_N(f):=\max\Brace{\abs{D^\al f(x)}\in\R_+\mid x\in K_N,\abs{\al}\le N}\]
-        として得る半ノルム列$(p_N)_{N\in\N}$に関して，Frechet空間となる．
-        これはHeine-Borel性を持つため，局所有界でなく，ノルム付け可能でない．
-        \item $K$に台を持つ$\Om$上の滑らかな関数の全体を
-        \[D_K:=\Brace{f\in C^\infty(\R^n)\mid \supp f\subset K}\]
-        とすると，これは$C^\infty(\Om)$の閉部分空間となり，再びFrechet空間である．\footnote{$D$の記法はSchwartz以来伝統的である．}
-    \end{enumerate}
-    この空間の上に，任意の多重指数$\al$について，$D^\al:C^\infty(\Om)\to C^\infty(\Om)$は連続になる．
-\end{example}
-
-\subsubsection{測度空間上の関数と積分}
-
-\begin{example}[測度空間上の体値関数の同値類]\label{exp-Banach-space-of-Radon-integrable-functions}
-    局所コンパクトハウスドルフ空間$X$上のRadon積分$\int:C_c(X)\to\R$について，
-    可積分関数$f$のなす空間
-    \begin{align*}
-        \L^p(X)=\left\{f\in\L(X)\;\middle|\;\int\abs{f}^p<\infty\quad(p\in[1,\infty))\right\},\quad\L^\infty(X)=\Brace{f\in\L(X)\;\middle|\;\esssup\abs{f}<\infty}
-    \end{align*}
-    は，セミノルム
-    \[\norm{f}_p:=\paren{\int\abs{f}^p}^{1/p}\;(1\le p<\infty),\quad\norm{f}_\infty:=\esssup\abs{f}=\inf\left\{s\in\R\;\middle|\;\int(\abs{f}-\abs{f}\land s)=0\right\}\]と定めると，
-    を持つ．
-    $\cN(X)$を零関数$\int\abs{f}=0$のなす部分空間とすると，$L^p(X):=\L^p(X)/\cN(X)$はノルム空間となり，さらにBanach空間となる(Riesz-Fischerの定理)．
-
-    測度空間$X$と言ったが，測度もRadon積分から定義できるので明示的には出てこないことに注意．
-\end{example}
-\begin{remark}[本質的上限のwell-definedness]
-    固定された$f$について，ノルム$\norm{f}_p$は$p>1$について連続．
-    このとき，$\norm{f}_p\xrightarrow{p\to\infty}\norm{f}_\infty$と，本質的上限に収束する．
-\end{remark}
-    
-\begin{theorem}[$L^p$空間の描像]\label{thm-Lp-of-dual-spaces}
-    $(X,\Om,\mu)$を測度空間とし，$1\le p<\infty,1/p+1/q=1$を共役指数とする．
-    $g\in L^q(\mu)$に対して，$F_g:L^p(\mu)\to\bF$を$F_g(f):=\int fgd\mu$で定める．
-    \begin{enumerate}
-        \item $1<p<\infty$のとき，$F:L^q(\mu)\iso L^p(\mu)^*$は等長同型を定める．
-        \item $p=1$で$(X,\Om,\mu)$が$\sigma$-有限のとき，$F:L^\infty(\mu)\iso L^1(\mu)^*$は等長同型を定める．
-    \end{enumerate}
-\end{theorem}
-
-\begin{example}
-    $I:=[0,1].p\in(0,1)$について，
-    \[L^p(I):=\Brace{f\in\Meas(I,\R)\;\middle|\;\Delta(f):=\int^1_0\abs{f(t)}^pdt<\infty}\]
-    上に，平行移動不変な距離$d(f,g):=\Delta(f-g)$が定まる．$I$でなく可算集合である場合$l^p$などは，これはFrechet空間になるが，
-    $[0,1]$上では局所有界な$F$-空間であるが，局所凸ではないため，Frechet空間とはならない．
-    すなわち，次が成り立つ：$\emptyset,L^p$を除いて凸開集合は存在しない．
-\end{example}
-
-\subsubsection{自然な部分空間}
-
-\begin{example}[Lipschitz空間]
-    $I:=[a,b]$上の$\al$-Holder連続な関数の全体
-    \[\Lip^\al(I):=\Brace{f\in C(I)\mid L(f)<\infty},\quad L(f):=\sup_{x\ne y}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}=\sup_{\delta>0}\frac{\om(\delta;f)}{\delta^\al}.\]
-    は，2つの同値なノルム
-    \[\norm{f}:=L(f)+\abs{f(a)}\]
-    \[\nnorm{f}:=L(f)+\norm{f}_\infty\]
-    についてBanach空間となる．
-    $L(f)$を$\al$-次Holder定数という．
-    \begin{enumerate}
-        \item さらに，連続度が$\om(\delta;f)=O(\delta)\;(\delta\to0)$を満たすものからなる部分集合$\lip^\al(I):=\Brace{f\in\Lip^\al(I)\mid\lim_{\delta\to0}\frac{\om(\delta;f)}{\delta^\al}=0}$は閉部分空間をなす．
-    \end{enumerate}
-\end{example}
-
-\begin{example}[導関数ノルムを備えたBanach空間]\label{exp-Banach-space-with-derivative-norm}
-    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階以下の導関数がすべて$\Om$上有界である関数の全体を$B^m(\Om)$または$C_b^m(\Om)$で表す．
-    これはある種の1-ノルム$\norm{u}_{C^1}=\sum_{\abs{\al}\le m}\norm{D^\al u}_\infty$について，Banach空間となる．
-    \begin{enumerate}
-        \item $C_b^0(\Om)$は$C_b(\Om)$に一致する．
-        \item $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
-    \end{enumerate}
-\end{example}
-
-\begin{example}[Holder空間]
-    局所コンパクトハウスドルフ空間$\Om$上の，$k$階$\al$-Holder連続微分可能な関数の空間を
-    \[C^{k,\al}(\Om):=\Brace{f\in C^k\mid\forall_{n\in[k]}\abs{f^{(k)}}_{C^{0,k}}<\infty}\quad\abs{f}_{C^{0,\al}}:=\sup_{x\ne y\in\Om}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}\]
-    と定めると，これは半ノルムの族$\norm{f}_{C^{k,\al}}:=\norm{f}_{C^k}+\sup_{\abs{\beta}=k}\abs{D^\beta f}_{C^{0,\al}}\;(\norm{f}_{C^k}:=\sup_{\abs{\beta}\le k}\sup_{x\in\Om}\abs{D^\beta}f(x))$について局所凸位相線形空間となり，$\Om$がコンパクトであるときさらにBanach空間となる．
-    \begin{enumerate}
-        \item 包含$C^{0,\beta}(\Om)\mono C^{0,\al}(\Om)\;(0<\al<\beta\le 1)$が存在する．
-        \item Ascoli-Arzelaの定理より，$\norm{-}_{0,\beta}$ノルムにおける有界集合は，$\norm{-}_{-\al}$ノルムにおける相対コンパクト集合に送られる．
-        \item これは，$C^k(\Om)$空間の，$k$に分数を許したバージョンだとみなせる．
-    \end{enumerate}
-\end{example}
-
-\subsubsection{群上の関数}
-
-\begin{example}[群上のBanach algebra]
-    特別なクラスである．
-    \begin{enumerate}
-        \item 局所コンパクト群$G$上のRadon測度$(C(G))^*$はBanach環をなす．積は測度の畳み込みとする．
-        \item Lebesgue空間$L^1(\R)$は畳み込みを積として非単位的なBanach代数をなす．単位元はDirac関数に相当する．
-        $\R$は一般の局所コンパクトハウスドルフな位相群$G$，Lebesgue測度はHaar測度に一般化出来る．
-        $L^1(G)$が単位的であることは，$G$が離散群であることに同値．
-    \end{enumerate}
-\end{example}
 
 \subsection{可分Banach空間の消息}
 
@@ -562,91 +827,69 @@ title=]
     任意の可分Banach空間は，ある$l^1$の商空間と等長同型である．
 \end{theorem}
 
-\subsection{ノルム空間の構成}
+\subsection{ノルム空間の直和と直積}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    Banach空間の族に対して，その直積であって，各点毎の一様ノルムを入れたものを直積といい，再びBanach空間となる．
-    一方で，代数的直和を考えると，様々なノルムを使用できるが，Banach性が保たれるとは限らず，適宜完備化を考える必要がある．
-    前者を$l^\infty$-直和，後者を$l^1$-直和と呼ぶ．圏Banでは前者は直積，後者は余直積である．
-    直和の完備化は，直積の言葉で捉えられる．
+    直積には$l^\infty$-直和，直和には$l^1$-直和を採用すると，これがBanの普遍構成である．
+    一方で，構成論的には代数的直和の完備化として捉えられることが肝要になる．
 
-    ただし，これらの概念は族が有限のとき，ノルムの取り方の違いのみに退化する．
+    Hilbert空間の直和は，$l^2$-直和をいう．
 \end{tcolorbox}
 
-\subsubsection{直積}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ノルム空間の直積は，線型空間の直積のうち，一様有界な元からなる部分空間として定義される．
-    すると，圏Banはこれについて完備である．
-    ノルムは$\infty$ノルムとする．
-    体$\F$の添字集合$A$に関するこの意味での直積を$l^\infty(A):=\prod_{a\in A}\F$で表す．
-\end{tcolorbox}
-
-\begin{definition}[direct product of normed spaces]
-    ノルム空間の族$(X_j)_{j\in J}$に対して，積空間$\prod_{j\in J}X_j$の元であって，次のように定めるノルムが有限である元$\norm{x}_\infty:=\sup\norm{\pr_j(x)}<\infty$\footnote{$\abs{J}<\infty$のとき，これは常に満たされる．}（すなわち，$\norm{\pr_j(x)}$が有界である元）のなす空間を，ノルム空間の\textbf{直積}という．
-\end{definition}
-
-\begin{proposition}[Banach空間の直積に対する閉性]
-    Banach空間の族$(X_j)$について，直積$\prod_{j\in J}X_j$もBanach空間となる．
-\end{proposition}
-
-\subsubsection{直和}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ノルム空間の直和とは，線型空間としての直和の完備化をいう．
-    この余直積についても，圏Banは完備である（ノルムは１ノルム$\Norm{\bigoplus_{s\in S}x_s}=\sum_{s\in S}\norm{x_s}$とする）．
-    加群の直和を「代数的直積」とも呼ぶ．
-    ノルム空間の直和は直積の言葉で捉えられる．
-    体$\bF$の添字集合$A$に関する直和を，$l^1(A)$で表す．
-\end{tcolorbox}
-
-\begin{definition}[algebraic direct product / direct sum]
-    $\sum_{j\in J}X_j:=\Brace{x\in\prod_{j\in J}\;\middle|\;\pr_j(x)=0\fe}$上に，$p$-ノルム($p\in[1,\infty]$)を考えたものを，\textbf{代数的直積}という．
-    $p=\infty$の場合を\textbf{直和}とも呼ぶ．
-\end{definition}
-
-\begin{proposition}[代数的直積の完備化]\label{prop-completion-of-algebraic-direct-product}
-    Banach空間の族$(X_j)$について，$p$-ノルムについて代数的直積を取ったノルム空間$\sum_{j\in J}X_j$を考える．
-    \begin{enumerate}
-        \item $p\in[1,\infty)$のとき，$\sum_{j\in J}X_j$の完備化は$\Brace{x\in\prod_{j\in J}X_j\;\middle|\;\sum_{j\in J}\norm{\pr_j(x)}^p<\infty}$に一致する．
-        \item $p=\infty$のとき，$\sum_{j\in J}X_j$の完備化は$\Brace{x\in\prod_{j\in J}X_j\;\middle|\;\norm{\pr_-(x)}:J\to\R \in C_0(J),ただしJは離散空間とする}$に一致する．
-    \end{enumerate}
-\end{proposition}
-\begin{remarks}
-    結局，圏Banでの直和とは，$l^1$-直和
-    \[\bigoplus_{i}^1W_i:=\Brace{(w_i)_i\in\prod_{i}W_i\;\middle|\;\sum_i\norm{w_i}<\infty}\]
-    である．
-\end{remarks}
-
-\begin{example}\label{exp-direct-sum-of-norm-spaces}
-    $J$を離散空間とする．
-    \begin{enumerate}
-        \item $X_j=F$としたとき，$\prod_{j\in J}F=:l^\infty(J)$と表し，有界関数$J\to F$のなす空間となる．
-        \item $p<\infty$ノルムに関して空間$l^p(J)$は，$L^p(J)$と同一視できる．
-        \item 直和は$\sum_{j\in J}F=:c_0(J)$と表し，無限遠で消える関数$f:J\to F$，すなわち，$\forall_{\ep>0}\;\abs{\Brace{j\in J\mid\abs{f(j)}\ge\ep}}<\infty$を満たす関数$f$の空間となる．
-        \item $J=\N$のとき，$(J)$は省略して$l^p,c_0$などと表す．$c_0$は単に，$0$に収束する数列のなす空間である．
-    \end{enumerate}
-\end{example}
-
-\subsubsection{Banach空間の直和}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Hilbert空間の$l^2$-直和は再びHilbert空間となり，これをHilbert空間の直和と呼んでしまう．
-    これが圏Hilbの余直積となる．
-\end{tcolorbox}
+\subsubsection{3つの直和}
 
 \begin{definition}
-    $W$をBanach空間の族とする．
+    $W\subset\Ban$をBanach空間の族とする．
     \begin{enumerate}
         \item $l^p$-直和とは，$\bigoplus_{i}^pW_i:=\Brace{(w_i)_i\in\prod_{i}W_i\;\middle|\;\sqrt[q]{\sum_i\norm{w_i}^p}<\infty}$．
         \item $l^\infty$-直和とは，$\bigoplus_{i}^pW_i:=\Brace{(w_i)_i\in\prod_{i}W_i\;\middle|\;\sup_{i}\norm{w_i}<\infty}$．
         \item $l^1$-直和とは，$\bigoplus_{i}^pW_i:=\Brace{(w_i)_i\in\prod_{i}W_i\;\middle|\;\sum_i\norm{w_i}<\infty}$．
     \end{enumerate}
 \end{definition}
+
+\begin{definition}
+    Banach空間の$l^\infty$-直和を\textbf{直積}といい，$l^1$-直和を\textbf{直和}という．
+    これは実際Ban上の直和・直積の普遍性を満たす．
+\end{definition}
+
+\begin{proposition}[well-definedness]
+    Banach空間の族の直積・直和はたしかにBanach空間である．
+\end{proposition}
+
+\begin{example}
+    $\forall_{j\in J}\;X_j=\bF$の場合を考える．
+    \begin{enumerate}
+        \item 直積を$l^\infty(J):=\prod_{j\in J}\bF$と表すと，これは$J$上の有界関数の空間となる．
+        \item $l^p$-直和について$l^p(J)=L^p(J)$が成り立つ，ただし$J$の測度は数え上げ測度とした．
+        \item 直和を$c_0(J):=\coprod_{j\in J}\bF$と表すと，$J$に離散位相を入れたときの$C_0(J)$に等しい．
+    \end{enumerate}
+    $J=\N$のとき，$(J)$の部分が省略される．
+\end{example}
+
+\subsubsection{代数的直和の完備化としての特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $l^1$-直和は，代数的直和空間（加群としての直和）の完備化として特徴付けられる．
+\end{tcolorbox}
+
+\begin{definition}
+    ノルム空間の族$(X_j)$に対して，
+    \[\sum_{j\in J}X_j:=\Brace{x\in\prod_{j\in J}X_j\;\middle|\;\pr_j(x)=0\;\fe}\]
+    を\textbf{代数的直和}という．ここには明らかに，$1\le p\le\infty$について，$p$-ノルムが入る．
+\end{definition}
+
+\begin{proposition}[well-definedness]\label{prop-completion-of-algebraic-direct-product}
+    Banach空間の族$(X_j)$について，代数的直和空間$\sum_{j\in J}X_j$を考える．
+    \begin{enumerate}
+        \item $p\in[1,\infty)$のとき，$\sum_{j\in J}X_j$の完備化は$\Brace{x\in\prod_{j\in J}X_j\;\middle|\;\sum_{j\in J}\norm{\pr_j(x)}^p<\infty}$に一致する．
+        \item $p=\infty$のとき，$\sum_{j\in J}X_j$の完備化は$\Brace{x\in\prod_{j\in J}X_j\;\middle|\;\norm{\pr_-(x)}:J\to\R \in C_0(J),ただしJは離散空間とする}$に一致する．
+    \end{enumerate}
+\end{proposition}
+\begin{remarks}
+    $\sum_{j\in J}X_j$の$1$-ノルムに関する完備化は，$l^1$-直和にほかならないことがわかる．これを\textbf{直和}という．
+\end{remarks}
 
 \subsection{ノルム位相の性質}
 
@@ -661,7 +904,7 @@ title=]
     一方で，弱位相についてはコンパクトになる．
 \end{remark}
 
-\section{カテゴリ}
+\section{Baireの定理の帰結}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -669,57 +912,71 @@ title=]
     閉グラフ定理を除いては，複素解析学の世界の一般化にも見える．
 \end{tcolorbox}
 
-\subsection{Baire category theorem}
+\subsection{Baireの定理}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ３つのBanach空間上の作用素の基本結果は，全てBaireの範疇定理の上に拠って立つ．
-    これは，完備距離空間の稠密開集合の可算交叉は再び稠密である（くらいに「濃い」）ことを主張している．
-\end{tcolorbox}
 
-\begin{definition}[Baire space, nowhere dense]\mbox{}
+\begin{definition}[nowhere dense, first category, Baire space]\mbox{}
     \begin{enumerate}
-        \item 閉包が内点を持たない集合を\textbf{疎集合}という．集合が疎であることと，その補集合が稠密であることは同値．
+        \item 閉包が内点を持たない集合$A$を\textbf{疎集合}という：$\o{X\setminus\o{A}}=X$．
+        集合$A$が疎であることと，その補集合$X\setminus A$が稠密であることは同値．
         \item 可算個の疎集合の合併として表せる集合を\textbf{第一類}という．
-        \item そうでない集合，すなわち，任意の稠密開集合の可算共通部分は稠密であるような位相空間を\textbf{第二類}または\textbf{Baire空間}という．
+        \item そうでない集合を\textbf{第二類}という．
+        これは，任意の稠密開集合の可算共通部分は稠密であることに同値．これが成り立つことを\textbf{Baire空間}であるという．
     \end{enumerate}
 \end{definition}
-\begin{Proof}
-    任意の半径$r>0$の閉球$B_0$を取り，これと$\cap_{n=1}^\infty A_n$との共通部分が空でないことを示せば，$\cap_{n=1}^\infty A_n$の稠密性が示せる．
 
-    いま，$A_1\cap B_0^\circ$は空でない開集合だから，ある半径$2^{-1}r$より小さい閉球$B_1$が取れる．
-    これを繰り返すことで，$B_n\subset A_n\cap B^\circ_{n-1},r(B_n)<2^{-n}r$を満たす閉球の列$(B_n)$が取れる．
-    $X$は完備だから，$\exists_{x\in X}\;\{x\}=\cap_{n=1}^\infty B_n\subset B_0\cap\paren{\cap_{n=1}^\infty A_n}$が成り立ち，共通部分が空でないことがわかった．
+\begin{theorem}[Baire空間の特徴付け]
+    位相空間$X$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $X$はBaire空間である：任意の稠密開集合の可算共通部分は稠密である．
+        \item $X$の任意の非空開集合は第二類である：可算個の疎集合の合併としては表せない．
+        \item $X$の閉集合列$(F_i)_{i\in\N}$が$\paren{\cup_{i\in\N}F_i}^\circ\ne\emptyset$ならば，$\exists_{i\in\N}\;F_i^\circ\ne\emptyset$．
+    \end{enumerate}
+\end{theorem}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] $X$の任意の非空開集合$H\in\O_X$が，$X$の疎集合の合併$H=\cup_{n\in\N}N_n$で表せると仮定して矛盾を示す．
+        各$N_n$は疎だから，$X\setminus\o{N_n}$は$X$上稠密である．
+        すると，$\cap_{n\in\N}X\setminus\o{N_n}\subset X\setminus H$も稠密である必要があるから，$X=X\setminus H$．これは$H\ne\emptyset$に矛盾．
+        \item[(2)$\Rightarrow$(3)] $\paren{\cup_{i\in\N}F_i}^\circ=:H\in\O_X$とおき，$\forall_{i\in\N}F_i^\circ=\emptyset$と仮定して矛盾を示す．すると，各$F_i$は疎だから，$H=\cup_{i\in\N}H\cap F_i$も素．よって，$H=\emptyset$となり，矛盾．
+        \item[(3)$\Rightarrow$(1)] $(G_i)$を$X$の稠密開集合の列とする．$F_i:=X\setminus G_i$とすると，$(\cup_{i\in\N}F_i)^\circ=\emptyset$だから，結論が従う．
+    \end{description}
 \end{Proof}
 
-\begin{proposition}[Baire category theorem 1]
-    任意の完備距離空間$X$はBaire空間である．
-    
-    すなわち，$(A_n)$を$X$の稠密開集合の列とすると，この共通部分$\cap_{n\in\N}A_n$は$X$で稠密である．
-    また双対命題は，閉集合列を用いて$X=\cup_{n=1}^\infty F_n$と表せたとき，少なくとも一つの$F_n$は疎でない（内点を持つ）．
+\begin{proposition}[Baire's theorem]
+    完備距離空間$(X,d)$はBaire空間である．
 \end{proposition}
-\begin{remark}
-    実はZFの下で従属選択公理と呼ばれる弱い選択公理と同値になる．
-\end{remark}
+\begin{Proof}
+    任意の稠密開集合の列$(A_n)$を取る．
+    $\cap_{n\in\N}A_n$が任意の半径$r>0$の閉球$B_0$と非空な共通部分を持つならば，稠密であると示せる．
+    そこで，任意の閉球$B_0:=B(a,r)\;(a\in X,r>0)$を取る．
+    \begin{enumerate}[(a)]
+        \item 閉球の列$(B_n)$を次のように構成する．$A_1$は稠密より，非空開集合$A_1\cap B_0^\circ$には半径$r/2$より小さい閉球$B_1$が取れる．これを繰り返すと，$\diam(B_n)<2^{-n}r$が成り立つ．
+        \item $(x_n)\in\prod_{n\in\N}B_n$はCauchy列だから極限$x\in X$を持ち，また$\{x\}=\cap B_n$が成り立つ．いま，$\cap B_n\subset B_0\cap\paren{\cap A_n}$である．
+    \end{enumerate}
+\end{Proof}
 
-\begin{proposition}[BCT2]
-    任意の局所コンパクトハウスドルフ空間はBaire空間である．
-\end{proposition}
-\begin{remarks}
-    こちらは函数解析学では使わないが，任意の有限次元多様体がBaire空間であることがわかる．多様体がパラコンパクトでない場合でも成り立つ．
-    なお，局所コンパクトでない完備距離空間も，距離化可能でない局所コンパクトハウスドルフ空間も存在することに注意．
-\end{remarks}
+\begin{corollary}[至る所微分不可能な関数の存在]
+    $X:=C([0,1])$を$\infty$-ノルムによってBanach空間とみなし，
+    \[\F_n:=\Brace{f\in X\mid\exists_{x\in[0,1]}\;\forall_{y\in[0,1]}\;\abs{f(x)-f(y)}\le n\abs{x-y}}\]
+    と定める．
+    \begin{enumerate}
+        \item $\F_n$は$X$の閉な疎集合である．
+        \item $X$には，$[0,1]$上至る所微分不可能な関数からなる稠密部分集合が存在する．
+    \end{enumerate}
+\end{corollary}
 
 \subsection{開写像定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    開写像定理と逆写像定理という，複素解析と並行な議論．
+    開球をどう写すかを考える．
+    実は，一般に$F$-空間の間の全射は開写像である．
 \end{tcolorbox}
 
-\begin{lemma}[単位閉球の像の描像]\label{lemma-image-of-ball}
+\begin{lemma}[単位閉球の像で特異的な振る舞いをするのは境界部分のみである]\label{lemma-image-of-ball}
     $X,Y$をBanach空間とする．
-    $T\in B(X,Y)$による単位閉球$B(0,1)$の像が，$Y$のある球$B(0,r)\;(r>0)$の中で稠密であるとする．この時，$\forall_{\ep\in(0,1)}\; B(0,(1-\ep)r)\subset T(B(0,1))$．
+    $T\in B(X,Y)$による単位閉球$B_X(0,1)$の像が，$Y$のある球$B_Y(0,r)\;(r>0)$の中で稠密であるとする：$B_Y(0,r)\subset\o{T(B_X(0,1))}$．この時，$\forall_{\ep\in(0,1)}\; B_Y(0,(1-\ep)r)\subset T(B_X(0,1))$．
 \end{lemma}
 \begin{Proof}\mbox{}
     \begin{description}
@@ -732,7 +989,7 @@ title=]
 \end{Proof}
 
 \begin{theorem}[開写像定理]\label{thm-open-mapping-theorem}
-    $X,Y$をBanach空間とし，有界線型作用素$T\in B(X,Y)$を全射とする．このとき，$T$は開写像である．
+    Banach空間の間の全射な有界作用素$T\in B(X,Y)$は開である．
 \end{theorem}
 \begin{Proof}\mbox{}
     \begin{description}
@@ -748,27 +1005,77 @@ title=]
     \end{description}
 \end{Proof}
 
+\begin{theorem}
+    $X$を$F$-空間，$Y$を位相線型空間，$T:X\to Y$を連続作用素とする．像$T(X)\subset Y$が第二類であるならば，次が成り立つ：
+    \begin{enumerate}
+        \item $T$は全射である；$T(X)=Y$．
+        \item $T$は開写像である．
+        \item $Y$も$F$-空間である．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{逆写像定理と補空間分解}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $F$-空間には，本質的にはノルムは1つしかはいらない．
+\end{tcolorbox}
+
 \begin{corollary}[逆写像定理]\label{cor-inverse-mapping-theorem}
-    Banach空間の間の任意の全単射な有界線型作用素は，有界な逆射を持つ．
+    Banach空間の間の任意の全単射な有界作用素の逆写像は，有界作用素である．
 \end{corollary}
+\begin{Proof}
+    全単射線型写像の逆も線型であるから，位相同型であることを示せば良い．
+    全単射な開写像は位相同型である．
+\end{Proof}
 
 \begin{corollary}[ノルムが同値であることの十分条件]
     線型空間$X$が，２つのノルム$\norm{-}_1,\norm{-}_2$についてBanach空間をなし，$\exists_{\al>0}\;\norm{-}_1\le\al\norm{-}_2$が成り立つとする．
     この時，$\beta>0$が存在して，$\norm{-}_2\le\beta\norm{-}_1$も満たす．
 \end{corollary}
+\begin{Proof}
+    $X_1:=(X,\norm{-}_1),X_2:=(X,\norm{-}_2)$とすると，$\id:X_2\to X_1$はLipschitz連続であるから全単射な有界作用素であるから，有界な逆を持つ．これはLipschitz連続であることと同値．よって，$X_1\simeq X_2$．
+\end{Proof}
+\begin{remarks}
+    2つの位相$(X,\tau_1),(X,\tau_2)$について，大小関係$\tau_1\subset\tau_2$があり，いずれも$F$-空間ならば，$\tau_1=\tau_2$である．
+\end{remarks}
+
+\begin{corollary}[Banach空間の補空間分解]
+    $Y,Z\subset X$をBanach空間の閉部分空間とする．次の2条件は同値．
+    \begin{enumerate}
+        \item 任意の$x\in X$は一意な分解$x=y+z\;(y\in Y,z\in Z)$を持つ．
+        \item $Y+Z=X$かつ$Y\cap Z=0$．
+    \end{enumerate}
+    またこのとき，$\exists_{\al>0}\;\norm{y}+\norm{z}\le\al\norm{x}$．
+\end{corollary}
+
+\begin{proposition}[補空間分解と射影]
+    $Y,Z\subset X$のBanach空間の閉部分空間とする．
+    このとき，次の2条件は同値：
+    \begin{enumerate}
+        \item 射影$P:X\to Y$は冪等である．
+        \item $Y=P(X)$と$Z=\Ker P$は互いに補空間である．
+    \end{enumerate}
+    またこの条件を満たすとき，次の2条件も同値：
+    \begin{enumerate}
+        \item $T\in B(X)$は$P$と可換である．
+        \item $P$の定める分解のそれぞれが$T$-安定：$T(Y)\subset Y$かつ$T(Z)\subset Z$．
+    \end{enumerate}
+    (2)は上三角行列であることを意味している．
+\end{proposition}
 
 \subsection{閉グラフ定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=全空間で定義された閉作用素は有界である]
-    関数が連続であることとグラフが閉であることは同値である．同様のことが作用素でも起こる．
-    
+    位相空間$X$がHausdorffであることと，任意の位相空間$T$からの連続写像$f:T\to X$は閉なグラフを持つこととは同値である．
+    コンパクトハウスドルフ空間の間の写像は，グラフが閉ならば連続である．
     グラフが閉である作用素は\textbf{閉作用素}という．
     グラフが閉で，全空間$X$上で定義された線型作用素は有界であるが，部分集合$D(T)\subsetneq X$上で定義された線型作用素については一般には有界とは限らない．
 \end{tcolorbox}
 
 \begin{theorem}[closed graph theorem]\label{thm-closed-graph-theorem}
-    作用素$T:X\to Y$のグラフ$G(T):=\Brace{(x,y)\in X\times Y\mid Tx=y}$が直積空間$X\times Y$の閉集合ならば，$T$は有界である．
+    作用素$T:X\to Y$のグラフ$G(T)\subset X\times Y$が閉ならば，$T$は有界である．
 \end{theorem}
 \begin{Proof}
     仮定より，$G(T)$は$X\times Y$内の閉部分空間をなす，特にBanachである．
@@ -776,19 +1083,40 @@ title=全空間で定義された閉作用素は有界である]
     $T=\pr_2\circ\pr_1^{-1}$より，$T$も有界．
 \end{Proof}
 
+\subsection{Banach-Steinhausの定理}
+
+\begin{definition}
+    $X,Y$を位相線型空間，$\Gamma\subset\Hom_\bF(X,Y)$を集合とする．
+    $\Gamma$が\textbf{同程度連続}とは，$\forall_{W\in\O(0_Y)}\;\exists_{V\in\O(0_X)}\;\forall_{T\in\Gamma}\;T(V)\subset W$が成り立つことをいう．
+\end{definition}
+
+\begin{theorem}[同程度連続ならば一様有界]
+    $X,Y\in\TVS,\Gamma\subset\Hom_\bF(X,Y)$を同程度連続な線型写像集合とする．このとき，次の意味で一様有界である：$\forall_{E\in\B(X)}\;\exists_{F\in\B(Y)}\;\forall_{T\in\Gamma}\;T(E)\subset F$．
+    ただし，$\B(E),\B(F)$は有界集合系とした．
+\end{theorem}
+
+\begin{theorem}[Banach-Steinhaus]
+    $X,Y\in\TVS,\Gamma\subset\Hom_\TVS(X,Y)$を連続線型写像の集合，$B:=\Brace{x\in X\mid \{Tx\}_{T\in\Gamma}\in\B(X)}$とする．
+    $B\subset X$がBaire空間ならば，$B=X$で，$\Gamma$は同程度連続である．
+\end{theorem}
+
+\begin{corollary}[各点有界ならば同程度連続]
+    $X$を$F$-空間，$Y$を位相線型空間とし，$\Gamma\subset\Hom_\TVS(X,Y)$を連続線形写像の集合とする．
+    任意の$\forall_{x\in X}\;\Gamma(x):=\Brace{Tx\in Y\mid T\in\Gamma}$が有界ならば，$\Gamma$は同程度連続である．
+\end{corollary}
+
 \subsection{一様有界性の原理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    内部homの構造について，有界性が綺麗に対応する．
-    すなわち，有界作用素の族が各点有界ならば，一様有界である．
-    結局，有界線型作用素列が一様有界であることを示すには，任意の$x\in X$について$\ev_x$の像が収束列を定めることを示せば良い．
+    有界作用素の族が各点で有界ならば，同程度連続であり，一様有界であり，したがって作用素ノルムについても有界である．
 \end{tcolorbox}
 
-\begin{theorem}[作用素族は各点有界ならば一様有界 (Banach-Steinhaus / 共鳴定理)]
-    $B(X,Y)$の族$(T_\lambda)$について，
-    各点有界（全ての$x\in X$について列$(T_\lambda x)$が$Y$で有界）ならば，
-    作用素ノルム$\{\norm{T_\lambda}\in\R\mid\lambda\in\Lambda\}$も有界である．
+\begin{theorem}[作用素族は各点有界ならば(一様)有界]
+    $X,Y$をBanach空間とする．\footnote{$X$が$F$-空間，$Y$が位相線型空間で十分．}
+    任意の集合$\{T_\lambda\}\subset B(X,Y)$が
+    各点有界：$\forall_{x\in X}\;\{T_\lambda x\}_{\lambda\in\Lambda}\in\B(Y)$ならば，
+    有界集合である：$\sup_{\lambda\in\Lambda}\norm{T_\lambda}<\infty$．
 \end{theorem}
 \begin{Proof}
     $Y_\Lambda:=\prod_{\lambda\in\Lambda}Y$を直積空間，$T:=\prod_{\lambda\in\Lambda}T_\lambda:X\to Y_\Lambda$を積作用素とすると，
@@ -798,41 +1126,56 @@ title=]
     $(x,y)\in X\times Y_\Lambda$に収束する列$(x_n,Tx_n)$を任意にとり，$Tx=y$を示せば良い．
     各$\lambda\in\Lambda$について$T_\lambda$は連続であるから，$T_\lambda x=\pr_\lambda(y)$．これは$y=Tx$を意味する．
 \end{Proof}
-\begin{remark}[Banach-Steinhaus]
-    $Y$は一般のノルム空間とできる．
-    基本的には，積作用素のノルムが上界として見つかるのが原理である．
-    次のように，対偶命題について
-    一般化されて主張されることもある(Rudin)\footnote{ある点$x\in X$が存在して，$\{\norm{T_\lambda}\}$は有界でない，というだけでなく，そのような$x$は\textbf{稠密な}開集合の可算共通部分として取れる．}：
-    $X$をBanach空間，$Y$をノルム空間とし，$\{\Lambda_\al\}_{\al\in A}\subset B(X,Y)$を集合とする．
-    このとき，次のうちどちらか一方のみが，必ず成り立つ．
-    \begin{enumerate}
-        \item 作用素ノルムが有界である：$\exists_{M<\infty}\;\forall_{\al\in A}\;\norm{\Lambda_\al}\le M$．
-        \item $X$のある稠密な$G_\delta$-集合\footnote{開集合の可算共通部分によって表現される集合}が存在して，$\forall_{x\in G_\delta}\;\sup_{\al\in A}\norm{\Lambda_\al x}=\infty$．
-    \end{enumerate}
-\end{remark}
 
-\begin{corollary}[作用素ネットが各点有界であることの十分条件]
-    $(T_\lambda)_{\lambda\in\Lambda}$を，$B(X,Y)$のネットであって，任意の$x\in X$について$Y$のネット$(T_\lambda x)_{\lambda\in\Lambda}$は有界で収束するとする．
-    このとき，$T\in B(X,Y)$が存在して，これに各点収束する$\forall_{x\in X}\;T_\lambda x\to Tx$．
+\subsection{作用素のネットが収束する十分条件}
+
+\begin{corollary}[作用素ネットが収束するための十分条件]
+    $B(X,Y)$のネット$(T_\lambda)_{\lambda\in\Lambda}$が，任意の$x\in X$について$Y$のネット$(T_\lambda x)_{\lambda\in\Lambda}$は有界で収束するならば，
+    このネットは各点収束先を持つ：$\exists_{T\in B(X,Y)}\;\forall_{x\in X}\;T_\lambda x\to Tx$．
 \end{corollary}
 \begin{Proof}
     $Tx:=\lim_{\lambda\in\Lambda}T_\lambda x$によって定まる作用素$T:X\to Y$が有界であることを示せば良い．
     この$\{T_\lambda\}$は各点有界族だったから一様有界でもある：$\exists_{\alpha\in\R}\;\forall_{\lambda\in\Lambda}\;\norm{T_\lambda}\le\al$．
     したがって，$\forall_{x\in X}\;\norm{Tx}\le\al\norm{x}$．すなわち，$T$は有界である．
 \end{Proof}
-\begin{remark}
+\begin{remarks}
     命題\ref{prop-extension-of-operator-on-dense-subset}より，$X$の稠密な部分集合上で任意のネットが有界で収束することを示せば十分．
+    さらに$(T_n)$が数列のときは収束だけ確認すれば良い．
+\end{remarks}
 
-\end{remark}
+\begin{corollary}
+    複素Banach空間$X:=\Brace{f\in C([0,2\pi];\C)\mid f(0)=f(2\pi)}$上の作用素$T_n\in B(X)$を
+    \[T_nf:=\sum_{k=-n}^n\paren{\frac{1}{2\pi}\int^{2\pi}_0f(t)e_{-k}(t)dt} e_k,\qquad(e_k(x):=\exp(ikx))\]
+    と定めると，
+    \begin{enumerate}
+        \item Dirichlet核$D_n$について，$T_nf=D_n*f$である：
+        \[D_n(x)=\sum^n_{k=-n}e_k(x)=\frac{\sin((n+1/2)x)}{\sin(x/2)}.\]
+        \item $\norm{T_n}=\norm{D_n}_1>4\pi^{-2}\sum^n_{k=1}k^{-1}$が成り立つ．
+        \item $\norm{T_n}\to\infty$．
+        \item Fourier級数が一様収束しないような$f\in X$が存在する．
+        \item 集合$\Brace{f\in L^2([0,2\pi])\mid\lim_{n\to\infty}T_nf\text{が存在する}}$は$L^2([0,2\pi])$上稠密な第一類集合である．
+    \end{enumerate}
+\end{corollary}
 
-\section{双対空間}
+\begin{corollary}
+    $X:=L^1([0,2\pi])$とすると，Riemann-Lebesgueの補題より，作用素$T:X\to c_0(\Z)$が
+    \[Tf(n):=\frac{1}{2\pi}\int^{2\pi}_0f(t)\exp(-int)dt\]
+    により定まる．
+    \begin{enumerate}
+        \item $T$は単射で有界である．
+        \item $T$は全射たりえない．
+    \end{enumerate}
+\end{corollary}
+
+\section{Hahn-Banachの優延長定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-According to Helmut H. Schaefer, "the study of a locally convex space in terms of its dual is the central part of the modern theory of topological vector spaces, for it provides the deepest and most beautiful results of the subject."
+    According to Helmut H. Schaefer, "the study of a locally convex space in terms of its dual is the central part of the modern theory of topological vector spaces, for it provides the deepest and most beautiful results of the subject."
+    殆どの関数論は，関手$S:=\Hom(-,\bF)$によって豊かな理論を得る．これが層の理論であり，双対空間論である．
 \end{tcolorbox}
 
-\subsection{Hahn-Banachの有界線型汎関数拡張定理}
+\subsection{Hahn-Banachの線型汎関数の延長定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=双対空間の元の存在]
@@ -843,26 +1186,25 @@ title=双対空間の元の存在]
     さらに言えば，選択公理と同じ役割をするともみれる．
 \end{tcolorbox}
 
-\begin{definition}[dual space, Minkowski functional]
-    $X$を$F$-ノルム空間とする．
-    \begin{enumerate}
-        \item 汎関数の空間$X^*:=B(X,F)$を\textbf{双対空間}という．$F$は完備だからこれはBanach空間である\ref{prop-internal-hom}．
-        \item 関数$m:X\to\R$が\textbf{Minkowski汎関数}または\textbf{劣線形汎関数}であるとは，次の２条件を満たすことをいう：
-        \begin{enumerate}[(a)]
-            \item (劣加法性) $m(x+y)\le m(x)+m(y)$．
-            \item (正斉次性) $\forall_{t\in\R_{\ge 0}}\;m(tx)=tm(x)$．
-        \end{enumerate}
-    \end{enumerate}
-\end{definition}
-\begin{remarks}
-    Minkowski汎関数は線型とは限らない．
-    これは，セミノルム（よりも一般的に距離的な概念）を表現する装置である．
-    実際セミノルムはMinkowski汎関数である．
-    だから値は実数となっている．
-\end{remarks}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    完備距離空間の稠密部分空間や，正規空間の閉集合上からは，一様ノルムを変えない延長が存在したが，
+    同様にノルム空間の部分空間上には，作用素ノルムを変えない延長が存在する．
+    一般の線型空間の部分空間の上からは，任意のMinkowski汎関数に対して，これを超えない延長が存在する．
+\end{tcolorbox}
 
-\begin{lemma}[fundamental lemma]
-    $m:X\to\R$を実線型空間上のMinkowski汎関数とし，$\varphi:Y\to\R$を部分空間上の汎関数で$m$で抑えられるものとする：$\forall_{y\in Y}\;\varphi(y)\le m(y)$．
+\begin{definition}[Minkowski functional]
+    $X$を$\bF$-ノルム空間とする．
+    関数$m:X\to\R$が\textbf{Minkowski汎関数}または\textbf{劣線形汎関数}であるとは，次の２条件を満たすことをいう：
+    \begin{enumerate}[(a)]
+        \item (劣加法性) $m(x+y)\le m(x)+m(y)$．
+        \item (正斉次性) $\forall_{t\in\R_{\ge 0}}\;m(tx)=tm(x)$．
+    \end{enumerate}
+    セミノルムはMinkowski汎関数である．
+\end{definition}
+
+\begin{lemma}[fundamental lemma (AC)]
+    $m:X\to\R$を実線型空間$X$上のMinkowski汎関数とし，$\varphi:Y\to\R$を部分空間$Y\subset X$上の線型汎関数で$m$で抑えられるものとする：$\forall_{y\in Y}\;\varphi(y)\le m(y)$．
     このとき，$X$上の汎関数$\wt{\varphi}:X\to\R$であって$m$によって抑えられる延長$\wt{\varphi}|_Y=\varphi$が存在する．
 \end{lemma}
 \begin{Proof}\mbox{}
@@ -895,49 +1237,41 @@ title=双対空間の元の存在]
     $\bF=\R$の場合，セミノルムはMinkowski汎関数で，$\abs{\varphi}\le m\Rightarrow\varphi\le m$だから，これは補題の特別な場合である．
     よって，$\bF=\C$の場合を考える．
 \end{Proof}
-\begin{remarks}
-    もちろん，$X$がノルム空間で，$f:Y\to\C$がその上の有界な線型汎関数であるときにも適用可能で，この場合，$\norm{F}=\norm{f}$を満たす延長が可能．
+\begin{remarks}[有界線型汎関数の延長]
+    $X$がノルム空間で，$f:Y\to\C$がその上の有界線型汎関数であるとき，特に$\norm{\o{f}}=\norm{f}$を満たす延長が可能．
+    $\norm{f}\le\norm{\o{f}}$は明らか．
+    また，セミノルムを$m(x):=\norm{f}\norm{x}$とすれば，$\forall_{x\in Y}\;\o{f}(x)\le\norm{f}\norm{x}$を満たすから，$\norm{\o{f}}\le\norm{f}$も成立．
 \end{remarks}
 
-\subsection{有界線型汎関数延長定理の系}
+\subsection{双対写像}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    ノルム空間$X$の双対空間$X^*$の正規化された$B^*$の元について，
+    延長定理により，種々の興味深い有界線型汎関数が$B^*\subset X^*$上に取れる．
     \begin{enumerate}
-        \item 任意に選んだ$x_0\in X\setminus\{0\}$に対して$\varphi(x_0)=\norm{x_0}$を満たすものが取れる．
-        \item 任意に選んだ閉部分空間$Y$と，その外の点$x\in X\setminus Y$に対して，$Y$上で消えていて，$\varphi(x)=\inf_{y\in\R}\norm{x-y}$を満たすように取れる．
+        \item $x\in X\setminus\{0\}$に対して，この方向の射線を$\varphi\paren{\al\frac{x}{\norm{x}}}=\al$と写すもの$B^*$上に取れる．
+        \item 閉部分空間$Y\subset X$に対して，$Y$からの距離を返すようなものが$B^*$上に取れる．
     \end{enumerate}
-    これにより，$X$が自明でないならば，$X^*$も自明でなく，さらに$X$の点を分離することが保証される．$X$と$X^*$とのinterplayが産む豊かな理論の始まりである．
+    特に(1)の対応を双対写像という\cite{Brezis}．
 \end{tcolorbox}
 
-\begin{proposition}[複素線型空間は実線形空間]
-    $V$を複素線型空間とする．
-    \begin{enumerate}
-        \item $f\in V^*$の実部を$u\in V^*$とする．このとき，$\forall_{x\in V}\;f(x)=u(x)-iu(ix)$．
-        \item $u\in B(V,\R)$に対して，$f(x):=u(x)-iu(ix)$と定めると，$f\in V^*$である．
-        \item $V$はノルム空間であり，$f,u\in V^*$は$\forall_{x\in V}\;f(x)=u(x)-iu(ix)$を満たすとする．このとき，$\norm{f}=\norm{u}$．
-    \end{enumerate}
-\end{proposition}
-
 \begin{corollary}[汎関数の構成]\label{cor-Hahn-Banach}
-    ノルム空間$X$において，
+    ノルム空間$X$の
     任意の元$x\in X\setminus\{0\}$に対して，
-    汎関数$\varphi\in X^*$が存在して，$\norm{\varphi}=1$かつ$\varphi(x)=\norm{x}$を満たす．
+    線型汎関数$\varphi_x\in X^*$が存在して，$\norm{\varphi_x}=1$かつ$\varphi_x(x)=\norm{x}$を満たす．
 \end{corollary}
 \begin{Proof}
     $\varphi:\bF x\to\bF$を，$\varphi(\al x)=\al\norm{x}$で定めると，$\norm{\varphi}=1$である．
     これはノルム$\norm{-}$より大きくないままの$X$上への延長が存在するが，$\norm{\al x}=1$を満たす$\al x\in\bF x$について$\varphi(\al x)=1$であるから，$\norm{\varphi}=1$のままである．
 \end{Proof}
-\begin{remarks}[state]
-    汎関数による点の分離能力は十分に高い．定理\ref{thm-Spectrum-is-compact}などに使う．
-    また，ノルム空間$X$が単位的$C^*$-代数であるとき，この条件を満たす汎関数を\textbf{状態}という．\footnote{\url{https://ncatlab.org/nlab/show/state on a star-algebra}}
-    局所コンパクトハウスドルフ空間上の連続関数環$C(X)$上の状態とは，確率測度が定める積分である．
-    ヒルベルト空間$H$上に表現された$C^*$-環の状態とは，任意の単位ベクトル$\xi\in B(H)$が定める汎関数$T\mapsto(T\xi|\xi)$であり，この操作は物理量の測定の期待値を与える．
+\begin{remarks}[duality map]
+    この対応は，双対空間$X^*$の単位円周$\partial B^*$上の点を取る標準的な対応$\varphi_-:X\setminus\{0\}\to\partial B^*$を定めており，$\varphi_x$は$x$方向の単位ベクトル$\frac{x}{\norm{x}}$を$1$に写す：$\varphi\paren{\frac{x}{\norm{x}}}=1$．
+    この条件を満たす$\varphi_x$は一般には一意でないが，$X^*$が厳密に凸(Hilbert空間や$L^p\;(p\in(1,\infty))$空間)のとき，一意的である．
+    純粋な存在定理として，汎関数による点の分離能力は十分に高いことを表現していると捉えられる．定理\ref{thm-Spectrum-is-compact}などに使う．
 \end{remarks}
 
-\begin{corollary}
-    ノルム空間$X$において，任意の閉部分空間$Y\subset X$と$x\in X\setminus Y$に対して，汎関数$\varphi\in X^*$が存在して，$\norm{\varphi}=1$かつ$\varphi|_Y=0$かつ$\varphi(x)=\inf\Brace{\norm{x-y}\in\R\mid y\in Y}$を満たす．
+\begin{corollary}[閉部分空間からの距離関数]\label{cor-distance-from-closed-subspace}
+    ノルム空間$X$の任意の閉部分空間$Y\subset X$と点$x\in X\setminus Y$に関して，線型汎関数$\varphi_Y\in X^*$が存在して，$\norm{\varphi_Y}=1$かつ$\varphi_Y|_Y=0$かつ$\varphi_Y(x)=\inf_{y\in Y}\norm{x-y}$を満たす．
 \end{corollary}
 \begin{remarks}
     \ref{prop-標準写像の随伴}に関連する．
@@ -949,19 +1283,46 @@ title=]
     \end{enumerate}
 \end{remarks}
 
-\begin{corollary}
+\begin{corollary}[作用素ノルムの双対空間による特徴付け]
     $x\in X$のノルムは，$X^*$を用いて次のようにも表せる：
-    \[\norm{x}=\sup\Brace{\abs{f(x)}\in\bF\mid f\in B^*}.\]
+    \[\norm{x}=\sup_{f\in B^*}\abs{f(x)}=\max_{f\in B^*}\abs{f(x)}.\]
     特に，$x\in X$に関する評価写像は$\ev_x\in X^*$で，$\norm{\ev_x}=\norm{x}$．
 \end{corollary}
 \begin{Proof}
     系\ref{cor-Hahn-Banach}による．
 \end{Proof}
+\begin{remarks}
+    作用素ノルムの場合とは違って，この特徴付けでは，supは達成される．
+\end{remarks}
 
-\subsection{零化空間と再双対空間}
+\subsection{複素線型空間の扱い}
+
+\begin{proposition}[複素線型空間は実線形空間]
+    $V$を複素線型空間とする．
+    \begin{enumerate}
+        \item $f\in V^*$の実部を$u\in V^*$とする．このとき，$\forall_{x\in V}\;f(x)=u(x)-iu(ix)$．
+        \item $u\in B(V,\R)$に対して，$f(x):=u(x)-iu(ix)$と定めると，$f\in V^*$である．
+        \item $V$はノルム空間であり，$f,u\in V^*$は$\forall_{x\in V}\;f(x)=u(x)-iu(ix)$を満たすとする．このとき，$\norm{f}=\norm{u}$．
+    \end{enumerate}
+\end{proposition}
+
+\section{双対空間}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    双対空間の単位閉球$B^*$に標準的な元の取り方を得た．これによって調べることが出来る．
+    \begin{enumerate}
+        \item $X$や$X^*$上の部分集合に対して，零化作用素$A^\perp$，極作用素$A^\circ$が存在し，種々の位相的性質を特徴付けることが出来る．
+        \item まず第一に埋め込み$i:X\mono X^{**}$が見つかる．
+        \item ペアリング$\brac{-,-}:X\times Y\to\bF$を用いて，他の空間の知識を別の空間に流入させることが出来る．
+        \item 射集合の間に，随伴作用素$*:B(X,Y)\to B(Y^*,X^*)$や，転置などの関手が考えられる．
+    \end{enumerate}
+\end{tcolorbox}
+
+\subsection{零化空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=自然なペアリングに関する直交空間]
     Hahn-Banachの拡張定理より，標準的な単射$\kappa_X:X\mono (X^*)^*$は等長写像であることが従う．
     これがBanのisoでもあるとき，$X$を回帰的という（Hahn-Banachの定理より等長写像であることが従うから，Banの同型でもある）．
 
@@ -971,21 +1332,38 @@ title=]
 \begin{definition}[annihilator]
     部分空間$Y\subset X$と$Z\subset X^*$について，
     \begin{enumerate}
-        \item $Y$の零化空間とは，$Y^\perp=\Brace{\varphi\in X^*\mid\forall_{y\in Y}\;\varphi(y)=0}$を指す．
-        \item $Z$の零化空間とは，$Z^\perp=\Brace{x\in X\mid\forall_{\varphi\in Z}\;\varphi(x)=0}$を指す．
+        \item $Y$の零化空間とは，$Y^\perp=\Brace{\varphi\in X^*\mid\forall_{y\in Y}\;\varphi(y)=0}=\cap_{y\in Y}\Ker\ev_y$を指す．
+        \item $Z$の零化空間とは，$Z^\perp=\Brace{x\in X\mid\forall_{\varphi\in Z}\;\varphi(x)=0}=\cap_{\varphi\in Z}\Ker\varphi$を指す．
     \end{enumerate}
+    自然なペアリング$\brac{\varphi,y}=\varphi(y)$に関する直交空間ともいう．
 \end{definition}
 
-\begin{lemma}\mbox{}
+\begin{lemma}[零化空間の基本性質]\mbox{}
     \begin{enumerate}
-        \item 一般に$Y\subset(Y^\perp)^\perp$である．
-        \item $Y$が閉部分空間である時，$Y=(Y^\perp)^\perp$である．
-        \item 一方で，$Z$が閉部分空間であってもお，$Z=(Z^\perp)^\perp$とは限らない．
+        \item 零化空間は必ず閉部分空間である．
+        \item 一般に$Y\subset(Y^\perp)^\perp,Z\subset(Z^\perp)^\perp$である．
+        \item $Y$が閉部分空間である時，$Y=(Y^\perp)^\perp$である．特に，$(Y^\perp)^\perp=\o{Y}$でもある．
+        \item 一方で，$Z$が閉部分空間であっても$Z=(Z^\perp)^\perp$とは限らないが，$w^*$-閉ならば$Z=(Z^\perp)^\perp$である．
     \end{enumerate}
     もちろん，$X$が有限次元の場合はいずれの等号も常に成り立つ．
 \end{lemma}
+\begin{Proof}\mbox{}
+    \begin{enumerate}
+        \item いずれも閉部分空間の共通部分であるため．
+        \item 任意に$y_0\in Y$を取る．任意に$\varphi\in T^\perp$を取ると，$\forall_{y\in Y}\;\varphi(y)=0$を満たすのだから，当然$\varphi(y_0)=0$．
+        \item $Y$は閉だから，系\ref{cor-distance-from-closed-subspace}より，ここからの距離を測る関数$\varphi_Y\in X^*$が取れる．任意に$x\in (Y^\perp)^\perp$を取ると，これは特に$\varphi_Y(x)=0$を満たす必要があるが，これは$x\in Y$を意味する．
+        \item 系\ref{cor-weak-star-closed-subspace}の証明より．
+    \end{enumerate}
+\end{Proof}
 
-\begin{proposition}\label{prop-dense-subspace-of-Banach-space}
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $X$が回帰的ならば，$(Z^\perp)^\perp=\oo{Z}$．
+        \item 一般に，$w^*$-閉包については，$(Z^\perp)^\perp=\o{Z}$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[一般の集合の零化空間]\label{prop-dense-subspace-of-Banach-space}
     局所凸空間$X$の部分集合$A$が生成する部分空間を$Y$とする．
     \begin{enumerate}
         \item $A^\perp=Y^\circ$である．
@@ -999,19 +1377,24 @@ title=]
     \end{enumerate}
 \end{Proof}
 
-\begin{definition}[bidual space, double-dual embedding, reflexive]
+\subsection{再双対空間}
+
+\begin{definition}[bidual space, double-dual embedding, reflexive]\label{def-bidual}
     $X$をノルム空間とすると，$X^*,X^{**}$はBanach空間である．
     \begin{enumerate}
-        \item $i:X\to X^{**}$を$i(x)(\varphi)=\varphi(x)$と定めると，これは単射線型作用素である．
-        \item すると$i$はノルム減少作用素で特に有界であることはすぐにわかるが，実は等長写像を定める（系\ref{cor-Hahn-Banach}）．
-        よって，$i$を埋め込みとして，$X$を$X^{**}$の部分空間と同一視し，$X$がBanach空間でない場合は，$i(X)\subset X^{**}$の閉包を取ることで完備化できる．
+        \item $i:X\to X^{**}$を値写像$i(x):=\ev_x$と定めると，これは単射線型作用素である．
+        \item すると$i$はノルム減少作用素（特に有界）であり，さらに等長写像である（系\ref{cor-Hahn-Banach}）．
+        よって，$i$はBanの埋め込みである．
         \item $i$が全射でもある（したがって$i$はBanの同型である）とき，Banach空間$X$を\textbf{回帰的}という．
     \end{enumerate}
 \end{definition}
-\begin{Proof}
-    $i$が単射であるのは明らか．任意の$x\in X$について，$\norm{i(x)}=\sup_{\varphi\in B^*}\varphi(x)\le\norm{x}$であるが，系\ref{cor-Hahn-Banach}より，$\varphi(x)=x$を満たす$\varphi\in B^*$が取れるから，実際$\norm{i(x)}=\norm{x}$とわかる．
+\begin{Proof}\mbox{}
+    \begin{enumerate}
+        \item $X^*$は$X$の相異なる2点を分離するので，$i$が単射である．
+        \item $\norm{i(x)}=\sup_{\varphi\in B^*}\varphi(x)\le\norm{x}$であるからノルム減少的．ここで系\ref{cor-Hahn-Banach}より，$\varphi(x)=x$を満たす$\varphi\in B^*$が取れるから，等号は達成される．
+    \end{enumerate}
 \end{Proof}
-\begin{example}\mbox{}
+\begin{example}[回帰的空間の例]\mbox{}
     \begin{enumerate}
         \item 有限次元線型空間は回帰的である．
         \item $L^p$空間は$1<p<\infty$のとき，回帰的である．
@@ -1019,7 +1402,15 @@ title=]
     \end{enumerate}
 \end{example}
 
-\subsection{回帰的Banach空間}
+\subsection{回帰性の特徴付け}
+
+\begin{proposition}
+    Banach空間$X$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $X$は回帰的である．
+        \item $X^*$は回帰的である．
+    \end{enumerate}
+\end{proposition}
 
 \begin{theorem}\label{thm-characterization-of-reflexive-Banach-spaces}
     Banach空間$X$について，次の２条件は同値．
@@ -1036,7 +1427,64 @@ title=]
     \end{enumerate}
 \end{corollary}
 
-\subsection{双対ペア}
+\begin{theorem}[James, R. C.]\label{thm-James}
+    $X$をBanach空間とする．
+    \begin{enumerate}
+        \item 任意の$f\in X^*$について，その作用素ノルム$\norm{f}=\sup_{x\in B}\abs{f(x)}$の上限が達成される．
+        \item $X$は回帰的である．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    このように，双対空間を考えるとsupが達成され得ることは，凸解析の双対理論でも利用される\ref{thm-Fenchel-Rockafellar}．
+\end{remarks}
+
+\subsection{回帰性の十分条件}
+
+\begin{definition}[uniformly convex, strictly convex]
+    Banach空間$X$が
+    \begin{enumerate}
+        \item \textbf{一様凸}とは，任意の$\partial B$の列$(x_n),(y_n)$が$\norm{x_n+y_n}\to 2$を満たすならば$\norm{x_n-y_n}\to0$を満たすことをいう．
+        \item \textbf{厳密に凸}とは，$\forall_{x,y\in X}\;\norm{x+y}=\norm{x}+\norm{y}\Rightarrow\exists_{\al\in\bF}\; x =\al y$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    $X$を一様凸とする．
+    \begin{enumerate}
+        \item 任意の有界線型汎関数$f\in X^*$は作用素ノルムの上限を達成する．
+        \item 任意の閉凸集合は最小のノルムを持つ点が一意に定まる．
+        \item 弱収束列$(x_n)$のノルムも収束するならば，$\norm{x_n-x}\to0$．
+        \item $X$は回帰的である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    任意のHilbert空間と$L^p\;(1<p<\infty)$空間は一様凸である．
+\end{example}
+
+\begin{proposition}
+    Banach空間$X$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $X$は厳密に凸である．
+        \item 任意の球面上の点$x\in\partial B$は，$B$の極点である：$\partial B\subset\Ex(B)$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{回帰性の遺伝}
+
+\begin{proposition}
+    $X$を回帰的Banach空間，
+    $Y\subset X$を閉部分空間とする．
+    $Y,X/Y$も回帰的である．
+\end{proposition}
+
+\subsection{双対空間の性質}
+
+\begin{proposition}
+    ノルム空間$X$の双対空間$X^*$が可分ならば，$X$も可分である．
+\end{proposition}
+
+\subsection{双対ペアによる誘導位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1046,24 +1494,77 @@ title=]
     その内積がある空間では直交補空間$X^\perp$に当たる概念が零化空間で，これを支える道具が極集合である．零化空間は$A^\perp=\brac{A}^\circ$と特徴づけられる．\ref{prop-dense-subspace-of-Banach-space}．
 \end{tcolorbox}
 
-\begin{definition}[algebraic duality / dual pair, duality]\mbox{}
+\begin{definition}[algebraic duality / algebraic dual pair, duality / dual pair]\mbox{}
     \begin{enumerate}
-        \item ２つの線型空間$X,Y$が\textbf{（代数的）双対}または\textbf{双対ペア}であるとは，双線型写像$\brac{-,-}:X\times Y\to\bF$であって，部分空間$\brac{-,Y}:=\Brace{b(-,y)\in X^*\mid y\in Y}\subset X^*$は$X$上の点を分離し，$\brac{X,-}\in Y^*$は$Y$上の点を分離するようなものが存在することをいう．\footnote{これは$\forall_{x\in X\setminus\{0\}}\;\exists_{y\in Y}\;\brac{x,y}\ne 0$に同値で，双線型形式が非退化であるともいう．pairing bilinear formという．}
-        \item $X,Y$がノルム空間でもあり，さらに$\brac{-,Y}\subset X^*,\brac{X,-}\subset Y^*$を満たす（すなわち有界になる）とき，単に\textbf{双対}または\textbf{双対ペア}という．
-        \item $X$において，任意の$y\in Y$を用いて$p_y(-):=\abs{\brac{-,y}}$とおけば，これは$X$上の半ノルムを定める．族$(p_y)_{y\in Y}$が$X$上に定める始位相を$\sigma(X,Y)$位相という．同様に，$Y$上にも$\sigma(Y,X)$位相が考えられる．
-        すなわち，$\sigma(X,Y)$位相とは，$Y$の元を（双対を通じて）$X$上の線型汎関数とみなしたとき，これらを連続にする最弱の位相である．
+        \item ２つの線型空間$X,Y$が\textbf{代数的双対ペア}であるとは，双線型写像$\brac{-,-}:X\times Y\to\bF$であって，部分空間$\brac{-,Y}\subset\Hom_\bF(X,\bF)$は$X$上の点を分離し，$\brac{X,-}\subset\Hom_\bF(Y,\bF)$は$Y$上の点を分離するようなものが存在することをいう．\footnote{これは$\forall_{x\in X\setminus\{0\}}\;\exists_{y\in Y}\;\brac{x,y}\ne 0$に同値で，双線型形式が非退化であるともいう．pairing bilinear formという．}
+        \item $X,Y$がノルム空間でもあり，さらに$\brac{-,Y}\subset X^*,\brac{X,-}\subset Y^*$を満たすとき，単に\textbf{双対ペア}という．
     \end{enumerate}
 \end{definition}
 
-\begin{example}[自然なペアリング]\mbox{}\label{exp-dual-pair}
+\begin{example}[線型空間の自然なペアリング]\label{exp-dual-pair}
+    双対空間の間には評価によって自然な双線型写像が存在する．
     \begin{enumerate}
         \item 組$(X,X^*)$は双対ペアである．双線型形式は$\brac{x,\varphi}=\varphi(x)$で与えられる．
         \item 組$(X^{**},X^*)$も双対ペアである．双線型形式は$\brac{z,\varphi}=z(\varphi)$で与えられる．
     \end{enumerate}
+\end{example}
+
+\begin{definition}[代数的双対が定める位相]
+    $(X,Y)$を代数的双対ペアとする．
+    \begin{enumerate}
+        \item $X$において，任意の$y\in Y$を用いて$p_y(-):=\abs{\brac{-,y}}$とおけば，これは$X$上の半ノルムを定める．族$(p_y)_{y\in Y}$が$X$上に定める始位相を\textbf{$\sigma(X,Y)$-位相}または\textbf{$Y$による弱位相}という．
+        すなわち，$\sigma(X,Y)$位相とは，$Y$の元を（双対を通じて）$X$上の線型汎関数とみなしたとき，これらを連続にする最弱の位相である．
+        \item 同様に，$Y$上にも$\sigma(Y,X)$位相が考えられる．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[線型空間の自然な誘導位相]
     $E$における$\sigma(E,E^*)$位相も，$E^*$における$\sigma(E^*,E^{**})$位相も\textbf{弱位相}と呼ぶ．
     一方で，$\sigma(E^*,E)$による$E^*$上の位相を\textbf{弱$*$-位相}\ref{def-weak-star-topology}という．
     埋め込み$i:X\mono X^{**}$の存在より，弱$*$位相は弱位相より弱い．
     が，いずれの場合も局所凸である．
+\end{example}
+
+\subsection{随伴作用素}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    随伴とは，標準的な双対双線型形式$\ev_(-)$を介して，互いに相等する関係にある元をいう．
+\end{tcolorbox}
+
+\begin{definition}[adjoint operator]
+    ノルム空間の射$T\in B(X,Y)$に対して，\textbf{随伴作用素}$T^*:Y^*\to X^*$を
+    自然なペアリングを用いて$\brac{x,T^*\varphi}_X=\brac{Tx,\varphi}_Y$で定まる．
+\end{definition}
+
+\begin{lemma}[$*$-作用素の反変関手性]
+    $S\in B(X,Y),R\in B(Y,Z),\al\in\bF$について，
+    \begin{enumerate}
+        \item $(\al T+S)^*=\al T^*+S^*$．
+        \item $(RT)^*=T^*R^*$．
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    ペアリングの双線型性による．
+\end{proof}
+
+\begin{proposition}[$*$-作用素の等長性]
+    ノルム空間の射$T\in B(X,Y)$の随伴作用素も$T^*\in B(Y^*,X^*)$であり，$\norm{T^*}=\norm{T}$．
+\end{proposition}
+
+\begin{proposition}[随伴であるための必要条件]
+    $X,Y$をBanach空間，$T:X\to Y,S:Y^*\to X^*$を作用素とする．
+    $\forall_{x\in X,\varphi\in Y^*}\;\brac{Tx,\varphi}_Y=\brac{x,S\varphi}_X$を満たすならば，
+    $S,T$はいずれも有界で，$S=T^*$である．
+\end{proposition}
+\begin{remarks}[随伴ならば有界]
+    これは，非有界な作用素を，その随伴を通じて調べる試みの失敗も意味する．
+    非有界な自己共役作用素の理論は，必ず部分写像(not everywhere defined)の考え方がついてくることがわかる．
+\end{remarks}
+
+\begin{example}[transpose]
+    線型作用素$x:X\to Y$に対して，前合成${}^t\!x:=x^*:Y^*\to X^*;f\mapsto f\circ x$を\textbf{転置写像}という．
+    $X,Y$をノルム空間とする．$\norm{{}^t\!x}=\norm{x}$．
 \end{example}
 
 \subsection{極集合}
@@ -1086,18 +1587,10 @@ title=]
     極集合の定義に単位円板$\sup_{x\in X}\abs{\brac{x,y}}\le1$を用いることもあり，この時をabsolute polarという．$\partial BA=A$を満たす集合$A$（これは$A$が均衡集合であることに同値\footnote{\url{https://en.wikipedia.org/wiki/Polar_set}}）については両定義は一致するが，そうでない場合は違うが，その後の議論では同種の命題が成り立つことが知られている．
 \end{remark}
 
-\begin{definition}[convex cone]
-    順序体$\R$上の局所凸線型空間内の集合$A$について，
-    \begin{enumerate}
-        \item $A$が錐であるとは，$\R_+A\subset A$を満たすことをいう．
-        \item $A$が\textbf{凸錐}であるとは，正係数の線型結合に閉じていることをいう：$A+A\subset A,\R_+A\subset A$．
-        \item 凸錐$A$が$A\cap -A=0$を満たすとき，$0$に頂点を持つという．
-    \end{enumerate}
-\end{definition}
-
-\begin{lemma}\mbox{}\label{lemma-polar}
+\begin{lemma}[極集合の性質]\mbox{}\label{lemma-polar}
     \begin{enumerate}
         \item $A^\circ$は凸で，$\sigma(Y,X)$-閉である．
+        \item $A\subset A^{\circ\circ}$で，$A$が閉凸集合ならば等号成立．
         \item $A$が絶対凸であるときは$A^\circ$も絶対凸であり，$A^\circ=\Brace{y\in Y\mid\forall_{x\in A}\;\abs{\brac{x,y}}\le 1}$と表せる．
         \item $A$が部分空間であるときは$A^\circ$も$Y$の部分空間であり，$A^\circ=\Brace{y\in Y\mid\forall_{x\in A}\;\brac{x,y}=0}$と表せる．
         \item $A$が$0$に頂点を持つ凸錐であるときは$A^\circ$も$0$に頂点を持つ凸錐であり，$A^\circ=\Brace{y\in Y\mid\forall_{x\in A}\;\brac{x,y}\ge0}$と表せる．
@@ -1112,92 +1605,252 @@ title=]
     局所凸空間$X$は，再双対空間$X^{**}$上で，$\sigma(X^{**},X^*)$-稠密である．
 \end{corollary}
 
-\subsection{随伴作用素}
+\subsection{数列空間の研究}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    随伴とは，標準的な双対双線型形式$\ev_(-)$を介して，互いに相等する関係にある元をいう．
-\end{tcolorbox}
+\begin{example}[数列空間の間のペアリング]
+    数列の内積$\brac{x,y}=\sum x_ny_n$によって，$l^1\simeq_\Ban(c_0)^*$と$l^\infty\simeq_\Ban(l^1)^*$を導くことが出来る．
+    一方で，$c_0,c$は回帰的ではない\ref{cor-predual-of-c0}．
+\end{example}
 
-\begin{definition}[adjoint operator]
-    ノルム空間の射$T\in B(X,Y)$に対して，\textbf{随伴作用素}$T^*:Y^*\to X^*$を$\brac{x,T^*\varphi}=\brac{Tx,\varphi}$で定まる．
+\begin{proposition}[Schur's property 1921]\label{prop-Schur}
+    $l^1$の弱収束列はノルム収束する．
+\end{proposition}
+\begin{remarks}
+    弱位相に関する同様の結論は，定理について$X\mono X^{**}$を考えることで，$X^*$が可分ならば単位閉球$B\subset X$は距離化可能であることがわかる．
+    しかし，双対空間が可分である例は（回帰的な例を除くと）少なく，代表的なのは$X=c_0,X^*=l^1$の場合のみである．
+    なお，$X$が可分だからといって$B$は弱位相に関して距離化可能ではないことが，この命題からわかる．
+    $l^1$の閉単位球が弱位相について距離化可能だとすると，$l^1$上の弱位相とノルム位相が一致してしまい，矛盾．
+    これが，弱位相を調べる際には点列のみを考えては粒度が足りない好例である．
+\end{remarks}
+
+\begin{definition}[shift operator]
+    有界作用素$S\in B(l^\infty)$を$(Sx)_n=x_{n+1}$で定める．これを\textbf{シフト作用素}という．
 \end{definition}
 
-\begin{lemma}[$*$-作用素の関手性]
-    $S\in B(X,Y),R\in B(Y,Z),\al\in\bF$について，
+\begin{proposition}[極限作用素の存在]
+    ある有界線型汎関数$L\in(l^\infty)^*$が存在して，次の2条件を満たす：
     \begin{enumerate}
-        \item $(\al T+S)^*=\al T^*+S^*$．
-        \item $(RT)^*=T^*R^*$．
+        \item $\forall_{x\in l^\infty}\;L(Sx)=L(x)$．
+        \item $\forall_{x\in l^\infty}\;\liminf x_n\le L(x)\le\limsup x_n$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[部分和作用素]
+    $T:l^1\to c_0$を$(Tx)_n:=\sum_{m\ge n}x_m$で定めると，$T\in B(l^1,c_0)$を満たす．
+\end{proposition}
+
+\section{位相線型空間論}
+
+\subsection{定義と性質まとめ}
+
+\begin{definition}[topological vector space]
+    線型空間$X$とその上の$T_1$-位相$\tau$の組
+    $(X,\tau)$が\textbf{位相線型空間}であるとは，$\tau$が線型空間の演算$+,\cdot$が定める終位相より強いことをいう．
+    \begin{enumerate}
+        \item 位相線型空間の近傍系$\O_0$とは，$0$の近傍系をいう．
+        \item その理由は，平行移動$T_a:X\to X;x\mapsto a+x\;(a\in X)$と拡大$M_\lambda:X\to X;x\mapsto\lambda x\;(\lambda\in\bF)$とが$X$の位相同型を定めるためである．
+        \item $X$上の距離$d$が\textbf{不変}であるとは，$\forall_{z\in X}\;d(x+z,y+z)=d(x,y)$を満たすことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    位相線型空間$(X,\tau)$について，
+    \begin{enumerate}
+        \item \textbf{局所凸}とは，$\O_0$が凸集合からなる基本系を持つことをいう．
+        \item \textbf{局所有界}とは，$0$に有界な近傍が存在することをいう．
+        \item \textbf{局所コンパクト}とは，$0$に相対コンパクトな近傍が存在することをいう．
+        \item \textbf{$F$-空間}であるとは，$\tau$がある不変な距離$d$が生成する完備な位相であることをいう．
+        \item \textbf{Frechet空間}であるとは，局所凸な$F$-空間をいう．
+        \item \textbf{Heine-Borel性を持つ}とは，任意の有界閉集合がコンパクトになることをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[位相線型空間の性質まとめ]\label{thm-character-of-TVS}
+    $X$を位相線形空間とする．
+    \begin{enumerate}
+        \item $X$が局所有界ならば$X$は第１可算である\ref{thm-neighborhood-is-absorbant}．
+        \item $X$が距離化可能であることと，第１可算であることとは同値．
+        \item $X$がノルム付け可能であることと，局所凸で局所有界であることは同値．
+        \item $X$が有限次元であることと，$X$が局所コンパクトであることとは同値．
+        \item 局所有界な位相線形空間$X$について，Heine-Borel性を持つことと有限次元であることとは同値．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{位相線型空間はHausdorff}
+
+\begin{lemma}[コンパクト集合と閉集合の開近傍による分離]
+    $X$を位相線型空間，$K,C\subset X$を互いに素な部分集合で，それぞれコンパクト・閉であるとする．
+    このとき，$0$の近傍$V\in\O_0$が存在して，$(K+V)\cap (C+V)=\emptyset$が成り立つ．
+    ただし，$K+V:=\cup_{x\in K}(x+V)$とした．
+\end{lemma}
+
+\begin{corollary}
+    位相線型空間$X$の近傍系$\O_0$の任意の元$U\in\O_0$に対して，$\exists_{V\in\O_0}\;\o{V}\subset U$．
+\end{corollary}
+
+\begin{corollary}
+    任意の位相線型空間はHausdorffである．
+\end{corollary}
+
+\subsection{均衡集合と絶対凸集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    集合$C$が定める計測関数
+    \[m_C(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
+    が半ノルムになるために$C$に必要な条件が絶対凸性である．回転や鏡映・反転に関して安定な集合をいう．
+\end{tcolorbox}
+
+\begin{definition}[balanced, absolutely convex]
+    $\bF$-線型空間$X$の部分集合$C\subset X$について，
+    \begin{enumerate}
+        \item $\forall_{\al\in\bF}\;\abs{\al}\le 1\Rightarrow\al C\subset C$を満たすとき，$C$を\textbf{均衡集合}または\textbf{円板}という．これは$\forall_{\al\in\bF}\;\abs{\al}=1\Rightarrow\al C=C$と同値．
+        \item 均衡な凸集合を\textbf{絶対凸}という．
+        \item $C$を含む絶対凸集合全体の共通部分を，絶対凸包という．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[絶対凸性の特徴付け]
+    $\bF$-線型空間$X$の部分集合$C$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $C$は絶対凸である．
+        \item $\forall_{x,y\in C}\;\forall_{\lambda_1,\lambda_2\in\bF}\;\abs{\lambda_1}+\abs{\lambda_2}\le 1\Rightarrow \lambda_1x+\lambda_2y\in C$．
     \end{enumerate}
 \end{lemma}
 
-\begin{proposition}[$*$-作用素の等長性]
-    $T\in B(X,Y)$をノルム空間の射とすると，その随伴作用素も$T^*\in B(Y^*,X^*)$であり，$\norm{T^*}=\norm{T}$．
-\end{proposition}
-
-\begin{proposition}[随伴であるための十分条件]
-    $X,Y$をBanach空間，$T:X\to Y,S:Y^*\to X^*$を任意の作用素であり，\\
-    $\forall_{x\in X,\varphi\in Y^*}\;\brac{Tx,\varphi}=\brac{x,S\varphi}$を満たすとする．
-    このとき，$S,T$はいずれも有界で，$S=T^*$である．
-\end{proposition}
-\begin{remarks}
-    これは，非有界な作用素を，その随伴を通じて調べる試みの失敗も意味する．
-    非有界な自己共役作用素の理論は，必ず部分写像(not everywhere defined)の考え方がついてくることがわかる．
-\end{remarks}
-
-\subsection{核}
-
-\begin{proposition}
-    線型汎函数$f:X\to\bF$について，
+\begin{lemma}[均衡性]
+    $C$を均衡集合とする．
     \begin{enumerate}
-        \item $f\ne 0$ならば，$X\simeq\Ker f\oplus\bF$．
-        \item $X$が局所凸とする．$f$が連続であることと，$\Ker f$が閉部分空間であることとは同値．
+        \item $C=-C$．
+        \item $\forall_{r,\lambda\in\R\setminus\{0\}}\;\lambda x\in rC\Leftrightarrow x\in\frac{r}{\abs{\lambda}}C$．
+        \item $C$が定める計量関数$m_C$について，$\forall_{\lambda\in\R}\;m_C(\lambda x)=\abs{\lambda}m_C(x)$．
     \end{enumerate}
-\end{proposition}
+\end{lemma}
 \begin{Proof}\mbox{}
     \begin{enumerate}
-        \item $f\ne 0$のとき，$f$は全射だから，$x\in f^{-1}(1)$が取れる．すると任意の$y\in X$について，$y=(y-f(y)x)+f(y)x\in\Ker f+\C x$である．実際，$f(y-f(y)x)=f(y)-f(y)f(x)=0$．
+        \item $-C\subset C$．$a\ne0$のとき$ax\in C\Leftrightarrow x\in a^{-1}C$だから，$x\in C\Rightarrow -x\in C\Rightarrow x\in -C$より，$C\subset-C$も得る．
+        \item (1)より，$\lambda x\in rC\Leftrightarrow\abs{\lambda}x\in rC\Leftrightarrow\frac{r}{\abs{\lambda}}C$．
     \end{enumerate}
 \end{Proof}
 
-\subsection{転置}
+\subsection{位相線型空間の位相的性質}
 
-\begin{definition}[transpose]
-    線型作用素$x:X\to Y$に対して，precomposition ${}^t\!x:=x^*:Y^*\to X^*;f\mapsto f\circ x$を\textbf{転置写像}という．
-\end{definition}
+\begin{theorem}
+    $X$を位相線型空間とする．
+    \begin{enumerate}
+        \item 任意の部分集合$A\subset X$について，$\o{A}=\bigcap_{V\in\O_0}(A+V)$．
+        \item $A,B\subset X$について，$\o{A}+\o{B}\subset\o{A+B}$．
+        \item $Y\subset X$が部分空間ならば，$\o{Y}$も部分空間である．
+        \item $C\subset X$が凸ならば，内部$C^\circ$も閉包$\o{C}$も凸である．
+        \item $B\subset X$が均衡集合ならば，$\o{B}$も均衡で，さらに$0\in B^\circ$ならば$B^\circ$も均衡である．
+        \item $E\subset X$が有界ならば，$\o{E}$も有界である．
+    \end{enumerate}
+\end{theorem}
 
-\begin{lemma}
-    $X,Y$をノルム空間とする．$\norm{{}^t\!x}=\norm{x}$．
-\end{lemma}
+\begin{theorem}
+    位相線型空間$X$において，
+    \begin{enumerate}
+        \item 任意の$0$の近傍は，均衡な$0$の近傍を含む．
+        \item 任意の$0$の凸近傍は，絶対凸な$0$の近傍を含む．
+    \end{enumerate}
+\end{theorem}
 
-\section{弱位相}
+\begin{corollary}\mbox{}\label{cor-locally-convex-space}
+    \begin{enumerate}
+        \item 任意の位相線型空間は，均衡な集合からなる基本系を持つ．
+        \item 任意の局所凸位相線型空間は，絶対凸な集合からなる基本系を持つ．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{併呑集合}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    作用素環の意味での弱位相／強位相とは，混用されるが全くの別物である．
-    区別の意味で，こちらはBanach空間としての弱位相などと呼ばれる．
-
-    $X^*$（の部分集合）が$X$に定める始位相を弱位相といい，$X^{**}$（の部分集合）が$X^*$に定める始位相を$*$-弱位相という．
+    任意の併呑集合は$0$を含むが，任意の$0$の近傍は併呑である．
 \end{tcolorbox}
+
+\begin{definition}[absorbant, barrelled]\label{def-barrel}
+    $E$を線型空間とする．
+    \begin{enumerate}
+        \item $M\subset E$が\textbf{吸収的集合}または\textbf{併呑集合}であるとは，$\cup_{t>0}tM=E$を満たすことをいう．
+        \item 任意の閉じた絶対凸な併呑集合（これを\textbf{樽型集合}という）が，$0$の近傍であるとき，局所凸線型空間$E$を\textbf{樽型空間}であるという．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[近傍は併呑]\label{thm-neighborhood-is-absorbant}
+    $X$を位相線型空間，$V\in\O_0$を近傍とする．
+    \begin{enumerate}
+        \item 無限に発散する単調増加な正数列$(r_n)$について，$X=\cup_{n\in\N}r_nV$．
+        \item 任意のコンパクト集合$K\subset X$は有界である．
+        \item $V$が有界ならば，$0$に収束する正数列$(\delta_n)$について，$\{\delta_nV\}_{n\in\N}$は基本系をなす．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Minkowski汎関数}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意のセミノルムは，ある併呑な絶対凸集合$A\subset X$の定めるMinkowski汎関数である．
+\end{tcolorbox}
+
+\begin{definition}
+    併呑凸集合$A\subset X$の定めるMinkowski汎関数$\mu_A:X\to\R_+$とは，
+    \[\mu_A(x):=\inf\Brace{t>0\mid t^{-1}x\in A}\]
+    をいう．併呑でないと，well-definedではない．
+\end{definition}
+
+\begin{theorem}
+    $p:X\to\R_+$をセミノルムとする．
+    \begin{enumerate}
+        \item $p(0)=0$．
+        \item $\abs{p(x)-p(y)}\le p(x-y)$．
+        \item $p\ge0$．
+        \item $p^{-1}(0)$は$X$の部分空間である．
+        \item 集合$B:=p^{-1}([0,1))$は絶対凸な併呑集合であり，$p=\mu_B$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $A$を線型空間$X$の併呑凸集合とする．
+    \begin{enumerate}
+        \item $\mu_A(x+y)\le\mu_A(x)+\mu_A(y)$．
+        \item $\forall_{t\in\R_+}\;\mu_A(tx)=t\mu_A(x)$．
+        \item $A$が均衡集合でもあるならば，$\mu_A$はセミノルムである．
+        \item $B:=\mu_A^{-1}([0,1)),C:=\mu_A^{-1}([0,1])$とすれば，$B\subset A\subset C$であり，$\mu_B=\mu_A=\mu_C$である．
+    \end{enumerate}
+\end{theorem}
 
 \subsection{局所凸性のセミノルム空間としての特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    解析学における位相線型空間は，ほとんど局所凸である．
-    そして局所凸空間は，セミノルム空間であるから，ノルム空間論の延長と捉えられる．
-    こうして，位相空間論的な近傍系の議論ではなく，セミノルムから議論することが出来る．
+    絶対凸集合は，セミノルムに関する「円板」として得られる集合にほかならないのであった．
+    局所凸位相線型空間は，絶対凸な集合からなる基本系を持つ\ref{cor-locally-convex-space}．
+    すなわち，セミノルムの族が定める位相線型空間こそが，局所凸位相線型空間にほかならない．
+    こうしてノルム空間論の延長で議論出来る．
     セミノルム空間の位相は，ノルム空間の位相はノルムを連続にする最弱位相である点を一般化する．
 \end{tcolorbox}
 
-\begin{definition}[topological vector space, locally convex]\mbox{}
+\begin{theorem}
+    位相線型空間$X$は，絶対凸な基本系$\B$を持つとすると，対応するMinkowski汎関数の族$(\mu_V)_{V\in\B}$について，
     \begin{enumerate}
-        \item $X$が\textbf{位相線型空間}であるとは，線型空間$X$に，演算$X\times Y\to X;(x,y)\mapsto x+y,\bF\times X\to X;(\al,x)\mapsto\al x$が連続になるような
-        Hausdorff位相が定義されている空間をいう．\footnote{Hausdorffでない位相が定義されている場合は，$0$の近傍系について$N:=\cap_{U\in\O(x)}U$とおくと閉部分空間で，$E/N$を考えるとHausdorff性を満たす．}
-        \item 位相線型空間$X$が\textbf{局所凸}であるとは，$0$の近傍フィルター$\O(0)$が凸集合からなる開基を持つことをいう．等質性$\O(x)=x+\O(0)$に注意．\footnote{平行移動が連続になるという設定は，連続群の理論の特殊化そのものである．}
-        \item 位相線型空間$X$上の連続な線型汎関数全体からなる集合$X^*$は再び線型空間となり，これを双対空間という．$X$が局所凸である限り，Hahn-Banachの定理より，$X^*$は十分大きい．
+        \item $\forall_{V\in\B}\;V=\Brace{x\in X\mid\mu_V(x)<1}$．
+        \item $\Brace{\mu_V}_{V\in\B}$は$X$上の連続なセミノルムからなる分離族である．
     \end{enumerate}
-\end{definition}
+\end{theorem}
+
+\begin{theorem}
+    $\P\subset\Map(X,\bF)$を$X$上のセミノルムからなる分離族とする．任意の$p\in\P$に対して，
+    \[V(p,n):=\Brace{x\in X\;\middle|\;p(x)<\frac{1}{n}}\]
+    とすると，$\{V(p,n)\}_{p\in\P,n\in\N}$の有限交叉の全体$\B$は$X$のある位相$\tau$の，絶対凸な基本系であり，$(X,\tau)$は局所凸であり，次が成り立つ：
+    \begin{enumerate}
+        \item 任意の$p\in\P$は連続．
+        \item $E\subset X$が有界であることと，任意の$p\in\P$について$p(E)$は有界であることとは同値．
+    \end{enumerate}
+\end{theorem}
+\begin{remarks}
+    特に，可算なセミノルムが定める局所凸線型空間は距離化可能である．
+\end{remarks}
 
 \begin{definition}[seminorm topology]\label{def-seminorm-topology}
     線型空間$X$とこれを分離するセミノルムの族$\F$を考える．すなわち，関数族$\F\times X\to\Map(X,\R);(m,y)\mapsto m(\cdot-y)$は$X$の点を分離する．
@@ -1249,300 +1902,119 @@ title=]
     実は開写像定理\ref{thm-open-mapping-theorem}の証明ですでに線形性と凸性との関係を使っている．
 \end{remarks}
 
-\subsection{弱位相を定める汎関数}
+\subsection{ノルム空間の特徴付け}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    命題\ref{prop-separating-space-of-functionals}は，$\sigma(X,Y)$-位相に関する一般理論を主張する．
-    線型汎関数の空間$Y$を連続にする最弱な位相は，正確に$Y$のみの線型汎関数を連続にする．
-    $Y$として評価写像を取れば，これは収束に関する言葉で特徴づけられることになる（弱位相の収束の特徴付け\ref{prop-characterization-of-convergence-in-wtopology}，$w^*$-位相の収束の特徴付け\ref{lemma-characterization-of-convergence-in-w*topology}）．
-\end{tcolorbox}
-
-\begin{lemma}
-    $\varphi,\varphi_1,\cdots,\varphi_n\in X^*$を線型空間$X$上の汎関数とする．次の３条件は同値．
+\begin{theorem}
+    位相線型空間$X$について，次の2条件は同値：
     \begin{enumerate}
-        \item $\exists_{\Brace{\al_1,\cdots,\al_n}\subset\bF}\;\varphi=\sum_{k\in[n]}\al_k\varphi_k$．
-        \item $\exists_{\al>0}\;\forall_{x\in X}\;\abs{\varphi(x)}\le\al\max_{k\in[n]}\abs{\varphi_k(x)}$．
-        \item $\cap_{k\in[n]}\Ker\varphi_k\subset\Ker\varphi$．
+        \item $X$はノルム付可能である．
+        \item $X$は有界凸な近傍を持つ．
     \end{enumerate}
-\end{lemma}
-
-\begin{proposition}[$\sigma(X,Y)$-位相の一般理論]\label{prop-separating-space-of-functionals}
-    線型空間$X$と，$X$の点を分離する線型汎関数のなす線型空間$Y$を考える．
-    $X$に$Y$定める弱位相$\sigma(X,Y)$を入れて考える．
-    このとき，線型汎関数$\varphi$がこの弱位相について連続ならば，$\varphi\in Y$である．
-\end{proposition}
-\begin{corollary}[symmetric version]
-    $(X,Y)$は，双線型写像$\brac{-,-}$によって代数的双対組であるとする．すると，$\brac{-,Y},\brac{X,-}$はそれぞれ$X,Y$に弱位相を定める．
-    これについて，$X,Y$は局所凸な位相空間になり，$X^*=Y,Y^*=X$を満たす．
-\end{corollary}
-
-\subsection{弱位相の性質}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    これは，命題\ref{prop-separating-space-of-functionals}に始まる$\sigma(X,Y)$-位相の一般理論の一部であるが，弱位相の得意な点は，ノルム位相とは有限次元の場合を除いて一般的には異なるが，双対空間は等しく$X^*$になることである．
-    凸集合について，閉性は同値になる．
-\end{tcolorbox}
-
-\begin{proposition}[弱収束は各点収束]\label{prop-characterization-of-convergence-in-wtopology}
-    $X$上のネット$(x_\lambda)_{\lambda\in\Lambda}$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $x$に弱位相$\sigma(X,X^*)$について収束する．
-        \item $\forall_{\varphi\in X^*}\;\varphi(x_\lambda)\to\varphi(x)$．
-    \end{enumerate}
-\end{proposition}
-\begin{remarks}
-    これは$w^*$-収束の特徴付け\ref{lemma-characterization-of-convergence-in-w*topology}の特別な場合である．
-\end{remarks}
-
-\begin{proposition}\label{prop-closedness-of-convex-sets}
-    凸集合$C\subset X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item ノルム閉である．
-        \item 弱閉である．
-    \end{enumerate}
-\end{proposition}
-\begin{Proof}
-    (1)$\Rightarrow$(2)は明らかだから，(2)$\Rightarrow$(1)を示す．
-    $x\in X\setminus C$を任意に取る．
-    すると，$C$と互いに素な$x$中心の開球$B$が取れる．
-    Hahn-Banachの分離定理\ref{thm-Hahn-Banach-separation-theorem}より，
-    $U:=\Brace{y\in X\mid\Re\varphi(y)\ge t}$なる$C$の弱位相における閉近傍が見つかる．
-    この補集合は，$x\in C$の開近傍である．よって，$X\setminus C$は弱位相について開いている．
-\end{Proof}
-\begin{remarks}
-    弱位相はノルム位相よりも開集合の数は同じか少ない．
-    閉集合の数も同様であるが，凸集合については保たれる．
-    この議論を一般化すると，\textbf{凸集合が閉であるという条件は，同じ双対を持つどの局所凸位相についても同値である}．
-\end{remarks}
-
-\subsection{絶対凸集合}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    集合$C$が定める計測関数
-    \[m_C(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
-    が半ノルムになるために$C$に必要な条件が絶対凸性である．
-\end{tcolorbox}
-
-\begin{definition}[balanced, absolutely convex]
-    $\bF$-線型空間$X$の部分集合$C$について，
-    \begin{enumerate}
-        \item $\forall_{\al\in\bF}\;\abs{\al}\le 1\Rightarrow\al C\subset C$を満たすとき，$C$を\textbf{均衡集合}または\textbf{円板}という．
-        \item 均衡な凸集合を\textbf{絶対凸}という．
-        \item $C$を含む絶対凸集合全体の共通部分を，絶対凸包という．
-    \end{enumerate}
-\end{definition}
-
-\begin{lemma}[絶対凸性の特徴付け]
-    $\bF$-線型空間$X$の部分集合$C$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $C$は絶対凸である．
-        \item $\forall_{x,y\in C}\;\forall_{\lambda_1,\lambda_2\in\bF}\;\abs{\lambda_1}+\abs{\lambda_2}\le 1\Rightarrow \lambda_1x+\lambda_2y\in C$．
-    \end{enumerate}
-\end{lemma}
-
-\begin{lemma}[均衡性]
-    $C$を均衡集合とする．
-    \begin{enumerate}
-        \item $C=-C$．
-        \item $\forall_{r,\lambda\in\R\setminus\{0\}}\;\lambda x\in rC\Leftrightarrow x\in\frac{r}{\abs{\lambda}}C$．
-        \item $C$が定める計量関数$m_C$について，$\forall_{\lambda\in\R}\;m_C(\lambda x)=\abs{\lambda}m_C(x)$．
-    \end{enumerate}
-\end{lemma}
-\begin{Proof}\mbox{}
-    \begin{enumerate}
-        \item $-C\subset C$．$a\ne0$のとき$ax\in C\Leftrightarrow x\in a^{-1}C$だから，$x\in C\Rightarrow -x\in C\Rightarrow x\in -C$より，$C\subset-C$も得る．
-        \item (1)より，$\lambda x\in rC\Leftrightarrow\abs{\lambda}x\in rC\Leftrightarrow\frac{r}{\abs{\lambda}}C$．
-    \end{enumerate}
-\end{Proof}
-
-\subsection{計測関数とHahn-Banachの分離定理}\label{sub-Hahn-Banach-separation}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Topにおける「正規性」にあたるものは，TVSでは
-    「局所凸」である．\footnote{Among non-locally convex spaces, however, there are examples such that the only continuous linear functional is the constant map onto $0 \in k$.\url{https://ncatlab.org/nlab/show/linear+functional}}
-    そして正規性では「閉集合を分離する関数」を考えたが，局所凸線型空間では，$0$の凸開近傍を考える．樽\ref{def-barrel}などの概念を参照．
-\end{tcolorbox}
-
-\begin{lemma}[gauge]
-    $X$を位相線型空間，$C\osub X$を$0$における凸開近傍とする．
-    関数$m:X\to\R_+$を
-    \[m(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
-    と定めると，これはMinkowski汎関数で，$C=\Brace{x\in X\mid m(x)<1}$と表せる．
-\end{lemma}
-\begin{Proof}\mbox{}
-    \begin{description}
-        \item[well-definedness] $C$は$0$の開近傍としたから，ある$N\in\N$が存在して，$\forall_{x\in X}\;\forall_{n\ge N}\;n^{-1}x\in C$．よって，$\forall_{x\in X}\;m(x)<\infty$であり，たしかに関数が定まる．なお，このことから，任意の$0$の近傍は併呑集合であることがわかる．
-        \item[正斉次性] $\forall_{t\ge 0}\;m(tx)=\inf_{tx\in sC,s>0}s=\inf_{x\in t^{-1}sC,s<0}s=tm(x)$．
-        \item[劣加法性] 任意の$x,y\in X$を取る．すると，ある正実数$s,t>0$が存在して，$s^{-1}x\in C$かつ$t^{-1}y\in C$．
-        $C$の凸性より，
-        \[\frac{s}{s+t}s^{-1}x+\frac{t}{s+t}t^{-1}y=(s+t)^{-1}(x+y)\in C\]
-        であるから，$m$の定義より，$m(x+y)\le s+t$．$s,t$の取り方に依らないから，$m(x+y)\le m(x)+m(y)$が従う．
-        \item[$C$の表現] $C$は開集合であるから，$x\in C$ならば，ある$\ep>0$が存在して，$(1+\ep)x\in C$．よって，$m(x)\le(1+\ep)^{-1}<1$．
-        逆に，$x\in X$は$m(x)<1$を満たすならば，ある$s<1$について$s^{-1}x\in C$ということだから，$C$が$0$の近傍であることと凸性より，
-        \[x=(1-s)0+s(s^{-1}x)\in C.\]
-    \end{description}
-\end{Proof}
-\begin{remarks}[absolutely convex]\label{remarks-seminorm-and-absolutely-convex-sets}
-    このように定義された関数を，しばしば$C$の計測関数(gauge)という．
-    $C$の凸性は$m$の劣加法性に対応している．
-    \footnote{実は，$\Brace{s>0\mid s^{-1}x\in C}$が空でないという仮定の下で，$C$が凸であるということは$C$が吸収的であるということと同値\ref{lemma-characterizing-absorbant}．なお，任意の位相線型空間において，$0$の近傍は併呑である．}
-    このときのMinkowski汎関数$m$が半ノルムにもなるため（正斉次性だけでなく，さらに強い同次性を満たすため）の$C$の条件を\textbf{絶対凸性}という．
-    $C$が単位球であるとき，$m_C$はノルムを定める．
-
-    実は，$X$上の半ノルムとこれを計測関数として定める絶対凸集合との間には全単射の対応が存在する！
-\end{remarks}
-
-\begin{lemma}
-    $C$を絶対凸とする．
-    $\Ker m_C=\bigcap_{t>0}tC$は，$C$に含まれる最大の線型部分空間である．
-\end{lemma}
-
-\begin{theorem}[Hahn-Banach separation theorem]\label{thm-Hahn-Banach-separation-theorem}
-    $A,B$を非空で互いに素な，位相線型空間$X$における凸集合とする．
-    $A$が開ならば，$\varphi\in X^*$と$t\in\R$が存在して，$\forall_{x\in A,y\in B}\;\Re\varphi(x)<t\le\Re\varphi(y)$を満たす．
 \end{theorem}
 
-\subsection{$w^*$-位相}
+\subsection{有界集合}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    汎関数の空間$X^*$には標準的な分離族$X\mono X^{**}$が考えられ，これについての始位相を$*$-弱位相という．
-    これは，$x\in X$での評価写像$\ev_x$を連続にする最弱の位相である．
-    $X^*$の作用素ノルムが定める位相より弱く，弱位相よりも弱いが，
-    $w^*$-位相は各点収束位相として特徴付けられるため，自然な対象である．
-    Alaogluの定理より，$\dim(X)<\infty$の場合のみノルム位相と$w^*$-位相は一致する．
-    回帰的な場合のみ弱位相と$w^*$-位相は一致する．
-\end{tcolorbox}
-
-\begin{definition}[weak-star topology]\label{def-weak-star-topology}
-    ノルム空間$X$は，\ref{exp-dual-pair}(2)の埋め込み$i:X\mono X^{**}$により，線型汎函数の空間$X^*$上の分離族とみれる．
-    こうして$X^*$に引き起こされる$\sigma(X^*,X)$位相を，\textbf{$*$-弱位相}という．
-    \footnote{すなわち，二重共役空間の部分空間$X\mono X^{**}$に属する写像を全て連続にする最弱の位相．}
-    こうして，$X^*$は局所凸な位相線型空間となり，$X$を双対空間と同一視できる（命題\ref{prop-separating-space-of-functionals}）．
-\end{definition}
-\begin{remarks}
-    $*$-弱位相の始位相としての定義より，$X^*$にノルムが定める位相よりも，弱位相$\sigma(X^*,X^{**})$よりも弱い．
-    このことから名前がついた．
-\end{remarks}
-
-\begin{lemma}[$*$-弱収束は各点収束]\label{lemma-characterization-of-convergence-in-w*topology}
-    $*$-弱位相における収束は各点収束である．すなわち，$X^*$上のネット$(\varphi_\lambda)_{\lambda\in\Lambda}$について，次の２条件は同値．
+\begin{proposition}
+    $X$を位相線型空間，$A,B\subset X$を部分集合とする．
     \begin{enumerate}
-        \item $w^*$-位相について$\varphi$に収束する．
-        \item $\forall_{x\in X}\;\varphi_\lambda(x)\to\varphi(x)$．
+        \item $A,B$が有界なら，$A+B$も有界である．
+        \item $A,B$がコンパクトなら，$A+B$もコンパクトである．
+        \item $A$がコンパクト，$B$が閉ならば，$A+B$も閉である．
     \end{enumerate}
-\end{lemma}
-
-\begin{proposition}[$w^*$-閉な部分空間の表現]
-    $X$をノルム空間とし，$Z$を双対空間$X^*$の$*$-閉な部分空間とする．
-    このとき，任意の$\varphi\in X^*\setminus Z$について，$x\in Z^\perp$が存在して，$\brac{x,\varphi}\ne 0$を満たす．
+    2つの閉集合の和は閉とは限らない．
 \end{proposition}
 
-\begin{corollary}
-    $X^*$の任意の$w^*$-閉な部分空間について，あるノルム閉な部分空間$Y$が存在して，$Y^\perp$と表せる．
-\end{corollary}
-
-\subsection{Hahn-Banachの応用}
-
-\begin{corollary}
-    [\cite{John Conway}IV.3.14]
-    $X$を局所凸空間，$Y$をその部分空間とする．次の２条件は同値．
+\begin{proposition}[有界性の特徴付け]
+    $X$を位相線型空間，$A\subset X$を部分集合とする．次の2条件は同値：
     \begin{enumerate}
-        \item $Y$は$X$上稠密である．
-        \item $X$上の連続な線型汎函数であって$Y$上で消えるものは零関数に限る．
-    \end{enumerate}
-\end{corollary}
-\begin{remarks}
-    一致の定理はこの特別な場合？
-\end{remarks}
-
-\begin{corollary}[双対空間の稠密部分空間の特徴付け]\label{cor-separating-subspace-is-dense}
-    部分空間$Y\subset X^*$をについて，次の2条件は同値．
-    \begin{enumerate}
-        \item Banach空間$X$の分離族である．
-        \item $Y$は$X^*$上$w^*$-稠密である．
-    \end{enumerate}
-\end{corollary}
-\begin{Proof}
-    $X^*$上$w^*$-稠密でないと仮定すると，$Y$上で$0$だが，恒等的に$0$ではないような$w^*$-連続な線型汎関数が存在することになるが，
-    $w^*$-位相を備えた空間$X^*$上で連続な汎関数は$(\ev_x)_{x\in X^*}$に限る．
-\end{Proof}
-
-\subsection{随伴と$w^*$-位相}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    随伴とは$\sigma(X,X^*)$-位相に関する対応であるから，$\sigma(X^*,X)$の言葉で特徴づけられるのは自然なことである．
-\end{tcolorbox}
-
-\begin{proposition}[随伴の特徴付け]\mbox{}
-    \begin{enumerate}
-        \item Banach空間$X,Y$間の作用素$T\in B(X,Y)$について，その随伴$T^*:Y^*\to X^*$は$w^*$-連続である．
-        \item 任意の$w^*$-連続な作用素$S:Y^*\to X^*$\footnote{有界性，すなわち$S\in B(Y^*,X^*)$は仮定しない}について，ある$T\in B(X,Y)$が存在して，$S=T^*$と表せる．特に，$S\in B(Y^*,X^*)$．
+        \item $A$は有界である．
+        \item $A$の任意の可算部分集合は有界である．
     \end{enumerate}
 \end{proposition}
 
-\begin{proposition}\label{prop-標準写像の随伴}
-    ノルム空間$X$の閉部分空間$Y$と，包含写像$I:Y\to X$と商写像$Q:X\to X/Y$について，
+\subsection{射の定義}
+
+\begin{theorem}[連続性の特徴付け]\label{thm-morphism-of-TVS}
+    位相線形空間$X$上の零でない線型汎関数$\Lambda:X\to\K$について，次の4条件は同値：
     \begin{enumerate}
-        \item 随伴$Q^*$と包含写像$J:Y^\perp\to X^*$とを同一視できる．
-        \item 随伴$I^*$と商写像$R:X^*\to X^*/Y^\perp$とを同一視できる．
+        \item $\Lambda$は連続．
+        \item 核$N(\Lambda):=\Lambda^{-1}(0)$は閉である．
+        \item $N(\Lambda)$は$X$上稠密でない．
+        \item $\Lambda$は$0$のある近傍$V$上で有界である．
     \end{enumerate}
-\end{proposition}
-
-\section{$w^*$-コンパクト}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=この位相が，無限をコンパクトに翻訳し，取扱可能にしてくれる．]
-    Banach空間上の汎関数のなす空間＝双対空間（例えば測度の空間など）の解析にあたって，最も大事な位相である$w^*$-位相を考える．
-    コンパクト集合がたくさんあることが良い．
-    特にコンパクトな凸集合には強力な一般論があり，基本的な対象となる．
-    「これにより，コンパクト性を通じて無限の世界が私たちの手元に届けられるようになった．」\cite{作用素環}
-\end{tcolorbox}
-
-\subsection{Alaogluの定理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    実は，単位閉球が$\sigma(X^*,X)$-コンパクトであることは，$w^*$-位相による$X^*$の双対空間が$X$になることに起因するから，\footnote{凸集合についてはノルム閉と弱閉が同値である議論と並行だろう．}
-    ノルム空間の単位閉球がコンパクトになることは，そのノルム空間が回帰的であることに同値．
-\end{tcolorbox}
-
-\begin{notation}
-    ノルム空間の双対空間$X^*$の閉単位球を$B^*$と表す．
-\end{notation}
-
-\begin{lemma}
-    ノルム空間$X$について，双対空間$X^*$の単位閉球$B^*$は$w^*$-閉集合でもあるが，一般に$0$の$w^*$-近傍であるとは限らない．
-\end{lemma}
-
-\begin{theorem}[Alaoglu's theorem]\label{thm-Alaoglu}
-    ノルム空間$X$について，双対空間$X^*$の単位閉球$B^*$は$w^*$-コンパクトである．
 \end{theorem}
-\begin{remarks}[Bourbaki-Alaoglu]
-    実は一般に，$X$における$0$の絶対凸近傍$U$の極集合$U^\circ$が$\sigma(X^*,X)$-コンパクトになる．
-    これはBourbaki-Alaogluの定理という．
-\end{remarks}
 
-\subsection{Krein-Milmanの定理}
+\subsection{有限次元となる十分条件}
+
+\subsection{距離化可能性}
+
+\begin{theorem}
+    $X$を第１可算な位相線型空間とする．このとき，距離$d$が存在して，次を満たす：
+    \begin{enumerate}
+        \item $d$は$X$の位相を生成する．
+        \item $0$を中心とする開球は均衡である．
+        \item $d$は平行移動不変である．
+        \item $X$が局所凸であるとき，さらに任意の開球が凸になるように$d$を選べる．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{有界作用素}
+
+\begin{theorem}
+    $X,Y$を位相線形空間，$\Lambda:X\to Y$を線型写像とする．
+    (1)$\Rightarrow$(2)$\Rightarrow$(3)が成り立つ．
+    $X$が距離化可能であるとき，(3)$\Rightarrow$(4)$\Rightarrow$(1)も成り立ち，4条件が同値になる．
+    \begin{enumerate}
+        \item $\Lambda$は連続である．
+        \item $\Lambda$は有界である．
+        \item $x_n\to 0$ならば$\{\Lambda x_n\}_{x\in\N}$は有界である．
+        \item $x_n\to0$ならば$\Lambda x_n\to0$．
+    \end{enumerate}
+    特にFrechet空間は距離化可能な完備局所凸線型空間であるから，上の4条件は同値になる．
+\end{theorem}
+
+\section{凸解析}
+
+\subsection{凸集合}
+
+\begin{proposition}[凸集合の特徴付けと伝播]
+    $X$を線型空間，$A\subset X$を部分集合とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $A$は凸である：$\forall_{a,b\in A}\;[a,b]\subset A$．
+        \item $\forall_{s,t>0}\;(s+t)A=sA+tA$．
+    \end{enumerate}
+    また，次が成り立つ．
+    \begin{enumerate}
+        \item 凸集合の任意交叉は凸．
+        \item 凸集合の増大族の極限は凸．
+        \item $A,B$が凸集合のとき，$A+B$も凸．
+    \end{enumerate}
+    なお，この3条件は，部分空間が満たす性質と全く同じである．
+\end{proposition}
+
+\begin{proposition}[凸包の特徴付け]
+    $X$を線型空間，$A\subset X$を部分集合とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $\Conv(A)$は$A$を含む凸集合全体の共通部分である．
+        \item $\Conv(A)=\Brace{x=\sum_{j\in J}\lambda_jx_j\in X\;\middle|\;\forall_{j\in J}\;x_j\in A\land \lambda_j\in\R_+\land\lambda_j=0\fe,\;\sum_{j\in J}\lambda_j=1}$である．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{凸集合の極点}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=コンパクト凸集合の代数的特徴付けを与える]
-    凸集合には，凸結合(convex conbination)を線型結合のようなものだと思うと「基底」なるべき概念があり，それらの情報だけで全体の形を復元できる．
-    極点に当たる関数は大抵特殊な振る舞いをするので，取っ掛かりになる．
-    その後，凸結合に対する安定性（これは線形性が十分条件となることが注意）と連続性を確認すれば，目標の凸集合上での成立を示せる．
-    実際，デルタ分布だけでなく，Cauchyの積分表示が対象とする関数クラス，ユニタリ行列，直交行列はすべてある凸集合の極点として特徴付けられる．
+title=]
+    図形$C$の
+    極集合$F$とは，$C\setminus F$の2点を結ぶ線分の内点とはならない集合をいう．多角形の辺などをいう．
+    極点とは，一点集合となるような極集合である．
+    極点全体の集合を$\Ex(C)$で表し，ここから元の集合$C$を復元する問題を考える．
 \end{tcolorbox}
 
-\begin{definition}[face, extreme point, extremal boundary]
-    線型空間$X$の凸集合$C$について，
+\begin{definition}[extreme set / face, extreme point, extremal boundary]
+    線型空間$X$の部分集合$C$について，
     \begin{enumerate}
-        \item $C$の\textbf{面}とは，凸な部分集合$F\subset C$であって，$\forall_{\lambda\in(0,1),x,y\in C}\;\lambda x+(1-\lambda)y\in F\Rightarrow x\in F\land y\in F$を満たすものをいう．
-        \item 特に，一点集合からなる面を，\textbf{極点}または\textbf{端点}という．すなわち，$C$の異なる２点を結ぶ線分上の点として表せない点である．
+        \item $C$の\textbf{極集合}とは，部分集合$F\subset C$であって，$\forall_{\lambda\in(0,1),x,y\in C}\;\lambda x+(1-\lambda)y\in F\Rightarrow x\in F\land y\in F$を満たすものをいう．
+        \item 特に，一点集合からなる面を，\textbf{極点}または\textbf{端点}という．
         \item $C$の極点全体からなる集合を，\textbf{極境界}といい，$\partial C$や$\Ex(C)$で表す．
     \end{enumerate}
 \end{definition}
@@ -1557,11 +2029,6 @@ title=コンパクト凸集合の代数的特徴付けを与える]
         \item $\{p\}$は$K$の面である．
     \end{enumerate}
 \end{proposition}
-
-\begin{theorem}[Krein-Milman]
-    線型空間$X$に，双対空間$X^*$が定める弱位相を備えて考える．
-    コンパクトな凸集合$C\subset X$について，極境界$\partial C$の凸包は$C$上弱稠密である：$C=\o{\Conv}(\Ex(C))$．
-\end{theorem}
 
 \begin{example}[凸集合の極点]\mbox{}
     \begin{enumerate}
@@ -1582,15 +2049,457 @@ title=コンパクト凸集合の代数的特徴付けを与える]
         また，この極点の凸包はそのまま閉単位球となる．実際，ユニタリ作用素の凸包ですでに開単位球を含む．
         \item $B(H)_\sa$は実Banach空間で，$\sigma$-弱位相の双対空間である．この極点は対称変換$S=S^*,S^2=I$である．
         \item $B(H)_+$は閉錐で，$B(H)$を生成する．この単位球の極点は直交射影$P=P^*,P^2=P$である．このクラスの作用素に対する結果がスペクトル定理である．
+        \item $P(X)$の極点はDirac測度である．
     \end{enumerate}
 \end{example}
+
+\subsection{位相線型空間の凸集合}
+
+\begin{proposition}
+    $X$を位相線型空間とする．
+    \begin{enumerate}
+        \item 開集合の凸包は開である．
+        \item $X$が局所凸ならば，任意の有界集合の凸包は有界である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[凸集合の正則性]
+    $X$を位相線型空間，$C\subset X$を凸集合とする．
+    \begin{enumerate}
+        \item $x\in C^\circ,y\in\o{C}$ならば，$\forall_{0<\lambda\le1}\;z=\lambda x+(1-\lambda y)\in C^\circ$．
+        \item $C^\circ\ne\emptyset$ならば，$\o{(C^\circ)}=C$かつ$(C^-)^\circ=C^\circ$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{凸錐}
+
+\begin{definition}[convex cone]
+    順序体$\R$上の局所凸線型空間内の集合$A$について，
+    \begin{enumerate}
+        \item $A$が錐であるとは，$\R_+A\subset A$を満たすことをいう．
+        \item $A$が\textbf{凸錐}であるとは，正係数の線型結合に閉じていることをいう：$A+A\subset A,\R_+A\subset A$．
+        \item 凸錐$A$が$A\cap -A=0$を満たすとき，$0$に頂点を持つという．
+    \end{enumerate}
+\end{definition}
+
+\section{Hahn-Banachの分離定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    2つの非空な凸集合は，位相線型空間$X$が有限次元のときは常に分離出来る．
+    一般の位相線型空間の場合，どちらかが開集合であるときに分離可能で，
+    局所凸空間の場合，それぞれ閉集合とコンパクト集合であるときに厳密に分離出来る．
+\end{tcolorbox}
+
+\subsection{超平面の性質}
+
+\begin{definition}[affine space]
+    affine空間$H$とは，線型空間$V$と全射線形作用素$p:V\to\bF$との組$(V,p)$である．ファイバー$H=p^{-1}(1)$もaffine空間と呼ぶ．
+    すると，包含$\Vect\mono\Aff$が存在し，対象写像は全射であるが，射写像は充満ではない．$\Aff$の射は線形写像と定数関数との和である．
+\end{definition}
+
+\begin{definition}[affine hyperplane]
+    $X$を位相線型空間とする．$H\subset X$が\textbf{affine超平面}であるとは，ある零でない線型汎関数$f:X\to\bF$が存在して$H=f^{-1}(\al)\;(\al\in\bF)$と表せることをいう．
+    以降，次の記法を用いる：
+    \[H^-=(f^{-1}(\al))^-:=\Brace{x\in X\mid f(x)\le\al},\quad H^+=(f^{-1}(\al))^+:=\Brace{x\in X\mid f(x)\ge\al}\]
+\end{definition}
+
+\begin{proposition}
+    $H\subset X$を超平面とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $H$は閉集合である．
+        \item 線型汎関数$f$は有界である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[separate, strictly separate]
+    $A,B\subset X$を部分集合，$H=f^{-1}(\al)\subset X$を超平面とする．
+    \begin{enumerate}
+        \item $H$が$A,B$を\textbf{分離する}とは，$A\subset H^-\land B\subset H^+$が成り立つことをいう．
+        \item $H$が$A,B$を\textbf{厳密に分離する}とは，$\exists_{\ep>0}\;A\subset (f^{-1}(\al-\ep))^-\land B\subset(f^{-1}(\al+\ep))^+$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\subsection{位相線型空間上の結果1}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    位相線型空間の任意の凸開近傍は，あるMinkowski汎関数が定める「開球」になる．
+    この性質を用いて，一般の位相空間上にHahn-Banachの分離定理が成り立つ．
+    Minkowski汎関数の劣加法性は凸性に対応していたのである．
+    また，$X$上の半ノルムとこれを計測関数として定める絶対凸集合との間には全単射の対応$m_C\leftrightarrow C$が存在する！
+\end{tcolorbox}
+
+\begin{theorem}[幾何形のHahn-Banachの分離定理]
+    $X$をノルム空間，
+    $A,B\subset X$を互いに素な凸集合とする．
+    片方が開集合ならば，ある閉超平面が存在して，$A$と$B$を分離する．
+\end{theorem}
+
+\begin{lemma}[gauge]
+    $X$を位相線型空間，$C\osub X$を$0$における凸開近傍とする．
+    関数$m_C:X\to\R_+$を
+    \[m_C(x):=\inf\Brace{s>0\mid s^{-1}x\in C}\]
+    と定めると，これはMinkowski汎関数で$\exists_{M\in\R_+}\forall_{x\in X}\;0\le m_C(x)\le M\norm{x}$を満たし，$C=\Brace{x\in X\mid m_C(x)<1}$と表せる．
+    この$m_C$を，開近傍$C$の\textbf{計測写像}という．
+\end{lemma}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[well-definedness] $C$は$0$の開近傍としたから，ある$N\in\N$が存在して，$\forall_{x\in X}\;\forall_{n\ge N}\;n^{-1}x\in C$．よって，$\forall_{x\in X}\;m(x)<\infty$であり，たしかに関数が定まる．なお，このことから，任意の$0$の近傍は併呑集合であることがわかる．
+        \item[正斉次性] $\forall_{t\ge 0}\;m(tx)=\inf_{tx\in sC,s>0}s=\inf_{x\in t^{-1}sC,s<0}s=tm(x)$．
+        \item[劣加法性] 任意の$x,y\in X$を取る．すると，ある正実数$s,t>0$が存在して，$s^{-1}x\in C$かつ$t^{-1}y\in C$．
+        $C$の凸性より，
+        \[\frac{s}{s+t}s^{-1}x+\frac{t}{s+t}t^{-1}y=(s+t)^{-1}(x+y)\in C\]
+        であるから，$m$の定義より，$m(x+y)\le s+t$．$s,t$の取り方に依らないから，$m(x+y)\le m(x)+m(y)$が従う．
+        \item[$C$の表現] $C$は開集合であるから，$x\in C$ならば，ある$\ep>0$が存在して，$(1+\ep)x\in C$．よって，$m(x)\le(1+\ep)^{-1}<1$．
+        逆に，$x\in X$は$m(x)<1$を満たすならば，ある$s<1$について$s^{-1}x\in C$ということだから，$C$が$0$の近傍であることと凸性より，
+        \[x=(1-s)0+s(s^{-1}x)\in C.\]
+    \end{description}
+\end{Proof}
+\begin{remarks}[絶対凸性の計測写像による特徴付け]\label{remarks-seminorm-and-absolutely-convex-sets}
+    $C$の凸性は$m$の劣加法性に対応している．
+    \footnote{実は，$\Brace{s>0\mid s^{-1}x\in C}$が空でないという仮定の下で，$C$が凸であるということは$C$が吸収的であるということと同値\ref{lemma-characterizing-absorbant}．なお，任意の位相線型空間において，$0$の近傍は併呑である．}
+    このときのMinkowski汎関数$m$が半ノルムにもなるため（正斉次性だけでなく，さらに強い同次性を満たすため）の$C$の条件を\textbf{絶対凸性}という．
+    $C$が単位球であるとき，$m_C$はノルムを定める．
+\end{remarks}
+
+\begin{lemma}[凸開集合と点の分離]
+    $C\subset X$を非空な凸開集合，$x_0\in X\setminus C$を点とする．
+    ある有界汎関数$f\in X^*$であって$\forall_{x\in C}\;f(x)<f(x_0)$を満たすものが存在する．
+    特に，超平面$f^{-1}(f(x_0))$は$\{x_0\}$と$C$とを分離する．
+\end{lemma}
+
+\begin{lemma}[計測写像の核の特徴付け]
+    $C$を絶対凸とする．
+    $\Ker m_C=\bigcap_{t>0}tC$は，$C$に含まれる最大の線型部分空間である．
+\end{lemma}
+
+\begin{theorem}[Hahn-Banach separation theorem]\label{thm-Hahn-Banach-separation-theorem}
+    $X$を位相線型空間，
+    $A,B\subset X$を非空で互いに素な凸集合とする．
+    $A$が開ならば，$\varphi\in X^*$と$t\in\R$が存在して，$\forall_{x\in A,y\in B}\;\Re\varphi(x)<t\le\Re\varphi(y)$を満たす．
+\end{theorem}
+
+\subsection{局所凸空間上の結果2}
+
+\begin{theorem}
+    $X$を局所凸空間，
+    $A,B\subset X$を互いに素な凸集合とする．
+    片方が閉集合でもう片方がコンパクト集合ならば，ある閉超平面が存在して，$A$と$B$を厳密に分離する．
+\end{theorem}
+
+\begin{corollary}[部分空間が稠密でないことの特徴付け \cite{John Conway}IV.3.14]
+    $X$を局所凸空間，$Y\subset X$を部分空間とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $\o{F}\ne E$．
+        \item ある零でない$f\in X\setminus\{0\}$が存在して，$f|_F=0$を満たす．
+    \end{enumerate}
+    特に，この$f$は任意の$x_0\notin X\setminus\o{Y}$に対して$f(x_0)=1$を満たすように取れる．
+\end{corollary}
+
+\begin{corollary}[双対空間の稠密部分空間の特徴付け]\label{cor-separating-subspace-is-dense}
+    $X$を局所凸空間，$Y\subset X^*$を部分空間とする．次の2条件は同値．
+    \begin{enumerate}
+        \item $X$の分離族である．
+        \item $Y$は$X^*$上$w^*$-稠密である．
+    \end{enumerate}
+\end{corollary}
+\begin{Proof}
+    $X^*$上$w^*$-稠密でないと仮定すると，$Y$上で$0$だが，恒等的に$0$ではないような$w^*$-連続な線型汎関数が存在することになるが，
+    $w^*$-位相を備えた空間$X^*$上で連続な汎関数は$(\ev_x)_{x\in X^*}$に限る．
+\end{Proof}
+
+\begin{corollary}[連続延長定理]
+    $X$を局所凸空間，$f:Y\to\bF$をその部分空間上の連続線型汎関数とする．
+    このとき，連続な延長$\o{f}\in X^*$が存在する：$\o{f}|_Y=f$．
+\end{corollary}
+
+\begin{remarks}
+    こうして，TVSの局所凸性は，Topの正規性に似た消息だと理解できる．
+\end{remarks}
+
+\begin{corollary}
+    $X$を局所凸空間，$B$を絶対凸な閉集合とする．$x_0\in X\setminus B$ならば，ある$f\in X^*$が存在して，$\abs{f(B)}\subset[0,1]$かつ$f(x_0)>1$を満たす．
+\end{corollary}
+
+\section{弱位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    作用素環の意味での弱位相／強位相とは，混用されるが全くの別物である．
+    区別の意味で，こちらはBanach空間としての弱位相などと呼ばれる．
+
+    $X^*$（の部分集合）が$X$に定める始位相を弱位相といい，$X^{**}$（の部分集合）が$X^*$に定める始位相を$*$-弱位相という．
+\end{tcolorbox}
+
+\subsection{弱位相を定める関数族の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\sigma(X,Y)$-位相に関する双対空間は$X^*=Y$となる．
+    $Y$として評価写像を取れば，これは収束に関する言葉で特徴づけられることになる（弱位相の収束の特徴付け\ref{prop-characterization-of-convergence-in-wtopology}，$w^*$-位相の収束の特徴付け\ref{lemma-characterization-of-convergence-in-w*topology}）．
+\end{tcolorbox}
+
+\begin{lemma}
+    $\varphi,\varphi_1,\cdots,\varphi_n\in X^*$を線型空間$X$上の汎関数とする．次の３条件は同値．
+    \begin{enumerate}
+        \item $\exists_{\Brace{\al_1,\cdots,\al_n}\subset\bF}\;\varphi=\sum_{k\in[n]}\al_k\varphi_k$．
+        \item $\exists_{\al>0}\;\forall_{x\in X}\;\abs{\varphi(x)}\le\al\max_{k\in[n]}\abs{\varphi_k(x)}$．
+        \item $\cap_{k\in[n]}\Ker\varphi_k\subset\Ker\varphi$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[$\sigma(X,Y)$-位相の双対空間]\label{prop-dual-space-of-TVS-with-weak-topology}
+    線型空間$X$と，$X$の点を分離する線型汎関数のなす線型空間$Y$を考える．
+    $X$に$Y$定める弱位相$\sigma(X,Y)$を入れて考える．
+    このとき，線型汎関数$\varphi$がこの弱位相について連続ならば，$\varphi\in Y$である．
+\end{proposition}
+\begin{corollary}[対称な同値命題]
+    線型空間の代数的双対ペア$(X,Y)$について，$\brac{-,Y},\brac{X,-}$がそれぞれ$X,Y$に定める弱位相は
+    局所凸で，$X^*=Y,Y^*=X$を満たす．
+\end{corollary}
+
+\subsection{弱収束の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ノルム収束列は弱収束する．
+\end{tcolorbox}
+
+\begin{proposition}[弱収束の特徴付け]\label{prop-characterization-of-convergence-in-wtopology}
+    $X$上のネット$(x_\lambda)_{\lambda\in\Lambda}$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $x$に弱位相$\sigma(X,X^*)$について収束する．
+        \item $\forall_{\varphi\in X^*}\;\varphi(x_\lambda)\to\varphi(x)$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{弱閉集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    弱位相は一般にノルム位相よりも弱いが，双対空間は$X^*$で一致するために，
+    凸集合について，閉性は同値になる（閉凸集合を共有する）．
+\end{tcolorbox}
+
+\begin{theorem}
+    $X$を局所凸空間，$C\subset X$を凸集合とする．
+    $C$の弱閉法は，元の位相に関する閉包と一致する．
+\end{theorem}
+
+\begin{proposition}\label{prop-closedness-of-convex-sets}
+    任意のノルム空間$X$の凸部分集合$C\subset X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item ノルム閉である．
+        \item 弱閉である．
+    \end{enumerate}
+    また，ノルム稠密であることと弱稠密であることも同値．
+\end{proposition}
+\begin{Proof}
+    (1)$\Rightarrow$(2)は明らかだから，(2)$\Rightarrow$(1)を示す．
+    $x\in X\setminus C$を任意に取る．
+    すると，$C$と互いに素な$x$中心の開球$B$が取れる．
+    Hahn-Banachの分離定理\ref{thm-Hahn-Banach-separation-theorem}より，
+    $U:=\Brace{y\in X\mid\Re\varphi(y)\ge t}$なる$C$の弱位相における閉近傍が見つかる．
+    この補集合は，$x\in C$の開近傍である．よって，$X\setminus C$は弱位相について開いている．
+\end{Proof}
+\begin{remarks}[同じ双対空間を持つということの帰結]
+    弱位相はノルム位相よりも開集合の数は同じか少ない．
+    閉集合の数も同様であるが，凸集合については保たれる．
+    この議論を一般化すると，\textbf{凸集合が閉であるという条件は，同じ双対を持つどの局所凸位相についても同値である}．
+\end{remarks}
+
+\begin{corollary}
+    $X$を距離化可能な局所凸空間，$\{x_n\}\subset X$を$x\in X$に弱収束する点列とする．
+    このとき，列$\{y_i\}\subset X$が存在して，次を満たす：
+    \begin{enumerate}
+        \item 任意の$y_i$は有限個の$x_n$の凸結合である．
+        \item 元来の位相に関して，$y_i\to x$．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{弱有界集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+任意の$V:=\Brace{x\in X\mid\abs{T_ix}<r_i,T_i\in X^*,r_i>0}$の形をした$0$の開近傍は，基本系$\B$をなす．
+\end{tcolorbox}
+
+\begin{proposition}
+    $X^*$は位相線型空間$X$の点を分離するとする（局所凸ならば成立）．
+    このとき，部分集合$A\subset X$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $A$は弱有界である．
+        \item $\forall_{V\in\B}\;\exists_{t\in>0}\;tA\subset V$．
+        \item $\forall_{T\in X^*}\;\exists_{\gamma\in\R_+}\;\forall_{x\in A}\;\abs{Tx}\le\gamma$．
+        \item 任意の$T\in X^*$は$A$上有界である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $X$は無限次元ならば，任意の$0$の弱近傍は無限次元部分空間を含む．
+    特に，弱位相は局所有界でなく，従ってノルム付け可能ではない．
+\end{corollary}
+
+\begin{proposition}
+    局所凸空間$X$において，弱有界集合と元来の位相について有界な集合とは一致する．
+\end{proposition}
+
+\begin{corollary}
+    $X$をノルム空間，$A\subset X$を$\forall_{f\in X^*}\;\sup_{x\in A}\abs{fx}<\infty$を満たす集合とする．
+    このとき，$A$はノルム有界．
+\end{corollary}
+
+\subsection{$w^*$-位相に関する収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    汎関数の空間$X^*$には標準的な分離族$X\mono X^{**}$が考えられ，これについての始位相を$*$-弱位相という．
+    これは，$x\in X$での評価写像$\ev_x$を連続にする最弱の位相である．
+    $X^*$の作用素ノルムが定める位相より弱く，弱位相よりも弱いが，
+    $w^*$-位相は各点収束位相として特徴付けられるため，自然な対象である．
+    Alaogluの定理より，$\dim(X)<\infty$の場合のみノルム位相と$w^*$-位相は一致する．
+    回帰的な場合のみ弱位相と$w^*$-位相は一致する．
+\end{tcolorbox}
+
+\begin{definition}[weak-star topology]\label{def-weak-star-topology}
+    ノルム空間$X$は，\ref{exp-dual-pair}(2)の埋め込み$i:X\mono X^{**}$により，線型汎函数の空間$X^*$上の分離族とみれる．
+    こうして$X^*$に引き起こされる$\sigma(X^*,X)$位相を，\textbf{$*$-弱位相}という．
+    \footnote{すなわち，二重共役空間の部分空間$X\mono X^{**}$に属する写像を全て連続にする最弱の位相．}
+    こうして，$X^*$は局所凸な位相線型空間となり，$X$を双対空間と同一視できる（命題\ref{prop-dual-space-of-TVS-with-weak-topology}）．
+\end{definition}
+\begin{remarks}
+    $*$-弱位相の始位相としての定義より，$X^*$にノルムが定める位相よりも，弱位相$\sigma(X^*,X^{**})$よりも弱い．
+    このことから名前がついた．
+\end{remarks}
+
+\begin{lemma}[$*$-弱収束は各点収束]\label{lemma-characterization-of-convergence-in-w*topology}
+    $*$-弱位相における収束は各点収束である．すなわち，$X^*$上のネット$(\varphi_\lambda)_{\lambda\in\Lambda}$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $w^*$-位相について$\varphi$に収束する．
+        \item $\forall_{x\in X}\;\varphi_\lambda(x)\to\varphi(x)$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{$w^*$-閉部分空間の特徴付け}
+
+\begin{proposition}
+    $X$をノルム空間，$Z\subset X^*$を$w^*$-閉部分空間とする．
+    任意の$\varphi\in X^*\setminus Z$について，$x\in Z^\perp$が存在して，$\brac{x,\varphi}\ne 0$を満たす．
+\end{proposition}
+\begin{Proof}\mbox{}
+    \begin{enumerate}[(a)]
+        \item 任意の$\varphi\in X^*\setminus Z$を取ると，ノルム空間は正規より，近傍によって分離出来るが，$X^*$は$w^*$-位相に関して局所凸だから，特に$w^*$-開な近傍$U\in\O(\varphi)$が取れる．
+        \item 位相線型空間$(X^*,\sigma(X^*,X))$の凸開集合$C$と凸集合$Z$に関するHahn-Banachの分離定理より，ある連続線型汎関数，すなわち，ある$x\in X$が存在して，$\exists_{t\in\R}\Re\brac{x,\varphi}<t\le\Re\brac{x,y}\;(\forall_{y\in Z})$が成り立つ．$X^*$上の連続汎関数は必ず$\exists_{x\in X}\;\brac{x,-}$と表せることに注意．
+        \item $Z$は部分空間だったから，$x\in Z^\perp$かつ$t\le0$である．仮に$\exists_{y\in Z}\;\Re\brac{x,Z}\ne0$ならば，$\Re\brac{x,Z}=\R$となって矛盾．
+    \end{enumerate}
+\end{Proof}
+
+\begin{corollary}[$w^*$-閉な部分空間の表現]\label{cor-weak-star-closed-subspace}
+    $X^*$の任意の$w^*$-閉な部分空間について，あるノルム閉な部分空間$Y\subset X$が存在して，$Y^\perp$と表せる．
+\end{corollary}
+\begin{Proof}
+    $Z\subset X^*$は$w^*$-閉とする．$Z=X^*$ならば$0^\perp=Z$だから，$Z\subsetneq X^*$とすると，
+    命題は$(Z^\perp)^\perp\subset Z$を含意する．$Z\subset(Z^\perp)^\perp$は常に成り立つから，$Z=(Z^\perp)^\perp$が成り立つ．$Z^\perp$はノルム閉である．
+\end{Proof}
+
+
+\subsection{随伴と$w^*$-位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    随伴とは$\sigma(X,X^*)$-位相に関する対応であるから，$\sigma(X^*,X)$の言葉で特徴づけられるのは自然なことである．
+\end{tcolorbox}
+
+\begin{proposition}[随伴の特徴付け]
+    ${-}^*:B(X,Y)\to\Hom_\TVS(Y^*,X^*)$は全単射である．すなわち，
+    \begin{enumerate}
+        \item Banach空間$X,Y$間の作用素$T\in B(X,Y)$について，その随伴$T^*:Y^*\to X^*$は$w^*$-連続である．
+        \item 任意の$w^*$-連続な作用素$S:Y^*\to X^*$\footnote{有界性，すなわち$S\in B(Y^*,X^*)$は仮定しない}について，ある$T\in B(X,Y)$が存在して，$S=T^*$と表せる．特に，$S\in B(Y^*,X^*)$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}\label{prop-標準写像の随伴}
+    ノルム空間$X$の閉部分空間$Y$と，包含写像$I:Y\to X$と商写像$Q:X\to X/Y$について，
+    \begin{enumerate}
+        \item 随伴$Q^*$と包含写像$J:Y^\perp\to X^*$とを同一視できる．
+        \item 随伴$I^*$と商写像$R:X^*\to X^*/Y^\perp$とを同一視できる．
+    \end{enumerate}
+\end{proposition}
+
+\section{コンパクト集合}
+
+
+
+\subsection{双対空間の単位閉球は$w^*$-コンパクト}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=双対理論を支えている消息]
+    位相線型空間は局所コンパクトならば有限次元だから，
+    $0$は相対コンパクトな近傍を持ってはならない．
+    しかし，$w^*$-位相では$B^*$はコンパクトである．
+    実は$B^*$は$0$の$w^*$-開近傍を含まない．
+\end{tcolorbox}
+
+\begin{lemma}
+    ノルム空間$X$について，
+    \begin{enumerate}
+        \item $B^*$は$w^*$-閉集合である．
+        \item $B^*$が$0$の$w^*$-近傍であるならば，$X$は有限次元である．
+    \end{enumerate}
+\end{lemma}
+\begin{Proof}\mbox{}
+    \begin{enumerate}
+        \item 任意の$B^*$の$w^*$-収束ネット$(\varphi_\lambda)$に対して，収束先$\varphi\in X^*$が$B^*$内に入ることを示せば良い．
+        すなわち，$\forall_{x\in X}\;\varphi_\lambda(x)\to\varphi(x)$．いま，$(\varphi_\lambda)$は$B^*$のネットだから，$\forall_{\lambda\in\Lambda}\;\varphi_\lambda(x)\le\norm{x}$．よって，$\varphi(x)\le\norm{x}$より，$\varphi\in B^*$．
+        \item $B^*$が$0$の$w^*$-近傍ならば，$X$は$w^*$-位相について局所コンパクトである．よって，$X$は有限次元\ref{thm-character-of-TVS}．
+    \end{enumerate}
+\end{Proof}
+
+\begin{theorem}[Alaoglu's theorem]\label{thm-Alaoglu}
+    ノルム空間$X$について，$B^*$は$w^*$-コンパクトである．
+\end{theorem}
+\begin{remarks}[Bourbaki-Alaoglu]
+    実は一般に，$X$における$0$の絶対凸近傍$U$の極集合$U^\circ$が$\sigma(X^*,X)$-コンパクトになる．
+    これはBourbaki-AlaogluまたはBanach-Alaogluの定理という．
+    上の消息は，自然なペアリングに関する極集合$B^\circ=\Brace{\varphi\in X^*\mid\forall_{x\in B}\abs{\varphi x}\le1}$に関する結果である．
+\end{remarks}
+\begin{remarks}
+    $B^*$が$\sigma(X^*,X)$-コンパクトであることは，$w^*$-位相による$X^*$の双対空間が$X$になることに起因する．\footnote{凸集合についてはノルム閉と弱閉が同値である議論と並行だろう．}
+    ノルム空間$X$の単位閉球$B$がコンパクトになることが，$X$が回帰的であることに同値であることと同じ消息である．
+\end{remarks}
+
+\subsection{弱コンパクト凸集合の凸閉包による復元}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=コンパクト凸集合の代数的特徴付けを与える]
+    凸集合には，凸結合(convex conbination)を線型結合のようなものだと思うと「基底」なるべき概念があり，それらの情報だけで全体の形を復元できる．
+    極点に当たる関数は大抵特殊な振る舞いをするので，取っ掛かりになる．
+    その後，凸結合に対する安定性（これは線形性が十分条件となることが注意）と連続性を確認すれば，目標の凸集合上での成立を示せる．
+    実際，デルタ分布だけでなく，Cauchyの積分表示が対象とする関数クラス，ユニタリ行列，直交行列はすべてある凸集合の極点として特徴付けられる．
+\end{tcolorbox}
+
+\begin{theorem}[Krein-Milman]
+    $X^*$は位相線型空間$X$の点を分離するとする（局所凸ならば成立\ref{cor-separating-subspace-is-dense}）．
+    弱コンパクトな凸集合$C\subset X$について，極境界$\partial C$の凸包は$C$上弱稠密である：$C=\o{\Conv(\Ex(C))}$．
+\end{theorem}
+\begin{remarks}
+    $C$を凸としたのは，$\o{\Conv(\Ex(C))}$をコンパクトにするためである．
+    $X$が局所凸ならば，次のようになる．
+\end{remarks}
+
+\begin{theorem}
+    $X$を局所凸空間，$K\subset X$をコンパクト部分集合とする．
+    このとき，$K\subset\o{\Conv(\Ex(K))}(=\o{\Conv(K)})$．
+\end{theorem}
 
 \begin{corollary}\label{cor-predual-of-c0}
     $X^*\simeq c_0$となるようなBanach空間$X$は存在しない．
 \end{corollary}
-\begin{remark}
+\begin{remarks}
+    Krein-Milmanの定理は，このように$X^*$上の$w^*$-コンパクト集合に使うことで重要な系を得る．
     他にも，$L^1([0,1])$もpredualを持たない．
-\end{remark}
+\end{remarks}
 
 \subsection{確率測度のなす部分空間}
 
@@ -1601,7 +2510,7 @@ title=]
     これは，積分を有界線形作用素とみる世界観の始まりでもある．「加法的集合関数」なる概念は時代遅れである．
 \end{tcolorbox}
 
-\begin{proposition}
+\begin{corollary}\label{cor-space-of-probability-measures}
     $\infty$-ノルムを備えたコンパクトハウスドルフ空間上のBanach代数$C(X)$を考える．
     $C(X)$の双対空間を$M(X)$，$P(X):=\Brace{\mu\in M(X)\mid\norm{\mu}\le 1,\mu(1)=1}$を確率測度のなす部分空間とする．
     \begin{enumerate}
@@ -1609,7 +2518,7 @@ title=]
         \item $P(X)$は$w^*$-コンパクトである．
         \item $P(X)$の極点はDirac測度$\delta_x\;(x\in X),\forall_{f\in C(X)}\;\delta_x(f)=f(x)$である．
     \end{enumerate}
-\end{proposition}
+\end{corollary}
 \begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\mu_1,\mu_2\in P(X)$と$\lambda\in(0,1)$を任意に取ると，$\lambda\mu_1+(1-\lambda)\mu_2\in P(X)$がわかる．
@@ -1618,14 +2527,20 @@ title=]
     \end{enumerate}
 \end{Proof}
 \begin{remarks}
+    Krein-Milmanの定理と併せ見ると，
     コンパクトハウスドルフ空間$X$上の確率測度は，
     $(C(X))^*$上において，
     有限な台を持つ測度（＝Dirac測度の凸結合）によって
-    各点近似（各点収束の位相で近似）が出来る．
+    各点近似($w^*$-位相は各点収束の位相\ref{lemma-characterization-of-convergence-in-w*topology})が出来る．
     これは経験過程に対する大数の法則である．
 \end{remarks}
 
-\subsection{Krein-Smulianの定理}
+\begin{proposition}
+    $X$をコンパクトハウスドルフ空間，$\{f_n\}\subset C(X)$を有界列とする．
+    $(f_n)$が$f\in C(X)$に各点収束するならば，任意の$\ep>0$に対して凸結合$g:=\sum\lambda_nf_n$が存在して，$\norm{f-g}_\infty<\ep$を満たす．
+\end{proposition}
+
+\subsection{凸集合の$w^*$-コンパクト性の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなされる．]
@@ -1635,10 +2550,10 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
 \end{tcolorbox}
 
 \begin{theorem}[Krein-Smulian theorem]
-    $X$をBanach空間，$B^*$を双対空間$X^*$の閉単位球とする．
-    凸集合$C\subset X^*$について，次の２条件は同値．
+    $X$をBanach空間，
+    $C\subset X^*$を凸集合とする．次の2条件は同値である．
     \begin{enumerate}
-        \item $\forall_{r>0}\;rB^*\cap C$は$w^*$-閉である，すなわち，$w^*$-コンパクトである．
+        \item $\forall_{r>0}\;rB^*\cap C$は$w^*$-閉である．従って，$rB^*$は$w^*$-コンパクトだから，$rB^*\cap C$も$w^*$-コンパクトである．
         \item $C$は$w^*$-閉である．
     \end{enumerate}
 \end{theorem}
@@ -1693,12 +2608,12 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
 \end{remarks}
 
 \begin{corollary}
-    部分空間$Z\subset X^*$（任意の凸集合$Z$）について，次の２条件は同値．
+    部分空間$Z\subset X^*$について，次の２条件は同値．
     \begin{enumerate}
         \item $Z$は$w^*$-閉である．
         \item $Z\cap B^*$は$w^*$-閉である．
     \end{enumerate}
-    特に，$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}だから，$Z\cap B^*$も$w^*$-閉ならば$w^*$-コンパクトである．\footnote{コンパクト集合と閉集合との共通部分はコンパクト．コンパクト性の特徴付けから示す．}
+    このとき，$Z\cap B^*$は$w^*$-閉コンパクト集合の閉部分集合だから，やはり$w^*$-コンパクトである．
 \end{corollary}
 \begin{Proof}
     (1)$\Rightarrow$(2)は明らか．(2)$\Rightarrow$(1)を考える．
@@ -1707,9 +2622,9 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
 \end{Proof}
 
 \begin{corollary}\label{cor-characterization-of-weak-star-continuousness}
-    $X^*$上の汎関数$x\in X^{**}$について，次の２条件は同値．
+    $X^*$上の線型汎関数$x:X^*\to\bF$について，次の２条件は同値．
     \begin{enumerate}
-        \item $w^*$-連続である．すなわち，$x\in X$．\footnote{$w^*$位相の定義\ref{def-weak-star-topology}と命題\ref{prop-separating-space-of-functionals}より．}
+        \item $w^*$-連続である．すなわち，$x\in X$\ref{prop-dual-space-of-TVS-with-weak-topology}．
         \item 閉単位球への制限$x|_{B^*}$が$w^*$-連続である．
     \end{enumerate}
 \end{corollary}
@@ -1719,7 +2634,14 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
     任意の凸な閉集合$E\subset\bF$に対して，$(x|_{B^*})^{-1}(E)=x^{-1}(E)\cap B^*$は$w^*$-閉集合だから，$x^{-1}(E)$も$w^*$-閉集合である．
 \end{Proof}
 
-\subsection{可分性と距離化可能性}
+\subsection{Banach空間の弱コンパクト集合}
+
+\begin{theorem}[Krein-Smulian]
+    $X$をBanach空間，$K$を弱コンパクト集合とする．
+    閉凸包$\o{\Conv(K)}$は引き続き弱コンパクトである．
+\end{theorem}
+
+\subsection{可分性の$w^*$-位相による特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1730,20 +2652,27 @@ title=]
     $X$をBanach空間とする．次の２条件は同値．
     \begin{enumerate}
         \item $X$は可分である．
-        \item $X^*$の単位閉球$B^*$は$w^*$位相に関して距離化可能である．
+        \item $B^*$は$w^*$位相に関して距離化可能である．
     \end{enumerate}
+    このとき，$X^*$も可分である．
+\end{theorem}
+\begin{remarks}
+    一般に位相線型空間の射はある近傍上で有界ならば連続である\ref{thm-morphism-of-TVS}が，これはこれと全く関係のない例外的な消息である．
+\end{remarks}
+
+\begin{proposition}
+    $X$を可分ノルム空間，$C\subset X^*$を$w^*$-コンパクト凸集合とする．
+    極境界$\Ex(C)$は，$C$の$G_\delta$-集合，すなわち開集合の可算共通部分で表せる集合である．
+\end{proposition}
+
+\subsection{不動点定理}
+
+\begin{theorem}[Markov's fixed point theorem]
+    $X^*$は位相線型空間$X$の点を分離するとし（局所凸ならば成立\ref{cor-separating-subspace-is-dense}），
+    $C\subset X$を弱コンパクトな凸集合とする．$\cT\subset\Hom_\TVS(X,X)$は，互いに可換な弱連続な作用素の族であって，$\forall_{T\in\cT}\;T(C)\subset C$を満たすならば，ある点$x\in X$が存在して$\forall_{T\in\cT}\;Tx=T$を満たす．
 \end{theorem}
 
-\begin{proposition}[Schur's property 1921]
-    $l^1$の列は，弱収束するならばノルム収束する．
-\end{proposition}
-\begin{remarks}
-    弱位相に関する同様の結論は，定理について$X\mono X^{**}$を考えることで，$X^*$が可分ならば単位閉球$B\subset X$は距離化可能であることがわかる．
-    しかし，双対空間が可分である例は（回帰的な例を除くと）少なく，代表的なのは$X=c_0,X^*=l^1$の場合のみである．
-    なお，$X$が可分だからといって$B$は弱位相に関して距離化可能ではないことが，この命題からわかる．
-    $l^1$の閉単位球が弱位相について距離化可能だとすると，$l^1$上の弱位相とノルム位相が一致してしまい，矛盾．
-    これが，弱位相を調べる際には点列のみを考えては粒度が足りない好例である．
-\end{remarks}
+\section{Banach空間値関数}
 
 \subsection{Banach空間値関数の可測性}
 
@@ -5284,7 +6213,7 @@ title=]
     は，$A$のスペクトル分析をするのに欠かせない情報である．
 \end{remark}
 
-\section{関数代数}
+\section{関数の代数}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -5305,14 +6234,17 @@ title=]
     $f=\frac{1}{2}(f+\o{f})+i\frac{f-\o{f}}{2i}$より，$\A_\sa:=\Brace{f\in\A\mid\Im f\subset\R}$を$\A$の実数値関数がなす部分集合とすると，$\A=\A_\sa+i\A_\sa$と表せることに同値．
 \end{definition}
 
+\begin{definition}[sub vector lattice]
+    部分空間$\A\subset C(X)$が$\forall_{f,g\in\A}\;(f\lor g\in\A)\land(f\land g\in\A)$を満たすとき，\textbf{部分線型束}という．
+\end{definition}
+
 \begin{lemma}
-    $\A\subset C(X;\R)$を，コンパクトハウスドルフ空間$X$上の実数値連続関数のなす線型空間とする．
-    $\forall_{f,g\in\A}\;(f\lor g\in\A)\land (f\land g\in\A)$を満たすとき，
+    コンパクトハウスドルフ空間$X$上の部分線型束$\A\subset C(X;\R)$について，
     任意の$X$上の連続関数で$X$の任意の２点において$\A$によって近似できるものは，$\A$によって一様に近似できる．
 \end{lemma}
 
 \begin{lemma}
-    $\A\subset C_b(X,\R)$を，位相空間$X$上の実数値有界連続関数のなす一様に閉じた代数\ref{def-uniform-algebra}とする．
+    $\A\subset C_b(X,\R)$を，一様位相について閉じた代数\ref{def-uniform-algebra}とする．
     $\A$は$C(X)$の束演算$f\lor g,f\land g$について閉じている．
 \end{lemma}
 
@@ -7894,7 +8826,7 @@ title=]
     $p\in[1,\infty)$とする．任意の$\L^p(X)$のCauchy列と任意の$\ep>0$について，部分列$(f_n)$と開集合$A$であって$\int[A]<\ep$を満たすものと零集合$N$が存在して，$(f_n)$は$X\setminus A$上一様に収束し，$X\setminus N$上各点収束する．
 \end{proposition}
 
-\begin{theorem}
+\begin{theorem}[Riesz-Fischer's theorem]\label{thm-Riesz-Fischer}
     $L^p(X)$はBanach空間である．
 \end{theorem}
 
@@ -8059,7 +8991,7 @@ title=]
     $\tau$を弱位相，すなわちセミノルム$f\mapsto\Abs{\int f}$の誘導する位相として，位相線型空間$(C_c(X),\tau)$の双対空間が，Radon電荷全体のなす空間である．
 \end{lemma}
 \begin{Proof}
-    命題\ref{prop-separating-space-of-functionals}より．
+    命題\ref{prop-dual-space-of-TVS-with-weak-topology}より．
 \end{Proof}
 
 \begin{theorem}[Radon電荷の極分解]
@@ -8329,127 +9261,6 @@ title=]
 \end{discussion}
 
 弱微分は微分に持ってほしい性質の殆どを備えており，またFourier解析と相性が良い．
-
-\subsection{基礎となるFrechet空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ここに，位相線形空間論をまとめる\cite{Rudin}．
-\end{tcolorbox}
-
-\begin{definition}[Heine-Borel property]
-    位相線形空間$X$がHeine-Borel性を持つとは，任意の有界閉集合がコンパクトであることをいう．
-\end{definition}
-
-\begin{example}
-    Hardy空間$H(\Om)$と非空な内部を持つコンパクト集合$K$内に台を持つ滑らかな関数の空間$C^\infty_K=C^\infty_c(K)$とは無限次元Frechet空間でHeine-Borel性を持つ．
-    したがってこれらは局所有界でなく，したがってノルム付け可能でない．
-\end{example}
-
-\begin{theorem}\label{thm-character-of-TVS}
-    $X$を位相線形空間とする．
-    \begin{enumerate}
-        \item $X$が局所有界ならば$X$は第２可算である．
-        \item $X$が距離化可能であることと，第２可算であることとは同値．
-        \item $X$がノルム付け可能であることと，局所凸で局所有界であることと，$0$に有界凸近傍が存在することは同値．
-        \item $X$が有限次元であることと，$X$が局所コンパクトであることとは同値．
-        \item 局所有界な位相線形空間$X$について，Heine-Borel性を持つことと有限次元であることとは同値．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    位相線形空間$X$上の零でない線型汎関数$\Lambda:X\to\K$について，次の4条件は同値：
-    \begin{enumerate}
-        \item $\Lambda$は連続．
-        \item $N(\Lambda):=\Lambda^{-1}(0)$は閉である．
-        \item $N(\Lambda)$は$X$上稠密でない．
-        \item $\Lambda$は$0$のある近傍$V$上で有界である．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    $X,Y$を位相線形空間，$\Lambda:X\to Y$を線型写像とする．
-    (1)$\Rightarrow$(2)$\Rightarrow$(3)が成り立つ．
-    $X$が距離化可能であるとき，(3)$\Rightarrow$(4)$\Rightarrow$(1)も成り立ち，4条件が同値になる．
-    \begin{enumerate}
-        \item $\Lambda$は連続である．
-        \item $\Lambda$は有界である．
-        \item $x_n\to 0$ならば$\{\Lambda x_n\}_{x\in\N}$は有界である．
-        \item $x_n\to0$ならば$\Lambda x_n\to0$．
-    \end{enumerate}
-    特にFrechet空間は距離化可能な完備局所凸線型空間であるから，上の4条件は同値になる．
-\end{theorem}
-
-\begin{example}[滑らかな関数のFrechet空間とその部分Frechet空間]
-    $K\subset\R^n$をコンパクトとする．
-    \[D_K:=C_c^\infty(K)=\Brace{f\in C^\infty(\R^n)\mid \supp f\subset K}\]
-    とすると，これは半ノルム列$(p_N)_{N\in\N}$に関するFrechet空間$C^\infty(\Om)\;(K\subset\Om)$の閉部分空間かつFrechet空間である．
-    ただし，$\R^n$の$\sigma$-コンパクト性から$\Om$に届くコンパクト集合の増大列$(K_i)$について，
-    \[p_N(f):=\max\Brace{\abs{D^\al f(x)}\in\R_+\mid x\in K_N,\abs{\al}\le N}\]
-    と定める．
-\end{example}
-
-\subsection{試験関数の空間}
-
-\begin{definition}
-    $\Om\osub\R^n$とする．
-    $D(\Om):=\bigcup_{K\compsub\Om}D_K$で定まるノルム空間を試験関数の空間という．
-    $D_K=C^\infty_c(K)$であったから，これは$D(\Om)=C^\infty_c(\Om)$に等しい．
-    \[\norm{\varphi}_N=\max\Brace{\abs{D^\al\varphi(x)}\in\R_+\mid x\in\Om,\abs{\al}\le N}\]
-    はノルムを定め，各$D_K$への制限は半ノルムを定め，$p_N$と同値な位相を$D_K$に定める．
-    $\norm{-}_N$は距離化可能であるが，完備ではない．
-\end{definition}
-
-\begin{lemma}
-    次の位相$\tau$は$D(\Om)$を完備にするが，距離化可能でない．
-    \begin{enumerate}
-        \item $\tau_K\subset P(D_K)$をFrechet空間$D_K$の位相とする．
-        \item $\beta:=\Brace{W\subset D(\Om)\mid W\text{は絶対凸集合で}\forall_{K\compsub\Om}\;D_K\cap W\in\tau_K}$．
-        \item $W\in\beta$の$\varphi\in D(\Om)$-平行移動$\varphi+W$で表せる集合の合併で表せる集合の全体を$\tau$とする．
-    \end{enumerate}
-\end{lemma}
-
-\begin{theorem}\mbox{}
-    \begin{enumerate}
-        \item $\tau$は$D(\Om)$に位相を定め，$\beta$は局所基底となる．
-        \item $(D(\Om),\tau)$は局所凸空間である．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}\mbox{}
-    \begin{enumerate}
-        \item 絶対凸集合$V\subset D(\Om)$について，開であることと$V\in\beta$であることとは同値．
-        \item $\tau_K$は$\tau$の相対位相に等しい．
-        \item $D(\Om)$の有界集合$E$について，あるコンパクト集合$K\subset\Om$が存在して$E\subset D_K$を満たし，また，正整数列$(M_N)_{N\in\N}$が存在して$\forall_{\varphi\in E}\;\forall_{N\in\N}\;\norm{\varphi}_N\le M_N$が成り立つ．
-        \item $D(\Om)$はHeine-Borel性を持つ．
-        \item $\{\varphi_i\}\subset D(\Om)$がCauchy列ならば，あるコンパクト集合$K\subset\Om$が存在して$\{\varphi_i\}\subset D_K$でもあり，$\forall_{N\in\N}\;\lim_{i,j\to\infty}\norm{\varphi_i-\varphi_j}_N=0$．
-        \item $\varphi_i\to0$ならば，あるコンパクト集合$K\subset\Om$が存在して$\cup_{i\in\N}\supp\varphi_i\subset K$を満たし，$\forall_{\al\in\N^n}\;D^\al\varphi_i\to0$は一様収束する．
-        \item $D(\Om)$は完備である．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    $Y$を局所凸空間，$\Lambda:D(\Om)\to Y$を線型作用素とする．次の4条件は同値：
-    \begin{enumerate}
-        \item $\Lambda$は連続．
-        \item $\Lambda$は有界．
-        \item $\varphi_i\to0$ならば，$\Lambda\varphi_i\to0$．
-        \item 任意の$K\compsub\Om$について，制限$\Lambda|_{D_K}$は連続．
-    \end{enumerate}
-\end{theorem}
-
-\begin{definition}[distribution]
-    $D(\Om)$上の連続な線型汎関数を\textbf{$\Om$上の分布}という．
-    分布の全体を$\D'(\Om)$で表す．
-\end{definition}
-
-\begin{theorem}
-    $\Lambda:D(\Om)\to\C$を線型汎関数とする．次の2条件は同値：
-    \begin{enumerate}
-        \item $\Lambda\in\D'(\Om)$．
-        \item 任意のコンパクト集合$K\subset\Om$に対して自然数$N\in\N$と定数$C\in\R$が存在して，$\forall_{\varphi\in D_K}\;\abs{\Lambda\varphi}\le C\norm{\varphi}_N$を満たす．
-    \end{enumerate}
-\end{theorem}
 
 \subsection{分布による解析学}
 
@@ -9010,7 +9821,7 @@ title=]
 \chapter{Fourier変換}
 
 
-\chapter{非線形関数解析}
+\chapter{Fréchet空間}
 
 \begin{quotation}
     関数解析の主な対象は線型写像であったが，非線形な関数解析に必要な線型化の理論，すなわち微分理論を考える．
@@ -9018,7 +9829,7 @@ title=]
     Specifically, it studies the critical points , i.e. the points where the first variational derivative of a functional vanishes, for functionals on spaces of sections of jet bundles. The kinds of equations specifying these critical points are Euler-Lagrange equations.\footnote{\url{https://ncatlab.org/nlab/show/variational+calculus}}
 \end{quotation}
 
-\section{Fréchet空間}
+\section{Fréchet空間の3つの定義}
 
 \subsection{定義１と特徴付け}
 
@@ -9154,6 +9965,8 @@ title=]
     \end{enumerate}
 \end{lemma}
 
+\section{Fréchet空間の性質}
+
 \subsection{Banach空間論と並行な議論}
 
 \begin{proposition}
@@ -9181,13 +9994,6 @@ title=]
     Bourbaki 1950考案．
 \end{tcolorbox}
 
-\begin{definition}[absorbant, barrelled]\label{def-barrel}
-    $E$を線型空間とする．
-    \begin{enumerate}
-        \item $M\subset E$が\textbf{吸収的集合}または\textbf{併呑集合}であるとは，$\cup_{t>0}tM=E$を満たすことをいう．
-        \item 任意の閉じた絶対凸な併呑集合（これを\textbf{樽型集合}という）が，$0$の近傍であるとき，局所凸線型空間$E$を\textbf{樽型空間}であるという．
-    \end{enumerate}
-\end{definition}
 
 \begin{lemma}\mbox{}
     \begin{enumerate}
@@ -9222,7 +10028,60 @@ title=]
     $E=\cup_{t>0}tM$と併せると，$0$は$M$の内点である．
 \end{Proof}
 
-\subsection{双対空間}
+\section{双対空間}
+
+\subsection{有界型空間}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    topologyとは開集合系を指定した空間であった．有界となるべき集合を指定することで得られる構造を，bornologyという．
+    位相空間の射は$f^*$が開集合系を保つものとしたが，有界型空間は$f_*$が有界系を保つものとした．
+    命名はBourbaki (1968)による．
+\end{tcolorbox}
+
+\begin{definition}[bornology, bornological set]
+    $X$を集合とする．$X$上の\textbf{有界集合系}とは，$\B\subset P(X)$であって次の3条件を満たすものとする：
+    \begin{enumerate}
+        \item $\cup\B=X$．
+        \item 下方閉：$\forall_{B\in\B}\;A\subset B\Rightarrow A\in\B$．
+        \item 有限合併閉性：$\forall_{B_1,\cdots,B_n\in\B}\;\cup_{i\in[n]}B_i\in\B$．
+    \end{enumerate}
+    組$(X,\B)$を\textbf{有界型空間}または\textbf{界相空間}という．
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 任意の$T_1$空間に対して，相対コンパクトな集合の全体は有界集合系をなす．
+        \item 任意の測度空間に関して，測度確定な集合の全体は有界集合系をなす．
+        \item 任意のBanach空間の帰納極限は有界型な線形空間である．
+    \end{enumerate}
+\end{example}
+
+\begin{definition}[bounded]\label{def-bounded-function}
+    写像$f:X\to Y$が\textbf{有界写像}であるとは，$f_*(\B_X)\subset\B_Y$を満たすことをいう．
+\end{definition}
+
+\begin{example}\mbox{}
+    \begin{enumerate}
+        \item 任意の距離空間において，$\exists_{r\in\R_+}\;A\subset rB$を$A\in\B$たる条件とすると，これは有界集合系をなし，任意のLipschitz写像は有界写像になる．
+        \item 任意の有界型空間において，線型作用素が連続であることと有界であることとは同値．
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}[bornological isomorphism]
+    有界写像$f$が全単射ならば逆写像も有界である．これを\textbf{界相同型}という．
+\end{proposition}
+
+\begin{theorem}
+    局所凸位相線形空間$X,Y$と線形写像$u:X\to Y$に対して，以下の3条件は同値：
+    \begin{enumerate}
+        \item $u$は有界．
+        \item $u$の有界円板を有界円板に写す．
+        \item $Y$の任意の併呑円板$D$に対して$u^{-1}(D)$は併呑．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Alaoglu-Bourbakiの定理}
 
 \begin{theorem}
     $E$を距離化可能な局所凸空間とする．このとき，双対空間$E^*$は完備である．
@@ -9982,14 +10841,14 @@ title=]
     \end{enumerate}
 \end{corollary}
 
-\subsection{双極}
+\subsection{双極定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     極めてきれいな理論が出来上がった．
 \end{tcolorbox}
 
-\begin{proposition}[bipolar theorem]
+\begin{proposition}[bipolar theorem (Fenchel-Moreau)]
     $F:V\to\oR$を関数とする．このとき，$F^{**}$は$F$の$\Gamma$-正則化である．
     特に，$\forall_{F\in\Gamma(V)}\;F^{**}=F$．
 \end{proposition}
@@ -10005,6 +10864,15 @@ title=]
 \begin{remark}
     $\pm\infty$は$\pm\infty$に対応するから，この全単射の$\Gamma_0(V)$への制限はそのまま$\Gamma_0(V^*)$への全単射である．
 \end{remark}
+
+\subsection{双対理論}
+
+\begin{theorem}[Fenchel-Rockafellar]\label{thm-Fenchel-Rockafellar}
+    $\varphi,\psi:V\to(-\infty,\infty]$を真の凸関数とする．
+    ある$x_0\in D(\varphi)\cap D(\psi)$上で$\varphi$は連続とする．
+    このとき，
+    \[\inf_{x\in V}(varphi(x)+\psi(x))=\sup_{f\in V^*}(-\varphi^*(-f)-\psi^*(f))=\max_{f\in V^*}(-\varphi^*(-f)-\psi^*(f)).\]
+\end{theorem}
 
 \subsection{極集合への応用}
 
@@ -10507,6 +11375,8 @@ title=]
     関数族ではなく，距離関数$d:D\times D\to\R$の指定によってデータ集合$D$を解析することをいう．
     $d$が定める積分核$\exp(-\lambda\cdot d(-,-))$を適切なクラスから選ぶことを考える．
 \end{tcolorbox}
+
+\chapter{参考文献}
 
 \begin{thebibliography}{99}
     \bibitem{AnalysisNow}

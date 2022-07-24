@@ -74,7 +74,7 @@
 colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 
 % 証明内の文字が小さくなる環境．
-\newenvironment{Proof}[1][\bf\footnotesize\underline{［証明］}]{\proof[#1]\footnotesize}{\endproof}
+\newenvironment{Proof}[1][\bf\underline{［証明］}]{\proof[#1]\color{darkgray}}{\endproof}
 
 %%%%%%%%%%%%%%% フォント %%%%%%%%%%%%%%%
 
@@ -460,6 +460,7 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 \newcommand{\Graph}{\mathrm{Graph}}
 \newcommand{\Ascent}{\mathrm{Ascent}}
 \newcommand{\Descent}{\mathrm{Descent}}
+\newcommand{\BIL}{\mathrm{BIL}}
 %%% 最適化
 \newcommand{\Minimize}{\text{Minimize}}
 \newcommand{\subjectto}{\text{subject to}}
@@ -552,7 +553,7 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 \renewcommand{\labelenumii}{(\alph{enumii})}
 \renewcommand{\labelenumiii}{(\roman{enumiii})}
 
-\newtheoremstyle{StatementsWithStar}% ?name?
+\newtheoremstyle{StatementsWithUnderline}% ?name?
 {3pt}% ?Space above? 1
 {3pt}% ?Space below? 1
 {}% ?Body font?
@@ -560,7 +561,7 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 {\bfseries}% ?Theorem head font?
 {\textbf{.}}% ?Punctuation after theorem head?
 {.5em}% ?Space after theorem head? 3
-{\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\ast}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
+{\textbf{\underline{\textup{#1~\thetheorem{}}}}\;\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
 %
 \newtheoremstyle{StatementsWithStar2}% ?name?
 {3pt}% ?Space above? 1
@@ -592,7 +593,7 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 {.5em}% ?Space after theorem head? 3
 {\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\circledcirc}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
 %
-\theoremstyle{definition}
+\theoremstyle{StatementsWithUnderline}
  \newtheorem{theorem}{定理}[section]
  \newtheorem{axiom}[theorem]{公理}
  \newtheorem{corollary}[theorem]{系}
@@ -602,6 +603,8 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
  \newtheorem*{lemma*}{補題}
  \newtheorem*{theorem*}{定理}
  \newtheorem{definition}[theorem]{定義}
+ \newtheorem{problem}[theorem]{問題}
+\theoremstyle{definition}
  \newtheorem{example}[theorem]{例}
  \newtheorem{notation}[theorem]{記法}
  \newtheorem*{notation*}{記法}
@@ -610,7 +613,6 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
  \newtheorem{counterexample}[theorem]{反例}
  \newtheorem{reidai}[theorem]{例題}
  \newtheorem{ruidai}[theorem]{類題}
- \newtheorem{problem}[theorem]{問題}
  \newtheorem{algorithm}[theorem]{算譜}
  \newtheorem*{solution*}{\bf{［解］}}
  \newtheorem{discussion}[theorem]{議論}
@@ -649,7 +651,7 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
  \newtheorem*{yodan*}{余談}
  \newtheorem*{kadai*}{課題}
 %
-\theoremstyle{StatementsWithStar}
+\theoremstyle{StatementsWithUnderline}
  \newtheorem{definition_*}[theorem]{定義}
  \newtheorem{question_*}[theorem]{問}
  \newtheorem{example_*}[theorem]{例}
