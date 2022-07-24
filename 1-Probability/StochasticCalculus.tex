@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -84,7 +84,7 @@ title=]
         \item 分散共分散公式：$E[\abs{x}^2]=\Tr Q+\abs{m}^2$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $Q$を定める双線型形式$G$は対称であったから，$Q$も対称である：$G(x,y)=G(y,x)\Rightarrow\brac{Qx|y}=\brac{Q^*x|y}$．
         また，$\forall_{x,x\ge0}\;\brac{Qx|x}=G(x,x)\ge0$より正である．
@@ -95,7 +95,7 @@ title=]
         \end{align*}
         \item 正作用素$T$が$\exists_{p>0}\;\Tr(\abs{T}^p)<\infty$を満たすならば，コンパクト作用素である．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{notation}
     正作用素の空間を$B^+(H)$とし，有限な跡を持つ作用素の空間を$B^+_1(H)\subset B^+(H)$で表す．
@@ -170,7 +170,7 @@ title=]
     $(H,\mu)$を可分な正規Hilbert空間とする：$\mu\sim N(a,Q)$．
     このとき，任意の可分Hilbert空間$K$へのaffine変換$T:H\to K;x\mapsto Ax+b\;(A\in B(H,K),b\in K)$とすると，$T_*\mu\sim N_{Aa+b,AQA^*}$．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     特性関数を計算すると，任意の$k\in K$について，
     \begin{align*}
         \wh{T_*\mu}(k)&=\int_K e^{i(k|y)}(T_*\mu)(dy)\\
@@ -178,7 +178,7 @@ title=]
         &=\int_He^{i(k|Ax+b)}\mu(dx)\\
         &=e^{i(k|b)}\int_He^{i(A^*k|x)}\mu(dx)=e^{i(k|Aa+b)}e^{-\frac{1}{2}(AQA^*k,k)}.
     \end{align*}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}
     $(H,\mu)$を可分な正規Hilbert空間とする：$\mu\sim N(0,Q)$．
@@ -221,7 +221,7 @@ title=]
         \item 対称な半正定値関数である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     Kolmogorovの拡張定理\ref{thm-Kolmogorov-extension-theorem}による．
     ここでは$a=0$として証明する．
     \begin{description}
@@ -240,7 +240,7 @@ title=]
         よって，$(P_{t_1,\cdots,t_n})_{n\in\N_{\ge1},\{t_i\}\subset T}$を有限次元周辺分布とする
         確率過程$X=(X_t)_{t\in\R_+}$が存在するが，これは平均$0$で分散$\Gamma$のGauss過程である．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[共分散公式]
     $X,Y$をGauss確率変数とする．
@@ -249,7 +249,7 @@ title=]
     \[\Gamma_X(s,t)=st\Var[X]+(s+t)\Cov[X,Y]+\Var[Y]\]
     を持つ．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     平均は期待値の線形性より明らか．
     分散については，次のように計算が進む．
     ただし，見やすくするため$\mu_X:=E[X],\mu_Y:=E[Y]\in\R$とする．
@@ -258,7 +258,7 @@ title=]
         &=E[X_sX_t]-(s\mu_X+\mu_Y)E[X_t]-(t\mu_X+\mu_Y)E[X_s]+(s\mu_X+\mu_Y)(t\mu_X+\mu_Y)\\
         &=stE[X^2]+(s+t)E[XY]+E[Y^2]+(s\mu_X+\mu_Y)(t\mu_X+\mu_Y)=st\Var[X]+(s+t)\Cov[X,Y]+\Var[Y].
     \end{align*}
-\end{proof}
+\end{Proof}
 
 \subsection{Gauss変数の独立性}
 
@@ -505,7 +505,7 @@ title=]
     実は，独立性の仮定は必要ない．
     一般に，$n$次元確率ベクトル$X=(X_1,\cdots,X_n):\Om\to\R^n$が$n$次元正規分布に従うことと，任意の線型汎関数$f\in(\R^n)^*$に関して$f(X):\Om\to\R$が正規確率変数であることとは同値．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $B_{t_1}\sim N(\mu_1,\sigma_1),B_{t_2}\sim N(\mu_2,\sigma_2)$として，$B_{t_1}+B_{t_2}$が正規分布に従うことを示せば十分である．
         一般に，独立な2つの確率変数の和の特性関数は，期待値が積に対して分解することより，元の確率変数の特性関数の積となる：\[\varphi_{X+Y}(u)=E[e^{iuX+Y}]=E[e^{iuX}e^{iuY}]=E[e^{iuX}]E[e^{iuY}]=\varphi_X(u)\varphi_Y(u).\]
@@ -525,7 +525,7 @@ title=]
             このとき，$\varphi_X$の関数形は，多変量正規分布の特性関数に他ならないと分かる．
         \end{description}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}[Cramer-Wold]
     (3)の結果は$\R^n$上の一般の確率分布について成り立ち，Cramer-Woldの定理と呼ばれる．
     原理は単純明快で，一般の$X\in\R^n$について，$\forall_{a\in\R^n}\;\varphi_{a^\top X}(v)=\varphi_X(va)$が成り立つため，$f\in(\R^n)^*$を通じた挙動が特性関数を一意に定める．
@@ -547,7 +547,7 @@ title=]
         \item $B$は平均$0$共分散$\Gamma(s,t):=\min(s,t)$のGauss過程である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] Gauss過程であることを示すには，任意の$0<t_1<\cdots<t_n\in\R_+$を取り，$B:=(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$が$n$次元の正規分布に従うことを示せば良い．
         まず，仮定(B1),(B2)より，$B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}$は独立であり，それぞれが正規分布に従う．
@@ -575,7 +575,7 @@ title=]
             \[E[(B_t-B_s)^2]=E[B_t^2]+E[B_s^2]-2E[B_tB_s]=t+s-2s=t-s.\]
         \end{enumerate}
     \end{description}
-\end{proof}
+\end{Proof}
 
 \section{Brown運動の構成}
 
@@ -607,9 +607,9 @@ title=]
     \[\exists_{G_\gamma\in\L(\Om';\R)}\;\forall_{s,t\in[0,T]}\qquad\abs{\wt{X}_t-\wt{X}_s}\le G_\gamma\abs{t-s}^\gamma.\]
     特に，$\wt{X}$の見本道は$\gamma$-次Holder連続である．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     \cite{Revus and Yor}I.2 Thm(2.1)は，一般の添字集合$t\in[0,1)^d$上のBanach空間値過程$(X_t)$について示している．
-\end{proof}
+\end{Proof}
 \begin{remarks}
     Gauss過程は積率の計算により，この十分条件を満たす．
 \end{remarks}
@@ -688,7 +688,7 @@ title=]
         \item $(X_n)$を正規確率ベクトルの列で，$\lim_{n\to\infty}X_n=X\;\as$を満たすとする．$b:=\lim_{n\to\infty}E[X_n],C:=\lim_{n\to\infty}\Cov[X_n]$が存在するならば，$X$は$b,C$が定める正規確率変数である．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\frac{1}{\sqrt{2}\sigma}(X_1+X_2,X_1-X_2)^\top$は，標準正規分布$\frac{1}{\sigma}(X_1,X_2)^\top$の直交行列$\frac{1}{\sqrt{2}}(1,1;1,-1)$による変換であるから，再び標準正規分布である．
         \item 右辺の不等式については，
@@ -698,7 +698,7 @@ title=]
             =\frac{1}{\sqrt{2\pi}}\frac{1}{x}e^{-\frac{x^2}{2}}.
         \end{align*}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{construction}
     $[0,1]$内の小数第$n$位までの2進有理数の集合を
@@ -758,7 +758,7 @@ title=]
     このように構成された$(B_t)_{t\in\R_+}$は，$\Om\times\R_+$上可測である．
     ただし，$(\Om,\A,P)$とは，独立同分布確率変数列$(Z_n)$の定義域となる確率空間とする．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $B_t=\sum^\infty_{i=0}F_i(t)$と定めたから，$\forall_{n\in\N}\;F_n(t)$は$\Om\times[0,1]$上可測であることを示せば良い．
     $\R_+$上のBrown運動は，これら$(B_t)_{t\in[0,1]}$の和として表せるため．
     任意の$c\in\R$について，
@@ -769,7 +769,7 @@ title=]
         \item $c<0$のとき\[\bigcup_{k=1}^{2^{n-1}}\Brace{Z_{\frac{2k-1}{2^n}}>c}\times\Square{\frac{2k-2}{2^n},\frac{2k}{2^n}}\cup\Brace{Z_{\frac{2k-1}{2^n}}\le c}\times\paren{\left[\frac{2k-2}{2^n},\frac{2k-1}{2^n}-\frac{Z_{\frac{2k-1}{2^n}}-c}{Z_{\frac{2k-1}{2^n}}}\frac{1}{2}\right)\cup\left(\frac{2k-1}{2^n}+\frac{Z_{\frac{2k-1}{2^n}}-c}{Z_{\frac{2k-1}{2^n}}}\frac{1}{2^n},\frac{2k}{2^n}\right]}.\]
     \end{enumerate}
     と等しいから，たしかに$\Om\times[0,1]$の積$\sigma$-加法族の元である．
-\end{proof}
+\end{Proof}
 
 \subsection{酔歩としての構成}
 
@@ -974,7 +974,7 @@ title=]
         \[\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=+\infty\;\as,\qquad\liminf_{n\to\infty}\frac{B_n}{\sqrt{n}}=-\infty\;\as\]
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 
         \begin{enumerate}[({B}1)]
@@ -1013,7 +1013,7 @@ title=]
         次に，$X_n:=B_n-B_{n-1}$とすると，$\Brace{B_n>c\sqrt{n}\;\io}=\Brace{\sum^n_{j=1}X_j>c\sqrt{n}\;\io}$は$(X_n)$について可換な事象であるから（手前の有限個の$X_1,\cdots,X_m$に対する置換に対して不変）であるから，Hewitt-Savageの定理より，$P[\Brace{B_n>c\sqrt{n}\;\io}]=1$．
         最後に，任意の$c\in\Z_+$について合併事象を取ると，$P\Square{\limsup_{n\to\infty}\frac{B_n}{\sqrt{n}}=\infty}=1$を得る．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[ユニタリ変換不変性 / conformal invariance property]
     多次元正規分布の性質が一般化される．
@@ -1079,7 +1079,7 @@ title=]
 \begin{remark}
     この２つは$X$が局所コンパクトならば同値になる．したがって，たとえば無限次元Banach空間では2つの概念は区別する必要がある．
 \end{remark}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[(1)$\Rightarrow$(2)] 
         任意の$\ep>0$を取ると，仮定よりある$\delta>0$が存在して，$\sup_{\abs{x-y}\le\delta,x,y\in U_{\delta}(x_0)}\abs{f(x)-f(y)}<\ep$．
@@ -1089,7 +1089,7 @@ title=]
         このとき，
         \[\sup_{\abs{x-y}\le\delta,x,y\in U_\delta(x_0)}\abs{f(x)-f(y)}\le\sup_{\abs{x-y}\le\delta,x,y\in U_\delta(x_0)}\paren{\abs{f(x)-f(x_0)}+\abs{f(x_0)-f(y)}}<\ep.\]
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{definition}
     Holder係数$\abs{f}_{C^{0,\al}}:=\sup_{x\ne y}\frac{\abs{f(x)-f(y)}}{\abs{x-y}}\in[0,\infty]$が$X$のあるコンパクト集合上で有界ならば，局所Holder連続であるという．
@@ -1175,7 +1175,7 @@ title=]
         \item ほとんど確実に，見本道のどこかには局所$1/2$-Holder連続であるような点が存在する．これをslow pointという．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 時間反転により$1/2$-大数の法則\ref{prop-character-of-Brownian-motion-1}(7)に帰着する．
         $\sup_{s\ne t\in[0,1]}\frac{\abs{B_t-B_s}}{\sqrt{\abs{t-s}}}>\sup_{t\in(0,1]}\frac{\abs{B_t-B_0}}{\sqrt{\abs{t-0}}}$であるから，
@@ -1200,7 +1200,7 @@ title=]
         ここで，任意の$t>0$に対して，$Y_s:=B_{t+s}-B_t$とすると，$Y_s$も標準Brown運動で(3)，$Y_0$にて微分可能でない．
         よって，$B$も$B_t$において微分可能でない．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}\mbox{}
     \begin{enumerate}
@@ -1251,7 +1251,7 @@ title=]
     このとき，次の$L^2(\Om)$-収束が成り立つ：
     \[\lim_{\abs{\pi}\to0}J_\pi=\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2=t\quad\in L^2(\Om).\]
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     確率変数列を$\xi_j:=(B_{t_{j+1}}-B_{t_j})^2-(t_{j+1}-t_j)\;(j\in n)$とおくと，これらは中心化された独立な確率変数列になる．
     実際，
     \[E[\xi_j]=E[(B_{t_{j+1}}-B_{t_j})^2]-E[t_{j+1}-t_j]=t_{j+1}-t_j-(t_{j+1}-t_j)=0.\]
@@ -1263,7 +1263,7 @@ title=]
         &=\sum^{n-1}_{j=0}\paren{3(t_{j+1}-t_j)^2-2(t_{j+1}-t_j)^2+(t_{j+1}-t_j)^2}\\
         &=2\sum^{n-1}_{j=0}(t_{j+1}-t_j)^2\le 2t\abs{\pi}\xrightarrow{\abs{\pi}\to0}0.
     \end{align*}
-\end{proof}
+\end{Proof}
 \begin{remark}
     より強く，概収束も示せる．なお，$(\pi_i)$が部分分割の系列でない場合，反例が殆ど確実に存在する．
     というのも，殆ど確実に分割の列で$\abs{\pi_n}\to 0$を満たすものが存在して，
@@ -1292,7 +1292,7 @@ title=]
     \[V:=\sup_{\pi}\sum^{n-1}_{j=0}\abs{B_{t_{j+1}}-B_{t_j}}\]
     は殆ど確実に$\infty$である．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     Brown運動の見本道は殆ど確実に連続であるから，$\sup_{j\in n}\abs{B_{t_{j+1}}-B_{t_j}}\xrightarrow{\abs{\pi}\to0}0$である．
     よって，もし$V<\infty$ならば，2乗和
     \begin{align*}
@@ -1303,7 +1303,7 @@ title=]
     \[\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2=P[V=\infty]\paren{\lim_{\abs{\pi}\to0}\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2}=t\]
     と表せる．
     $P[V<\infty]=0$でない限り，2次変動が$t$に$L^2$-収束することに矛盾する．
-\end{proof}
+\end{Proof}
 
 
 
@@ -1412,7 +1412,7 @@ title=]
         \item この過程の同値類は，$B\in C(\R_+;L^{2m}(H,\mu))\;(\forall_{m\in\N})$を満たす連続過程である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{enumerate}[({B}1)]
             \item $B_t\sim N(0,t)\;(t\ge0)$より，$B_0=0$．
@@ -1434,7 +1434,7 @@ title=]
         \end{enumerate}
         \item 任意の$t>s$について，$B_t-B_s\sim N_{t-s}$の$2m$次の積率から分かる．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}
     $m>1,\al\in\paren{\frac{1}{2m},1},T>0$とし，$f\in L^{2m}([0,T];H)$とする．このとき，
@@ -1492,7 +1492,7 @@ title=]
         \item 任意の$\om\in\Om$に対して，$B_t(\om):=\om(t)$と見本道を定めると，この対応$\Om\to\Om$はBrown運動である．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item \begin{description}
             \item[$\sigma(\cC)\subset\F$] 任意の$k\in\N,0\le t_1<\cdots<t_k,A_1,\cdots,A_k\in\B^1(\R)$に対して，$C(t_1\in A_1,\cdots,t_k\in A_k)=\bigcap_{i\in[k]}\pr_{t_i}^{-1}(A_i)$と表せる．$A_i$が全て開集合であるとき，$C$も開集合となる．$A_i$が一般のとき，写像の逆像の集合演算に対する関手性より，$C$は開集合または閉集合の可算和・積で表せる．
@@ -1532,7 +1532,7 @@ title=]
             \end{align*}
         \end{enumerate}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[コンパクト開位相の性質]
     $K\compsub\R_*,U\osub\R$について，
@@ -1551,7 +1551,7 @@ title=]
     特に，次の変数変換の公式を得る：
     \[\forall_{\varphi\in\L^1(\Om,\F,P)}\quad\int_\Om\varphi(\om)P(d\om)=\int_{\Om'}\varphi(B(-,\om'))P'(d\om').\]
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     可測性は次の議論より明らか．
 
     任意の$k\in\N,0\le t_1<\cdots<t_k,A_1,\cdots,A_k\in\B^1(\R)$について，$C(t_1,\cdots,t_k;A_1,\cdots,A_k)$上での値が一致すればよいが，Brown運動の独立増分性と，増分が正規分布に従うことより，
@@ -1560,7 +1560,7 @@ title=]
         &=\int_{A_1\times\cdots\times A_k}p_{t_1}(x_1)p_{t_2-t_1}(x_2-x_1)\cdots p_{t_k-t_{k-1}}(x_k-x_{k-1})dx_1\cdots dx_k\\
         &=P[C(t_1,\cdots,t_k;A_1,\cdots,A_k)].
     \end{align*}
-\end{proof}
+\end{Proof}
 
 \subsection{Cameron-Matrin定理}
 
@@ -1663,7 +1663,7 @@ title=]
         \item $F\in D[0,1]\Rightarrow Q_n(F)\xrightarrow{n\to\infty}\norm{F'}^2_2$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $(a+b)^2=a^2+2ab+b^2\le 2a^2+2b^2$より，任意の$j\in[2^n]$について，
         \begin{align*}
@@ -1682,7 +1682,7 @@ title=]
 
         \end{description}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[Paley-Wiener stochastic integral]
     $(B_t)_{t\in\R_+}$を標準Brown運動とする．$F\in D[0,1]$について，
@@ -1766,7 +1766,7 @@ title=]
         \item (Blumenthal one-zero law) $A\in\F_0^+:=\cap_{\ep>0}\F_\ep$ならば，$P[A]\in\{0,1\}$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\F_t$は任意の有限列$I_1,\cdots,I_n\in\B^1(\R)$と任意の有限列$0\le s_1<\cdots<s_n\le t$を用いて，$C(s_1,\cdots,s_n;I_1,\cdots,I_n)$によって生成されるということである．
         また，$t_n<t$を満たす柱状集合の全体を用いても，見本道の連続性より，任意の開区間$I\osub\R$について，$\Brace{B_t\in I}=\limsup_{n\to\infty}\Brace{B_{t-1/n}\in I}$と表せる．
@@ -1802,7 +1802,7 @@ title=]
             $\F^+_0\subset\F\subset\cG$より，$G=A$と取れる．よって，$P[A]=P[A]P[A]$を得る．
         \end{description}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \begin{lemma}[自然な情報系の右連続性]
     $\F_t$が完備であることより，次の2条件が成り立つ．
@@ -1811,7 +1811,7 @@ title=]
         \item $(\F_t)$は右連続である：$\forall_{t\in\R_+}\cap_{s>t}\F_s=\F_t$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $(X_t)_{t\in\R_+}$を$(\Om,\F,P)$上の$(\F_t)$-適合的な確率過程とする：$\forall_{t\in\R_+}\;X_t\in\L_{\F_t}(\Om)$．
         すなわち，$\forall_{t\in\R_+}\;\forall_{A\in\B^1(\R)}\;\Brace{X_t\in A}\in\F_t$．
@@ -1827,7 +1827,7 @@ title=]
         $\sigma[\F_t,\cG_0]=\F_t$であることより，
         \[\F_t=\sigma[\F_t,\cG_0]=\cap_{\ep\ge0}\sigma[\F_t,\cG_\ep]=\cap_{\ep>0}\sigma[\F_t,\cG_\ep].\]
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
 \section{Markov性}
 
@@ -1842,7 +1842,7 @@ title=]
     \[\forall_{f\in\L(\R)\cap l^\infty(\R)}\;\forall_{s\ge0,t>0}\;E[f(B_{s+t})|\F_s]=(P_tf)(B_s).\]
     また，$f\in\L(\R)_+$としてもよい．
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     補題\ref{lemma-Blumenthal}(1)より
     $\F_s\indep B_{s+t}-B_s$だから，$\forall_{x\in\R}\;f(B_{s+t}-B_s+x)\indep\F_s$だから，
     \begin{align*}
@@ -1853,7 +1853,7 @@ title=]
         &=\int_\R f(y+B_s)\frac{1}{\sqrt{2\pi t}}e^{-\frac{y^2}{2t}}dy\\
         &=\int_\R f(y)\frac{1}{\sqrt{2\pi t}}e^{-\frac{(B_s-y)^2}{2t}}dy=(P_tf)(B_s).
     \end{align*}
-\end{proof}
+\end{Proof}
 
 \subsection{Markov半群}
 
@@ -1894,7 +1894,7 @@ title=]
         \item 複素幾何Brown運動：$(\exp(iaB_t+a^2t/2))_{t\in\R_+}\;(a\in\R)$．
     \end{enumerate}
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $\forall_{0\le s<t}\;B_t-B_s\indep\F_s$補題\ref{lemma-Blumenthal}(1)より，$E[B_t-B_s|\F_s]=E[B_t-B_s]=0$．
         \item 任意の$0\le s<t$について，
@@ -1917,7 +1917,7 @@ title=]
             &=\exp\paren{iaB_s+\frac{a^2t}{2}}\exp\paren{-\frac{1}{2}a^2(t-s)}=\exp\paren{iaB_s+\frac{a^2s}{2}}.
         \end{align*}
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     (3)は正規分布の積率母関数とも，対数正規分布とも見れる．
 \end{remarks}
@@ -1935,14 +1935,14 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
     $\tau_a:=\inf\Brace{t\in\R_+\mid B_t=a}$とすると，これは$(\F_t)$-停止時である．
     ただし，$\Brace{t\in\R_+\mid B_t=a}=\emptyset$のとき，$\tau_a=\infty$とする．
 \end{lemma}
-\begin{proof}
+\begin{Proof}
     \begin{align*}
         \Brace{\tau_a>t}&=\cap_{s\in[0,t]}\Brace{B_s<a}\\
         &=\cup_{k\in\N}\cap_{s\in[0,t]}\Brace{B_s\le a-\frac{1}{k}}\overset{\as}{=}\cup_{k\in\N}\cap_{s\in[0,t]\cap\Q}\Brace{B_s\le a-\frac{1}{k}}\in\F_t.
     \end{align*}
     最後の等号は，$\subset$は明らかであるが，$\supset$は，殆ど至る所の$\om\in\Om$に対して$s\mapsto B_s(\om)$が連続であるため，$\exists_{k\in\N}\;\forall_{s\in[0,t]\cap\Q}\;B_s\le a-\frac{1}{k}$は$[0,t]$上でも同様の条件が成り立つことを含意する．
     よって，$\Brace{\tau_a\le t}\in\F_t$もわかる．
-\end{proof}
+\end{Proof}
 \begin{remarks}
     $\Brace{\tau_a<t}$を示しても十分であるが，これは情報系$(\F_t)$が右連続であることに依る．
 \end{remarks}
@@ -1951,7 +1951,7 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
     任意の$a>0$について，
     \[\forall_{\al>0}\;E[e^{-\al\tau_a}]=e^{-\sqrt{2\al}a}.\]
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     幾何Brown運動のmartingale性に注目することで，これだけから出てくる．
     \begin{description}
         \item[martingaleの用意] \mbox{}\\
@@ -1984,7 +1984,7 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
         \[E\Square{\exp\paren{-\frac{\lambda^2\tau_a}{2}}}=e^{-\lambda a}.\]
         $\al=\lambda^2/2$の場合を考えれば良い．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     なお，$\tau_a$の確率密度関数を$f:\R_+\to[0,1]$とすると，
     \[E[e^{-\al\tau_a}]=\int_{\R_+}e^{-\al s}f(s)ds=\L[f](\al)\]
@@ -2000,13 +2000,13 @@ title=Markov過程の到達時刻はLaplace変換の有名な応用先である]
         \item $E[\tau_a]=+\infty$．
     \end{enumerate}
 \end{corollary}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item Laplace逆変換による．
         \item 両辺の$\al$に関する微分による．$e^{-\al\tau_a}$は$\om$に関して可積分であるのはもちろん，$\al$についても可微分で，またその導関数$-\tau_ae^{-\al\tau_a}$も$\om$に関して可積分だから，微分と積分は交換して良い．
         \item $\al\to0$の極限を考えることによる（単調収束定理）．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     $\tau_a$の平均は存在しない(発散する)が，殆ど確実に有限になるという不可解な消息がある．
     また，(1)は解析的な方法に依らず，鏡像の原理からも導ける．
@@ -2023,7 +2023,7 @@ title=]
     $a<0<b$のとき，
     \[P[\tau_a<\tau_b]=\frac{b}{b-a}.\]
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[任意抽出定理] Doobの任意抽出定理より，$\forall_{t\in\R_+}\;E[B_{t\land\tau_a\land\tau_b}]=E[B_0]=0\;\as$
         $\forall_{t\in\R_+}\;B_{t\land\tau_a\land\tau_b}\in[a,b]$より，優収束定理から$E[B_{\tau_a\land\tau_b}]=0$を得る．
@@ -2031,20 +2031,20 @@ title=]
         ここで到達時刻は$\tau_a,\tau_b<\infty\;\as$を満たすから，$\Om=\Brace{\tau_a<\tau_b}\sqcup\Brace{\tau_b<\tau_a}\sqcup\Brace{\tau_b=\tau_a<\infty}\sqcup\Brace{\tau_a\land\tau_b=\infty}$の直和分解のうち最後の2項は零集合だから，
         \[0=P[\tau_a<\tau_b]a+(1-P[\tau_a<\tau_b])b.\]
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{proposition}[脱出時刻の期待値]\label{prop-mean-of-Brownian-exit-time}
     $a<0<b$のとき，脱出時刻を
     $T:=\inf\Brace{t\in\R_+\mid B_t\notin(a,b)}$とすると$E[T]=-ab$．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $B_t^2-t$はmartingaleであるから，任意抽出定理より$\forall_{t\in\R_+}\;E[B^2_{T\land t}]=E[T\land t]$．
     $t\to\infty$の極限を考えて，
     \begin{align*}
         E[T]&=E[B_T^2]=a^2\frac{b}{b-a}+b^2\frac{a}{a-b}\\
         &=\frac{ab(a-b)}{b-a}=-ab.
     \end{align*}
-\end{proof}
+\end{Proof}
 
 \section{強Markov性}
 
@@ -2053,7 +2053,7 @@ title=]
 \begin{theorem}[Hunt (1956) and Dynkin and Yushkevich (1956)]\mbox{}\\
     $T:\Om\to\R_+$を有限な$(\F_t)$-停止時とする．このとき，$(\wt{B}_t:=B_{T+t}-B_T)_{t\in\R_+}$は再びBrown運動で，$\F_T$と独立である．
 \end{theorem}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[$T$が有界なとき]
         任意の$\lambda\in\R$について，$M_t:=\exp\paren{i\lambda B_t+\frac{\lambda^2t}{2}}$はmartingaleである．
@@ -2089,7 +2089,7 @@ title=]
         \[\exp\paren{-\frac{\lambda^2}{2}(t-s)}\]
         に収束する．
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}[時間一様性]
     $(P_t)$をBrown運動に対応する連続半群とすると，
@@ -2112,7 +2112,7 @@ title=]
     $M_t:=\sup_{s\in[0,t]}B_s$とする．
     \[\forall_{a>0}\;P[M_t\ge a]=2P[B_t>a].\]
 \end{theorem}
-\begin{proof}
+\begin{Proof}
     時刻$\tau_a<\infty$で折り返した確率過程を
     \[\wh{B}_t:=B_t1_{\Brace{t\le\tau_a}}+(2a-B_t)1_{\Brace{t>\tau_a}}\]
     と定める．
@@ -2126,7 +2126,7 @@ title=]
         よって，
         \[P[M_t\ge a]=P[B_t>a]+P[\wt{B}_t\ge a]=2P[B_t>a].\]
     \end{description}
-\end{proof}
+\end{Proof}
 
 \begin{corollary}\label{cor-density-of-sup-process-of-Brownian-motion}
     任意の$a>0$に対して，$M_a:=\sup_{t\in[0,a]}B_t$は次の密度関数を持つ：
@@ -2138,7 +2138,7 @@ title=]
 \begin{lemma}
     殆ど確実に，Brown運動$(B_t)_{t\in[0,1]}$ただ一つの点にて最大値を取る．
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[方針] $[0,1]$の分割
         \[\I_n:=\Brace{\Square{\frac{j-1}{2^n},\frac{j}{2^n}}\in P([0,1])\;\middle|\;1\le j\le 2^n}\]
@@ -2151,7 +2151,7 @@ title=]
         $\sup_{t\in[a,b]}(B_t-B_a)$を$\F_a$で条件づけたものは，$\sup_{t\in[0,b-a]}B_t$と同じ確率分布を持つ．
         系\ref{cor-density-of-sup-process-of-Brownian-motion}より，これは絶対連続である．
     \end{description}
-\end{proof}
+\end{Proof}
 
 
 \section{Laplace作用素}
@@ -2162,7 +2162,11 @@ title=]
     その生成作用素$\lim_{t\to0}\frac{P_t-I}{t}=\frac{\nabla}{2}$がLaplace作用素である．$I$は恒等作用素とした．
 \end{tcolorbox}
 
+\chapter{マルチンゲール}
 
+\begin{quotation}
+    確率積分は一般のマルチンゲールについて定義出来る．
+\end{quotation}
 
 \chapter{確率解析}
 
@@ -2194,7 +2198,7 @@ title=]
     博士論文\cite{Ito42}でLévy過程のLévy-伊藤分解定理を定め，\cite{Ito44}で確率積分を定義した．
 \end{tcolorbox}
 
-\subsection{発展的可測}
+\subsection{発展的可測性の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=発展的可測性とは$\P/\B(\R)$-可測性である]
@@ -2223,7 +2227,7 @@ title=発展的可測性とは$\P/\B(\R)$-可測性である]
         \item $u$は発展的可測．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{description}
         \item[$\P$のwell-definedness] 明らかに，$\forall_{t\in\R_+} A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])$という条件は，$A=\emptyset,\Om\times\R_+$はこれを満たし，これを満たす$(A_n)$が存在したとき，合併も満たす．
         また，補集合については，$\F_t\times\B([0,t])$が$\Om\times[0,t]$上の$\sigma$-代数をなすことに注意すると，
@@ -2234,9 +2238,9 @@ title=発展的可測性とは$\P/\B(\R)$-可測性である]
         $A=\cup_{n\in\N}A_n\in\F\times\B(\R_+)$．
         \item[(1)$\Leftrightarrow$(2)] $\P/\B(\R)$-可測過程$u:\Om\times\R_+\to\R$を取る．任意の$t\in\R_+$について，$u|_{\Om\times[0,t]}$によるBorel可測集合$B\in\B(\R)$の逆像は$u^{-1}(B)\cap(\Om\times[0,t])$であるが，$u^{-1}(B)\in\P$より，これは$\F_t\times\B([0,t])$の元である．
     \end{description}
-\end{proof}
+\end{Proof}
 
-\subsection{単過程上の定義}
+\subsection{発展的可測な単過程の確率積分}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2256,9 +2260,9 @@ title=]
         で表す．最後の等式はFubiniの定理による．
     \end{enumerate}
 \end{notation}
-\begin{proof}
+\begin{Proof}
     
-\end{proof}
+\end{Proof}
 
 \begin{definition}[simple process, stochastic integral]\mbox{}
     \begin{enumerate}
@@ -2272,7 +2276,7 @@ title=]
     \end{enumerate}
 \end{definition}
 \begin{remarks}
-    すでにこの時点で，$\phi_j$を$1_{(t_j,t_{j+1}]}$に対して$\F_{t_j}$-可測としているため，$\phi_j\indep B_{t_{j+1}}-B_{t_j}$を含意することがトリックになる．
+    すでにこの時点で，$\phi_j$を$1_{(t_j,t_{j+1}]}$に対して$\F_{t_j}$-可測としているため，$\phi_j\indep (B_{t_{j+1}}-B_{t_j})$を含意することがトリックになる．
 \end{remarks}
 
 \begin{lemma}[単関数上の積分の性質]\label{lemma-property-of-SI-on-E}
@@ -2283,10 +2287,10 @@ title=]
         \item 等長性：$\norm{I(u)}^2_{\L^2(\Om)}=E\Square{\paren{\int^\infty_0u_tdB_t}^2}=E\Square{\int^\infty_0u^2_tdt}=\norm{u}^2_{\L^2(\P)}$．
     \end{enumerate}
 \end{lemma}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item $u_t,v_t$が定める$\R_+$の分割の細分を取って考えると良い．
-        \item $\forall_{j\in n}\;\phi_j\indep B_{t_{j+1}}-B_{t_j}$より，
+        \item $\forall_{j\in n}\;\phi_j\indep (B_{t_{j+1}}-B_{t_j})$より，
         \[E\Square{\int^\infty_0u_tdB_t}=\sum^{n-1}_{j=0}E[\phi_j(B_{t_{j+1}}-B_{t_j})]=\sum^{n-1}_{j=0}E[\phi_j]E[B_{t_{j+1}}-B_{t_j}]=0.\]
         \item $u_t=\sum^{n-1}_{j=0}\phi_j1_{(t_j,t_{j+t}]}(t)\;(\phi_j\in L^2_{\F_{t_j}}(\Om))$，$\Delta B_j:=B_{t_{j+1}}-B_{t_j}\in L^2(\Om)$とすると，
         $(I(u))^2=\sum^{n-1}_{i,j=0}\phi_i\phi_j\Delta B_i\Delta B_j$．
@@ -2306,9 +2310,13 @@ title=]
             &=E[I(u^2)]=\norm{u}^2_{\L^2(\P)}.
         \end{align*}
     \end{enumerate}
-\end{proof}
+\end{Proof}
+\begin{remarks}
+    証明中の大事な示唆として，$L^2(\P)$内の$C$-過程（Brown運動など）は，2.の証明中のように収束する単過程列を取れる．
+    しかし，一般の$u\in L^2(\P)$にこの方法が通用するわけではない．
+\end{remarks}
 
-\subsection{延長}
+\subsection{一般の発展的可測過程への延長}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2319,15 +2327,15 @@ title=]
 \begin{proposition}
     $\E\subset L^2(\P)$は稠密．
 \end{proposition}
-\begin{proof}
+\begin{Proof}
     $\E\subset L^2(\P)$の間に，$C$-過程のクラス
-    \[C'(\R_+;L^2(\Om)):=\Brace{u\in L^2(\P)\mid u:\R_+\to L^2(\Om)\text{は連続}}\]
+    \[C'(\R_+;L^2(\Om)):=\Brace{u\in L^2(\P)\mid u_t:\R_+\to L^2(\Om)\text{は連続}}\]
     を考える．$C'(\R_+;L^2(\Om))=C(\R_+;L^2(\Om))$の如何は
     発展的可測性についての更なる考察が必要であるから，記号を使い分けた．
     同一視して，
     $\E\subset C'(\R_+;L^2(\Om))\subset L^2(\P)$の順に稠密性を示す．
     \begin{description}
-        \item[1. $C'(\R_+;L^2(\Om))\subset L^2(\P)$] 任意の$u\in L^2(\P)$を取る．
+        \item[1. $C'(\R_+;L^2(\Om))$の$L^2(\P)$上での稠密性] 任意の$u\in L^2(\P)$を取る．
         \[u^{(n)}_t:=n\int^t_{\paren{t-\frac{1}{n}}\lor0}u_sds\]
         と定めると，$u^{(n)}:\R_+\to L^2(\Om)$は連続である：$u^{(n)}\in C(\R_+;L^2(\Om))$．
         実際，Lebesgueの収束定理より，
@@ -2344,7 +2352,7 @@ title=]
         よって，$u_t^{(n)}\in C'(\R_+;L^2(\Om))$．
         
         さらに，$u_t^{(n)}\to u_t$が成り立つ．
-        実際，$u_t\in L^2(\Om,\P,P\times l)$より，
+        実際，$u_t\in L^2(\Om\times\R_+,\P,P\times l)$より，
         \begin{align*}
             u_t^{(n)}&=\frac{\int^t_0u_sds-\int^{(t-1/n)\lor0}_0u_sds}{1/n}\xrightarrow{n\to\infty}u_t.
         \end{align*}
@@ -2354,18 +2362,23 @@ title=]
         
         $u_t,u_t^{(n)}\in L^2(\P)$より，再びLebesgueの優収束定理から，
         \[E\Square{\int_{\R_+}\abs{u_t-u_t^{(n)}}^2dt}\xrightarrow{n\to\infty}0.\]
-        \item[2. $\E\subset C'(\R_+;L^2(\Om))$]
+        よって，$L^2(\P)$上の任意の点には，$C'(\R_+;L^2(\Om))$の点列でそれに収束するものが存在する．
+        いずれも距離化可能だから，$\o{C'(\R_+;L^2(\Om))}=L^2(\P)$．
+        \item[2. $\E$の$L^2(\P)$の位相についての$ C'(\R_+;L^2(\Om))$上での稠密性]
         $u\in  C'(\R_+;L^2(\Om))$を任意に取る．
         \[u^{(n,N)}_t:=\sum^{n-1}_{j=0}u_{t_j}1_{(t_j,t_{j+1}]}(t),\qquad\paren{t_j:=N\frac{j}{n},j\in n}\]
-        として，$\E$の二重列を定める．$u^{(n,N)}_t$は$t> N$については$0$であることに注意．
+        とすると，$u_{t_j}\in L^2_{t_j}(\P)$は発展的可測より特に
+        $u_{t_j}\in L_{\F_{t_j}}^2(\Om)$だから，これはたしかに単過程で，$\E$のネットである．
+        $u^{(n,N)}_t$は$t> N$については$0$であることに注意．
         これに対して，
         \[E\Square{\int^\infty_0\Abs{u_t-u_t^{(n,N)}}^2}\le E\Square{\int^\infty_Nu^2_tdt}+N\sup_{\abs{t-s}\le N/n}E[\abs{u_t-u_s}^2].\]
         $n\to\infty,N\to\infty$の極限を考えると，右辺は$0$に収束する．
+        よって，$L^2(\P)$の相対位相について，$C'(\R_+;L^2(\Om))\subset\o{\E}$．
     \end{description}
-\end{proof}
+\end{Proof}
 \begin{remarks}\mbox{}
     \begin{enumerate}
-        \item Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．\footnote{\url{https://terrytao.wordpress.com/2011/05/24/locally-compact-topological-vector-spaces/}}
+        \item Wiener空間$C(\R_+)$などの無限次元位相線型空間は局所コンパクトになり得ない．\footnote{位相線型空間が局所コンパクトであることは，有限次元であることに同値．}
         また，$C_c(\R_+;L^2(\Om))$は$L^2(\R_+;L^2(\Om))$上稠密である，という結果は得られそうであるが，高度である．
         そこで，$f\in L^1([a,b],\o{\R})$について$F(x):=\int^x_af(t)dt$は$(a,b)$上殆ど至る所微分可能であり，$F'(x)=f(x)$が成り立つというLebesgueの定理を用いた．
         \item また，$C'(\R_+;L^2(\Om))$は，明らかな方法で単過程近似が出来ることを用いた．病的な関数については，Lebesgueの言葉で処理したのである．
@@ -2375,7 +2388,7 @@ title=]
 \begin{corollary}[確率積分の等距離延長]\label{cor-extention-of-SI}
     確率積分$I:\E\to L^2(\Om)$は，線型な等長同型$I:L^2(\P)\to L^2(\Om)$に延長できる．
 \end{corollary}
-\begin{proof}
+\begin{Proof}
     確率積分$I$は$\E$上の有界線型作用素であったから（等長なので特に有界），$L^2(\P)$上に作用素ノルムを変えずに一意に連続延長する．
     連続延長であることより，等距離性は保たれる：ノルムの連続性より，
     \[\norm{I(u)}=\norm{I(\lim_{n\to\infty}u^{(n)})}=\lim_{n\to\infty}\norm{I(u^{(n)})}=\lim_{n\to\infty}\norm{u^{(n)}}=\norm{u}.\]
@@ -2391,34 +2404,34 @@ title=]
         &\le 1\paren{E\Square{\int^\infty_0(u_t^{(n)}-u_t)^2dt}+E\Square{\int^\infty_0(u_t^{(m)}-u_t)^2dt}}\xrightarrow{n,m\to\infty}0.
     \end{align*}
     あとは，収束列$(u^{(n)})$の取り方に依らないことを示せば良い．
-\end{proof}
+    これは，2つの異なる収束列が同じ$u$に依存するとき，2つの収束列の差が定める列は$0$に収束するから，$I$の$0\in\E$での連続性から従う．
+\end{Proof}
 
 \subsection{確率積分の性質}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $I:L^2(\Om\times\R_+,\P,P\times l)\to L^2(\Om,\F,P)$は，$t\in\R_+$の成分が消えて，純粋な確率変数のみが残ることとなる．
-    このとき，$\Im I\subset L^2_0(\Om,\F,P)$となる．
+    このとき，$\Im I\subset L^2_0(\Om,\F,P)$を満たす，Hilbの埋め込みとなっている．
 \end{tcolorbox}
 
-\begin{proposition}[期待値との関係]
+\begin{proposition}[$I$はHilbの射である]
     任意の$u,v\in\L^2(\P)$について，
     \begin{enumerate}
         \item $E[I(u)]=0$．
-        \item $E[I(u)I(v)]=E\Square{\int^\infty_0u_sv_sds}=E[I(uv)]$．
+        \item $E[I(u)I(v)]=E\Square{\int_0^\infty u_tdB_t\int_0^\infty v_tdB_t}=E\Square{\int^\infty_0u_sv_sds}=(u|v)_{L^2(\P)}$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}
-    $(u^{(n)})$を$u$に$L^2(\Om)$-収束する単過程列
-    %\[u^{(n)}_t=\sum^{N^{(n)}-1}_{j=0}\phi_j^{(n)}1_{(t_j^{(n)},t_{j+1}^{(n)}]}(t)\]
-    とする．
+\begin{Proof}
+    $\{u^{(n)}\}\subset\E$を$u$に$L^2(\P)$-収束する単過程列
+    とすると，$I$の連続性より$\{I(u_n)\}$も$I(u)$に$L^2(\Om)$-収束する．
     \begin{enumerate}
-        \item $I(u)$は可積分で，単過程列$u^{(n)}$はこれを優関数とするように取れるから，
-        Lebesgueの優収束定理より，
+        \item よって，
         \begin{align*}
-            E[I(u)]&=E\Square{\lim_{n\to\infty}I(u^{(n)})}\\
-            &=\lim_{n\to\infty}E[I(u^{(n)})]=0.
+            \Abs{E[I(u^n)]-E[I(u)]}&\le E[\abs{I(u^n)-I(u)}]=\norm{I(u^n)-I(u)}_{L^1(\Om)}\\
+            &\le\norm{I(u^n)-I(u)}_{L^2(\Om)}\xrightarrow{n\to\infty}0.
         \end{align*}
+        または，$L^2$-収束する列$(I(u_n))\to I(u)$の期待値の像も収束するためには，一様可積分性を示しても十分である．
         \item $I$の線形性と等長性\ref{cor-extention-of-SI}より，$(I(u+v))^2$の確率積分は
         \begin{align*}
             E[I(u^2)]+E[I(v^2)]+2E[I(uv)]=E[(I(u+v))^2]= E[(I(u)+I(v))^2]=E[I(u^2)]+E[I(v^2)]+2E[I(u)I(v)].
@@ -2426,9 +2439,12 @@ title=]
         と2通りに表せる．
         ゆえに，$E[I(uv)]=E[I(u)I(v)]$．
     \end{enumerate}
-\end{proof}
+\end{Proof}
+\begin{remarks}
+    (2)は極化恒等式による証明である．
+\end{remarks}
 
-\subsection{不定積分}
+\subsection{不定積分の定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2479,8 +2495,8 @@ title=]
         発展的可測で，任意の有界閉集合$[0,T]$上で2乗可積分な過程のなす空間を
         \[L^2_\infty(\P):=\Brace{u\in\L(\P)\mid\forall_{t\in\R_+}\;E_{\Om\times\R_+}[1_{[0,t]}u^2]<\infty}\]
         とすると，これは$L^2(\P)$よりも大きい．
-        標準的な埋め込み$L^2_T(\P)\mono L^2(\P)$と$L^2(\P)\epi L^2_T(\P)$とはいくつか考えられて，
-        $L^2_T(\P)\subset L^2(\P)$はいささか商空間に近いが，$L^2_\infty(\P)$はある種の極限対象である．
+        標準的な埋め込み$L^2_T(\P)\mono L^2(\P)$と射影$L^2(\P)\epi L^2_T(\P)$とはいくつか考えられて，
+        $L^2_T(\P)\subset L^2(\P)$の関係はいささか商空間に近いが，$L^2_\infty(\P)$はおそらく正しく定式化すれば「帰納極限」である．
         \item 本来は，発展的可測で，任意の有界閉集合$[0,T]$で，見本過程$u_s(\om)$が殆ど確実に2乗可積分になる過程のなす空間
         \[L^2_\loc(\P):=\Brace{u\in\L(\P)\mid\forall_{t\in\R_+}\;E_{\R_+}[1_{[0,t]}u^2]<\infty\;\as}\]
         で定義できる．
@@ -2507,92 +2523,156 @@ title=]
         \item $\forall_{s\in[0,t]}\;E[M_t|\F_s]=M_s\;\as$
     \end{enumerate}
 \end{proposition}
-\begin{proof}
-    任意に$t\in\R_+$を取る．
-    $1_{[0,t]}u_s\in L^2(\P)$に対して，単過程列を
-    \[u^{(n)}:=\sum_{j=0}^{n-1}u_{t_j}1_{(t_j,t_{j+1}]},\quad t_j:=t\frac{j}{n}\]
-    と定めるとこれは単調増加列で，$I(1_{[0,t]}u_s)=\lim_{n\to\infty}I(1_{[0,t]}u_s^{(n)})$と表せる．
-    ただし，収束はノルム収束である．
+\begin{Proof}
+    任意の$t\in\R_+$について，$1_{[0,t]}u\in L^2(\P)$より，ある単過程列$\{u^n\}\subset\E$が存在して，$u^n\to 1_{[0,t]}u\;\on L^2(\P)$．このとき，$I[1_{[0,t]}u^n]\to I[1_{[0,t]}u]\;\on L^2(\Om)$．
     \begin{enumerate}
-        \item 
-        $M_t=I(1_{[0,t]}u)$が$\F_t$-可測であることを示すには，任意の$n\in\N$について$I(1_{[0,t]}u_s^{(n)})$が$\F_t$-可測であることを示せば良いが，これは
-        \[I(1_{[0,t]}u)=\sum_{j=0}^{n-1}u_{t_j}(B_{t_{j+1}}-B_{t_j})\]
-        というように，$\F_t$-可測な確率変数の連続な合成であることから明らか．
-        \item 中心化されているため，特に可測である．あるいは$I$の像が$L^2(\Om)$であることからも．
+        \item いま，各$I[1_{[0,t]}u^n]$が$\F_t$-可測であることに注意すると，$I[1_{[0,t]}u]$はある概収束する部分列$\{X_j\}\subset\{I[1_{[0,t]}u]\}$に関して$\lim_{j\to\infty}X_j=I[1_{[0,t]}u^n]\;\as$と表せるから，$\F_t$が任意の零集合を含むことより，やはり$\F_t$-可測である．
+        %$M_t=I(1_{[0,t]}u)$が$\F_t$-可測であることを示すには，任意の$n\in\N$について$I(1_{[0,t]}u_s^{(n)})$が$\F_t$-可測であることを示せば良いが，これは
+        %\[I(1_{[0,t]}u)=\sum_{j=0}^{n-1}u_{t_j}(B_{t_{j+1}}-B_{t_j})\]
+        %というように，$\F_t$-可測な確率変数の連続な合成であることから明らか．
+        \item $I$の像が$L^2(\Om)$であることより．
         \item 任意の$s\le t$に対して，
         \begin{align*}
             E[I(1_{[0,t]}u^{(n)})|\F_s]&=\sum^{n-1}_{j=0}E[u_{t_j}(B_{t_{j+1}}-B_{t_j})|\F_s]\\
-            &=\sum^{n-1}_{j=0}E[E[u_{t_j}(B_{t_{j+1}}-B_{t_j})|\F_{t_j\lor s}]|\F_s]\\
-            &=\sum^{n-1}_{j=0}E[u_{t_{j}}E[B_{t_{j+1}}-B_{t_j}|\F_{t_j\lor s}]|\F_s]\\
+            &=\sum^{n-1}_{j=0}E[E[u_{t_j}(B_{t_{j+1}\land t}-B_{t_j})|\F_{t_j\lor s}]|\F_s]\\
+            &=\sum^{n-1}_{j=0}E[u_{t_{j}}E[B_{t_{j+1}\land t}-B_{t_j}|\F_{t_j\lor s}]|\F_s]\\
             &=\sum_{j=0}^{n-1}u_{t_j}(B_{t_{j+1}\land s}-B_{t_j\land s})=I(1_{[0,s]}u^{(n)}).
         \end{align*}
         というように，時刻$s$以降は$\F_s$と独立になるために$B_{t_{j+1}}-B_{t_j}$の項が零因子になり，ちょうど$s$までの和のみが残ることとなる．
-        さらに，$I$の連続性より，$I(1_{[0,t]}u^{(n)})\to I(1_{[0,t]}u)\;\on\;L^2(\Om)$であるから，両辺$n\to\infty$の極限を考えると，条件付き期待値に関する単調収束定理より，
+        さらに，$I$の連続性より，$I(1_{[0,t]}u^{(n)})\to I(1_{[0,t]}u)\;\on\;L^2(\Om)$であるから，両辺$n\to\infty$の極限を考えると，条件付き期待値が$L^2(Om)$-距離に関する非拡大写像であることより，
         \[E[I(1_{[0,t]}u)|\F_s]=I(1_{[0,s]}u).\]
     \end{enumerate}
-\end{proof}
+\end{Proof}
 
-\subsection{そのほかの性質}
+\subsection{代数的性質}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $L^\infty(\F_a)$-斉次性は，条件付き期待値の性質$\forall_{Z\in L^\infty(\cG)}\;E[ZX|\cG]=ZE[X|\cG]$．
 \end{tcolorbox}
 
-\begin{proposition}
+\begin{proposition}[代数法則]
     不定積分の$(\F_t)$-マルチンゲール$\Brace{M_t:=\int^t_0 u_sdB_s}_{t\in\R_+}\subset L^1(\Om)\;(u\in L^2_\infty(\P))$について，
     \begin{enumerate}
         \item 加法性：$\forall_{a\le b\le c\in\R_+}\;\int^b_au_sdB_s+\int^c_bu_sdB_s=\int^c_au_sdB_s$．
-        \item $L^\infty(\F_a)$-斉次性：$\forall_{a<b\in\R_+,F\in L^\infty(\F_a)}\;F:\Om\to\R$について，$\int^b_aFu_sdB_s=F\int^b_au_sdB_s$．
-        \item 連続性：$(M_t)$には連続なバージョンが存在する．
-        \item 最大不等式：$\forall_{T,\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda^2}E\Square{\int^T_0u^2_tdt}$かつ$E\Square{\sup_{t\in[0,T]}\abs{M_t}^2}\le 4E\Square{\int^T_0u^2_tdt}$．
-        
-        またこれは$u\in L^2(\P)$に過ぎずとも，$T=\infty$の場合は成立する．
-        \item 2次変分：$\forall_{n\in\N}\;\forall{\pi:=\{0=t_0<t_1<\cdots<t_n=t\}\subset[0,t]}\;S^2_\pi(u):=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{L^2(\Om)}\int^t_0u^2_sds$．
-        \item 停止時までの積分：$u\in L^2(\P)$で，$\tau:\Om\to\R_+$を停止時とする．このとき，$u1_{[0,\tau]}\in L^2(\P)$で，
-        \[\int^\infty_0u_t1_{[0,\tau]}(t)dB_t=\int^\tau_0u_tdB_t.\]
+        \item $L^\infty(\F_a)$-斉次性：任意の区間$(a,b)\subset\R_+$と，$\F_a$-可測な有界関数$F:\Om\to\R$について，$\int^b_aFu_sdB_s=F\int^b_au_sdB_s$．
     \end{enumerate}
 \end{proposition}
-\begin{proof}\mbox{}
+\begin{Proof}\mbox{}
     \begin{enumerate}
         \item 確率積分の線形性より，$I[1_{[a,b]}u_s]+I[1_{[b,c]}u_s]=I[1_{[a,c]}u_s]$．
         \item $1_{[a,b]}Fu_s\in L^2(\P)$であるから，確率積分$\int^b_aFu_sdB_s$は確かに定まる．実際，
-        \[E\Square{\int^b_au_s^2(\om)dsd\om}<\infty,\quad F(\om)\in L^2(\Om)\]
-        に注意すると，
+        \[E\Square{\int^b_au_s^2(\om)ds}<\infty,\quad F(\om)\in L^2(\Om)\]
+        に注意すると，Cauchy-Schwartzの不等式より，
         \begin{align*}
             \int_\Om\int_{\R_+}1_{[a,b]}(s)F(\om)u_s(\om)dsd\om&=\int_\Om F(\om)\int^b_au_s(\om)dsd\om=\paren{F(\om)\;\middle|\;\int^b_au_s(\om)ds}_{L^2(\Om)}\\
             &\le\norm{F}_{L^2(\Om)}\norm{u_s}_{L^2(\Om\times[0,T])}<\infty.
         \end{align*}
-        ここで，$1_{[a,b]}u\in L^2(\P)$に対して，
-        単過程列$(u^{(n)})$を
-        \[u^{(n)}:=\sum^{n-1}_{j=0}u^{(n)}_{t_j}1_{(t_j,t_{j+1}]},\qquad t_j:=a+(b-a)\frac{j}{n}\]
-        と定めると，これは下から$1_{[a,b]}u$にノルム収束する．
-        よって，$I[1_{[a,b]}Fu_s]=\lim_{n\to\infty}I[1_{[a,b]}Fu_s^{(n)}]$と表せるから，
-        単過程$u$について，
-        $I[1_{[a,b]}Fu_s]=F\cdot I[1_{[a,b]}u_s]$を示せば良い．
-        改めて
-        \[u:=\sum^{n-1}_{j=0}u_{t_j}1_{(t_j,t_{j+1}]},\qquad t_j:=a+(b-a)\frac{j}{n}\]
-        とすると，$Fu_s$も，各係数$Fu_{t_j}$は2乗可積分で$\F_{t_j}$-可測な確率変数となるから，$Fu$も単過程である．
-        実際，$F$は仮定から$\F_a\subset\F_{t_j}$-可測で，$u_{t_j}$は$u$が発展的可測であることより$u|_{[0,t_j]}$が$\F_{t_j}\times\B([0,t_j])$-可測であり，$\forall_{I\in\B(\R)}\;u_{t_j}^{-1}(I)=(u|_{[0,t_j]}^{-1}(I))_{t_j}\in\F_{t_j}$という切り口で表されるから，やはり$\F_{t_j}$-可測(Fubiniの定理)．
-        したがって，単過程に対する確率積分の定義から，
-        \[I[1_{[a,b]}Fu_s]=\sum^{n-1}_{j=0}Fu_{t_j}(B_{t_{j+1}}-B_{t_j})=F\sum^{n-1}_{j=0}u_{t_j}(B_{t_{j+1}}-B_{t_j})=FI[1_{[a,b]}u_s].\]
-        を得る．
-        \item 任意の$T>0$を取る．
-        $1_{[0,T]}u$に収束する単過程列$(u^{(n)})$を取る．
-        $M^{(n)}_t:=I(1_{[0,t]}u^{(n)})$とすると，$\lim_{n\to\infty}M^{(n)}_t=M_t$であるが，これらは連続確率変数の和であるから連続，従って$(M^{(n)}_t)_{t\in\R_+}$は連続過程である．
 
+        $F$を$\F_a$-可測な有界関数として，$I[1_{[a,b]}Fu]=F\cdot I[1_{[a,b]}u]$を示せば良い．
+        すると，$1_{[a,b]}u\in L^2(\P)$に対して，
+        単過程列$(u^{(n)})$が取れて，$1_{[a,b]}u$に$L^2(\P)$-収束する．
+        この任意の$u^{(m)}$について，$I[1_{[a,b]}Fu^{(m)}]=F\cdot I[1_{[a,b]}u^{(m)}]$が示せれば，あとは$I$のノルム連続性から従う．
+        単過程$u^{(m)}$は
+        \[u^{(m)}:=\sum^{n^{(m)}-1}_{j=0}\phi^{(m)}_{j}1_{(t_j^{(m)},t_{j+1}^{(m)}]},\qquad\paren{\phi^{(m)}_j\in L^2_{\F_{t_j}}(\Om),0\le t_1^{(m)}<\cdots<t_{n^{(m)}}^{(m)}}\]
+        と表せる．
+        このとき，
+        \[1_{[a,b]}Fu^{(m)}:=\sum^{n^{(m)}-1}_{j=0}F\phi^{(m)}_{j}1_{(t_j^{(m)}\lor a,t_{j+1}^{(m)}\land b]}\]
+        も単過程であることを示せば，結果$I[1_{[a,b]}Fu^{(m)}]=F\cdot I[1_{[a,b]}u^{(m)}]$は単過程に対する確率積分$I$の定義からすぐに従う．
+        
+        $\phi_j^{(m)}$は$\F_{t_j^{(m)}}$-可測としたから，特に$\F_{t_j^{(m)}\lor a}$-可測．
+        $F$は$\F_a$-可測としたから特に$\F_{t_j^{(m)}\lor a}$-可測．よって，$1_{[a,b]}Fu^{(m)}$も単過程である．
+        %$Fu_s$も，各係数$Fu_{t_j}$は2乗可積分で$\F_{t_j}$-可測な確率変数となるから，$Fu$も単過程である．
+        %実際，$F$は仮定から$\F_a\subset\F_{t_j}$-可測で，$u_{t_j}$は$u$が発展的可測であることより$u|_{[0,t_j]}$が$\F_{t_j}\times\B([0,t_j])$-可測であり，$\forall_{I\in\B(\R)}\;u_{t_j}^{-1}(I)=(u|_{[0,t_j]}^{-1}(I))_{t_j}\in\F_{t_j}$という切り口で表されるから，やはり$\F_{t_j}$-可測(Fubiniの定理)．
+        %したがって，単過程に対する確率積分の定義から，
+        %\[I[1_{[a,b]}Fu_s]=\sum^{n-1}_{j=0}Fu_{t_j}(B_{t_{j+1}}-B_{t_j})=F\sum^{n-1}_{j=0}u_{t_j}(B_{t_{j+1}}-B_{t_j})=FI[1_{[a,b]}u_s].\]
+        %を得る．
     \end{enumerate}
-\end{proof}
+\end{Proof}
 \begin{remarks}
     おそらく，$I(1_{[a,b]}u)$は$\F_b$-可測である．
 \end{remarks}
 
-\begin{corollary}
-    \begin{description}
-        \item[(5)] $\forall_{p>0,T>0}$
-        \[c_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}\le E\Square{\sup_{t\in[0,T]}\Abs{\int^t_0u_sdB_s}^p}\le C_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}.\]
-    \end{description}
+\subsection{連続な修正マルチンゲール}
+
+\begin{proposition}[$C$-過程と法則同等]
+    任意の$u\in L^2_\infty(\P)$の不定積分のマルチンゲール$(M_t)_{t\in\R_+}$には連続な修正が存在する．
+\end{proposition}
+\begin{Proof}
+    任意の$u\in L^2_\infty(\P)$と任意の$T>0$を取ると，$1_{[0,T]}u\in L^2(\P)$より，単過程列$\{u^{(n)}\}\subset\E$が存在して，$u^{(n)}\to 1_{[0,T]}u\in L^2(\P)$．
+    ここで，各単過程$u^{(n)}$の定める不定積分のマルチンゲール$I[1_{[0,t]}u^{(n)}]=:M_t^{(n)}$は，
+    \[M^{(n)}_t=\sum_{j=0}^{m^{(n)}-1}\phi_j^{(n)}(B_{t_{j+1}^{(n)}\land t}-B_{t_j^{(n)}})\qquad\paren{\phi_j^{(n)}\in L^2_{\F_{t_j^{(n)}}},0\le t_0^{(n)}<t_1^{(n)}<\cdots<t_{m^{(n)}}^{(n)}}\le T\]
+    と表せるから，$C$-過程$\Om\to C([0,T];\R)$であり，いま$M_t$に各点$t\in[0,T]$について$L^2(\Om)$-収束することはわかっている．
+    これが，殆ど確実に$[0,T]$上一様収束することを示す．すると，極限過程$(J_t)_{t\in[0,T]}$は連続で，$(M_t)_{t\in[0,T]}$と法則同等である．
+    \begin{enumerate}[(a)]
+        \item $(M_t^{(n)}-M_t^{(m)})$は連続なマルチンゲールだから，これについてのDoobの不等式より，任意の$\lambda>0$について，
+        \begin{align*}
+            P\Square{\sup_{t\in[0,T]}\abs{M_t^{(n)}-M_t^{(m)}}>\lambda}&\le\frac{1}{\lambda^2}E[\abs{M^{(n)}_T-M^{(m)}_T}^2]=\frac{1}{\lambda^2}\norm{I(u^{(n)}_T-u^{(m)}_T)}_{L^2(\Om)}\\
+            &=\frac{1}{\lambda^2}\norm{u^{(n)}_t-u^{(m)}_t}_{L^2(\P)}\xrightarrow{n,m\to\infty}0.
+        \end{align*}
+        \item したがって，任意の$k\in\N$に対して，十分大きく$n_k,n_k+1\in\N$を取ると，
+        \[P\Square{\sup_{t\in[0,T]}\abs{M_t^{(n_{k+1})}-M_t^{(n_k)}}>\frac{1}{2^k}}\le\frac{1}{2^k}\]
+        が成り立つ．よって，$A_k:=\Brace{\sup_{t\in[0,T]}\abs{M_t^{(n_{k+1})}-M_t^{(n_k)}}>\frac{1}{2^n}}\subset\Om$とおくと，$\sum^\infty_{k=1}P[A_k]<\infty$．
+        よって，Borel-Cantelliの補題より，$N:=\limsup_{k\to\infty}A_k$とおくとこれは零集合であり，
+        \[\forall_{\om\in\Om\setminus N}\;\exists_{k_1\in\N}\;\forall_{k\ge k_1}\quad\sup_{t\in[0,T]}\abs{M_t^{(n_{k+1})}(\om)-M_t^{(n_k)}(\om)}\le\frac{1}{2^k}\]
+        が成り立っている．これは，$(M_t^{(n_k)})$が殆ど確実に，$[0,T]$上一様収束することを表している．この極限となる連続関数を$J_t(\om):\Om\times[0,T]\to\R$とおく．
+        \item ここで，$(M_t^{(n_k)})$は$\int^t_0u_sdB_s$にも$L^2(\Om)$-収束するから，$\forall_{t\in[0,T]}\;J_t=\int^t_0u_sdB_s\;\as$．
+        $T>0$は任意にとったから，結局任意の$t\in\R_+$について成り立つ．
+    \end{enumerate}
+\end{Proof}
+
+\begin{corollary}[最大不等式]
+    $u\in L_\infty^2(\P)$について，
+    \begin{enumerate}
+        \item $\forall_{T,\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda^2}E\Square{\int^T_0u^2_tdt}$．
+        \item $E\Square{\sup_{t\in[0,T]}\abs{M_t}^2}\le 4E\Square{\int^T_0u^2_tdt}$．
+        \item (1),(2)は特に$u\in L^2(\P)$の場合，$T=\infty$としても成立する．
+    \end{enumerate}
 \end{corollary}
+\begin{Proof}
+    (1),(2)は，不定積分のmartingale $(M_t)$の連続な修正$(\wt{M}_t)$について(これもマルチンゲール)，$\forall_{T>0}\;\wt{M}_T\in L^2(\Om)$であるから，Doobの不等式より，
+    \[\forall_{\lambda>0}\quad P\Square{\sup_{0\le t\le T}\abs{\wt{M}_t}>\lambda}\le\frac{1}{\lambda^2}E[\abs{\wt{M}_T}^2],\]
+    \[E\Square{\sup_{t\in[0,T]}\abs{\wt{M}_t}^2}\le 4E[\abs{\wt{M}_T}^2].\]
+    \begin{enumerate}
+        \item $E[\abs{\wt{M}_t}^2]=E[\abs{M_t}^2]$は明らか．
+        また，$\Brace{\sup_{0\le t\le T}\abs{\wt{M} _t}\ne\sup_{0\le t\le T}\abs{M_t}}$も零集合であることを示す．
+        
+        よって，
+        1式目の左辺は$M_t$としてもよく，同様に右辺は
+        \[=\frac{1}{\lambda^2}\norm{I(1_{[0,T]}u)}_{L^2(\Om)}^2=\frac{1}{\lambda^2}E\Square{\int^T_0u_t^2dt}\]
+        に等しい．
+        \item 同様にして，2式目の右辺は
+        \[=4E\Square{\int^T_0u_t^2dt}\]
+        に等しい．
+        \item $u\in L^2(\P)$の場合，単調収束定理により，$T\to\infty$としても(1)は成り立つ．
+        (2)の左辺が収束するのは，マルチンゲールの2次変分過程が可積分であるから，Lebesgueの優収束定理が使える．
+    \end{enumerate}
+\end{Proof}
+
+\subsection{二次変分}
+
+\begin{proposition}[二次変分]
+    分割$\pi:=\{0=t_0<t_1<\cdots<t_n=t\}\subset[0,t]\;(n\in\N)$のなすネット$S:2^{([0,t])}\to L^2(\Om)$は，$L^2(\Om)$極限
+    \[S^2_\pi(u):=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{L^2(\Om)}\int^t_0u^2_sds\]
+    を持つ．
+\end{proposition}
+
+\begin{corollary}
+    \[\forall_{p>0,T>0}\quad c_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}\le E\Square{\sup_{t\in[0,T]}\Abs{\int^t_0u_sdB_s}^p}\le C_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}.\]
+\end{corollary}
+
+\subsection{停止時までの積分}
+
+\begin{proposition}[停止時までの積分]
+    $u\in L^2(\P)$で，$\tau:\Om\to\R_+$を停止時とする．このとき，
+    \begin{enumerate}
+        \item $u1_{[0,\tau]}\in L^2(\P)$．
+        \item 
+    \end{enumerate}
+    で，
+    \[\int^\infty_0u_t1_{[0,\tau]}(t)dB_t=\int^\tau_0u_tdB_t.\]
+\end{proposition}
+
 
 \section{一般の過程の積分}
 
