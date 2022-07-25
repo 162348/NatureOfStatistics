@@ -3224,6 +3224,11 @@ title=]
 
 \subsection{定義と局所マルチンゲール性}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Riemann-Stieltjes積分の方法で，$X_t$が$C$-過程，$Y_t$が局所有界過程のときは，$\int^T_0X_tdY_t$が定義出来る．
+\end{tcolorbox}
+
 \begin{lemma}
     局所2乗可積分な過程$u\in L^2_\loc(\P)$に対して，確率時刻$T_n:\Om\to\o{\R_+}\;(n\in\N)$を
     \[T_n:=\inf\Brace{t\in\R_+\;\middle|\;\int^t_0u_s^2ds=n}\]
@@ -3369,6 +3374,30 @@ title=]
 \begin{corollary}
     \[\brac{f'(X),X}_t=\int^t_0f''(X_s)d\brac{X}_s=\Brac{\int^t_0f''(X_s)u_sdB_s,\int^t_0u_sdB_s}.\]
 \end{corollary}
+
+\section{Young積分とラフパス}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Riemann-Stieltjes積分の方法の一般化によって，$X_t,Y_t\in\R^d$がそれぞれ$\al,\beta$-Holder連続で$\al+\beta>1$を満たす場合に$\int^T_0X_tdY_t$が定義出来る．
+\end{tcolorbox}
+
+
+\begin{history}
+    では一般の$f\in\Map(\R^d,\R)$について，伊藤積分と同様の方法で積分が定義出来るための十分条件を考えたい．
+    これは
+    \[B^{i,j}_{0,t}(\om):=\int^t_0B^i_u(\om)dB^j_u(\om)\quad(i,j\in[d])\]
+    が定義できて(Young積分では出来ない)，かつ，ある一定の代数的条件(Chen's identity)と解析的条件(Holder連続性)を満たす，
+    という形のものが，Terry Lyonsによって発見された．
+    そしてYoung積分の場合の議論と並行に，逐次積分にあたる積分が定義されれば，方程式の解はラフパスの連続な汎関数となる．
+    この性質がラフパス解析に強力さを与えている．
+\end{history}
+
+\begin{context}
+    Gauss過程，非整数Brown運動はセミマルチンゲールではなく，このような確率過程をBrown運動などのマルチンゲールから考察するにはラフパスの理論が必要になる．
+\end{context}
+
+\subsection{ラフパスの定義}
 
 \section{後退確率積分}
 
@@ -3708,6 +3737,8 @@ title=]
         種々の多様体とその上の特徴的な関数族を訪ね歩きたいのだが，このように調べたい関数にその土地固有の確率過程を放り込んで展開すれば，何かしら見えてくると思われる．
     \end{quote}
 \end{quotation}
+
+
 
 \chapter{参考文献}
 

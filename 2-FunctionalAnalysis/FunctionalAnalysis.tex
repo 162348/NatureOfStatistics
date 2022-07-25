@@ -2543,6 +2543,13 @@ title=]
     $(f_n)$が$f\in C(X)$に各点収束するならば，任意の$\ep>0$に対して凸結合$g:=\sum\lambda_nf_n$が存在して，$\norm{f-g}_\infty<\ep$を満たす．
 \end{proposition}
 
+\subsection{Baire測度の集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C[0,1]$の双対空間は$[0,1]$上の有限な全変動を持つBaire測度全体の空間になる．
+\end{tcolorbox}
+
 \subsection{凸集合の$w^*$-コンパクト性の特徴付け}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -2674,6 +2681,40 @@ title=]
     $X^*$は位相線型空間$X$の点を分離するとし（局所凸ならば成立\ref{cor-separating-subspace-is-dense}），
     $C\subset X$を弱コンパクトな凸集合とする．$\cT\subset\Hom_\TVS(X,X)$は，互いに可換な弱連続な作用素の族であって，$\forall_{T\in\cT}\;T(C)\subset C$を満たすならば，ある点$x\in X$が存在して$\forall_{T\in\cT}\;Tx=T$を満たす．
 \end{theorem}
+
+\section{関数空間の弱位相}
+
+\subsection{弱収束}
+
+\begin{theorem}
+    $X$をノルム空間とし，$\{x_n\}\subset X$を$x$に弱収束する点列とする．
+    このとき$\{x_n\}$はノルム有界で，$\norm{x}\le\lim_{n\to\infty}\norm{x_n}$を満たす．
+\end{theorem}
+
+\begin{theorem}[Mazur]
+    $X$をノルム空間とし，$\{x_n\}\subset X$を$x$に弱収束する点列とする．
+    任意の$\ep>0$に対して，$x_n$の凸結合が存在して，
+    \[\Abs{x-\sum_{j=1}^n\al_jx_j}\le\ep.\]
+\end{theorem}
+
+\begin{theorem}
+    $X$をノルム空間とし，$\{x_n\}\subset X$点列とする．
+    \begin{enumerate}
+        \item $(x_n)$は弱収束する．
+        \item \begin{enumerate}[(a)]
+            \item $\sup_{n\in\N}\norm{x_n}<\infty$．
+            \item 任意のノルム稠密な部分集合$Y\subset X^*$について，$\forall_{f\in Y}\;f(x_n)\to f(x)$．
+        \end{enumerate}
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    可積分関数列$\{f_n\}\subset L^1(X)$について，弱収束することは次の2条件に同値：
+    \begin{enumerate}
+        \item $\{\norm{f_n}\}$は有界．
+        \item $\forall_{A\in\A}\;\lim_{n\to\infty}\int_Af_nd\mu\in\R$が存在する．
+    \end{enumerate}
+\end{corollary}
 
 \section{Banach空間値関数}
 

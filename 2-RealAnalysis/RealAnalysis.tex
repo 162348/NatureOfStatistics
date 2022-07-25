@@ -2959,6 +2959,14 @@ title=]
     \end{cases}\]とすると，これは$\forall_{n\in\N}\;\abs{f_n(x)}\le 1$が成り立つから有界であり，また$\lim_{n\to\infty}f_n(x)=0$に一様収束するが，$\int_Xf_ndx=\log 2$．
 \end{remark}
 
+\subsection{Beppo-Leviの定理}
+
+\begin{theorem}
+    $\{f_n\}\subset L^1(X)$は一様有界とする：$\sup_{n\in\N}\int f_nd\mu<\infty$．
+    このとき，ある可積分関数$f\in L^1(X)$に対して$f_n\nearrow f$ならば，
+    \[\lim_{n\to\infty}\int f_nd\mu=\int fd\mu.\]
+\end{theorem}
+
 \subsection{定積分の近似}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,

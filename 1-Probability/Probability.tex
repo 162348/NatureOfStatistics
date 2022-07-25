@@ -3,8 +3,8 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
@@ -1113,6 +1113,44 @@ title=]
     列$(P_n)$が$P$に弱収束するための必要十分条件は，これが相対コンパクトであること，すなわち任意の部分列$(P_{n_i})$が，$P$に弱収束する部分列を持つことである．
 \end{theorem}
 
+\subsection{弱収束を定める位相}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $P(X)$上の弱位相($\sigma(P(X),C_b(X))$-位相)と，$C(\R;\C)$上の各点収束の位相とについて，Fourier変換は位相同型である(Glivenkoの定理)．
+    が，その像は「確率分布の特性関数」については閉じていない．すなわち，特性関数の各点収束極限は特性関数とは限らない．
+    \cite{ハンドブック}
+\end{tcolorbox}
+
+\begin{proposition}
+    $P(X)$の弱収束を定める位相は距離化可能である．
+\end{proposition}
+\begin{example}
+    Prohorovの距離が知られており，これの$X=\R$の場合がLevyの距離である．
+\end{example}
+
+\begin{proposition}
+    $\Lambda\subset P(X)$について，(1)$\Rightarrow$(2)が成り立ち，$X$が完備なとき逆も成り立つ．
+    \begin{enumerate}
+        \item 緊密である．
+        \item 相対コンパクトである．
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Glivenko]
+    $\{\mu_n\}\subset P(\R^n)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $(\mu_n)$は$\mu$に弱収束する．
+        \item $\varphi_{\mu_n}$は$\varphi_\mu$に各点収束する．
+    \end{enumerate}
+    なお，(1)が成り立つとき，(2)は特に広義一様収束する．
+\end{theorem}
+
+\begin{theorem}[Levyの連続性定理]
+    $\{\mu_n\}\subset P(\R^n)$の特性関数の列$(\varphi_{\mu_n})$はある$\varphi$に各点収束し，$\varphi$は$t=0$で連続とする．
+    このとき，ある$\mu\in P(\R^n)$が存在して，$\varphi=\varphi_\mu$が成り立つ．
+\end{theorem}
+
 \subsection{漠収束の特徴付け}
 
 \begin{proposition}[漠収束の特徴付け]\label{prop-characterization-of-value-convergence}
@@ -1401,8 +1439,218 @@ title=]
     コンパクトハウスドルフ空間$X$上の確率測度は，$C(X)$上において，有限な台を持つ測度（＝Radon chargeが定める積分の空間）によって各点近似（各点収束の位相で近似）が出来る．
 \end{remarks}
 
+\chapter{有限測度空間上の関数空間}
 
+\begin{quotation}
+    弱収束の理論は関数解析の理論の系である．\cite{Yoshida}の120pから．
+    確率測度の弱収束とは，$\sigma(P(X),C_b(X))$-位相に関する収束をいう．
+\end{quotation}
 
+\section{原子}
+
+\subsection{定義}
+
+\begin{definition}[atom]
+    $(X,\A,\mu)$を測度空間とする．
+    集合$A\in\A$が次の2条件を満たすとき，\textbf{$\mu$-原子}という：
+    \begin{enumerate}
+        \item $\mu(E)\ne0$．
+        \item $\forall_{B\in\A}\;B\subset A\Rightarrow\mu(B)\in\{\mu(A),0\}$．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    $A_1,A_2$を原子とする．次のうちいずれか一方のみが成り立つ：
+    \begin{enumerate}
+        \item $\mu(A_1\cap A_2)=0$．
+        \item $\mu(A_1\triangle A_2)=0$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}
+    $\R^n$上のLebesgue測度は原子を持たない．
+\end{example}
+
+\subsection{有限測度空間の分割}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    有限測度空間が原子を持たないならば，測度について「全有界」である．
+\end{tcolorbox}
+
+\begin{theorem}[Saks]
+    $(X,\A,\mu)$を有限測度空間とする．
+    任意の$\ep>0$に対して，$X$の有限な分割$\{E_i\}_{i\in[n]}\subset\A$であって，任意の$E_i$について，次のいずれかが成り立つものが存在する：
+    \begin{enumerate}
+        \item $\mu(E_i)>\ep$を満たす原子である．
+        \item $\mu(E_i)\le\ep$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\section{$L^1$の研究}
+
+\subsection{一様可積分性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一様可積分ならば可積分である，という状況が成り立つのは，有限測度空間においてのみである．
+    Lebesgueの優収束定理は，可積分関数を上界に持って一様有界ならば積分が収束することをいうが，有界測度空間では一様可積分性を用いてさらに強い結果が成り立つ．
+    また一様可積分性は，非原子的な測度空間では，得られる不定積分の族が一様に絶対連続であることと特徴付けられる．
+\end{tcolorbox}
+
+\begin{observation}
+    $f\in L^1(X)$ならば，$\norm{f}1_{\Brace{\abs{f}\ge\al}}\xrightarrow{\al\to\infty}0\;\in L^1(X)$が成り立ち，優関数$\abs{f}$が存在するからLebesgueの優収束定理より，
+    \[\lim_{\al\to\infty}\int_{\Brace{\abs{f}\ge\al}}\abs{f}d\mu=0\]
+    も成り立つ．
+\end{observation}
+
+\begin{definition}
+    族$\{f_\lambda\}\subset L^1(X)$が\textbf{一様可積分}とは，
+    \[\lim_{\al\to\infty}\sup_{\lambda\in\Lambda}\int_{\Brace{\abs{f_\lambda}\ge\al}}\abs{f}d\mu=0\]
+    が成り立つことをいう．
+\end{definition}
+
+\begin{lemma}
+    族$\F:=\{f_\lambda\}\subset L^1(X)$について，
+    \begin{enumerate}
+        \item $(X,\A,\mu)$が有限のとき，$\F$が一様可積分ならば，各$f_\lambda$は可積分である．
+        \item $\F$が一様有界ならば一様可積分である．
+        \item $\mu(X)=\infty$のとき，$\F$が例え一様有界であっても可積分でない$f_\lambda$が存在し得る．
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}[可積分性の特徴付け]
+    $(X,A,\mu)$を有限測度空間とする．$\{f_n\}\subset\L(X)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\{f_n\}$は一様可積分．
+        \item \begin{enumerate}[(a)]
+            \item $\Brace{\int f_nd\mu}_{n\in\N}\subset\R$は有界．
+            \item 定積分列$\Brace{\int_-\abs{f_n}d\mu}$は一様に絶対連続：
+            \[\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{A\in\A}\;\mu(A)<\delta\Rightarrow\sup_{n\in\N}\int_Af_nd\mu\le\ep.\]
+        \end{enumerate}
+    \end{enumerate}
+    さらに，測度$\mu$が非原子的ならば，(b)$\Rightarrow$(a)が成り立つ．
+\end{proposition}
+
+\begin{proposition}[可積分性の十分条件]
+    列$(f_n)$は
+    \[\exists_{\ep>0}\quad\sup_{n\in\N}\int\abs{f_n}^{1+\ep}d\mu<\infty\]
+    を満たすならば一様可積分である．
+    すなわち，部分空間$L^p(X)\subset L^1(X)\;(p>1)$に入っていれば一様可積分である．
+\end{proposition}
+
+\subsection{概収束列の一様可積分性の特徴付け}
+
+\begin{theorem}[概収束列の一様可積分性の特徴付け]
+    $(X,\A,\mu)$を有限とし，$f_n\to f\;\as$とする．
+    (1)$\Rightarrow$(2)が成り立ち，$f,f_n$が非負のとき(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item $\{f_n\}$が一様可積分である．
+        \item $\{f_n\}\subset L^1(X)$かつ$f\in L^1(X)$で，
+        \[\lim_{n\to\infty}\int f_nd\mu=\int fd\mu\]
+        が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[概収束する可積分関数列の一様可積分性の特徴付け]
+    $(X,\A,\mu)$を有限とし，$\{f_n\}\subset L^1(X)$は$f\in L^1(X)$に概収束するとする．
+    このとき，次の3条件は同値：
+    \begin{enumerate}
+        \item $f_n$は一様可積分である．
+        \item $f_n\to f\in L^1(X)$．
+        \item $\norm{f_n}_{L^1(X)}\to\norm{f}_{L^1(X)}$．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{一様可積分性の十分条件}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    先程は$f_n$の$L^1$-収束で特徴付けた．
+    今回は，$f_n$が定める不定積分が，集合関数$\A\to\R$として各点収束するならば一様積分であることを論じる．
+\end{tcolorbox}
+
+\begin{notation}
+    $(X,\A,\mu)$を有限測度空間とする．
+    \begin{enumerate}
+        \item 対称差が零という関係による同値類を$\wt{\A}$で表す．
+        \item $\wt{\A}$には距離$\rho(\wt{E},\wt{F}):=\mu(E\triangle F)$が定まる．
+        \item 等長な位相の埋め込み$\wt{\A}\mono L^1(\X)$が存在する．
+    \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+    $\A$は距離$\rho$によって完備になる．
+\end{lemma}
+
+\begin{theorem}[Vitali-Hahn-Saks]
+    $(X,\A,\mu)$を有限測度空間，$\{\nu_n\}\subset M(X)$を全変動が有限な符号付測度の列で，次を満たすとする：
+    \begin{enumerate}
+        \item $\forall_{n\in\N}\;\nu_n\ll\mu$．
+        \item $\forall_{A\in\A}\;\lim_{n\to\infty}\nu_n(A)=:\nu(A)\in\R$．
+    \end{enumerate}
+    このとき，次の2条件が成り立つ：
+    \begin{enumerate}
+        \item $(\lambda_n)$は一様に絶対連続である：$\mu(E_\lambda)\to0$ならば，一様に$\nu_n(E_\lambda)\to0$．
+        \item 極限関数$\nu:\A\to\R$は$\sigma$-加法的である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $(X,\A,\mu)$を有限測度空間とし，$\{g_n\}\subset L^1(X)$とする．
+    \[\forall_{E\in\A}\;\lim_{n\to\infty}\int_Eg_nd\mu=:\nu(E)\in\R\]
+    ならば，次の2条件が成り立つ．
+    \begin{enumerate}
+        \item $\{g_n\}$は一様可積分である．
+        \item 極限関数$\nu:\A\to\R$は$\A$上$\sigma$-加法的である．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{弱収束の特徴付け}
+
+\begin{corollary}
+    可積分関数列$\{f_n\}\subset L^1(X)$について，弱収束することは次の2条件に同値：
+    \begin{enumerate}
+        \item $\{\norm{f_n}\}$は有界．
+        \item $\forall_{A\in\A}\;\lim_{n\to\infty}\int_Af_nd\mu\in\R$が存在する．
+    \end{enumerate}
+\end{corollary}
+
+\subsection{弱点列コンパクト集合の特徴付け}
+
+\begin{theorem}
+    $(X,\A,\mu)$を有限測度空間とし，$\F\subset L^1(X)$を部分集合とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\F$は弱点列コンパクトである．
+        \item $\F$はノルム有界かつ一様可積分である．
+        \item 定積分の族$\Brace{\int_-\abs{f}d\mu}_{f\in\F}$は一様に絶対連続である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $(X,\A,\mu)$を有限測度空間とし，$\F\subset L^1(X)$を部分集合とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\F$は弱相対コンパクトである．
+        \item $\abs{\F}:=\Brace{\abs{f}\in L^1(X)\mid f\in\F}$は弱相対コンパクトである．
+    \end{enumerate}
+    また，一様可積分性も同値．
+\end{corollary}
+
+\begin{theorem}[南雲]
+    
+\end{theorem}
+
+\section{$L$の研究}
+
+\begin{proposition}
+    $(\Om,\F,P)$を有限測度空間とする．
+    $L(\Om)$は距離化可能である．例えば，次は距離を定める：
+    \begin{enumerate}
+        \item $d_1(X,Y):=\inf\Brace{a>0\mid P[\abs{X-Y}>a]<a}$．
+        \item $d_2(X,Y):=\inf\Brace{P[\abs{X-Y}>a]+a\in\R_+\mid a>0}$．
+    \end{enumerate}
+    そしてこの距離に関する収束は確率収束である．
+\end{proposition}
 
 \section{確率変数列の収束}
 
@@ -1470,7 +1718,12 @@ title=]
     このときある部分列が存在して，概収束する．
 \end{corollary}
 
-\subsection{概収束の性質}
+\begin{theorem}[さらに弱めた逆：Skorohodの概収束実現定理]
+    必ずしも同一の確率空間上に定義されているとは限らない実確率変数列$X_n$は$X$に分布収束するとする．
+    このとき，ある確率空間の上に実確率変数$(\wt{X}_n),\wt{X}$が存在して，$\wt{X}_n\overset{d}{=}X_n,\wt{X}\overset{d}{=}X$かつ$\wt{X}_n\to\wt{X}\;\as$が成り立つ．
+\end{theorem}
+
+\subsection{概収束を定める位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1481,17 +1734,50 @@ title=]
 \end{tcolorbox}
 
 \begin{proposition}
-    概収束は距離付け不可能である．
+    概収束を定める位相は距離付け可能でない．
 \end{proposition}
 
-\subsection{確率収束の性質}
+\subsection{概収束と確率収束}
 
-\begin{proposition}[確率収束に関する連続写像定理]
-    $(S_i,d_i)\;(i=1,2)$を可分距離空間とする．
-    $X,X_n$を$S_1$-値確率変数，$h:S_1\to S_2$を可測写像とする．
-    $P[X\in C]=1$を満たす可測集合$C\in\B(S_1)$上で$h$は連続であるとする．
-    このとき，$X_n\xrightarrow{p}X\Rightarrow h(X_n)\xrightarrow{p}h(X)$．
+\begin{proposition}[\cite{西尾}]
+    任意の確率変数列
+    $\{X_n\}\subset\L(\Om)$について，
+    集合$\Delta:=\Brace{\om\in\Om\mid\lim_{n\to\infty}X_n(\om)\in\R}$は可測である．
 \end{proposition}
+\begin{remarks}
+    $\Delta$が充満集合であるとき，$X_n$は概収束するという．
+    収束先は$L(\Om)$や$L^1(\Om)$上では一意だが，普通は$X(\om):=1_\Delta \lim_{n\to\infty}X_n(\om)$とすると，可測関数である．
+\end{remarks}
+
+\begin{proposition}
+    確率変数列
+    $\{X_n\}\subset\L(\Om)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $(X_n)$は概収束する．
+        \item $\forall_{\ep>0}\;\lim_{n\to\infty}P[\exists_{N\in\N}\;\forall_{n,m\ge N}\;\abs{X_n-X_m}<\ep]=1$．
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    確率変数列
+    $\{X_n\}\subset\L(\Om)$が確率収束するならば，概収束する部分列が存在する．
+\end{proposition}
+\begin{remarks}
+    Egorovの定理との関係は？
+    この$>\ep$が潰せないもどかしさは，他に集積点がある場合を意味しているのだろうか？？
+\end{remarks}
+
+\begin{proposition}
+    確率変数列
+    $\{X_n\}\subset\L(\Om)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $(X_n)$は$X$に確率収束する．
+        \item 集合$\{X_n\}$の任意の列は，$X$に概収束する部分列を含む．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{確率収束の遺伝}
+
 
 \begin{proposition}[確率収束の遺伝]
     $X_n,X,Y_n,Y$を確率変数とする．
@@ -1506,6 +1792,16 @@ title=]
     一方で，結合分布の弱収束は，各成分の弱収束より強い\ref{thm-Slutsky}．
     これも，各成分の分布だけでは結合分布が定まらないことに起因する．
 \end{remark}
+
+\subsection{確率収束を定める位相}
+
+\begin{proposition}[確率収束に関する連続写像定理]
+    $(S_i,d_i)\;(i=1,2)$を可分距離空間とする．
+    $X,X_n$を$S_1$-値確率変数，$h:S_1\to S_2$を可測写像とする．
+    $P[X\in C]=1$を満たす可測集合$C\in\B(S_1)$上で$h$は連続であるとする．
+    このとき，$X_n\xrightarrow{p}X\Rightarrow h(X_n)\xrightarrow{p}h(X)$．
+\end{proposition}
+
 
 \begin{proposition}[確率収束を定める距離1]
     $X,Y\in\Meas(\Om,\R)$について，$d(X,Y):=E\Square{\frac{\abs{X-Y}}{1+\abs{X-Y}}}$と定める．
@@ -5939,6 +6235,10 @@ title=]
     "Weak Convergence of Measures"
     \bibitem{伊藤清}
     伊藤清『確率論』
+    \bibitem{ハンドブック}
+    『確率論ハンドブック』
+    \bibitem{Yoshida}
+    Yoshida, Kousaku. \textit{Functional Analysis}.
     \bibitem{Kolmogorov31}
     Kolmogorov, A. N. (1933). Analytical methods in probability theory. 「私はKolmogorovのこの論文（「解析的方法」）の序文にあるアイデアからヒントを得て，マルコフ過程の軌道を表す確率微分方程式を導入したが，これが私のその後の研究の方向を決めることになった．」
     \bibitem{Kolmogorov33}
