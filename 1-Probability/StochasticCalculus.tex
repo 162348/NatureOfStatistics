@@ -3,17 +3,13 @@
 \author{司馬博文}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
 
-\chapter{Brown運動}
-
-
-
-\section{記法}
+\chapter{確率過程論}
 
 \begin{notation}
     正整数$k,n\ge1$について，
@@ -28,7 +24,261 @@
     また，$(\Om,\F,P)$を確率空間とし，$L^p(\Om)$によってその上の$L^p$空間を表す．
 \end{notation}
 
-\section{Gauss分布}
+\begin{notation}
+    確率時空間$(\Om,\F,P,\bF)$について，
+    \begin{enumerate}
+        \item Markov時刻の全体を$\T(\bF)\subsetneq\L(\Om;\o{\R_+})$で表す．
+        \item 適合過程の全体も$\bF$で表す．
+        \item $C$-過程，$D$過程の全体をそれぞれ$C:=\L(\Om;C(\R_+))$で表す．
+    \end{enumerate}
+\end{notation}
+
+\begin{notation}
+    確率過程$X\in D$について，
+    \begin{enumerate}
+        \item 左連続化を$X_-:=(X_{t-})_{t\in\R_+}$と表す．
+        \item $\Delta X_t:=X_t-X_{t-}$と表す．
+        \item 上限過程を$X^*_t:=\sup_{s\le t}\abs{X_s}$と表す．$(\Delta X)_t^*=\sup_{s\le t}\abs{\Delta X_s}$である．
+        \item 確率時刻$\tau$に対しては$\Delta X_\tau:=X_\tau1_{\tau<\infty}-X_{\tau-}1_{\tau<\infty}$と表す．
+        \item 確率時刻$\tau$に対する停止過程を$X^\tau:=X_{t\land\tau}$で表す．
+    \end{enumerate}
+\end{notation}
+
+\section{Banach空間値可測関数論}
+
+\subsection{確率過程の定義}
+
+\begin{definition}
+    確率空間$(\Om,\F,P)$の\textbf{フィルトレーション}または\textbf{フロー}\cite{LipsterShiryayev}とは，部分$\sigma$-代数の単調増加列$\bF$をいう．
+    \begin{enumerate}
+        \item $\F_\infty:=\lor_{t\in\R_+}\F_t=\sigma\paren{\cup_{t\in\R_+}\F_t}$と表す．
+        \item 左極限を$\F_{t-}:=\lor_{s<t}\F_s$と表すと，$\F_{0-}=\F_0$．
+        \item フィルトレーションの左連続化を$\bF_-:=(\F_{t-})_{t\in\R_+}$と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[filtered probability space \cite{Borodin} / stochastic basis \cite{LipsterShiryayev}]
+    \textbf{フィルター付き確率空間}または\textbf{確率時空間}とは，次の条件を満たす確率空間とフィルトレーション$\bF=(\F_t)_{t\in\R_+}$の4-組$(\Om,\F,P,\bF)$をいう：
+    \begin{enumerate}
+        \item 確率空間$(\Om,\F,P)$は完備である．
+        \item フィルトレーションは右連続で，$\cN(\Om,\F,P)\subset\F_0$を満たす閉$\sigma$-代数からなる．
+    \end{enumerate}
+    この2条件は"usual condition"とも呼ばれる．
+\end{definition}
+
+\begin{definition}
+    $(\Om,\F,P,\bF)$を確率時空間とする．
+    \begin{enumerate}
+        \item 確率変数の族$\{X_t\}_{t\in\R_+}\subset\L(\Om)$を\textbf{確率過程}という．
+        \item \textbf{$\bF$-適合}であるとは，$\forall_{t\in\R_+}\;X_t\in\L_{\F_{t-}}(\Om)$を満たすことをいう．
+        この条件を$X\in\bF$とも表す．
+    \end{enumerate}
+    離散の場合の適合過程・可予測過程の概念を一般化する．
+\end{definition}
+
+\subsection{可測過程}
+
+\begin{definition}
+    過程$\{X_t\}\subset\L(\Om)$が
+    \begin{enumerate}
+        \item \textbf{可測}であるとは，これが定める積空間上の写像$X:\Om\times\R_+\to\R$が$\F\times\B(\R_+)$-可測であることをいう．
+        \item \textbf{発展的可測}であるとは，$\forall_{t\in\R_+}\;X|_{\Om\times[0,t]}$が$\F_t\times\B([0,t])$-可測であることをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}[発展的可測性の十分条件]\mbox{}
+    \begin{enumerate}
+        \item 適合的な可測過程$u:\Om\times\R_+\to\R$には，発展的可測なバージョンが存在する(Meyer 1984, Th'm 4.6)．
+        \item 適合的な$D$-過程は発展的可測である：$D\cap\bF\subset\L(\P)$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[発展的可測性の特徴付け]
+    $\P$を積空間$\Om\times\R_+$上の$\sigma$-代数で，$1_A\;(A\in\P)$が発展的可測になるものとする：
+    \[\P:=\Brace{A\in P(\Om\times\R_+)\mid\forall_{t\in\R_+} A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])}\]
+    すると，確かに$\P$は$\sigma$-代数で，
+    $\P\subset\F\times\B(\R_+)$が成り立ち，
+    過程$u:\Om\times\R_+\to\R$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\P/\B(\R)$-可測：$u\in\L(\P)$．
+        \item $u$は発展的可測．
+    \end{enumerate}
+\end{lemma}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[$\P$のwell-definedness] 明らかに，$\forall_{t\in\R_+} A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])$という条件は，$A=\emptyset,\Om\times\R_+$はこれを満たし，これを満たす$(A_n)$が存在したとき，合併も満たす．
+        また，補集合については，$\F_t\times\B([0,t])$が$\Om\times[0,t]$上の$\sigma$-代数をなすことに注意すると，
+        $A\cap(\Om\times[0,t])\in\F_t\times\B([0,t])$のとき，
+        $\o{A}\cap(\Om\times[0,t])=(\Om\times[0,t])\setminus (A\cap(\Om\times[0,t]))\in\F_t\times\B([0,t])$による．
+        \item[$\P\subset\F\times\B(\R_+)$] 
+        任意の$A\in\P$を取ると，特に$n\in\N$について，$A_n:=A\cap(\Om\times[0,n])\in\F_n\times\B([0,t])\subset\F\times\B(\R_+)$．
+        $A=\cup_{n\in\N}A_n\in\F\times\B(\R_+)$．
+        \item[(1)$\Leftrightarrow$(2)] $\P/\B(\R)$-可測過程$u:\Om\times\R_+\to\R$を取る．任意の$t\in\R_+$について，$u|_{\Om\times[0,t]}$によるBorel可測集合$B\in\B(\R)$の逆像は$u^{-1}(B)\cap(\Om\times[0,t])$であるが，$u^{-1}(B)\in\P$より，これは$\F_t\times\B([0,t])$の元である．
+    \end{description}
+\end{Proof}
+
+\begin{definition}[random set, evanescent / negligible, thin, exhausting, debut]
+    積空間$\Om\times\R_+$について，
+    \begin{enumerate}
+        \item 任意の部分集合を確率集合という．
+        \item $\pi_A:=\pr_2(A)=\Brace{\om\in\Om\mid\exists_{t\in\R_+}\;(\om,t)\in A}$と表す．
+        \item 集合$A\subset\Om\times\R_+$が\textbf{無視できる}とは，$P[\pi_A]=0$を満たすことをいう．
+        \item 確率集合$A$が\textbf{薄い}とは，ある確率時刻の列$(\tau_n)$が存在して，そのグラフの和$A=\cup_{n\in\N}[\tau_n]$と表せることをいう．
+        \item このとき，グラフが互いに素$\forall_{i\ne j}\;[\tau_i]\cap[\tau_j]$であるとき，列$(\tau_n)$は$A$を\textbf{尽くしている}という．
+        \item 任意の確率集合$A$に対して，$D_A:=\inf_{(\om,t)\in A}t$を$A$の\textbf{デビュー}という．ただし，$\Brace{(\om,t)\in A}=\emptyset$のとき，下限は$\infty$とする．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    区間の確率化を$[\sigma,\tau]:=\Brace{(\om,\tau)\in\Om\times\R_+\mid\sigma(\om)\le t\le\tau(\om)}\;(\sigma,\tau\in\L(\Om;\o{\R_+}))$と表す．
+    このとき，$[t]:=[t,t]=\Brace{(\om,t)\in\Om\times\R_+\mid\tau(\om)=t}$を確率時刻$\tau$のグラフという．
+\end{example}
+
+\subsection{確率過程の同値性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    確率過程の全体への同値類の入れ方には選択の余地がある．
+    \cite{Revus and Yor}では有限次元周辺分布が一致することを，\cite{Nualart},\cite{Prato}では修正であることを「同値」と言っている．
+    同値類の中に存在する別の元を「バージョン」ということは変わらない．
+\end{tcolorbox}
+
+\begin{definition}[stochastically equivalent, modification / version, indistinguishable]
+    時空間$(\Om,\F,P,\bF)$上の2つの確率過程$X,Y$について，
+    \begin{enumerate}
+        \item \textbf{確率同値}であるとは，$\forall_{t>0}\;X_t=Y_t\;\ae$が成り立つことをいう．このとき，一方を他方の\textbf{修正}という．
+        \item \textbf{識別不可能}であるとは，$A=\Brace{(\om,t)\in\Om\times\R_+\mid X\ne Y}$の射影$\pi(A)$が$P$-零集合であることをいう．このとき，$X\overset{P}{=}Y$または$X=Y$と表す．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[equivalence / version, finite dimensional marginal distributions]\mbox{}
+    \begin{enumerate}
+        \item 同じ状態空間$(E,\E)$を持つ$(\Om,\F,P),(\Om',\F',P')$上の2つの過程$X,X'$が\textbf{同値である}または一方が他方の\textbf{バージョン}であるとは，
+        任意の有限部分集合$\{t_1,\cdots,t_n\}\subset\R_+$と任意の可測集合$A_1,\cdots,A_n\in\E$について，
+        \[P[X_{t_1}\in A_1,\cdots,X_{t_n}\in A_n]=P'[X'_{t_1}\in A_1,\cdots,X'_{t_n}\in A_n]\]
+        \item 測度$P$の$(X_{t_1},\cdots,X_{t_n}):\Om\to E^n$による押し出しを$P_{t_1,\cdots,t_n}:=P^{(X_{t_1},\cdots,X_{t_n})}$で表す．
+        任意の有限集合$\{t_1,\cdots,t_n\}\subset\R_+$に関する押し出し全体の集合$\M_X$を\textbf{有限次元分布}(f.d.d)と呼ぶ．
+    \end{enumerate}
+\end{definition}
+\begin{lemma}[過程の同値性の特徴付け]
+    $X,Y$について，次の3条件は同値．
+    \begin{enumerate}
+        \item $X,Y$は同値である．
+        \item $\M_X=\M_Y$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{definition}[modification / equivalence / version, indistinguishable]
+    定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
+    \begin{enumerate}
+        \item 2つは\textbf{修正}または\textbf{変形}であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．\footnote{\cite{Nualart}ではこの概念をequivalenceまたはvarsionと呼んでいる．}
+        \item 2つは\textbf{識別不可能}であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}\mbox{}
+    \begin{enumerate}
+        \item $X,Y$が互いの修正であるならば，同値である．
+        \item $X,Y$が互いの修正であり，見本道が殆ど確実に右連続ならば，識別不可能である．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{Kolmogorovの拡張定理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Kolmogorovの拡張定理は，Hopfの拡張定理の一般化である．
+    そこから確率過程論についても，種々の対象が構成できる．
+    $\R_+$上の確率過程も，有限次元周辺分布を指定することで構成できるが，$\R^\infty$の場合と違って一意性は担保されない．
+\end{tcolorbox}
+
+\begin{theorem}
+    確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
+    $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
+    なお，$\R^\N$には直積位相を考える．
+    \begin{quotation}
+        (consistency) $\forall_{n\in\N}\;\forall_{A\in\B(\R^n)}\;\mu_{n+1}(A\times\R)=\mu_n(A)$．
+    \end{quotation}
+    特に，この一貫性条件は$\R^\N$上の測度に延長できるための必要十分条件である．
+    これは$\R$を一般の完備可分空間としても成り立つ．
+\end{theorem}
+
+\begin{corollary}
+    $\R$上の確率測度$\mu$に対して，ある確率空間が存在して，これを法則とする独立な確率変数の列$(X_n)_{n\in\N}$が存在する．
+\end{corollary}
+
+\begin{corollary}[Hilbert空間により添字付けられた確率過程]
+    $H$を可分実Hilbert空間とする．
+    ある確率空間$(\Om,\F,P)$とその上の確率変数の族$X=(X_h)_{h\in H}$が存在して，次の2条件を満たす：
+    \begin{enumerate}
+        \item 写像$X:H\to\Meas(\Om,\R);h\mapsto X_h$は線型である．
+        \item 任意の$h\in H$について，確率変数$X_h$は中心化されたGauss変数で，線型写像$X:H\to L^2(\Om)$は等長である：$E[X_h^2]=\norm{h}^2_H$．
+        \item $\Im X\simeq_\Hilb H$は$L^2(\Om)$のGauss部分空間である．
+    \end{enumerate}
+\end{corollary}
+\begin{remark}
+    この同一視により，独立性$X_h\indep X_{h'}$は添字空間$H$における直交性として理解できる．
+\end{remark}
+
+\begin{theorem}[確率過程版]\label{thm-Kolmogorov-extension-theorem}
+    確率分布族$\{P_{t_1,\cdots,t_n}\}_{n\in\N_{\ge1},t_i\in\R_+}$が次の条件を満たすとき，ある確率空間$(\Om,\F,P)$が存在して，これらを有限次元周辺分布とする確率過程$(X_t)_{t\in\R_+}$が存在する．
+    \begin{enumerate}[({C}1)]
+        \item $P_{t_1,\cdots,t_n}\in P(\R^n)$である．
+        \item 任意の部分集合$\{t_{k_1}<\cdots<t_{k_m}\}\subset\{t_1<\cdots<t_n\}$について，$P_{t_{k_1}},\cdots,P_{t_{k_m}}$は$P_{t_1,\cdots,t_n}$の対応する周辺分布である．
+    \end{enumerate}
+\end{theorem}
+
+\section{空間CとD}
+
+\subsection{定義と特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    この2つの空間を考えることは，可測性の問題による．
+\end{tcolorbox}
+
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $C[a,b]:=C([a,b];\R)$とする．
+        \item $D[a,b]:=\Brace{f\in\Map([a,b];\R)\mid\forall_{t\in[a,b]}\lim_{s\nearrow t}f(s)\in\R\land\lim_{s\searrow t}f(s)\in\R}$とする．
+        ただし，$D[a,b]$の元は，任意の$t\in[a,b]$において，$x(t):=x(t+0)$として標準化されているとする．そこで，$D$の元を\textbf{右連続見本道}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[$D$-過程のwell-defined性]
+    確率変数の族$\{X_t\}_{t\in T}\subset\L(\Om)$について，
+    次の2条件は同値．
+    \begin{enumerate}
+        \item $(X_t)$は$D$-過程である：$\forall_{\om\in\Om}\;X_-(\om)\in C(D)$．
+        \item 見本過程に値を取る写像$\Om\to D(T)$として可測．
+    \end{enumerate}
+    また，この同値な条件を満たすとき，写像$\Om\times T\to\R$としても可測である．
+\end{theorem}
+
+\begin{theorem}
+    適合的$D$-過程$X\in D\cap\bF$の不連続点$\Brace{\Delta X\ne0}\subset\Om\times\R_+$は薄い集合であり，あるMarkov時刻の列$\{\tau_k\}\subset\T(\bF)$を用いて$\Brace{\Delta X\ne0}=\cup[\tau_k]$と表せる．
+\end{theorem}
+
+\subsection{位相的性質}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C,D$には，評価写像$(\ev_t)_{t\in T}$が引き起こす始位相を入れる($C$ではコンパクト開位相である)．
+
+\end{tcolorbox}
+
+\begin{enumerate}
+    \item 有界閉区間$[a,b]$上の空間$C([a,b])$は一様位相について可分なBanach空間となる．
+    \item 非有界区間$\R_+$上の空間$C(\R_+)$はコンパクト開位相について可分なBanach空間となる．
+    \item 同様の位相について，$C(T)\mono D(T)$も完備になる(コンパクト一様収束について右連続性は保たれる)が，可分ではない．
+    \item $D(T)$にはSkorohod位相と呼ばれる完備可分な位相が存在する．この位相を生成する距離は2つ知られており，Skorohod距離は完備ではないが，Billingsleyの距離について完備である．
+\end{enumerate}
+
+\begin{theorem}[Borel $\sigma$-代数の特徴付け]
+    $C,D$空間のBorel代数$\B(D(T))$は，族$\{ev_t:\F\to\R\}_{t\in T}$が定める始$\sigma$-代数に一致する．
+\end{theorem}
+
+\section{可分Hilbert空間上の確率測度}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -153,9 +403,7 @@ title=]
     測度確定な可測集合$F\in\A,\mu(F)<\infty$のGauss測度$X(F)$は$X(1_F)$とも表す．
 \end{definition}
 
-
-
-\section{Gauss確率変数}
+\section{可分Hilbert空間値の確率変数}
 
 \subsection{Hilbert空間上のGauss変数}
 
@@ -378,93 +626,306 @@ title=]
     随伴$M^*$はSkorohod積分またはGauss発散作用素という．
 \end{tbox}
 
-\section{確率過程の扱い}
+\section{情報系}
 
-\subsection{確率過程の同値性}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    確率過程の全体への同値類の入れ方には選択の余地がある．
-    \cite{Revus and Yor}では有限次元周辺分布が一致することを，\cite{Nualart},\cite{Prato}では修正であることを「同値」と言っている．
-    同値類の中に存在する別の元を「バージョン」ということは変わらない．
-\end{tcolorbox}
-
-\begin{definition}[equivalence / version, finite dimensional marginal distributions]\mbox{}
+\begin{definition}
+    フィルトレーション$(\F_t)$が$(\Om,\F,P)$上の\textbf{情報系}であるとは，
     \begin{enumerate}
-        \item 同じ状態空間$(E,\E)$を持つ$(\Om,\F,P),(\Om',\F',P')$上の2つの過程$X,X'$が\textbf{同値である}または一方が他方の\textbf{バージョン}であるとは，
-        任意の有限部分集合$\{t_1,\cdots,t_n\}\subset\R_+$と任意の可測集合$A_1,\cdots,A_n\in\E$について，
-        \[P[X_{t_1}\in A_1,\cdots,X_{t_n}\in A_n]=P'[X'_{t_1}\in A_1,\cdots,X'_{t_n}\in A_n]\]
-        \item 測度$P$の$(X_{t_1},\cdots,X_{t_n}):\Om\to E^n$による押し出しを$P_{t_1,\cdots,t_n}:=P^{(X_{t_1},\cdots,X_{t_n})}$で表す．
-        任意の有限集合$\{t_1,\cdots,t_n\}\subset\R_+$に関する押し出し全体の集合$\M_X$を\textbf{有限次元分布}(f.d.d)と呼ぶ．
+        \item 閉$\sigma$-代数である：$\cN(P)\subset\F_0$．
+        \item 右連続である：$\forall_{t\in\R_+}\;\F_t=\cap_{n\ge1}\F_{t+1/n}$．
     \end{enumerate}
 \end{definition}
-\begin{lemma}[過程の同値性の特徴付け]
-    $X,Y$について，次の3条件は同値．
+
+\begin{definition}
+    $(\Om,\F,P)$上のフィルトレーション$(\F_t)$に対して，確率変数$T:\Om\to\o{\R_+}$が\textbf{$(\F_t)$-停止時}であるとは，$\forall_{t\in\R_+}\;\Brace{T\le t}\in\F_t$を満たすことをいう．
+\end{definition}
+
+\section{停止時}
+
+\subsection{定義と特徴付け}
+
+\begin{definition}[random time, Markov time, stopping time]
+    フィルトレーション付き確率空間$(\Om,\F,P,(\F_t)_{t\in\R_+})$において，
     \begin{enumerate}
-        \item $X,Y$は同値である．
-        \item $\M_X=\M_Y$．
+        \item \textbf{確率時刻}とは，確率変数$\Om\to\o{\R_+}$をいう．
+        \item \textbf{Markov時刻}とは，次を満たす確率時刻$\tau$をいう：$\forall_{t\in\R_+}\;E_t:=\Brace{\tau\le t}\in\F_t$．
+        \item \textbf{停止時}とは，殆ど確実に有限な値を取るMarkov時刻をいう．
+        \item 停止時が\textbf{有界}であるとは，本質的に有界であることをいう：$\exists_{K\in\R_+}\;T\le K\;\as$．そのほかにも，暗黙に同値類を考える．
     \end{enumerate}
+    Markov時刻の全体を$\T(\bF)\subsetneq\L(\Om;\o{\R_+})$で表す．
+\end{definition}
+
+\begin{lemma}
+    確率時刻$\tau$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\tau\in\T(\bF)$．
+        \item $\forall_{t>0}\;\Brace{\tau<t}\in\F_t$．
+    \end{enumerate}
+    これは$\bF$を右連続に取ったことによる．
 \end{lemma}
 
-\begin{definition}[modification / equivalence / version, indistinguishable]
-    定義された確率空間も状態空間も等しい2つの過程$X,Y$について，
+\begin{proposition}
+    $\sigma,\tau\in\T(\bF)$をMarkov時刻とする．
     \begin{enumerate}
-        \item 2つは\textbf{修正}または\textbf{変形}であるとは，$\forall_{t\in\R_+}\;X_t=Y_t\;\as$を満たすことをいう．\footnote{\cite{Nualart}ではこの概念をequivalenceまたはvarsionと呼んでいる．}
-        \item 2つは\textbf{識別不可能}であるとは，殆ど至る所の$\om\in\Om$について，$\forall_{t\in\R_+}\;X_t(\om)=Y_t(\om)$が成り立つことをいう．
+        \item $\{\sigma=\tau\},\{\sigma\le\tau\}\in\F_\tau\cap\F_\sigma$．
+        \item $\Brace{\sigma<\tau}\in\F_{\tau-}$．$\Brace{\sigma<\infty}\in\F_{\sigma-}$．
     \end{enumerate}
+\end{proposition}
+
+\subsection{停止時の構成}
+
+\begin{proposition}
+    $\tau_1,\tau_2$が停止時ならば，$\tau_1\land\tau_2,\tau_1\lor\tau_2$もそうである．
+\end{proposition}
+
+\begin{proposition}
+    任意の単調増加な可測関数$f:\R_+\to\R_+$について，$\tau$が停止時ならば$f\circ\tau$も停止時である．
+\end{proposition}
+
+\begin{corollary}
+    特に，停止時$\tau$に対して，$\forall_{k\in\N_{>0}}\;\tau_k:=\frac{\floor{k\tau}+1}{k}$は停止時であり，任意の有界な停止時$\tau$は，像が有限な停止時の列$(\tau_k)$で近似出来る．
+\end{corollary}
+
+\subsection{停止時の近似}
+
+\begin{proposition}\label{prop-approximation-of-stopping-time-from-upwards}
+    任意の停止時$\tau$に対して，停止時
+    \[\tau_n:=\sum^{n2^n}_{i=1}\frac{i}{2^n}1_{\Brace{\frac{i-1}{2^n}\le\tau<\frac{i}{2^n}}}\]
+    は像が有限集合で，$\tau_n\searrow\tau\;\as$
+\end{proposition}
+\begin{remarks}
+    可測関数の単関数近似の系である．
+\end{remarks}
+
+\subsection{停止過程}
+
+
+
+\section{停止時の情報系}
+
+\subsection{Markov時の情報系}
+
+\begin{definition}
+    Markov時刻$\tau\in\T(\bF)$の定める情報とは，$\F$の部分$\sigma$-代数
+    \[\F_\tau:=\Brace{A\in\F\mid\forall_{t\in\R_+}\;A\cap E_t\in\F_t}\]
+    をいう．また，
+    \[\F_{\tau-}:=\Brace{A\in\F\mid\forall_{t\in\R_+}\;A\cap\Brace{t<\tau}\in\F_t}\]
+    と表すこととする．
 \end{definition}
 
 \begin{lemma}\mbox{}
     \begin{enumerate}
-        \item $X,Y$が互いの修正であるならば，同値である．
-        \item $X,Y$が互いの修正であり，見本道が殆ど確実に右連続ならば，識別不可能である．
+        \item $\F_\tau,\F_{\tau-}$はたしかに$\sigma$-代数をなし，$\F_{\tau-}\subset\F_\tau$が成り立ち，$\tau\in\L_{\F_{\tau-}}(\Om)$．
+        \item $\tau\in\T(\bF)$が定値関数$t\in\o{\R_+}$であるとき，$\F_\tau=\F_t$に一致する．
     \end{enumerate}
 \end{lemma}
 
-\subsection{Kolmogorovの拡張定理}
+\begin{proposition}[Markov時刻の情報系の性質]
+    $\tau,\tau_n\in\T$をMarkov時刻とする．
+    \begin{enumerate}
+        \item $\forall_{t\in\R_+}\;\tau+t\in\T$．
+        \item $0\le\tau_1\le\tau_2$ならば，$\F_{\tau_1}\subset\F_{\tau_2}$．
+        \item $\F_{\sup\tau_n}=\cap\F_{\tau_n}$．
+        \item $\forall_{A\in\F_{\inf\tau_n}}\;A\cap\Brace{\inf\tau_n<\sup\tau_n}\in\F_{\tau-}$．
+        \item $\forall_{A\in\F_\infty}\;A\cap\Brace{\tau=\infty}\in\F_{\tau-}$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{任意抽出}
+
+\begin{proposition}
+    $X\in\L(\P)$を発展的可測とし，$\tau\in\T(\bF)$をMarkov時刻とする．
+    このとき，$1_{\Brace{\tau<\infty}}X_\tau$は$\F_\tau$-可測な確率変数である．
+\end{proposition}
+
+\section{条件付き期待値}
+
+\chapter{マルチンゲール}
+
+\begin{quotation}
+    確率積分は一般のマルチンゲールについて定義出来る．
+    情報の独立な発展を表す過程で，任意の過程はマルチンゲールを中心に回転する．
+\end{quotation}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $\M$を連続な見本道を持つマルチンゲールのなすクラスとする．
+        \item 連続な局所マルチンゲールのなすクラスを$\M_\loc$で表し，そのうち$0$から始まるもののなす部分集合を$\M_\loc^0:=\Brace{M\in\M_\loc\mid\forall_{\om\in\Om}\;M_0(\om)=0}$とする．
+        \item 連続な半マルチンゲールの全体を$\S$で表す．
+        \item $\A^+\subset\L(\Om;C(\R_+))$を，単調増加で連続な見本道を持つ適合的過程の集合とする．
+        \item $\A\subset\L(\Om;C(\R_+))$を，局所有界変動で連続な見本道を持つ適合的過程の集合とする．
+        \item $\H:=\Brace{M\in\M\;\middle|\;\sup_{t\in\R_+}E[\abs{M_t}^2]<\infty}$によって，$L^2$-有界な連続マルチンゲールの全体を表す．
+    \end{enumerate}
+\end{notation}
+
+\section{定義と構成}
+
+\subsection{局所マルチンゲールと半マルチンゲール}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    Kolmogorovの拡張定理は，Hopfの拡張定理の一般化である．
-    そこから確率過程論についても，種々の対象が構成できる．
-    $\R_+$上の確率過程も，有限次元周辺分布を指定することで構成できるが，$\R^\infty$の場合と違って一意性は担保されない．
+title=]
+    劣マルチンゲールは，平均過程$(E[M_t])_{t\in\R_+}$が単調増加である．
+    劣マルチンゲールに成り立つ命題は，双対的に優マルチンゲールについても成り立ち，従ってマルチンゲールについては等号が成り立つ．
+\end{tcolorbox}
+
+\begin{definition}
+    フィルトレーション付き確率空間$(\Om,\F,P,(\F_t)_{t\in\R_+})$上の\textbf{マルチンゲール}とは，次の3条件を満たす確率過程$(M_t)$をいう：
+    \begin{enumerate}
+        \item $M$は$D$-過程である：$M_-(\om)\in D(\R_+)\;\as$
+        \item $\forall_{t\in\R_+}\;M_t\in L^1_{\F_t}(\Om)$．
+        \item $\forall_{0\le s\le t}\;E[M_t|\F_s]=M_s\;\as$
+    \end{enumerate}
+    (3)の代わりに$E[X_t|\F_s]\ge X_s\;\as$を満たすとき，\textbf{$(\F_t)$-劣マルチンゲール}という．
+    連続な見本道を持つマルチンゲールのなすクラスを$\M$で表す．
+\end{definition}
+
+\begin{definition}[local martingale]
+    過程$(M_t)$が\textbf{局所マルチンゲール}であるとは，$\infty$に概発散する停止時列$\{\tau_n\}\subset\L(\Om)$が存在して，各$\tau_n$-停止過程$(M_{t\land\tau_n})_{t\in\R_+}$がマルチンゲールであることをいう．
+    特に，連続な局所マルチンゲールのなすクラスを$\M_\loc$で表し，そのうち$0$から始まるもののなす部分集合を$\M_\loc^0:=\Brace{M\in\M_\loc\mid\forall_{\om\in\Om}\;M_0(\om)=0}$とする．
+\end{definition}
+
+\begin{definition}[semimartingale]
+    過程$X$が局所マルチンゲール$M\in\M_\loc$と局所有界変動な$C$-過程$A\in\A$とを用いて$X_t=M_t+A_t$と表せるとき，連続な\textbf{半マルチンゲール}という．
+    この全体を$\S$で表す．
+\end{definition}
+
+\begin{proposition}
+    [劣]マルチンゲールの全体は線型空間をなす．
+\end{proposition}
+
+\subsection{凸関数による構成}
+
+\begin{theorem}
+    $\psi:\R\to\R$を凸関数，$\{M_t\}\subset D(\R_+)$をマルチンゲールとし，$\psi(\{M_t\})\subset L^1(\Om)$とする．
+    \begin{enumerate}
+        \item $(\psi(X_t))_{t\in\R_t}$は$(\F_t)$-劣マルチンゲールである．
+        \item $\psi$が広義単調増加に取れるならば，$(X_t)$が$(\F_t)$-劣マルチンゲールに過ぎなくとも，$(\psi(X_t))_{t\in\R_+}$は$(\F_t)$-劣マルチンゲールとなる．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    特に，可積分性が保たれる限り，$(\abs{X_n})$や$(X_n^p)\;(p>1)$は劣マルチンゲールである．
+\end{example}
+
+\subsection{局所マルチンゲールがマルチンゲールとなる十分条件}
+
+\begin{proposition}
+    $M\in\M_\loc$が$E[\sup_{s\in\R_+}\abs{M_s}]<\infty$を満たすとき，$M\in\M$．
+\end{proposition}
+
+\section{二次変分}
+
+\subsection{変分過程}
+
+\begin{notation}[単調増加な過程と局所有界変動な過程のクラス]\mbox{}
+    \begin{enumerate}
+        \item $\A^+\subset\L(\Om;C(\R_+))$を，単調増加で連続な見本道を持つ適合的過程の集合とする．
+        \item $\A\subset\L(\Om;C(\R_+))$を，局所有界変動で連続な見本道を持つ適合的過程の集合とする．
+        \item 見本道$X(\om)$の局所有界変動のとき，過程$(V_t)_{t\in\R_+}$が定まる：
+        \[V_t(\om):=\sup_{\Delta\in 2^{([0,T])}}\sum_{i\in\Delta}\abs{X_{t_i\land t}(\om)-X_{t_{i-1}\land t}(\om)}<\infty.\]
+        これを\textbf{変分過程}という．
+    \end{enumerate}
+    このとき，$X\in\A$ならば$V\in\A^+$である．
+\end{notation}
+
+\begin{definition}
+    \begin{enumerate}
+        \item $\D$を，$0$から始まり$\infty$に発散する$\R_+$の狭義単調増加列の全体のなす有向集合とする．
+        \item 過程$X$に対して，$\L(\Om)$のネット$(T^\Delta_t(X))_{\Delta\in\D}$を
+        \[T^\Delta_t(X):=\sum^{k-1}_{i=0}(X_{t_{i+1}}-X_{t_i})^2+(X_t-X_{t_k})^2\qquad\paren{t\in\R_+,t_k\le t<t_{k+1}}\]
+        と定める．
+        \item このネットが確率収束するとき，$X$は\textbf{有限な二次変分を持つ}といい，その極限過程を$\brac{X}$または$\brac{X,X}$で表す．
+    \end{enumerate}
+\end{definition}
+
+\subsection{局所マルチンゲールは局所有界変動でない}
+
+\begin{theorem}
+    $\M^0_\loc\cap\A=\{0\}$である．
+    特に，半マルチンゲール$X\in\S$を定める分解は，$M_0=0$を満たすものは一意である．
+\end{theorem}
+
+\subsection{マルチンゲールの二次変分}
+
+\begin{theorem}\mbox{}
+    マルチンゲール$M\in\M$について，
+    \begin{enumerate}
+        \item 有限な二次変分過程$\brac{M,M}$を持つ．
+        \item $\brac{M}\in\A^+$は$M_0=0$かつ$t\mapsto M_t^2-\brac{M,M}_t$をマルチンゲールにする唯一の$\A^+$の元である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    $(X^n)$が$Y$に\textbf{広義一様に確率収束する}とは，$\forall_{T>0}\;\sup_{s\in[0,T]}\abs{X^n_s-Y_s}\xrightarrow{p}0$を満たすことをいう．
+\end{definition}
+
+\begin{theorem}\label{thm-quadratic-variation-of-martingales}
+    局所マルチンゲール$M\in\M_\loc$について，
+    \begin{enumerate}
+        \item ただ一つの過程$\brac{M,M}\in\A^+$が存在して，点$0$で消え，$M^2-\brac{M,M}\in\M_\loc$を満たす．
+        \item ネット$(T^\Delta(M))$は$\brac{M,M}$に広義一様に確率収束する．
+        \item $(M_t)$がマルチンゲールでもあるとき，広義一様に$L^1(\Om)$-収束もする．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{局所マルチンゲールのブラケット}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\brac{-,-}:\M^0_\loc\times\M^0_\loc\to\A$．
 \end{tcolorbox}
 
 \begin{theorem}
-    確率空間列$(\R^n,\B(\R^n))$上の確率測度列$(\mu_n)$が次の一貫性条件をみたすとき，$(\R^\N,\B(\R^\N))$上の確率測度$\mu$であって$\forall_{A\in\B(\R^n)}\;\mu(A\times\R^\N)=\mu_n(\A)$を満たすものが一意的に存在する．ただし，
-    $A\times\R^\N=\Brace{(\om_n)\in\R^\N\mid (\om_1,\cdots,\om_n)\in A}$とした．
-    なお，$\R^\N$には直積位相を考える．
-    \begin{quotation}
-        (consistency) $\forall_{n\in\N}\;\forall_{A\in\B(\R^n)}\;\mu_{n+1}(A\times\R)=\mu_n(A)$．
-    \end{quotation}
-    特に，この一貫性条件は$\R^\N$上の測度に延長できるための必要十分条件である．
-    これは$\R$を一般の完備可分空間としても成り立つ．
-\end{theorem}
-
-\begin{corollary}
-    $\R$上の確率測度$\mu$に対して，ある確率空間が存在して，これを法則とする独立な確率変数の列$(X_n)_{n\in\N}$が存在する．
-\end{corollary}
-
-\begin{corollary}[Hilbert空間により添字付けられた確率過程]
-    $H$を可分実Hilbert空間とする．
-    ある確率空間$(\Om,\F,P)$とその上の確率変数の族$X=(X_h)_{h\in H}$が存在して，次の2条件を満たす：
+    $M,N\in\M^0_\loc$とする．
     \begin{enumerate}
-        \item 写像$X:H\to\Meas(\Om,\R);h\mapsto X_h$は線型である．
-        \item 任意の$h\in H$について，確率変数$X_h$は中心化されたGauss変数で，線型写像$X:H\to L^2(\Om)$は等長である：$E[X_h^2]=\norm{h}^2_H$．
-        \item $\Im X\simeq_\Hilb H$は$L^2(\Om)$のGauss部分空間である．
-    \end{enumerate}
-\end{corollary}
-\begin{remark}
-    この同一視により，独立性$X_h\indep X_{h'}$は添字空間$H$における直交性として理解できる．
-\end{remark}
-
-\begin{theorem}[確率過程版]\label{thm-Kolmogorov-extension-theorem}
-    確率分布族$\{P_{t_1,\cdots,t_n}\}_{n\in\N_{\ge1},t_i\in\R_+}$が次の条件を満たすとき，ある確率空間$(\Om,\F,P)$が存在して，これらを有限次元周辺分布とする確率過程$(X_t)_{t\in\R_+}$が存在する．
-    \begin{enumerate}[({C}1)]
-        \item $P_{t_1,\cdots,t_n}\in P(\R^n)$である．
-        \item 任意の部分集合$\{t_{k_1}<\cdots<t_{k_m}\}\subset\{t_1<\cdots<t_n\}$について，$P_{t_{k_1}},\cdots,P_{t_{k_m}}$は$P_{t_1,\cdots,t_n}$の対応する周辺分布である．
+        \item 唯一の$\brac{M,N}\in\A$が存在して$0$で消え，$M\cdot N-\brac{M,N}\in\M_\loc$を満たす．
+        \item 次のネット$(T^\Delta(M,N))$は$\brac{M,N}$に広義一様に確率収束する：
+        \[T^\Delta_s(M,N):=\sum(M_{t_i\land s}-M_{t_{i-1}\land s})\cdot(N_{t_i\land s}-N_{t_{i-1}\land s}).\]
     \end{enumerate}
 \end{theorem}
+
+\subsection{BDG不等式}
+
+\begin{theorem}[Burkholder-David-Gundy inequality]
+    $\{M_t\}_{t\in[0,T]}\subset C([0,T])$を連続な局所マルチンゲールで，ある$p>0$について$M_T\in L^p_{\F_T}(\Om)$を満たすとする．
+    \begin{enumerate}
+        \item 定数$c_p<C_p$が存在して，
+        \[c_pE[\brac{M}_t^{p/2}]\le E\Square{\sup_{t\in[0,T]}\abs{M_t}^p}\le C_pE[\brac{M}_t^{p/2}].\]
+        \item 可分Hilbert空間$H$に値を取るとき：$\{M_t\}_{t\in[0,T]}\subset C([0,T];H)$，
+        \[E[\norm{M_t}^p_H]\le c_pE[\brac{M}_T^{p/2}]\]
+        が成り立つ．ただし，$\brac{M}_T=\sum^\infty_{i=1}\brac{\brac{M,e_i}_H}_T$とした．
+    \end{enumerate}
+\end{theorem}
+
+\section{Doobの不等式}
+
+\subsection{任意停止定理}
+
+\begin{theorem}[Doob's optional stopping theorem]\label{thm-Doob-optional-stopping}
+    $\{M_t\}_{t\in\R_+}\subset C(\R_+)$を連続な劣マルチンゲール，$S\le T$を有界な停止時とする．
+    このとき，$E[M_T|\F_S]\ge M_S\;\ae$が成り立つ．特に，$E[M_S]\le E[M_T]$である．
+\end{theorem}
+
+\begin{corollary}[有界とは限らない停止時に関する停止過程へのマルチンゲール性の遺伝]
+    $\{M_t\}_{t\in\R_+}\subset D(\R_+)$を劣マルチンゲール，$T$を停止時とする．
+    停止過程$(M_{t\land T})_{t\in\R_+}$は再び劣マルチンゲールである．
+\end{corollary}
+
+\subsection{最大不等式}
+
+\begin{theorem}[Doob's maximal inequality]\label{thm-Doob-maximal-inequality}
+    $\{M_t\}_{t\in[0,T]}\subset C([0,T])$を連続な局所マルチンゲールで，ある$p\ge1$について$M_T\in L^p_{\F_T}(\Om)$を満たすとする．
+    \begin{enumerate}
+        \item $\forall_{\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda^p}E[1_{\Brace{\sup_{t\in[0,T]}\abs{M_t}>\lambda}}\abs{M_T}^p]\le\frac{1}{\lambda^p}E[\abs{M_T}^p]$．
+        \item $\forall_{\lambda>0}\;P\Square{\sup_{t\in[0,T]}\abs{M_t}>\lambda}\le\frac{1}{\lambda}E[X^+_T]$．
+        \item $\forall_{a<b\in\R}\;E[U_{0,T}(a,b;X)]\le\frac{E[X^+_T]+\abs{a}}{b-a}$．
+        \item $p>1$のとき，さらに$E\Square{\sup_{t\in[0,T]}\abs{M_t}^p}\le\paren{\frac{p}{p-1}}^pE[\abs{M_T}^p]$が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+
+
+\chapter{Brown運動}
 
 \section{Brown運動の定義と特徴付け}
 
@@ -2162,11 +2623,7 @@ title=]
     その生成作用素$\lim_{t\to0}\frac{P_t-I}{t}=\frac{\nabla}{2}$がLaplace作用素である．$I$は恒等作用素とした．
 \end{tcolorbox}
 
-\chapter{マルチンゲール}
 
-\begin{quotation}
-    確率積分は一般のマルチンゲールについて定義出来る．
-\end{quotation}
 
 \chapter{確率解析}
 
@@ -2191,7 +2648,7 @@ title=]
     伊藤解析とは，等距離な有界線型作用素$I:L^2(\P)\to L^2(\Om)$とその代数法則をいう．
 \end{quotation}
 
-\section{確率積分}
+\section{Hilbの同型としての確率積分の構成}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2212,8 +2669,11 @@ title=発展的可測性とは$\P/\B(\R)$-可測性である]
     \[\forall_{t\in\R_+}\;u|_{\Om\times[0,t]}\in\L(\Om\times[0,t],\F_t\times\B([0,t])).\]
 \end{definition}
 
-\begin{lemma}[発展的可測性の十分条件]
-    適合的な可測過程$u:\Om\times\R_+\to\R$には，発展的可測なバージョンが存在する(Meyer 1984, Th'm 4.6)．
+\begin{lemma}[発展的可測性の十分条件]\mbox{}
+    \begin{enumerate}
+        \item 適合的な可測過程$u:\Om\times\R_+\to\R$には，発展的可測なバージョンが存在する(Meyer 1984, Th'm 4.6)．
+        \item 適合的な$D$-過程は発展的可測である．
+    \end{enumerate}
 \end{lemma}
 
 \begin{lemma}[発展的可測性の特徴付け]
@@ -2463,7 +2923,7 @@ title=]
     と定める．ただし，$\wt{u}$は$u$を$(T,\infty)$上で零として延長したものとした．
 \end{definition}
 
-\begin{example}[Brown運動の不定積分]
+\begin{example}[Brown運動の不定積分]\label{exp-integral-of-Brownian-motion}
     任意の$T>0$に関して，Brown運動$(B_t)_{t\in[0,T]}$は$\F_t\times\B([0,T])$-可測過程である（$[0,T]\to\L(\Om,\F_t,P)$が$C$-過程であるため）．よって，
     Brown運動自体は発展的可測である．
     その上，連続過程でもある：$B\in C'(\R_+;L^2(\Om))$．
@@ -2481,7 +2941,7 @@ title=]
     従って，Brown運動$B$は，$\R_+$上積分可能ではないが，任意のコンパクト集合上では積分可能で，中心化された$\chi^2$-分布に従う確率変数になる．
 \end{example}
 
-\section{不定確率積分の性質}
+\section{剪断過程を通じた不定確率積分の性質}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -2651,63 +3111,371 @@ title=]
 
 \subsection{二次変分}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    マルチンゲール$M_t$の二次変分過程は，単調増加で連続な見本道を持つ適合的過程$\brac{M}_t=\int^t_0u_s^2ds$となる．
+\end{tcolorbox}
+
 \begin{proposition}[二次変分]
     分割$\pi:=\{0=t_0<t_1<\cdots<t_n=t\}\subset[0,t]\;(n\in\N)$のなすネット$S:2^{([0,t])}\to L^2(\Om)$は，$L^2(\Om)$極限
     \[S^2_\pi(u):=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{L^2(\Om)}\int^t_0u^2_sds\]
     を持つ．
 \end{proposition}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[$u\in\E$のとき] 
+        $u$を単過程とすると，
+        \[u=\sum^{m-1}_{i=0}\phi^i1_{(t^i,t^{i+1}]}\]
+        と表せる．このとき，分割$\Delta:=\Brace{0\le t_0<t_1<\cdots<t_m\le t}$の任意の細分$\pi:=\Brace{0\le t_0<t_1<\cdots<t_n\le t}$について，全射$\sigma:n+1\to m+1$が存在して，
+        \[S_\pi=\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2=\sum^{n-1}_{j=0}\phi_{\sigma(j)}^2(B_{t_{\sigma(j+1)}}-B_{t_{\sigma(j)}})^2\]
+        と表せる．この部分ネットは$\sum^{m-1}_{i=0}\phi_i^2(t_{i+1}-t_i)=\int^t_0u^2_sds$に$L^2(\Om)$-収束する．すると任意の分割$\pi'$に対しても，細分$\Delta\cup\pi'$を取れば，この任意の細分は$\int^t_0u^2_sds$に収束していく．
+        \item[一般の$u\in L^2_\infty(\P)$のとき]
+        このとき，$1_{[0,t]}u\in L^2(\P)$より，任意の$\ep>0$に対して，ある単過程$v\in\E$が存在して，
+        \[\norm{u-v}^2_{L^2(\P)}=E\Square{\int^t_0(u_s-v_s)^2ds}<\ep\]
+        を満たす．いま，
+        \[E\Square{\Abs{S^2_\pi(u)-\int^t_0u^2_sds}}\le E[\abs{S^2_\pi(u)-S^2_\pi(v)}]+E\Square{\Abs{S^2_\pi(v)-\int^t_0v^2_sds}}+E\Square{\Abs{\int^t_0(u_s^2-v_s^2)ds}}\]
+        \begin{enumerate}[(a)]
+            \item 第2項は$0$に収束する．
+            \item 第3項は，$u_s^2-v_s^2=(u_s+v_s)(u_s-v_s)$とCauchy-Schwartzの不等式より，
+            \begin{align*}
+                E\Square{\Abs{\int^t_0(u_s^2-v_s^2)ds}}&\le\norm{u-v}_{L^2(\P)}\norm{u+v}_{L^2(\P)}\\
+                &\le\ep^{1/2}(2\norm{u}+\norm{v-u}).
+            \end{align*}
+            \item 第1項も，同様の評価を得る．なお，途中で$\norm{I(1_{[t_j,t_{j+1}]}(u-v))}_{L^1(\Om)}\le\norm{I(1_{[t_j,t_{j+1}]}(u-v))}_{L^2(\Om)}\le\norm{u-v}_{L^2(\P)}<\ep^{1/2}$を用いる：
+            \begin{align*}
+                E[\abs{S^2_\pi(u)-S^2_\pi(v)}]&=E\Square{\Abs{\sum^{n-1}_{j=0}\paren{I(1_{[t_j,t_{j+1}]u})^2-I[1_{[t_j,t_{j+1}]}v]^2}}}\\
+                &=E\Square{\Abs{\sum^{n-1}_{j=0}I(1_{[t_j,t_{j+1}]}(u-v))I(1_{[t_j,t_{j+1}]}(u+v))}}\\
+                &\le E\Square{\Abs{\sum^{n-1}_{j=0}\ep^{1/2}I(1_{[t_j,t_{j+1}]}(u+v))}}\\
+                &=\ep^{1/2}E\Square{\Abs{I(u+v)}}\\
+                &\le\ep^{1/2}\norm{I(u+v)}_{L^2(\Om)}=\ep^{1/2}\norm{u+v}_{L^2(\P)}.
+            \end{align*}
+        \end{enumerate}
+        以上より，
+        \[\limsup_{\abs{\pi}\to0}E\Square{\Abs{S^2_\pi(u)-\int^t_0u^2_sds}}\le 2\ep^{1/2}(2\norm{u}+\ep^{1/2}).\]
+    \end{description}
+\end{Proof}
 
-\begin{corollary}
+\begin{corollary}[Burkholder-David-Gundy inequality]
     \[\forall_{p>0,T>0}\quad c_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}\le E\Square{\sup_{t\in[0,T]}\Abs{\int^t_0u_sdB_s}^p}\le C_pE\Square{\Abs{\int^T_0u^2_sds}^{p/2}}.\]
 \end{corollary}
+\begin{Proof}
+    $(M_t)$は一様可積分なのだろうか？
+\end{Proof}
+
 
 \subsection{停止時までの積分}
 
-\begin{proposition}[停止時までの積分]
+\begin{definition}[停止時までの積分]
+    $\tau\in\T(\F_t)$を停止時とする．時刻$\tau$までの確率積分を．
+    \[\int^\tau_0u_tdB_t:=\int^\infty_0u_tdB^\tau_t\]
+    と定めると，$I:L^2(\P)\to L^2(\Om)$がやはり定まる．
+\end{definition}
+
+\begin{proposition}[well-definedness]
     $u\in L^2(\P)$で，$\tau:\Om\to\R_+$を停止時とする．このとき，
-    \begin{enumerate}
-        \item $u1_{[0,\tau]}\in L^2(\P)$．
-        \item 
-    \end{enumerate}
-    で，
-    \[\int^\infty_0u_t1_{[0,\tau]}(t)dB_t=\int^\tau_0u_tdB_t.\]
+    $u1_{[0,\tau]}\in L^2(\P)$で，
+    \[I[u_t1_{[0,\tau]}]=\int^\infty_0u_t1_{[0,\tau]}(t)dB_t=\int^\tau_0u_tdB_t.\]
 \end{proposition}
+\begin{Proof}\mbox{}
+    \begin{description}
+        \item[$u$が単過程で$\tau$が単関数であるとき] 
+        まず，
+        \[u_t=F1_{(a,b]}(t)\;(0\le a<b,F\in L^2_{\F_a}(\Om)),\quad\Im\tau\subset\Brace{0=t_0<t_1<\cdots<t_n}\]
+        と表せる場合を考える．このとき，$1_{(0,\tau]}$は
+        \[1_{(0,\tau]}(t)=\sum^{n-1}_{j=0}1_{\Brace{\tau\ge t_{j+1}}}1_{(t_j,t_{j+1}]}(t)\]
+        と表せるが，いま$\tau$は離散値だから$\Brace{\tau\ge t_{j+1}}=\Brace{\tau\le t_j}\in\F_{t_j}$が成り立ち，$1_{(0,\tau]}$は単過程である．
+        よって，$u1_{[0,\tau]}=u(1_{\{0\}}+1_{[0,\tau]})\in L^2(\P)$．
+        そしてこのとき，
+        \begin{align*}
+            I(u1_{[0,\tau]})&=F\sum^{n-1}_{j=0}1_{\Brace{\tau\ge t_{j+1}}}I(1_{(t_j,t_{j+1}]\cap(a,b]})\\
+            &=F\sum^n_{i=1}1_{t=t_i}I(1_{(a,b]\cap[0,t_i]})\\
+            &=F(B_{b\land\tau}-B_{a\land\tau})=F(B^\tau_b-B^\tau_a)=\int^\tau_0u_tdB_t.
+        \end{align*}
+        \item[$u$が単過程で$\tau$が一般であるとき] 
+        $\tau_n\searrow\tau$を満たす離散値停止時の列$(\tau_n)$が取れる\ref{prop-approximation-of-stopping-time-from-upwards}．
+        このとき，右辺は$t\mapsto B_t$の連続性より，左辺は$\tau_n\searrow\tau$は$L^2(\Om)$-収束もするので，$I$の連続性より従う．
+        \item[$u$も一般であるとき] 
+        一般の$u\in L^2(\P)$には，単過程列$\{u^{(n)}\}\subset\E$が存在して，$u^{(n)}\xrightarrow{L^2(\P)}u$．
+        このとき，$T=\infty$の場合の最大不等式より，
+        \begin{align*}
+            E\Square{\Abs{\int^\tau_0u_t^{(n)}dB_t-\int^\tau_0u_tdB_t}^2}&\le E\Square{\sup_{t\in\R_+}\Abs{\int^t_0(u_s^{(n)}-u_s)dB_s}^2}\\
+            &\le 4E\Square{\int^\infty_0\abs{u_s^{(n)}-u_s}^2ds}=4\norm{u_s^{(n)}-u_s}_{L^2(\P)}.
+        \end{align*}
+        よって，
+        たしかに
+        \[\int^\tau_0u_t^{(n)}dB_t\xrightarrow{L^2(\Om)}\int^\tau_0u_tdB_t\]
+        が成り立つ．
+    \end{description}
+\end{Proof}
 
+\begin{corollary}
+    同様にして，$u\in L^2_\infty(\P)$でも，有界な停止時$\tau$については定義出来る．
+\end{corollary}
 
-\section{一般の過程の積分}
+\section{前方Riemann和としての確率積分の拡張再定義}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    確率積分を時区間の前点を代表点としたRiemann和の確率極限として捉え直すことで，
     $L^2_\infty(\P)$より広く，一般の局所自乗可積分な見本過程を持つ過程を積分できる．
+    すると，$I:L^2_\loc(\P)\to\M^0_\loc$が定まる．
+    いままでは，マルチンゲール$\M^0$には必ず極限が存在したために，自然な$L^2(\P)\to L^2(\Om)$が存在していたのである．
 \end{tcolorbox}
 
-\begin{notation}
-    \[L^2_\loc(\P):=\Brace{u\in L(\P)\mid}\]
-\end{notation}
+\subsection{定義と局所マルチンゲール性}
+
+\begin{lemma}
+    局所2乗可積分な過程$u\in L^2_\loc(\P)$に対して，確率時刻$T_n:\Om\to\o{\R_+}\;(n\in\N)$を
+    \[T_n:=\inf\Brace{t\in\R_+\;\middle|\;\int^t_0u_s^2ds=n}\]
+    とすると，これは停止時で，剪断過程$u_t^{(n)}:=u_t1_{[0,T_n]}(t)\in L^2(\P)$は確率可積分である．
+\end{lemma}
+
+\begin{proposition}
+    局所2乗可積分な過程$u\in L^2_\loc(\P)$に対して，適合的な連続過程$(\int^t_0u_sdB_s)\in C\cap\bF$が存在して，
+    \[\quad\int^t_0u_s^{(n)}dB_s=\int^t_0u_sdB_s\quad\on\Brace{t\le T_n}.\]
+\end{proposition}
+\begin{Proof}
+    任意に$n\in\N$を取る．任意の$m\ge n$に対して，
+    $t\mapsto\int^t_0u_s^2ds$は(絶対)連続だから，
+    $\om\in\Brace{t\le T_n}$上では$1_{[0,T_n]}1_{[0,t]}u^{(n)}=1_{[0,t]}u^{(n)}$かつ$1_{[0,T_m]}1_{[0,t]}u^{(m)}=1_{[0,t]}u^{(m)}$だから，
+    \[\int^t_0u^{(n)}_sdB_s=\int^t_0u_s^{(m)}dB_s\]
+    が成り立つ．そこで，
+    \[\int^t_0u_sdB_s:=\int^t_0u_s^{(n)}dB_s\quad\on\;\Brace{t\le T_n}\]
+    と定める．これは明らかに$n\in\N$の取り方に依らない．
+    \begin{description}
+        \item[適合性] 任意の$t\in\R_+$について，
+        \[\int^t_0u_sdB_s=\sum_{n\in\N}1_{\Brace{t\le T_n}}\int^t_0u_sdB_s\]
+        と表せるから，$\F_t$-可測である．
+        \item[連続過程である]
+        $T_n\nearrow \infty$であるから，任意の$t\in\R_+$に対して，ある$N$が存在して$t\le T_N$．このとき
+        \[\int^t_0u_sdB_s=\int^t_0u^{(N)}_sdB_s\]
+        であり，右辺は連続な修正を持つ．
+    \end{description}
+\end{Proof}
+\begin{remarks}
+    「連続な修正を持つ」の間違いでは？？
+\end{remarks}
+
+\begin{corollary}
+    $u\in L^2_\loc(\P)$の定める不定積分の過程$(M_t)$は連続な局所マルチンゲールである：$M\in\M^0_\loc$．
+    すなわち，ある$T_n\nearrow\infty\;\ae$を満たす停止時の列が存在して，各停止過程$M^{T_n}$はマルチンゲールである．
+\end{corollary}
+
+\subsection{積分の確率連続性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    対応$L^2_\loc(\P)\to\M^0_\loc\overset{\ev_T}{\epi}\L(\Om)$は確率連続である．
+\end{tcolorbox}
+
+\begin{proposition}
+    $u\in L^2_\loc(\P)$とする．このとき，
+    \[\forall_{K,\delta,T>0}\quad P\Square{\abs{I(1_{[0,T]}u)}\ge K}\le P\Square{\int^T_0u_s^2ds\ge\delta}+\frac{\delta}{K^2}.\]
+\end{proposition}
+
+\begin{corollary}
+    列$\{u^{(n)}\}\subset L^2_\loc(\P)$は$u\in L^2_\loc(\P)$に確率収束するとする．
+    このとき，任意の$T>0$について，
+    \[\int^T_0u^n_sdB_s\xrightarrow{p}\int^T_0u_sdB_s.\]
+\end{corollary}
+
+\subsection{局所マルチンゲールの二次変分}
+
+\begin{proposition}
+    $u\in L^2_\loc(\P)$の確率積分は局所有界で，
+    \[\forall_{t\in\R_+}\quad\sum^{n-1}_{j=0}\paren{\int^{t_{j+1}}_{t_j}u_sdB_s}^2\xrightarrow{P}\int^t_0u_s^2ds.\]
+\end{proposition}
 
 \section{伊藤の公式}
 
-\section{田中の公式}
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $L^1_\loc(\P):=\Brace{\nu\in\L(\P)\;\middle|\;\forall_{t>0}\int^t_0\abs{\nu_s}ds<\infty\;\as}$．
+        \item $C^{1,2}(\R_+\times\R)$で，$t\in R_+$について1階，$x\in \R$について2階連続微分可能な関数全体のなす空間とする．
+    \end{enumerate}
+\end{notation}
+
+\subsection{伊藤過程の定義と例}
+
+\begin{definition}
+    適合的な連続過程$X\in C\cap\bF$が\textbf{伊藤過程}であるとは，
+    \[\exists_{u\in L^2_\loc(\P)}\;\exists_{\nu\in L^1_\loc(\P)}\;\exists_{X_0\in\L_{\F_0}(\Om)}\quad X_t=X_0+\int^t_0u_sdB_s+\int^t_0v_sds\]
+    が成り立つことをいう．
+    ただし，$\exists_{c\in\R}\;X_0=c\;\as$に注意\ref{lemma-Blumenthal}．
+\end{definition}
+
+\begin{example}
+    $B^2_t$は伊藤過程である\ref{exp-integral-of-Brownian-motion}：
+    \[B^2_t=\int^t_02B_sdB_s+t.\]
+    一般に，$f\in C^2(\R)$について，$f(B_t)$と表せる過程は伊藤過程であり，確率不定積分と可微分な見本道を持つ過程との和に分解出来る．
+\end{example}
+
+\subsection{局所マルチンゲールの二次変分の特徴付け}
+
+\begin{proposition}
+    $X,Y$を伊藤過程とする：
+    \[X_t=X_0+\int^t_0u^X_sdB_s+\int^t_0v_s^Xds,\qquad Y_t=Y_0+\int^t_0u_s^YdB_s+\int^t_0v_s^Yds.\]
+    このとき，$X,Y$の二次共変分は，局所マルチンゲール$M_t^X,M_t^Y$の二次共変分に一致する：
+    \[\brac{X,Y}_t=\int^t_0u_s^Xu_s^Yds=\Brac{\int^t_0u_s^XdB_s,\int^t_0u_s^YdB_s}_t\]
+    すなわち，次が成り立つ：
+    \[\sum_{j\in\pi}(Y_{t_{j+1}}-Y_{t_j})(X_{t_{j+1}}-X_{t_j})\xrightarrow{P}\int^t_0u^X_su^Y_sds.\]
+\end{proposition}
+
+\subsection{伊藤の公式}
+
+\begin{theorem}
+    $f\in C^{1,2}(\R_+\times\R)$，$X$を伊藤過程とする．
+    このとき，$Y_t:=f(t,X_t)$は再び伊藤過程で，任意の$t\in\R_+$について，
+    \[Y_t\overset{\as}{=}f(0,X_0)+\int^t_0\pp{f}{t}(s,X_s)ds+\int^t_0\pp{f}{x}(s,X_s)u_sdB_s+\int^t_0\pp{f}{x}(s,X_s)v_sds+\frac{1}{2}\int^t_0\pp{^2f}{x^2}(s,X_s)u_s^2ds.\]
+\end{theorem}
+\begin{remarks}
+    前の命題から，$\brac{X}_t=\int^t_0u^2_sds=\Brac{\int^t_0u_sdB_s}_t$の記法を採用すると，
+    \[Y_t=f(0,X_0)+\int^t_0\pp{f}{t}(s,X_s)ds+\int^t_0\pp{f}{x}(s,X_s)dX_s+\frac{1}{2}\int^t_0\pp{^2f}{x^2}(s,X_s)d\brac{X}_s\]
+    と表記できる．
+\end{remarks}
+\begin{remarks}
+    微分形式では$dX_t=u_tdB_t+v_tdt$と表し，形式的計算規則$(dB_t)^2=dt,dB_tdt=dtdB_t=dtdt=0$に従うと，
+    \[df(t,X_t)=\pp{f}{t}(t,X_t)dt+\pp{f}{x}(t,X_t)dX_t+\frac{1}{2}\pp{^2f}{x^2}(t,X_t)(dX_t)^2\]
+    とも表せる．なお，$(dX_t)^2=u^2_tdt=d\brac{X}_t$である．
+\end{remarks}
+
+\begin{example}[種々の公式]\mbox{}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{example}
+
+\section{田中の公式と局所時間}
 
 \section{伊藤の公式の多次元化}
 
 \section{Stratonovich積分}
 
+\subsection{定義}
+
+\begin{proposition}
+    $X,Y$を伊藤過程とする．
+    次の収束が成り立つ：
+    \[\sum_{j\in\pi}(X_{t_{j+1}}-X_{t_j})\frac{Y_{t_j}+Y_{t_{j+1}}}{2}\xrightarrow{P}\int^t_0Y_sdX_s+\frac{1}{2}\brac{X,Y}_t=:\int^t_0Y_s\circ dX_s.\]
+\end{proposition}
+
+\subsection{基本定理}
+
+\begin{proposition}
+    $f\in C^3(\R)$ならば，
+    \[f(X_t)=f(X_0)+\int^t_0f'(X_s)\circ dX_s.\]
+\end{proposition}
+
+\begin{corollary}
+    \[\brac{f'(X),X}_t=\int^t_0f''(X_s)d\brac{X}_s=\Brac{\int^t_0f''(X_s)u_sdB_s,\int^t_0u_sdB_s}.\]
+\end{corollary}
+
 \section{後退確率積分}
+
+\subsection{定義}
+
+\begin{definition}[backward filtration, backward predictable]
+    期限$T>0$を定める．
+    \begin{enumerate}
+        \item $\wh{\F_t}:=\sigma[\Brace{B_T-B_s}_{t\le s\le T}\cup\cN]$とすると，$(\wh{\F}_t)_{t\in[0,T]}$は閉$\sigma$-代数の減少列である．これを\textbf{後退フィルトレーション}という．
+        \item 過程$u$が\textbf{後退可予測}とは，$\forall_{t\in[0,T]}\;u|_{\Om\times[t,T]}$が$\wh{\F}_t\otimes\B([t,T])$-可測であることをいう．
+        \item 二乗可積分な後退可予測関数全体の空間を
+        \[L^2_T(\wh{\P}):=\Brace{u\in\L_T(\wh{\P})\;\middle|\;E\Square{\int^T_0u_s^2ds}<\infty}\]
+        で表す．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    $\wh{\P}$は発展的可測の場合と同様に，$\Om\times\R_+$上の$\sigma$-代数として表現出来るか？
+\end{remarks}
+
+\begin{definition}[backward Ito stochastic integral]
+    後退フィルター付き確率空間$(\Om,\F,P,(\wh{\F}_t))$上の二乗可積分過程
+    $u\in L^2_T(\wh{\P})$の\textbf{後退伊藤積分}とは，次の$L^2(\Om)$-極限をいう：
+    \[\int^T_0u_t\wh{d}B_t:=\lim_{n\to\infty}\sum^{n-2}_{j=0}\paren{\frac{n}{T}\int^{(j+2)T/n}_{(j+1)T/n}u_sds}(B_{(j+1)T/n}-B_{jT/n}).\]
+\end{definition}
+
+\begin{proposition}[後退Riemann和の極限としての特徴付け]
+    過程$u$は$(\wh{\F}_t)$-適合で$u_t:\R_+\to L^2(\Om)$は連続であるとする．
+    このとき，
+    \[\int^T_0u_t\wh{d}B_t=\lim_{n\to\infty}\sum^{n-1}_{j=0}i_{(j+1)T/n}(B_{(j+1)T/n}-B_{jT/n}).\]
+\end{proposition}
+
+\begin{proposition}[伊藤積分への帰着]
+    $\wh{B}_t:=B_T-B_{T-t}$とすると，これは$\wh{\F}_{T-t}$-Brown運動である．このとき，
+    \[\forall_{u\in L^2_T(\wh{\P})}\quad\int^T_0u_t\wh{d}B_t=\int^T_0u_{T-t}d\wh{B}_t.\]
+\end{proposition}
 
 \section{積分表現定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    $L^2(\Om)$の元は積分で表現出来る．
+    不定積分の対応$L^2_\infty(\P)\ni u\mapsto(M_t=I(1_{[0,t]}u))\in\M_2$は，二乗可積分なマルチンゲールの全体の空間$\M_2$上に全射を定める．
 \end{tcolorbox}
+
+\begin{theorem}[integral representation theorem]
+    任意の$T>0, F\in L^2_{\F_T}(\Om)$について，ある過程$u\in L^2_T(\P)$が唯一つ存在して，
+    \[F=E[F]+\int^T_0u_sdB_s.\]
+\end{theorem}
+
+\begin{corollary}
+    $M\in\M_2$は二乗可積分な$(\F_t)$-マルチンゲールとする．このとき，唯一の$u\in L^2_\infty(\P)$が存在して，
+    \[M_t=E[M_0]+\int^t_0u_sdB_s\]
+    と表せる．特に，$M$は連続な修正を持つ．
+\end{corollary}
+
+\begin{example}
+    \[B^3_T=\int^T_03(B_t^2+(T-t))dB_t.\]
+\end{example}
 
 \section{Girsanovの定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     ドリフトを持ったBrown運動が通常のBrown運動に戻るような測度変換を与える．
+    Cameron and Martin (1944)が最初に示したが，Girsanov (1960)が一般化した．
 \end{tcolorbox}
+
+\subsection{Girsanovの定理}
+
+\begin{lemma}[確率変動するドリフト$\theta t$を持ったBrown運動]
+    $\theta\in L^2_T(\P)$と$(\Om,\F,P)$上のBrown運動$(B_t)_{t\in\R_+}$に対して，
+    \[L_t:=\exp\paren{\int^t_0\theta_sdB_s-\frac{1}{2}\int^t_0\theta^2_sds}\quad(t\in[0,T])\]
+    と定める．
+    \begin{enumerate}
+        \item $L$は局所マルチンゲールである．
+        \item 線型な確率微分方程式$L_t=1+\int^t_0\theta_sL_sdB_s$を満たす．
+    \end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Novikov (1972)]
+    \[E\Square{\exp\paren{\frac{1}{2}\int^T_0\theta^2_sds}}<\infty\]
+    ならば，$L$はマルチンゲールでもある．
+\end{lemma}
+
+\begin{theorem}
+    $\theta\in L^2_T(\P)$がNovikovの条件を満たすとする．このとき，
+    \[W_t:=B_t-\int^t_0\theta_sds\]
+    は$[0,T]$上のBrown運動である．
+\end{theorem}
+
+\subsection{到達時刻の研究}
+
+\begin{notation}
+    $\theta\in\R$と固定すると，
+    \[\left.\frac{dQ}{dP}\right|_{\F_t}=L_t:=\exp\paren{\theta B_t-\frac{\theta^2}{2}t}\]
+    という退化した場合を得る．
+    $Q$の存在は，Novikovの補題による．
+\end{notation}
+
+\begin{proposition}
+    $\tau_a:=\inf\Brace{t\in\R_+\mid B_t=a}\;(a\ne0)$とすると，この$Q$に関する確率密度関数は
+    \[f(s)=\frac{\abs{a}}{\sqrt{2\pi s^3}}\exp\paren{-\frac{(a-\theta s)^2}{2s}}\quad(s>0)\]
+    となる．
+\end{proposition}
+\begin{remarks}
+    $\theta a\ge0$のとき，位置$a$とドリフトの方向が一致するか，ドリフトがない場合であるが，このとき確率1で到達する．
+    一方で$\theta a<0$だと，確率は$\exp(-2\theta a)$となる．ドリフトが強くて$a$が遠いほど，確率は指数関数的に減少する．
+\end{remarks}
 
 \chapter{Malliavin解析}
 
@@ -2941,15 +3709,27 @@ title=]
     \end{quote}
 \end{quotation}
 
+\chapter{参考文献}
+
 \begin{thebibliography}{99}
     \bibitem{Nualart}
     David Nualart and Eulalia Nualart "Introduction to Malliavin Calculus"
+    \bibitem{LipsterShiryayev}
+    Lipster, and Shiryayev. \textit{Theory of Martingale}.
+    \bibitem{Borodin}
+    Borodin. \textit{Stochastic Processes}.
+    \bibitem{Prato}
+    Giuseppe Prato. \textit{Introduction to Stochastic Analysis and Malliavin Calculus}.
+    \bibitem{Scheutzow}
+    Michael Scheutzo. Stochastic Processes
+    \bibitem{Bremaud}
+    Brémaud. \textit{Probability Theory And Stochastic Processes}.
+    \bibitem{JacodShiryayev}
+    Jacod, and Shiryayev. \textit{Limit Theorems For Stochastic Processes}.
+
+
     \bibitem{Revus and Yor}
     Daniel Revuz, and Marc Yor "Continuous Martingales and Brownian Motion"
-    \bibitem{Prato}
-    Giuseppe Prato - Introduction to Stochastic Analysis and Malliavin Calculus
-    \bibitem{Vershynin}
-    Vershynin -  High-Dimensional Probability
     \bibitem{Bass}
     Richard Bass - Stochastic Processes
     \bibitem{舟木}
