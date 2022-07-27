@@ -1251,6 +1251,63 @@ title=]
 \[\int^t_0\frac{1}{Y_s}(dM_s-\al(s)Y_sds)\]
 もマルチンゲールとなることがわかる．
 
+\chapter{離散確率過程}
+
+\begin{quotation}
+    ここでは離散確率過程を扱うが，その偶然変動の理論の多くは組み合わせ論的な性質を持つ．
+    この方が，題材としては目から鱗な事項が多い．
+\end{quotation}
+
+\section{第１逆正弦法則}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Andersen (1953,\cite{Andersen})により発見された独立確率変数の和に見られる確率変動の性質を，Bernolli試行を例に取ってみる．
+    結局は空間内での対称な単純ランダムウォークである．
+    この確率分布は$\arcsin$を用いて表せ，ほとんど原点に戻らない．
+\end{tcolorbox}
+
+\subsection{投票でのリード}
+
+\begin{lemma}[鏡像原理]
+    点$A$から$B$に行く道のうち，$x$軸に接するか交わる道は，$A$の$x$に関する対称点$A'$から$B$に行く道の数に等しい．
+\end{lemma}
+
+\begin{corollary}[投票問題: Bertrand 1887]
+    候補者$P$が$p$票を得て，候補者$Q$が$q<p$票を得たとする．
+    このとき，票読の間，常に$P$が$Q$よりも得票数が多かった確率は$\frac{p-q}{p+q}$である．
+\end{corollary}
+
+\begin{corollary}
+    銅貨投げゲームにおいて，一度もスコアの逆転現象が起こらない確率が一番高い．
+\end{corollary}
+
+\begin{example}[リードの逆転は思ったよりも起こらない]
+    処置群と対照群で，降順のデータ$a_1>\cdots>a_n,b_1>\cdots>b_n$が得られたとする．
+    これらを混ぜて，長さ$2n$の有限な単調減少列を定める．完全に無効な処置である場合，
+    \[\Abs{\Brace{i\in[n]\mid a_i>b_i}}\ge k\]
+    となる確率は$\frac{n-k+1}{n+1}$である．これを用いてGaltonは1876年に検定を行なっていて，そのデータをCharles Darwinが引用している．
+    このとき，$n=15,k=13$であったから，このような現象は確率$3/16$で起こるので全く棄却できないが，Galtonは有効としてしまった．
+\end{example}
+
+\begin{example}[タイも驚くほど起こらない]
+    硬貨投げを10000回行う．タイが140回以上の確率は0.157で，14回以下の確率は0.115である．
+\end{example}
+
+\subsection{第１逆正弦法則}
+
+\begin{theorem}[第１逆正弦法則]
+    ある$\al\in(0,1)$に対して，$n\to\infty$のとき，正の側で費やされる時間の割合$k/n$が$k/n<\al$となる確率は次に等しい：
+    \[P[k/n<\al]=\pi^{-1}\int^\al_0\frac{dx}{\sqrt{x(1-x)}}=\frac{2}{\pi}\arcsin\sqrt{\al}.\]
+\end{theorem}
+\begin{corollary}\mbox{}
+    \begin{enumerate}
+        \item 粒子が同じ側で約97.6\% の時間を過ごす確率は20\% である．
+        \item 10回中に1回は，粒子は99.4\% の時間を同じ側で過ごす．
+    \end{enumerate}
+\end{corollary}
+
+
 \chapter{加法過程}
 
 \begin{quotation}

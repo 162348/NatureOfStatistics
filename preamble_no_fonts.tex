@@ -594,87 +594,84 @@ colframe=#2,colback=#2!10,coltitle=#2!20!black,title={#3},#1}
 {\textbf{\textup{#1~\thetheorem{}}}{}\,$^{\circledcirc}$\thmnote{(#3)}}% ?Theorem head spec (can be left empty, meaning ‘normal’)?
 %
 \theoremstyle{StatementsWithUnderline}
- \newtheorem{theorem}{定理}[section]
- \newtheorem{axiom}[theorem]{公理}
- \newtheorem{corollary}[theorem]{系}
- \newtheorem{proposition}[theorem]{命題}
- \newtheorem*{proposition*}{命題}
- \newtheorem{lemma}[theorem]{補題}
- \newtheorem*{lemma*}{補題}
- \newtheorem*{theorem*}{定理}
- \newtheorem{definition}[theorem]{定義}
- \newtheorem{problem}[theorem]{問題}
+  \newtheorem{theorem}{定理}[section]
+  \newtheorem{axiom}[theorem]{公理}
+  \newtheorem{corollary}[theorem]{系}
+  \newtheorem{proposition}[theorem]{命題}
+  \newtheorem{lemma}[theorem]{補題}
+  \newtheorem{definition}[theorem]{定義}
+  \newtheorem{problem}[theorem]{問題}
 \theoremstyle{definition}
- \newtheorem{example}[theorem]{例}
- \newtheorem{notation}[theorem]{記法}
- \newtheorem*{notation*}{記法}
- \newtheorem{assumption}[theorem]{仮定}
- \newtheorem{question}[theorem]{問}
- \newtheorem{counterexample}[theorem]{反例}
- \newtheorem{reidai}[theorem]{例題}
- \newtheorem{ruidai}[theorem]{類題}
- \newtheorem{algorithm}[theorem]{算譜}
- \newtheorem*{solution*}{\bf{［解］}}
- \newtheorem{discussion}[theorem]{議論}
- \newtheorem{remark}[theorem]{注}
- \newtheorem{remarks}[theorem]{要諦}
- \newtheorem{image}[theorem]{描像}
- \newtheorem{observation}[theorem]{観察}
- \newtheorem{universality}[theorem]{普遍性} %非自明な例外がない．
- \newtheorem{universal tendency}[theorem]{普遍傾向} %例外が有意に少ない．
- \newtheorem{hypothesis}[theorem]{仮説} %実験で説明されていない理論．
- \newtheorem{theory}[theorem]{理論} %実験事実とその（さしあたり）整合的な説明．
- \newtheorem{fact}[theorem]{実験事実}
- \newtheorem{model}[theorem]{模型}
- \newtheorem{explanation}[theorem]{説明} %理論による実験事実の説明
- \newtheorem{anomaly}[theorem]{理論の限界}
- \newtheorem{application}[theorem]{応用例}
- \newtheorem{method}[theorem]{手法} %実験手法など，技術的問題．
- \newtheorem{history}[theorem]{歴史}
- \newtheorem{usage}[theorem]{用語法}
- \newtheorem{research}[theorem]{研究}
- \newtheorem{shishin}[theorem]{指針}
- \newtheorem{yodan}[theorem]{余談}
- \newtheorem{construction}[theorem]{構成}
- \newtheorem{motivation}[theorem]{動機}
- \newtheorem{context}[theorem]{背景}
- \newtheorem{advantage}[theorem]{利点}
-% \newtheorem*{remarknonum}{注}
- \newtheorem*{definition*}{定義}
- \newtheorem*{remark*}{注}
- \newtheorem*{question*}{問}
- \newtheorem*{problem*}{問題}
- \newtheorem*{axiom*}{公理}
- \newtheorem*{example*}{例}
- \newtheorem*{corollary*}{系}
- \newtheorem*{shishin*}{指針}
- \newtheorem*{yodan*}{余談}
- \newtheorem*{kadai*}{課題}
+  \newtheorem*{proposition*}{命題}
+  \newtheorem*{lemma*}{補題}
+  \newtheorem*{theorem*}{定理}
+  \newtheorem{example}[theorem]{例}
+  \newtheorem{notation}[theorem]{記法}
+  \newtheorem*{notation*}{記法}
+  \newtheorem{assumption}[theorem]{仮定}
+  \newtheorem{question}[theorem]{問}
+  \newtheorem{counterexample}[theorem]{反例}
+  \newtheorem{reidai}[theorem]{例題}
+  \newtheorem{ruidai}[theorem]{類題}
+  \newtheorem{algorithm}[theorem]{算譜}
+  \newtheorem*{solution*}{\bf{［解］}}
+  \newtheorem{discussion}[theorem]{議論}
+  \newtheorem{remark}[theorem]{注}
+  \newtheorem{remarks}[theorem]{要諦}
+  \newtheorem{image}[theorem]{描像}
+  \newtheorem{observation}[theorem]{観察}
+  \newtheorem{universality}[theorem]{普遍性} %非自明な例外がない．
+  \newtheorem{universal tendency}[theorem]{普遍傾向} %例外が有意に少ない．
+  \newtheorem{hypothesis}[theorem]{仮説} %実験で説明されていない理論．
+  \newtheorem{theory}[theorem]{理論} %実験事実とその（さしあたり）整合的な説明．
+  \newtheorem{fact}[theorem]{実験事実}
+  \newtheorem{model}[theorem]{模型}
+  \newtheorem{explanation}[theorem]{説明} %理論による実験事実の説明
+  \newtheorem{anomaly}[theorem]{理論の限界}
+  \newtheorem{application}[theorem]{応用例}
+  \newtheorem{method}[theorem]{手法} %実験手法など，技術的問題．
+  \newtheorem{history}[theorem]{歴史}
+  \newtheorem{usage}[theorem]{用語法}
+  \newtheorem{research}[theorem]{研究}
+  \newtheorem{shishin}[theorem]{指針}
+  \newtheorem{yodan}[theorem]{余談}
+  \newtheorem{construction}[theorem]{構成}
+  \newtheorem{motivation}[theorem]{動機}
+  \newtheorem{context}[theorem]{背景}
+  \newtheorem{advantage}[theorem]{利点}
+  \newtheorem*{definition*}{定義}
+  \newtheorem*{remark*}{注}
+  \newtheorem*{question*}{問}
+  \newtheorem*{problem*}{問題}
+  \newtheorem*{axiom*}{公理}
+  \newtheorem*{example*}{例}
+  \newtheorem*{corollary*}{系}
+  \newtheorem*{shishin*}{指針}
+  \newtheorem*{yodan*}{余談}
+  \newtheorem*{kadai*}{課題}
 %
 \theoremstyle{StatementsWithUnderline}
- \newtheorem{definition_*}[theorem]{定義}
- \newtheorem{question_*}[theorem]{問}
- \newtheorem{example_*}[theorem]{例}
- \newtheorem{theorem_*}[theorem]{定理}
- \newtheorem{remark_*}[theorem]{注}
+  \newtheorem{definition_*}[theorem]{定義}
+  \newtheorem{question_*}[theorem]{問}
+  \newtheorem{example_*}[theorem]{例}
+  \newtheorem{theorem_*}[theorem]{定理}
+  \newtheorem{remark_*}[theorem]{注}
 %
 \theoremstyle{StatementsWithStar2}
- \newtheorem{definition_**}[theorem]{定義}
- \newtheorem{theorem_**}[theorem]{定理}
- \newtheorem{question_**}[theorem]{問}
- \newtheorem{remark_**}[theorem]{注}
+  \newtheorem{definition_**}[theorem]{定義}
+  \newtheorem{theorem_**}[theorem]{定理}
+  \newtheorem{question_**}[theorem]{問}
+  \newtheorem{remark_**}[theorem]{注}
 %
 \theoremstyle{StatementsWithStar3}
- \newtheorem{remark_***}[theorem]{注}
- \newtheorem{question_***}[theorem]{問}
+  \newtheorem{remark_***}[theorem]{注}
+  \newtheorem{question_***}[theorem]{問}
 %
 \theoremstyle{StatementsWithCCirc}
- \newtheorem{definition_O}[theorem]{定義}
- \newtheorem{question_O}[theorem]{問}
- \newtheorem{example_O}[theorem]{例}
- \newtheorem{remark_O}[theorem]{注}
-%
-\theoremstyle{definition}
+  \newtheorem{definition_O}[theorem]{定義}
+  \newtheorem{question_O}[theorem]{問}
+  \newtheorem{example_O}[theorem]{例}
+  \newtheorem{remark_O}[theorem]{注}
 %
 \raggedbottom
 \allowdisplaybreaks

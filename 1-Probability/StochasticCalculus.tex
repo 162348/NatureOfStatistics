@@ -745,6 +745,10 @@ title=]
 \begin{quotation}
     確率積分は一般のマルチンゲールについて定義出来る．
     情報の独立な発展を表す過程で，任意の過程はマルチンゲールを中心に回転する．
+
+    マルチンゲールは，増分が規則的で，これをハックした解析が可能になる．
+    これにより，各増分に注目して時間大域的な性質を編み上げることが出来るクラスであり，ある種の「確率過程の線形代数」である．
+    そして，この方法による解析が可能なクラスがセミマルチンゲールである．
 \end{quotation}
 
 \begin{notation}\mbox{}
@@ -1683,10 +1687,11 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\subsection{変分}
+\subsection{2次変分の$L^2$-収束}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
+    変分とは，分割の全体からなる有向集合$2^{([0,T])}$からのあるクラスのネットの極限である．
     確率過程の2次変分過程は，高頻度取引の分野においてrealized volatilityといい，重要な統計量となっている．
     その漸近分散を求めるのに，混合型中心極限定理が必要となる．
     この定理は非エルゴード的な確率システムにおける「中心極限定理」となる．
@@ -1698,8 +1703,6 @@ title=]
         \item ほとんど確実に，局所的な増加点$t\in(0,\infty)\;\st\;\exists_{t\in(a,b)\osub\R_+}\;[\forall_{s\in(a,t)}\;f(s)\le f(t)]\land[\forall_{s\in(t,b)}\;f(t)\le f(s)]$を持たない．
     \end{enumerate}
 \end{proposition}
-
-\subsubsection{２次変分}
 
 \begin{notation}
     $\Sigma(0,T)$で，$[0,T]$上の分割$\sigma$全体の集合とする．すると，$\sigma_1\le\sigma_2:\Leftrightarrow\abs{\sigma_1}\le\abs{\sigma_2}$によって分割の集合には順序が定まる．
@@ -1733,20 +1736,37 @@ title=]
     他にこういうものを排除する十分条件として，$\sum_{n\in\N}\abs{\pi_n}<\infty$がある．
 \end{remark}
 
-\begin{proposition}[2次変動の概収束]
-    $[0,t]$の分割の列$(\pi^n)_{n\ge 1},\pi^n:=\Brace{0=t^n_0<\cdots<t^n_{k_n}=t}$は$\sum_{n\in\N}\abs{\pi^n}<\infty$を満たすとする．
+\subsection{全変動が非有界}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^2(\Om)$-収束する事実からも導けるが，ここでは2次変動が概収束する場合について考察しておくことで，
+    より簡単な証明も与える．
+\end{tcolorbox}
+
+\begin{lemma}
+    $X,Z\in L^2(\Om)$は互いに独立で，対称な確率変数とする：$X\overset{d}{=}-X,Z\overset{d}{=}-Z$．
+    このとき，
+    \[E[(X+Z)^2|X^2+Z^2]=X^2+Z^2\]
+    が成り立つ．
+\end{lemma}
+\begin{Proof}
+    $X+Z,X-Z$は同じ分布を持つから，
+    \[E[(X+Z)^2|X^2+Z^2]=E[(X-Z)^2|X^2+Z^2]<\infty\]
+    よって，両辺の差を取って，$E[XZ|X^2+Z^2]=0$を得る．
+\end{Proof}
+
+\begin{proposition}[2次変動の概収束部分列]
+    $[0,t]$の分割の列$(\pi^n)_{n\in\N}$は，細分関係についての増大列になっているとする．
+    このとき，
+    \[\lim_{n\to\infty}\sum^{k(n)}_{j=1}(B_{t_j}^{(n)}-B_{t_j}^{(n)})=t\;\as.\]
+\end{proposition}
+
+\begin{proposition}[2次変動が概収束するための十分条件]
+    $[0,t]$の分割の列$(\pi^n)_{n\ge 1},\pi^n:=\Brace{0=t^n_0<\cdots<t^n_{k_n}=t}$は$\sum_{n\in\N}\abs{\pi^n}<\infty$を満たしながら$\abs{\pi}\to0$と収束するとする．
     このとき，
     \[\sum^{k_n-1}_{j=0}\paren{B_{t^n_{j+1}}-B_{t^n_j}}^2\xrightarrow{\as}t.\]
 \end{proposition}
-
-\subsubsection{１次変分}
-
-\begin{definition}[bounded variation]
-    右連続関数$f:[0,t]\to\R$が\textbf{有界変動}であるとは，
-    \[V_f^{(1)}(t):=\sup\sum^k_{j=1}\abs{f(t_j)-f(t_{j-1})}<\infty\]
-    を満たすことをいう．有界変動関数は2つの単調増加関数の差で表されるクラスと一致する．
-\end{definition}
-
 
 \begin{corollary}[全変動の発散]
     区間$[0,t]$における全変動
@@ -1765,8 +1785,6 @@ title=]
     と表せる．
     $P[V<\infty]=0$でない限り，2次変動が$t$に$L^2$-収束することに矛盾する．
 \end{Proof}
-
-
 
 \section{Wiener積分と白色雑音}\label{sec-Wiener-integral}
 
@@ -2940,6 +2958,10 @@ title=]
     が成り立つ．
     従って，Brown運動$B$は，$\R_+$上積分可能ではないが，任意のコンパクト集合上では積分可能で，中心化された$\chi^2$-分布に従う確率変数になる．
 \end{example}
+\begin{remarks}
+    これは，特殊な近づけ方をすると概収束もする．
+    これのマルチンゲールに関する一般論がLevyのdownward定理である\cite{Morters and Peres}[Th'm 1.35]．
+\end{remarks}
 
 \section{剪断過程を通じた不定確率積分の性質}
 
@@ -3055,15 +3077,20 @@ title=]
 
 \subsection{連続な修正マルチンゲール}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    各時点$t\in\R_+$について，$\as$な同値類の中で連続なものを見つけられる，という消息である．
+\end{tcolorbox}
+
 \begin{proposition}[$C$-過程と法則同等]
     任意の$u\in L^2_\infty(\P)$の不定積分のマルチンゲール$(M_t)_{t\in\R_+}$には連続な修正が存在する．
 \end{proposition}
 \begin{Proof}
     任意の$u\in L^2_\infty(\P)$と任意の$T>0$を取ると，$1_{[0,T]}u\in L^2(\P)$より，単過程列$\{u^{(n)}\}\subset\E$が存在して，$u^{(n)}\to 1_{[0,T]}u\in L^2(\P)$．
     ここで，各単過程$u^{(n)}$の定める不定積分のマルチンゲール$I[1_{[0,t]}u^{(n)}]=:M_t^{(n)}$は，
-    \[M^{(n)}_t=\sum_{j=0}^{m^{(n)}-1}\phi_j^{(n)}(B_{t_{j+1}^{(n)}\land t}-B_{t_j^{(n)}})\qquad\paren{\phi_j^{(n)}\in L^2_{\F_{t_j^{(n)}}},0\le t_0^{(n)}<t_1^{(n)}<\cdots<t_{m^{(n)}}^{(n)}}\le T\]
+    \[M^{(n)}_t=\sum_{j=0}^{m^{(n)}-1}\phi_j^{(n)}(B_{t_{j+1}^{(n)}\land t}-B_{t_j^{(n)}})\qquad\paren{\phi_j^{(n)}\in L^2_{\F_{t_j^{(n)}}},0\le t_0^{(n)}<t_1^{(n)}<\cdots<t_{m^{(n)}}^{(n)}\le T}\]
     と表せるから，$C$-過程$\Om\to C([0,T];\R)$であり，いま$M_t$に各点$t\in[0,T]$について$L^2(\Om)$-収束することはわかっている．
-    これが，殆ど確実に$[0,T]$上一様収束することを示す．すると，極限過程$(J_t)_{t\in[0,T]}$は連続で，$(M_t)_{t\in[0,T]}$と法則同等である．
+    これが，殆ど確実に$[0,T]$上一様収束することを示す．すると，極限過程$(J_t)_{t\in[0,T]}$は連続で，$(M_t)_{t\in[0,T]}$の修正である．
     \begin{enumerate}[(a)]
         \item $(M_t^{(n)}-M_t^{(m)})$は連続なマルチンゲールだから，これについてのDoobの不等式より，任意の$\lambda>0$について，
         \begin{align*}
@@ -3241,12 +3268,13 @@ title=]
 \end{proposition}
 \begin{Proof}
     任意に$n\in\N$を取る．任意の$m\ge n$に対して，
-    $t\mapsto\int^t_0u_s^2ds$は(絶対)連続だから，
+    $t\mapsto\int^t_0u_s^2ds$は(絶対)連続で，さらに，
     $\om\in\Brace{t\le T_n}$上では$1_{[0,T_n]}1_{[0,t]}u^{(n)}=1_{[0,t]}u^{(n)}$かつ$1_{[0,T_m]}1_{[0,t]}u^{(m)}=1_{[0,t]}u^{(m)}$だから，
     \[\int^t_0u^{(n)}_sdB_s=\int^t_0u_s^{(m)}dB_s\]
     が成り立つ．そこで，
     \[\int^t_0u_sdB_s:=\int^t_0u_s^{(n)}dB_s\quad\on\;\Brace{t\le T_n}\]
-    と定める．これは明らかに$n\in\N$の取り方に依らない．
+    と定める．これ張り合わせの条件を満たし，$n\in\N$の取り方に依らない．
+    こうして，$M_t:\Om=\cup_{n\in\N}\Brace{t\le T_n}\to C(\R;\R)$が定まった．
     \begin{description}
         \item[適合性] 任意の$t\in\R_+$について，
         \[\int^t_0u_sdB_s=\sum_{n\in\N}1_{\Brace{t\le T_n}}\int^t_0u_sdB_s\]

@@ -12,6 +12,10 @@
 \chapter{モデルの枠組み}
 
 \begin{quotation}
+    確率論とは有界測度論に他ならず，これを解析するには面積・体積・時間の概念同様，極限の概念によって数学モデルに落とし込んでのち，極限定理と漸近展開によって解析するのが数理である．
+\end{quotation}
+
+\begin{quotation}
     決定的な予測をすることが不可能な程度に，
     不完全な情報しか持たない現象をモデルする技法を考える．
     量子論のように原理的に不可知であるか，意思決定のように複雑性やノイズの大きさによるものかは，形式的には関係ない．
@@ -39,231 +43,62 @@
     これらの類比はFréchetの研究(1940,\cite{Frechet})において初めて完全に示された．
 \end{quotation}
 
-\section{確率空間の数理構造}
+\section{確率の数理構造の解明の歴史}
+
+
+
+\subsection{事象の公理(von Mises)}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=測度論的確率論という枠組み]
-    確率空間は測度空間の一種と見る．
-    確率変数は関数空間の元と見て，平均は作用素と見て構成する．\footnote{こうして，量子論と確率論が関数解析を舞台として合流する．}
+title=「集合の公理」のもう一つの見方]
+    集合を事象と翻訳した「標本空間(Merkmalraum)」の概念はvon Misesの21から31までの仕事による．
+    するとその後ここに測度・位相の構造を載せるという自然な発展を辿った．
+    この視点の転換は，集合の正則性公理や選択公理などを，事象のためにも流用することと捉えられる．
+    非可測集合の存在は選択公理と同値であるというのは，人類の認知論の一つの歴史的メルクマールに到達しているということでもある．
 \end{tcolorbox}
 
-\subsection{事象の公理}
 
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    von Neumannの正則性公理や整礎性などは，事象のためのものとも考えられる．
-    すると，測度が要請する可算性も，人間のために作られたように思える．
-    特に，非可測集合の存在は選択公理と同値であるというのは，人類の認知論の一つの歴史的メルクマールに到達しているということでもある．
-\end{tcolorbox}
-
-\subsection{Kolmogorovの公理}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    標本空間(Merkmalraum)の概念はvon Misesの21から31までの仕事による．
-    ここに測度を載せることは自然な発展であり，Kolmogorovがはっきりと公理をまとめた．
-    相空間も標本空間である，標本空間はファイバー束と見た方が良いのだろうか？
-\end{tcolorbox}
-
-\begin{notation}[mutually exclusive]\mbox{}
+\begin{notation}[mutually exclusive]
+    集合の和・差の演算を，さらに細かく区別する．
     \begin{enumerate}
-        \item 集合$A,B$が排反であるとは，互いに素であることをいう．この時の和事象を$A+B,A\coprod B$で表し直和という．\cite{伊藤清}では直和も$\sum_{i=1}^n A_i$と表す．$P(A+B)=P(A)+P(B),P(A\cup B)=P(A)+P(B)-P(A\cap B)$と書き分けられる．
+        \item 事象$A,B$が排反であるとは，集合として互いに素であることをいう．この時の和事象を$A+B$で表し直和という．$P(A+B)=P(A)+P(B),P(A\cup B)=P(A)+P(B)-P(A\cap B)$と書き分ける．
         \item 族$(A_i)_{i\in I}$が排反であるとは，$\forall_{i,j\in I}\;i\ne j\Rightarrow A_i\cap A_j=\emptyset$であることをいう．
         \item $A\subset B$のときの差事象$A\setminus B$を固有差といい，$B-A$と書く．
     \end{enumerate}
 \end{notation}
-
-\begin{definition}[sample space, sample, event, total event]\mbox{}
-    \begin{enumerate}
-        \item \textbf{標本空間}$\Omega$の元$\omega\in\Omega$を標本（点）という．\footnote{見本空間，見本点ともいう．}
-        \item $\sigma$-加法族$\calF\subset P(\Omega)$の元を\textbf{事象}と呼ぶ．\footnote{部分集合を条件や関係だけでなく事象と捉えるのは，集合論の初歩でもやるようだ．}事象としての$\Omega\in\calF$を全事象という．
-    \end{enumerate}
-\end{definition}
-
-\begin{axiom}[probability]
-    $\sigma$-代数$\mathcal{F}$に対して，次を満たす測度$P:\mathcal{F}\to[0,1]$を\textbf{確率測度}または\textbf{試行$T$の確率法則}という．
-    \begin{enumerate}
-        \item $P(A)\ge 0\;(\forall_{A\in\calF})$．
-        \item $P(\Omega)=1$．
-        \item ($\sigma$-加法性) $P(\cup_{i\in\N}A_i)=\sum_{i\in\N}P(A_i)$，ただし族$(A_i):\N\to\calF$は$\forall_{i\ne j}\;A_i\cap A_j=\emptyset$を満たす．
-    \end{enumerate}
-\end{axiom}
-\begin{history}
-    確率論に測度論を導入することは，Borel (1909)の大数の強法則の証明，Wiener (1920-24)のBrown運動の研究で成功を収め，Kolmogorov (1933)が公理にまとめた．
-\end{history}
-
-\begin{definition}[random variable, probability distribution / law]
-    確率空間を$(\Omega,\calF)$，$(\X,\B)$を可測空間とする．
-    \begin{enumerate}
-        \item \textbf{$\X$-値確率変数}とは，可測空間の射$X:\Omega\to\X$をいう．
-        \item これに沿って引き起こされる像測度$X_*P=P^X:P(\X)\supset\B\to[0,1]$を$P^X(B):=P(X^{-1}(B))$で定める：\footnote{逆像写像$X^*$により，なんとか反変に見えるから許したが，nLabでは$f_*\mu$で表されている．}
-        \[\xymatrix{
-            &{[0,1]}\\
-            P(\Omega)\ar[ur]^-{P}&&P(\X)\ar[ul]_-{P^X}\ar[ll]_-{X^*}\\
-            \Omega\ar[u]^-{P}\ar[rr]_-X&&\X\ar[u]_-P
-        }\]
-        これを\textbf{$X$の確率分布}または\textbf{確率法則}という．
-        \item 特に，確率$P$は，恒等写像$\id_\Omega:\Omega\to\Omega$についての確率分布$P^{\id_\Omega}$である．
-        \item 像$\Im X$も同様の記法$\Om^X$で表し，これを\textbf{$X$の標本空間}という．
-        \item $\Om^X$は\textbf{混合試行}$T_X$の標本空間と考える．$X$の定める同一視による商空間を考えているために「混合」という．
-    \end{enumerate}
-\end{definition}
-
-\begin{example}\mbox{}
-    \begin{enumerate}
-        \item 統計力学における相空間$M\subset\R^3$上の$r$粒子系において，粒子の位置が$\R^r$の一様分布に従うとき，\textbf{Maxwell-Boltzmanの統計が成立する}というが，これが成り立つ実際の物理系はない．
-        一方で，全ての区別できない$r$粒子の付値全体の集合上の一様分布に従うとき，\textbf{Bose-Einsteinの統計に従う}という．光子など，相互作用のないBose粒子系で成立する．
-        さらに，2以上の粒子が同じ区画に入らないものの中で，区別できない付値の全体の集合上の一様分布に従うとき，\textbf{Fermi-Diracの統計が成り立つ}といい，電子・中性子・陽子について成立する．
-    \end{enumerate}
-\end{example}
-
-\subsection{確率変数の概念の一般化}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    有界測度空間への米田埋め込みが，確率論の世界への跳躍である．
-    確率変数とは，$(\R,\B_1(\R))$への表現に他ならない．
-    この観点から，合成$g\circ X_i$を$g(X_i)$などと書く上に，始域$\Om$は自由に取って考察することとなる．
-
-    また，測度を無理やり可測関数の押し出しと見る場面は少ないかもしれないが，確率論においては，たしかに
-    確率変数は確率分布を一般化する．
-\end{tcolorbox}
-
-\begin{definition}[joint distribution, marginal distribution]\mbox{}
-    \begin{enumerate}
-        \item 確率変数の列$X_1,\cdots,X_n$に対して，積写像$(X_1,\cdots,X_n)$を\textbf{同時分布}または\textbf{結合分布}という．
-        \item 同時分布から一部の確率変数を消去してえる分布を\textbf{周辺分布}という．\footnote{表の欄外（margin）に行や列の和を記載することから周辺（marginal）と呼ばれるようになった．}
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}[可積分]\mbox{}
-    \begin{enumerate}
-        \item 実確率変数$X:\Omega\to\R$が可積分であるとは，$E[\abs{X}]=\int_{\Omega}\abs{X(\omega)}dP(\omega)<\infty$すなわち，$X\in L^1$であることをいう．
-        \item $L^1(\Om,\mu):=\Brace{f\in\Map(\Om,\o{\R})\mid\int_\Om\abs{f(\om)}\mu(d\om)<\infty.}$と表す．
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}[stochastic process]
-    確率変数の族$(X_t)_{t\in T}$を，特に$T$が全順序集合のとき，\textbf{確率過程}と言う．
-\end{definition}
-
-\begin{lemma}
-    関数の族$\{X_n\}\subset\Map(\Om,\R)$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $(X_n)$は確率過程である．
-        \item $X:\N\times\Om\to\R$は$\B(\N)\times\F/\B(\R)$-可測である．
-    \end{enumerate}
-\end{lemma}
-    
-\begin{proposition}[確率変数の構成]
-    確率変数$X_1,\cdots,X_n$と可測関数$g:\R^n\to\R$に対して，$Y:=g(X_1,\cdots,X_n)$は再び可測関数である．
-\end{proposition}
-
-\subsection{標本空間の$\sigma$-代数について}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    標本空間の一番大事な構造として$\sigma$-代数があるが，これは情報の増加を表す．
-    もっとも直感的な例として，
-    コイントスを繰り返す行為を一つの空間内で表現したい場合，部分集合の族は自然$\sigma$-代数をなす．
-\end{tcolorbox}
-
-\begin{example}[確率空間を取り直すのではなく，$\sigma$-加法族を発展させる]
-    素朴に，$n$回試行を行ったときの標本空間は$\Om_n:=\Map([n],2)$であり，事象のなす$\sigma$-加法族は$P(\Om_n)$である．
-
-    一方で，$\Om:=\Map(\N,2)$を全体集合とすると，$n$回試行を行ったときの事象のなす部分集合族は，
-    $\om^n\in\Om_n$に対して，$A(\om^n):=\Brace{\om\in\Om\mid\forall_{i\in[n]}\;\om_i=\om_i^n}$とすると，
-    対応$A_n:P(\Om_n)\to P(\Om);B\mapsto A(B):=\cup_{\om^n\in B}A(\om^n)$を用いて，$\cF_n:=\Im A_n\subset P(\Om)$は，$\sigma$-加法族の構造を持つ．
-    逆に，それ以外の構造は見出し難い．
-\end{example}
-
-\begin{definition}[cylinder set]
-    この枠組みを一般化する．可測空間$(S,\cS)$に値を取る試行を繰り返す試行の標本空間を$\Om:=S^\N$とする．
-    その部分空間$C\subset\Om$であって，ある$n\in\N$を用いて
-    \[C=C(t_1,\cdots,t_n;A_1,\cdots,A_n):=\Brace{\om\in\Om\mid\forall_{i\in[n]}\;\om_{t_i}\in A_i}\qquad\text{ただし，}t_i\in\N,A_i\in\cS\]
-    と表せるとき，これを\textbf{柱状集合}という．
-    これは第$t_i$回の試行の結果を指定して得られる事象である．
-    $\Om$上の$\sigma$-代数としては，柱状集合をすべて含むものを取る．
-\end{definition}
-
-\subsection{エントロピー構造（要再考）}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-実は，確率論で直積測度を考えるときは，暗黙にエントロピー最大の原理を仮定している．
-確率論の枠組みではエントロピーを厳密に定義でき，これは系の状態を決定するために必要な情報量＝乱雑さの小ささを計っている．
-Entropy is a measure of disorder, given by the amount of information necessary to precisely specify the state of a system.\footnote{\url{https://ncatlab.org/nlab/show/entropy}}
-\end{tcolorbox}
-
-\begin{remark}[情報としての$\sigma$-加法族]
-    $\sigma$-代数の細かさによって，観察の粒度を表現する．
-    「情報」が追加されるたびに確率測度$P$を取り替えるのではなく，$P$は一つ
-    の固定されたものと考えて「情報」の変化は$\sigma$-加法族の細分化として表現する．
-    新たに追加されていくのである．
-    例えば，確率変数$X$の値がわかれば$X^2$の値もわかるが，逆は成り立たない．すなわち，$\sigma$-加法族の引き戻しについて，$(X^2)^*(\B)\subsetneq X^*(\B)=(X^3)^*(\B)$．\footnote{この考え方を確率変数が定めるfiltration $\sigma[X_0,\cdots,X_n]$という．}
-    したがって，外から観測できる範囲は$(\Omega,\F,P)$の$\sigma$-部分代数を自然になすので，これは情報を表すと考えると自然である．\footnote{例えば事象$B\in\F$の与える情報は$\sigma$-加法族$\{\emptyset,\Omega,B,\Omega\setminus B\}$で表されると考えられる．}
-    こうして，確率変数$X$が$\F_t$可測である，というと，時刻$t$時点の情報で値が（確率１で）定まっていることになる．\footnote{サイコロを２回振る事象は，２回降った時点で値が$0,1$の２値に収束するはずである．情報$\F_t$がどこから来たかは不問とする．この間に$\sigma$-代数の構造があるため，他の確率分布$\X\to\R$からの引き戻しや，他の事象についての知識からも持って来れるはず．}
-    そこで，問題は平均$E[X_n|\F_m]\;(m<n)$を求めることとなる．したがって，このモデルでは条件付き確率だらけである．
-\end{remark}
-
-\begin{definition}[関数が生成する$\sigma$-加法族]
-    関数$X_1,\cdots,X_n:\Om\to\X$に対して，これら全てを可測とするような$\Om$上の最小の$\sigma$-加法族を$\sigma(X_1,\cdots,X_n)$で表す．
-\end{definition}
-
-\begin{definition}[principle of maximum entropy]\mbox{}
-    \begin{enumerate}
-        \item $\Om_1\times\Om_2$が考えている試行$T_1\times T_2$を試行の\textbf{直結合}という．
-        \item 次の図式を可換にする確率測度$\wt{P}$は一般に複数存在するが，$\wt{P}\{(\om_1,\om_2)\}=P_1\{\om_1\}P_2\{\om_2\}$を満たすものはHahn-Kolmogorovの定理よりただ一つである．
-        \item これを直積測度の公理としても良いし，エントロピー最大の原理からも従う．確率測度$P$のエントロピーとは，$\ep(P):=\sum^m_{i=1}P\{a_i\}\log\frac{1}{P\{a_i\}}\;(\Om=\{a_i\}_{i\in[m]})$と定まる．
-    \end{enumerate}
-\end{definition}
-
-\begin{definition}[surprisal / self-information / information content, expected surprisal, almost partiton, entropy]
-    $(X,\M,\mu)$を確率空間とする．
-    \begin{enumerate}
-        \item 可測集合$A\in\M$の新鮮さとは，$\sigma_\mu(A):=-\log\mu(A)=\log\frac{1}{\mu(A)}(\ge0)$をいう．ただし，$\mu(A)=0$の時は$\sigma_\mu(A)=\infty$とする．これは可測関数$\sigma_\mu:\M\to[0,\infty]$を定める．「もしその事象$A\in\M$が起こったら観測者がどれほど驚くか」をモデリングしていると考えられる．$\mu(A)=1$のとき，$\sigma_\mu(A)=0$であり，$\mu(A)=0$のとき，$\sigma_\mu(A)=\infty$である．
-        \item $h_\mu(A):=\sigma_\mu(A)\mu(A)$を期待驚愕度という．このとき$\mu(A)=0\Rightarrow h_\mu(A)=0$である．これは$\mu(A)=e^{-1}$のときに最大値$e^{-1}\log e$を取り，$h_\mu(\emptyset)=h_\mu(X)=0$を満たす上に凸な関数である．
-        \item 合併がfull set，任意の２つの共通部分が零集合となるような$X$の族を\textbf{概分割}という．
-        \item \textbf{$\sigma$-加法族$\M$のエントロピー}とは，\[H_\mu(\M):=\sup\Brace{\sum_{A\in\F}h_\mu(A)\in\R_{\ge0}\;\middle|\;\F\subset\M,\abs{\F}<\om,X=\biguplus\F}\]
-        のことをいう．$X$の可測集合による有限な直和分割の期待驚愕度の和として定められる．\footnote{こういうものは本当に極限構成になっている．$X$の可算な分割はdirectedで$h_\mu$はconcaveであるため．}
-        なお，実際$\F$は$X$の概分割で十分である．
-    \end{enumerate}
-\end{definition}
 \begin{remarks}
-    $\log$は本質的ではない．$1\mapsto 0,0\mapsto\infty$を満たす関数で，$\frac{1}{x}$より急激でないものならば良かったのではないか．
-    また，$\log$の底は分野によってさまざまである．Shanonnのentropyでは$2$，
+    ZermeloはPoincareの再帰定理にもとづいて，recurrence paradoxとしてエントロピー増大の原理のBoltzmanによる定式化である$H$定理を批判した．
+    ここに確率論の基礎論的・認識論的な難しさが見て取れる．
+    再帰的関数は基礎論の話題になるのだ．
 \end{remarks}
 
-\subsection{分割と情報}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=Kolmogorovと伊藤清の特徴：分割から説き起こす]
-    ぼくが数学を始めるきっかけとなった写像の標準分解：
-    写像が定める同値類と写像との関係と全くパラレルである．
-    $X$が定める同値関係が$Y$より細かいこと(正確には$\exists_{N\in\N(\Om)}\;\forall_{\ep_1,\ep_2\in\Om\setminus N}\;X(\om_1)=X(\om_2)\Rightarrow Y(\om_1)=Y(\om_2)$)と，$\F[Y]\subset\F[X]$は同値である．
-    $X$はものの位置でもなんでも，あらゆる物理的観測を表し得る．
-    観測は$\Om$の分割を定め，分割は$\sigma$-代数を生成する．
-\end{tcolorbox}
-
-\begin{notation}
-    確率変数$X$に対して，これが$\Om$上に定める分割が生成する最小の閉$\sigma$-代数を$\F[X]<\D(P)$で表すこととしよう．
-    すなわち，
-    $(\Om,\D(P),P)$上の，$\D(P)$の部分$\sigma$-代数であって，すべての$P$-零集合を含むものを\textbf{閉$\sigma$-代数}といい，$\Phi=\Phi(\Om,P)=\Brace{\B\lor2<\D(P)\mid\B<\D(P)}$でらわす．
-\end{notation}
-
-\begin{definition}\mbox{}
+\begin{definition}[sample space, sample, event]
+    可測空間$(\Om,\F)$を\textbf{標本空間}または\textbf{状態空間}という．
     \begin{enumerate}
-        \item $\Om$の直和分割であって可測集合のみからなるものを，\textbf{可測同値類による直和分割}という．
-        
-        \item 可測関数$X:\Om\to S$について，$\F[X]:=X^{-1}(\D(P^X))\lor 2$を，\textbf{$X$で生成される閉$\sigma$-代数}という．
-        これは，$X$を可測にする閉$\sigma$-代数の中で最小のものである．
-        \item 確率変数の族$\{X_\lambda\}_{\lambda\in\Lambda}$については，$\F[X_\lambda,\lambda\in\Lambda]:=\bigvee_{\lambda\in\Lambda}\F[X_\lambda]$と表す．
+        \item $\Omega$の元$\omega\in\Omega$を\textbf{標本}（点）または\textbf{状態}という．
+        \item $\F$の元を\textbf{事象}と呼ぶ．\footnote{部分集合を条件や関係だけでなく事象と捉えるのは，集合論の初歩でもやるようだ．}事象としての$\Omega\in\calF$を全事象という．
     \end{enumerate}
 \end{definition}
+\begin{example}[statistical ensemble, path space]
+    Boltzmanの統計力学，Poincareと天体力学，Feynmanと量子力学などでも考えられている．
+    \begin{enumerate}
+        \item 統計力学における巨視系など，施行を繰り返した空間$E^\N$が理想的な標本空間の形態である．
+        統計力学においてはこのようにして得られる確率空間を特に\textbf{統計的集団}という．
+        \item 古典力学は経路空間上の作用汎関数の微分の理論であり，量子力学は経路空間上の作用汎関数の測度に関する積分の理論である．
+        そこで，見本道の空間上の積分が問題になる．そして時間発展は，見本道の空間の保測変換，すなわちHilbert空間上のHermite作用素となる．
+        \item 経路空間を一般化して，状態空間$E$を底空間とし，このファイバー束$\iota:F\epi E,\pi:E\epi M$を考える．$F$を内部空間としい，場の値域にあたり，$M$は場の定義域にあたる．
+        こうして確率空間は切断の全体$\Gamma(M,E)$とし，これを\textbf{場の空間}ともいう．
+    \end{enumerate}
+\end{example}
 
 \begin{theorem}[すべての閉$\sigma$-代数はある観測の結果とみなせる]
     任意の閉$\sigma$-加法族$\F$に対して，ある実確率変数$X\in\L(\Om)$が存在して，$\F=\F[X]$が成り立つ．
 \end{theorem}
+\begin{remarks}
+    $\sigma$-代数とは，観測の結果のモデルである．
+    観測が細かくなればなるほど，知識は増えていく．
+    逆に，$\sigma$-代数以外の言葉で，状態空間$(X,\A,\mu)$の様子を観察する手立ては人類にはない．
+\end{remarks}
 
 \begin{theorem}
     $X,Y\in\L(\Om)$について，$X\prec Y\;\as:\Leftrightarrow [\exists_{\varphi\in\Map(\Om,\Om)}\;X=\varphi\circ Y\;\as]$と表すと，これは同値類$\sim$とその上の順序を定め，
@@ -273,7 +108,112 @@ title=Kolmogorovと伊藤清の特徴：分割から説き起こす]
     \end{enumerate}
 \end{theorem}
 
-\section{集合演算と事象}\label{sec-event}
+\subsection{確率の公理(Kolmogorov)}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    標本空間に有限測度を導入して確率のモデルとすることは，Borel (1909)の大数の強法則の証明，Wiener (1920-24)のBrown運動の研究で成功を収め，Kolmogorov (1933)が公理にまとめた．
+    確率空間とは知識の空間であり，
+    数理物理の相空間も標本空間である．このように空間に関する知識のとき，
+    標本空間はファイバー束と見た方が良い．一方で確率過程のように時間発展に関する知識のとき，
+    標本空間はフィルター付きと見たほうが良い．
+\end{tcolorbox}
+
+\begin{axiom}[probability]
+    $(\Om,\F)$を標本空間とする．
+    この上の有限な測度$P$であって，$P(\Om)=1$と正規化されたものを\textbf{確率}という．
+    測度空間$(\Om,\F,P)$を\textbf{確率空間}という．
+\end{axiom}
+
+\begin{definition}[random variable / observable, probability distribution / law]
+    $(\Om,\F),(\X,\A)$を標本空間とする．
+    \begin{enumerate}
+        \item 可測空間の射$X\in\L(\Om;\X)$を\textbf{$\X$-値確率変数}または\textbf{可観測量}という．
+        \item これが$(\X,\A)$に押し出す像測度$X_*P=:P^X$を\textbf{確率分布}または\textbf{法則}という．
+        \item 像$\Im X$も同様の記法$\Om^X$で表し，これを\textbf{$X$の標本空間}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[時空間のモデルの例]\mbox{}
+    \begin{enumerate}
+        \item 統計力学における相空間$M\subset\R^3$上の$r$粒子系において，粒子の位置が$\R^r$の一様分布に従うとき，\textbf{Maxwell-Boltzmanの統計が成立する}というが，これが成り立つ実際の物理系はない．
+        一方で，全ての区別できない$r$粒子の付値全体の集合上の一様分布に従うとき，\textbf{Bose-Einsteinの統計に従う}という．光子など，相互作用のないBose粒子系で成立する．
+        さらに，2以上の粒子が同じ区画に入らないものの中で，区別できない付値の全体の集合上の一様分布に従うとき，\textbf{Fermi-Diracの統計が成り立つ}といい，電子・中性子・陽子について成立する．
+    \end{enumerate}
+\end{example}
+
+\subsection{力学系の公理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    力学系では自己射を考え，それの自然なフィルトレーションとを考える．
+\end{tcolorbox}
+
+\begin{definition}
+    確率空間$(X,\A,\mu)$について，
+    \begin{enumerate}
+        \item 測度を保存する自己写像$\varphi:X\to X,\varphi_*\mu=\mu$との組$(X,\A,\mu,\varphi)$を\textbf{力学系}という．
+        \item 可観測量の空間上の作用素$T_\varphi:\L(X)\to\L(X);f\mapsto f\circ\varphi$を\textbf{Koopman作用素}という．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}[flow]
+    自己射$(\varphi_t)$は通常Hamiltonの原理などの物理法則から定まり，1-パラメータ変換群をなす．これを\textbf{流れ}ともいう．
+\end{remarks}
+
+\begin{theorem}[Poincare recurrence theorem]
+    力学系$(X,\A,\mu,\varphi)$について，次が成り立つ：
+    \[\forall_{E\in\A}\;\mu\paren{\Brace{x\in E\mid \varphi^n(x)\notin E\;\fe}}=0.\]
+\end{theorem}
+
+\subsection{量子確率論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    状態を可観測量$f:X\to\R$を通じて観測するというモデルである力学系の公理の考え方を取り入れて，
+    確率空間の公理との交差点が量子確率空間とみなせる．
+\end{tcolorbox}
+
+\begin{definition}[quantum probability space, state on a $C^*$-algebra]
+    位相を加えた確率空間$(\Om,\F,P)$の，$X$のGelfand双対となる$C^*$-代数$\A$と，$P$のその上への双対となる状態$\brac{-}:\A\to\C$との組を\textbf{量子確率空間}という．
+    一般に，単位的$C^*$-代数$\A$の\textbf{状態}とは，正な線型汎関数$\rho:\A\to\C$であって$\rho(1)=1$を満たすものをいう．
+\end{definition}
+
+\subsection{エントロピー}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=エントロピーとは確率不変量である]
+知識の限界のモデルである
+確率空間には保存量が定義でき，系の時間発展を見るエルゴード理論や通信の限界を考える情報理論で用いられる．
+実は，確率論で直積測度を考えるときは，暗黙にエントロピー最大の原理を仮定している．
+\footnote{Entropy is a measure of disorder, given by the amount of information necessary to precisely specify the state of a system.\url{https://ncatlab.org/nlab/show/entropy}}
+\end{tcolorbox}
+
+\begin{definition}[surprisal / self-information, information function, Shanonn entropy]
+    $(X,\A,\mu)$を確率空間とし，$f:X\to\R$を可観測量，
+    $\P\subset\A$を$f$が定める$X$の分割とする．
+    \begin{enumerate}
+        \item $\mu!(A):=-\log\mu(A)$で定まる
+        測度$\mu!:\A\to\o{\R_+}$を\textbf{驚愕度}という．
+        \item 分割$\P$に対して，各元$x\in X$にそれの属する$A\in\P$の驚愕度に対応させる関数$I_\P:X\to\R$を\textbf{$\P$の情報量関数}という：
+        \[I_\P:=-\int_{A\in\P}1_{A}\log\mu(A).\]
+        \item この積分$H(\P):=\int_XI_\P d\mu$を\textbf{分割$\P$のエントロピー}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Kolmogorov-Sinai entropy]
+    力学系$(X,\A,\mu,T)$について，$\bP$を$X$の有限な分割$\P\subset\A$のなす有向集合とする．
+    $\P\in\bP$の像
+    \[h(T):=\sup_{\P\in\bP}\lim_{n\to\infty}\frac{1}{n}H(\P\lor T_*\P\lor\cdots\lor T_*^{n-1}\P)\]
+    を\textbf{力学系$(X,\A,\mu,T)$のエントロピー}という．
+    これは力学系の同型類において等しい値を取る．
+\end{definition}
+\begin{history}
+    KhinchinがShannonのエントロピーが保測写像$T$や一般の$\sigma$-代数にも，ネットの極限のことばで定義出来ることを発見した．
+    力学系の同型類の研究において，Kolmogorovはエントロピーが不変量になることを発見した．
+    SinaiとOrnsteinはこれを応用してBernoulli力学系に対する同型問題を解決した．
+\end{history}
+
+\section{確率不等式まとめ}\label{sec-event}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=有界測度論]
@@ -490,7 +430,7 @@ title=有界測度論としては初等的でも，確率論的には非自明�
     $A^\comp_1,\cdots,A^\comp_n$について，劣加法性より．
 \end{proof}
 
-\section{有界測度論と確率分布の概念}
+\section{分布の扱いまとめ}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -567,7 +507,7 @@ title=]
     により，任意の開区間の測度は$\varphi$が一意に定める．
 \end{proof}
 
-\section{確率空間の生息圏：可測空間の圏}
+\section{確率空間の圏のまとめ}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -678,7 +618,7 @@ title=]
     標準確率測度の列$(P_n)$も標準．
 \end{theorem}
 
-\section{確率変数の空間上の作用素}
+\section{確率変数の空間上の作用素まとめ}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=統計的問題では線型汎関数の推定が主眼となる所以である]

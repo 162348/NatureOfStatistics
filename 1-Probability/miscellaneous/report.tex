@@ -1,0 +1,190 @@
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\title{数学講究XA\\担当：会田茂樹先生}
+\author{05-210520 司馬博文}
+\date{\today}
+\pagestyle{headings}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\maketitle
+
+\section*{問題１}
+
+\begin{lemma*}
+    $\{Z_n\}\subset L^2(\Om)$を平均$0$の確率変数列で，$\sum_{n=1}^\infty E[Z_n^2]<\infty$を満たすとする．
+    これは概収束する．
+\end{lemma*}
+
+\begin{lemma*}
+    実確率過程$B=(B_t)_{t\in\R_+}$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $B$は次の3条件を満たす：
+        \begin{enumerate}[(a)]
+            \item $B_0=0\;\as$
+            \item $B_t-B_s\sim N(0,t-s)\;(0\le s<t)$．
+            \item $\forall_{n=2,3,\cdots}\;\forall_{0\le t_1<\cdots<t_n}\;B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1}$は独立．
+        \end{enumerate}
+        \item $B$は平均$0$共分散$\Gamma(s,t):=\min(s,t)$のGauss過程である．
+    \end{enumerate}
+\end{lemma*}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[(1)$\Rightarrow$(2)] Gauss過程であることを示すには，任意の$0<t_1<\cdots<t_n\in\R_+$を取り，$B:=(B_{t_1},\cdots,B_{t_n}):\Om\to\R^n$が$n$次元の正規分布に従うことを示せば良い．
+        まず，仮定(a),(c)より，$B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}$は独立であり，それぞれが正規分布に従う．
+        したがって，積写像$A:=(B_{t_1},B_{t_2}-B_{t_1},\cdots,B_{t_n}-B_{t_{n-1}}):\Om\to\R^n$は$n$次元正規分布に従う．
+        行列
+        \[J:=\begin{bmatrix}1&0&\cdots&\cdots&0\\1&1&0&\cdots&0\\\vdots&\ddots&\ddots&\ddots&\vdots\\1&\cdots&\cdots&1&0\\1&\cdots&\cdots&1&1\end{bmatrix}\]
+        が定める線形変換を$f:\R^n\to\R^n$とおくと，これは明らかに可逆で，$B=f(A)$が成り立つ．
+        ここで，任意の線型汎関数$q\in(\R^n)^*$に関して，$q(B)=q(f(A))$は，$q\circ A:\R^n\to\R$が線型であることから，正規分布に従う．
+        よって，$B$も正規分布に従う．
+
+        また，仮定(b)より平均は$m(t)=E[B_t]=0$で，共分散は，$s\ge t$のとき，増分の独立性(c)に注意して
+        \[\Gamma(s,t)=\Cov[B_s,B_t]=E[B_sB_t]=E[B_s(B_t-B_s+B_s)]=E[B_s(B_t-B_s)]+E[B_s^2]=s.\]
+        $\Gamma$の対称性より，これは$\Gamma(s,t)=\min(s,t)$を意味する．
+        \item[(2)$\Rightarrow$(1)] \mbox{}
+        \begin{enumerate}[({B}1)]
+            \item 平均と分散を考えると，$m(0)=E[B_0]=0$かつ$\Gamma(0,0)=E[B_0^2]=0$．よって，$E[\abs{B_0}]=0$より，$B_0=0\;\as$
+            \item Gauss過程であることより，組$A:=(B_{t_n}-B_{t_{n-1}},\cdots,B_{t_2}-B_{t_1})$は$n$次元正規分布に従う．これらが独立であることを示すには，補題より$A$の分散共分散行列$\Sigma_A$の非対角成分がすべて$0$であることを示せば良い．
+            平均が$0$で$\Gamma(s,t)=\min(s,t)$であることより，
+            任意の$1<i< j\in[n]$について，共分散の双線型性に注意して，
+            \begin{align*}
+                \Cov[B_{t_i}-B_{t_{i-1}},B_{t_j}-B_{t_{j-1}}]&=E[(B_{t_i}-B_{t_{i-1}})(B_{t_j}-B_{t_{j-1}})]\\
+                &=E[B_{t_i}B_{t_j}]-E[B_{t_{i-1}}B_j]-E[B_{t_i}B_{t_{j-1}}]+E[B_{t_{i-1}}B_{t_{j-1}}]=i-(i-1)-i+(i-1)=0.
+            \end{align*}
+            \item 平均が$0$で$\Gamma(s,t)=\min(s,t)$であることより，
+            \[E[(B_t-B_s)^2]=E[B_t^2]+E[B_s^2]-2E[B_tB_s]=t+s-2s=t-s.\]
+        \end{enumerate}
+    \end{description}
+\end{proof}
+
+\begin{proposition*}
+    $\{\xi_i\}\subset L^2(\Om)$を$N(0,1)$に従う独立同分布列，$\{e_i\}$を可分Hilbert空間$L^2([0,1])$の正規直交基底とする．
+    \[X_n(t,\om):=\sum_{i=1}^n\xi_i(\om)\int^t_0e_i(u)du\]
+    について，次が成り立つ．
+    \begin{enumerate}
+        \item $\forall_{t\in[0,1]}\;\lim_{n\to\infty}X_n(t)$は$L^2$と概収束の意味で収束する．
+        \item 極限過程$X$は条件(b),(c)を満たす．
+        \item $X_n$は一様収束の位相についても，殆ど至る所収束する．とくに，$X$はBrown運動である．
+    \end{enumerate}
+\end{proposition*}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[$L^2(\Om)$-収束] 任意に$t\in[0,1]$を取る．
+            このとき，$E[\xi_i\xi_j]=\delta_{ij}$に注意すると，
+            \begin{align*}
+                \Norm{\int^M_{i=N}\xi_i(\om)\int^t_0e_i(u)du}_{L^2(\Om)}&=E\Square{\paren{\sum_{i=N}^M\xi_i\int^t_0e_i(u)du}^2}\\
+                &=E\Square{\sum_{i=N}^M\xi_i^2\paren{\int^t_0e_i(u)du}^2}\\
+                &=\sum_{i=N}^M\paren{\int^t_0e_i(u)du}^2\\
+                &=\sum_{i=N}^M(1_{[0,t]}|e_n)^2_{L^2([0,1])}\\
+                &=\sum^M_{i=0}(1_{[0,t]}|e_n)^2_{L^2([0,1])}-\sum^N_{i=0}(1_{[0,t]}|e_n)^2_{L^2([0,1])}\xrightarrow{N,M\to\infty}0.
+            \end{align*}
+            となるから，$(X_n)$は$L^2(\Om)$上のCauchy列である．$L^2(\Om)$の完備性より，これは収束する．
+            \item[概収束] 各$Z_i:=\xi_i\int^t_0e_i(u)du$は平均$0$の，独立確率変数で，
+            \[\sum_{i=1}^\infty E\Square{\xi^2_i\paren{\int^t_0e_i(u)du}^2}=\sum_{i=1}^\infty\paren{\int^t_0e_i(u)du}^2=1\]
+            より，概収束する．
+        \end{description}
+        \item 補題より，$X$の平均と共分散を確かめれば良い．
+        \begin{description}
+            \item[平均] $E:L^2(\Om)\to\R$の$L^2(\Om)$-連続性より，
+            \begin{align*}
+                E[X]=E\Square{\lim_{n\to\infty}\sum^n_{i=0}\xi_i\int^t_0e_i(u)du}&=\lim_{n\to\infty}E\Square{\sum^n_{i=0}\xi_i\int^t_0e_i(u)du}=0.
+            \end{align*}
+            \item[分散] 任意の$s,t\in\R_+$と$n\ge1$について，$E[\xi_i\xi_j]=\delta_{ij}$とParsevalの等式より，
+            \begin{align*}
+                \Cov[X_s,X_t]&=E\Square{\paren{\sum_{i=1}^n\xi_i\int^s_0e_i(u)du}\paren{\sum_{i=1}^n\xi_i\int^t_0e_i(u)du}}\\
+                &=\sum_{i=1}^n\paren{\int^s_0e_i(u)du}\paren{\int^t_0e_i(u)du}\\
+                &=\sum_{i=1}^n(1_{[0,s]}|e_i)_{L^2([0,1])}(1_{[0,t]}|e_i)_{L^2([0,1])}\xrightarrow{n\to\infty}(1_{[0,s]}|1_{[0,t]})_{L^2([0,1])}=\min(s,t).
+            \end{align*}
+        \end{description}
+        \item (Ito and Nishio, 1968 \cite{Ito-Nishio})より，殆ど至る所一様収束もする．よって，$X$は連続過程でもあり，従ってBrown運動である．
+    \end{enumerate}
+\end{proof}
+
+\section*{問題２}
+
+\begin{lemma*}
+    $X,Z\in L^2(\Om)$を独立で対称な確率変数とする：$X\overset{d}{=}-X,Z\overset{d}{=}-Z$．
+    このとき，
+    \[E[(X+Z)^2|X^2+Z^2]=X^2+Z^2.\]
+\end{lemma*}
+\begin{proof}
+    $X+Z,X-Z$は同じ分布を持つから，
+    \[E[(X+Z)^2|X^2+Z^2]=E[(X-Z)^2|X^2+Z^2]<\infty\]
+    よって，両辺の差を取って，$E[XZ|X^2+Z^2]=0$を得る．
+\end{proof}
+
+\begin{theorem*}[Levy's downward theorem]
+    $(\cG_n)_{n\in\N}$を部分$\sigma$-代数の単調減少列，$\cG_\infty:=\bigcap_{k\in\N}\cG_k$とする．
+    このとき，可積分過程$\{X_n\}\subset L^1(\Om)$が$(\cG_n)$-逆マルチンゲールならば，
+    \[\lim_{n\to\infty}X_n=E[X_1|\cG_\infty]\;\as\]
+\end{theorem*}
+
+\begin{proposition*}
+    $(B^1_t,B^2_t)_{t\in[0,1]}$を2次元Brown運動とし，$\P_m:=\{\tau^m_k=k2^{-m}\}^{2^m}_{k=0}$を$[0,1]$の分割とする．
+    \begin{enumerate}
+        \item $I_m:=\sum_{k=0}^{2^m}B^1_{\tau^m_{k-1}}(B^1_{\tau^m_k}-B^1_{\tau^m_{k-1}})$は$m\to\infty$について$L^2$及び概収束の意味で収束する．
+        \item $J_m:=\sum_{k=0}^{2^m}(B^1_{\tau^m_k}-B^1_{\tau^m_{k-1}})(B^2_{\tau^m_k}-B^2_{\tau^m_{k-1}})$は$m\to\infty$について$L^2$及び概収束の意味で$0$に収束する．
+    \end{enumerate}
+\end{proposition*}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $I_m$の各項は
+        \begin{align*}
+            B^1_{\tau^m_{k-1}}(B^1_{\tau^m_{k}}-B^1_{\tau^m_{k-1}})=\frac{1}{2}\paren{((B^1_{\tau^m_{k}})^2-(B^1_{\tau^m_{k-1}})^2)-\underbrace{(B^1_{\tau^m_{k}}-B^1_{\tau^m_{k-1}})^2}_{=:I_n^k}}
+        \end{align*}
+        と表せるから，
+        \[I_m=\frac{1}{2}(B_1^1)^2-\frac{1}{2}\sum_{k=1}^{2^m}I_m^k\]
+        と表せる．
+        \begin{description}
+            \item[概収束] $I'_m:=\sum_{k=1}^{2^m}I_m^k$とき，これがある$I'$に概収束することを示せば，$I=I'/2+(B_1^1)^2/2$も概収束することが分かる．
+            $\cG_n:=\sigma[I'_m|m\ge n]$とすると，$(\cG_n)$は部分$\sigma$-代数の減少列である．
+            
+            このとき，$\forall_{m\ge2}\;I'_m=E[I'_{m-1}|\cG_m]$を示す．
+            まず，各$1\le k\le 2^m$について，$\cG:=\sigma[(B^1_{\tau^m_{k}}-B^1_{\tau^{m+1}_{2k-1}})^2+(B^1_{\tau^{m+1}_{2k-1}}-B^1_{\tau^{m}_{k-1}})^2]$とおくと，
+            補題より，
+            \[E[I_m^k|\cG]=(B^1_{\tau^m_{k}}-B^1_{\tau^{m+1}_{2k+1}})^2+(B^1_{\tau^{m+1}_{2k-1}}-B^1_{\tau^{m}_{k-1}})^2=I_{m+1}^{2k}+I_{m+1}^{2k-1}\]
+            が成り立つから，たしかに$\forall_{m\ge2}\;I'_m=E[I'_{m-1}|\cG_m]$が成り立つ．
+
+            よって，$(I_m)$は逆マルチンゲールだから，Levyの定理より，$\lim_{m\to\infty}I'_m=E[I'_1|\cG_\infty]\;\as$
+            
+            %特に，$E[I']=E[I'_1]=1$．
+            
+            %また，Fatouの補題より，
+            %\begin{align*}
+            %    \liminf_{m\to\infty}E[(I_m-E[I_m])^2]&=\lim_{m\to\infty}\paren{E[I_m^2]-(E[I_m])^2}\\
+            %    &=\liminf_{m\to\infty}\paren{E\Square{\sum_{k=1}^{2^m}(B^1_{\tau^m_{k}}-B^1_{\tau^m_{k-1}})^4}-(\tau^m_{k}-\tau^m_{k-1})^2}\\
+            %    &=2\liminf_{m\to\infty}\frac{1}{2^m}=0.
+            %\end{align*}
+            %よって，
+            \item[$L^2$-収束]
+            $I'_m$が$1$に$L^2$-収束することを示す．一般の$[0,1]$の分割$\pi:=\{0=t_0<t_1<\cdots<t_n=t\}$について収束を示せば良い．
+            確率変数列を$\xi_j:=(B_{t_{j+1}}-B_{t_j})^2-(t_{j+1}-t_j)\;(j\in n)$とおくと，これらは中心化された独立な確率変数列になる．
+            \begin{align*}
+                E\Square{\paren{\sum^{n-1}_{j=0}(B_{t_{j+1}}-B_{t_j})^2-t}^2}&=E\Square{\paren{\sum^{n-1}_{j=0}\xi_j}^2}=\sum^{n-1}_{j=0}E[\xi^2_j]\\
+                &=\sum^{n-1}_{j=0}\paren{3(t_{j+1}-t_j)^2-2(t_{j+1}-t_j)^2+(t_{j+1}-t_j)^2}\\
+                &=2\sum^{n-1}_{j=0}(t_{j+1}-t_j)^2\le 2t\abs{\pi}\xrightarrow{\abs{\pi}\to0}0.
+            \end{align*}
+        \end{description}
+        \item 多次元Brown運動のそれぞれの成分は互いに独立であることに注意する．
+        \begin{description}
+            \item[$L^2$-収束] 次のように計算出来る．
+            \begin{align*}
+                E[(J_m-0)^2]&=E\Square{\sum^{2^m}_{k=0}(B^1_{\tau^m_{k}}-B^1_{\tau^m_{k-1}})^2(B^2_{\tau^m_{k}}-B^2_{\tau^m_{k-1}})^2}\\
+                &=\sum^{2^m}_{k=0}E[((B^1_{\tau^m_{k}}-B^1_{\tau^m_{k-1}})^2)]E[(B^2_{\tau^m_{k}}-B^2_{\tau^m_{k-1}})^2]\\
+                &=\sum^{2^m}_{k=0}(\tau^m_k-\tau^m_{k-1})^2=\sum^{2^m}_{k=0}\frac{1}{2^{2m}}\xrightarrow{m\to\infty}0.
+            \end{align*}
+            \item[概収束] よって，$L^1$-収束$E[\abs{J_m}]\to0$も従うから，$J_m\to0\;\as$
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+\begin{thebibliography}{9}
+    \bibitem{Ito-Nishio}
+    Ito, Kiyoshi., and Nishio, Makiko. (1968). On the Convergence of Sums of Independent Banach Space Valued Random Variables. \textit{Okasa Journal of Mathematics}. 5(1): 35-48.
+    \bibitem{Morters}
+    Morters, Peter., and Peres, Yuval. (2012). \textit{Brownian Motion}. Cambridge Univ. Press.
+\end{thebibliography}
+
+\end{document}
