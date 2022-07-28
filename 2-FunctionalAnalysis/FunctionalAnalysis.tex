@@ -83,6 +83,21 @@ title=]
     これが弱位相の発想を導く．
 \end{remarks}
 
+\begin{definition}[$F$-norm, $F$-space / quasi-normed space, Frechet space]
+    $V$を$K$-線型空間とする．$\norm{-}:V\to K$を関数とする．
+    \begin{enumerate}
+        \item 次の3条件を満たすとき，$\norm{-}$を\textbf{$G$-[セミ]ノルム}という．\footnote{ノルム空間のunderlying spaceをアーベル群について一般化した時に適切となるノルム概念である．}
+        \begin{enumerate}[(a)]
+            \item 正：$\norm{0_V}=0$．$[\norm{x}=0\Rightarrow x=0_V]$
+            \item \textbf{$-1$の作用}：$\forall_{x\in V}\;\norm{-x}=\norm{x}$．
+            \item 三角不等式：$\forall_{x,y\in V}\;\norm{x+y}\le\norm{x}+\norm{y}$．
+        \end{enumerate}
+        \item $G$-[セミ]ノルムが$V$に定める擬距離が定める位相について，スカラー乗法$K\times V\to V;(a,x)\mapsto ax$が連続であるとき，これを\textbf{$F$-[セミ]ノルム}という．
+        \item そのノルム位相が完備な$F$-ノルム空間を\textbf{$F$-空間}という：すなわち，任意のCauchyネットが収束する$F$-ノルム空間を$F$-空間という．
+        \item $F$-空間のノルム位相が局所凸であるとき，これを\textbf{Fréchet空間}という．射を連続線型写像とすると，Fréchet空間は圏TVSの充満部分圏をなす．
+    \end{enumerate}
+\end{definition}
+
 \begin{proposition}[有界性：連続性の特徴付け]
     $X,Y$をノルム空間，
     $T:X\to Y$を線型作用素とする．次の6条件は同値．
@@ -279,7 +294,7 @@ title=]
     \end{enumerate}
 \end{example}
 
-\subsection{位相空間上の試験関数の空間と分布論}
+\subsection{試験関数の空間と分布論}
 
 \begin{example}[滑らかな関数の空間と試験関数の空間]
     $K\subset\R^n$をコンパクト集合とし，$K\subset\Om\osub\R^n$を開集合として，$C^\infty(\Om),D_K(\Om),D(\Om)$を定める．
@@ -300,7 +315,7 @@ title=]
         \begin{enumerate}[(i)]
             \item $D_K(\Om):=\bigcap_{y\in\Om\setminus K}\Ker\ev_y$だから，たしかに閉部分空間である．
         \end{enumerate}
-        \item $D(\Om):=\bigcup_{K\in\cC(\Om)}D_K(\Om)=C_c^\infty(\Om)$(帰納極限になっている)は局所凸で完備であり，$F$-空間でもあるが，Frechet空間ではない．この空間を\textbf{コンパクト台を持つ試験関数の空間}という．
+        \item ネット$(D_K)_{K\in\cC}$の帰納極限$D(\Om):=\bigcup_{K\in\cC(\Om)}D_K(\Om)=C_c^\infty(\Om)$は再び局所凸で完備であり，$F$-空間でもあるが，Frechet空間ではない．この空間を\textbf{コンパクト台を持つ試験関数の空間}という．
         \begin{enumerate}[(i)]
             \item $\norm{\phi}_N:=\max_{\abs{\al}\le N,x\in\Om}\abs{D^\al\phi(x)}$はノルムを定める．このノルムの$D_K$への制限はセミノルムであり，$D_K$の位相を定める．
             \item このノルムについて，$D(\Om)$は局所凸な距離化可能空間になるが，完備ではない．
@@ -309,8 +324,12 @@ title=]
             つまり，位相$\tau$は完備な時点で距離化可能ではない．
         \end{enumerate}
     \end{enumerate}
+    $D(\Om)$上，次の位相に関して連続な線型汎関数を\textbf{分布}または\textbf{超関数}という．
 \end{example}
 
+\begin{theorem}[連続関数の滑らかな近似]
+    任意の$f\in C_c(\R^n)$は，$C_c^\infty(\R^n)$の列によって$\R^n$上一様に近似可能である．
+\end{theorem}
 
 \begin{lemma}
     次の位相$\tau$は$D(\Om)$を完備にするが，距離化可能でない．
@@ -328,7 +347,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{theorem}\mbox{}
+\begin{theorem}[試験関数の空間の位相の特徴付け]\mbox{}
     \begin{enumerate}
         \item 絶対凸集合$V\subset D(\Om)$について，開であることと$V\in\beta$であることとは同値．
         \item $\tau_K$は$\tau$の相対位相に等しい．
@@ -422,18 +441,22 @@ title=]
 \end{example}
 
 \begin{example}[導関数ノルムを備えたBanach空間]\label{exp-Banach-space-with-derivative-norm}
-    $\Om\osub\R^n$上の$C^m$-級関数であって，$m$階以下の導関数がすべて$\Om$上有界である関数の全体を$B^m(\Om)$または$C_b^m(\Om)$で表す．
-    これはある種の1-ノルム$\norm{u}_{C^1}=\sum_{\abs{\al}\le m}\norm{D^\al u}_\infty$について，Banach空間となる．
+    $\Om\osub\R^n$上の$C^m$-級関数の空間$C^m(\Om)$，$m$階以下の導関数がすべて$\Om$上有界である関数の空間$B^m(\Om)$または$C_b^m(\Om)$を定義する．
     \begin{enumerate}
-        \item $C_b^0(\Om)$は$C_b(\Om)$に一致する．
-        \item $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
+        \item $C^m(\Om)$はセミノルムの族$(p_{K,m}(f)=\sup_{\abs{s}\le m,x\in K}\abs{D^sf(x)})$に関してFrechet空間となる．
+        \item $C^m_b(\Om)$はある種の1-ノルム$\norm{u}_{C^1}=\sum_{\abs{\al}\le m}\norm{D^\al u}_\infty$について，Banach空間となる．
+        \begin{enumerate}[(i)]
+            \item これはある種の1-ノルム$\norm{u}_{C^1}=\sum_{\abs{\al}\le m}\norm{D^\al u}_\infty$について，Banach空間となる．
+            \item $C_b^0(\Om)$は$C_b(\Om)$に一致する．
+            \item $C_c^m(\Om)\subset C_b^m(\Om)$は変わらない．
+        \end{enumerate}
     \end{enumerate}
 \end{example}
 
 \begin{example}[Holder空間]
     局所コンパクトハウスドルフ空間$X$上の，$k$階$\al$-Holder連続微分可能な関数の空間を
     \[C^{k,\al}(X):=\Brace{f\in C^k\mid\forall_{n\in[k]}\abs{f^{(k)}}_{C^{0,k}}<\infty}\quad\abs{f}_{C^{0,\al}}:=\sup_{x\ne y\in\Om}\frac{\abs{f(x)-f(y)}}{\abs{x-y}^\al}\]
-    と定めると，これは半ノルムの族$\norm{f}_{C^{k,\al}}:=\norm{f}_{C^k}+\sup_{\abs{\beta}=k}\abs{D^\beta f}_{C^{0,\al}}$，ただし$\norm{f}_{C^k}:=\sup_{\abs{\beta}\le k}\sup_{x\in\Om}\abs{D^\beta f(x)}$について局所凸位相線形空間となり，$X$がコンパクトであるときさらにBanach空間となる．
+    と定めると，これは半ノルムの族$\norm{f}_{C^{k,\al}}:=\norm{f}_{C^k}+\sup_{\abs{\beta}=k}\abs{D^\beta f}_{C^{0,\al}}$，ただし$\norm{f}_{C^k}:=\sup_{\abs{\beta}\le k}\sup_{x\in\Om}\abs{D^\beta f(x)}$についてFrechet空間(たぶん)となり，$X$がコンパクトであるときさらにBanach空間となる．
     \begin{enumerate}[(i)]
         \item 包含$C^{0,\beta}(X)\mono C^{0,\al}(X)\;(0<\al<\beta\le 1)$が存在する．
         \item Ascoli-Arzelaの定理より，$\norm{-}_{0,\beta}$ノルムにおける有界集合は，$\norm{-}_{-\al}$ノルムにおける相対コンパクト集合に送られる．
@@ -2684,7 +2707,7 @@ title=]
 
 \section{関数空間の弱位相}
 
-\subsection{弱収束}
+\subsection{弱収束とノルム収束}
 
 \begin{theorem}
     $X$をノルム空間とし，$\{x_n\}\subset X$を$x$に弱収束する点列とする．
@@ -2715,6 +2738,27 @@ title=]
         \item $\forall_{A\in\A}\;\lim_{n\to\infty}\int_Af_nd\mu\in\R$が存在する．
     \end{enumerate}
 \end{corollary}
+
+\begin{corollary}
+    ある$f_\infty\in L^1(X,\M,\mu)$に弱収束する可積分関数列$\{f_n\}\subset L^1(X,\M,\mu)$について，ノルム収束することは次の条件に同値：
+    \[\forall_{B\in\M^1}\;\forall_{\ep>0}\;\mu\paren{\Brace{x\in B\mid\abs{f_n(x)-f_\infty(x)}\ge\ep}}\xrightarrow{x\to\infty}0.\]
+\end{corollary}
+\begin{remarks}
+    $l^1$で弱収束列はノルム収束するというSchurの定理はこの系である．
+    全く同様に，超関数の空間$D'(\Om)$の列も，$w^*$-収束するならば強収束もする．
+\end{remarks}
+
+\begin{theorem}
+    回帰的Banach空間は弱点列完備である．
+\end{theorem}
+
+\begin{theorem}
+    $Hilbert$空間において，$\{f_n\}\subset X$を$f_\infty$に弱収束する列とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $\{f_\infty\}$に強収束もする．
+        \item $\norm{f_n}\xrightarrow{n\to\infty}\norm{f_\infty}$．
+    \end{enumerate}
+\end{theorem}
 
 \section{Banach空間値関数}
 
