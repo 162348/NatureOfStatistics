@@ -1,0 +1,118 @@
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{数学史　レポート\\担当：中根美知代先生}
+\author{司馬博文 J4-190549}
+\date{\today}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+
+\section{問題１}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    \begin{enumerate}
+        \item 講義全体を通じて，印象に残ったことを３つあげよ．
+        \item 受講を通じて，自分の数学史への意識はどのように変わったか．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{enumerate}
+    \item 印象に残ったことは以下の通りである．
+    \begin{enumerate}[(i)]
+        \item 原理や定理などの結果に対して，主な貢献をした人物の名前を冠することは当たり前の慣習であり，これまでもあってきたが，
+        これが思いの外，方便としての意味が強いことがわかった．
+        研究を進める上で，「誰々の論文に言及されていたあの事実」程度の意味で，研究者の間で符牒で使っているうちに定着した可能性も大いにあると考えれば不思議なことではないのかもしれないが，
+        最小作用の原理が「Hamiltonの原理」と呼ばれているにも拘らず，Hamiltonが変分原理に触れたのは主に光学の研究に関してと，そして「動力学の一般的方法第二論文」(1835,\cite{Hamilton35})において，自身の「主関数の方法」の有用性を説明する程度の立ち位置で「主関数の変分が零になるならば，Lagrangeの運動方程式が成り立つ」と触れられているに過ぎないことは，
+        事実に反する．しかし，学術界において変分原理への注目のきっかけがHamiltonの研究によるのなら，そのような呼称が現在まで続くきっかけとして十分なのだろうと理解した．
+        すると，数学史としての知識は，定理や原理の名前からの類推とは全く別個に獲得することが望まれる．
+        \item 
+    \end{enumerate}
+    \item 
+\end{enumerate}
+
+\section{問題２}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    19世紀の初めから1925年前後にかけてのHamilton-Jacobi理論が形成されていく過程を概観せよ．
+\end{tcolorbox}
+
+\begin{enumerate}
+    \item Newtonのプリンキピアは1687年に刊行された．このとき，その表現の形式はEuclidに倣った幾何学を用いてなされていた．
+    その後の18世紀では，Euler, Bernoulli, Leibniz, Laplaceらにより，微積分学・変分学が両輪となって相互作用を持ちながら大きく発展した．
+    その過程で，Newtonの運動方程式を２階の常微分方程式として得て，幾何学の言葉から代数・解析学の言葉に翻訳したのがEulerであった(1747,\cite{Euler1747})．
+    \item Eulerが才能を見出した数学者に，Lagrangeがいる．まず，2人は，変分問題の解曲線が満たすべき方程式を導き，現在ではEuler-Lagrange方程式と呼ばれている．
+    そして，
+    \item ここで，幾何光学にも注目しており，Lagrangeの力学理論に新たな光を入れたのがHamiltonであった．
+    Hamiltonはまず，光学を解析的な言葉で定式化する仕事をしている．
+    Hamiltonは，Fermatの原理を念頭に，「特性関数」という量$I$を定義し，この変分が零になる道が実現されるという意味で「最小作用の原理」と呼びえる定理が成り立つことを導いた．
+    そこで仕事が力学に移る際にも，一つの量を定義して，そこから事実を演繹する，というパラレルな理論展開をおこなった．
+    どうやら，Hamiltonはその手法に詩の美しさに通じるような美しさを感じていたとも考えられる．
+    こうして，「力学における特性関数」の方法を，「動力学の一般的手法」として2つの論文で発表した(1834\cite{Hamilton34},1835\cite{Hamilton35})．
+    特に，第二論文における「主関数$S$」に対する変分原理として，Lagrangeの方程式が導けることも言及したが，あくまで「特性関数」の手法の有用性の例くらいの位置付けに留まっている．
+    \item ドイツにおいてHamiltonの研究に影響を受けた数学者にJacobiがいる．
+    彼はHamiltonの方法は，変分問題とそれと等価な微分方程式系(Euler-Lagrangeの方程式とも呼べる)を解くことは，対応するある偏微分方程式を解くことに帰着できる，という形の理論へ一般化することを考えた．
+    特にこのとき，力を定めるポテンシャルが$t$に陽に依存するときも同様の手法が適用可能であるという意味で，たしかにHamiltonの議論より一般的になっている．
+    特にその象徴とも言える形の定理は，次の形で表現できる(1837,\cite{Jacobi37B})：
+    \begin{theorem}[Jacobi,\cite{Hilbert37}]
+        偏微分方程式$u_x+H(x_1,\cdots,x_n,x,u_{x_1},\cdots,u_{x_n})=0$の完全積分$u=\varphi(x_1,\cdots,x_n,x,a_1,\cdots,a_n)$が知られているならば，
+        $2n$個の任意のパラメータ$a_1,\cdots,a_n,b_1,\cdots,b_n$を持った方程式$\varphi_{a_i}=b_i,\varphi_{x_i}=p_i$から正準な連立微分方程式
+        \[\dd{x_i}{x}=H_{p_i},\quad\dd{p_i}{x}=-H_{x_i}\]
+        の解の$2n$-パラメータの群が得られる．
+    \end{theorem}
+    特にこの定理は，上の形をした偏微分方程式(Hamilton-Jacobi方程式)が，あるクラスの変数をとることで変数分離可能である，という結果(1837,\cite{Jacobi37C})と併せると，
+    正準方程式の解法理論として実用的なものになる．
+    \item 一方で，Jacobiの結果はあくまで「偏微分方程式に帰着して解けるタイプの微分方程式を見つけた」という形のものであり，これを現代理解されている形に提示しなおしたのはPoincareであった．
+    中でも特に，正準変換の概念を通じてJacobiの理論を見直し，Jacobiの主定理とは，正準変換が，正準形の微分方程式を定数関数へ写す変換であるための十分条件を与えているものである，という観点に到達した．
+    Poincareは最終的に，定理の形にまとめれば，次の結果を得ている(1905,Poincare1905)：
+    \begin{theorem}\mbox{}
+        \begin{enumerate}
+            \item 変換$(q_1,\cdots,q_n,p_1,\cdots,p_n)\mapsto(q_1',\cdots,q'_n,p'_1,\cdots,p'_n)$が，ある関数$S$について$dS=\sum q_i'dp_i'-\sum q_idp_i$を満たすならば，正準変換である．
+            \item 正準変換後のHamiltonian $K$が零関数ならば，新たな正準変数は定数関数である．
+            \item 正準変換を定める母関数$S$が次の偏微分方程式を満たすならば，変換後のHamiltonian $K$は零関数である：
+            \[H\paren{q_1,\cdots,q_n,\pp{S}{q_1},\cdots,\pp{S}{q_n};t}+\pp{S_t}{t}=0.\]
+        \end{enumerate}
+    \end{theorem}
+    \item PoincareはJacobiの理論を，変換の観点から捉え直した．正準変換も，他の多くの数学的構造を保つ変換のように，群をなす．
+    そこで特に，Lie代数の知見が応用できることをWhittakerが発表する．
+    というのも，正準変換を，純粋に群論的な視点から，相空間の連続変換のなすLie代数の中で，Poissonの基本括弧式の関係を満たすもの，と特徴付けられる，という見方を提示した．
+    そこで，一時期は正準変換は「接触変換」とも呼ばれていた．
+    \item 
+\end{enumerate}
+
+\begin{thebibliography}{99}
+    \bibitem{Goldstein}
+    Goldstein『古典力学(下)』
+    \bibitem{Euler1747}
+    Euler, L. (1747). Reserches sur le mouvement des corps céleste général. Omera Omnia, Ser.II, Vol.25.
+    \bibitem{Lagrange1788}
+    (1788) Méchanique analitique . Paris.
+    \bibitem{Lagrange1811}
+    Mécanique analytique. 2nd ed., Volume 1.(1811) Vol.2 (1813) Paris.
+    \bibitem{Hamilton34}
+    Hamilton, W. R. (1834). On a General Method in Dynamics; by which the Study of the Motions of all
+    free Systems of attracting or repelling Points is reduced to the Search and Differentiation
+    of one central Relation, or characteristic Function.
+    \bibitem{Hamilton35}
+    Hamilton, W. R. (1835). Second Essay on a General Method in Dynamics.
+    \bibitem{Jacobi36}
+    Jacobi, C. G. J. (1836).
+    “Sur le Mouvement d’un Point et sur un Cas particulier du Probl`em des trois Corps,” Lettre adress´ee
+`a l’Acad´emie des Sciences de Paris, Comptes Rendus, t.3, pp.59-61 = Werke 4, pp.37-38.
+    \bibitem{Jacobi37B}
+    Jacobi, C. G. J. (1837). Uber die Reduction der Integration der partiellen Differentialgleichungen erster Ordnung zwischenirgend einer Zahl Variabeln auf die Integration eines einzigen Systems gewohnlicher Differentialgleichungen \textit{Journal fur die Reine und Angewandte Mathematik}. 17::97-162.
+    \bibitem{Jacobi37C}
+    Jacobi, C. G. J. (1837). Note sur l’intgration des ́equations diff erentielles de la dynamique. \textit{Comptes rendus de l’Acadmiedes Sciences} 5::61-67.
+    \bibitem{Born25}
+    Max Born. (1925). Vorlesungen über Atommechanik. Berlin, Springer.
+    \bibitem{Hilbert37}
+    Courant, R., and Hilbert, D. (1937). Methoden der Mathematischen Physik. Berlin, Verlag von Julius Springer.
+    \bibitem{Poincare1892}
+    『天体力学の新しい方法』
+    \bibitem{Poincare1905}
+    『天体力学講義』
+\end{thebibliography}
+
+\end{document}

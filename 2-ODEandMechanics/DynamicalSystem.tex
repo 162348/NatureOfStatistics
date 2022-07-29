@@ -1,29 +1,32 @@
-\documentclass[uplatex, 12pt, dvipdfmx]{jsreport}
-\title{Hamilton力学系}
+\documentclass[uplatex, dvipdfmx]{jsreport}
+\title{力学系に対する理論}
 \author{司馬博文 J4-190549}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-\input{/Users/hirofumi.shiba48/Desktop/数理科学/preamble_CM.tex}
+%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
 
+\begin{quotation}
+    古典力学から派生して，力学的な系＝「状態空間の経時変換の数学的モデル」を解析する位相的・幾何学的・解析的手法と，
+    そこに確率空間の構造を入れるまでを，確率統計学的な視点から概観する．
+    ただし，統計力学は扱わない．
+    \begin{enumerate}
+        \item Hamiltonの正準方程式が定める力学系を\textbf{Hamilton力学系}という．測地流や流体力学の渦点流などの力学系も含む．
+        \begin{enumerate}[(i)]
+            \item Hamilton力学系が\textbf{可積分系}であるとは，十分な数の第一積分（＝保存量）が存在する場合をいう．
+            このとき，解は規則的でよくわかる（Liouvoille-Arnoldの定理）．
+            \item 可積分系を摂動すると一般には非可積分系になる（三体問題など）が，摂動が十分小さければ可積分系
+            の時に存在していた規則的な解が同様に存在する．
+            これをKAM定理という．
+            Kolmogorov, Arnold, Moserによる．
+        \end{enumerate}
+    \end{enumerate}
+\end{quotation}
+
 \begin{abstract}
-    力学系とは，時間発展により状態が変化するシステムに対する数学的モデルである．
-    特に，常微分方程式や写像が定める力学系が主流である．
-
-    その中で，Hamilton力学系とは，古典力学（解析力学）を起源として，Hamiltonの正準方程式によって定まる力学系をいう．
-    測地流や流体力学の渦点流などの力学系も含む．
-
-    Hamilton力学系が可積分系であるとは，十分な数の第一積分（＝保存量）が存在する場合をいう．
-    このとき，解は規則的でよくわかる（Liouvoille-Arnoldの定理）．
-
-    可積分系を摂動すると一般には非可積分系になる（三体問題などk）が，摂動が十分小さければ可積分系
-    の時に存在していた規則的な解が同様に存在する．
-    これをKAM定理という．
-    Kolmogorov, Arnold, Moserによる．
-
-    1980年代に入り，文献\cite{Arnold}が定式化するのはsymplectic幾何である．
-    その故郷である物理学を尋ねてみることは数学の面からも物理学の面からも大切である．
     \begin{quotation}
         Hamiltonian formalism lay at the basis of quantum mechanics and has become one of the most often used tools in the mathematical arsenal of physics.
         After the significance of symplectic structures and Huygens' principle for all sorts of optimization problems was realized, Hamilton's equations began to be used constantly in engineering calculations.
@@ -64,32 +67,91 @@
     常微分方程式に帰着できる偏微分方程式系という研究の流れがあった}．
 \end{abstract}
 
-
-
-\chapter{Lagrange系}
+\chapter{古典力学}
 
 \begin{quotation}
-    まさか，こんな定式化があるとは思わなかった．物体の可能な配置全体の集合は自然に多様体となるのか！そんな発想あるか？
-    \begin{definition}[(Fadell's) configuration space, generalized coordinates]
-        ある物体系について，その可能な布置(configuration)全てからなる集合を\textbf{配置集合}という．
-
-        これを特に以下のように数学的に構成するとき，特にFadellの配置空間という．
-        多様体$M$に対して，この上の位相的に区別可能な$N$個の点からなる$N$-組全体の集合を配置集合という．
-
-        この配置空間上の基底のことを\textbf{一般化された座標}という．
-    \end{definition}
-    ラグランジュ力学は力学系の振る舞いを配位空間(configuration space)の言葉によって記述する．
-    古典力学系系の配位空間は，可微分多様体の構造を持ち，その上に微分同相写像（滑らかな多様体の同型）が作用する．
-    この同型群についての不変量が，ラグランジュ力学の定理の主要部である．（叙述されるときは局所座標で語られようとも）．
-
-    ラグランジュ力学系は，配位空間と呼ばれる多様体と，その接束上の関数（「ラグランジアン関数」という）の組として与えられる．
-
-    この配位空間の微分同相（ラグランジアンを保つ）の任意のone-parameter群は，保存則を定める．例えば運動方程式の第一積分などである（エネルギーと呼ばれる）．
-
-    ニュートン力学における保存力系(potential system)とは，ラグランジュ力学系のうち，配位空間がEuclid空間で，ラグランジアンが運動エネルギーとポテンシャルエネルギーの差となる場合$L(q,\dot{q},t)=T-V$である．
+    古典力学での系は，ホロノミックな拘束のとき，$\R^n$を配置空間として記述でき，$n$個の時間に関して2階の微分方程式と$2n$個の初期条件が与えられる．
+    特に，本質的な独立変数は$n$個の$q_i$のみである．
+    この設定ではLagrange形式とHamilton形式は等価で，むしろLagrange形式の方が含蓄が豊富である．
+    Hamilton形式の真価は，理論的な拡張に対する枠組みを提供するという点で有用性を見せてくる．
+    特に，統計力学と量子力学では大部分がHamilton形式によって構成される．
 \end{quotation}
 
-\section{仮想仕事とd'Alembertの法則}
+\section{力学の脱幾何学化}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Newtonは力学をEuclid幾何学の形式で書いた．
+    Eulerが運動方程式という解析的に同等な表現を世界で初めてした．
+    Lagrangeが$\delta$の記法を発明し，Eulerの変分法を代数的な馬力を借りて押し進めた．
+\end{tcolorbox}
+
+\begin{history}[幾何学の時代]
+    Issac Newton 1642-1727 は天体の運動を幾何学の言葉で書いた．
+    当時は幾何学の対義語が「代数」「解析」であった．
+    Euclidの原論以来の形式から，力学を解放する試みが「解析力学」(Lagrange)であり，その騎手はLagrangeに間違いないのである．
+    初めて，代数・幾何の離陸，という意味で，応用数学の故郷である．
+    Eulerの時点で変分法まで揃っていた．
+\end{history}
+
+\begin{history}[Leonhard Euler 1707-1783による解析化・変分原理への変換と，Lagrangeへのバトンタッチ]
+    Euler 1747 \cite{Euler1747}「天体の運動一般の研究」でNewtonの運動方程式を定式化した．
+    変分法という分野を創始したのもEulerであり，
+    1744年には，変分問題の極値
+    を与える曲線がみたす方程式を導いている．その
+    論文の付録で作用量と定義し，そ
+    れを最小にする最小作用の原理によって運動が規
+    定されることも提唱している．
+
+    この夢のプログラムを$\delta$の記法を発明して，代数の力を援用して引き継いだのがLagrangeである．
+    EulerはLeibnizの方法の方が数学的に発展性があると気づいて，Lagrangeをイタリアからベルリンアカデミーに呼び出し，多いに発展させた．これでNewtonの質点力学を剛体力学，弾性体力学，流体力学へと発展させた．
+\end{history}
+
+\begin{history}[Joseph Louis Lagrange 1736-1813]
+    まず，変分法を$\delta$の記法を用いて完全に脱幾何学し，
+    まず極値曲線の方程式を解いて，Eulerに招聘された．さらに，力学
+    解析・代数の言葉で書き直したのが『解析力学』1788,\cite{Lagrange1788}．
+    事実，運動方程式から，最小作用の原理などは定理として導かれる．
+    ポテンシャルなどの技法は既に多様体的な考え方を内包していた．なお，ポテンシャルが存在するとは，保存系であることに同値．
+    この考え方を用いて運動方程式を書き直したもの，すなわち
+    Lagrangeの方程式
+    \[\dd{}{t}\pp{t}{\dot{q}_i}-\pp{T}{q_i}+\pp{U}{q_i}=0\]
+    も導かれる．
+
+    Siméon Denis Poisson 1781-1840の1809の仕事を盛り込んだ第二版も，定理を増やした．
+\end{history}
+
+\section{Lagrange系の定義}
+
+\subsection{系の分類}
+
+\begin{definition}[holonomic, configuration space, system point, generalized coordinates]
+    古典力学は微分方程式と\textbf{拘束条件}とで定まる力学系を考察する．
+    \begin{enumerate}
+        \item 拘束条件が\textbf{ホロノミック}であるとは，質点の座標の間の方程式$f(r_1,r_2,\cdots,t)=0$で表すことができることをいう．
+        剛体理論はホロノミックな系である．
+        \item ホロノミックな系において，自由度全体の空間$\R^N$からホロノミックな拘束条件の数$k$だけ変数を取り除いた独立変数の空間$\R^{N-k}=:\R^n$を\textbf{配置空間}(Fadell)といい，その元を\textbf{配置点}，その近傍座標を\textbf{一般化座標}という．
+        \item ホロノミックな系がさらに次の2条件を満たすとき（保存系はこれを満たす），\textbf{Langrange系}であるという：
+        \begin{enumerate}[({L}1)]
+            \item 外力が(一般化)ポテンシャルから導かれる：$F_i=-\nabla_iV$．
+            \item 拘束力は仕事をしない．すなわち，拘束力による仮想仕事が零になる．
+        \end{enumerate}
+        このとき，$n$本の方程式
+        \[\dd{}{t}\paren{\pp{L}{\dot{q_j}}}-\pp{L}{q_j}=0\]
+        を\textbf{Euler-Lagrange方程式}という．
+        \item 次の条件を満たす力学系を\textbf{一元的(monogenic)な系}(Lanczos, 1970\cite{Goldstein1})という：
+        \begin{enumerate}[({H}1)]
+            \item 外力が，位置と速度のみの関数である一般化スカラーポテンシャルから導かれる．
+        \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\subsection{微分原理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=仮想仕事とd'Alembertの法則によるLagrangeの方程式の導出]
+    動力学が静力学に変換される手法である．
+\end{tcolorbox}
 
 \begin{screen}
     Lagrangian力学の構成には二通りある．Newton力学を微分法則から換言する歴史的方法と，積分法則「最小作用の法則」を与えることである．ランダウ・リフシッツの教科書は後者の方法を採用している．
@@ -109,192 +171,43 @@
     d'Alembertは百科全書派の一人で，啓蒙運動に大きく貢献した．
 \end{remark}
 
-\section{Calculus of variations}
-
-\begin{definition}[variational calculus / secondary calculus]
-    曲線の空間（という可微分関数空間：無限次元線型空間）のうち，極値を取る関数を定める手法を\textbf{変分法}という．
-
-    換言すれば，非線型汎関数(nonlinear functional)の停留点(stationary point)／臨界点(critical point)を扱う微分法(differential calculus)である．
-\end{definition}
-
-\begin{definition}[functional]
-    無限次元多様体上の関数を特に\textbf{汎関数}という．特に，係数体(scaler)に値を取るときにいう．
-
-    特に，変分法が取り扱う汎関数を\textbf{作用(action functional)}という．
-\end{definition}
-\begin{example}[汎関数の例]\mbox{}
-    \begin{enumerate}
-        \item 変分法はJohann Bernoulli (1696) の取り上げた最速降下曲線問題を，Eulerが取り上げて著書Elementa Calculi Variationumにまとめてから変分法の名前がついて始まった．
-        \item Euclid空間の曲線$\gamma:=\{(t,x)\mid x(t)=x,\; t\in[t_0,t_1]\}$の長さ$\Phi(\gamma)=\int^{t_1}_{t_0}\sqrt{1+\dot{x}^2}dt$は，汎関数である．
-    \end{enumerate}
-\end{example}
-\begin{history}
-    マーストン・モースは変分法を今日Morse理論と呼ばれるものに応用した。
-    レフ・ポントリャーギン、ラルフ・ロッカフェラーおよび F. H. Clarke は最適制御理論において変分法に対する新しい数学的な道具を開発した。
-    リチャード・ベルマンの動的計画法は変分法の代替となるもののひとつである。
-\end{history}
-
-\subsection{変分}
-
-\begin{definition}[differentiability of functionals, variation / differential]
-    曲線$\gamma+h$とは，$\gamma+h=\{(t,x)\mid x=x(t)+h(t)\}$とする．
-    汎関数$\Phi$が\textbf{微分可能}であるとは，$h$について線型な汎関数$F$と$R(h,\gamma)=O(h^2)$を満たす汎関数$R$を用いて，
-    \[ \Phi(\gamma+h)-\Phi(\gamma) = F+R \]
-    この線型汎関数$F$を\textbf{一次変分(first variation)}または\textbf{微分(differential)}という．$h$をこの曲線$\gamma$の\textbf{変分}(variation of the curve)という．
-\end{definition}
-\begin{example}[action functional]
-    $\gamma$を$(t,x)$-平面上の曲線，$L=L(a,b,c)$を可微分な三変数関数とする．汎関数$\Phi$を次のように定める．
-    \[ \Phi(\gamma) = \int^{t_1}_{t_0}L(x(t),\dot{x}(t),t)dt \]
-    以前示した，＜曲線の長さという汎関数＞の例は，$L=\sqrt{1+b^2}$の場合である．
-\end{example}
-
-\begin{theorem}[action functionalの微分]\label{thm-differential-of-action-functional}
-    汎関数$\Phi(\gamma)$は微分可能で，そのdifferential $F(h)$は次のように表せる．
-    \[ F(h) = \int^{t_1}_{t_0}\left.\left[ \frac{\partial L}{\partial x}-\frac{d}{dt}\frac{\partial L}{\partial\dot{x}} \right]hdt+\left(\frac{\partial L}{\partial\dot{x}}h\right) \right|^{t_1}_{t_0} \]
-\end{theorem}
-\begin{proof}
-    まず，
-    \begin{align*}
-        \Phi(\gamma+h)-\Phi(\gamma) &= \int^{t_1}_{t_0}\left[L(x+h,\dot{x}+\dot{h},t)-L(x,\dot{x},t)\right]dt\\
-        &= \int^{t_1}_{t_0}\left[\frac{\partial L}{\partial x}h+\frac{\partial L}{\partial\dot{x}}\dot{h}\right]dt + O(h^2) = F(h) + R(h,\gamma)
-    \end{align*}
-    と置くと，$F(h)=\int^{t_1}_{t_0}\left[\frac{\partial L}{\partial x}h+\frac{\partial L}{\partial\dot{x}}\dot{h}\right]dt, R=O(h^2)$であるから，確かに積分可能．
-    また，部分積分より，
-    \[ F(h) = \int^{t_1}_{t_0}\left( \frac{\partial L}{\partial\dot{x}}\frac{\partial h}{\partial t} \right)dt = \left[ h\frac{\partial L}{\partial\dot{x}} \right]^{t_1}_{t_0} - \int^{t_1}_{t_0} h\frac{d}{dt}\frac{\partial L}{\partial\dot{x}} \]
-\end{proof}
-
-\subsection{極値問題}
-
-\begin{definition}[extremal]
-    微分可能汎関数$\Phi(\gamma)$について，曲線$\gamma$が\textbf{極値関数／極値点}であるとは，$\forall h,\; F(h)=0$が成り立つことをいう．
-\end{definition}
-
-\begin{theorem}[作用汎関数が極値を取る条件：Euler-Lagrange方程式]\label{thm-EL-equation}
-    曲線$\gamma$が，$x(t_0)=x_0,x(t_1)=x_1$を通る曲線の空間上で，作用汎関数$\Phi(\gamma)=\int^{t_1}_{t_0}L(x,\dot{x},t)dt$の極値点であるための必要十分条件は，
-    次が成り立つことである．
-    \[ \frac{d}{dt}\left(\frac{\partial L}{\partial\dot{x}}\right) - \frac{\partial L}{\partial x} = 0\;\;\;\mathrm{on\;}\gamma \]
-\end{theorem}
-\begin{proof}
-    定理\ref{thm-differential-of-action-functional}より，$F(h)$が$h$に依らず$0$になるための$\gamma$の条件を考えるが，
-    $F$第二項は$h(t_1)=h(t_0)=0$より$0$．従って，次の補題により，$\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{x}}\right) - \frac{\partial L}{\partial x} = 0$が成り立てば良い．
-\end{proof}
-
-\begin{lemma}
-    連続関数$f:[t_0,t_1]\to\R$について，次の２条件は同値．
-    \begin{enumerate}
-        \item 任意の連続関数$h:[t_0,t_1]\to\R, h(t_0)=h(t_1)=0$に対して，条件$\int^{t_1}_{t_0}f(t)h(t)dt=0$である．
-        \item $f=0$．
-    \end{enumerate}
-\end{lemma}
-
-\begin{example}
-    $L=\sqrt{1+\dot{x}^2}$とするとき，この値は確かに$0$になり，そのとき$\gamma$は直線になることが確認できる．
-\end{example}
-
-\subsection{The Euler-Lagrange equation}
-
-\begin{definition}
-    前節の定理\ref{thm-EL-equation}で，作用汎関数が極値を取るための条件として出現した次の３変数実関数についての２階偏微分方程式を，\textbf{オイラー・ラグランジュ方程式}という．
-    \[ \frac{d}{dt}\left(\frac{\partial L}{\partial\dot{x}}\right) - \frac{\partial L}{\partial x} = 0\;\;\;\mathrm{on\;}\gamma \]
-\end{definition}
-
-これを，一次元ではなく一般の次元に拡張することを考える．
-\begin{notation}
-    以降，$\x\in\R^n$を数ベクトルとし，$\gamma=\{(t,\x)\in\R^{n+1}\mid \x=\x(t),t\in[t_0,t_1]\}$を曲線とし，$L:\R^n\times\R^n\times\R\to\R$を$2n+1$次関数とする．
-\end{notation}
-
 \begin{theorem}
-    曲線$\gamma$と作用汎関数$\Phi(\gamma)=\int^{t_1}_{t_0}L(\x,\dot{\x},t)dt$について，
+    d'Alembertの原理は，Lagrangeの方程式を含意する．
+\end{theorem}
+
+\begin{remarks}
+    Largangianは特に，弾性力・電磁場・素粒子の系でも定義でき，異なる物理系が同じ形のLagrangianで記述できることも多い．
+    特に，電磁場に対してHamiltonの変分原理を記述することによって，粒子に対する量子化の方法を取り入れ，量子電磁力学が構成された．
+\end{remarks}
+
+\subsection{積分原理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ホロノミックな系についてはLagrangeの原理と等価であり，さらに形式的には非ホロノミックな系にも拡張できる原理である．
+\end{tcolorbox}
+
+\begin{axiom}[Hamiltonの原理]
+    時区間$[t_1,t_2]$間の系の運動は，$L:=T-V$の線積分$I=\int^{t_2}_{t_1}Ldt$が停留値をとるような運動である．
+\end{axiom}
+
+\begin{theorem}[２つの原理の等価性]
+    一元系の拘束がホロノミックであるとき，次の2条件は同値：
     \begin{enumerate}
-        \item 曲線$\gamma$は２点$(t_0,\x_0),(t_1,\x_1)$を通る曲線の空間上の，汎関数$\Phi$の極値点である．
-        \item $\gamma$についてEuler-Lagrange方程式が成立する．
+        \item Hamiltonの原理式$\delta I=0$が成り立つ．
+        \item Lagrangeの方程式が成り立つ．
     \end{enumerate}
 \end{theorem}
-\begin{remark}[一般化された座標とは「適切に取られた座標」くらいの意味だろうか]\label{remark-generalized-coordinates}
-    これは，一般化の過程で重要になる事実であるが，線型汎関数とその極値点との組の関係は，座標系の取り方に依らない．これを指定する言語が「（一般化座標による）微分方程式」であるのかもしれない．
 
-    例えば，平面上の曲線の距離を表す線型汎関数は，cartesian座標をとるかpolar座標を取るかによって表示が違う．
-    \begin{align*}
-        \Phi_{\mathrm{cart}}&=\int^{t_1}_{t_0}\sqrt{\dot{x}_1^2+\dot{x}_1^2}dt, &\Phi_{\mathrm{pol}}&=\int^{t_1}_{t_0}\sqrt{\dot{r}^2+r^2\dot{\varphi}^2}dt.
-    \end{align*}
-    線型汎関数は本質的に同じく，その極値点$\gamma:\R\to\R^2$はいずれも「直線」である．
-    また，この直線も，その方程式は座標によって違うのはもちろんである．
-    座標の取り方が邪魔をしている．
+\begin{proposition}[Hamiltonの原理の必要条件]
+    一元系の拘束がホロノミックであるとき，Hamiltonの原理は次を含意する．すなわち，$\delta I=0$であるためには，次が必要：
+    \[\pp{f}{y_i}-\dd{}{x}\pp{f}{\dot{y}_i}=0\]
+    これは$\delta J=0$を書き下したもので，\textbf{Euler-Lagrangeの方程式}という．
+\end{proposition}
 
-    しかし，一般化座標によって書かれたEuler-Lagrange方程式で直線の方程式を指定しようとすれば，
-    直線を表すベクトル値関数$\gamma:\R\to\R^2$が解になる状況が，
-    座標$x_1,x_2$とそれによるLagrangian $L(x_1,x_2)$とがセットで得られる．
-\end{remark}
 
-\section{Lagrange's equations}
+\subsection{サイクリックな座標}
 
-\begin{screen}
-    保存力系において，Newton方程式の解とEuler-Lagrange方程式の解が等しいことを示す（定理\ref{thm-classical-mechanics-in-Lagrange-formalizm}）．
-\end{screen}
-
-\begin{align}
-    \frac{d}{dt}(m_i\dot{r}_i)+\frac{\partial U}{\partial r_i}=0 \label{equation-Newton}\\
-    \frac{d}{dt}\frac{\partial L}{\partial\dot{\x}}-\frac{\partial L}{\partial\x}=0 \label{equation-Lagrange}
-\end{align}
-
-\subsection{Hamilton's principle of least action}
-
-\begin{theorem}[Hamilton's principle of least action]\label{thm-classical-mechanics-in-Lagrange-formalizm}
-    方程式\ref{equation-Newton}によって定まる力学系の運動は，次の汎関数の極値点$\gamma\subset\R^n\times\R$に等しい．
-    \begin{align*}
-        \Phi(\gamma)&=\int^{t_1}_{t_0}Ldt,&where\;L&=T-U.
-    \end{align*}
-\end{theorem}
-\begin{proof}
-    $\gamma$が線型汎関数の極値点であるためには，
-    \[ \frac{d}{dt}\left(\frac{\partial L}{\partial\dot{x}}\right) - \frac{\partial L}{\partial x} = 0\;\;\;\mathrm{on\;}\gamma \]
-    が成り立てば良い．いま$L(\x,\dot{\x},t)=T(\dot{\x},t)-U(\x,t)$より，
-    \begin{align*}
-        \frac{\partial L}{\partial\x}&=0-\frac{\partial U}{\partial\x},&\frac{\partial L}{\partial\dot{\x}}&=\sum \mathrm{m}\dot{\x}^2
-    \end{align*}
-    より，求める条件は，成分ごとに書けば$\frac{d}{dt}(m_i\dot{x}_i)+\frac{\partial U}{\partial x}=0$．
-\end{proof}
-\begin{remark}
-    この定理は，現代的には変分原理と呼ぶべきであるが，歴史的には\textbf{ハミルトンの最小作用の法則}という．
-    ほとんどの場合，作用が最大になるからであるが，正確には停留点である．
-\end{remark}
-
-\begin{corollary}
-    $\q=(q_1,\cdots,q_{3n})$を$n$質点系の配置空間内の任意の座標系とする．$\q$の時間発展は，次の方程式に従う．
-    \begin{align*}
-        \frac{d}{dt}\frac{\partial L}{\partial\dot{\x}}-\frac{\partial L}{\partial\x}&=0,&where\;L=T-U
-    \end{align*}
-\end{corollary}
-\begin{proof}
-    定理\ref{thm-classical-mechanics-in-Lagrange-formalizm}より，物体の運動は汎関数$\int Ldt$の極値点である．
-    従って，議論\ref{remark-generalized-coordinates}より，任意の座標系について，Euler-Lagrangeの方程式は成立する．
-\end{proof}
-
-\begin{definition}[Lagrange function / Lagrangian]\mbox{}
-    \begin{enumerate}
-        \item 関数$L(\q,\dot{\q},t)=T-U$を\textbf{ラグランジュ関数・ラグランジアン}という．
-        \item $q_i$を\textbf{一般化座標}という．
-        \item $\dot{q}_i$を\textbf{一般化速度}という．
-        \item $p_i:=\frac{\partial L}{\partial\dot{q}_i}$を\textbf{一般化運動量}という．
-        \item $\frac{\partial L}{\partial q_i}$を\textbf{一般化力}という．
-        \item $\int^{t_1}_{t_0}L(\q,\dot{\q},t)dt$を\textbf{作用}という（エネルギと時間の積というPlanck定数の次元を持つことに注意）．
-        \item Euler-Lagrange方程式を，特に力学の観点からは\textbf{ラグランジュの運動方程式}という．
-    \end{enumerate}
-\end{definition}
-
-\subsection{The simplest examples}
-この例は
-
-\begin{example}[等速直線運動または静止]
-    Euclid空間$\R^3$内の束縛のない質点であって，Lagrangianが$L=T=\frac{m\dot{\mathbf{r}}^2}{2}$と表される系を考える．
-    正規直交座標$q_i=r_i$を導入すれば$L=\frac{m}{2}(\dot{q}_1^2+\dot{q}_2^2+\dot{q}_3^2)$と表せる．
-    従って，この場合は，一般化速度は速度の成分で，一般化運動量は運動量の成分$p_i=m\dot{q}_i$で，Lagrangeの運動方程式はNewtonの運動方程式と同一であり，
-    極値点は必ず直線になる．
-\end{example}
-
-\begin{example}[角運動量保存則の言い換え]
-    
-\end{example}
 
 次の概念は，角運動量保存則と運動量保存則を統合した視点から総合する概念である．
 
@@ -376,56 +289,554 @@
 
 \subsection{The case of many variables}
 
-\section{Hamilton's equations}
+\chapter{変分法}
 
-\begin{screen}
-    Legendre変換により，ラグランジュ力学系の$n$元二階微分方程式は，非常に対称的な$2n$元の一階微分方程式に変換される．
-    これをハミルトン方程式または正準方程式という．
-\end{screen}
+\begin{quotation}
+    Lagrangeの運動方程式にEulerの名前が環されているのは，変分法という導出における不可欠なピースがEulerによるものだからである．
+\end{quotation}
 
-\subsection{Equivalence of Lagrange's and Hamilton's equations}
+\section{枠組みと歴史}
 
-式\ref{equation-Lagrange}の書き換えである
-ラグランジュ系
-\begin{equation}\label{equation-Lagrange-2}
-    \dot{\mathbf{p}}=\frac{\partial L}{\partial\mathbf{q}}
-\end{equation}
-であって，Lagrangian $L:\R^n\times\R^n\times\R\to\R$が第二変数$\dot{\mathbf{q}}$について凸であるとする．
+\begin{definition}[variational calculus / secondary calculus]
+    曲線の空間（という可微分関数空間：無限次元線型空間）のうち，極値を取る関数を定める手法を\textbf{変分法}という．
 
-\begin{theorem}[Hamilton's equation / canonical equation]
-    ラグランジュ方程式系\ref{equation-Lagrange-2}は，次の方程式系と等価である．
+    換言すれば，非線型汎関数(nonlinear functional)の停留点(stationary point)／臨界点(critical point)を扱う微分法(differential calculus)である．
+\end{definition}
+
+\begin{definition}[functional]
+    無限次元多様体上の関数を特に\textbf{汎関数}という．特に，係数体(scaler)に値を取るときにいう．
+
+    特に，変分法が取り扱う汎関数を\textbf{作用(action functional)}という．
+\end{definition}
+\begin{example}[汎関数の例]\mbox{}
+    \begin{enumerate}
+        \item 変分法はJohann Bernoulli (1696) の取り上げた最速降下曲線問題を，Eulerが取り上げて著書Elementa Calculi Variationumにまとめてから変分法の名前がついて始まった．
+        \item Euclid空間の曲線$\gamma:=\{(t,x)\mid x(t)=x,\; t\in[t_0,t_1]\}$の長さ$\Phi(\gamma)=\int^{t_1}_{t_0}\sqrt{1+\dot{x}^2}dt$は，汎関数である．
+    \end{enumerate}
+\end{example}
+\begin{history}
+    マーストン・モースは変分法を今日Morse理論と呼ばれるものに応用した。
+    レフ・ポントリャーギン、ラルフ・ロッカフェラーおよび F. H. Clarke は最適制御理論において変分法に対する新しい数学的な道具を開発した。
+    リチャード・ベルマンの動的計画法は変分法の代替となるもののひとつである。
+\end{history}
+
+\section{変分}
+
+\begin{definition}[differentiability of functionals, variation / differential]
+    曲線$\gamma+h$とは，$\gamma+h=\{(t,x)\mid x=x(t)+h(t)\}$とする．
+    汎関数$\Phi$が\textbf{微分可能}であるとは，$h$について線型な汎関数$F$と$R(h,\gamma)=O(h^2)$を満たす汎関数$R$を用いて，
+    \[ \Phi(\gamma+h)-\Phi(\gamma) = F+R \]
+    この線型汎関数$F$を\textbf{一次変分(first variation)}または\textbf{微分(differential)}という．$h$をこの曲線$\gamma$の\textbf{変分}(variation of the curve)という．
+\end{definition}
+\begin{example}[action functional]
+    $\gamma$を$(t,x)$-平面上の曲線，$L=L(a,b,c)$を可微分な三変数関数とする．汎関数$\Phi$を次のように定める．
+    \[ \Phi(\gamma) = \int^{t_1}_{t_0}L(x(t),\dot{x}(t),t)dt \]
+    以前示した，＜曲線の長さという汎関数＞の例は，$L=\sqrt{1+b^2}$の場合である．
+\end{example}
+
+\begin{theorem}[action functionalの微分]\label{thm-differential-of-action-functional}
+    汎関数$\Phi(\gamma)$は微分可能で，そのdifferential $F(h)$は次のように表せる．
+    \[ F(h) = \int^{t_1}_{t_0}\left.\left[ \frac{\partial L}{\partial x}-\frac{d}{dt}\frac{\partial L}{\partial\dot{x}} \right]hdt+\left(\frac{\partial L}{\partial\dot{x}}h\right) \right|^{t_1}_{t_0} \]
+\end{theorem}
+\begin{proof}
+    まず，
     \begin{align*}
-        \dot{\mathbf{p}} &= -\frac{\partial H}{\partial\mathbf{q}},\\
-        \dot{\mathbf{q}} &= \frac{\partial H}{\partial\mathbf{p}}.
+        \Phi(\gamma+h)-\Phi(\gamma) &= \int^{t_1}_{t_0}\left[L(x+h,\dot{x}+\dot{h},t)-L(x,\dot{x},t)\right]dt\\
+        &= \int^{t_1}_{t_0}\left[\frac{\partial L}{\partial x}h+\frac{\partial L}{\partial\dot{x}}\dot{h}\right]dt + O(h^2) = F(h) + R(h,\gamma)
     \end{align*}
-    ただし，$H(\mathbf{p},\mathbf{q},t)=\mathbf{p\dot{q}}-L(\mathbf{q},\dot{\mathbf{q}},t)$は，Lagrangianを$\dot{\mathbf{q}}$の関数と見たときのLegendre変換とした．
+    と置くと，$F(h)=\int^{t_1}_{t_0}\left[\frac{\partial L}{\partial x}h+\frac{\partial L}{\partial\dot{x}}\dot{h}\right]dt, R=O(h^2)$であるから，確かに積分可能．
+    また，部分積分より，
+    \[ F(h) = \int^{t_1}_{t_0}\left( \frac{\partial L}{\partial\dot{x}}\frac{\partial h}{\partial t} \right)dt = \left[ h\frac{\partial L}{\partial\dot{x}} \right]^{t_1}_{t_0} - \int^{t_1}_{t_0} h\frac{d}{dt}\frac{\partial L}{\partial\dot{x}} \]
+\end{proof}
+
+\section{極値問題}
+
+\begin{definition}[extremal]
+    微分可能汎関数$\Phi(\gamma)$について，曲線$\gamma$が\textbf{極値関数／極値点}であるとは，$\forall h,\; F(h)=0$が成り立つことをいう．
+\end{definition}
+
+\begin{theorem}[作用汎関数が極値を取る条件：Euler-Lagrange方程式]\label{thm-EL-equation}
+    曲線$\gamma$が，$x(t_0)=x_0,x(t_1)=x_1$を通る曲線の空間上で，作用汎関数$\Phi(\gamma)=\int^{t_1}_{t_0}L(x,\dot{x},t)dt$の極値点であるための必要十分条件は，
+    次が成り立つことである．
+    \[ \frac{d}{dt}\left(\frac{\partial L}{\partial\dot{x}}\right) - \frac{\partial L}{\partial x} = 0\;\;\;\mathrm{on\;}\gamma \]
+\end{theorem}
+\begin{proof}
+    定理\ref{thm-differential-of-action-functional}より，$F(h)$が$h$に依らず$0$になるための$\gamma$の条件を考えるが，
+    $F$第二項は$h(t_1)=h(t_0)=0$より$0$．従って，次の補題により，$\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{x}}\right) - \frac{\partial L}{\partial x} = 0$が成り立てば良い．
+\end{proof}
+
+\begin{lemma}
+    連続関数$f:[t_0,t_1]\to\R$について，次の２条件は同値．
+    \begin{enumerate}
+        \item 任意の連続関数$h:[t_0,t_1]\to\R, h(t_0)=h(t_1)=0$に対して，条件$\int^{t_1}_{t_0}f(t)h(t)dt=0$である．
+        \item $f=0$．
+    \end{enumerate}
+\end{lemma}
+
+\begin{example}
+    $L=\sqrt{1+\dot{x}^2}$とするとき，この値は確かに$0$になり，そのとき$\gamma$は直線になることが確認できる．
+\end{example}
+
+\chapter{Hamilton-Jacobi理論}
+
+\section{Hamilton系}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hamilton形式は，1階の微分方程式で系を記述することを試みるが，初期条件は$2n$個あるので，$q_i,\dot{q}_i$を独立と扱い，$2n$次元の\textbf{相空間}を状態空間とする．
+\end{tcolorbox}
+
+\begin{definition}[phase space, canonical variables]\mbox{}
+    \begin{enumerate}
+        \item Hamilton系の状態空間$\R^{2n}$を\textbf{相空間}といい，その元$(p,q)\in\R^{2n}$を\textbf{正準変数}という．
+    \end{enumerate}
+\end{definition}
+
+
+\subsection{Hamiltonの研究}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    
+\end{tcolorbox}
+
+\begin{history}[William Rowan Hamilton 1805-1865]
+    イギリスで代数と論理学が出会い，Booleなどの結節点が，計算機を産んだ．Leibnizの夢である．
+    その中でHamiltonはたくましく当時の数理科学優等生であったフランスに学び，イギリスらしい進展を付け加えた．
+
+    本格的に数学を始めたのは15歳の頃で、当時最先端のラグランジュ、ラプラスの書物を学ぶ。この頃わずか16歳にしてラプラスの『天体力学』に誤りを発見し、専門家を驚かせた。
+    Hamiltonは実は詩人になりたかったのかもしれない．ワーズワースに憧れていたのだろうか．
+\end{history}
+\begin{remark}
+    夏目漱石の『趣味の遺伝』(1906)で「ハミルトンのクオータニオンを発明したのもおおかたこんなものだろう」
+という表現があるが，これが受け入れられるはずがあろうか？
+そういえば線形変換を行列ではなく，四元数で書いていたのだっけか．
+\end{remark}
+
+
+\begin{history}[Hamiltonの光学研究]
+    「光線系の理論」と題する一連の考作が1828年から発表されている．
+    光学と力学が共進化したのは極めて興味深い事実である．
+    解析力学の仕事をするにあたって，Fermatの原理をどの程度着想源としたかは不明である．
+
+    ハミルトンは反射・屈折の法則から，Fermatの原理を「証明」している．
+    そして，Fermatの原理の翻訳として得たのは，
+    \[\delta I=\delta\int\nu(x,y,z)d\rho=0.\]
+    である．ただし，$\nu$は屈折率，$\rho$は線分要素とした．
+    $I$を特性関数という．
+    これは，Lagrange系において力を与えるポテンシャル$V$にあたる．
+\end{history}
+
+\begin{history}[力学への応用]\mbox{}
+    \begin{enumerate}
+        \item 1834年に発表した「動力学の一般的方法」\cite{Hamilton34}では，Newtonの原理から出発して，
+        \[S:=\int^t_0(T-U)dt\]
+        なる，「特性関数」にあたる量を定義し，「主関数」と呼んでいる．
+        おそらく現代的な意味とは違う．
+        そしてこれについての変分原理から，最小作用の原理を示した．
+        \item 1835年に発表した「動力学の一般的方法第二論文」\cite{Hamilton35}で，Hamiltonの正準方程式を導いた．
+        そしてこのHamilton系についても，「主関数」の方法が使えることを論じて論文を終える．
+        \item 2つともHamiltonの原理と呼べる変分原理に関する記述はなく，(2)で「主関数の変分が$0$になるという条件は，Lagrangeの方程式を含意する」という，主関数の理論の有用性に関する1つの例程度の立ち位置である．
+    \end{enumerate}
+\end{history}
+
+\section{Jacobiの研究}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ハミルトンが「動力学の一般的方法」として示したのは，運動方程式を直接解かず，偏微分芳程式を解いて主関数を求め，それを
+    使って運動方程式の解が得られることである．
+    ヤコビは，この着想を一般の常微分方程式系に対して，
+    偏微分方程式に帰着して解く方法として整備した．
+    
+    すなわち，
+    あるクラスの連立1階常微分方程式系（正準方程式）を，非線形1階偏微分方程式に帰着して解く技法をつなげた(Hilbert\cite{Hilbert37})．
+    一般に，偏微分方程式のほうが常微分方程式を解くより難しい．
+    しかしヤコビは，適当な変数変換を施し，変数を完全に分離で
+    きれば，HJ方程式は求積法で容易に解けることを指摘した．
+    これは正準変換の１つである．
+\end{tcolorbox}
+
+\begin{history}[Carl Gustav Jacob Jacobi 1804-1851への継承]
+    王立協会の紀要に発表されたHamilton力学研究は大陸
+    の有力な研究者たちの注目を引いた。
+    1842-43年冬学期におこなったケーニヒスベルク大学講義録『力学講義』が集大成になる．
+    ここでは
+    JacobiもNewtonの原理から出発して，種々の結果を定理として導く．
+    そこでは，Hamiltonの原理にあたる変分原理を定理として示し，
+    「Hamiltonはこの原理から出発した」という事実とは異なる記述が添えてある．
+\end{history}
+
+\begin{history}[Jacobiの研究方針：変分問題の一般的解法理論]
+    変分問題の解はEuler-Lagrangeの方程式を満たす．
+    そのうち，たまたま力学に応用できるとき，これをLagrangeの運動方程式と呼ぶのみである．
+    そこでJacobiはHamiltonやLagrangeの場合と違って，ポテンシャルが$t$に依存する場合も含めた理論を立てようとした．
+    このときも，偏微分方程式の完全解がもとまれば，これが微分方程式系と変分原理を満たす運動の軌跡を与える．
+\end{history}
+
+\begin{history}[偏微分方程式の解法理論への貢献]\mbox{}
+    \begin{enumerate}
+        \item 1836の論文\cite{Jacobi36}では，
+        2つの固定中心から引きつけられる質点の運動に対応するHJ方程式の変数を，
+        楕円座標を導入して完全に分離させ，オイラー以
+        来の難問を解いてみせた．
+        ヤコビの解法は時とし
+        て強力なのである．ヤコビが自覚するように，既
+        知の変数変換で変数が分離するような問題に対し
+        てしか適用できない方法だが，19世紀後半には近
+        似計算法が発展していくので，彼の着想は有効に
+        活用されていった．
+        \item 1837の論文\cite{Jacobi37}「変分法と微分方程式の研究」と「偏微分方程式の解を常微分方程式系に帰着することについて」と「力学の微分方程式の積分について」で，
+        変分問題＝「正準方程式」と呼ばれる形を持った微分方程式問題を偏微分方程式に帰着し，
+        その解法を提示した．
+        しかしこれが「正準変換」の１例であることには気づいていない．
+        二重にロバストな統計量の構成と同様，解けるクラスを確定しただけである．
+    \end{enumerate}
+\end{history}
+
+\section{正準変換への過程}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    ここまでの理論では「正準変換（正準形の射）」の考え方が入っていない．
+    以降，Hamilton-Jacobi理論は天体力学と呼ばれていた．
+\end{tcolorbox}
+
+\begin{history}[Poincareの正準変換の研究]\mbox{}
+    \begin{enumerate}
+        \item 1892年，彼の
+        代表作『天体力学の新しい方法』\cite{Poincare1892}で，
+        Newton方程式からHamiltonの正準方程式を導き，その後Jacobiの解法を紹介する．
+        しかしここでさらに一歩踏み込んで，Hamilton-Jacobi方程式の完全解が
+        正準変換の母関数になることを示唆した．
+        \item 第3版で，母関数$S$がH-J方程式の解になれば，これが定める正準変換が力学系の解を与えることを示し，
+        これはGoldsteinの教科書に載っている説明と同じである．
+        \item 1905の『天体力学講義』\cite{Poincare1905}では，正準変換となるための十分条件を1-形式で提示する．
+        特にH-J方程式の完全解$S$はこれを満たし，さらにこれが定める正準変換は，変換後の正準変数が定数になるようなクラスを定める．
+        これを\textbf{Jacobiの方法と称した}が，Jacobiがここまで見えていた訳ではない．
+    \end{enumerate}
+\end{history}
+
+\begin{history}[エドマンド・T・ホイッテーカー(1873-1956)]
+    Lieの接触変換は，正準変換を引き起こすことに気づいた(1904 『解析力学』)．
+    1960sまでは，正準性を保つ変換を正準変換とともに「接触変換」とも呼ばれていた．
+\end{history}
+
+\section{天の力学から原子の力学へ}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Bohr (1913)の原子模型の提案から，Hamilton光学が見直された．
+    ハミルトン光学ないしは光学のHJ理論という分野が，1920年代には確立していた．
+    そしてBornがHamilton-Jacobi理論を，天体力学と量子力学をつなげる数学的形式として見直し，『原子の力学』(1925)として刊行した．
+    「量子力学」と題する論文が刊行されたのも，同年のすぐ後の出来事であった．
+\end{tcolorbox}
+
+\begin{history}
+    当時の量子物
+理学者の間でよく読まれたのは，スウェーデンの
+天文学者力ール・シヤリエ(1862-1934)による
+『天の力学』であった．
+ドイツ語で，制限つき周期運動について詳しいためである．
+ここでは，天体力学における角変数$\om=\nu t+\beta$が，作用に相当する積分と正準共役になることが示唆されていた．
+この正準変数を「\textbf{作用・角変数}」と名付けたのは，シュワルツシルト(1916)がシュタルク効果の説明にあたってである．
+\end{history}
+
+\begin{history}[KleinからDavid Hilbertへ：変分原理からの大総合]
+    \begin{enumerate}
+        \item KleinはHamilton光学の普及に努めた．
+        \item 1922-23年，ダーフイト-ヒルベルト(1862-1943)はゲツチングン大学で，『量子論の数学的基
+        礎』17を講義した．ここで彼は，変分原理に基づい
+        て光学と力学のHJ理論を統一的に論じた．
+        このように変分原理から出発する物理学の見方はHamiltonの仕事ではなく，Hilbertなのであった！
+        実際，この本は変分原理を基調に書かれており，正準方程式を\textbf{変分問題の標準微分方程式}として提示している．
+    \end{enumerate}
+\end{history}
+
+\begin{theorem}[Jacobi]
+    偏微分方程式$u_x+H(x_1,\cdots,x_n,x,u_{x_1},\cdots,u_{x_n})=0$の完全積分$u=\varphi(x_1,\cdots,x_n,x,a_1,\cdots,a_n)$が知られているならば，
+    $2n$個の任意のパラメータ$a_1,\cdots,a_n,b_1,\cdots,b_n$を持った方程式$\varphi_{a_i}=b_i,\varphi_{x_i}=p_i$から正準な連立微分方程式
+    \[\dd{x_i}{x}=H_{p_i},\quad\dd{p_i}{x}=-H_{x_i}\]
+    の解の$2n$-パラメータの群が得られる．
 \end{theorem}
 
-\subsection{Hamilton's function and energy}
+\begin{history}[Max Born]
+    ヒルベルトの定式化を押さえた上でボルンは，
+    1925年に『原子の力学』を刊行する．
+    名前の由来は「天体力学だけでなく，原子の力学のためのHamilton-Jacobi理論の再評価」というところである．
+    Hilbertの講義録は2009まで世に出なかったので，
+    今日の(ゾンマーフェルトが望んだような)前期量子論を理解するためのHamilton-Jacobiの理論の教科書としての流れを作った．
+    そこで，我々の歴史的理解が歪んだのである．
+\end{history}
 
-\subsection{Cyclic coordinates}
+\section{Legendre変換}
 
-\section{Liouville's theorem}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lagrange系からHamilton系への変換$(q,\dot{q},t)\mapsto(q,p,t)$はLegendre変換が与える．
+    このとき，$n$個の２階常微分方程式であるLagrangeの方程式は，$2n$個の１階偏微分方程式となる．
+\end{tcolorbox}
 
-\subsection{The phase flow}
+\begin{discussion}[canonical equations of Hamilton]
+    $f(x,y)$の微分$df=udx+vdy\;(u=f_x,v=f_y)$から，$u,v$を変数として取り出すと，$f$に関する2階微分方程式は1階になるであろう．
+    このとき，$g:=f-ux$と定めると，$dg=df-udx-xdu=vdy-xdu$．すなわち，
+    \[x=-\pp{g}{u},\quad v=\pp{g}{y}\]
+    となる．ここで，の部分$x$だけ$u$に代わっている．
+    このとき，$H(q,p,t):=\dot{q}_ip_i-L(q,\dot{q},t)$を\textbf{Hamiltonian}といい，$-\pp{L}{t}=\pp{H}{t}$を満たす．
+    これについての同様の条件式
+    \[\dot{q}_i=\pp{H}{p_i},\quad-\dot{p}_i=\pp{H}{q_i}\]
+    を\textbf{Hamiltonの正準方程式}という．
+\end{discussion}
+\begin{example}[Gibbs free energyはHamiltonianである]
+    enthalpy $X$はentropy $S$と圧力$P$について，$dX=TdS+VdP$の関係があり，これもLegendre変換の関係になる．
+    なお，$T$は温度，$V$は体積である．
+    このとき，$G:=X-TS$とすると，\textbf{Gibbsの自由エネルギー}が定義され，これはHamiltonianである．
+\end{example}
 
-\subsection{Liouville's theorem}
+\section{Symplectic記法}
 
-\subsection{Proof}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hamiltonの運動方程式は座標と運動量を対称に取り扱わない．無理矢理この組による$n$変数条件に書き換えようとすると多くの場合は奇怪になるが，唯一示唆的な手段がある．
+\end{tcolorbox}
 
-\subsection{Poincaré's recurrence theorem}
+\begin{definition}\mbox{}
+    \begin{enumerate}
+        \item $\eta_i:=q_i,\eta_{i+n}:=p_i\;(i\in[n])$とし，$\eta\in\R^{2n}$を列行列とする．
+        \item 列行列$\pp{H}{\eta}$を$\paren{\pp{H}{\eta}}_i:=\pp{H}{q_i},\paren{\pp{H}{\eta}}_{i+n}:=\pp{H}{p_i}$とする．
+        \item $J:=(0,1;-1,0)\in M_{2n}(\R)$とする．
+    \end{enumerate}
+\end{definition}
 
-\subsection{Applications of Poincaré theorem}
+\begin{theorem}[symplectic notation / matrix notation]
+    Hamiltonの運動方程式は
+    \[\dot{\eta}=J\pp{H}{\eta}\]
+    と表せる．
+\end{theorem}
+\begin{history}
+    symplecticの語は，intertwinedという意味のギリシャ語から，Weyl (1939) \textit{The Classical Group}において造語された．
+\end{history}
 
-\chapter{Hamilton系}
+\section{変分原理}
+
+\subsection{修正されたHamiltonの原理}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    配置空間$\R^n$上の軌跡の空間上の変分原理をHamiltonの原理と呼んだ．この，相空間$\R^{2n}$上の対応物を\textbf{修正されたHamiltonの原理}という．
+\end{tcolorbox}
+
+\begin{theorem}
+    修正されたHamiltonの原理が導くEuler-Lagrange方程式は，正準方程式に他ならない．
+\end{theorem}
+
+\begin{remarks}
+    Hamilton形式においては，$p,q$のいずれか一方に特権的な地位を与えるべきではなく，全く平等に扱うべきであり，基礎方程式を2階から1階にしたことに伴って数が増えただけである．
+    独立変数を，「座標」と「運動量」に分けることは，単に運動を記述する$2n$の独立変数を，Hamiltonの運動方程式に対して対称な振る舞いをするように，数学的に2つにグループ分けしているのみである．
+\end{remarks}
+
+\subsection{最小作用の原理}
+
+\begin{definition}
+    配置空間上の変分について，
+    \begin{enumerate}
+        \item $\delta$-変分は，配置空間上の軌跡の空間上の微分で，$\delta q_i(t_1)=\delta q_i(t_2)=0$が必要．
+        \item $\Delta$-変分はもっと条件が緩く，軌跡の微分可能性のみが要求される．
+    \end{enumerate}
+\end{definition}
+
+\begin{axiom}
+    \[\Delta\int^{t_2}_{t_1}p_i\dot{q_i}dt=0\]
+    を最小作用の原理という．
+\end{axiom}
+
+\begin{proposition}[幾何光学のFermatの原理との類似性]
+    次の条件が成り立つとき，最小作用の原理は$\Delta(t_2-t_1)=0$となる．
+    \begin{enumerate}
+        \item 非相対論的で，一般化座標を定義する式が時間を陽に含まない．このとき，運動エネルギーは$T=\frac{1}{2}M_{jk}(q)\dot{q}_j\dot{q}_k$と表せる．
+        \item ポテンシャルが速度に依存しない．
+        \item 系に外力が作用しない．
+    \end{enumerate}
+    すなわち，2点間の移動時間が極値をとるような特定の道筋に沿って運動する．
+    この条件は幾何光学におけるFermatの原理と全く同じである．
+\end{proposition}
+
+\begin{theorem}[Jacobi形の最小作用の原理]
+    (1)の条件が成り立つとき，$(M_{jk})$なる係数行列は計量テンソルをなす曲がった配置空間(curvilinear configuration space)が構成できる．
+    この多様体上の計量は$(d\rho)^2=M_{jk}dq_jdq_k$と表せる．
+    このとき，最小作用の原理は
+    \[\Delta\int^{\rho_2}_{\rho_1}\sqrt{H-V(q)}d\rho=0\]
+    と表せる．すなわち，系の運動は，系を表す点が配置空間における測地線に沿って進む．
+\end{theorem}
+
+\section{正準変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    本質的に解かなければいけない微分方程式は，Lagrangianを用いる手続と同じになるが，座標と運動量を区別しないことで，より力学の形式的な構造に対する深い示唆を与える．
+    例えば，Hamiltonが保存されるとき（時間の関数でないとき），$2n$個の座標がサイクリックになるような正準座標への変換が存在する．従って，解が得られる．
+\end{tcolorbox}
+
+\begin{definition}[extended canonical transformation, restricted]
+    変換$Q_i=Q_i(q,p,t),P_i=P_i(q,p,t)$が，再びある$K$についてHamiltonの運動方程式を満たすならば，この変換を\textbf{広義の正準変換}という．
+    また，$Q,P$が$t$の項を含まないとき，\textbf{限定された}正準変換であるという．
+\end{definition}
+
+\begin{lemma}[正準変換の正規化と母関数による定式化]
+    $Q,P$が広義の正準変換ならば，
+    \[\exists_{\lambda\in\R}\;\exists_{F\in C^2(\R^{2n})}\;\lambda(p_i\dot{q}_i-H)=P_i\dot{Q}_i-K+\dd{F}{t}\]
+    が必要．$\lambda$を\textbf{スケール変換}，$F$を\textbf{母関数}という．
+    $\lambda=1$を満たすとき，$Q,P$を単に\textbf{正準変換}という．
+\end{lemma}
+\begin{remarks}
+    母関数によって正準変換を分類できる．
+\end{remarks}
+
+\begin{theorem}[symplecticな定式化]
+    $Q,P$を変換とし，これが定める1列行列を$\zeta\in M_{1,2n}(\R)$，$\dot{\eta}=J\pp{H}{\eta}$を正準変数$\eta\in M_{1,2n}(\R)$に関するHamiltonの方程式とし，$(M_{ij})=\pp{\zeta}{\eta}\in M_{2n}(\R)$をそのJacobi行列とする．
+    このとき，次の2条件は同値：
+    \begin{enumerate}
+        \item $Q,P$は正準変換である．
+        \item $MJM^\top=J$．
+    \end{enumerate}
+    条件(2)を\textbf{シンプレクティック条件}，$M$を\textbf{シンプレクティック行列}という．
+\end{theorem}
+\begin{history}
+    $Q,P$が制限されていない一般の場合に対してこれを示す方法は，Lieによる連続変換の$1$-パラメータ変換群の理論を用いることでできる．
+\end{history}
+
+\begin{proposition}[正準変換の群]\mbox{}
+    \begin{enumerate}
+        \item 恒等変換は正準である．
+        \item 正準変換の逆は正準である．
+        \item 正準変換の合成は正準である．
+        \item 正準変換の合成は結合的である．
+    \end{enumerate}
+\end{proposition}
+
+\section{正準不変量}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hamilton力学のほとんどの概念はPoisson括弧式を用いて特徴づけることができるのは，変換群の構造を用いて相空間$\R^{2n}$が特徴付けられることを言っていると考えれば当然の事実であろう．
+\end{tcolorbox}
+
+\subsection{Poisson括弧式}
+
+\begin{definition}[Poisson brackets, fundamental]
+    正準変数$p,q$に関する括弧式とは，双線型形式
+    \[[u,v]_{p,q}:=\pp{u}{q_i}\pp{v}{p_i}-\pp{u}{p_i}\pp{v}{q_i}=\paren{\pp{u}{\eta}}^\top J\pp{v}{\eta}\]
+    をいう．$\zeta$を正準変数としたとき，$[\zeta,\zeta]$を\textbf{基本括弧式}という．
+\end{definition}
+
+\begin{lemma}
+    この演算について，$\R^{2n}$の変換関数の全体はLie代数をなす．
+    積は結合的ではなく，代わりにJacobiの恒等式を満たす．
+\end{lemma}
+
+\begin{proposition}
+    変換$\eta\to\zeta$について，次の2条件は同値：
+    \begin{enumerate}
+        \item 正準変換である．
+        \item $[\zeta,\zeta]_\eta=J$．
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Lagrangeの括弧式}
+
+歴史的な興味があるのみである．
+
+\subsection{Liouvilleの定理}
+
+\begin{theorem}
+    統計的集団$E\subset\R^{2n}$について，任意の点$x\in E$の近傍に含まれる$E$の他の点の密度$D$は，時間的に一定である．すなわち，次が成り立つ：
+    \[\dd{D}{t}=[D,H]+\pp{D}{t}=0.\]
+\end{theorem}
+
+\begin{definition}[microcanonical ensemble]
+    $D$を，あるエネルギーをもつ系については特定の定数，その他のエネルギー準位を持つ場合は$0$にする．
+    この条件を満たす統計的集団$E$を\textbf{小正準集団}という．
+\end{definition}
+
+\section{Hamilton-Jacobiの理論}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    実際，この枠組みに整理したのはPoincareである．
+\end{tcolorbox}
+
+\subsection{Hamilton-Jacobiの方程式}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Hamiltonが時間に依存する場合の解法理論を考える．解とは，$t=0$のときに初期値$(q_0,p_0)$を持つような正準変数に他ならないから，まずは定数関数$(q_0,p_0)$への正準変換を考え，その逆変換$q=q(q_0,p_0,t),p=p(q_0,p_0,t)$を計算すれば良い．
+    そのための十分条件がHamilton-Jacobiの方程式であり，数学的にはこれを解けば，力学問題の解が得られたことになる．
+\end{tcolorbox}
+
+\begin{theorem}[Hamilton-Jacobi equation, Hamilton's principal function]\mbox{}
+    \begin{enumerate}
+        \item 変換後のHamiltonian $K$が零関数ならば，新たな正準変数は定数関数である．
+        \item 母関数$F$が次の方程式を満たすとき，$K=0$である：
+        \[H\paren{q_1,\cdots,q_n,\pp{F_2}{q_1},\cdots,\pp{F_2}{q_n};t}+\pp{F_t}{t}=0.\]
+    \end{enumerate}
+    (2)を満たすときの母関数を$S$と書いて，Hamiltonの\textbf{主関数}という．
+\end{theorem}
+
+\begin{corollary}
+    $S$は次を満たす：$\dd{S}{t}=L$．
+\end{corollary}
+
+\begin{history}
+    HamiltonはLagrangian $L$の時間積分が，ある偏微分方程式の特解であることに気づいた．
+    その逆の成立，すなわち，Hamilton-Jacobiの完全解から，系の運動の解が導かれることに気づいたのがJacobiであった．
+\end{history}
+
+\subsection{サイクリックな正準変数への変換とHamiltonの特性関数}
+
+\section{Bohrの量子力学と天文力学}
+
+
+
+\chapter{参考文献}
 
 \begin{thebibliography}{99}
     \bibitem{Arnold}
     Vladimir I. Arnold "Mathematical Methods of Classical Mechanics" 2nd, (1991).
+    \bibitem{Goldstein1}
+    Goldstein 『古典力学』上
+    \bibitem{Goldstein2}
+    Goldstein 『古典力学』下
     \bibitem{原島}
     原島鮮『力学』
     \bibitem{磯崎}
     磯崎洋『解析力学と微分方程式』（共立出版，2020）
+
+    \bibitem{Euler1747}
+    Euler, L. (1747). Reserches sur le mouvement des corps céleste général. Omera Omnia, Ser.II, Vol.25.
+    \bibitem{Lagrange1788}
+    (1788) Méchanique analitique . Paris.
+    \bibitem{Lagrange1811}
+    Mécanique analytique. 2nd ed., Volume 1.(1811) Vol.2 (1813) Paris.
+    \bibitem{Hamilton34}
+    Hamilton, W. R. (1834). On a General Method in Dynamics; by which the Study of the Motions of all
+    free Systems of attracting or repelling Points is reduced to the Search and Differentiation
+    of one central Relation, or characteristic Function.
+    \bibitem{Hamilton35}
+    Hamilton, W. R. (1835). Second Essay on a General Method in Dynamics.
+    \bibitem{Jacobi36}
+    Jacobi, C. G. J. (1836).
+    “Sur le Mouvement d’un Point et sur un Cas particulier du Probl`em des trois Corps,” Lettre adress´ee
+`a l’Acad´emie des Sciences de Paris, Comptes Rendus, t.3, pp.59-61 = Werke 4, pp.37-38.
+    \bibitem{Jacobi37}
+    Jacobi, C. G. J. (1837). Note sur
+    \bibitem{Born25}
+    Max Born. (1925). Vorlesungen über Atommechanik. Berlin, Springer.
+    \bibitem{Hilbert37}
+    Courant, R., and Hilbert, D. (1937). Methoden der Mathematischen Physik. Berlin, Verlag von Julius Springer.
+    \bibitem{Poincare1892}
+    『天体力学の新しい方法』
+    \bibitem{Poincare1905}
+    『天体力学講義』
 \end{thebibliography}
 
 \end{document}
