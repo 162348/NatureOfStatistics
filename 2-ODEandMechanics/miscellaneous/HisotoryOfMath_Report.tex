@@ -1,12 +1,13 @@
-\documentclass[uplatex, dvipdfmx]{jsreport}
+\documentclass[uplatex, dvipdfmx]{jsarticle}
 \title{数学史　レポート\\担当：中根美知代先生}
 \author{司馬博文 J4-190549}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
+\maketitle
 
 \section{問題１}
 
@@ -26,10 +27,19 @@ title=]
         研究を進める上で，「誰々の論文に言及されていたあの事実」程度の意味で，研究者の間で符牒で使っているうちに定着した可能性も大いにあると考えれば不思議なことではないのかもしれないが，
         最小作用の原理が「Hamiltonの原理」と呼ばれているにも拘らず，Hamiltonが変分原理に触れたのは主に光学の研究に関してと，そして「動力学の一般的方法第二論文」(1835,\cite{Hamilton35})において，自身の「主関数の方法」の有用性を説明する程度の立ち位置で「主関数の変分が零になるならば，Lagrangeの運動方程式が成り立つ」と触れられているに過ぎないことは，
         事実に反する．しかし，学術界において変分原理への注目のきっかけがHamiltonの研究によるのなら，そのような呼称が現在まで続くきっかけとして十分なのだろうと理解した．
+        さらには，Jacobiの理論はHilbertの講義録\cite{Hilbert37}で提示されている形のように，現代で学ぶ形は壮麗で極めて見通しが良いが，この形に昇華したのは勿論Jacobiだけでなく，Poincareら重要な継承者がおり，彼らが敬意を込めて先人の名前に代表させたにすぎないと知ったときも妙に納得感があった．
+        
         すると，数学史としての知識は，定理や原理の名前からの類推とは全く別個に獲得することが望まれる．
-        \item 
+        \item 特にHamilton-Jacobiの理論を初め，解析力学の内容は，物理学者，数学者らが多く参入しており，変分法など数学的には高度な手法も縦横無尽に使われ，微分方程式論から微分幾何学，群論などの代数学の多くの数学の分野のみならず，統計力学や量子力学の殆どの現代的物理学理論も解析力学を踏まえている．
+        これほど重要で，多くの後進も学んだ分野において，殆ど数学史・科学史的な先行研究が乏しいという事実には非常に驚いた．
+        数学史や理論の形成過程に対する考察は，直接には数学・科学には関係が無いにしても，第一線の数学・科学者にとっても極めて有用な知見になると考える．
+        特に筆者自身の経験からみても，なにか大きな理論を自分で作った者が書いた教科書ほど，歴史的な事実も大事に扱い，前面には押し出さないにしろ教科書には必ず盛り込んでいるように見受けられる(WeylのRiemann面，伊藤清の『確率論』，吉田耕作の『測度と積分』など)．
+        \item Hamilton-Jacobiの理論は前期量子論を契機に改めてまとめられ，そこで整備された結果，このように複雑で荘厳な理論体系を湛え，現代に残っている，という歴史的現象は印象に残った．
+        また，Hilbertの講義録の出版が遅れたために，
     \end{enumerate}
-    \item 
+    \item 元来数学史には興味が深く，新たな知見が得られることを望んで受講した．その結果，新たな知見も勿論豊富に得られたが，何より数学史の手法について学ぶことが多かった．
+    数学の歴史に関する知見は，しばしば自身の成果を援用するためという目的を持って活用されがちである．特にGaussとLaplaceの間で最小二乗法に関してや，NewtonとLeibnizとの間で微分積分学の発明に関して，自身の先行性を主張した論争は有名であった．
+    そこで，学問としての数学史は，原典に対して，数学的にも勿論ではあるが，どちらかといえばテクスト論的に，自身の解釈とは中立的に考察する立場と技術が必要になることを認識した．
 \end{enumerate}
 
 \section{問題２}
@@ -43,6 +53,7 @@ title=]
     \item Newtonのプリンキピアは1687年に刊行された．このとき，その表現の形式はEuclidに倣った幾何学を用いてなされていた．
     その後の18世紀では，Euler, Bernoulli, Leibniz, Laplaceらにより，微積分学・変分学が両輪となって相互作用を持ちながら大きく発展した．
     その過程で，Newtonの運動方程式を２階の常微分方程式として得て，幾何学の言葉から代数・解析学の言葉に翻訳したのがEulerであった(1747,\cite{Euler1747})．
+    Eulerは微積分学を「無限小解析」，代数学を「有限解析」と呼んでおり，2つは地続きのものと捉えていた．この立場から，Newton力学を超克する立場を「解析力学」と呼ぶことは不自然ではない．
     \item Eulerが才能を見出した数学者に，Lagrangeがいる．まず，2人は，変分問題の解曲線が満たすべき方程式を導き，現在ではEuler-Lagrange方程式と呼ばれている．
     そして，
     \item ここで，幾何光学にも注目しており，Lagrangeの力学理論に新たな光を入れたのがHamiltonであった．
@@ -66,7 +77,7 @@ title=]
     正準方程式の解法理論として実用的なものになる．
     \item 一方で，Jacobiの結果はあくまで「偏微分方程式に帰着して解けるタイプの微分方程式を見つけた」という形のものであり，これを現代理解されている形に提示しなおしたのはPoincareであった．
     中でも特に，正準変換の概念を通じてJacobiの理論を見直し，Jacobiの主定理とは，正準変換が，正準形の微分方程式を定数関数へ写す変換であるための十分条件を与えているものである，という観点に到達した．
-    Poincareは最終的に，定理の形にまとめれば，次の結果を得ている(1905,Poincare1905)：
+    Poincareは最終的に，現代的な表現を用いた定理の形にまとめれば，次の結果を本質的には得ている(1905,Poincare1905)：
     \begin{theorem}\mbox{}
         \begin{enumerate}
             \item 変換$(q_1,\cdots,q_n,p_1,\cdots,p_n)\mapsto(q_1',\cdots,q'_n,p'_1,\cdots,p'_n)$が，ある関数$S$について$dS=\sum q_i'dp_i'-\sum q_idp_i$を満たすならば，正準変換である．
@@ -76,31 +87,46 @@ title=]
         \end{enumerate}
     \end{theorem}
     \item PoincareはJacobiの理論を，変換の観点から捉え直した．正準変換も，他の多くの数学的構造を保つ変換のように，群をなす．
-    そこで特に，Lie代数の知見が応用できることをWhittakerが発表する．
+    そこで特に，Lie代数の知見が応用できることをWhittakerが『解析力学』にて触れる．
     というのも，正準変換を，純粋に群論的な視点から，相空間の連続変換のなすLie代数の中で，Poissonの基本括弧式の関係を満たすもの，と特徴付けられる，という見方を提示した．
-    そこで，一時期は正準変換は「接触変換」とも呼ばれていた．
-    \item 
+    そこで，一時期は正準変換は「接触変換(contact transformation)」とも呼ばれていた．
+
+    この知見は一見脈絡のないもののように見えるが，LieとKleinが着々と準備を進めていた数学理論であった．
+    Lieはそもそも微分方程式の古典的に知られていた解法はすべて変換の連続な族に関して不変であるという事実に注目し，
+    当時発展を極めていた不変式論の成果を幾何・解析学に流入させた．
+    なお，この方面のLieの論文を出版したのはKleinである\cite{Bourbaki}．
+    \item 周期運動に関してHamilton-Jacobiの方法を適用した際に出てくる，作用変数と，それによるHamiltonの特性関数の偏微分として得られる角変数という2つの正準変数は，Hamilton-Jacobi方程式の完全解を得ずにして，周期運動の振動数を得るための強力な手段として知られていた．
+    特に，天体力学におけるKepler問題に対して，作用-角変数は有用であった．
+    ことさら，Bohr (1913)の原子の量子論が出現してからは，量子条件は作用変数を用いて自然に記述されることが理解されたため，その後すぐに作用-角変数へ強い関心が持たれた．
+    特に前期量子論は，古典力学における対応する問題を作用-角変数を用いて解き，作用変数$J$の値をPlanck定数$h$の整数倍に離散化することで，運動が量子化される，という方向で発展した\cite{Goldstein},\cite{Born25}．
+    こうして，原子のモデルの古典力学における類比物として，天体力学，特にKepler問題などの設定は強い関心を持たれたのである．
+    \item これらの歴史を経て，変分原理を基調として，幾何光学と力学を最初に統一的に扱ったのはHilbertの1922から1923年にかけての講義であった．
+    すなわち，今日におけるHamilton-Jacobiの理論にまで整備が進んだ大事な要因の一つに，前期量子論からの要請と，天体力学と原子模型との偶然の設定の類似がある．
+    特に，Hamilton自身が，変分原理を中心に据えた，幾何光学と力学の統一的視点を提案したわけでは全くなかった．
+    \item その後，Hamilton-Jacobiの理論は突然関心を失った．その理由はBohrの量子論の限界がすぐに知れたからである．特に，水素原子よりも少しでも複雑になり，問題が2体問題ではなくなると，古典的には問題が解けなくなるため，同様の天体力学との類比は実行困難となる．
+    これは波動力学と行列力学との登場によって打開され，これらはHamilton-Jacobiの理論の直接の延長線上にあるわけではない．
+    \item しかし，古典力学の標準的な教科書の一つ\cite{Goldstein}では，天体力学のみならず，電磁気学やプラズマ物理学などにおいて，作用-角変数は実り多い応用を生み出し続けていることが指摘されている．
+    またさらに，Hamilton-Jacobiの理論と幾何光学の関係の中に，波動力学への芽生えが含まれていることを指摘している．
+    幾何光学におけるアイコナール$L$に対する方程式$(\nabla L)^2=n^2$は，力学における特性関数$W$に対するHamilton-Jacobiの方程式と酷似しており，これはHamilton-Jacobiの方程式が，古典力学が，ある波の運動の幾何光学的な極限の場合に対応していることを示唆する．
+    こうして，光などの量子論的対象は，粒子でありながら波動でもある，という現代でも人々を驚かせる発想への架け橋となったことは間違いないだろう．
+    古典極限としてHamilton-Jacobiの理論をSchrodinger方程式から回復することもできる．
 \end{enumerate}
 
 \begin{thebibliography}{99}
     \bibitem{Goldstein}
-    Goldstein『古典力学(下)』
+    Goldstein, H. (瀬川富士，矢野忠，江沢康生訳) (2005). 『新版 古典力学(下)』．吉岡書店．
+    \bibitem{オイラーの生涯}
+    Fellman, E. A. (山本敦之訳). (2002). 『オイラーの生涯』 シュプリンガー・フェアラーク東京．
+    \bibitem{Bourbaki}
+    Bourbaki, N. (村田全，清水達雄，杉浦光夫訳). (2006). 『数学史(下)』 ちくま学芸文庫．
     \bibitem{Euler1747}
     Euler, L. (1747). Reserches sur le mouvement des corps céleste général. Omera Omnia, Ser.II, Vol.25.
-    \bibitem{Lagrange1788}
-    (1788) Méchanique analitique . Paris.
-    \bibitem{Lagrange1811}
-    Mécanique analytique. 2nd ed., Volume 1.(1811) Vol.2 (1813) Paris.
     \bibitem{Hamilton34}
     Hamilton, W. R. (1834). On a General Method in Dynamics; by which the Study of the Motions of all
     free Systems of attracting or repelling Points is reduced to the Search and Differentiation
     of one central Relation, or characteristic Function.
     \bibitem{Hamilton35}
     Hamilton, W. R. (1835). Second Essay on a General Method in Dynamics.
-    \bibitem{Jacobi36}
-    Jacobi, C. G. J. (1836).
-    “Sur le Mouvement d’un Point et sur un Cas particulier du Probl`em des trois Corps,” Lettre adress´ee
-`a l’Acad´emie des Sciences de Paris, Comptes Rendus, t.3, pp.59-61 = Werke 4, pp.37-38.
     \bibitem{Jacobi37B}
     Jacobi, C. G. J. (1837). Uber die Reduction der Integration der partiellen Differentialgleichungen erster Ordnung zwischenirgend einer Zahl Variabeln auf die Integration eines einzigen Systems gewohnlicher Differentialgleichungen \textit{Journal fur die Reine und Angewandte Mathematik}. 17::97-162.
     \bibitem{Jacobi37C}
@@ -110,9 +136,9 @@ title=]
     \bibitem{Hilbert37}
     Courant, R., and Hilbert, D. (1937). Methoden der Mathematischen Physik. Berlin, Verlag von Julius Springer.
     \bibitem{Poincare1892}
-    『天体力学の新しい方法』
+    Poincare, H. (1892). 『天体力学の新しい方法』
     \bibitem{Poincare1905}
-    『天体力学講義』
+    Poincare, H. (1915). 『天体力学講義』
 \end{thebibliography}
 
 \end{document}

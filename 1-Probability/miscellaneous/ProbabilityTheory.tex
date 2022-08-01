@@ -218,7 +218,7 @@ title=エントロピーとは確率不変量である]
 \begin{history}
     KhinchinがShannonのエントロピーが保測写像$T$や一般の$\sigma$-代数にも，ネットの極限のことばで定義出来ることを発見した．
     力学系の同型類の研究において，Kolmogorovはエントロピーが不変量になることを発見した．
-    SinaiとOrnsteinはこれを応用してBernoulli力学系に対する同型問題を解決した．
+    SinaiとOrnsteinはこれを応用してBernoulli力学系に対する同型問題を解決した(Ornsteinの同型定理 1970)．
 \end{history}
 
 \section{確率不等式まとめ}\label{sec-event}
@@ -843,24 +843,10 @@ title=]
     \end{enumerate}
 \end{quotation}
 
-\section{確率測度の収束}
+\section{測度の表現定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=Banach空間論の発展を後押しした消息]
-    確率変数は，確率測度を押し出す．この構造を用いて確率変数の収束「法則収束」を定義するから，まずは測度の収束を論じる．
-
-    測度の弱収束の理論は，A. D. AlexandorffとProhorovによる．
-    Cramer-Woldのように，線型汎関数が定める1次元周辺分布が確率測度を決定する消息がある．
-    そこで，測度の弱収束は，その上の有界線型汎関数を通じて定義することは自然である．
-
-    凸解析と関数解析が肝要となる．Alexandroff自身も，凸集合の幾何の研究が，自身の抽象測度論の研究の源泉になったと言っている．
-    経験過程は極点の凸結合であると捉えられる．極点の凸結合の極限で真の分布を探そうとする営みが経験過程論であるか！？
-\end{tcolorbox}
-
-\subsection{測度と積分の双対性}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=測度の双対空間と前双対空間]
+    title=測度の双対空間と前双対空間]
     測度の空間の位相は，双対空間から入れるから，測度の空間の双対空間とpredualとを考察しておく必要がある．
 
     この消息ははじめRadon 1913\footnote{Radon, J. Theorie und Anwendungen der absolut additiven Mengenfunktionen. Sitz. Akad.
@@ -869,48 +855,128 @@ title=測度の双対空間と前双対空間]
     Banachが「弱収束」と「$*$-弱収束」を一般のノルム空間上に定義した1929年よりも前の用語である．
 \end{tcolorbox}
 
-\begin{notation}
-    $X$をHausdorff空間，$X$のBorel集合体を$\A$，Borel $\sigma$-集合体を$\B$で表し，
-    $\A$上の有限加法的な正則Borel符号付測度の空間を$M_f(X)$，$\B$上の$\sigma$-加法的な正則Borel符号付測度の空間を$M_\sigma(X)$で表す．
-    これらに全変動ノルムを入れると，有限な加法的集合関数は有界変動だから，そのままノルム空間となる．
-    明らかに，$M_f(X)\subset C_b(X)^*$である．
-\end{notation}
-
-\begin{definition}[Radon measure, Radon charge]\mbox{}
-    \begin{enumerate}
-        \item $(X,\B)$上のBorel測度$\mu:\B\to[0,\infty]$が\textbf{Radon測度}であるとは，次の2条件を満たすことをいう：
-        \begin{enumerate}[(a)]
-            \item locally finite：$\forall_{x\in X}\;\exists_{x\in C\subset X}\;\mu(C)<\infty$．
-            \item inner regularity / tightness：$\forall_{B\osub X}\;\mu(B)=\sup_{K\compsub B}\mu(B\K)$．
-        \end{enumerate}
-        実は，Radon測度は測度確定な可測集合$B\in\M^1$について，外正則でもある．
-        \item $(X,\B)$上の\textbf{Radon電荷}とは，複素測度$\mu:\B\to\C$であって，全変動測度$\abs{\mu}:\B\to[0,\infty)$がRadon測度であるものをいう．
-        ただし，複素測度の全変動とは，$\abs{\mu}(E)=\sup\sum_{i=1}^\infty\abs{\mu(E_i)}$として定まる写像をいう．
-        実は複素測度は必ず有界変動を持ち，全変動$\abs{\mu}(X)$をノルムとしてBanach空間をなす．これを$\RM(X)$で表す．
-    \end{enumerate}
-\end{definition}
-
-\begin{theorem}[Radon測度とRadon積分の等価性]
-    $X$が局所コンパクトでもあるとき，
-    $(X,\B)$上のBorel測度$\mu:\B\to[0,\infty]$について，次の2条件は同値：
-    \begin{enumerate}
-        \item $\mu$はRadon測度である．
-        \item $\mu$が定める写像$C_c(X;\R)\ni f\mapsto\int fd\mu$は正な線型汎関数である． 
-    \end{enumerate}
+\begin{theorem}[Borel測度の正則性についての結果]
+    局所コンパクトハウスドルフ空間$X$上のRadon測度は有限ならば外部正則である．
 \end{theorem}
 
-\begin{proposition}[Alexandrov (1940)：有限加法的集合関数の表現]\label{prop-representation-theorem-C_b}
-    $X$を任意の正規空間とする．任意の有界汎関数$\Lambda\in C_b(X)^*$に対して，ただ一つの$\mu\in M_f(X)$が存在して，$\forall_{f\in C_b(X)}\;\Lambda(f)=\int_Xfd\mu$を満たし，$\norm{\Lambda}=\norm{\mu}$を満たす．
-    すなわち，Banach空間として等長同型である$C_b(X)^*\simeq_\Ban M_f(X)$．
-\end{proposition}
+\subsection{Radon積分とこれを定めるRadon測度}
 
-\begin{proposition}[Riesz-Markov-Kakutani representation theorem]\label{prop-representation-theorem-C_0}
-    局所コンパクトハウスドルフ空間$X$について，
-    \begin{enumerate}
-        \item 正な有界線型汎関数のなす正錐と，Radon測度のなす正錐$\o{M(X)_+}$とは，位相同型である：$(C_c(X,\C)_+)^*\simeq_\Top\o{\RM(X)_+}$．
-        \item 等長同型が存在する：$C_0(X,\C)^*\simeq_\Ban M(X)$．
-    \end{enumerate}
-\end{proposition}
+\begin{lemma}
+    各点完備な位相線型束上の線型汎関数は，正ならば連続である．
+\end{lemma}
+
+\begin{theorem}[実数上のRadon積分のLebesgue-Stieltjes積分としての表現]\label{thm-dual-of-Cab}
+    正な線型汎関数$\int\in (C_c(\R))^*_+$について，Lebesgue-Stieltjes積分が定める対応
+    \[F:\Brace{m\in\Map(\R,\R)\mid m\text{は単調増加}}\to(C_c(\R))^*_+\]
+    は全射で，$F$が定める同値類は$m$を下半連続に取ることで代表元とすることができ，これによって集合の同型が引き起こされる．
+\end{theorem}
+
+\begin{theorem}[Radon-Riesz\footnote{MalliavinとAlexandorffもRiesz and Radonと呼んでいる．}]
+    $X$を局所コンパクトハウスドルフ空間，
+    $(C_c(X))_+^*$を正な線型汎関数のなす正錐，
+    $\RM(X;[0,\infty])$をその上のRadon測度とする．次の対応は全単射である：
+    \[\xymatrix@R-2pc{
+        \RM(X)\ar[r]&(C_c(X))_+^*\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \mu\ar@{|->}[r]&\mu(A)=\int_*[A]
+    }\]
+    また，位相同型でもある．\footnote{\url{https://ncatlab.org/nlab/show/Riesz+representation+theorem}}
+\end{theorem}
+\begin{history}
+    Rieszの元来の定理は次のものであるが，これと，$[a,b]$上の有界変動関数とその上の正則なBorel測度との間には全単射が存在するために，この定理もRieszの名前で呼ばれる．
+\end{history}
+\begin{remark}
+    $\RM(X;[0,\infty])$の元は，「外部正則かつ開集合上内部正則かつ局所有限なBorel測度$\mu^*$」と一対一対応し，この関係を，「$\mu$は$\mu^*$に付随する本質的測度である」という．\footnote{url{https://ncatlab.org/nlab/show/Radon+measure}}
+\end{remark}
+
+\subsection{$C$の双対空間と符号付き測度}
+
+\begin{theorem}
+    次の対応$F$は全射である：
+    \[F:\Brace{m\in\Map(\R;\R)\mid m\text{は単調増加}}\to (C(R))_+\*.\]
+\end{theorem}
+
+\begin{theorem}[絶対連続関数の双対空間のLebesgue積分による特徴付け (Riesz 1909)\ref{thm-dual-of-C-on-interval}]
+    \[C([a,b])^*\simeq_\Set\Brace{\rho\in\BV([a,b])}\]
+\end{theorem}
+
+
+\subsection{$C_0$の双対空間}
+
+\begin{lemma}
+    $C_c(X)$は$C_0(X)$上一様ノルムについて稠密である．特に，$C_c(X)^*=C_0(X)^*$．
+\end{lemma}
+
+\begin{theorem}[Riesz-Markov (1938)]
+    $X$を局所コンパクトハウスドルフ空間，$\RM(X;\R)$をその上の符号付きRadon測度の全変動ノルムに関するBanach空間，$(C_0(X))^*$を$C_0(X)$上の有界線型汎関数のBanach空間とする．
+    このとき，次の対応は等長同型$(C_0(X))^*\simeq_\Ban\RM(X;\R)$を定める：
+    \[\xymatrix@R-2pc{
+        (C_0(X))^*\ar[r]&\RM(X;\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi f=\mu[f]\;(f\in C_0(X))
+    }\]
+\end{theorem}
+\begin{remark}
+    このときRadon測度は有限だから，実際は正則なBorel測度にもなっている．
+    なお，符号付きRadon測度の代わりに複素Radon測度としても成立する\ref{prop-Riesz-Markov-3}．
+\end{remark}
+
+\begin{corollary}[実数上のRadon測度は有界変動関数によって表現される]
+    次の対応は等長同型$(C_0(\R))^*\simeq_\Ban\BV(\R)$を定める：
+    \[\xymatrix@R-2pc{
+        C_0(R)\ar[r]&\BV(\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi(f)=\int_\R f(u)d\al (u).
+    }\]
+\end{corollary}
+
+\subsection{$C_b$の双対空間}
+
+
+\begin{definition}[Baire measure]
+    位相空間$X$上の
+    Baire $\sigma$-代数とは，$C(X)$を可測にする最小の$\sigma$-代数をいう．このとき，
+    $C_b(X)$を可測にする最小の$\sigma$-代数としても特徴付けられる．
+    Baire $\sigma$-代数上の測度をBaire測度という．
+\end{definition}
+
+\begin{theorem}[Riesz-Markov-Kakutani (1941)]
+    $X$をコンパクトハウスドルフ空間，$M_B(X)$をBaire測度が全変動ノルムについてなすBanach空間とする．
+    このとき，次の対応は等長同型$(C(X))^*\simeq_\Ban M(X)$を定める：
+    \[\xymatrix@R-2pc{
+        (C(X))^*\ar[r]&M_B(X)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi f=\mu[f]\;(f\in C(X))
+    }\]
+\end{theorem}
+
+\begin{theorem}[Markov-Alexandorff (1940)]
+    $X$を$T_4$-位相空間，$M_f(X)$をその上の有限加法的な符号付きRadon測度が全変動ノルムについてなす空間とする．
+    次の対応は等長同型$(C_b(X))^*\simeq_\Ban M_f(X)$を定める：
+    \[\xymatrix@R-2pc{
+        (C_b(X))^*\ar[r]&M_f(X)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi(f)=\int_Xfd\mu
+    }\]
+\end{theorem}
+\begin{history}
+    初めて$C_B(\R)$上の線型汎関数の空間を考察したのはFichtenholz G.とKantorovitch, L. (1934)であった．
+    Alexandorff (1940)でchargeと呼んでいるものは，有限加法的な符号付き測度で，有限加法的な集合関数である．
+    これはMarkov (38)の仕事の拡張だという．
+    この論文ではRiesz-Radonの拡張が試みられ，そこでchargeの語を生み出している．\footnote{to call it measure seemed to be inconvenient, therefore, lead by a natural physical analogy, I call it a charge.}
+    そしてまさか$T_4$-空間を表す正規性は，このRiesz-Radonの研究から出てきたとは．
+\end{history}
+
+\subsection{$l^\infty$の双対空間}
+
+\begin{theorem}[Hildebrandt, T. H. (1934)]
+    次の対応は等長同型$(l^\infty(\R))^*\simeq_\Ban M_f(\R)$を定める．
+    \[\xymatrix@R-2pc{
+        (l^\infty(\R))^*\ar[r]&M_f(\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi(f)=\int_\R fd\mu
+    }\]
+\end{theorem}
 
 \subsection{測度の収束の定義4種}
 
@@ -921,7 +987,7 @@ title=測度の双対空間と前双対空間]
     これらはまとめて\textbf{$w^*$-位相}または\textbf{弱位相}と呼ばれるが，
     唯一の違いは$P(X)\subset M(X)$自体のコンパクト性である．
     一般に$P(X)$は$\sigma(P(X),C_c(X))$-コンパクトとは限らないため，収束先が$P(X)$に収まらない可能性だけが問題となり，これは一様緊密性の仮定をおくことで解決される(Prohorov)．
-    そこで収束としては「弱位相」と「漠収束」と呼び分けることとなる．
+    そこで収束としては「弱収束」と「漠収束」と呼び分けることとなる．
 
     $P(X)$に限らなければ，Alexandrovの結果より$M(X)=(C_0(X))^*\subsetneq M_f(X)=(C_b(X))^*$であるから，$M(X)$に$\sigma(M(X),C_b(X))$-位相を入れると$\sigma(M(X),C_c(X))$-位相より強くなるはずである．
 \end{tbox}
@@ -995,44 +1061,263 @@ title=測度の空間はBanach空間であるが，それ以上に具体的対�
     有界測度の列が緊密であるとき，３つの関数のクラス$C_c(X),C_0(X),C_b(X)$が定める収束概念は一致する．
 \end{remarks}
 
-\subsection{確率測度のノルム収束}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-    title=]
-    Radon電荷のBanach空間$M(\Om)$上でのノルム収束を，全変動収束という．
-    その双対空間は$C_0(\Om,\C)$であるが(Riesz-Markov)，この元に対する収束が弱収束である．
-    確率測度の空間$P(X)$はもちろんノルム閉ではないが，凸である．
-\end{tcolorbox}
-
-\begin{lemma}[確率測度の全変動距離の特徴付け]
-    $\mu,\nu\in P(\Om,\F,P)$について，
-    \[\norm{\mu-\nu}=2\sup_{A\in\F}\abs{\mu(A)-\nu(A)}.\]
-\end{lemma}
-
-\begin{corollary}[Scheffe]
-    $\{X_n\},X\ll\mu$とする．$p_n\to p\;\mu\dae$が成り立つならば，$X_n$は$X$に全変動ノルムについて収束する：$\norm{X_n-X}\to0$．すなわち，$\lim_{n\to\infty}F_n(x)=F(x)$が一様収束する．逆は成り立たない．
-\end{corollary}
-
-\subsection{弱収束・漠収束の定義と特徴付け}
+\section{有界測度の空間の弱位相}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    弱収束と漠収束は同じ位相に関する収束である(一般に$X$がHausdorffのときこれが成り立つ)．
-    しかし，前者に対応する$\sigma(M(X),C_b(X))$-位相で$P(X)$は点列コンパクトだが，後者に対応する$\sigma(M(X),C_c(X))$-位相で$P(X)$とは点列コンパクトとは限らず，収束先が確率測度になるとは限らない．
-    距離化可能である．
+    $P(X)$の弱位相＝$\sigma(M(X),C_b(X))$-位相の性質が重要になってくるので，ここにまとめることとする．
+    \begin{enumerate}
+        \item $X$が可分であることと，$P(X)$が可分で距離化可能であることは同値．
+        \item $X$が可分ならば，その稠密部分集合$Y\subset X$上の有限の台を持つ確率測度の全体$F(X)$が$P(X)$上稠密である．特に，Dirac測度の埋め込み$D\mono P(X)$の凸包は稠密である(Krein-Smulianの定理の系)．
+        \item $X$がコンパクトは距離空間であるとき，$P(X)$もコンパクトで距離付け可能．
+        \item $X$が完備可分ならば，$P(X)$も完備可分である．
+        \item $X$が完備可分な距離空間であるとき，$P(X)$の部分集合が相対コンパクトであることと一様に緊密であることとは同値(Prokhorov)．
+    \end{enumerate}
 \end{tcolorbox}
+
+\begin{notation}
+    $X$を距離空間とし，その上の
+    Borel確率測度のなす空間を$P(X)$と表す．
+    距離空間$X$上のDirac測度全体の集合を$\Delta\subset P(X)\subset C_b(X)^*$で表す．
+\end{notation}
+
+\begin{theorem}[Prokhorov metric]
+    $S$を完備可分距離空間とする．
+    $P(S)$の弱位相はProkhorov距離$\pi$によって完備可分に距離付け可能で，
+    弱相対点列コンパクト性は$\pi$についての弱コンパクト性で特徴付けられる．
+\end{theorem}
+
+\subsection{可分性と距離付け可能性}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Levy距離$d_L$は$P(\R)$上に弱位相を定め，$(P(\R),d_L)$は完備可分距離空間となる．
+\end{tcolorbox}
+
+\begin{lemma}
+    デルタ測度への対応$i:X\mono P(X)$は位相の埋め込みである．
+\end{lemma}
+
+\begin{lemma}
+    $\Delta:=\Im i$は$P(X)$内で点列コンパクトである．\footnote{一般に部分集合$A\subset X$の閉包$\o{A}$は点列閉包$B$を含むが，点列閉包と一致するのは一般に$X$が距離空間の場合のみ．}
+\end{lemma}
+
+\begin{lemma}
+    $X$を全有界な距離空間とする．$X$上の有界な一様連続関数の集合$U(X)\subset C_b(X)$は，一様ノルムの下で可分なBanach空間となる．
+\end{lemma}
+
+\begin{theorem}[確率測度の空間の弱位相の距離化可能性]\label{thm-metrizability-of-P(X)-in-weak-topology}
+    次の２条件は同値．
+    \begin{enumerate}
+        \item $X$は可分な距離空間である．
+        \item 弱位相を備えた$P(X)$は距離付け可能で可分である．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{距離の例}
+
+\begin{example}[Levy-Prokhorov距離]
+    $B_\ep(E):=\{x\in X\mid\rho(x,E)<\ep\}$と表す．
+    \[\pi(\mu,\nu):=\inf\Brace{\ep>0\mid\forall_{E\in\B(X)}\;\mu(E)\le\nu(B_\ep(E))+\ep\land\nu(E)\le\mu(B_\ep(E))+\ep}\]
+    は距離を定め，これが定める位相は弱位相に一致する．
+    対応する分布関数の空間の距離をLevyの距離といい，これが先に提出され，Prokhorovがこの形に一般化した．
+\end{example}
+
+\begin{theorem}[弱位相との関係]
+    $\{P_n\}\subset P(S)$について，(1)$\Rightarrow$(2)が成り立つ．
+    $S$が可分であるとき，(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item $\pi(P_n)\to\pi(P)$．
+        \item $P_n\Rightarrow P$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $S$を可分とする．$\P\subset P(S)$について，次の2条件は同値．
+    \begin{enumerate}
+        \item $\P$は相対(点列)コンパクトである．
+        \item 距離$\pi$について相対コンパクトである．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}[1-Wasserstein distance / Kantorovich-Rubinstein distance / Monge-Kantorovich distance]
+    さらに$X$を完備とする(すべて併せてポーランド空間とする)．
+    このとき，次は$P(X)$の距離を与える：
+    \[W_1(\mu,\nu)=\sup\Brace{\int\varphi d\mu-\int\varphi d\nu\in\R\;\middle|\;\varphi\in\Lip(X;\R),L(\varphi)\le 1}.\]
+\end{example}
+
+\subsection{稠密部分集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+        確率測度自体が凸結合の一般化のようなものである．そこで，確率測度も凸結合とその極限について閉じているのは当然のことである．
+        経験過程は重要な意味を持つ．これを，極点の凸結合として幾何学的に説明できないか？
+        経験過程の有限性は実用性に通じるが，これは組み合わせ論的な本質も備えているのではないか？
+    
+        $X$がコンパクトのとき，その上の弱位相と$w^*$-位相は一致する．
+    \end{tcolorbox}
+
+\begin{theorem}
+    $X$を可分距離空間，$E\subset X$は稠密とする．
+    $E$に含まれる可測集合上のみに台をもつ確率測度のなす部分空間
+    \[\Brace{\mu\in P(X)\mid\supp\mu\subset P(E)}\]
+    は$P(X)$内で稠密である．
+\end{theorem}
+
+\begin{theorem}[可算稠密部分集合の構成]
+    $X$を可分距離空間，$D$をその可算な稠密部分集合とする．
+    このとき，$D$の有限部分集合を台とするような確率測度のなす集合$F(D)$は，$P(X)$において稠密である．
+\end{theorem}
+
+\begin{corollary}
+    $D$が可分である時，Dirac測度としての標準的な埋め込み$D\mono\M(D)$の像の凸包は稠密である．
+\end{corollary}
+
+
+\begin{lemma}[ポーランド空間上の確率測度はRadon測度]
+    $S$を可分な距離空間とする．$(S,\B(S))$上のBorel確率測度$P$は，
+    \begin{enumerate}
+        \item 正則である：
+        \[P(B)=\sup_{F\subset B;F:closed}P(F)=\inf_{B\subset G\osub S}P(G).\]
+        \item $S$が完備ならば，さらに外部正則である：
+        \[\forall_{\ep>0}\;\exists_{K\compsub S}\; P(K)>1-\ep.\]
+    \end{enumerate}
+\end{lemma}
+
+\begin{proposition}
+    コンパクトハウスドルフ空間$X$上のBanach代数$C(X)=C_b(X)=C_0(X)=C_c(X)$を考える，但しノルムは一様ノルムとした．
+    $C(X)$の双対空間を$M(X)$，$P(X):=\Brace{\mu\in M(X)\mid\norm{\mu}\le 1,\mu(1)=1}$を確率測度のなす部分空間とする．
+    \begin{enumerate}
+        \item $P(X)$は$M(X)$の凸集合である．
+        \item $P(X)$は$w^*$-コンパクトである．
+        \item $P(X)$の極点はDirac測度$\delta_x\;(x\in X),\forall_{f\in C(X)}\;\delta_x(f)=f(x)$である．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\mu_1,\mu_2\in P(X)$と$\lambda\in(0,1)$を任意に取ると，$\lambda\mu_1+(1-\lambda)\mu_2\in P(X)$がわかる．
+        \item 線型汎函数$\ev_1:M(X)\to\bF;\mu\mapsto\mu(1)$は$w^*$-位相について連続である
+        $M(X)=(C(X))^*$の閉単位球$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}である．
+    \end{enumerate}
+\end{proof}
+\begin{remarks}
+    コンパクトハウスドルフ空間$X$上の確率測度は，$C(X)$上において，有限な台を持つ測度（＝Radon chargeが定める積分の空間）によって各点近似（各点収束の位相で近似）が出来る．
+\end{remarks}
+
+\subsection{相対コンパクト部分集合}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $\sigma(M(X),C_b(X))$-位相と$\sigma(M(X),C_c(X))$-位相との代表的な違いは，コンパクト集合の違いである．
+    ここで緊密性の概念が出現する．\ref{remarks-tightness}も参照．例えばmassが無限遠点に逃げていく列などが省かれる．
+\end{tcolorbox}
+
+
+
+\begin{theorem}[コンパクト性 (Bogoliubov and Krylov)]
+    距離空間$X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$はコンパクトである．
+        \item $P(X)$は弱コンパクトで距離化可能．
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}[totally bounded / weakly compact]
+    確率測度の族$\Gamma\subset P(X)$が\textbf{相対コンパクト}であるとは，任意の列について，ある部分列が存在してこれが弱収束することをいう．
+\end{definition}
+\begin{remarks}
+    可分距離空間$X$上の確率測度の空間$P(X)$の弱位相は距離化可能で可分である\ref{thm-metrizability-of-P(X)-in-weak-topology}．
+    距離空間について，可分性と全有界性とは同値である．
+    また，距離空間について，コンパクト性と点列コンパクト性と「完備かつ全有界」であることとは同値だから，
+    $S$が完備可分距離空間である場合，相対コンパクト性を全有界ともいう（完備距離空間において，コンパクト集合と閉集合とは同値）．
+\end{remarks}
+
+\begin{definition}[(uniformly) tight / tendue]
+    確率測度の族$\Gamma\subset P(X)$が\textbf{（一様に）緊密}\footnote{測度が内部正則であることも「緊密」というので，それから見れば「一様に緊密」と言いたくなる．}であるとは，
+    $\forall_{\ep>0}\;\exists_{K\overset{\text{cpt}}{\subset} X}\;\forall_{\mu\in\Gamma}\;\mu(K)\ge 1-\ep$．
+\end{definition}
+
+\begin{theorem}[Prokhorov：緊密性とは，相対コンパクト性の特徴付けである]\label{thm-Prokhorov}
+    $X$を距離空間とする．確率測度の族$\Gamma\subset P(X)$について，(1)$\Rightarrow$(2)が成り立つ．
+    $X$が完備可分であるとき，(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item  $\Gamma$は（一様に）緊密である．
+        \item $\Gamma$は弱(狭)位相について相対コンパクトである．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[漠収束の特徴付け]
+    完備可分距離空間$X$上の確率測度列$(\mu_n)$について，次の２条件は同値．\footnote{\url{https://math.stackexchange.com/questions/313986/are-vague-convergence-and-weak-convergence-of-measures-both-weak-convergence}}
+    \begin{enumerate}
+        \item $\mu$に弱収束する．
+        \item $\mu$に漠収束し，かつ$(\mu_n)$は一様に緊密である．
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    (1)$\Rightarrow$(2)は明らかだから，(2)$\Rightarrow$(1)を示す．
+    漠収束の特徴付け\ref{prop-characterization-of-value-convergence}より，
+    極限測度$\mu$が$P(X)$に属することを示せば十分である．
+    略．
+\end{proof}
+
+\subsection{完備性}
+
+\begin{theorem}[完備性]
+    可分な距離空間$X$について，次の２条件は同値．
+    \begin{enumerate}
+        \item $X$は完備である．
+        \item $P(X)$は$\pi$-完備である．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $D$がポーランドである時，$\M(D)$もポーランドである．
+\end{corollary}
+
+\section{距離空間上の有限測度の弱収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=Banach空間論・位相空間論の発展を後押しした研究対象]
+    測度の弱収束の理論は，A. D. AlexandorffとProhorovによる．
+    Cramer-Woldのように，線型汎関数が定める1次元周辺分布が確率測度を決定する消息がある．
+    そこで，測度の弱収束は，その上の有界線型汎関数を通じて定義することは自然である．
+
+    凸解析と関数解析が肝要となる．Alexandroff自身も，凸集合の幾何の研究が，自身の抽象測度論の研究の源泉になったと言っている．
+\end{tcolorbox}
+
+\subsection{弱収束の定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $S$上の開集合上の関数として，または積分として，双対的な2つの見方のどちらでも良いが，関数解析的にとらえて位相の議論に持ち込むのが良いだろう．
+\end{tcolorbox}
+
+\begin{theorem}
+    距離空間$(S,\B(S))$上の任意の確率測度は位相的に正則，特にRadonである：
+    \[\forall_{B\in\B(S)}\quad P(B)=\sup_{F\subset B;F:closed}P(F)=\inf_{B\subset G\osub S}P(G).\]
+    特に，距離空間上の確率測度は，開または閉集合上で値が決まれば，一意に定まる．
+\end{theorem}
+\begin{remarks}
+    また，確率測度$P$が$S$上緊密であることは，任意のBorel集合$B\in\B(S)$が$P$に関して緊密(=内部正則)であれば良い．
+\end{remarks}
 
 \begin{definition}[weak convergence of measure, vague convergence]
     一般の局所コンパクトハウスドルフ空間$X$について，Rieszの表現定理より$P(X)\subset M(X)\simeq C_0(X)^*$と同一視出来る．
-    このBorel可測空間$(X,\B(X))$上の確率測度の空間$P(X)\subset C_0(X)^*$の列$(\mu_n)$について，
-    \begin{enumerate}
-        \item $\forall_{f\in C_b(X)}\;\int_Xfd\mu_n\to\int_Xfd\mu$，平均で表すと$\forall_{f\in C_b(X)}\;E[f(X_n)]\to E[f(X)]$を，\textbf{測度の弱収束}と呼ぶ．これを$\mu_n\Rightarrow\mu$と表す．
-        \item さらに条件を弱めて$\forall_{f\in C_0(X)}\;\int_Xfd\mu_n\to\int_Xfd\mu$は$w^*$-位相に対応し，\textbf{漠収束}と呼ばれる．\footnote{これを弱位相と呼ぶこともあるが，$C_0(X)$はほとんど回帰的である例がないので，不適切である．}これは上述の狭位相と広位相が退化して一つになったものである．
-    \end{enumerate}
+    このとき考え得る$\sigma(M(X),C_b(X))$-位相に関する収束を\textbf{弱収束}，$\sigma(M(X),C_0(X))$-位相に関する収束を\textbf{漠収束}という．
 \end{definition}
 \begin{remarks}
     $C_b(X)$を試験関数とした場合は，確率変数が無限遠へ飛ぶ場合のすべてを検知するが，$C_c(X)\subset C_0(X)$を用いた場合は見逃す場合がある．
 \end{remarks}
+
+\begin{lemma}
+    任意の$P,Q\in P(S)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $\forall_{f\in UC_b(S)}\;Pf=Qf$．
+        \item $P=Q$．
+    \end{enumerate}
+\end{lemma}
+
+\subsection{特徴付け}
 
 \begin{theorem}[Portmanteau定理：弱収束の特徴付け (Alexandroff)\footnote{I don' tknow who invented such a nonsensical name for Alexandroﬀ’s theorem.\cite{Bogachev}}]\label{thm-Portmanteau}
     $\{\mu_n\}\subset P(\R),\mu\in P(\R)$について，次の５条件は同値．これは一般の距離空間$X$について成り立つ．
@@ -1052,16 +1337,37 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{theorem}[その他の集合族による特徴付け]
-    距離空間上の測度空間$(X,\B(X))$について，$\A\subset\B(X)$を乗法族とする：$X\in\A,\forall_{A,B\in\A}\;A\cap B\in\A$．
-    任意の開集合が$\A$の元の可算和で表せるとき，$\forall_{A\in\A}\;P_n(A)\to P(A)$は$P_n\Rightarrow P$を含意する．
+\begin{theorem}[一致の定理が成り立つ部分Borel集合族上での一致]\mbox{}
+    $\A_P\subset\B(S)$が次の2条件をみたすとき，$\forall_{A\in\A}\;P_n(A)\to P(A)$は$P_n\Rightarrow P$を含意する．
+    \begin{enumerate}
+        \item $A_P$は乗法族である．
+        \item 任意の開集合が$\A$の元の可算和で表せる．
+    \end{enumerate}
+    また，条件(2)は，次のいずれと入れ替えても成立．
+    \begin{enumerate}[(a)]
+        \item $S$が可分で$\forall_{x\in S}\;\forall_{\ep>0}\;\exists_{A\in\A_P}\;x\in A^\circ\subset A\subset B_\ep(x)$．
+    \end{enumerate}
 \end{theorem}
 
 \begin{theorem}[３つ目の特徴付け]
-    列$(P_n)$が$P$に弱収束するための必要十分条件は，これが相対コンパクトであること，すなわち任意の部分列$(P_{n_i})$が，$P$に弱収束する部分列を持つことである．
+    列$\{P_n\}\subset P(S)$と$P\in P(S)$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $P_n\Rightarrow P$．
+        \item $\{P_n\}\subset P(S)$は相対コンパクト集合．
+    \end{enumerate}
 \end{theorem}
 
-\subsection{弱収束を定める位相}
+\subsection{緊密性}
+
+\begin{theorem}
+    $S$が次を満たすならば，任意の$S$上の確率測度は緊密である．
+    \begin{enumerate}
+        \item $S$は完備で可分．
+        \item $S$は$\sigma$-コンパクト(例えば可分な局所コンパクト空間)．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{Fourier変換の連続性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1099,7 +1405,56 @@ title=]
     このとき，ある$\mu\in P(\R^n)$が存在して，$\varphi=\varphi_\mu$が成り立つ．
 \end{theorem}
 
+\subsection{連続写像定理}
+
+\begin{notation}
+    距離空間$(S_i,d_i)\;(i=1,2)$と，確率測度$\nu,\nu_n\in P(S_1)$と可測写像$T:S_1\to S_2$について，
+\end{notation}
+
+\begin{proposition}[連続写像は弱連続作用素を引き起こす]
+    $\nu_n\Rightarrow\nu$かつ$T:S_1\to S_2$が連続ならば，
+    $T_*\nu_n\Rightarrow T_*\nu^T$．
+\end{proposition}
+
+\begin{theorem}[連続写像定理]
+    $h:S_1\to S_2$を可測写像，$D_h\subset S$を不連続点とすると，$D_h\in\B(S)$．
+    このとき，$P_n\Rightarrow P$かつ$P[D_h]=0$ならば，$h_*P_n\Rightarrow h_*P$．
+\end{theorem}
+
+\begin{lemma}[可測写像列]
+    可測写像の列$\{T_n\}\subset\Meas(S_1,S_2)$について，次の条件は同値．
+    \begin{description}
+        \item[(C)] $x$に収束する$S_1$の任意の点列$(x_n)$について，$T_n(x_n)\to T(x)$が成り立つ．
+        \item[(C')] $\forall_{\ep>0}\;\exists_{(n_0,\delta)\in\N\times\R_+}\;\forall_{(n,x')\in\N\times S_1}\;n\ge n_0\land d_1(x,x')<\delta\Rightarrow d_2(T(x),T_n(x'))<\ep$．
+    \end{description}
+\end{lemma}
+
+\begin{theorem}[可測写像列への一般化]
+    $\nu_n\to\nu$とする．あるfull set$C\in\B(S_1),\nu(C)=1$が存在して，この上で$x\in C$は条件(C)を満たすとする．このとき，$\nu_n^{T_n}\to\nu^T$．
+\end{theorem}
+
+\begin{corollary}
+    可測写像$T:S_1\to S_2$は，$\nu(C)=1$なる可測集合$C\in\B(S_1)$上各点連続であるとする．このとき，$\nu_n\to\nu$ならば$\nu^T\to\nu^T$．
+\end{corollary}
+
+\subsection{積空間上の弱収束}
+
+\begin{theorem}
+    $T:=S_1\times S_2$が可分ならば，次の2条件は同値：
+    \begin{enumerate}
+        \item $P^1_n\times P^2_n\Rightarrow P^1\times P^2$．
+        \item $P^1_n\Rightarrow P^1$かつ$P^2_n\Rightarrow P^2$．
+    \end{enumerate}
+\end{theorem}
+
 \subsection{漠収束の特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    弱収束と漠収束は同じ位相に関する収束である(一般に$X$がHausdorffのときこれが成り立つ)．
+    しかし，前者に対応する$\sigma(M(X),C_b(X))$-位相で$P(X)$は点列コンパクトだが，後者に対応する$\sigma(M(X),C_c(X))$-位相で$P(X)$とは点列コンパクトとは限らず，収束先が確率測度になるとは限らない．
+    距離化可能である．
+\end{tcolorbox}
 
 \begin{proposition}[漠収束の特徴付け]\label{prop-characterization-of-value-convergence}
     $\{\mu_n\}\subset P(\R),\mu\in M(\R)$について，次の２条件は同値．
@@ -1125,38 +1480,39 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\subsection{連続写像定理}
+\section{Donskerの定理}
 
-\begin{notation}
-    距離空間$(S_i,d_i)\;(i=1,2)$と，確率測度$\nu,\nu_n\in P(S_1)$と可測写像$T:S_1\to S_2$について，
-\end{notation}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $C$上の弱収束の理論によって，中心極限定理を精緻化することを考える．
+\end{tcolorbox}
 
-\begin{proposition}
-    $\nu_n\to\nu$かつ$T$が連続ならば，$\nu_n^T\to\nu^T$．
-\end{proposition}
+\section{有限測度のノルム収束}
 
-\begin{lemma}
-    可測写像の列$\{T_n\}\subset\Meas(S_1,S_2)$について，次の条件は同値．
-    \begin{description}
-        \item[(C)] $x$に収束する$S_1$の任意の点列$(x_n)$について，$T_n(x_n)\to T(x)$が成り立つ．
-        \item[(C')] $\forall_{\ep>0}\;\exists_{(n_0,\delta)\in\N\times\R_+}\;\forall_{(n,x')\in\N\times S_1}\;n\ge n_0\land d_1(x,x')<\delta\Rightarrow d_2(T(x),T_n(x'))<\ep$．
-    \end{description}
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    Radon電荷のBanach空間$M(\Om)$上でのノルム収束を，全変動収束という．
+    その双対空間は$C_0(\Om,\C)$であるが(Riesz-Markov)，この元に対する収束が弱収束である．
+    確率測度の空間$P(X)$はもちろんノルム閉ではないが，凸である．
+\end{tcolorbox}
+
+\begin{lemma}[確率測度の全変動距離の特徴付け]
+    $\mu,\nu\in P(\Om,\F,P)$について，
+    \[\norm{\mu-\nu}=2\sup_{A\in\F}\abs{\mu(A)-\nu(A)}.\]
 \end{lemma}
 
-\begin{theorem}
-    $\nu_n\to\nu$とする．あるfull set$C\in\B(S_1),\nu(C)=1$が存在して，この上で$x\in C$は条件(C)を満たすとする．このとき，$\nu_n^{T_n}\to\nu^T$．
-\end{theorem}
-
-\begin{corollary}
-    可測写像$T:S_1\to S_2$は，$\nu(C)=1$なる可測集合$C\in\B(S_1)$上各点連続であるとする．このとき，$\nu_n\to\nu$ならば$\nu^T\to\nu^T$．
+\begin{corollary}[Scheffe]
+    $\{X_n\},X\ll\mu$とする．$p_n\to p\;\mu\dae$が成り立つならば，$X_n$は$X$に全変動ノルムについて収束する：$\norm{X_n-X}\to0$．すなわち，$\lim_{n\to\infty}F_n(x)=F(x)$が一様収束する．逆は成り立たない．
 \end{corollary}
 
 \section{分布関数の収束}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=Euclid空間の確率測度の弱収束理論のもう一つの展開方法]
     Portmanteau定理\ref{thm-Portmanteau}の特徴づけに，分布関数の言葉がある．
     むしろ，こちらを確率分布の弱収束として定義する事もありえる．
+    これは，$\R$上のBorel集合は$(-\infty,x]$が生成しており，$x$が$F$の連続点であることと$P[\{x\}]=0$とは同値．
+    これは分布と絶対連続関数との対応\ref{thm-dual-of-Cab}の一般化ともみなせる．
 \end{tcolorbox}
 
 \subsection{弱収束の定義}
@@ -1200,198 +1556,11 @@ title=]
     \end{description}
 \end{proof}
 
-\section{確率測度の空間}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    $P(X)$の幾何学的性質が基礎的になってくるので，ここにまとめることとする．
-    $X=\R$のとき，次が成り立つ．
-    \begin{enumerate}
-        \item $P(X)$上の弱位相＝$\sigma(M(X),C_b(X))$-位相は第２可算で距離化可能である．
-    \end{enumerate}
-\end{tcolorbox}
-
-\begin{notation}
-    $X$を距離空間とし，その上の
-    Borel確率測度のなす空間を$P(X)$と表す．
-    距離空間$X$上のDirac測度全体の集合を$\Delta\subset P(X)\subset C_b(X)^*$で表す．
-\end{notation}
-
-\subsection{可分性と距離付け可能性}
-
-\begin{lemma}
-    $X$は，弱位相における$\Delta$と位相同型である．
-\end{lemma}
-
-\begin{lemma}
-    $\Delta$は$P(X)$内で点列コンパクトである．\footnote{一般に部分集合$A\subset X$の閉包$\o{A}$は点列閉包$B$を含むが，点列閉包と一致するのは一般に$X$が距離空間の場合のみ．}
-\end{lemma}
-
-\begin{lemma}
-    $X$を全有界な距離空間とする．$X$上の有界な一様連続関数の集合$U(X)\subset C_b(X)$は，一様ノルムの下で可分なBanach空間となる．
-\end{lemma}
-
-\begin{theorem}[確率測度の空間の弱位相の距離化可能性]\label{thm-metrizability-of-P(X)-in-weak-topology}
-    次の２条件は同値．
-    \begin{enumerate}
-        \item $X$は可分な距離空間である．
-        \item 弱位相を備えた$P(X)$は距離付け可能で可分である．
-    \end{enumerate}
-\end{theorem}
-
-\subsection{距離の例}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Levy距離$d_L$は$P(\R)$上に弱位相を定め，$(P(\R),d_L)$は完備可分距離空間となる．
-\end{tcolorbox}
-
-\begin{example}[Levy-Prokhorov距離]
-    $B_\ep(E):=\{x\in X\mid\rho(x,E)<\ep\}$と表す．
-    \[\eta(\mu,\nu):=\inf\Brace{\ep>0\mid\forall_{E\in\B(X)}\;\mu(E)\le\nu(B_\ep(E))+\ep\land\nu(E)\le\mu(B_\ep(E))+\ep}\]
-    は距離を定め，これが定める位相は$*$-弱位相に一致する．
-    対応する分布関数の空間の距離をLevyの距離といい，これが先に提出され，Prokhorovがこの形に一般化した．
-\end{example}
-
-\begin{example}[1-Wasserstein distance / Kantorovich-Rubinstein distance / Monge-Kantorovich distance]
-    さらに$X$を完備とする(すべて併せてポーランド空間とする)．
-    このとき，次は$P(X)$の距離を与える：
-    \[W_1(\mu,\nu)=\sup\Brace{\int\varphi d\mu-\int\varphi d\nu\in\R\;\middle|\;\varphi\in\Lip(X;\R),L(\varphi)\le 1}.\]
-\end{example}
-
-\subsection{稠密部分集合の遺伝}
-
-\begin{theorem}
-    $X$を可分距離空間，$E\subset X$は稠密とする．
-    $E$に含まれる可測集合上のみに台をもつ確率測度のなす部分空間
-    \[\Brace{\mu\in P(X)\mid\supp\mu\subset P(E)}\]
-    は$P(X)$内で稠密である．
-\end{theorem}
-
-\subsection{コンパクト性}
-
-\begin{theorem}[可算稠密部分集合の構成]
-    $X$を可分距離空間，$D$をその可算な稠密部分集合とする．
-    このとき，$D$の有限部分集合を台とするような確率測度のなす集合$F(D)$は，$P(X)$において稠密である．
-\end{theorem}
-
-\begin{corollary}
-    $D$が可分である時，Dirac測度としての標準的な埋め込み$D\mono\M(D)$の像の凸包は稠密である．
-\end{corollary}
-
-\begin{theorem}[コンパクト性 (Bogoliubov and Krylov)]
-    距離空間$X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $X$はコンパクトである．
-        \item $P(X)$は弱コンパクトで距離化可能．
-    \end{enumerate}
-\end{theorem}
-
-\subsection{完備性}
-
-\begin{theorem}[完備性]
-    可分な距離空間$X$について，次の２条件は同値．
-    \begin{enumerate}
-        \item $X$は完備である．
-        \item $P(X)$は完備である．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    $D$がポーランドである時，$\M(D)$もポーランドである．
-\end{theorem}
-
-\subsection{相対コンパクト集合の特徴付け}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ここで緊密性の概念が出現する．\ref{remarks-tightness}も参照．例えばmassが無限遠点に逃げていく列などが省かれる．
-\end{tcolorbox}
-
-\begin{definition}[totally bounded / weakly compact]
-    確率測度の族$\Gamma\subset P(X)$が\textbf{相対コンパクト}であるとは，任意の列について，ある部分列が存在してこれが弱収束することをいう．
-\end{definition}
-\begin{remarks}
-    可分距離空間$X$上の確率測度の空間$P(X)$の弱位相は距離化可能で可分である\ref{thm-metrizability-of-P(X)-in-weak-topology}．
-    距離空間について，可分性と全有界性とは同値である．
-    また，距離空間について，コンパクト性と点列コンパクト性と「完備かつ全有界」であることとは同値だから，
-    $S$が完備可分距離空間である場合，相対コンパクト性を全有界ともいう（完備距離空間において，コンパクト集合と閉集合とは同値）．
-\end{remarks}
-
-\begin{definition}[(uniformly) tight / tendue]
-    確率測度の族$\Gamma\subset P(X)$が\textbf{（一様に）緊密}\footnote{測度が内部正則であることも「緊密」というので，それから見れば「一様に緊密」と言いたくなる．}であるとは，
-    $\forall_{\ep>0}\;\exists_{K\overset{\text{cpt}}{\subset} X}\;\forall_{\mu\in\Gamma}\;\mu(K)\ge 1-\ep$．
-\end{definition}
-
-\begin{theorem}[Prokhorov：緊密性とは，相対コンパクト性の特徴付けである]\label{thm-Prokhorov}
-    $X$を距離空間とする．確率測度の族$\Gamma\subset P(X)$について，(1)$\Rightarrow$(2)が成り立つ．
-    $X$が完備かつ可分であるとき，(2)$\Rightarrow$(1)も成り立つ．
-    \begin{enumerate}
-        \item  $\Gamma$は（一様に）緊密である．
-        \item $\Gamma$は弱(狭)位相について相対コンパクトである．
-    \end{enumerate}
-\end{theorem}
-
-\begin{corollary}[漠収束の特徴付け]
-    完備可分距離空間$X$上の確率測度列$(\mu_n)$について，次の２条件は同値．\footnote{\url{https://math.stackexchange.com/questions/313986/are-vague-convergence-and-weak-convergence-of-measures-both-weak-convergence}}
-    \begin{enumerate}
-        \item $\mu$に弱収束する．
-        \item $\mu$に漠収束し，かつ$(\mu_n)$は一様に緊密である．
-    \end{enumerate}
-\end{corollary}
-\begin{proof}
-    (1)$\Rightarrow$(2)は明らかだから，(2)$\Rightarrow$(1)を示す．
-    漠収束の特徴付け\ref{prop-characterization-of-value-convergence}より，
-    極限測度$\mu$が$P(X)$に属することを示せば十分である．
-    略．
-\end{proof}
-
-\subsection{コンパクト空間上の確率測度}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    確率測度自体が凸結合の一般化のようなものである．そこで，確率測度も凸結合とその極限について閉じているのは当然のことである．
-    経験過程は重要な意味を持つ．これを，極点の凸結合として幾何学的に説明できないか？
-    経験過程の有限性は実用性に通じるが，これは組み合わせ論的な本質も備えているのではないか？
-
-    $X$がコンパクトのとき，その上の弱位相と$w^*$-位相は一致する．
-\end{tcolorbox}
-
-\begin{lemma}[ポーランド空間上の確率測度はRadon測度]
-    $S$を可分な距離空間とする．$(S,\B(S))$上のBorel確率測度$P$は，
-    \begin{enumerate}
-        \item 正則である：
-        \[P(B)=\sup_{F\subset B;F:closed}P(F)=\inf_{B\subset G\osub S}P(G).\]
-        \item $S$が完備ならば，さらに外部正則である：
-        \[\forall_{\ep>0}\;\exists_{K\compsub S}\; P(K)>1-\ep.\]
-    \end{enumerate}
-\end{lemma}
-
-\begin{proposition}
-    コンパクトハウスドルフ空間$X$上のBanach代数$C(X)=C_b(X)=C_0(X)=C_c(X)$を考える，但しノルムは一様ノルムとした．
-    $C(X)$の双対空間を$M(X)$，$P(X):=\Brace{\mu\in M(X)\mid\norm{\mu}\le 1,\mu(1)=1}$を確率測度のなす部分空間とする．
-    \begin{enumerate}
-        \item $P(X)$は$M(X)$の凸集合である．
-        \item $P(X)$は$w^*$-コンパクトである．
-        \item $P(X)$の極点はDirac測度$\delta_x\;(x\in X),\forall_{f\in C(X)}\;\delta_x(f)=f(x)$である．
-    \end{enumerate}
-\end{proposition}
-\begin{proof}\mbox{}
-    \begin{enumerate}
-        \item $\mu_1,\mu_2\in P(X)$と$\lambda\in(0,1)$を任意に取ると，$\lambda\mu_1+(1-\lambda)\mu_2\in P(X)$がわかる．
-        \item 線型汎函数$\ev_1:M(X)\to\bF;\mu\mapsto\mu(1)$は$w^*$-位相について連続である
-        $M(X)=(C(X))^*$の閉単位球$B^*$は$w^*$-コンパクト\ref{thm-Alaoglu}である．
-    \end{enumerate}
-\end{proof}
-\begin{remarks}
-    コンパクトハウスドルフ空間$X$上の確率測度は，$C(X)$上において，有限な台を持つ測度（＝Radon chargeが定める積分の空間）によって各点近似（各点収束の位相で近似）が出来る．
-\end{remarks}
-
 \chapter{有限測度空間上の関数空間}
 
 \begin{quotation}
     弱収束の理論は関数解析の理論の系である．\cite{Yoshida}の120pから．
-    確率測度の弱収束とは，$\sigma(P(X),C_b(X))$-位相に関する収束をいう．
+    確率測度の弱収束とは，$\sigma(P(X),C_b(X))$-位相に関する収束をいった．
 \end{quotation}
 
 \section{原子}
@@ -1467,7 +1636,7 @@ title=]
     \end{enumerate}
 \end{lemma}
 
-\begin{proposition}[可積分性の特徴付け]
+\begin{proposition}[一様可積分性の特徴付け]
     $(X,A,\mu)$を有限測度空間とする．$\{f_n\}\subset\L(X)$について，次の2条件は同値．
     \begin{enumerate}
         \item $\{f_n\}$は一様可積分．
@@ -1480,42 +1649,19 @@ title=]
     さらに，測度$\mu$が非原子的ならば，(b)$\Rightarrow$(a)が成り立つ．
 \end{proposition}
 
-\begin{proposition}[可積分性の十分条件]
+\begin{proposition}[一様可積分性の十分条件]
     列$(f_n)$は
     \[\exists_{\ep>0}\quad\sup_{n\in\N}\int\abs{f_n}^{1+\ep}d\mu<\infty\]
     を満たすならば一様可積分である．
     すなわち，部分空間$L^p(X)\subset L^1(X)\;(p>1)$に入っていれば一様可積分である．
 \end{proposition}
 
-\subsection{概収束列の一様可積分性の特徴付け}
-
-\begin{theorem}[概収束列の一様可積分性の特徴付け]
-    $(X,\A,\mu)$を有限とし，$f_n\to f\;\as$とする．
-    (1)$\Rightarrow$(2)が成り立ち，$f,f_n$が非負のとき(2)$\Rightarrow$(1)も成り立つ．
-    \begin{enumerate}
-        \item $\{f_n\}$が一様可積分である．
-        \item $\{f_n\}\subset L^1(X)$かつ$f\in L^1(X)$で，
-        \[\lim_{n\to\infty}\int f_nd\mu=\int fd\mu\]
-        が成り立つ．
-    \end{enumerate}
-\end{theorem}
-
-\begin{corollary}[概収束する可積分関数列の一様可積分性の特徴付け]
-    $(X,\A,\mu)$を有限とし，$\{f_n\}\subset L^1(X)$は$f\in L^1(X)$に概収束するとする．
-    このとき，次の3条件は同値：
-    \begin{enumerate}
-        \item $f_n$は一様可積分である．
-        \item $f_n\to f\in L^1(X)$．
-        \item $\norm{f_n}_{L^1(X)}\to\norm{f}_{L^1(X)}$．
-    \end{enumerate}
-\end{corollary}
-
-\subsection{一様可積分性の十分条件}
+\subsection{平均収束列の一様可積分性}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
-    先程は$f_n$の$L^1$-収束で特徴付けた．
-    今回は，$f_n$が定める不定積分が，集合関数$\A\to\R$として各点収束するならば一様積分であることを論じる．
+    先程は$f_n$の$L^1$ノルムの収束で特徴付けた．
+    今回は，$f_n$が定める不定積分が，集合関数$\A\to\R$として各点収束するならば一様可積分であることを論じる．
 \end{tcolorbox}
 
 \begin{notation}
@@ -1554,6 +1700,33 @@ title=]
     \end{enumerate}
 \end{corollary}
 
+\begin{theorem}
+    $X,X_n\subset L^1(S)$を非負関数とする．$X_n\Rightarrow X$かつ$E[X_n]\to E[X]$ならば，$\{X_n\}$は一様可積分．
+\end{theorem}
+
+\subsection{概収束列の一様可積分性}
+
+\begin{theorem}[概収束列の一様可積分性の特徴付け]
+    $(X,\A,\mu)$を有限とし，$f_n\to f\;\as$とする．
+    (1)$\Rightarrow$(2)が成り立ち，$f,f_n$が非負のとき(2)$\Rightarrow$(1)も成り立つ．
+    \begin{enumerate}
+        \item $\{f_n\}$が一様可積分である．
+        \item $\{f_n\}\subset L^1(X)$かつ$f\in L^1(X)$で，
+        \[\lim_{n\to\infty}\int f_nd\mu=\int fd\mu\]
+        が成り立つ．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}[概収束する可積分関数列の一様可積分性の特徴付け]
+    $(X,\A,\mu)$を有限とし，$\{f_n\}\subset L^1(X)$は$f\in L^1(X)$に概収束するとする．
+    このとき，次の3条件は同値：
+    \begin{enumerate}
+        \item $f_n$は一様可積分である．
+        \item $f_n\to f\in L^1(X)$．
+        \item $\norm{f_n}_{L^1(X)}\to\norm{f}_{L^1(X)}$．
+    \end{enumerate}
+\end{corollary}
+
 \subsection{弱収束の特徴付け}
 
 \begin{corollary}
@@ -1588,7 +1761,15 @@ title=]
     
 \end{theorem}
 
+\section{$L^p$の研究}
+
+\begin{theorem}[Grothendieck (\cite{Rudin},Th'm 5.2)]
+    任意の$0<p<\infty$について，確率空間$(\Om,\F,P)$上の閉部分空間$S\subset L^p(P)$が$S\subset L^\infty(P)$も満たすならば，有限次元である．
+\end{theorem}
+
 \section{$L$の研究}
+
+\subsection{距離化可能性}
 
 \begin{proposition}
     $(\Om,\F,P)$を有限測度空間とする．
@@ -1600,7 +1781,14 @@ title=]
     そしてこの距離に関する収束は確率収束である．
 \end{proposition}
 
-\section{確率変数列の収束}
+\subsection{確率変数のなす空間}
+
+\begin{proposition}
+    $X_1\in\L(\Om;S_1),X_2\in\L(\Om;S_2)$と，$(X_1,X_2)\in\L(\Om;S_1\times S_2)$は同値．
+    しかし，$S_1\times S_2$が可分でない限り，$X_1,X_2$が確率変数であっても，$(X_1,X_2)$も確率変数とは限らない．
+\end{proposition}
+
+\section{概収束}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -1621,12 +1809,6 @@ title=]
 \end{definition}
 \begin{remark}[法則収束の特異性]
     概収束，確率収束，$p$次平均収束は$X_n$と$X$の間に関係$=$や演算$-$が定義されていることが必要であるから，列$(X_n)$は同一の確率空間上で定義されている必要があるが，法則収束は実はその必要はなく，純粋に実数上に引き起こす測度のみによって決まる概念であるから，始域は抽象化されている．
-\end{remark}
-
-\begin{remark}
-    $(\X_n,\A_n,P_n)$上の$S$-値確率変数列$(X_n)$と
-    ある定点$c\in S$に対して，\[X_n\xrightarrow{p}c:\Leftrightarrow\forall_{\ep>0}\;\lim_{n\to\infty}P_n[d(X_n,c)>\ep]=0\]
-    も確率収束と呼ばれるが，この場合は法則収束$P_n^{X_n}\Rightarrow\delta_c$と同値になる．
 \end{remark}
 
 \subsection{収束の間の関係}
@@ -1685,6 +1867,8 @@ title=]
     概収束を定める位相は距離付け可能でない．
 \end{proposition}
 
+\section{確率収束}
+
 \subsection{概収束と確率収束}
 
 \begin{proposition}[\cite{西尾}]
@@ -1725,18 +1909,39 @@ title=]
     \end{enumerate}
 \end{proposition}
 
+\subsection{確率収束と弱収束}
+
+\begin{lemma}
+    $\{P_n\}\subset P(S),a\in S$について，次の2条件は同値：
+    \begin{enumerate}
+        \item $P_n\pto a$．
+        \item $P_n\wto a$．
+    \end{enumerate}
+\end{lemma}
+
+
+
 \subsection{確率収束の遺伝}
 
 
 \begin{proposition}[確率収束の遺伝]
-    $X_n,X,Y_n,Y$を確率変数とする．
+    $(X_n,Y_n)$を$S\times S$上の確率変数列とし，積距離を$\rho:S\times S\to\R_+$とする．
+    $X_n\Rightarrow X$かつ$\rho(X_n,Y_n)\Rightarrow0$ならば，$Y_n\Rightarrow X$である．
+\end{proposition}
+
+\begin{theorem}
+    $(X_{un},X_n)$は二重列とし，$X_{un}\Rightarrow Z_u\Rightarrow X$を満たすとする．このとき，
+    $\forall_{\ep>0}\;\lim_u\limsup_nP[\rho(X_{un},X_n)\ge\ep]=0$ならば，$X_n\Rightarrow X$も成り立つ．
+\end{theorem}
+
+\subsection{積空間上の確率収束}
+
+\begin{theorem}
     \begin{enumerate}
-        \item 定数$c\in\R$については，$X_n\xrightarrow{p}c$と$X_n\xrightarrow{d}c$とは同値．
-        \item $X_n\xrightarrow{d}X$かつ$d(X_n,Y_n)\xrightarrow{p}0$ならば，$Y_n\xrightarrow X$．
         \item $X_n\xrightarrow{d}X$かつ$Y_n\xrightarrow{p}c$ならば，$(X_n,Y_n)\xrightarrow{d}(X,c)$．
         \item $X_n\xrightarrow{p}X$かつ$Y_n\xrightarrow{p}Y$ならば，$(X_n,Y_n)\xrightarrow{p}(X,Y)$．
     \end{enumerate}
-\end{proposition}
+\end{theorem}
 \begin{remark}
     一方で，結合分布の弱収束は，各成分の弱収束より強い\ref{thm-Slutsky}．
     これも，各成分の分布だけでは結合分布が定まらないことに起因する．
@@ -1816,6 +2021,8 @@ title=]
     これをBanach空間上で行う技法を関数デルタ法という．
 \end{remarks}
 
+\section{分布収束}
+
 \subsection{分布収束の性質}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1875,18 +2082,6 @@ title=]
     正数列$\{r_n\}\subset\R_{>0}$に対して，$X_n=o_p(r_n):\Leftrightarrow\frac{X_n}{r_n}=o_p(1)$とし，$X_n=O_p(r_n):\Leftrightarrow\frac{X_n}{r_n}=O_p(1)$．
 \end{definition}
 
-\subsection{安定収束}
-
-\begin{definition}
-    任意の確率収束する確率変数列$Y_n\xrightarrow{p}Y$に対して$(X_n,Y_n)\xrightarrow{d}(X,Y)$が成り立つとき，$X_n\xrightarrow{d}X\;(stably)$と表し，\textbf{安定収束}するという．
-\end{definition}
-\begin{example}
-    独立確率変数列$(X_n)$，マルチンゲール$(X_n)$など，中心極限定理が従う多くの場合，これが法則収束するとき，安定収束する．
-\end{example}
-\begin{remark}
-    安定収束の概念は非エルゴード的統計において最も基本的な役割を演じる．非エルゴード統計とは，条件付きFisher情報量の極限にランダム性が残る場合をいう．
-\end{remark}
-
 \subsection{弱収束が定める概収束列}
 
 \begin{theorem}[Skorokhod representation theorem]
@@ -1898,11 +2093,58 @@ title=]
     あくまで測度の$*$-弱収束が主軸である，とも捉えられる．
 \end{remarks}
 
+\subsection{積空間上の弱収束}
+
+\begin{theorem}
+    $S\times S$を可分とする$X_n\Rightarrow X$かつ$Y_n\Rightarrow a$ならば，$(X_n,Y_n)\Rightarrow(X,a)$．
+\end{theorem}
+
+\begin{theorem}
+    $S\times S$を可分で，$X,Y$を独立，$Y\overset{d}{=}Z$かつ$\rho(Y_nZ)\Rightarrow0$，$\F_0\subset\F$を集合体とする．
+    次の2条件が成り立つならば，$(X_n,Y_n)\Rightarrow(X,Y)$．
+    \begin{enumerate}
+        \item $\forall_{A\in P(S)}\;\forall_{E\in\F_0}\;P[X\in\partial A]=0\Rightarrow P[(X_n\in A)\cap E]\to P[X\in A]P[E]$．
+        \item $\forall_{n\in\N}\;X_n\in\L_{\F_1}(\Om)$．
+    \end{enumerate}
+\end{theorem}
+
+\section{平均収束}
+
+
+\subsection{弱収束列が平均収束する条件}
+
+\begin{theorem}
+    $X_n\Rightarrow X$ならば，$E[X]\le\liminf_nE[X_n]$．
+\end{theorem}
+
+\begin{theorem}
+    $\{X_n\}\subset L^1(X)$は一様可積分で$X_n\Rightarrow X$を満たすとする．このとき，$X$も可積分で$E[X_n]\Rightarrow E[X]$．
+\end{theorem}
+
+\begin{theorem}[優収束定理]
+    $Y\in L^1(\Om)_+$は$\forall_{n\in\N}\;\forall_{t>0}\;P[\abs{X_n}\ge t]\le P[Y\ge t]$を満たすとする．このとき，$X_n\Rightarrow Y$は$E[X_n]\to E[X]$を含意する．
+\end{theorem}
+
+\section{安定収束}
+
+\begin{definition}
+    任意の確率収束する確率変数列$Y_n\xrightarrow{p}Y$に対して$(X_n,Y_n)\xrightarrow{d}(X,Y)$が成り立つとき，$X_n\xrightarrow{d}X\;(stably)$と表し，\textbf{安定収束}するという．
+\end{definition}
+\begin{example}
+    独立確率変数列$(X_n)$，マルチンゲール$(X_n)$など，中心極限定理が従う多くの場合，これが法則収束するとき，安定収束する．
+\end{example}
+\begin{remark}
+    安定収束の概念は非エルゴード的統計において最も基本的な役割を演じる．非エルゴード統計とは，条件付きFisher情報量の極限にランダム性が残る場合をいう．
+\end{remark}
+
+\section{独立確率変数の収束}
+
 \subsection{独立確率変数列の収束}
 
 \begin{theorem}
     独立確率変数の列$(X_n)$の級数の過程$S_n:=\sum_{i=1}^nX_i$について，確率収束と概収束とは同値になる．
 \end{theorem}
+
 
 \section{期待値の収束}
 
@@ -6130,8 +6372,12 @@ title=]
     Patrick Billingsley. (1976). \textit{Probability and Measures}.
     \bibitem{Billingsley68}
     Patrick Billingsley. (1968). \textit{Convergence of Probability Measures}.
+    \bibitem{Billingsley71}
+    Patrick Billingsley. (1971). \textit{Weak Convergence of Measures}.
     \bibitem{Bogachev}
     Weak Convergence of Measures.
+    \bibitem{Rudin}
+    Rudin, W. \textit{Functional Analysis}.
 
     \bibitem{伊藤清}
     伊藤清．『確率論』

@@ -1,0 +1,185 @@
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\title{函数解析\\担当：石毛和弘先生}
+\author{05-210520 司馬博文}
+\pagestyle{headings} \setcounter{secnumdepth}{4}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\usepackage[math]{anttor}
+\begin{document}
+\maketitle
+
+\section{問題１}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の$1\le p<\infty$に対して，$C_c(\Om)$は$L^p(\Om)$上稠密である．
+\end{tcolorbox}
+
+\begin{proposition}\label{prop-dense-subspace-C_c-in-Lp}
+    任意の$1\le p<\infty$に対して，$C_c(\Om)$は$L^p(\Om)$上稠密である．
+\end{proposition}
+\begin{proof}
+    任意の$f\in L^p(\Om)$と$\ep>0$に対して，ある$g\in C_c(\Om)$が存在して$\norm{f-g}_{L^p(\Om)}<\ep$を満たすことを示せば良い．
+    \begin{enumerate}
+        \item $\Om$は$\sigma$-コンパクトだから，コンパクトな$\Om$の部分集合の増大列$(K_n)$で$\cup_{n\in\N}K_n=\Om$を満たすものが存在する．
+        集合$K_n$の定義関数を$1_{K_n}$として，$f_n:=1_{K_n}f$とすると，$f_n\nearrow f$であるから，Lebesgueの優収束定理より，$\exists_{N\in\N}\;\norm{f_N-f}_{L^p(\Om)}<\ep/2$．
+        \item $j_\delta\in C^\infty(\R^n)\;(\delta>0)$を開球$B_\delta(0)$の外では零な軟化子として，$J_\delta(f):=j_\delta *f$をこれに対応する作用素とする．
+        $\R^n\setminus\Om$上では零として$f_N$を延長したものを$\wt{f}_N$と表すと，十分小さい$\delta>0$に対して，$\supp(J_\delta\wt{f}_N)\subset\Om$かつ$\norm{J_\delta\wt{f}_N-\wt{f}_N}_{L^p(\R^n)}<\ep/2$を満たすように出来る．
+        このとき$\supp(J_\delta\wt{f}_N)\subset\Brace{x\in\Om\mid \dist(x,K_N)\le\delta}$を満たすから，$J_\delta\wt{f}_N\in C_c^\infty(\Om)$．特に，$J_\delta\wt{f}_N\in C_c(\Om)$．
+    \end{enumerate}
+    (1),(2)を併せると，$g:=J_\delta\wt{f}_N$とすれば，$\norm{f-g}_{L^p(\Om)}<\ep$．$C_c(\Om)$は$L^p(\Om)$上稠密である．
+\end{proof}
+
+\section{問題２}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Lebesgue空間$L^p(\Om)\;(1\le p\le\infty)$の可分性について調べよ．
+\end{tcolorbox}
+
+\begin{theorem}
+    Lebesgue空間$L^p(\Om)\;(1\le p<\infty)$は可分である．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] $\Om:=\R^n$の場合について示せば，一般の領域$\Om$については，$L^p(\Om)\mono L^p(\R^n)$を，$\R^n\setminus\Om$上で零と定めることにより部分集合とみなすことで，可分性が従う．
+        いま，$\R^n$上の閉矩形全体のなす集合を
+        \[\cR:=\Brace{\prod_{k=1}^n[a_k,b_k]\in P(\R^n)\;\middle|\;a_k< b_k\in\Q}\]
+        と定めるとこれは可算集合で，$\sigma(\cR)=\B(\R^n)$を満たす．
+        $\E\subset L^p(\R^n)$を，各閉矩形$R$の定義関数$1_R$が生成する$\Q$-線型空間とすると，これは可算集合である．
+        あとは，$L^p(\Om)$上稠密であることを示せばよい．
+        \item[$\E$が$L^p(\Om)$上稠密であることの証明] 任意の$f\in L^p(\R^n)$と$\ep>0$について，
+        命題\ref{prop-dense-subspace-C_c-in-Lp}より，$\exists_{f_1\in C_c(\R^n)}\;\norm{f-f_1}_p<\ep$．
+        すると，$\supp f_1$はコンパクトだから，ある閉矩形$R\in\cR$が存在して，$\supp f_1\subset R$を満たす．
+        このとき，$f_1$は連続だから，$R$を十分細かく$\cR$の元の和として$R=\cup_{k=1}^NR_d$かつ$\exists_{i\ne j}\;x\in R_i$かつ$x\in R_j$ならば$\exists_{i\in[d]}\;x\in\partial R_i$を満たすように取れる．
+        こうして，任意の$\delta>0$に対して，$f_2\in\E$の値を各$R_j^\circ$上$\min_{x\in R_j}f_1(x)\le f_2\le\max_{x\in R_j}f_1(x)$を満たすように定め，各$\partial R_j$上では$0$とすれば，
+        $\norm{f_1-f_2}_\infty<\delta$を満たすように出来る．とくに，$\delta<\frac{\ep}{\abs{R}^{1/p}}$を満たすように取れば，ある$f_2\in\E$について$\norm{f_1-f_2}_\infty<\ep$を満たすように取れる．
+
+        以上より，$\norm{f-f_2}_p\le\norm{f-f_1}_p+\norm{f-f_2}<2\ep$．
+        よって，$\E$は$L^p(\Om)$上稠密である．
+    \end{description}
+\end{proof}
+
+\begin{theorem}
+    $L^\infty(\Om)$は可分でない．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\Om=\cup_{n\in\N}S_n$かつ$\forall_{n\in\N}\;\abs{S_n}>0$を満たすような$\Om$の可測な分割$\{S_n\}\subset\B(\Om)$が存在する．
+        実際，$S_0:=\Om\setminus(2^{-1}\Om)$とすると，$\abs{S_0}=(1/2)^n\abs{\Om}$．同様に，$S_m:=S_{m-1}\setminus2^{-1}S_{m-1}$としていくと，各$(S_n)$は互いに素で，正の測度を持つ．
+        \item 任意の$I\subset\N$に対して，$f_I:=1_{\cup_{n\in I}S_n}$を集合$\cup_{n\in I}S_n\subset\Om$の特性関数とすると，任意の$I\ne J\subset\N$に対して$\norm{f_I-f_J}_\infty=1$より，$\{B_{1/2}(f_I)\}_{I\in P(\N)}\subset L^\infty(\Om)$は互いに素な開集合の非可算無限族となる．
+        ただし$B_{1/2}(f_I)$とは，$f_I\in L^\infty(\Om)$を中心とした半径$1/2$の開球とした．
+        \item $X\subset L^\infty(\Om)$を稠密部分集合とすると，$\{X\cap B_{1/2}(f_I)\}$は非空集合の族であるから，選択公理より元$\{x_I\}_{I\in P(\N)}$が選び出せて，$x_I\in X\cap B_{1/2}(f_I)$を満たす．
+        これにより，単射$P(\N)\to X;I\mapsto x_I$が定まったことになるから，$X$は非可算集合である．
+    \end{enumerate}
+\end{proof}
+
+\section{問題３}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $L^1(\Om)\subsetneq (L^\infty(\Om))^*$．
+\end{tcolorbox}
+
+\begin{theorem}
+    $L^1(\Om)\subsetneq (L^\infty(\Om))^*$．
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $L^1(\Om)\ne (L^\infty(\Om))^*$である．仮に等号が成立するならば，$L^\infty(\Om)$は可分であることが必要だが，これは矛盾．
+        \item $L^1(\Om)\subset (L^\infty(\Om))^*$である．任意の$u\in L^1(\Om)$に対して，対応
+        \[\xymatrix@R-2pc{
+            T_u:L^\infty(\Om)\ar[r]&\R\\
+            \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+            f\ar@{|->}[r]&T_u(f):=\int_\Om fudx
+        }\]
+        は$T_u\in(L^\infty(\Om))^*$を満たすことを示せば良い．$T_u$は明らかに線形作用素であり，
+        またこれはHolderの不等式より，$\abs{T_uf}\le\norm{u}_1\norm{f}_\infty$が成り立つから，有界でもある．
+    \end{enumerate}
+\end{proof}
+
+\section{問題４}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Banach空間の$x\in X$への弱収束列$\{x_j\}\subset X$は，任意の$\ep>0$に対して，$\{x_j\}$のある凸結合が存在して，$\Norm{x-\sum^k_{j=1}\al_jx_j}\le\ep$を満たす．
+\end{tcolorbox}
+
+\begin{theorem}[Mazur, S.]
+    $X$をノルム空間とし，$\{x_n\}\subset X$を$x$に弱収束する点列とする．
+    任意の$\ep>0$に対して，$x_n$の凸結合が存在して，
+    \[\Abs{x-\sum_{j=1}^n\al_jx_j}\le\ep.\]
+\end{theorem}
+\begin{proof}\mbox{}
+    \begin{description}
+        \item[方針] $x_n\wto x$は$x_n-x_0\wto x_\infty-x_0$と同値だから，改めて$x_n-x_0$を$x_n$と取り直すことで，$x_0=0$を仮定しても一般性は失われない．
+        このとき，
+        \[M_1:=\Brace{\sum^n_{i=1}\al_ix_i\in X\;\middle|\;\al_i\ge0,\sum^n_{i=1}\al_i=1}\]
+        とすると，$x_0=0$の仮定より$0\in M_1$である．$\exists_{\ep>0}\;\forall_{u\in M}\;\norm{x_\infty-u}>\ep$と仮定して矛盾を導く．
+        \item[優越するMinkowski汎関数の構成] 
+        \[M:=\Brace{v\in X\mid\exists_{u\in M_1}\;\norm{v-u}\le\ep/2}\]
+        とすると，$M_1\subset M$を満たす$0$の凸近傍である．よって，$\mu_M(x):=\inf\Brace{t>0\mid t^{-1}x\in M}$とおくと，これはMinkowski汎関数である．
+        \item[Hahn-Banachの定理による帰謬]
+        いま$\forall_{v\in M}\;\norm{x_\infty-v}>\ep/2$なので，$\mu_M(x_\infty)>1$より，ある$\mu_M(u_0)=1$を満たす$u_0\in X$と$\beta>1$を用いて$x_\infty=\beta u_0$と表せる．
+        ここで，
+        \[X_1:=\Brace{x\in X\mid\exists_{\gamma\in\R}\;x=\gamma u_0}\]
+        とすると，$x_\infty\in X_1$を満たす部分空間である．
+        この上の有界線型汎関数を$f_1(x)=\gamma\;(x=\gamma u_0\text{のとき})$で定めると，これは$f_1\le\mu_M\;\on X$を満たす．よって，$f\le p$を満たす$X$上への有界線型な延長$f:X\to\R$が存在する：$f\in X^*$．
+        これまでの議論より
+        \[\sup_{x\in M_1}f(x)\le\sup_{x\in M}f(x)\le\sup_{x\in M}\mu_M(x)=1<\beta=f(\beta(u_0))=f(x_\infty)\]
+        であるから，$f(x_n)\to f(x_\infty)$に矛盾．
+    \end{description}
+\end{proof}
+
+\section{問題５}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    $K\in L^2(\Om\times\Om)$に対して，
+    \begin{enumerate}
+        \item 任意の$f\in L^2(\Om)$に対して，$(Kf)(x):=\int_\Om K(x,y)f(y)dy$は$\R^n$上well-definedで，$L^2(\Om)$の元である．
+        \item $K:L^2(\Om)\to L^2(\Om)$はコンパクトである．
+    \end{enumerate}
+\end{tcolorbox}
+
+\begin{proposition}
+    $K\in L^2(\Om\times\Om)$に対して，
+    \begin{enumerate}
+        \item 任意の$f\in L^2(\Om)$に対して，$(Kf)(x):=\int_\Om K(x,y)f(y)dy$は$\R^n$上well-definedで，$L^2(\Om)$の元である．
+        \item $K:L^2(\Om)\to L^2(\Om)$はコンパクトである．
+    \end{enumerate}
+\end{proposition}
+\begin{proof}\mbox{}
+    \begin{enumerate}
+        \item $\Om\times\Om$は$\sigma$-有限だから，Fubiniの定理より，$K(x,-)f(-):\Om\to\o{\R}$は可測で，殆ど至る所可積分である．
+        よってたしかに，殆ど至る所$(Kf)(x)$は定まる．
+        また，Cauchy-Schwartzの不等式より，殆ど至る所の$x$に対して，
+        \begin{align*}
+            \abs{Kf(x)}&\le\int_\Om\abs{K(x,y)}\abs{f(y)}dy\\
+            &=\norm{f}_2\paren{\int_\Om\abs{K(x,y)}^2dy}^{1/2}
+        \end{align*}
+        が成り立つから，
+        \begin{align*}
+            \norm{Kf}_2^2&\le\norm{f}_2^2\int_\Om\int_\Om\abs{K(x,y)}^2dxdy=\norm{f}_2^2\norm{K}_2^2<\infty.
+        \end{align*}
+        よってたしかに$Kf\in L^2(\Om)$である．
+        \item $B\subset L^2(\Om)$を単位閉球とする．
+        \begin{description}
+            \item[方針：有限ランク作用素のノルム収束極限であることを示す] $(T_n)$を有限ランク作用素の列とし，$T$に作用素ノルムについて収束するとする．このとき，$T$はコンパクト作用素である．
+            実際，Alaogluの定理より$B$は弱コンパクトだから，$T:L^2(\Om)\to L^2(\Om)$が弱-ノルム連続であることを示せば良い．
+            任意の$x$に弱収束する点列$\{x_n\}\subset B$について，
+            \[\norm{Tx_m-Tx}=\norm{(T-T_n)x_m-(T-T_n)x+T_nx_m-T_nx}\le2\norm{T-T_n}+\norm{T_nx_m-T_nx}\]
+            が成り立つが，$\Im(T_n)$は有限次元だから，弱位相とノルム位相は一致し，$\norm{T_nx_m-T_nx}\xrightarrow{n,m\to\infty}0$．
+            \item[有限ランク作用素の構成] 
+            $K_1:=\sum_{i=1}^na_i\otimes b_i\;(a_i,b_i\in L^2(\Om))$を
+            $K_1(x,y):=\sum_{i=1}^na_i(x)b_i(y)$と定める．このとき，
+            \[(K_1f)(x)=\int_\Om K_1(x,y)f(y)dy=\sum_{i=1}^na_i(x)\int_\Om b_i(y)f(y)dy\]
+            より，$\rank(\Im(K_1))\le n$である．
+            \item[$K$に収束する有限ランク作用素列の構成] 
+            $L^2(\Om\times\Om)$は可分だから，$K$にノルム収束する列$K_n:=\sum_{i=1}^{m^n}a_i\otimes b_i$が存在する．
+            これについて，$\norm{K_n-K}\xrightarrow{n\to\infty}0$が成り立つ．
+        \end{description}
+    \end{enumerate}
+\end{proof}
+
+\end{document}

@@ -823,33 +823,6 @@ title=]
     \end{description}
 \end{Proof}
 
-
-\subsection{可分Banach空間の消息}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    収束列の空間$l^1$には，可算なSchauder基底が存在する．$c_0\mono c_\infty\mono c_b=l^\infty$で，$l^\infty$は可分でない．
-    この包含関係は稠密からは程遠い．なお，$c_\infty$は収束列の空間とした．
-    また，$c_c\mono l^p\mono k^q\mono c_0\;(0<p<q<\infty)$が成り立つ，包含関係は後者の位相について稠密である．
-    なお，上述の包含関係はすべて真に成り立つ．
-\end{tcolorbox}
-
-\begin{example}[Tsirelson space (74)]
-    どの部分空間も$l^p\;(1\le p<\infty)$とも$c_0$とも同型でないようなBanach空間が存在する．
-\end{example}
-
-\begin{theorem}[Bessaga and Pelczynski]\label{thm-Bessaga-and-Pelczynski}
-    Banach空間$X$の列$(x_n)$について，これが生成する閉部分空間$\Span\Brace{x_n}$が$c_0$に同型な部分空間を含むための十分条件は，
-    \begin{enumerate}
-        \item $\inf_{n\in\N}\norm{x_n}>0$．
-        \item $\exists_{C\ge0}\;\forall_{k\ge1}\;\forall_{\ep_j\in\{\pm 1\}}\;\Norm{\sum^k_{j=1}\ep_jx_j}\le C$．
-    \end{enumerate}
-\end{theorem}
-
-\begin{theorem}
-    任意の可分Banach空間は，ある$l^1$の商空間と等長同型である．
-\end{theorem}
-
 \subsection{ノルム空間の直和と直積}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
@@ -1428,6 +1401,11 @@ title=自然なペアリングに関する直交空間]
     \end{enumerate}
 \end{example}
 
+\begin{lemma}[Goldstine]
+    $X$をBanach空間とする．
+    $\iota(B)\subset X^{**}$は$\sigma(X^{**},X^*)$-位相について$B^**$上稠密である．
+\end{lemma}
+
 \subsection{回帰性の特徴付け}
 
 \begin{proposition}
@@ -1438,7 +1416,7 @@ title=自然なペアリングに関する直交空間]
     \end{enumerate}
 \end{proposition}
 
-\begin{theorem}\label{thm-characterization-of-reflexive-Banach-spaces}
+\begin{theorem}[Kakutani]\label{thm-characterization-of-reflexive-Banach-spaces}
     Banach空間$X$について，次の２条件は同値．
     \begin{enumerate}
         \item $X$は回帰的である．
@@ -1466,6 +1444,11 @@ title=自然なペアリングに関する直交空間]
 
 \subsection{回帰性の十分条件}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    一様凸性は，$\forall_{\ep>0}\;\exists_{\delta>0}\;\forall_{x,y\in B}\;\norm{x-y}>\ep\Rightarrow\Norm{\frac{x+y}{2}}\le1-\delta$とも定義できる．
+\end{tcolorbox}
+
 \begin{definition}[uniformly convex, strictly convex]
     Banach空間$X$が
     \begin{enumerate}
@@ -1474,7 +1457,7 @@ title=自然なペアリングに関する直交空間]
     \end{enumerate}
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}[Milman]
     $X$を一様凸とする．
     \begin{enumerate}
         \item 任意の有界線型汎関数$f\in X^*$は作用素ノルムの上限を達成する．
@@ -2111,7 +2094,7 @@ title=]
 \section{Hahn-Banachの分離定理}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
+title=関数空間の弱位相に対するHausdorffの公理の役割を果たす]
     2つの非空な凸集合は，位相線型空間$X$が有限次元のときは常に分離出来る．
     一般の位相線型空間の場合，どちらかが開集合であるときに分離可能で，
     局所凸空間の場合，それぞれ閉集合とコンパクト集合であるときに厳密に分離出来る．
@@ -2256,6 +2239,7 @@ title=]
     区別の意味で，こちらはBanach空間としての弱位相などと呼ばれる．
 
     $X^*$（の部分集合）が$X$に定める始位相を弱位相といい，$X^{**}$（の部分集合）が$X^*$に定める始位相を$*$-弱位相という．
+    いずれの位相も極限が一意であることは，Hahn-Banachの分離定理から従う．
 \end{tcolorbox}
 
 \subsection{弱位相を定める関数族の特徴付け}
@@ -2674,25 +2658,6 @@ title=$w^*$-閉性の特徴付けは，単位閉球の言葉によってなさ�
     閉凸包$\o{\Conv(K)}$は引き続き弱コンパクトである．
 \end{theorem}
 
-\subsection{可分性の$w^*$-位相による特徴付け}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    弱位相と$w^*$-位相は決して距離化可能でないが，有界な集合に限ると距離化可能たり得る\cite{John Conway}V.5.1．
-\end{tcolorbox}
-
-\begin{theorem}[単位閉球の距離化可能性]\label{thm-metrizability-of-ball}
-    $X$をBanach空間とする．次の２条件は同値．
-    \begin{enumerate}
-        \item $X$は可分である．
-        \item $B^*$は$w^*$位相に関して距離化可能である．
-    \end{enumerate}
-    このとき，$X^*$も可分である．
-\end{theorem}
-\begin{remarks}
-    一般に位相線型空間の射はある近傍上で有界ならば連続である\ref{thm-morphism-of-TVS}が，これはこれと全く関係のない例外的な消息である．
-\end{remarks}
-
 \begin{proposition}
     $X$を可分ノルム空間，$C\subset X^*$を$w^*$-コンパクト凸集合とする．
     極境界$\Ex(C)$は，$C$の$G_\delta$-集合，すなわち開集合の可算共通部分で表せる集合である．
@@ -2705,23 +2670,114 @@ title=]
     $C\subset X$を弱コンパクトな凸集合とする．$\cT\subset\Hom_\TVS(X,X)$は，互いに可換な弱連続な作用素の族であって，$\forall_{T\in\cT}\;T(C)\subset C$を満たすならば，ある点$x\in X$が存在して$\forall_{T\in\cT}\;Tx=T$を満たす．
 \end{theorem}
 
-\section{関数空間の弱位相}
+\section{可分空間}
 
-\subsection{弱収束とノルム収束}
+\subsection{可分Banach空間の消息}
 
-\begin{theorem}
-    $X$をノルム空間とし，$\{x_n\}\subset X$を$x$に弱収束する点列とする．
-    このとき$\{x_n\}$はノルム有界で，$\norm{x}\le\lim_{n\to\infty}\norm{x_n}$を満たす．
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    収束列の空間$l^1$には，可算なSchauder基底が存在する．$c_0\mono c_\infty\mono c_b=l^\infty$で，$l^\infty$は可分でない．
+    この包含関係は稠密からは程遠い．なお，$c_\infty$は収束列の空間とした．
+    また，$c_c\mono l^p\mono k^q\mono c_0\;(0<p<q<\infty)$が成り立つ，包含関係は後者の位相について稠密である．
+    なお，上述の包含関係はすべて真に成り立つ．
+\end{tcolorbox}
+
+\begin{example}[Tsirelson space (74)]
+    どの部分空間も$l^p\;(1\le p<\infty)$とも$c_0$とも同型でないようなBanach空間が存在する．
+\end{example}
+
+\begin{theorem}[Bessaga and Pelczynski]\label{thm-Bessaga-and-Pelczynski}
+    Banach空間$X$の列$(x_n)$について，これが生成する閉部分空間$\Span\Brace{x_n}$が$c_0$に同型な部分空間を含むための十分条件は，
+    \begin{enumerate}
+        \item $\inf_{n\in\N}\norm{x_n}>0$．
+        \item $\exists_{C\ge0}\;\forall_{k\ge1}\;\forall_{\ep_j\in\{\pm 1\}}\;\Norm{\sum^k_{j=1}\ep_jx_j}\le C$．
+    \end{enumerate}
 \end{theorem}
 
-\begin{theorem}[Mazur]
+\begin{theorem}
+    任意の可分Banach空間は，ある$l^1$の商空間と等長同型である．
+\end{theorem}
+
+\subsection{双対空間が可分ならば可分}
+
+\begin{theorem}
+    Banach空間$X$の双対空間$X^*$は可分とする．このとき，$X$も可分である．
+\end{theorem}
+\begin{remark}
+    $L^1$は可分だが，$(L^1)^*=L^\infty$は可分ではない．
+\end{remark}
+
+\subsection{可分性の$w^*$-位相による特徴付け}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    弱位相と$w^*$-位相は決して距離化可能でないが，有界な集合に限ると距離化可能たり得る\cite{John Conway}V.5.1．
+
+    また，$B$が弱距離化可能であることと$X^*$が可分であることが同値で，$B$が弱コンパクトであることと$X$が回帰的であることが同値(Kakutani,\ref{thm-characterization-of-reflexive-Banach-spaces})．
+\end{tcolorbox}
+
+\begin{theorem}[$X$の可分性は双対空間の$w^*$-距離化可能性で分かる]\label{thm-metrizability-of-ball}
+    $X$をBanach空間とする．次の２条件は同値．
+    \begin{enumerate}
+        \item $X$は可分である．
+        \item $B^*$は$w^*$位相に関して距離化可能である．
+    \end{enumerate}
+    このとき，$X^*$も可分である．
+\end{theorem}
+\begin{remarks}
+    一般に位相線型空間の射はある近傍上で有界ならば連続である\ref{thm-morphism-of-TVS}が，これはこれと全く関係のない例外的な消息である．
+\end{remarks}
+
+\begin{theorem}
+    $X$をBanach空間とする．次の2条件は同値：
+    \begin{enumerate}
+        \item $X^*$は可分である．
+        \item $B$は弱距離化可能である．
+    \end{enumerate}
+\end{theorem}
+
+
+\subsection{$L^p$の可分性}
+
+\section{関数空間上の点列の収束}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    特に$L^p(X)$空間について，
+    弱収束と漸近収束との関係を考える．
+\end{tcolorbox}
+
+\subsection{弱収束の特徴付け}
+
+\begin{theorem}[ノルム空間の弱収束の必要条件]
+    $X$をノルム空間とし，$\{x_n\}\subset X$を点列，$x\in X$とする．(1)$\Rightarrow$(2)が成り立つ．
+    \begin{enumerate}
+        \item $\{x_n\}$は$x$に弱収束する．
+        \item $\{x_n\}$はノルム有界で：$\sup_{n\in\N}\norm{x_n}<\infty$，$\norm{x}\le\liminf_{n\to\infty}\norm{x_n}$を満たす．
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Mazur, S.]
+    $X$を局所凸空間，$E\subset X$を凸集合とする．
+    弱閉包$\o{E}$と元来の閉包$\oo{E}$とは等しい．
+\end{theorem}
+
+\begin{corollary}
+    局所凸空間の凸な部分集合について，
+    \begin{enumerate}
+        \item 元来の閉集合と弱閉集合とは同値．
+        \item 元来の稠密集合と弱稠密集合とは同値．
+    \end{enumerate}
+\end{corollary}
+
+\begin{corollary}
     $X$をノルム空間とし，$\{x_n\}\subset X$を$x$に弱収束する点列とする．
     任意の$\ep>0$に対して，$x_n$の凸結合が存在して，
     \[\Abs{x-\sum_{j=1}^n\al_jx_j}\le\ep.\]
-\end{theorem}
+\end{corollary}
 
-\begin{theorem}
-    $X$をノルム空間とし，$\{x_n\}\subset X$点列とする．
+\begin{theorem}[ノルム空間の弱収束の特徴付け]
+    $X$をノルム空間とし，$\{x_n\}\subset X$点列とする．次の2条件は同値．
     \begin{enumerate}
         \item $(x_n)$は弱収束する．
         \item \begin{enumerate}[(a)]
@@ -2731,7 +2787,7 @@ title=]
     \end{enumerate}
 \end{theorem}
 
-\begin{corollary}
+\begin{corollary}[$L^1$の場合]
     可積分関数列$\{f_n\}\subset L^1(X)$について，弱収束することは次の2条件に同値：
     \begin{enumerate}
         \item $\{\norm{f_n}\}$は有界．
@@ -2748,16 +2804,40 @@ title=]
     全く同様に，超関数の空間$D'(\Om)$の列も，$w^*$-収束するならば強収束もする．
 \end{remarks}
 
-\begin{theorem}
-    回帰的Banach空間は弱点列完備である．
-\end{theorem}
+\subsection{ノルム収束の十分条件}
 
 \begin{theorem}
-    $Hilbert$空間において，$\{f_n\}\subset X$を$f_\infty$に弱収束する列とする．次の2条件は同値：
+    Hilbert空間において，$\{f_n\}\subset X$を$f_\infty$に弱収束する列とする．次の2条件は同値：
     \begin{enumerate}
         \item $\{f_\infty\}$に強収束もする．
         \item $\norm{f_n}\xrightarrow{n\to\infty}\norm{f_\infty}$．
     \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    $X$を一様凸なBanach空間とし，$\{x_n\}$は$x$に弱収束するとする．このときさらに$\limsup_{n\in\N}\norm{x_n}\le\norm{x}$ならば，ノルム収束もする．
+\end{theorem}
+
+\subsection{$L^p$のノルム収束}
+
+\begin{theorem}
+    $\{f_n\}\subset L^p(\Om)\;(\Om\osub\R^n)$は$f$にノルム収束するとする．このとき，ある部分列と$h\in L^p(\Om)$が存在して，$h$を優関数として概収束する．
+\end{theorem}
+
+\subsection{有界列の収束}
+
+\begin{theorem}
+    $\{f_n\}\subset X^*$を有界列とする．$X$が可分ならば，$\{f_n\}$は$w^*$-相対コンパクトである：$\exists_{\{f_{n_k}\}\subset\{f_n\}}\;\exists_{f\in X^*}\;w^*\text{-}\lim_{k\to\infty}f_{n_k}=f$．
+\end{theorem}
+
+\begin{theorem}
+    $\{x_n\}\subset X$を有界列とする．$X$が回帰的ならば，$\{x_n\}$は弱相対コンパクトである：$\exists_{\{x_{n_k}\}\subset\{x_n\}}\;\exists_{x\in X}\;w\text{-}\lim_{k\to\infty}x_{n_k}=x$．
+\end{theorem}
+
+\subsection{回帰的ならば弱位相が完備}
+
+\begin{theorem}
+    回帰的Banach空間は弱点列完備である．
 \end{theorem}
 
 \section{Banach空間値関数}
@@ -7991,9 +8071,11 @@ title=]
 \begin{lemma}
     各点完備な位相線型束上の線型汎関数は，正ならば連続である．
 \end{lemma}
+
 \begin{theorem}[実数上のRadon積分のLebesgue-Stieltjes積分としての表現\ref{thm-Stieltjes}]
-    正な線型汎関数$\int\in (C_c(\R))^*_+$と，Radon測度$\RM(X;[0,\infty])$とについて，
-    \[(C_c(\R))^\vee_+\simeq_\Set\Brace{m\in\Map(\R,\R)\mid m\text{は単調増加で下半連続}}\]
+    正な線型汎関数$\int\in (C_c(\R))^*_+$について，Lebesgue-Stieltjes積分が定める対応
+    \[F:\Brace{m\in\Map(\R,\R)\mid m\text{は単調増加}}\to(C_c(\R))^*_+\]
+    は全射で，$F$が定める同値類は$m$を下半連続に取ることで代表元とすることができ，これによって集合の同型が引き起こされる．
 \end{theorem}
 
 \begin{theorem}[Radon-Riesz\footnote{MalliavinとAlexandorffもRiesz and Radonと呼んでいる．}]
@@ -8014,11 +8096,19 @@ title=]
     $\RM(X;[0,\infty])$の元は，「外部正則かつ開集合上内部正則かつ局所有限なBorel測度$\mu^*$」と一対一対応し，この関係を，「$\mu$は$\mu^*$に付随する本質的測度である」という．\footnote{url{https://ncatlab.org/nlab/show/Radon+measure}}
 \end{remark}
 
-\subsection{双対空間と符号付き測度}
+\subsection{$C$の双対空間と符号付き測度}
+
+\begin{theorem}
+    次の対応$F$は全射である：
+    \[F:\Brace{m\in\Map(\R;\R)\mid m\text{は単調増加}}\to (C(R))_+\*.\]
+\end{theorem}
 
 \begin{theorem}[絶対連続関数の双対空間のLebesgue積分による特徴付け (Riesz 1909)\ref{thm-dual-of-C-on-interval}]
     \[C([a,b])^*\simeq_\Set\Brace{\rho\in\BV([a,b])}\]
 \end{theorem}
+
+
+\subsection{$C_0$の双対空間}
 
 \begin{lemma}
     $C_c(X)$は$C_0(X)$上一様ノルムについて稠密である．特に，$C_c(X)^*=C_0(X)^*$．
@@ -8038,7 +8128,17 @@ title=]
     なお，符号付きRadon測度の代わりに複素Radon測度としても成立する\ref{prop-Riesz-Markov-3}．
 \end{remark}
 
-\subsection{その他}
+\begin{corollary}[実数上のRadon測度は有界変動関数によって表現される]
+    次の対応は等長同型$(C_0(\R))^*\simeq_\Ban\BV(\R)$を定める：
+    \[\xymatrix@R-2pc{
+        C_0(R)\ar[r]&\BV(\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi(f)=\int_\R f(u)d\al (u).
+    }\]
+\end{corollary}
+
+\subsection{$C_b$の双対空間}
+
 
 \begin{definition}[Baire measure]
     位相空間$X$上の
@@ -8048,30 +8148,42 @@ title=]
 \end{definition}
 
 \begin{theorem}[Riesz-Markov-Kakutani (1941)]
-    $X$をコンパクトハウスドルフ空間，$M(X)$をBaire測度が全変動ノルムについてなすBanach空間とする．
+    $X$をコンパクトハウスドルフ空間，$M_B(X)$をBaire測度が全変動ノルムについてなすBanach空間とする．
     このとき，次の対応は等長同型$(C(X))^*\simeq_\Ban M(X)$を定める：
     \[\xymatrix@R-2pc{
-        (C(X))^*\ar[r]&M(X)\\
+        (C(X))^*\ar[r]&M_B(X)\\
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
         \Phi\ar@{|->}[r]&\Phi f=\mu[f]\;(f\in C(X))
     }\]
 \end{theorem}
 
-\begin{theorem}[markov-Alexandorff (1940)]
-    $X$を$T_4$-位相空間，$M_f(X)$をその上の内部正則なBorel有限加法的符号付き測度が全変動ノルムについてなす空間とする．
+\begin{theorem}[Markov-Alexandorff (1940)]
+    $X$を$T_4$-位相空間，$M_f(X)$をその上の有限加法的な符号付きRadon測度が全変動ノルムについてなす空間とする．
     次の対応は等長同型$(C_b(X))^*\simeq_\Ban M_f(X)$を定める：
     \[\xymatrix@R-2pc{
         (C_b(X))^*\ar[r]&M_f(X)\\
         \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
-        L\ar@{|->}[r]&L(f)=\int_Xfd\mu
+        \Phi\ar@{|->}[r]&\Phi(f)=\int_Xfd\mu
     }\]
 \end{theorem}
 \begin{history}
+    初めて$C_B(\R)$上の線型汎関数の空間を考察したのはFichtenholz G.とKantorovitch, L. (1934)であった．
     Alexandorff (1940)でchargeと呼んでいるものは，有限加法的な符号付き測度で，有限加法的な集合関数である．
-    これはMarkovの仕事の拡張だという．
+    これはMarkov (38)の仕事の拡張だという．
     この論文ではRiesz-Radonの拡張が試みられ，そこでchargeの語を生み出している．\footnote{to call it measure seemed to be inconvenient, therefore, lead by a natural physical analogy, I call it a charge.}
     そしてまさか$T_4$-空間を表す正規性は，このRiesz-Radonの研究から出てきたとは．
 \end{history}
+
+\subsection{$l^\infty$の双対空間}
+
+\begin{theorem}[Hildebrandt, T. H. (1934)]
+    次の対応は等長同型$(l^\infty(\R))^*\simeq_\Ban M_f(\R)$を定める．
+    \[\xymatrix@R-2pc{
+        (l^\infty(\R))^*\ar[r]&M_f(\R)\\
+        \rotatebox[origin=c]{90}{$\in$}&\rotatebox[origin=c]{90}{$\in$}\\
+        \Phi\ar@{|->}[r]&\Phi(f)=\int_\R fd\mu
+    }\]
+\end{theorem}
 
 \section{Radon積分}
 
@@ -9849,6 +9961,7 @@ title=]
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     $L^p$の元を$C^\infty$の列で近似するときはいつでも畳み込みを用いる．
+    隆起関数との畳み込みは，任意の尺度$\ep>0$に対して，$u\in L_\loc^1(\R^n)$上の台を$\ep$以上は大きくしない範囲で，ノルム減少的に滑らかにすることが出来る．
 \end{tcolorbox}
 
 \begin{lemma}
@@ -9864,7 +9977,7 @@ title=]
     補題を満たす関数$j\in C^\infty_c(\R^m)$を一つ取る．
     \begin{enumerate}
         \item $\ep>0$に対して，$j_\ep(x):=\frac{1}{\ep^n}j\paren{\frac{x}{\ep}}$とおくと，再び$j_\ep\in C_c^\infty(\R^n)$と(1),(3)を満たすが，(2)については$\abs{x}\ge\ep\Rightarrow j_\ep(x)=0$という形で満たす．
-        \item 畳み込みを取る作用素を$J_\ep:L^1_\loc(\R^n)\to C^\infty(\R^n);u\mapsto J_\ep u=j_\ep*u$で定める．これを\textbf{Friedrichsの軟化子}という．
+        \item 任意の$\ep>0$に対して，畳み込みを取る作用素を$J_\ep:L^1_\loc(\R^n)\to C^\infty(\R^n);u\mapsto J_\ep u=j_\ep*u$で定める．これを\textbf{Friedrichsの軟化子}という．
     \end{enumerate}
 \end{definition}
 \begin{lemma}

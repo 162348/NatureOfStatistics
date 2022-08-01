@@ -3,79 +3,125 @@
 \author{司馬博文 J4-190549}
 \date{\today}
 \pagestyle{headings} \setcounter{secnumdepth}{4}
-%\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
-\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
+\input{/Users/Hirofumi Shiba/NatureOfStatistics/preamble_no_fonts.tex}
+%\input{/Users/hirofumi.shiba48/NatureOfStatistics/preamble_no_fonts.tex}
 \usepackage[math]{anttor}
 \begin{document}
 \tableofcontents
 
-\begin{quotation}
-    古典力学から派生して，力学的な系＝「状態空間の経時変換の数学的モデル」を解析する位相的・幾何学的・解析的手法と，
-    そこに確率空間の構造を入れるまでを，確率統計学的な視点から概観する．
+\begin{abstract}
+    数々の数理モデルの中で，時空間のモデルに使われるのは実数とこれがなすBanach空間$\R^n$であってきた．
+    これを力学系＝「連続な状態空間内であって，経時発展法則が微分方程式によって与えられるもの」という．
+    確率空間や統計的実験が考えられるのは遥かに後のことである．
+    力学系を解析する位相的・幾何学的・解析的手法を見る（微分方程式論という）．
+    そこに確率空間の構造を入れる量子確率論・情報理論，そして古典的問題の確率過程による解析までを見て，
+    確率統計学的な示唆を得たい．
     ただし，統計力学は扱わない．
     \begin{enumerate}
         \item Hamiltonの正準方程式が定める力学系を\textbf{Hamilton力学系}という．測地流や流体力学の渦点流などの力学系も含む．
         \begin{enumerate}[(i)]
-            \item Hamilton力学系が\textbf{可積分系}であるとは，十分な数の第一積分（＝保存量）が存在する場合をいう．
+            \item Hamilton力学系が\textbf{完全積分可能}または\textbf{可積分系}であるとは，独立変数の数と同じ数の第一積分$F_1,\cdots,F_n$が存在して次を満たす場合をいう：
+            \begin{enumerate}[(a)]
+                \item $dF_1,\cdots,dF_n$は$M$の稠密な開集合上で線形独立．
+                \item $\forall_{i,j\in[n]}\;[F_i,F_j]=0$．
+            \end{enumerate}
             このとき，解は規則的でよくわかる（Liouvoille-Arnoldの定理）．
             \item 可積分系を摂動すると一般には非可積分系になる（三体問題など）が，摂動が十分小さければ可積分系
             の時に存在していた規則的な解が同様に存在する．
             これをKAM定理という．
             Kolmogorov, Arnold, Moserによる．
         \end{enumerate}
+        \item 力学では，状態空間をEuclid空間に取る．これは変数の空間であり，対象は多様体である．Lagrange以来の，運動を座標系の取り方に依らない理解への志向が結節した数学的対象である．
+        一方で，セミパラメトリックモデルでは，変数の空間を一般のBanach空間に取ることになる．
     \end{enumerate}
-\end{quotation}
-
-\begin{abstract}
-    \begin{quotation}
-        Hamiltonian formalism lay at the basis of quantum mechanics and has become one of the most often used tools in the mathematical arsenal of physics.
-        After the significance of symplectic structures and Huygens' principle for all sorts of optimization problems was realized, Hamilton's equations began to be used constantly in engineering calculations.
-
-        The apparatus of classical mechanics is applied to: the foundations of Riemannian geometry, the dynamics of an ideal fluid, Kolmogorov's theory of perturbations of conditionally periodic motion, short-wave asymptotics for equations of mathematical physics, and the classification of caustics in geometrical optics.
-    \end{quotation}
-    \begin{quotation}
-        (\cite{Arnold} perface to the second edition) The ideas and methods of symplectic geometry, developed in this book, have now found many applications in mathematical physics and in other domains of applied mathematics, as well as in pure mathematics itself. Especially, the short-wave asymptotical expansions theory has reached a very sophisticated level, with many important applications to optics, wave theory, acoustics, spectroscopy, and even chemistry; this development was parallel to the development of the theories of Lagrange and Legendre singularities, that is, of singularities of caustics and of wave founts, of their topology and their perestroikas.
-        
-        Integrable hamiltonian systems have been discovered unexpectedly in many classical problems of mathematical physics, and their study has led to new results in both physics and mathematics, for instance, in algebraic geometry.
-    \end{quotation}
-    解析力学は19世紀を通じて極めてはっきりした霊性に突き動かされ，その後の数学と物理の発展において中心的なミームとなった．
-    ベクトル力学として建てられたNewton力学を，Lagrangianというスカラー関数を中心に据え，この連立微分方程式を解くという数学的問題に換言・還元した．
-    これをEuler Lagrange方程式という．まず，問題の換言として，Lagrangianに全ての情報が含まれているというスキームは簡明である．
-    物理的保存量はLagrangianの持つ対称性として理解できる．この強力さが，微分方程式への集中した研究の原動力となった．
-
-    このスキームに，特殊相対論の要請は「Lagrangian密度がLorentz不変である」という形で乗る．これが場の理論の構築に於て本質的な役割を果たす．
-    \begin{quotation}
-        （中略）代わりに，導関数を含まない関係式を用いて，軌道が特定できるかということが主要な問題となる．（後略）
-    
-        17世紀，微分積分学はNewton, Leibnizによって始められ，18世紀，Euler, d'Alembert, Lagrange らによって確立されていった．これ以降，微分積分学の主要な動機の一つに古典的な力学の問題を解くと言ったことが意識されていくのだが，古典力学に由来する微分方程式をシステマティックに解く方法論が，解析力学の名の下に集積されていく．
-    
-        線型性という性質を仮定した世界を系統的に扱う技術として線型代数があり，その重要性は20世紀以降，十分に理解されてきたと思う．一方で，非線型現象も含めた微分方程式の解を求める技法としての解析力学の重要性は十分に意識されてはこなかったのではないだろうか．
-    
-        物理学においては，解析力学を，量子力学や統計力学への導入として重要視することが多いかと思うのだが，筆者はむしろ常微分方程式の解法理論としての重要性を強調したい．
-    \end{quotation}
-    \begin{quotation}
-        解析力学は魅力的な学問である．それが発達したのは19世紀でその頃は力学と数学にあまり区別のない時代であった．
-        そのため解析力学は自然科学の広場のような性格を持つことになった．解析力学の特徴はその数学的形式である．
-        ここの運動の様子よりもそれらの背後にある数学的構造を教えてくれるからである．実際，物理学の重要な方程式がLagrange形式やHamilton形式を通じて導かれるのを見ると，
-        その正当性を納得せざるを得ない．古典物理学から量子力学への飛躍をもたらしたのも解析力学の発想である．
-        （中略）．全容を知ろうとするには広すぎるから，最初から全体像を思い描かなくても良いであろう．ゆっくりと過去の含蓄を味わいながら基本的な計算力とものの見方を自分の中に育て，
-        古典物理学，近代物理学，現代数学に分け入って行くための路を辿るというのが解析力学を学ぶ自然な道であろう．
-        何よりも，曲面や空間を扱うための記号や基本的考え方は解析力学の中に自然に溶け込んでいる．これらに慣れることは数理物理学の基礎を身につけるための良い方法である．
-    \end{quotation}
-    Hamilton-Yacobiの理論は普通は１階単独偏微分方程式とそれに伴う特性曲線の理論を意味する．
-    \textbf{しかし古典的な解析学にはこれに加えて，
-    常微分方程式に帰着できる偏微分方程式系という研究の流れがあった}．
 \end{abstract}
 
-\chapter{古典力学}
+\chapter{微分方程式}
 
 \begin{quotation}
-    古典力学での系は，ホロノミックな拘束のとき，$\R^n$を配置空間として記述でき，$n$個の時間に関して2階の微分方程式と$2n$個の初期条件が与えられる．
-    特に，本質的な独立変数は$n$個の$q_i$のみである．
-    この設定ではLagrange形式とHamilton形式は等価で，むしろLagrange形式の方が含蓄が豊富である．
-    Hamilton形式の真価は，理論的な拡張に対する枠組みを提供するという点で有用性を見せてくる．
-    特に，統計力学と量子力学では大部分がHamilton形式によって構成される．
+    解析力学は微分方程式の解法理論という性格もある．
 \end{quotation}
+
+\begin{notation}\mbox{}
+    \begin{enumerate}
+        \item $B^d\subset\R^d$を任意の閉球とする．$B$をBanach空間$X$の任意の閉球とする．
+    \end{enumerate}
+\end{notation}
+
+\section{定義}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    任意の微分方程式は，一般性を失うことなく，一階の自励系として良い．
+\end{tcolorbox}
+
+\begin{definition}[differential equation, integral curve, autonomous system]
+    $M$を1次元多様体，
+    $X$をBanach空間，
+    $f:M\times X\supset U\to X$を関数とする．空間$\Map(M;X)$上の
+    条件$y'(t)=f(t,y(t))$を(正規形の)\textbf{微分方程式}という．
+    \begin{enumerate}
+        \item 解集合$\Brace{y\in \AC(U;X)\mid\forall_{t\in\pr_1(U)}\;y'(t)=f(t,y(t))}$の元を\textbf{大域解}または\textbf{積分曲線}という．
+        \item 解集合$\Brace{y\in C^1(B_c^1(t_0);X)\mid\forall_{t\in B_c^1(t_0)}\;y'(t)=f(t,y(t)),y(t_0)=y_0}$の元を\textbf{$(t_0,y_0)$-初期値問題の$c$-近傍上の局所解}という．
+        \item $f$が$M$上定値であるとき，\textbf{自励系}であるといい，$X$を\textbf{相空間}といい，$f$を\textbf{ベクトル場}という．$M\times X$を相空間とみなすことで，全ての常微分方程式は自励系とみなせる．これを\textbf{拡張相空間}という．
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[solvable in quadratures, exact 1-form, first integral]\mbox{}
+    \begin{enumerate}
+        \item 微分方程式が$dF=g$なる形に変形出来るとき，積分によって対応$F\mapsto dF$の逆像が1つ求められる．このとき\textbf{求積可能}であるという．
+        \item 微分形式$\om$が$\om=\sum_{i=1}^nP_idx^i\;(P_i\in C^1)$と表せるとき，\textbf{完全}であるという．これは，Frobeniusの条件$\om\wedge d\om=0$に同値．
+        \item $G\in C^1(Q;X)$が\textbf{第一積分}であるとは，解$y$に対して$G\circ(\id,y)$が定数関数であることをいう：$\forall_{t\in M}\;\dd{}{t}G(t,y(t,x))=0$．
+    \end{enumerate}
+\end{definition}
+\begin{remarks}
+    積分は微分方程式を解く方法として独立に用意できる一方で，微分方程式を解く行為としても定義できる．
+    幾何学的に言えば，微分方程式を解くとは，接空間上の情報をつなぎ合わせて，全空間の様子を見ることに他ならない．
+    こうして，Lie群とLie代数の概念を得る．
+    For example, finding integral curves of vector fields and more generally finding integral submanifolds of distributions, is also called an integration. In this vain, also a Lie group is a global object which integrates a Lie algebra (indeed, infinitesimally this reduces to solving the Maurer-Cartan equations). 
+\end{remarks}
+\begin{history}\mbox{}
+    \begin{enumerate}
+        \item 第一積分とは，全ての微分方程式を積分によって解こうとしていた時代に，解のことを積分と呼んでいた．
+        \item 完全積分可能とは，Hamilton系に対して定義される概念であり，Frobeniusが定義した．Jacobi-Clebschの理論が1階偏微分方程式系の対応物を「完全系」と定義した\cite{Bourbaki}．1-形式の「完全」性，さらには完全系列との関わりは不明．
+    \end{enumerate}
+\end{history}
+
+\section{局所解の存在と一意性}
+
+\subsection{存在}
+
+\begin{theorem}[Cauchy-Peano (1890)]
+    $Q:=B^1_a(t_0)\times B_r(y_0)\subset\R\times X$を閉集合とし，$f:Q\to X$を関数とする．
+    $f$が連続ならば，$(t_0,y_0)$-初期値問題の局所解が存在する．
+\end{theorem}
+
+\begin{theorem}[Caratheodory]
+    $Q:=B^1_a(t_0)\times B_r(y_0)\subset\R\times X$を閉集合とし，$f:Q\to X$を関数とする．
+    次の3条件が成り立つとき，任意の$c\le\min(a,r/K)$に対して，$(t_0,y_0)$-初期値問題の$c$-近傍上の殆ど至る所の局所解が存在する：
+    \begin{enumerate}
+        \item $t$-可測性：$\forall_{x\in B_r(y_0)}\;f(-,x)\in \L(B_a^1(t_0);X)$．
+        \item $y$-連続性：$\forall_{(t,x)\in Q}\;f(t,-)\in C(B_r(y_0);X)$．
+        \item 可積分性：$\exists_{m\in L^1(B_a^1;X)}\;\forall_{(t,x)\in Q}\;\abs{f(t,x)}\le m(t)$．
+    \end{enumerate}
+\end{theorem}
+
+\subsection{一意性}
+
+\begin{theorem}[Picard-Lindelof (1894)]
+    $Q:=B^1_a(t_0)\times B_r(y_0)\subset\R\times X$を閉集合とし，$f:Q\to X$を関数とする．次の3条件が成り立つとき，任意の$c\le\min(a,r/K)$に対して，$(t_0,y_0)$-初期値問題の$c$-近傍局所解が唯一存在する：
+    \begin{enumerate}
+        \item $t$-連続性：$\forall_{x\in B_r(y_0)}\;f(-,x)\in C(B_a^1(t_0);X)$．
+        \item $y$-Lipschitz連続性：$\forall_{(t,x)\in Q}\;f(t,-)\in\Lip(B_r(y_0);X)$．
+        \item 有界性：$\exists_{K\in\R}\;\sup_{(t,x)\in Q}\norm{f(t,x)}\le K$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    $f$が$y$について$C^r$-級ならば，解は$M$上$C^{r+1}$-級である．
+\end{corollary}
+
+\section{Gronwallの不等式と大域解}
 
 \section{力学の脱幾何学化}
 
@@ -87,9 +133,10 @@ title=]
 \end{tcolorbox}
 
 \begin{history}[幾何学の時代]
-    Issac Newton 1642-1727 は天体の運動を幾何学の言葉で書いた．
+    Issac Newton 1642-1727 はプリンキピア(1687)で，天体の運動を幾何学の言葉で書いた．
     当時は幾何学の対義語が「代数」「解析」であった．
-    Euclidの原論以来の形式から，力学を解放する試みが「解析力学」(Lagrange)であり，その騎手はLagrangeに間違いないのである．
+    Euclidの原論以来の形式から，力学を解放する試みが「解析力学」(Lagrange)であった（Eulerに言わせれば，代数が有限解析で微積分が無限小解析である）．
+    その金字塔がLagrangeによるMéchanique analitique (1788)である．
     初めて，代数・幾何の離陸，という意味で，応用数学の故郷である．
     Eulerの時点で変分法まで揃っていた．
 \end{history}
@@ -221,103 +268,34 @@ title=]
     Lagrangeの運動方程式\ref{equation-Lagrange}より，$\frac{dp_i}{dt}=\frac{d}{dt}\frac{\partial L}{\partial \dot{x}_i}=\frac{\partial L}{\partial x_i}=0$．
 \end{proof}
 
-\section{Legendre transformation}
-
-\begin{screen}
-    Legendre変換とは，線型空間上の実凸関数を，その双対空間上の関数に写す変換であり，従って対合である．
-
-    Legendre transformations are related to projective duality and tangental coordinates in algebraic geometry and the construction of dual Banach spaces in analysis.
-\end{screen}
-
-\subsection{Definition}
-
-\begin{definition}[Legendre transform / dual in the sense of Young]
-    ２つの可微分関数$f,\overline{f}:\R\to\R$が，互いに\textbf{ルジャンドル変換}または\textbf{ヤング双対}であるとは，これらの微分が互いに逆写像であることをいう：
-    \begin{align*}
-        Df\circ D\overline{f}&=\id,&D\overline{f}\circ Df&=\id.
-    \end{align*}
-\end{definition}
-
-\begin{definition}[Legendre transformation]
-    $y=f(x)$を凸関数とする：$f''(x)>0$．この関数$f$に対して，新たな変数$p$を持つ関数$g$を$g(p)=F(p,x(p))$対応させる対応を\textbf{ルジャンドル変換}という．
-    ただし，ここでの$x:\R\to\R$とは座標変換であって，$p$に対して$F(p,x)=px-f(x)$を最小にする$x$を$x=x(p)$と定める：$\frac{\partial F}{\partial x}=0$, i.e., $f'(x)=p$．
-    なお，$f$は凸関数であるから，このような点$x(p)$はただ一つである．
-\end{definition}
-\begin{remark}
-    $F(p,x)=px-f(x)$とは，原点を通り傾き$p$の直線$y=px$と，曲線$y=f(x)$との垂直方向の距離である．それは即ち，曲線$y=f(x)$上の点で接線の傾きが$p$となる点に他ならない．
-
-    ルジャンドル変換は点と線の双対性、つまり凸な関数$y = f (x)$は$(x, y)$の点の集合によって表現できるが、それらの傾きと切片の値で指定される接線の集合によっても等しく充分に表現できることに基いている。
-\end{remark}
-
-\begin{proposition}\mbox{}
-    \begin{enumerate}
-        \item $f$の定義域を$\R$とする．このとき，$g$の定義域は，一点か，閉区間か，半直線(ray)である．
-        \item $f$の定義域が閉区間だったとする．このとき，$g$の定義域は$\R$である．
-    \end{enumerate}
-\end{proposition}
-
-これを一般化した概念が凸共役またはLegendre-Fenchel変換である．
-
-\begin{definition}[convex conjugation]
-    $X$を実ノルム線型空間とし，$X^*$を$X$の双対空間とし，双対組を$\langle\cdot,\cdot\rangle:X^*\times X\to\R$で表す．
-    拡大実数に値を取る関数$f:X\to\R\cup\{\infty\}$の\textbf{凸共役}$f^*:X^*\to\R\cup\{\infty\}$を，次のように定める：
-    \[ f^*(x^*):=\sup\{\langle x^*,x\rangle-f(x)\mid x\in X\}. \]
-\end{definition}
-
-\subsection{Examples}
-
-\subsection{Involutivity}
-
-\begin{proposition}
-    Legendre変換は凸関数を凸関数に写す．
-\end{proposition}
-
-\begin{theorem}
-    Legendre変換はinvolutiveである．
-\end{theorem}
-
-\begin{corollary}
-    直線の族$\{y=px-g(p)\}_{p}$の包絡線は，$f=g^*$として，$\{(x,y)\in\R^2\mid y=f(x)\}$である．
-\end{corollary}
-
-\subsection{Young's inequality}
-
-\begin{definition}[Young's inequality]
-    定義より，$F(x,p)=px-f(x)\le g(p)\;(\forall x,p)$である．次の形の不等式を\textbf{ヤングの不等式}という：
-    \[ px\le f(x)+g(p). \]
-\end{definition}
-
-\subsection{The case of many variables}
-
 \chapter{変分法}
 
 \begin{quotation}
     Lagrangeの運動方程式にEulerの名前が環されているのは，変分法という導出における不可欠なピースがEulerによるものだからである．
+
+    これがHamilton-Jacobiの理論を通じて，シンプレクティック構造とHuygensの原理があらゆる種の最適化理論において重要になることが認識されると，
+    工学の分野でもHamilton方程式は欠かせないものとなった．
 \end{quotation}
 
 \section{枠組みと歴史}
 
-\begin{definition}[variational calculus / secondary calculus]
-    曲線の空間（という可微分関数空間：無限次元線型空間）のうち，極値を取る関数を定める手法を\textbf{変分法}という．
-
-    換言すれば，非線型汎関数(nonlinear functional)の停留点(stationary point)／臨界点(critical point)を扱う微分法(differential calculus)である．
-\end{definition}
-
-\begin{definition}[functional]
-    無限次元多様体上の関数を特に\textbf{汎関数}という．特に，係数体(scaler)に値を取るときにいう．
-
-    特に，変分法が取り扱う汎関数を\textbf{作用(action functional)}という．
-\end{definition}
 \begin{example}[汎関数の例]\mbox{}
     \begin{enumerate}
         \item 変分法はJohann Bernoulli (1696) の取り上げた最速降下曲線問題を，Eulerが取り上げて著書Elementa Calculi Variationumにまとめてから変分法の名前がついて始まった．
+        \item Lagrange (1760)が提起したPlateau問題とは，境界条件に対して，これを満たす面積最小の曲面を求める問題である．
         \item Euclid空間の曲線$\gamma:=\{(t,x)\mid x(t)=x,\; t\in[t_0,t_1]\}$の長さ$\Phi(\gamma)=\int^{t_1}_{t_0}\sqrt{1+\dot{x}^2}dt$は，汎関数である．
     \end{enumerate}
 \end{example}
 \begin{history}
-    マーストン・モースは変分法を今日Morse理論と呼ばれるものに応用した。
-    レフ・ポントリャーギン、ラルフ・ロッカフェラーおよび F. H. Clarke は最適制御理論において変分法に対する新しい数学的な道具を開発した。
-    リチャード・ベルマンの動的計画法は変分法の代替となるもののひとつである。
+    変分法的な問題を通じて，現在多くの理論が巣立った．
+    \begin{enumerate}
+        \item Hamiltonの論文にアイデアをもらい，力学の手法から，変分法における正準方程式を偏微分方程式に帰着して解く手法，という形で一般化したのはJacobiである．
+        \item Marston Morse 1892-77 (米)は道の空間上のエネルギー汎関数の臨界点の研究を通じて測地線への理解を試み，今日では
+        可微分関数の性質からその始域の多様体の位相的性質を分析する手法体系に育っており，現在\textbf{Morse理論}と呼ばれている．
+        \item Pontryagin，Rockafeller，F. H. Clarkeは制約条件の下である汎関数を最大化する方法を考える\textbf{最適制御理論}という形で，変分法に対する新しい数学的な道具を整備した(最大値の原理)．
+        \item Bellmanによって\textbf{動的計画法}が導入され，これは変分法の代替となる計算機的な手法である．これはHamilton-Jacobiの理論の一般化となっている．
+        \item \textbf{調和関数論}における変分原理は\textbf{Dirichletの原理}と呼ばれている．純粋数学への応用はRiemannが初めて複素解析について行い，Hilbertが定式化して正当性が認められ，変分法の\textbf{直接法}が発展する契機となった．
+    \end{enumerate}
 \end{history}
 
 \section{変分}
@@ -379,7 +357,15 @@ title=]
 
 \chapter{Hamilton-Jacobi理論}
 
-\section{Hamilton系}
+\begin{quotation}
+    古典力学での系は，ホロノミックな拘束のとき，$\R^n$を配置空間として記述でき，$n$個の時間に関して2階の微分方程式と$2n$個の初期条件が与えられる．
+    特に，本質的な独立変数は$n$個の$q_i$のみである．
+    この設定ではLagrange形式とHamilton形式は等価で，むしろLagrange形式の方が含蓄が豊富である．
+    Hamilton形式の真価は，理論的な拡張に対する枠組みを提供するという点で有用性を見せてくる．
+    特に，統計力学と量子力学では大部分がHamilton形式によって構成される．
+\end{quotation}
+
+\section{Hamilton系とその歴史}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -440,7 +426,7 @@ title=]
     \end{enumerate}
 \end{history}
 
-\section{Jacobiの研究}
+\subsection{Jacobiの研究}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -494,82 +480,49 @@ title=]
     \end{enumerate}
 \end{history}
 
-\section{正準変換への過程}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    ここまでの理論では「正準変換（正準形の射）」の考え方が入っていない．
-    以降，Hamilton-Jacobi理論は天体力学と呼ばれていた．
-\end{tcolorbox}
-
-\begin{history}[Poincareの正準変換の研究]\mbox{}
-    \begin{enumerate}
-        \item 1892年，彼の
-        代表作『天体力学の新しい方法』\cite{Poincare1892}で，
-        Newton方程式からHamiltonの正準方程式を導き，その後Jacobiの解法を紹介する．
-        しかしここでさらに一歩踏み込んで，Hamilton-Jacobi方程式の完全解が
-        正準変換の母関数になることを示唆した．
-        \item 第3版で，母関数$S$がH-J方程式の解になれば，これが定める正準変換が力学系の解を与えることを示し，
-        これはGoldsteinの教科書に載っている説明と同じである．
-        \item 1905の『天体力学講義』\cite{Poincare1905}では，正準変換となるための十分条件を1-形式で提示する．
-        特にH-J方程式の完全解$S$はこれを満たし，さらにこれが定める正準変換は，変換後の正準変数が定数になるようなクラスを定める．
-        これを\textbf{Jacobiの方法と称した}が，Jacobiがここまで見えていた訳ではない．
-    \end{enumerate}
-\end{history}
-
-\begin{history}[エドマンド・T・ホイッテーカー(1873-1956)]
-    Lieの接触変換は，正準変換を引き起こすことに気づいた(1904 『解析力学』)．
-    1960sまでは，正準性を保つ変換を正準変換とともに「接触変換」とも呼ばれていた．
-\end{history}
-
-\section{天の力学から原子の力学へ}
-
-\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
-title=]
-    Bohr (1913)の原子模型の提案から，Hamilton光学が見直された．
-    ハミルトン光学ないしは光学のHJ理論という分野が，1920年代には確立していた．
-    そしてBornがHamilton-Jacobi理論を，天体力学と量子力学をつなげる数学的形式として見直し，『原子の力学』(1925)として刊行した．
-    「量子力学」と題する論文が刊行されたのも，同年のすぐ後の出来事であった．
-\end{tcolorbox}
-
-\begin{history}
-    当時の量子物
-理学者の間でよく読まれたのは，スウェーデンの
-天文学者力ール・シヤリエ(1862-1934)による
-『天の力学』であった．
-ドイツ語で，制限つき周期運動について詳しいためである．
-ここでは，天体力学における角変数$\om=\nu t+\beta$が，作用に相当する積分と正準共役になることが示唆されていた．
-この正準変数を「\textbf{作用・角変数}」と名付けたのは，シュワルツシルト(1916)がシュタルク効果の説明にあたってである．
-\end{history}
-
-\begin{history}[KleinからDavid Hilbertへ：変分原理からの大総合]
-    \begin{enumerate}
-        \item KleinはHamilton光学の普及に努めた．
-        \item 1922-23年，ダーフイト-ヒルベルト(1862-1943)はゲツチングン大学で，『量子論の数学的基
-        礎』17を講義した．ここで彼は，変分原理に基づい
-        て光学と力学のHJ理論を統一的に論じた．
-        このように変分原理から出発する物理学の見方はHamiltonの仕事ではなく，Hilbertなのであった！
-        実際，この本は変分原理を基調に書かれており，正準方程式を\textbf{変分問題の標準微分方程式}として提示している．
-    \end{enumerate}
-\end{history}
-
-\begin{theorem}[Jacobi]
-    偏微分方程式$u_x+H(x_1,\cdots,x_n,x,u_{x_1},\cdots,u_{x_n})=0$の完全積分$u=\varphi(x_1,\cdots,x_n,x,a_1,\cdots,a_n)$が知られているならば，
-    $2n$個の任意のパラメータ$a_1,\cdots,a_n,b_1,\cdots,b_n$を持った方程式$\varphi_{a_i}=b_i,\varphi_{x_i}=p_i$から正準な連立微分方程式
-    \[\dd{x_i}{x}=H_{p_i},\quad\dd{p_i}{x}=-H_{x_i}\]
-    の解の$2n$-パラメータの群が得られる．
-\end{theorem}
-
-\begin{history}[Max Born]
-    ヒルベルトの定式化を押さえた上でボルンは，
-    1925年に『原子の力学』を刊行する．
-    名前の由来は「天体力学だけでなく，原子の力学のためのHamilton-Jacobi理論の再評価」というところである．
-    Hilbertの講義録は2009まで世に出なかったので，
-    今日の(ゾンマーフェルトが望んだような)前期量子論を理解するためのHamilton-Jacobiの理論の教科書としての流れを作った．
-    そこで，我々の歴史的理解が歪んだのである．
-\end{history}
-
 \section{Legendre変換}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Legendre変換とは，線型空間上の実凸関数を，その双対空間上の関数に写す変換であり，従って対合である．
+    代数幾何学でも関連する概念があるようであるが，Banach空間の双対の構成との類似性に注目したい．
+    これを一般化した概念が凸共役またはLegendre-Fenchel変換である．
+\end{tcolorbox}
+
+\subsection{定義}
+
+\begin{definition}[Legendre transform / dual in the sense of Young]
+    ２つの可微分関数$f,\overline{f}:\R\to\R$が，互いに\textbf{ルジャンドル変換}または\textbf{ヤング双対}であるとは，これらの微分が互いに逆写像であることをいう：
+    \begin{align*}
+        Df\circ D\overline{f}&=\id,&D\overline{f}\circ Df&=\id.
+    \end{align*}
+\end{definition}
+
+\begin{definition}[Legendre transformation]
+    $y=f(x)$を凸関数とする：$f''(x)>0$．この関数$f$に対して，新たな変数$p$を持つ関数$g$を$g(p)=F(p,x(p))$対応させる対応を\textbf{ルジャンドル変換}という．
+    ただし，ここでの$x:\R\to\R$とは座標変換であって，$p$に対して$F(p,x)=px-f(x)$を最小にする$x$を$x=x(p)$と定める：$\frac{\partial F}{\partial x}=0$, i.e., $f'(x)=p$．
+    なお，$f$は凸関数であるから，このような点$x(p)$はただ一つである．
+\end{definition}
+\begin{remark}
+    $F(p,x)=px-f(x)$とは，原点を通り傾き$p$の直線$y=px$と，曲線$y=f(x)$との垂直方向の距離である．それは即ち，曲線$y=f(x)$上の点で接線の傾きが$p$となる点に他ならない．
+
+    ルジャンドル変換は点と線の双対性、つまり凸な関数$y = f (x)$は$(x, y)$の点の集合によって表現できるが、それらの傾きと切片の値で指定される接線の集合によっても等しく充分に表現できることに基いている。
+\end{remark}
+
+\begin{proposition}\mbox{}
+    \begin{enumerate}
+        \item $f$の定義域を$\R$とする．このとき，$g$の定義域は，一点か，閉区間か，半直線(ray)である．
+        \item $f$の定義域が閉区間だったとする．このとき，$g$の定義域は$\R$である．
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[convex conjugation]
+    $X$を実ノルム線型空間とし，$X^*$を$X$の双対空間とし，双対組を$\langle\cdot,\cdot\rangle:X^*\times X\to\R$で表す．
+    拡大実数に値を取る関数$f:X\to\R\cup\{\infty\}$の\textbf{凸共役}$f^*:X^*\to\R\cup\{\infty\}$を，次のように定める：
+    \[ f^*(x^*):=\sup\{\langle x^*,x\rangle-f(x)\mid x\in X\}. \]
+\end{definition}
+
+\subsection{力学系に定める変換}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
@@ -592,6 +545,27 @@ title=]
     なお，$T$は温度，$V$は体積である．
     このとき，$G:=X-TS$とすると，\textbf{Gibbsの自由エネルギー}が定義され，これはHamiltonianである．
 \end{example}
+
+\subsection{凸関数の保存}
+
+\begin{proposition}
+    Legendre変換は凸関数を凸関数に写す．
+\end{proposition}
+
+\begin{definition}[Young's inequality]
+    定義より，$F(x,p)=px-f(x)\le g(p)\;(\forall x,p)$である．次の形の不等式を\textbf{ヤングの不等式}という：
+    \[ px\le f(x)+g(p). \]
+\end{definition}
+
+\subsection{対合性}
+
+\begin{theorem}
+    Legendre変換はinvolutiveである．
+\end{theorem}
+
+\begin{corollary}
+    直線の族$\{y=px-g(p)\}_{p}$の包絡線は，$f=g^*$として，$\{(x,y)\in\R^2\mid y=f(x)\}$である．
+\end{corollary}
 
 \section{Symplectic記法}
 
@@ -714,12 +688,40 @@ title=]
     \end{enumerate}
 \end{proposition}
 
-\section{正準不変量}
+\section{正準不変量と接触変換}
 
 \begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
 title=]
     Hamilton力学のほとんどの概念はPoisson括弧式を用いて特徴づけることができるのは，変換群の構造を用いて相空間$\R^{2n}$が特徴付けられることを言っていると考えれば当然の事実であろう．
 \end{tcolorbox}
+
+\subsection{歴史}
+
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+    title=]
+    ここまでの理論では「正準変換（正準形の射）」の考え方が入っていない．
+    以降，Hamilton-Jacobi理論は天体力学と呼ばれていた．
+\end{tcolorbox}
+
+\begin{history}[Poincareの正準変換の研究]\mbox{}
+    \begin{enumerate}
+        \item 1892年，彼の
+        代表作『天体力学の新しい方法』\cite{Poincare1892}で，
+        Newton方程式からHamiltonの正準方程式を導き，その後Jacobiの解法を紹介する．
+        しかしここでさらに一歩踏み込んで，Hamilton-Jacobi方程式の完全解が
+        正準変換の母関数になることを示唆した．
+        \item 第3版で，母関数$S$がH-J方程式の解になれば，これが定める正準変換が力学系の解を与えることを示し，
+        これはGoldsteinの教科書に載っている説明と同じである．
+        \item 1905の『天体力学講義』\cite{Poincare1905}では，正準変換となるための十分条件を1-形式で提示する．
+        特にH-J方程式の完全解$S$はこれを満たし，さらにこれが定める正準変換は，変換後の正準変数が定数になるようなクラスを定める．
+        これを\textbf{Jacobiの方法と称した}が，Jacobiがここまで見えていた訳ではない．
+    \end{enumerate}
+\end{history}
+
+\begin{history}[Edmund Whittaker (1873-1956)]
+    Lieの接触変換は，正準変換を引き起こすことに気づいた(1904 『解析力学』)．
+    1960sまでは，正準性を保つ変換を正準変換とともに「接触変換」とも呼ばれていた．
+\end{history}
 
 \subsection{Poisson括弧式}
 
@@ -795,7 +797,62 @@ title=]
 
 \section{Bohrの量子力学と天文力学}
 
+\section{天の力学から原子の力学へ}
 
+\begin{tcolorbox}[colframe=ForestGreen, colback=ForestGreen!10!white,breakable,colbacktitle=ForestGreen!40!white,coltitle=black,fonttitle=\bfseries\sffamily,
+title=]
+    Bohr (1913)の原子模型の提案から，Hamilton光学が見直された．
+    ハミルトン光学ないしは光学のHJ理論という分野が，1920年代には確立していた．
+    そしてBornがHamilton-Jacobi理論を，天体力学と量子力学をつなげる数学的形式として見直し，『原子の力学』(1925)として刊行した．
+    「量子力学」と題する論文が刊行されたのも，同年のすぐ後の出来事であった．
+\end{tcolorbox}
+
+\begin{history}
+    当時のドイツの量子物
+理学者の間でよく読まれたのは，スウェーデンの
+天文学者Carl Charlier(1862-1934)による
+『天の力学』であった．
+ドイツ語で，制限つき周期運動について詳しいためである．
+ここでは，天体力学における角変数$\om=\nu t+\beta$が，作用に相当する積分と正準共役になることが示唆されていた．
+この正準変数を「\textbf{作用・角変数}」と名付けたのは，シュワルツシルト(1916)がシュタルク効果の説明にあたってである．
+\end{history}
+
+\begin{history}[KleinからDavid Hilbertへ：変分原理からの大総合]
+    \begin{enumerate}
+        \item KleinはHamilton光学の普及に努めた．
+        \item 1922-23年，ダーフイト-ヒルベルト(1862-1943)はゲツチングン大学で，『量子論の数学的基
+        礎』17を講義した．ここで彼は，変分原理に基づい
+        て光学と力学のHJ理論を統一的に論じた．
+        このように変分原理から出発する物理学の見方はHamiltonの仕事ではなく，Hilbertなのであった！
+        実際，この本は変分原理を基調に書かれており，正準方程式を\textbf{変分問題の標準微分方程式}として提示している．
+    \end{enumerate}
+\end{history}
+
+\begin{theorem}[Jacobi]
+    偏微分方程式$u_x+H(x_1,\cdots,x_n,x,u_{x_1},\cdots,u_{x_n})=0$の完全積分$u=\varphi(x_1,\cdots,x_n,x,a_1,\cdots,a_n)$が知られているならば，
+    $2n$個の任意のパラメータ$a_1,\cdots,a_n,b_1,\cdots,b_n$を持った方程式$\varphi_{a_i}=b_i,\varphi_{x_i}=p_i$から正準な連立微分方程式
+    \[\dd{x_i}{x}=H_{p_i},\quad\dd{p_i}{x}=-H_{x_i}\]
+    の解の$2n$-パラメータの群が得られる．
+\end{theorem}
+
+\begin{history}[Max Born]
+    ヒルベルトの定式化を押さえた上でボルンは，
+    1925年に『原子の力学』を刊行する．
+    名前の由来は「天体力学だけでなく，原子の力学のためのHamilton-Jacobi理論の再評価」というところである．
+    Hilbertの講義録は2009まで世に出なかったので，
+    今日の(ゾンマーフェルトが望んだような)前期量子論を理解するためのHamilton-Jacobiの理論の教科書としての流れを作った．
+    そこで，我々の歴史的理解が歪んだのである．
+\end{history}
+
+\chapter{力学系}
+
+\begin{quotation}
+    Hamilton-Jacobi理論を完成させたPoincareののち，新たな対象が生まれた．
+\end{quotation}
+
+\section{歴史}
+
+３体問題に決着を付けたのがPoincareで，これ以降，カオス・力学系という対象が認識された．
 
 \chapter{参考文献}
 
@@ -803,18 +860,22 @@ title=]
     \bibitem{Arnold}
     Vladimir I. Arnold "Mathematical Methods of Classical Mechanics" 2nd, (1991).
     \bibitem{Goldstein1}
-    Goldstein 『古典力学』上
+    Goldstein, H. (瀬川富士，矢野忠，江沢康生訳) 『新版 古典力学(上)』．吉岡書店．
     \bibitem{Goldstein2}
-    Goldstein 『古典力学』下
-    \bibitem{原島}
-    原島鮮『力学』
+    Goldstein, H. (瀬川富士，矢野忠，江沢康生訳) (2005). 『新版 古典力学(下)』．吉岡書店．
+    \bibitem{オイラーの生涯}
+    Fellman, E. A. (山本敦之訳). (2002). 『オイラーの生涯』 シュプリンガー・フェアラーク東京．
+    \bibitem{Bourbaki}
+    Bourbaki, N. (村田全，清水達雄，杉浦光夫訳). (2006). 『数学史(下)』 ちくま学芸文庫．
     \bibitem{磯崎}
     磯崎洋『解析力学と微分方程式』（共立出版，2020）
+    \bibitem{伊藤}
+    伊藤秀一 (1998) 『常微分方程式と解析力学』（共立講座，21世紀の数学）．
 
     \bibitem{Euler1747}
     Euler, L. (1747). Reserches sur le mouvement des corps céleste général. Omera Omnia, Ser.II, Vol.25.
     \bibitem{Lagrange1788}
-    (1788) Méchanique analitique . Paris.
+    Lagrange. (1788) Méchanique analitique . Paris.
     \bibitem{Lagrange1811}
     Mécanique analytique. 2nd ed., Volume 1.(1811) Vol.2 (1813) Paris.
     \bibitem{Hamilton34}
@@ -825,18 +886,19 @@ title=]
     Hamilton, W. R. (1835). Second Essay on a General Method in Dynamics.
     \bibitem{Jacobi36}
     Jacobi, C. G. J. (1836).
-    “Sur le Mouvement d’un Point et sur un Cas particulier du Probl`em des trois Corps,” Lettre adress´ee
-`a l’Acad´emie des Sciences de Paris, Comptes Rendus, t.3, pp.59-61 = Werke 4, pp.37-38.
-    \bibitem{Jacobi37}
-    Jacobi, C. G. J. (1837). Note sur
+    “Sur le Mouvement d’un Point et sur un Cas particulier du Probl`em des trois Corps,” Lettre adresseea l’Acad´emie des Sciences de Paris, Comptes Rendus, t.3, pp.59-61 = Werke 4, pp.37-38.
+    \bibitem{Jacobi37B}
+    Jacobi, C. G. J. (1837). Uber die Reduction der Integration der partiellen Differentialgleichungen erster Ordnung zwischenirgend einer Zahl Variabeln auf die Integration eines einzigen Systems gewohnlicher Differentialgleichungen \textit{Journal fur die Reine und Angewandte Mathematik}. 17::97-162.
+    \bibitem{Jacobi37C}
+    Jacobi, C. G. J. (1837). Note sur l’intgration des ́equations diff erentielles de la dynamique. \textit{Comptes rendus de l’Acadmiedes Sciences} 5::61-67.
     \bibitem{Born25}
     Max Born. (1925). Vorlesungen über Atommechanik. Berlin, Springer.
     \bibitem{Hilbert37}
     Courant, R., and Hilbert, D. (1937). Methoden der Mathematischen Physik. Berlin, Verlag von Julius Springer.
     \bibitem{Poincare1892}
-    『天体力学の新しい方法』
+    Poincare, H. (1892). 『天体力学の新しい方法』
     \bibitem{Poincare1905}
-    『天体力学講義』
+    Poincare, H. (1915). 『天体力学講義』
 \end{thebibliography}
 
 \end{document}
